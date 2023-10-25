@@ -1,0 +1,48 @@
+name: app_main
+description: A new Flutter module project.
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.1.3 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  retrofit: ^4.0.3
+  json_annotation: ^4.8.1
+  get_it: ^7.6.0
+  bloc: ^8.1.2
+  flutter_bloc: ^8.1.3
+  injectable: ^2.1.2
+  dio: ^5.3.3
+  shared_preferences: ^2.2.2
+  adaptive_theme: ^3.2.1
+  bot_toast: ^4.1.3
+  top_snackbar_flutter: ^3.1.0
+  bloc_concurrency: ^0.2.2
+  rxdart: ^0.27.7
+
+  app_core:
+    path: ../app_core
+  mobilehub_core:
+    path: ../plugins/mobilehub/packages/mobilehub_core
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  build_runner: ^2.3.3
+  retrofit_generator: ^8.0.1
+  json_serializable: ^6.6.2
+  injectable_generator: ^2.1.6
+
+flutter:
+  uses-material-design: true
+
+  module:
+    androidX: true
+    androidPackage: com.example.app_main
+    iosBundleIdentifier: com.example.appMain
