@@ -15,11 +15,11 @@ mixin ValidationMixin<T extends StatefulWidget> on State<T> {
 
   bool get conditionValidator => true;
 
-  bool get isValidForm => chechValidation();
+  bool get isValidForm => checkValidation();
 
   void onValidation([Duration debounce = const Duration(milliseconds: 300)]) {
     EasyDebounce.debounce('debounceValidation_$hashCode', debounce, () {
-      _validationListener.value = chechValidation();
+      _validationListener.value = checkValidation();
     });
   }
 
@@ -36,7 +36,7 @@ mixin ValidationMixin<T extends StatefulWidget> on State<T> {
     );
   }
 
-  bool chechValidation() {
+  bool checkValidation() {
     final valid =
         (_formKey.currentState?.validate() ?? false) && conditionValidator;
     _validationListener.value = valid;

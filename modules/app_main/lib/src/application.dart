@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/routes.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:localization/localization.dart';
 import 'core/coordinator/app_coordinator.dart';
 import 'core/utils/toast_message/toast_message.dart';
 
@@ -40,6 +41,8 @@ class _ApplicationState extends State<Application> with WidgetsBindingObserver {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey: AppCoordinator.root,
+      localizationsDelegates: LocalizationFactory.localizationsDelegates,
+      supportedLocales: LocalizationFactory.supportedLocales,
       title: widget.title,
       theme: light,
       darkTheme: dark,
@@ -100,13 +103,16 @@ class _ApplicationState extends State<Application> with WidgetsBindingObserver {
     final theme = ThemeData();
 
     return AdaptiveTheme(
-      light: theme,
-      dark: theme,
+      light: theme.getTheme(Brightness.light),
+      dark: theme.getTheme(Brightness.dark),
       initial: widget.savedThemeMode ?? AdaptiveThemeMode.light,
-      builder: (ThemeData light, ThemeData dark) => _buildMaterialApp(
-        locale: null,
-        light: light,
-        dark: dark,
+      builder: (ThemeData light, ThemeData dark) => MultiBlocProvider(
+        providers: widget.providers,
+        child: _buildMaterialApp(
+          locale: const Locale('vi', 'VN'),
+          light: light,
+          dark: dark,
+        ),
       ),
     );
   }

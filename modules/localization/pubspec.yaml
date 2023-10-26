@@ -1,7 +1,7 @@
 name: localization
 description: A new Flutter package project.
 version: 0.0.1
-homepage: https://tech.fighttech.vn
+homepage:
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 environment:

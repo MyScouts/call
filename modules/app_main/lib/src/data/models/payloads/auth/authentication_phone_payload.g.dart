@@ -9,15 +9,31 @@ part of 'authentication_phone_payload.dart';
 AuthenticationPhonePayload _$AuthenticationPhonePayloadFromJson(
         Map<String, dynamic> json) =>
     AuthenticationPhonePayload(
-      phone: json['phone'] as String,
+      phoneNumber: json['phoneNumber'] as String,
       password: json['password'] as String,
-      countryId: json['country_id'] as int,
+      phoneCode: json['phoneCode'] as String,
     );
 
 Map<String, dynamic> _$AuthenticationPhonePayloadToJson(
         AuthenticationPhonePayload instance) =>
     <String, dynamic>{
-      'phone': instance.phone,
+      'phoneCode': instance.phoneCode,
+      'phoneNumber': instance.phoneNumber,
       'password': instance.password,
-      'country_id': instance.countryId,
+    };
+
+CompletedPhoneRegisterPayload _$CompletedPhoneRegisterPayloadFromJson(
+        Map<String, dynamic> json) =>
+    CompletedPhoneRegisterPayload(
+      phoneNumber: json['phoneNumber'] as String,
+      otp: json['otp'] as String,
+      phoneCode: json['phoneCode'] as String,
+    );
+
+Map<String, dynamic> _$CompletedPhoneRegisterPayloadToJson(
+        CompletedPhoneRegisterPayload instance) =>
+    <String, dynamic>{
+      'phoneCode': instance.phoneCode,
+      'phoneNumber': instance.phoneNumber,
+      'otp': instance.otp,
     };

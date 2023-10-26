@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
+import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
+import 'package:app_main/src/presentation/authentication/authenticate_screen.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:mobilehub_core/mobilehub_core.dart';
 import 'package:app_core/app_core.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -13,7 +16,7 @@ import 'di/di.dart';
 abstract class IAppDelegate {
   Future<Widget> build(Map<String, dynamic> env);
   Future<void> run(Map<String, dynamic> env);
-
+  UserSharePreferencesUsecase get userSharePreferencesUsecase => injector.get();
   void reset() {
     injector.reset();
   }
@@ -23,7 +26,7 @@ final onLogout = BehaviorSubject();
 
 @singleton
 class AppDelegate extends IAppDelegate {
-  AppDelegate() {}
+  AppDelegate();
 
   @override
   Future<Widget> build(Map<String, dynamic> env) async {
@@ -32,14 +35,12 @@ class AppDelegate extends IAppDelegate {
     Configurations().setConfigurationValues(env);
     await configureDependencies(environment: Environment.prod);
 
-    // final userBloc = injector.get<UserBloc>();
     final savedThemeMode = await AdaptiveTheme.getThemeMode();
 
-    var initialRoute = 'login';
-    // if (userSharePreferencesUsecase.isAuthenticated) {
-    //   initialRoute = 'dashboard';
-    //   userBloc.add(AutoLoginEvent());
-    // }
+    var initialRoute = AuthenticateScreen.routeName;
+    if (userSharePreferencesUsecase.isAuthenticated) {
+      // initialRoute = DashboardScreen.routeName;
+    }
 
     if (Configurations.isStudio) {
       final myBlocObserver = MyBlocObserver();
@@ -49,7 +50,9 @@ class AppDelegate extends IAppDelegate {
     return Application(
       title: 'VDONE',
       isProduction: Configurations.isProduction,
-      providers: [],
+      providers: [
+        BlocProvider<UserCubit>(create: (_) => injector.get()),
+      ],
       savedThemeMode: savedThemeMode,
       initialRoute: initialRoute,
     );

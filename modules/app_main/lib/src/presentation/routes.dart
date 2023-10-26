@@ -1,14 +1,14 @@
-import 'package:app_main/src/di/di.dart';
+import 'package:app_core/app_core.dart';
 import 'package:injectable/injectable.dart';
-
-import '../core/router/route_module.dart';
 import 'authentication/authentication_routes.dart';
+import 'dashboard/dashboard_routes.dart';
 
 @singleton
 class Routes extends RouteModuleBuilder {
   @override
   List<RouteModule> get routes => [
-        getIt.get<AuthenticationRoutes>(),
+        get<DashboardRoutes>(),
+        get<AuthenticationRoutes>(),
       ];
 
   @override

@@ -2,6 +2,7 @@ name: mobilehub_core
 description: A new Flutter package project.
 version: 0.0.2
 homepage: https://flutter.dev
+publish_to: none
 
 environment:
   sdk: ">=2.19.3 <3.0.0"
@@ -18,7 +19,7 @@ dependencies:
   rxdart: ^0.27.3
   equatable: ^2.0.3
   collection: ^1.17.2
-  intl: 0.18.0
+  intl: ^0.18.1
   json_annotation: ^4.8.1
   freezed_annotation: ^2.1.0
 

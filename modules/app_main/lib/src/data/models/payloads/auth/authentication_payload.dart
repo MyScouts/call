@@ -12,7 +12,4 @@ class AuthenticationPayload {
     required this.password,
     required this.countryId,
   });
-
-  factory AuthenticationPayload.fromJson(Map<String, dynamic> json) =>
-      _$AuthenticationPayloadFromJson(json);
 }

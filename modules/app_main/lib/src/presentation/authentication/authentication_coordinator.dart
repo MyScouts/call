@@ -1,35 +1,29 @@
+import 'package:app_main/src/presentation/authentication/authenticate_screen.dart';
+import 'package:app_main/src/presentation/authentication/verify_otp_screen.dart';
 import 'package:flutter/material.dart';
-
-import 'login/login_screen.dart';
 
 extension AuthenticationCoordinator on BuildContext {
   Future<T?> startLogin<T>({bool hasDashboard = false}) {
-    return Navigator.of(this).pushNamed(LoginScreen.routeName, arguments: {
+    return Navigator.of(this)
+        .pushNamed(AuthenticateScreen.routeName, arguments: {
       'hasDashboard': hasDashboard,
     });
   }
 
   Future<T?> startLoginUtil<T>() {
-    return Navigator.of(this)
-        .pushNamedAndRemoveUntil(LoginScreen.routeName, (route) => false);
+    return Navigator.of(this).pushNamedAndRemoveUntil(
+      AuthenticateScreen.routeName,
+      (route) => false,
+    );
   }
 
-  // Future<T?> startVerifyOtp<T>({
-  //   required String token,
-  //   required String username,
-  //   required CredentialType credentialType,
-  //   required TypeOtpGenerate type,
-  // }) {
-  //   return Navigator.of(this).pushNamed(
-  //     VerifyOtpScreen.routeName,
-  //     arguments: {
-  //       'token': token,
-  //       'username': username,
-  //       'type': type,
-  //       'credentialType': credentialType,
-  //     },
-  //   );
-  // }
+  Future<T?> startVerifyOtp<T>(
+      {required String phoneNumber, required String phoneCode}) {
+    return Navigator.of(this).pushNamed(VerifyOTPScreen.routeName, arguments: {
+      "phoneNumber": phoneNumber,
+      "phoneCode": phoneCode,
+    });
+  }
 
   // Future<T?> startEnterName<T>() {
   //   return Navigator.of(this).pushReplacementNamed(EnterNameScreen.routeName);

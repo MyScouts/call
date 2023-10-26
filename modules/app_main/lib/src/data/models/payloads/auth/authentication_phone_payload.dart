@@ -1,23 +1,39 @@
-
 import 'package:json_annotation/json_annotation.dart';
 
 part 'authentication_phone_payload.g.dart';
 
 @JsonSerializable()
 class AuthenticationPhonePayload {
-  final String phone;
-
+  final String phoneCode;
+  final String phoneNumber;
   final String password;
 
-  @JsonKey(name: 'country_id')
-  final int countryId;
-
   const AuthenticationPhonePayload({
-    required this.phone,
+    required this.phoneNumber,
     required this.password,
-    required this.countryId,
+    required this.phoneCode,
   });
 
   factory AuthenticationPhonePayload.fromJson(Map<String, dynamic> json) =>
       _$AuthenticationPhonePayloadFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AuthenticationPhonePayloadToJson(this);
+}
+
+@JsonSerializable()
+class CompletedPhoneRegisterPayload {
+  final String phoneCode;
+  final String phoneNumber;
+  final String otp;
+
+  const CompletedPhoneRegisterPayload({
+    required this.phoneNumber,
+    required this.otp,
+    required this.phoneCode,
+  });
+
+  factory CompletedPhoneRegisterPayload.fromJson(Map<String, dynamic> json) =>
+      _$CompletedPhoneRegisterPayloadFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CompletedPhoneRegisterPayloadToJson(this);
 }

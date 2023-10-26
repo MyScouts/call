@@ -1,49 +1,52 @@
+import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
+import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../data/models/payloads/auth/authentication_payload.dart';
-import '../../data/models/responses/login_response.dart';
-import '../../data/models/responses/register_with_phone_response.dart';
-import '../repositories/auth_repository.dart';
+import '../../data/models/responses/authenticate_response.dart';
+import '../../data/repositories/auth_repository.dart';
 
 @injectable
 class AuthenticationUsecase {
   final AuthRepository _authRepository;
+  final UserSharePreferencesUsecase _userSharePreferencesUsecase;
 
   AuthenticationUsecase(
     this._authRepository,
+    this._userSharePreferencesUsecase,
   );
 
   Future<void> signOut([bool forceLogout = false]) async {
-    // _loggerService
-    //     .d('[AuthenticationUsecase][signOut] forceLogout: $forceLogout');
-
-    // await _stringeeService.disconnect();
-
     if (forceLogout == false) {
-      // final fcmToken = _userSharePreferencesUsecase.getFCMToken;
-      // if (fcmToken?.isNotEmpty ?? false) {
-      //   await _notificationUsecase.unregister(fcmToken!);
-      // }
       await _authRepository.logout();
     }
-    // await _userSharePreferencesUsecase.logout();
   }
 
   Future<LoginResponse> login({
-    required AuthenticationPayload payload,
-    required CredentialType type
+    required AuthenticationPhonePayload payload,
   }) async {
-    // TODO: implement loginWithEmail
-    throw UnimplementedError();
+    final response = await _authRepository.loginWithPhone(payload);
+    await _userSharePreferencesUsecase.saveToken(
+      response.accessToken,
+      response.refreshToken,
+    );
+    return response;
   }
 
-  Future<RegisterWithPhoneResponse> registerWithPhone(
-      AuthenticationPayload payload) {
+  Future registerWithPhone(AuthenticationPhonePayload payload) {
     return _authRepository.registerWithPhone(
-      countryId: payload.countryId,
       password: payload.password,
-      phone: payload.username,
+      phone: payload.phoneNumber,
+      phoneCode: payload.phoneCode,
     );
+  }
+
+  Future phoneCompletedRegister(CompletedPhoneRegisterPayload payload) async {
+    final response = await _authRepository.completeRegister(payload);
+    await _userSharePreferencesUsecase.saveToken(
+      response.accessToken,
+      response.refreshToken,
+    );
+    return true;
   }
 }
 

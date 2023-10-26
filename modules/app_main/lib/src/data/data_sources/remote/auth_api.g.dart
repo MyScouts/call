@@ -19,21 +19,21 @@ class _AuthApi implements AuthApi {
   String? baseUrl;
 
   @override
-  Future<ApiResponse<LoginResponse>> loginWithPhone(
-      AuthenticationPhonePayload body) async {
+  Future<LoginResponse> loginWithPhone(AuthenticationPhonePayload body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = body;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<LoginResponse>>(Options(
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<LoginResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'api/auth/phone/login',
+              'api/v1/auth/sms/login',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -42,29 +42,54 @@ class _AuthApi implements AuthApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<LoginResponse>.fromJson(
-      _result.data!,
-      (json) => LoginResponse.fromJson(json as Map<String, dynamic>),
-    );
+    final value = LoginResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<ApiResponse<RegisterWithPhoneResponse>> registerWithPhone(
-      AuthenticationPhonePayload body) async {
+  Future<dynamic> registerWithPhone(AuthenticationPhonePayload body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = body;
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'api/v1/auth/sms/register',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<PhoneCompleteRegister> phoneCompleteRegister(
+      CompletedPhoneRegisterPayload body) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<RegisterWithPhoneResponse>>(Options(
+        _setStreamType<PhoneCompleteRegister>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'api/auth/phone/register',
+              'api/v1/auth/sms/complete-register',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -73,11 +98,7 @@ class _AuthApi implements AuthApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<RegisterWithPhoneResponse>.fromJson(
-      _result.data!,
-      (json) =>
-          RegisterWithPhoneResponse.fromJson(json as Map<String, dynamic>),
-    );
+    final value = PhoneCompleteRegister.fromJson(_result.data!);
     return value;
   }
 

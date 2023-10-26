@@ -35,4 +35,5 @@ export 'src/domain/entities/user/user.dart';
 export 'src/domain/usecase/design_resource_usecase.dart';
 export 'src/domain/usecase/gift_share_preferences_usecase.dart';
 export 'src/domain/usecase/user_share_preferences_usecase.dart';
+export 'src/helpers/validation_helper.dart';
 export 'src/presentation/user_information_bloc.dart';
