@@ -9,5 +9,8 @@
     "lbl_Phone": "phone number",
     "lbl_password": "password",
 
-    "phone_placeholder": "enter phone number"
+    "phone_placeholder": "enter phone number",
+    "minium_8_character": "Minimum of 8 characters",
+    "least_one_uppercase_character": "Contains at least one uppercase character",
+    "has_one_1_digit": "Has at least 1 digit"
 }

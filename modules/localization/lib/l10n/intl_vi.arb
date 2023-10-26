@@ -9,5 +9,9 @@
     "lbl_Phone": "số điện thoại",
     "lbl_password": "Mật khẩu",
 
-    "phone_placeholder": "nhập số điện thoại"
+    "phone_placeholder": "nhập số điện thoại",
+    "phone_placeholder": "enter phone number",
+     "minium_8_character": "Tối thiểu 8 ký tự",
+    "least_one_uppercase_character": "Có ít nhất một ký tự viết hoa",
+    "has_one_1_digit": "Có ít nhất 1 chữ số"
 }

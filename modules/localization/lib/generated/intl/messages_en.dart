@@ -26,12 +26,18 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "has_one_1_digit":
+            MessageLookupByLibrary.simpleMessage("Has at least 1 digit"),
         "lbl_Phone": MessageLookupByLibrary.simpleMessage("phone number"),
         "lbl_password": MessageLookupByLibrary.simpleMessage("password"),
+        "least_one_uppercase_character": MessageLookupByLibrary.simpleMessage(
+            "Contains at least one uppercase character"),
         "messages_login_fail":
             MessageLookupByLibrary.simpleMessage("Login failed."),
         "messages_server_internal_error":
             MessageLookupByLibrary.simpleMessage("server internal error"),
+        "minium_8_character":
+            MessageLookupByLibrary.simpleMessage("Minimum of 8 characters"),
         "phone_placeholder":
             MessageLookupByLibrary.simpleMessage("enter phone number"),
         "validation_invalid": m0,

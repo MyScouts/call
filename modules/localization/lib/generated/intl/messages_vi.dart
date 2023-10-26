@@ -26,14 +26,20 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "has_one_1_digit":
+            MessageLookupByLibrary.simpleMessage("Có ít nhất 1 chữ số"),
         "lbl_Phone": MessageLookupByLibrary.simpleMessage("số điện thoại"),
         "lbl_password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
+        "least_one_uppercase_character": MessageLookupByLibrary.simpleMessage(
+            "Có ít nhất một ký tự viết hoa"),
         "messages_login_fail":
             MessageLookupByLibrary.simpleMessage("Đăng nhập không thành công."),
         "messages_server_internal_error":
             MessageLookupByLibrary.simpleMessage("lỗi hệ thống."),
+        "minium_8_character":
+            MessageLookupByLibrary.simpleMessage("Tối thiểu 8 ký tự"),
         "phone_placeholder":
-            MessageLookupByLibrary.simpleMessage("nhập số điện thoại"),
+            MessageLookupByLibrary.simpleMessage("enter phone number"),
         "validation_invalid": m0,
         "validation_required": m1
       };

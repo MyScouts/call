@@ -119,6 +119,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Minimum of 8 characters`
+  String get minium_8_character {
+    return Intl.message(
+      'Minimum of 8 characters',
+      name: 'minium_8_character',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contains at least one uppercase character`
+  String get least_one_uppercase_character {
+    return Intl.message(
+      'Contains at least one uppercase character',
+      name: 'least_one_uppercase_character',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Has at least 1 digit`
+  String get has_one_1_digit {
+    return Intl.message(
+      'Has at least 1 digit',
+      name: 'has_one_1_digit',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
