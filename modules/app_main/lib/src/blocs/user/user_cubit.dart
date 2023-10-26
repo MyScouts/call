@@ -69,10 +69,10 @@ class UserCubit extends Cubit<UserState> {
           err = "Xác minh không thành công!";
           break;
       }
-      emit(PhoneRegisterFail(message: err));
+      emit(PhoneCompletedRegisterFail(message: err));
     } catch (error) {
       debugPrint("phoneRegister: $error");
-      emit(PhoneRegisterFail(message: "international_error"));
+      emit(PhoneCompletedRegisterFail(message: "international_error"));
     }
   }
 

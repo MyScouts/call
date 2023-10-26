@@ -50,7 +50,7 @@ class ThemeText {
 
       //Paragraphh: Text normal in app
       bodyMedium: styleByFontFamily(
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: FontWeight.w400,
       ),
 
@@ -92,8 +92,8 @@ class ThemeText {
 
       /// Text in TextField, Title of Listile
       titleMedium: styleByFontFamily(
-        fontSize: 15,
-        fontWeight: FontWeight.w400,
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
       ),
     );
   }

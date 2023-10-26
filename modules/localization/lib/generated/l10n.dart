@@ -140,6 +140,16 @@ class S {
     );
   }
 
+  /// `Continue`
+  String get lbl_continue {
+    return Intl.message(
+      'Continue',
+      name: 'lbl_continue',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `enter phone number`
   String get phone_placeholder {
     return Intl.message(
@@ -175,6 +185,146 @@ class S {
     return Intl.message(
       'Has at least 1 digit',
       name: 'has_one_1_digit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login`
+  String get login {
+    return Intl.message(
+      'Login',
+      name: 'login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register`
+  String get register {
+    return Intl.message(
+      'Register',
+      name: 'register',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgot password?`
+  String get forgot_password {
+    return Intl.message(
+      'Forgot password?',
+      name: 'forgot_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Registration is consent to`
+  String get registration_is_consent_to {
+    return Intl.message(
+      'Registration is consent to',
+      name: 'registration_is_consent_to',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `terms_of_service_and_policies`
+  String get terms_of_service_and_policies {
+    return Intl.message(
+      'terms_of_service_and_policies',
+      name: 'terms_of_service_and_policies',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `by VDONE`
+  String get by_vdone {
+    return Intl.message(
+      'by VDONE',
+      name: 'by_vdone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Note about passwords`
+  String get note_about_passwords {
+    return Intl.message(
+      'Note about passwords',
+      name: 'note_about_passwords',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the verification code`
+  String get enter_the_verification_code {
+    return Intl.message(
+      'Enter the verification code',
+      name: 'enter_the_verification_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirmation code has been sent`
+  String get confirmation_code_has_been_sent {
+    return Intl.message(
+      'Confirmation code has been sent',
+      name: 'confirmation_code_has_been_sent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm`
+  String get confirm {
+    return Intl.message(
+      'Confirm',
+      name: 'confirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resend the code later?`
+  String get resend_the_code_later {
+    return Intl.message(
+      'Resend the code later?',
+      name: 'resend_the_code_later',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resend`
+  String get resend {
+    return Intl.message(
+      'Resend',
+      name: 'resend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Congratulations, you have successfully registered!`
+  String get congratulations_on_your_successful_registration {
+    return Intl.message(
+      'Congratulations, you have successfully registered!',
+      name: 'congratulations_on_your_successful_registration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wish you have great experiences on our products`
+  String get wish_you_have_great_experiences_on_our_products {
+    return Intl.message(
+      'Wish you have great experiences on our products',
+      name: 'wish_you_have_great_experiences_on_our_products',
       desc: '',
       args: [],
     );

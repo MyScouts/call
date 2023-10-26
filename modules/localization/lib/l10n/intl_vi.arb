@@ -11,9 +11,24 @@
     "lbl_Phone": "số điện thoại",
     "lbl_password": "Mật khẩu",
     "lbl_password_confirm": "Nhập lại mật khẩu",
+    "lbl_continue": "Tiếp tục",
 
     "phone_placeholder": "nhập số điện thoại",
     "minium_8_character": "Tối thiểu 8 ký tự",
     "least_one_uppercase_character": "Có ít nhất một ký tự viết hoa",
-    "has_one_1_digit": "Có ít nhất 1 chữ số"
+    "has_one_1_digit": "Có ít nhất 1 chữ số",
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "forgot_password":"Quên mật khẩu?",
+    "registration_is_consent_to": "Bằng việc đăng ký là đồng ý với",
+    "terms_of_service_and_policies": "Điều khoản dịch vụ và Chính sách",
+    "by_vdone": "của VDONE",
+    "note_about_passwords": "Lưu ý về mật khẩu",
+    "enter_the_verification_code": "Nhập mã xác minh",
+    "confirmation_code_has_been_sent" : "Mã xác nhận đã được gửi ",
+    "confirm": "Xác nhận",
+    "resend_the_code_later": "Gửi lại mã sau?",
+    "resend": "Gửi lại",
+    "congratulations_on_your_successful_registration": "Chúc mừng bạn đã đăng ký thành công",
+    "wish_you_have_great_experiences_on_our_products": "Chúc bạn có những trải nghiệm tuyệt vời trên sản phẩm của chúng tôi"
 }

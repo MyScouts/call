@@ -11,9 +11,24 @@
     "lbl_Phone": "phone number",
     "lbl_password": "password",
     "lbl_password_confirm": "Password Confirm",
+    "lbl_continue": "Continue",
 
     "phone_placeholder": "enter phone number",
     "minium_8_character": "Minimum of 8 characters",
     "least_one_uppercase_character": "Contains at least one uppercase character",
-    "has_one_1_digit": "Has at least 1 digit"
+    "has_one_1_digit": "Has at least 1 digit",
+    "login": "Login",
+    "register": "Register",
+    "forgot_password":"Forgot password?",
+    "registration_is_consent_to": "Registration is consent to",
+    "terms_of_service_and_policies": "terms_of_service_and_policies",
+    "by_vdone": "by VDONE",
+    "note_about_passwords": "Note about passwords",
+    "enter_the_verification_code": "Enter the verification code",
+    "confirmation_code_has_been_sent" : "Confirmation code has been sent",
+    "confirm": "Confirm",
+    "resend_the_code_later": "Resend the code later?",
+    "resend": "Resend",
+    "congratulations_on_your_successful_registration": "Congratulations, you have successfully registered!",
+    "wish_you_have_great_experiences_on_our_products": "Wish you have great experiences on our products"
 }

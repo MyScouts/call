@@ -4,6 +4,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/presentation/authentication/authenticate_screen.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:app_core/app_core.dart';
@@ -38,7 +39,7 @@ class AppDelegate extends IAppDelegate {
 
     var initialRoute = AuthenticateScreen.routeName;
     if (userSharePreferencesUsecase.isAuthenticated) {
-      // initialRoute = DashboardScreen.routeName;
+      initialRoute = DashboardScreen.routeName;
     }
 
     if (Configurations.isStudio) {

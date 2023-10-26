@@ -9,7 +9,7 @@ import 'package:imagewidget/imagewidget.dart';
 import 'package:localization/localization.dart';
 import 'package:ui/ui.dart';
 
-import '../components/custom_text_field.dart';
+import '../widget/custom_text_field.dart';
 
 class RegisterWidget extends StatefulWidget {
   const RegisterWidget({super.key});
@@ -144,7 +144,7 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                     ],
                   ),
                 ),
-                hintText: "Nhập số điện thoại",
+                hintText: S.current.phone_placeholder.capitalize(),
                 hintStyle: const TextStyle(
                   color: Color(0xFF8C8C8C),
                   fontSize: 14,
@@ -175,13 +175,14 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                 isPassword: true,
               ),
               const SizedBox(height: 16),
-              const Text(
-                "Nhập lại mật khẩu",
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF212121),
-                    height: 20 / 14,
-                    leadingDistribution: TextLeadingDistribution.even),
+              Text(
+                S.current.lbl_password_confirm,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF212121),
+                  height: 20 / 14,
+                  leadingDistribution: TextLeadingDistribution.even,
+                ),
               ),
               const SizedBox(height: 4),
               CustomTextField(
@@ -204,9 +205,9 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "Lưu ý về mật khẩu:",
-                    style: TextStyle(
+                  Text(
+                    "${S.current.note_about_passwords}:",
+                    style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                         height: 20 / 14,
@@ -253,25 +254,27 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                 disabled: !_formValid || !_passwordValid,
               ),
               const SizedBox(height: 24),
-              const Align(
+              Align(
                 alignment: Alignment.center,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
                   child: Text.rich(
                     TextSpan(
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF8C8C8C),
-                          height: 20 / 14,
-                          leadingDistribution: TextLeadingDistribution.even,
+                        style: context.text.bodyMedium!.copyWith(
+                          color: context.theme.hintColor,
                         ),
                         children: [
-                          TextSpan(text: "Bằng việc đăng ký là đồng ý với\n"),
                           TextSpan(
-                              text: "Điều khoản dịch vụ và Chính sách",
-                              style: TextStyle(color: Color(0xFF085CAF))),
-                          TextSpan(text: " của VDONE"),
+                            text: "${S.current.registration_is_consent_to}\n",
+                          ),
+                          TextSpan(
+                            text: S.current.terms_of_service_and_policies,
+                            style: context.text.titleMedium!.copyWith(
+                              color: context.theme.primaryColor,
+                            ),
+                          ),
+                          const TextSpan(text: " "),
+                          TextSpan(text: S.current.by_vdone),
                         ]),
                     textAlign: TextAlign.center,
                   ),

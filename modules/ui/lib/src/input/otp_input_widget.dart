@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class OTPInputWidget extends StatefulWidget {
-  final bool isError;
+  final ValueNotifier<bool> errorCtr;
   final int length;
   final Function(String) onCompleted;
   final Function() onChange;
   const OTPInputWidget({
     super.key,
     this.length = 6,
-    required this.isError,
+    required this.errorCtr,
     required this.onCompleted,
     required this.onChange,
   });
@@ -47,61 +47,73 @@ class _OTPInputWidgetState extends State<OTPInputWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: fromKey,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: List.generate(
-          widget.length,
-          (index) => Container(
-            height: 50,
-            width: 50,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: widget.isError
-                    ? AppColors.red10.withOpacity(.1)
-                    : AppColors.grey13,
-                border: Border.all(
-                  color: widget.isError ? AppColors.red10 : Colors.transparent,
-                  width: 1.5,
-                )),
-            child: TextFormField(
-              controller: _controllers[index],
-              focusNode: _focus[index],
-              onSaved: (newValue) {
-                debugPrint(newValue);
-              },
-              onChanged: (value) {
-                widget.onChange();
-                if (value.length == 1 && index < 5) {
-                  _focus[index + 1].requestFocus();
-                }
-
-                if (value.isEmpty && index > 0) {
-                  _focus[index - 1].requestFocus();
-                }
-                if (value.isNotEmpty && index + 1 == widget.length) {
-                  final String value =
-                      _controllers.map((e) => e.text.trim()).join();
-                  widget.onCompleted(value);
-                }
-              },
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.center,
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(1),
-                FilteringTextInputFormatter.digitsOnly,
-              ],
-              style: context.text.bodyLarge,
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                errorBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                filled: false,
+    return SizedBox(
+      height: 50,
+      child: Form(
+        key: fromKey,
+        child: ValueListenableBuilder<bool>(
+          valueListenable: widget.errorCtr,
+          builder: (context, isError, child) {
+            return GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: widget.length,
+                childAspectRatio: 1,
+                crossAxisSpacing: 10,
               ),
-            ),
-          ),
+              itemCount: widget.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: isError
+                          ? AppColors.red10.withOpacity(.1)
+                          : AppColors.grey13,
+                      border: Border.all(
+                        color: isError ? AppColors.red10 : Colors.transparent,
+                        width: 1.5,
+                      )),
+                  child: TextFormField(
+                    controller: _controllers[index],
+                    focusNode: _focus[index],
+                    onSaved: (newValue) {
+                      debugPrint(newValue);
+                    },
+                    onChanged: (value) {
+                      widget.onChange();
+                      if (value.length == 1 && index < 5) {
+                        _focus[index + 1].requestFocus();
+                      }
+
+                      if (value.isEmpty && index > 0) {
+                        _focus[index - 1].requestFocus();
+                      }
+                      if (value.isNotEmpty && index + 1 == widget.length) {
+                        final String value =
+                            _controllers.map((e) => e.text.trim()).join();
+                        widget.onCompleted(value);
+                      }
+                    },
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(1),
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    style: context.text.bodyLarge,
+                    decoration: const InputDecoration(
+                      isDense: false,
+                      contentPadding: EdgeInsets.zero,
+                      border: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      filled: false,
+                    ),
+                  ),
+                );
+              },
+            );
+          },
         ),
       ),
     );

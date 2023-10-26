@@ -36,7 +36,6 @@ mixin TimerMixin<T extends StatefulWidget> on State<T> {
 
   void _setTimer() {
     _time = DateTimeHelper.timestamp + timeInputLimit;
-
     if (isCountDown && _time != null) {
       timeCtr = ValueNotifier<int>(timeInputLimit);
     } else {

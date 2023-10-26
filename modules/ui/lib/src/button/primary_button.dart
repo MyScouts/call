@@ -6,7 +6,7 @@ class PrimaryButton extends StatelessWidget {
     super.key,
     required this.title,
     required this.onTap,
-    required this.color,
+    this.color,
     required this.disabled,
     this.backgroundColor,
     this.width,
@@ -16,7 +16,7 @@ class PrimaryButton extends StatelessWidget {
   });
   final String title;
   final Function()? onTap;
-  final Color color;
+  final Color? color;
   final Color? backgroundColor;
   final double? width;
   final double? height;

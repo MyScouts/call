@@ -1,5 +1,6 @@
 import 'package:app_main/src/presentation/authentication/authenticate_screen.dart';
 import 'package:app_main/src/presentation/authentication/verify_otp_screen.dart';
+import 'package:app_main/src/presentation/authentication/widget/congrutulation_dialog.dart';
 import 'package:flutter/material.dart';
 
 extension AuthenticationCoordinator on BuildContext {
@@ -29,26 +30,14 @@ extension AuthenticationCoordinator on BuildContext {
     });
   }
 
-  // Future<T?> startEnterName<T>() {
-  //   return Navigator.of(this).pushReplacementNamed(EnterNameScreen.routeName);
-  // }
-
-  // Future<T?> startForgotPassword<T>() {
-  //   return Navigator.of(this).pushNamed(ForgotPasswordScreen.routeName);
-  // }
-
-  // Future<T?> startEnterNewPassword<T>({
-  //   required String token,
-  //   required String otp,
-  //   required CredentialType type,
-  //   required String username,
-  // }) {
-  //   return Navigator.of(this)
-  //       .pushReplacementNamed(EnterNewPasswordScreen.routeName, arguments: {
-  //     'token': token,
-  //     'otp': otp,
-  //     'type': type,
-  //     'username': username,
-  //   });
-  // }
+  Future<T?> showCongratulations<T>({Widget? content, Widget? button}) {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: false,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return const CongratulationRegisterDialog();
+      },
+    );
+  }
 }

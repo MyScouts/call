@@ -26,14 +26,27 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "by_vdone": MessageLookupByLibrary.simpleMessage("của VDONE"),
+        "confirm": MessageLookupByLibrary.simpleMessage("Xác nhận"),
+        "confirmation_code_has_been_sent":
+            MessageLookupByLibrary.simpleMessage("Mã xác nhận đã được gửi "),
+        "congratulations_on_your_successful_registration":
+            MessageLookupByLibrary.simpleMessage(
+                "Chúc mừng bạn đã đăng ký thành công"),
+        "enter_the_verification_code":
+            MessageLookupByLibrary.simpleMessage("Nhập mã xác minh"),
+        "forgot_password":
+            MessageLookupByLibrary.simpleMessage("Quên mật khẩu?"),
         "has_one_1_digit":
             MessageLookupByLibrary.simpleMessage("Có ít nhất 1 chữ số"),
         "lbl_Phone": MessageLookupByLibrary.simpleMessage("số điện thoại"),
+        "lbl_continue": MessageLookupByLibrary.simpleMessage("Tiếp tục"),
         "lbl_password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
         "lbl_password_confirm":
             MessageLookupByLibrary.simpleMessage("Nhập lại mật khẩu"),
         "least_one_uppercase_character": MessageLookupByLibrary.simpleMessage(
             "Có ít nhất một ký tự viết hoa"),
+        "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
         "messages_login_fail":
             MessageLookupByLibrary.simpleMessage("Đăng nhập không thành công."),
         "messages_resend_otp_success":
@@ -42,11 +55,24 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("lỗi hệ thống."),
         "minium_8_character":
             MessageLookupByLibrary.simpleMessage("Tối thiểu 8 ký tự"),
+        "note_about_passwords":
+            MessageLookupByLibrary.simpleMessage("Lưu ý về mật khẩu"),
         "phone_placeholder":
             MessageLookupByLibrary.simpleMessage("nhập số điện thoại"),
+        "register": MessageLookupByLibrary.simpleMessage("Đăng ký"),
+        "registration_is_consent_to": MessageLookupByLibrary.simpleMessage(
+            "Bằng việc đăng ký là đồng ý với"),
+        "resend": MessageLookupByLibrary.simpleMessage("Gửi lại"),
+        "resend_the_code_later":
+            MessageLookupByLibrary.simpleMessage("Gửi lại mã sau?"),
+        "terms_of_service_and_policies": MessageLookupByLibrary.simpleMessage(
+            "Điều khoản dịch vụ và Chính sách"),
         "validation_invalid": m0,
         "validation_password_match": MessageLookupByLibrary.simpleMessage(
             "Mật khẩu xác nhận không khớp"),
-        "validation_required": m1
+        "validation_required": m1,
+        "wish_you_have_great_experiences_on_our_products":
+            MessageLookupByLibrary.simpleMessage(
+                "Chúc bạn có những trải nghiệm tuyệt vời trên sản phẩm của chúng tôi")
       };
 }

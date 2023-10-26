@@ -3,6 +3,7 @@ import 'package:app_main/src/presentation/authentication/pages/login_page.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:localization/localization.dart';
 
 class AuthenticateScreen extends StatefulWidget {
   static const String routeName = 'authenticate';
@@ -70,7 +71,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  "Đăng nhập",
+                                  S.current.login,
                                   style: TextStyle(
                                       fontWeight: isLogin
                                           ? FontWeight.w600
@@ -86,9 +87,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            width: 4,
-                          ),
+                          const SizedBox(width: 4),
                           InkWell(
                             onTap: () {
                               isLogin = false;
@@ -104,7 +103,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  "Đăng ký",
+                                  S.current.register,
                                   style: TextStyle(
                                     fontWeight: isLogin
                                         ? FontWeight.w400

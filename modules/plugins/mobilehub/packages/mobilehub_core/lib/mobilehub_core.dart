@@ -7,7 +7,7 @@ export 'src/easy_debounce.dart';
 export 'src/extensions/build_context_ext.dart';
 export 'src/extensions/datetime_helper_extension.dart';
 export 'src/helpers/platform_helper.dart';
-// export 'src/mixins/timer_mixin.dart';
+export 'src/mixins/timer_mixin.dart';
 export 'src/mixins/validation_mixin.dart';
 export 'src/networking/certificate_http_overrides.dart';
 export 'src/router/navigator_page.dart';

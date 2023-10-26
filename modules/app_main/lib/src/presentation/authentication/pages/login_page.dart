@@ -2,7 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
-import 'package:app_main/src/presentation/authentication/components/custom_text_field.dart';
+import 'package:app_main/src/presentation/authentication/widget/custom_text_field.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -108,59 +108,49 @@ class _LoginWidgetState extends State<LoginWidget> with ValidationMixin {
                 ),
                 isPassword: true,
               ),
-              const SizedBox(
-                height: 16,
-              ),
-              const Align(
+              const SizedBox(height: 16),
+              Align(
                 alignment: Alignment.center,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
                   child: Text.rich(
                     TextSpan(
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF8C8C8C),
-                          height: 20 / 14,
-                          leadingDistribution: TextLeadingDistribution.even,
+                        style: context.text.bodyMedium!.copyWith(
+                          color: context.theme.hintColor,
                         ),
                         children: [
-                          TextSpan(text: "Bằng việc đăng ký là đồng ý với\n"),
                           TextSpan(
-                              text: "Điều khoản dịch vụ và Chính sách",
-                              style: TextStyle(color: Color(0xFF085CAF))),
-                          TextSpan(text: " của VDONE"),
+                            text: "${S.current.registration_is_consent_to}\n",
+                          ),
+                          TextSpan(
+                            text: S.current.terms_of_service_and_policies,
+                            style: context.text.titleMedium!.copyWith(
+                              color: context.theme.primaryColor,
+                            ),
+                          ),
+                          const TextSpan(text: " "),
+                          TextSpan(text: S.current.by_vdone),
                         ]),
                     textAlign: TextAlign.center,
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 12,
-              ),
+              const SizedBox(height: 12),
               PrimaryButton(
-                title: "Đăng nhập",
+                title: S.current.login,
                 onTap: _onLogin,
                 color: Colors.white,
                 disabled: _buttonDisabled,
               ),
-              const SizedBox(height: 12),
-              Align(
-                alignment: Alignment.center,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                  child: InkWell(
-                    onTap: () {},
-                    child: const Text(
-                      "Quên mật khẩu?",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        height: 20 / 14,
-                        leadingDistribution: TextLeadingDistribution.even,
-                        color: Color(0xFF8C8C8C),
-                      ),
+              const SizedBox(height: 20),
+              Center(
+                child: InkWell(
+                  onTap: () {},
+                  child: Text(
+                    S.current.forgot_password,
+                    style: context.text.titleMedium!.copyWith(
+                      color: AppColors.grey20,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),

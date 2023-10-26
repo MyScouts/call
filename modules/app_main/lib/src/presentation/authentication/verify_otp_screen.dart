@@ -2,7 +2,8 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
-import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
+import 'package:app_main/src/presentation/authentication/authentication_constants.dart';
+import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
@@ -25,33 +26,46 @@ class VerifyOTPScreen extends StatefulWidget {
   State<VerifyOTPScreen> createState() => _VerifyOTPScreenState();
 }
 
-class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
+class _VerifyOTPScreenState extends State<VerifyOTPScreen> with TimerMixin {
   String _otp = "";
-  bool _otpError = false;
+  final ValueNotifier<bool> _errorCtr = ValueNotifier(false);
   bool _disabled = true;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      startTimer();
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocListener<UserCubit, UserState>(
-      listener: (context, state) {
-        if (state is PhoneCompletedRegisterSuccess) {
-          hideLoading();
-          context.startDashboardUtil();
-        }
+    return ScaffoldHideKeyboard(
+      body: BlocListener<UserCubit, UserState>(
+        listener: (context, state) {
+          if (state is PhoneCompletedRegisterSuccess) {
+            hideLoading();
+            context.showCongratulations();
+          }
 
-        if (state is PhoneCompletedRegisterFail) {
-          hideLoading();
-          showToastMessage(state.message);
-          _otpError = true;
-          setState(() {});
-        }
+          if (state is PhoneCompletedRegisterFail) {
+            hideLoading();
+            showToastMessage(state.message, ToastMessageType.error);
+            _errorCtr.value = true;
+          }
 
-        if (state is ResendOTPSuccess) {
-          hideLoading();
-          showToastMessage(S.current.messages_resend_otp_success.capitalize());
-        }
-      },
-      child: ScaffoldHideKeyboard(
-        body: SafeArea(
+          if (state is ResendOTPSuccess) {
+            debugPrint("$state");
+            restartTimer();
+            hideLoading();
+            setState(() {});
+            showToastMessage(
+              S.current.messages_resend_otp_success.capitalize(),
+            );
+          }
+        },
+        child: SafeArea(
             child: Container(
           padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
           child: Column(
@@ -62,18 +76,18 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Nhập mã xác minh",
+                    S.current.enter_the_verification_code,
                     style: context.text.titleLarge!
                         .copyWith(fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(height: 5),
                   Text.rich(
                     TextSpan(
-                      style: context.text.titleSmall,
-                      text: "Mã xác nhận đã được gửi ",
+                      style: context.text.bodySmall,
+                      text: S.current.confirmation_code_has_been_sent,
                       children: [
                         TextSpan(
-                          text: "(+${widget.phoneCode}) ${widget.phoneNumber}",
+                          text: " (+${widget.phoneCode}) ${widget.phoneNumber}",
                           style: context.text.titleSmall!.copyWith(
                             fontWeight: FontWeight.w800,
                           ),
@@ -91,32 +105,46 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
                     },
                     onChange: () {
                       _disabled = true;
+                      _errorCtr.value = false;
                       setState(() {});
                     },
-                    isError: _otpError,
+                    errorCtr: _errorCtr,
                   ),
                   const SizedBox(height: 30),
                   PrimaryButton(
-                    title: "Xác nhận",
+                    title: S.current.confirm,
                     onTap: _onVerify,
                     color: Colors.white,
                     disabled: _disabled,
                   ),
                   const SizedBox(height: 20),
-                  Center(
-                    child:
-                        Text.rich(TextSpan(text: "Gửi lại mã sau?", children: [
-                      const TextSpan(text: " "),
-                      TextSpan(
-                        text: "Gửi lại",
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = _handleResendOTP,
-                        style: context.text.bodyMedium!.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.blue10,
+                  ValueListenableBuilder(
+                    valueListenable: timeCtr,
+                    builder: (context, value, child) {
+                      final timerString =
+                          value > 0 ? '(${value.toString()}s)' : '';
+                      return Center(
+                        child: Text.rich(
+                          TextSpan(
+                            text: S.current.resend_the_code_later,
+                            children: [
+                              const TextSpan(text: " "),
+                              if (value > 0) TextSpan(text: timerString),
+                              if (value <= 0)
+                                TextSpan(
+                                  text: S.current.resend,
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = _handleResendOTP,
+                                  style: context.text.bodyMedium!.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.blue10,
+                                  ),
+                                ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ])),
+                      );
+                    },
                   )
                 ],
               ),
@@ -129,13 +157,13 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
 
   _onVerify() {
     showLoading();
-    context
-        .read<UserCubit>()
-        .phoneCompletedRegister(CompletedPhoneRegisterPayload(
-          phoneNumber: widget.phoneNumber,
-          otp: _otp,
-          phoneCode: widget.phoneCode,
-        ));
+    context.read<UserCubit>().phoneCompletedRegister(
+          CompletedPhoneRegisterPayload(
+            phoneNumber: widget.phoneNumber,
+            otp: _otp,
+            phoneCode: widget.phoneCode,
+          ),
+        );
   }
 
   void _handleResendOTP() {
@@ -148,4 +176,13 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> {
           ),
         );
   }
+
+  @override
+  bool get isCountDown => true;
+
+  @override
+  void onCompleteTimer() {}
+
+  @override
+  int get timeInputLimit => AuthenticationConstants.otpTimer;
 }
