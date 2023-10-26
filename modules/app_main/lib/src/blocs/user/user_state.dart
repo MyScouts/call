@@ -34,3 +34,13 @@ final class PhoneLoginFail extends UserState {
   final String message;
   PhoneLoginFail({required this.message});
 }
+
+// Resend OTP
+final class OnResendOTP extends UserState {}
+
+final class ResendOTPSuccess extends UserState {}
+
+final class ResendOTPFail extends UserState {
+  final String message;
+  ResendOTPFail({required this.message});
+}

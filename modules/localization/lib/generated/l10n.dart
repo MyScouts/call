@@ -70,6 +70,16 @@ class S {
     );
   }
 
+  /// `Resend OTP success.`
+  String get messages_resend_otp_success {
+    return Intl.message(
+      'Resend OTP success.',
+      name: 'messages_resend_otp_success',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{field} is required.`
   String validation_required(Object field) {
     return Intl.message(
@@ -90,6 +100,16 @@ class S {
     );
   }
 
+  /// `Password confirm not match`
+  String get validation_password_match {
+    return Intl.message(
+      'Password confirm not match',
+      name: 'validation_password_match',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `phone number`
   String get lbl_Phone {
     return Intl.message(
@@ -105,6 +125,16 @@ class S {
     return Intl.message(
       'password',
       name: 'lbl_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password Confirm`
+  String get lbl_password_confirm {
+    return Intl.message(
+      'Password Confirm',
+      name: 'lbl_password_confirm',
       desc: '',
       args: [],
     );

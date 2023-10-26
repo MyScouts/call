@@ -16,6 +16,7 @@ class AuthenticationRoutes extends RouteModule {
           return VerifyOTPScreen(
             phoneCode: args['phoneCode'],
             phoneNumber: args['phoneNumber'],
+            password: args["password"],
           );
         },
       };

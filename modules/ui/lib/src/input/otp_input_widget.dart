@@ -8,11 +8,13 @@ class OTPInputWidget extends StatefulWidget {
   final bool isError;
   final int length;
   final Function(String) onCompleted;
+  final Function() onChange;
   const OTPInputWidget({
     super.key,
     this.length = 6,
     required this.isError,
     required this.onCompleted,
+    required this.onChange,
   });
 
   @override
@@ -70,6 +72,7 @@ class _OTPInputWidgetState extends State<OTPInputWidget> {
                 debugPrint(newValue);
               },
               onChanged: (value) {
+                widget.onChange();
                 if (value.length == 1 && index < 5) {
                   _focus[index + 1].requestFocus();
                 }

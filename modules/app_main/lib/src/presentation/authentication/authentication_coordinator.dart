@@ -17,11 +17,15 @@ extension AuthenticationCoordinator on BuildContext {
     );
   }
 
-  Future<T?> startVerifyOtp<T>(
-      {required String phoneNumber, required String phoneCode}) {
+  Future<T?> startVerifyOtp<T>({
+    required String phoneNumber,
+    required String phoneCode,
+    required String password,
+  }) {
     return Navigator.of(this).pushNamed(VerifyOTPScreen.routeName, arguments: {
       "phoneNumber": phoneNumber,
       "phoneCode": phoneCode,
+      "password": password,
     });
   }
 

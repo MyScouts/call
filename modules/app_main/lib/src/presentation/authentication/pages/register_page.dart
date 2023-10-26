@@ -1,12 +1,15 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/presentation/authentication/authentication_constants.dart';
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
-import 'package:app_main/src/presentation/authentication/components/custom_submit_button.dart';
-import 'package:app_main/src/presentation/authentication/components/custom_text_field.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:localization/localization.dart';
+import 'package:ui/ui.dart';
+
+import '../components/custom_text_field.dart';
 
 class RegisterWidget extends StatefulWidget {
   const RegisterWidget({super.key});
@@ -16,9 +19,48 @@ class RegisterWidget extends StatefulWidget {
 }
 
 class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
+  bool _passwordValid = false;
+  bool _formValid = false;
+  final List<PasswordRules> _rules = [];
   final _phoneCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
   final _rePasswordCtrl = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _passwordCtrl.addListener(() {
+      final password = _passwordCtrl.text;
+      if (password.length >= 8) {
+        _rules.add(PasswordRules.min8Character);
+      } else {
+        _rules.removeWhere((element) => element == PasswordRules.min8Character);
+      }
+
+      if (password.hasNumber) {
+        _rules.add(PasswordRules.hasOneNumber);
+      } else {
+        _rules.removeWhere((element) => element == PasswordRules.hasOneNumber);
+      }
+
+      if (password.hasUppercase) {
+        _rules.add(PasswordRules.hasOneCapital);
+      } else {
+        _rules.removeWhere((element) => element == PasswordRules.hasOneCapital);
+      }
+
+      if (_rules.length == PasswordRules.values.length) {
+        _passwordValid = true;
+      }
+      setState(() {});
+    });
+
+    validationListener.addListener(() {
+      _formValid = isValidForm;
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<UserCubit, UserState>(
@@ -28,6 +70,7 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
           context.startVerifyOtp(
             phoneCode: "84",
             phoneNumber: _phoneCtrl.text.trim(),
+            password: _passwordCtrl.text,
           );
         }
 
@@ -43,19 +86,19 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Số điện thoại",
-                style: TextStyle(
+              Text(
+                S.current.lbl_Phone.capitalize(),
+                style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF212121),
                     height: 20 / 14,
                     leadingDistribution: TextLeadingDistribution.even),
               ),
-              const SizedBox(
-                height: 4,
-              ),
+              const SizedBox(height: 4),
               CustomTextField(
                 controller: _phoneCtrl,
+                validator: ValidationHelper.phone,
+                onChange: (value) => onValidation(),
                 prefixIcon: IntrinsicHeight(
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -85,9 +128,7 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                               width: 22,
                               fit: BoxFit.cover,
                             ),
-                            const SizedBox(
-                              width: 4,
-                            ),
+                            const SizedBox(width: 4),
                             const Text(
                               "+84",
                               style: TextStyle(
@@ -112,9 +153,9 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                "Mật khẩu",
-                style: TextStyle(
+              Text(
+                S.current.lbl_password,
+                style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF212121),
                     height: 20 / 14,
@@ -122,6 +163,7 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
               ),
               const SizedBox(height: 4),
               CustomTextField(
+                onChange: (value) => onValidation(),
                 controller: _passwordCtrl,
                 hintText: "**************",
                 hintStyle: const TextStyle(
@@ -143,7 +185,12 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
               ),
               const SizedBox(height: 4),
               CustomTextField(
+                onChange: (value) => onValidation(),
                 controller: _rePasswordCtrl,
+                validator: (value) => ValidationHelper.match(
+                  value,
+                  _passwordCtrl.text,
+                ),
                 hintText: "**************",
                 hintStyle: const TextStyle(
                   color: Color(0xFF8C8C8C),
@@ -166,88 +213,50 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                         leadingDistribution: TextLeadingDistribution.even,
                         color: Color(0xFF6E6E6E)),
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Row(
-                    children: [
-                      ImageWidget(
-                        IconAppConstants.icUncheckCircle,
-                        width: 16,
-                      ),
-                      const SizedBox(width: 4),
-                      const Text(
-                        "Tối thiểu 8 ký tự",
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            height: 20 / 14,
-                            leadingDistribution: TextLeadingDistribution.even,
-                            color: Color(0xFF6E6E6E)),
-                      ),
-                    ],
-                  ),
                   const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        IconAppConstants.icUncheckCircle,
-                        width: 16,
-                      ),
-                      const SizedBox(width: 4),
-                      const Text(
-                        "Có ít nhất một ký tự viết hoa",
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            height: 20 / 14,
-                            leadingDistribution: TextLeadingDistribution.even,
-                            color: Color(0xFF6E6E6E)),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        IconAppConstants.icUncheckCircle,
-                        width: 16,
-                      ),
-                      const SizedBox(width: 4),
-                      const Text(
-                        "Có ít nhất 1 chữ số",
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            height: 20 / 14,
-                            leadingDistribution: TextLeadingDistribution.even,
-                            color: Color(0xFF6E6E6E)),
-                      ),
-                    ],
-                  ),
+                  Column(
+                    children: PasswordRules.values
+                        .map((e) => Container(
+                              margin: const EdgeInsets.only(bottom: 5),
+                              child: Row(
+                                children: [
+                                  ImageWidget(
+                                    _rules.contains(e)
+                                        ? IconAppConstants.icCheckCircle
+                                        : IconAppConstants.icErrorCircle,
+                                    width: 16,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    e.getText(),
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        height: 20 / 14,
+                                        leadingDistribution:
+                                            TextLeadingDistribution.even,
+                                        color: Color(0xFF6E6E6E)),
+                                  ),
+                                ],
+                              ),
+                            ))
+                        .toList(),
+                  )
                 ],
               ),
               const SizedBox(height: 24),
-              CustomSubmitButton(
+              PrimaryButton(
                 title: "Đăng ký",
                 onTap: _onRegister,
                 color: Colors.white,
-                gradientBackgroundColor: const LinearGradient(
-                  colors: [
-                    Color(0xFF015CB5),
-                    Color(0xFF0E86FC),
-                  ],
-                  begin: FractionalOffset(0.0, 0.0),
-                  end: FractionalOffset(1.0, 0.0),
-                ),
+                disabled: !_formValid || !_passwordValid,
               ),
               const SizedBox(height: 24),
               const Align(
                 alignment: Alignment.center,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 12,
-                  ),
+                  padding: EdgeInsets.symmetric(vertical: 12),
                   child: Text.rich(
                     TextSpan(
                         style: TextStyle(

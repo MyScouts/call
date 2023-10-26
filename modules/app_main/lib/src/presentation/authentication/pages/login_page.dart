@@ -75,7 +75,7 @@ class _LoginWidgetState extends State<LoginWidget> with ValidationMixin {
                 prefixIcon: IntrinsicHeight(
                   child: _buildVgFlag(),
                 ),
-                hintText: S.current.phone_placeholder,
+                hintText: S.current.phone_placeholder.capitalize(),
                 hintStyle: const TextStyle(
                   color: Color(0xFF8C8C8C),
                   fontSize: 14,
@@ -84,9 +84,9 @@ class _LoginWidgetState extends State<LoginWidget> with ValidationMixin {
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                "Mật khẩu",
-                style: TextStyle(
+              Text(
+                S.current.lbl_password.capitalize(),
+                style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF212121),
                     height: 20 / 14,

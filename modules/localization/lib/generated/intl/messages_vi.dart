@@ -30,17 +30,23 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Có ít nhất 1 chữ số"),
         "lbl_Phone": MessageLookupByLibrary.simpleMessage("số điện thoại"),
         "lbl_password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
+        "lbl_password_confirm":
+            MessageLookupByLibrary.simpleMessage("Nhập lại mật khẩu"),
         "least_one_uppercase_character": MessageLookupByLibrary.simpleMessage(
             "Có ít nhất một ký tự viết hoa"),
         "messages_login_fail":
             MessageLookupByLibrary.simpleMessage("Đăng nhập không thành công."),
+        "messages_resend_otp_success":
+            MessageLookupByLibrary.simpleMessage("Gửi lại OTP thành công."),
         "messages_server_internal_error":
             MessageLookupByLibrary.simpleMessage("lỗi hệ thống."),
         "minium_8_character":
             MessageLookupByLibrary.simpleMessage("Tối thiểu 8 ký tự"),
         "phone_placeholder":
-            MessageLookupByLibrary.simpleMessage("enter phone number"),
+            MessageLookupByLibrary.simpleMessage("nhập số điện thoại"),
         "validation_invalid": m0,
+        "validation_password_match": MessageLookupByLibrary.simpleMessage(
+            "Mật khẩu xác nhận không khớp"),
         "validation_required": m1
       };
 }

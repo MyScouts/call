@@ -6,54 +6,6 @@ import 'dart:io';
 import 'package:intl/intl.dart';
 
 extension StringExt on String {
-  // String formatPhone() {
-  //   if (isEmpty || contains('null')) {
-  //     return '';
-  //   }
-  //
-  //   if (contains('(') && contains(')')) {
-  //     return this;
-  //   }
-  //
-  //   String phoneNumber = this;
-  //   final bool addPlus = phoneNumber.startsWith('1');
-  //
-  //   if (addPlus) {
-  //     phoneNumber = phoneNumber.substring(1);
-  //   }
-  //   final bool addParents = phoneNumber.length >= 3;
-  //   final bool addDash = phoneNumber.length >= 8;
-  //
-  //   // +1
-  //   String updatedNumber = '';
-  //   if (addPlus) {
-  //     updatedNumber += '+1';
-  //   }
-  //
-  //   // (222)
-  //   if (addParents) {
-  //     updatedNumber += '(';
-  //     updatedNumber += phoneNumber.substring(0, 3);
-  //     updatedNumber += ') ';
-  //   } else {
-  //     updatedNumber += phoneNumber.substring(0);
-  //     return updatedNumber;
-  //   }
-  //
-  //   // 111
-  //   if (addDash) {
-  //     updatedNumber += phoneNumber.substring(3, 6);
-  //     updatedNumber += '-';
-  //   } else {
-  //     updatedNumber += phoneNumber.substring(3);
-  //     return updatedNumber;
-  //   }
-  //
-  //   // 3333
-  //   updatedNumber += phoneNumber.substring(6);
-  //   return updatedNumber;
-  // }
-
   bool get isNotEmptyData => isNotEmpty && toUpperCase() != 'NULL';
 
   String capitalize() {
@@ -161,4 +113,9 @@ extension DurationByStringExt on String {
       return Duration.zero;
     }
   }
+}
+
+extension StringCheck on String {
+  bool get hasNumber => RegExp(r'\d+').hasMatch(this);
+  bool get hasUppercase => RegExp(r'[A-Z]').hasMatch(this);
 }

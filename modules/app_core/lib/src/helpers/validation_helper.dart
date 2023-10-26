@@ -25,4 +25,11 @@ class ValidationHelper {
     }
     return null;
   }
+
+  static String? match(String? value1, String value2) {
+    if (value1 != value2) {
+      return S.current.validation_password_match.capitalize();
+    }
+    return null;
+  }
 }

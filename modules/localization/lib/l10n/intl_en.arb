@@ -2,12 +2,15 @@
 {
     "messages_server_internal_error": "server internal error",
     "messages_login_fail": "Login failed.",
+    "messages_resend_otp_success": "Resend OTP success.",
 
     "validation_required": "{field} is required.",
     "validation_invalid": "{field} invalid.",
+    "validation_password_match": "Password confirm not match",
 
     "lbl_Phone": "phone number",
     "lbl_password": "password",
+    "lbl_password_confirm": "Password Confirm",
 
     "phone_placeholder": "enter phone number",
     "minium_8_character": "Minimum of 8 characters",

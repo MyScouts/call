@@ -104,4 +104,29 @@ class UserCubit extends Cubit<UserState> {
       );
     }
   }
+
+  Future resendOTP(AuthenticationPhonePayload payload) async {
+    if (state is OnResendOTP) return;
+    try {
+      emit(OnResendOTP());
+      await _authenticationUsecase.registerWithPhone(payload);
+      emit(ResendOTPSuccess());
+    } on DioException catch (error) {
+      final data = error.response!.data;
+      debugPrint("phoneRegister: $error");
+      String err = "international_error";
+      switch (data['statusCode']) {
+        case 406:
+          err = "Mã OTP không hợp lệ";
+          break;
+        default:
+          err = "Xác minh không thành công!";
+          break;
+      }
+      emit(ResendOTPFail(message: err));
+    } catch (error) {
+      debugPrint("phoneRegister: $error");
+      emit(ResendOTPFail(message: "international_error"));
+    }
+  }
 }

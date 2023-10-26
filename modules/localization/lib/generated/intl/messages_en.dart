@@ -30,10 +30,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Has at least 1 digit"),
         "lbl_Phone": MessageLookupByLibrary.simpleMessage("phone number"),
         "lbl_password": MessageLookupByLibrary.simpleMessage("password"),
+        "lbl_password_confirm":
+            MessageLookupByLibrary.simpleMessage("Password Confirm"),
         "least_one_uppercase_character": MessageLookupByLibrary.simpleMessage(
             "Contains at least one uppercase character"),
         "messages_login_fail":
             MessageLookupByLibrary.simpleMessage("Login failed."),
+        "messages_resend_otp_success":
+            MessageLookupByLibrary.simpleMessage("Resend OTP success."),
         "messages_server_internal_error":
             MessageLookupByLibrary.simpleMessage("server internal error"),
         "minium_8_character":
@@ -41,6 +45,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "phone_placeholder":
             MessageLookupByLibrary.simpleMessage("enter phone number"),
         "validation_invalid": m0,
+        "validation_password_match":
+            MessageLookupByLibrary.simpleMessage("Password confirm not match"),
         "validation_required": m1
       };
 }
