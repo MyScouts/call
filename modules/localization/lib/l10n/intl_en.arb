@@ -1,0 +1,156 @@
+{
+    "@@locale":"en",
+    "formatPrice":"{value}",
+     "@formatPrice": {
+        "description":"Format Numbers and Currencies",
+        "placeholders": {
+             "value": {
+                "type":"int",
+                "format":"simpleCurrency",
+                "optionalParameters": {
+                    "decimalDigits": 2
+                }
+            }
+
+        }
+    },
+    "formatPriceShort":"{value}",
+    "@formatPriceShort": {
+        "description":"Format Numbers and Currencies",
+        "placeholders": {
+             "value": {
+                "type":"int",
+                "format":"compactCurrency",
+                "optionalParameters": {
+                    "decimalDigits": 2
+                }
+            }
+        }
+    },
+    "formatDateDDmmYYYY":"{date} | {time} ",
+    "@formatDateDDmmYYYY": {
+        "placeholders": {
+            "date": {
+                "type": "DateTime",
+                "format": "yMd"
+            }
+        }
+    },
+    "formatDateDDmmYYYYhhMM":"{date} | {time} ",
+    "@formatDateDDmmYYYYhhMM":{
+        "description":"format datetime",
+        "placeholders": {
+            "date": {
+                "type":"DateTime",
+                "format":"yMd"
+            },
+            "time": {
+                "isCustomDateFormat":"true",
+                "type":"DateTime",
+                "format":"hh:mm a"
+            }
+        }
+    },
+    
+    "cta_Yes":"Yes",
+    "cta_No":"No",
+    "cta_Save":"Save",
+    "cta_Add":"Add",
+    "cta_Open":"Open",
+    "cta_Checkout":"Check out",
+    "cta_Decline":"Decline",
+    "cta_Accept":"Accept",
+    "cta_Cancel":"Cancel",
+    "cta_Reschedule":"Reschedule",
+    "lbl_Male":"Male",
+    "lbl_Female":"Female",
+    "lbl_Other":"Other",
+    "lbl_NotFoundData":"Not found data!",
+    "lbl_Find":"Find",
+    "lbl_Next":"Next",
+    "lbl_Message":"Message",
+    "lbl_Allergist":"Allergist",
+    "lbl_Address":"Address",
+    "lbl_Terms":"I agree with VDONE Terms of Use",
+    "lbl_Primary":"Primary",
+    "lbl_Secondary":"Secondary",
+    "lbl_Login":"Đăng nhập",
+    "lbl_Register":"Đăng ký",
+    "lbl_Email":"Email",
+    "lbl_Phone":"Số điện thoại",
+    "lbl_Continue":"Tiếp theo",
+    "lbl_Confirm":"Xác nhận",
+    "lbl_Gallery":"Gallery",
+    "lbl_Camera":"Camera",
+    "lbl_File":"File",
+    "lbl_SavePhoto":"Save Photo",
+    "lbl_Close":"Close",
+    "lblAddress_StreetNumber":"Street number",
+    "lblAddress_StreetName":"Street name",
+    "lblAddress_Suite":"Suite",
+    "lblAddress_City":"City",
+    "lblAddress_State":"State",
+    "lblAddress_ZipCode":"Zip code",
+    "lblAddress_StateOrCity":"State/city (optional)",
+    "lblUser_GeneralInfo":"General information",
+    "lblUser_FirstName":"First name",
+    "lblUser_LastName":"Last name",
+    "lblUser_PhoneNumber":"Phone number",
+    "lblUser_ProfilePicture":"Profile picture",
+    "lblUser_CoverPhoto":"Cover photo",
+    "lblUser_Email":"Email",
+    "lblUser_Password":"Password",
+    "lblUser_RetypePassword":"Re-type Password",
+    "lblUser_PreferNotToAnswer":"Prefer not to answer",
+    "lblUser_DayOfBirth":"Day of birth",
+    "signIn_Submit":"Sign in",
+    "dashboard_TabNews":"News",
+    "dashboard_TabLive":"Live",
+    "dashboard_TabExplore":"Explore",
+    "dashboard_TabPDone":"P-Done",
+    "validate_PleaseEnterUsername":"Vui lòng nhập tên đăng nhập",
+    "validate_UsernameMustLeast4Character":"Tên đăng nhập phải có ít nhất 4 ký tự",
+    "validate_PleaseEnterAccountInfo":"Vui lòng nhập thông tin tài khoản",
+    "validate_PleaseEnterPassword":"Vui lòng nhập mật khẩu",
+    "validate_PasswordMustLeastNumCharacter":"Mật khẩu phải có ít nhất {passWordMinCharacter} ký tự",
+    "validate_PasswordFormat":"Mật khẩu phải bao gồm chữ hoa, chữ thường, số, ký tự đặc biệt",
+    "validate_PleaseEnterCorrectEmail":"Vui lòng nhập đúng email",
+    "validate_PleaseEnterEmail":"Vui lòng nhập email",
+    "validate_PleaseEnterInfo":"Vui lòng nhập thông tin",
+    "validate_PleaseEnterCorrectPhone":"Vui lòng nhập đúng số điện thoại",
+    "validate_PleaseEnterPhone":"Vui lòng nhập số điện thoại",
+    "validate_PleaseEnterEmailOrPhone":"Vui lòng nhập email hoặc số điện thoại",
+    "validate_WrongFormat":"Sai định dạng",
+    "validate_PleaseSelectFile":"Vui lòng chọn tập tin trước khi tiếp tục",
+    "auth_subdescription":"Để trải nghiệm ứng dụng tốt hơn",
+    "auth_forgotPassword":"Quên mật khẩu",
+    "auth_forgotPasswordSubtitle":"Nhập email hoặc số điện thoại đã đăng ký tài khoản",
+    "auth_forgotPasswordEnterNewPassTitle":"Đổi mật khẩu",
+    "auth_forgotPasswordEnterNewPassDescription":"Vui lòng nhập mật khẩu mới cho tài khoản",
+    "verifyOtp_title":"Xác thực tài khoản qua {type}",
+    "verifyOtp_subtitle":"Xin vui lòng nhập mã OTP vừa được gửi tới {type}:",
+    "verifyOtp_resendSuccess":"Gửi lại mãi thành công.",
+    "community_group":"Nhóm cộng đồng",
+    "community_survey":"Khảo sát cộng đồng",
+    "community_charity":"Từ thiện cộng đồng",
+    "community_training":"Đào tạo cộng đồng",
+    "pdoneAction_registerPDone":"Đăng ký P-Done",
+    "pdoneAction_registerCollaboratorsAndLink":"Đăng ký JA",
+    "pdoneAction_registerVShop":"Đăng ký V-Shop",
+    "pDonePage_emptyDatalist_Tile":"Chưa có bài đăng nào",
+    "pDonePage_emptyDatalist_Subtile":"Đăng bài để trang của bạn phong phú hơn!",
+    "pDonePage_emptyDatalist_SubtileNoLogin":"Kết thêm bạn để thấy nhiều bài đăng hơn!",
+    "createPost_limitFlimMessage":"Video thước phim thời lượng cần nhỏ hơn 45s.",
+    "error_":"------------",
+    "error_PHONE_OR_PASSWORD_NOT_MATCH":"Tài khoản hoặc mật khẩu không đúng!",
+    "error_USER_NOT_FOUND":"Tài khoản không tồn tại!",
+    "helloWorld":"Hello World!",
+    "@helloWorld": {
+        "description":"The conventional newborn programmer greeting"
+    },
+    "missedCall": "Cuộc gọi nhỡ",
+    "outcomingCall": "Cuộc gọi đi",
+    "incomingCall": "Cuộc gọi đến",
+    "transactionHistory" : "Lịch sử giao dịch",
+    "transactionHistoryDetail" : "Chi tiết giao dịch"
+}
