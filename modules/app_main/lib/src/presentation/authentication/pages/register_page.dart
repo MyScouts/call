@@ -3,6 +3,7 @@ import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/authentication/authentication_constants.dart';
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -100,49 +101,7 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                 validator: ValidationHelper.phone,
                 onChange: (value) => onValidation(),
                 prefixIcon: IntrinsicHeight(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        child: ImageWidget(
-                          IconAppConstants.icPhone,
-                          width: 24,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8.0),
-                        child: VerticalDivider(
-                          color: Color(0xFFD9D9D9),
-                          thickness: 1,
-                          width: 1,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Row(
-                          children: [
-                            ImageWidget(
-                              IconAppConstants.icVnFlag,
-                              width: 22,
-                              fit: BoxFit.cover,
-                            ),
-                            const SizedBox(width: 4),
-                            const Text(
-                              "+84",
-                              style: TextStyle(
-                                color: Color(0xFF212121),
-                                height: 20 / 14,
-                                leadingDistribution:
-                                    TextLeadingDistribution.even,
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                  child: _buildVgFlag(),
                 ),
                 hintText: S.current.phone_placeholder.capitalize(),
                 hintStyle: const TextStyle(
@@ -294,5 +253,73 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
           password: _passwordCtrl.text,
           phoneCode: "84",
         );
+  }
+
+  _buildVgFlag() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(12),
+          child: ImageWidget(
+            IconAppConstants.icPhone,
+            width: 24,
+            fit: BoxFit.cover,
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 8.0),
+          child: VerticalDivider(
+            color: Color(0xFFD9D9D9),
+            thickness: 1,
+            width: 1,
+          ),
+        ),
+        SizedBox(
+          // width: 100,
+          height: double.infinity,
+          child: CountryCodePicker(
+            hideSearch: true,
+            onChanged: (value) {
+              debugPrint("$value");
+            },
+            initialSelection: '+84',
+            showCountryOnly: false,
+            showOnlyCountryWhenClosed: false,
+            alignLeft: false,
+            hideMainText: true,
+            dialogSize: Size.fromHeight(
+              MediaQuery.of(context).size.height * .7,
+            ),
+            barrierColor: Colors.transparent,
+            builder: (country) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Row(
+                  children: [
+                    ImageWidget(
+                      country != null
+                          ? "assets/${country.flagUri!}"
+                          : IconAppConstants.icVnFlag,
+                      width: 22,
+                      fit: BoxFit.cover,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      country?.dialCode ?? "",
+                      style: const TextStyle(
+                        color: Color(0xFF212121),
+                        height: 20 / 14,
+                        leadingDistribution: TextLeadingDistribution.even,
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
+        )
+      ],
+    );
   }
 }
