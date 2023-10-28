@@ -32,23 +32,23 @@ class ThemeDecoration {
       );
 
   BoxDecoration get card => BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8),
         color: Colors.white,
         border: Border.all(color: Colors.grey),
       );
 
   InputBorder get textInputBorder => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8),
         borderSide:
             BorderSide(color: _theme.themeColor.textInputBorderColor, width: 1),
       );
   InputBorder get textInputErrorBorder => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide(color: _theme.themeColor.error, width: 1),
       );
 
   InputBorder get textInputBorderSocial => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8),
         borderSide: const BorderSide(color: Colors.transparent, width: 0),
       );
 

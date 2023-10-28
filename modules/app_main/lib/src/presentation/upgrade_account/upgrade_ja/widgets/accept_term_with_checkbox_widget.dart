@@ -40,29 +40,26 @@ class _AcceptTermWithCheckboxWidgetState
           onTap: () {
             _acceptTerm.value = !_acceptTerm.value;
           },
-          child: Container(
-            padding: const EdgeInsets.only(top: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Checkbox(
-                  value: _acceptTerm.value,
-                  activeColor: AppColors.green11,
-                  onChanged: _onChangedCheckbox,
-                  visualDensity: const VisualDensity(horizontal: 0),
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 12),
-                    child: PolicyWidget(
-                      isAccepted: _acceptTerm.value,
-                    ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Checkbox(
+                value: _acceptTerm.value,
+                activeColor: AppColors.green11,
+                onChanged: _onChangedCheckbox,
+                visualDensity: const VisualDensity(horizontal: 0),
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: PolicyWidget(
+                    isAccepted: _acceptTerm.value,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },

@@ -3,12 +3,14 @@ class ImageConstants {
   static String defaultAuthBg = ImageApp.authBackground.path;
   static String bgCongratulation = ImageApp.bgCongratulation.path;
   static String warning = ImageApp.warning.path;
+  static String defaultAvatar = ImageApp.defaultAvatar.path;
 }
 
 enum ImageApp {
   defaultAppLogo('assets/images/vdone_logo.png'),
   authBackground('assets/images/bg_auth.png'),
   bgCongratulation('assets/images/bg_congratulation.png'),
+  defaultAvatar('assets/images/person.png'),
   warning('assets/images/warning.png');
 
   const ImageApp(this.path);

@@ -807,6 +807,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.8"
+  searchfield:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "53c461f41b70270bc8b46e2ef2a6f5d9c1a8aa4f"
+      url: "https://github.com/FightTech-VN/searchfield.git"
+    source: git
+    version: "0.7.1"
   shared_preferences:
     dependency: "direct main"
     description:

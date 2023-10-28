@@ -11,11 +11,10 @@ class ReadMorePolicy extends StatefulWidget {
 }
 
 class _ReadMorePolicyState extends State<ReadMorePolicy> {
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.fromLTRB(20, 10, 20, MediaQuery.of(context).padding.bottom + 10),
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
