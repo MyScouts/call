@@ -10,7 +10,7 @@ packages:
     source: hosted
     version: "64.0.0"
   adaptive_theme:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: adaptive_theme
       sha256: "38b433c0761d9f15017a15c9ff3e15e8905d3e9bad54a489c7939da6bdf782dd"
@@ -26,19 +26,12 @@ packages:
     source: hosted
     version: "6.2.0"
   app_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
-      path: "modules/app_core"
+      path: "../app_core"
       relative: true
     source: path
     version: "0.0.1"
-  app_main:
-    dependency: "direct main"
-    description:
-      path: "modules/app_main"
-      relative: true
-    source: path
-    version: "1.0.0+1"
   archive:
     dependency: transitive
     description:
@@ -64,7 +57,7 @@ packages:
     source: hosted
     version: "2.11.0"
   bloc:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: bloc
       sha256: "3820f15f502372d979121de1f6b97bfcf1630ebff8fe1d52fb2b0bfa49be5b49"
@@ -72,7 +65,7 @@ packages:
     source: hosted
     version: "8.1.2"
   bloc_concurrency:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: bloc_concurrency
       sha256: "44535c9f429cd7e91d548cf89fde1c23a8b4b3637decdb1865bb583091a00d4e"
@@ -88,7 +81,7 @@ packages:
     source: hosted
     version: "2.1.1"
   bot_toast:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: bot_toast
       sha256: "6b93030a99a98335b8827ecd83021e92e885ffc61d261d3825ffdecdd17f3bdf"
@@ -216,7 +209,7 @@ packages:
     source: hosted
     version: "3.1.1"
   country_code_picker:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: country_code_picker
       sha256: "92818885f0e47486539f80463b66f649970506a91dd3c0731ca3ba5308324a4d"
@@ -232,7 +225,7 @@ packages:
     source: hosted
     version: "3.0.3"
   cupertino_icons:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: cupertino_icons
       sha256: d57953e10f9f8327ce64a508a355f0b1ec902193f66288e8cb5070e7c47eeb2d
@@ -248,14 +241,14 @@ packages:
     source: hosted
     version: "2.3.3"
   design_system:
-    dependency: transitive
+    dependency: "direct main"
     description:
-      path: "modules/design_system"
+      path: "../design_system"
       relative: true
     source: path
     version: "1.0.0+1"
   dio:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: dio
       sha256: "417e2a6f9d83ab396ec38ff4ea5da6c254da71e4db765ad737a42af6930140b7"
@@ -277,13 +270,6 @@ packages:
       sha256: e76d2c34491c29e6c57b388b5bcb566186901f7b4b7732244d3c7eadf7654565
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.1"
-  environments:
-    dependency: "direct main"
-    description:
-      path: "modules/app_distribution/environments"
-      relative: true
-    source: path
     version: "0.0.1"
   equatable:
     dependency: transitive
@@ -347,7 +333,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_bloc:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_bloc
       sha256: e74efb89ee6945bcbce74a5b3a5a3376b088e5f21f55c263fc38cbdc6237faae
@@ -410,7 +396,7 @@ packages:
     source: hosted
     version: "3.2.0"
   get_it:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: get_it
       sha256: f79870884de16d689cf9a7d15eedf31ed61d750e813c538a6efb92660fea83c3
@@ -466,7 +452,7 @@ packages:
     source: hosted
     version: "4.0.2"
   imagewidget:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: imagewidget
       sha256: "3631a080d523887cce2f31d52d8c7cc93f0ea11501274d50012905bd22faa5e3"
@@ -474,7 +460,7 @@ packages:
     source: hosted
     version: "1.1.0"
   injectable:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: injectable
       sha256: cd3c422e13270c81f64ab73c80406b2b2ed563fe59d0ff2093eb7eee63d0bbeb
@@ -514,7 +500,7 @@ packages:
     source: hosted
     version: "0.6.7"
   json_annotation:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: json_annotation
       sha256: b10a7b2ff83d83c777edba3c6a0f97045ddadd56c944e1a23a3fdf43a1bf4467
@@ -538,9 +524,9 @@ packages:
     source: hosted
     version: "2.1.1"
   localization:
-    dependency: transitive
+    dependency: "direct main"
     description:
-      path: "modules/localization"
+      path: "../localization"
       relative: true
     source: path
     version: "0.0.1"
@@ -593,9 +579,9 @@ packages:
     source: hosted
     version: "1.0.4"
   mobilehub_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
-      path: "modules/plugins/mobilehub/packages/mobilehub_core"
+      path: "../plugins/mobilehub/packages/mobilehub_core"
       relative: true
     source: path
     version: "0.0.2"
@@ -720,7 +706,7 @@ packages:
     source: hosted
     version: "1.5.1"
   pretty_dio_logger:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: pretty_dio_logger
       sha256: "00b80053063935cf9a6190da344c5373b9d0e92da4c944c878ff2fbef0ef6dc2"
@@ -768,7 +754,7 @@ packages:
     source: hosted
     version: "4.1.0"
   reorderables:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: reorderables
       sha256: "004a886e4878df1ee27321831c838bc1c976311f4ca6a74ce7d561e506540a77"
@@ -776,7 +762,7 @@ packages:
     source: hosted
     version: "0.6.0"
   retrofit:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: retrofit
       sha256: "04ed77c82cadb655bb9357e8d0cb9da72ff704749a2d0cfe6540dd1f1f7ca4b9"
@@ -792,7 +778,7 @@ packages:
     source: hosted
     version: "8.0.2"
   rxdart:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: rxdart
       sha256: "0c7c0cedd93788d996e33041ffecda924cc54389199cde4e6a34b440f50044cb"
@@ -808,7 +794,7 @@ packages:
     source: hosted
     version: "0.3.8"
   shared_preferences:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: shared_preferences
       sha256: "81429e4481e1ccfb51ede496e916348668fd0921627779233bd24cc3ff6abd02"
@@ -909,7 +895,7 @@ packages:
     source: hosted
     version: "1.10.0"
   spannable_grid:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: spannable_grid
       sha256: "6a13f93cae27365c2ad017da763849941dfdbf14ef20f2ccf04affb116368e68"
@@ -981,7 +967,7 @@ packages:
     source: hosted
     version: "1.0.1"
   top_snackbar_flutter:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: top_snackbar_flutter
       sha256: "22d14664a13db6ac714934c3382bd8d4daa57fb888a672f922df71981c5a5cb2"
@@ -1005,9 +991,9 @@ packages:
     source: hosted
     version: "1.3.2"
   ui:
-    dependency: transitive
+    dependency: "direct main"
     description:
-      path: "modules/ui"
+      path: "../ui"
       relative: true
     source: path
     version: "0.0.2"

@@ -87,7 +87,7 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> with TimerMixin {
                       text: S.current.confirmation_code_has_been_sent,
                       children: [
                         TextSpan(
-                          text: " (+${widget.phoneCode}) ${widget.phoneNumber}",
+                          text: " (${widget.phoneCode}) ${widget.phoneNumber}",
                           style: context.text.titleSmall!.copyWith(
                             fontWeight: FontWeight.w800,
                           ),
@@ -161,7 +161,7 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> with TimerMixin {
           CompletedPhoneRegisterPayload(
             phoneNumber: widget.phoneNumber,
             otp: _otp,
-            phoneCode: widget.phoneCode,
+            phoneCode: widget.phoneCode.replaceAll("+", ""),
           ),
         );
   }
@@ -171,7 +171,7 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> with TimerMixin {
     context.read<UserCubit>().resendOTP(
           AuthenticationPhonePayload(
             password: widget.password,
-            phoneCode: widget.phoneCode,
+            phoneCode: widget.phoneCode.replaceAll("+", ""),
             phoneNumber: widget.phoneNumber,
           ),
         );

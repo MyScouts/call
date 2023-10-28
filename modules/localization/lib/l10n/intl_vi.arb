@@ -7,12 +7,19 @@
     "validation_required": "vui lòng nhập {field}.",
     "validation_invalid": "{field} không hợp lệ.",
     "validation_password_match": "Mật khẩu xác nhận không khớp",
+    "message_password_invalid": "Mật khẩu không hợp lệ.",
+    "message_user_not_found": "Tài khoản không tồn tại.",
+    "message_user_exits": "Người dùng đã tồn tại",
+    "message_register_fail":"Đăng ký không thành công.",
+    "message_otp_not_match":"Mã OTP không hợp lệ.",
+    "messages_resend_otp_fail": "Gửi lại OTP không thành công.",
 
     "lbl_Phone": "số điện thoại",
     "lbl_password": "Mật khẩu",
     "lbl_password_confirm": "Nhập lại mật khẩu",
     "lbl_continue": "Tiếp tục",
-
+    
+    "search":"Tìm kiếm",
     "phone_placeholder": "nhập số điện thoại",
     "minium_8_character": "Tối thiểu 8 ký tự",
     "least_one_uppercase_character": "Có ít nhất một ký tự viết hoa",

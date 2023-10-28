@@ -1,5 +1,8 @@
+import 'package:app_main/src/presentation/dashboard/dashboard/widget/statusbar_widget.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_contants.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:imagewidget/imagewidget.dart';
 import 'package:reorderables/reorderables.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -21,47 +24,47 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
     list1 = [
       AppItem(
-        imageUrl: "assets/images/facebook.jpg",
+        imageUrl: ImageConstants.bgFacebook,
         title: "Facebook",
       ),
       AppItem(
-        imageUrl: "assets/images/instagram.webp",
+        imageUrl: ImageConstants.bgInstagram,
         title: "Instagram",
       ),
       AppItem(
-        imageUrl: "assets/images/locket.webp",
+        imageUrl: ImageConstants.bgLocket,
         title: "Locket",
       ),
       AppItem(
-        imageUrl: "assets/images/tiktok.webp",
+        imageUrl: ImageConstants.bgTiktok,
         title: "Tiktok",
       ),
       AppItem(
-        imageUrl: "assets/images/facebook.jpg",
+        imageUrl: ImageConstants.bgFacebook,
         title: "Facebook",
       ),
       AppItem(
-        imageUrl: "assets/images/instagram.webp",
+        imageUrl: ImageConstants.bgInstagram,
         title: "Instagram",
       ),
       AppItem(
-        imageUrl: "assets/images/locket.webp",
+        imageUrl: ImageConstants.bgLocket,
         title: "Locket",
       ),
       AppItem(
-        imageUrl: "assets/images/tiktok.webp",
+        imageUrl: ImageConstants.bgTiktok,
         title: "Tiktok",
       ),
     ];
     list2 = [
       AppItem(
-        imageUrl: "assets/images/locket.webp",
+        imageUrl: ImageConstants.bgLocket,
         title: "Locket",
       ),
     ];
     list3 = [
       AppItem(
-        imageUrl: "assets/images/tiktok.webp",
+        imageUrl: ImageConstants.bgTiktok,
         title: "Tiktok",
       ),
     ];
@@ -85,26 +88,44 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          PageView(
-            children: [
-              PageScreen(
-                items: list1,
-                maxWidth: maxWidth,
-              ),
-              PageScreen(
-                items: list2,
-                maxWidth: maxWidth,
-              ),
-              PageScreen(
-                items: list3,
-                maxWidth: maxWidth,
-              ),
-            ],
-            onPageChanged: (int index) {
-              setState(() {
-                _currentPage = index;
-              });
-            },
+          Positioned.fill(
+            child: ImageWidget(
+              ImageConstants.defaultBgDashboard,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height,
+            ),
+          ),
+          Positioned.fill(
+            top: MediaQuery.of(context).padding.top,
+            child: Column(
+              children: [
+                StatusBarWidget(),
+                Expanded(
+                  child: PageView(
+                    children: [
+                      PageScreen(
+                        items: list1,
+                        maxWidth: maxWidth,
+                      ),
+                      PageScreen(
+                        items: list2,
+                        maxWidth: maxWidth,
+                      ),
+                      PageScreen(
+                        items: list3,
+                        maxWidth: maxWidth,
+                      ),
+                    ],
+                    onPageChanged: (int index) {
+                      setState(() {
+                        _currentPage = index;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
           Positioned(
             bottom: 20.0,
@@ -143,42 +164,19 @@ class _PageScreenState extends State<PageScreen> {
     final space = (widget.maxWidth - 68 * 4 - 60) / 3;
     _tiles.add(GridItem(
       item: AppItem(
-        imageUrl: "assets/images/facebook.jpg",
+        imageUrl: ImageConstants.bgFacebook,
         title: "Facebook",
       ),
       size: 128 + space,
     ));
     _tiles.add(GridItem(
       item: AppItem(
-        imageUrl: "assets/images/tiktok.webp",
+        imageUrl: ImageConstants.bgTiktok,
         title: "Tiktok",
       ),
       size: 128 + space,
     ));
   }
-
-  // Widget feedback(List<DraggableGridItem> list, int index) {
-  //   final maxWidth = MediaQuery.of(context).size.width;
-  //   return Container(
-  //     height: maxWidth/4,
-  //     width: maxWidth/4,
-  //     color: Colors.transparent,
-  //     child: list[index].child,
-  //   );
-  // }
-
-  // PlaceHolderWidget placeHolder(List<DraggableGridItem> list, int index) {
-  //   return PlaceHolderWidget(
-  //     child: Container(
-  //       color: Colors.transparent,
-  //     ),
-  //   );
-  // }
-
-  // void onDragAccept(
-  //     List<DraggableGridItem> list, int beforeIndex, int afterIndex) {
-  //   log('onDragAccept: $beforeIndex -> $afterIndex');
-  // }
 
   void _onReorder(int oldIndex, int newIndex) {
     setState(() {
@@ -190,10 +188,10 @@ class _PageScreenState extends State<PageScreen> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final space = (size.width - 68 * 4 - 60) / 3;
-
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 60),
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
         width: size.width,
         height: size.height,
         child: ReorderableWrap(
@@ -246,15 +244,13 @@ class GridItem extends StatelessWidget {
                 child: Container(
                   width: size,
                   height: size,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(image: AssetImage(item.imageUrl)),
+                  child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
+                    child: ImageWidget(item.imageUrl),
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 8,
-              ),
+              const SizedBox(height: 8),
               Text(
                 item.title,
                 style: const TextStyle(

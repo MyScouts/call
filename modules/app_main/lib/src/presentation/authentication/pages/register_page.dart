@@ -26,6 +26,7 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
   final _phoneCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
   final _rePasswordCtrl = TextEditingController();
+  String _phoneCode = "+84";
 
   @override
   void initState() {
@@ -69,7 +70,7 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
         if (state is PhoneRegisterSuccess) {
           hideLoading();
           context.startVerifyOtp(
-            phoneCode: "84",
+            phoneCode: _phoneCode,
             phoneNumber: _phoneCtrl.text.trim(),
             password: _passwordCtrl.text,
           );
@@ -207,7 +208,7 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
               ),
               const SizedBox(height: 24),
               PrimaryButton(
-                title: "Đăng ký",
+                title: S.current.register.capitalize(),
                 onTap: _onRegister,
                 color: Colors.white,
                 disabled: !_formValid || !_passwordValid,
@@ -251,7 +252,7 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
     context.read<UserCubit>().phoneRegister(
           phone: _phoneCtrl.text.trim(),
           password: _passwordCtrl.text,
-          phoneCode: "84",
+          phoneCode: _phoneCode.replaceAll("+", ""),
         );
   }
 
@@ -281,9 +282,13 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
           child: CountryCodePicker(
             hideSearch: true,
             onChanged: (value) {
-              debugPrint("$value");
+              if (value.dialCode != null) {
+                _phoneCode = value.dialCode!;
+                setState(() {});
+                debugPrint("$value");
+              }
             },
-            initialSelection: '+84',
+            initialSelection: _phoneCode,
             showCountryOnly: false,
             showOnlyCountryWhenClosed: false,
             alignLeft: false,

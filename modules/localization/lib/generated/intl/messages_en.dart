@@ -47,8 +47,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "least_one_uppercase_character": MessageLookupByLibrary.simpleMessage(
             "Contains at least one uppercase character"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
+        "message_otp_not_match":
+            MessageLookupByLibrary.simpleMessage("OTP invalid."),
+        "message_password_invalid":
+            MessageLookupByLibrary.simpleMessage("password invalid."),
+        "message_register_fail":
+            MessageLookupByLibrary.simpleMessage("register fail."),
+        "message_user_exits":
+            MessageLookupByLibrary.simpleMessage("User exits"),
+        "message_user_not_found":
+            MessageLookupByLibrary.simpleMessage("User not found."),
         "messages_login_fail":
             MessageLookupByLibrary.simpleMessage("Login failed."),
+        "messages_resend_otp_fail":
+            MessageLookupByLibrary.simpleMessage("resend OTP fail."),
         "messages_resend_otp_success":
             MessageLookupByLibrary.simpleMessage("Resend OTP success."),
         "messages_server_internal_error":
@@ -65,6 +77,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resend": MessageLookupByLibrary.simpleMessage("Resend"),
         "resend_the_code_later":
             MessageLookupByLibrary.simpleMessage("Resend the code later?"),
+        "search": MessageLookupByLibrary.simpleMessage("search"),
         "terms_of_service_and_policies": MessageLookupByLibrary.simpleMessage(
             "terms_of_service_and_policies"),
         "validation_invalid": m0,

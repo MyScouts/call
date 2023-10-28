@@ -80,6 +80,66 @@ class S {
     );
   }
 
+  /// `password invalid.`
+  String get message_password_invalid {
+    return Intl.message(
+      'password invalid.',
+      name: 'message_password_invalid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User not found.`
+  String get message_user_not_found {
+    return Intl.message(
+      'User not found.',
+      name: 'message_user_not_found',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User exits`
+  String get message_user_exits {
+    return Intl.message(
+      'User exits',
+      name: 'message_user_exits',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `register fail.`
+  String get message_register_fail {
+    return Intl.message(
+      'register fail.',
+      name: 'message_register_fail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OTP invalid.`
+  String get message_otp_not_match {
+    return Intl.message(
+      'OTP invalid.',
+      name: 'message_otp_not_match',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `resend OTP fail.`
+  String get messages_resend_otp_fail {
+    return Intl.message(
+      'resend OTP fail.',
+      name: 'messages_resend_otp_fail',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `{field} is required.`
   String validation_required(Object field) {
     return Intl.message(
@@ -145,6 +205,16 @@ class S {
     return Intl.message(
       'Continue',
       name: 'lbl_continue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `search`
+  String get search {
+    return Intl.message(
+      'search',
+      name: 'search',
       desc: '',
       args: [],
     );

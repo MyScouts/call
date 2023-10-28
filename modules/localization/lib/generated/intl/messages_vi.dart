@@ -47,8 +47,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "least_one_uppercase_character": MessageLookupByLibrary.simpleMessage(
             "Có ít nhất một ký tự viết hoa"),
         "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
+        "message_otp_not_match":
+            MessageLookupByLibrary.simpleMessage("Mã OTP không hợp lệ."),
+        "message_password_invalid":
+            MessageLookupByLibrary.simpleMessage("Mật khẩu không hợp lệ."),
+        "message_register_fail":
+            MessageLookupByLibrary.simpleMessage("Đăng ký không thành công."),
+        "message_user_exits":
+            MessageLookupByLibrary.simpleMessage("Người dùng đã tồn tại"),
+        "message_user_not_found":
+            MessageLookupByLibrary.simpleMessage("Tài khoản không tồn tại."),
         "messages_login_fail":
             MessageLookupByLibrary.simpleMessage("Đăng nhập không thành công."),
+        "messages_resend_otp_fail": MessageLookupByLibrary.simpleMessage(
+            "Gửi lại OTP không thành công."),
         "messages_resend_otp_success":
             MessageLookupByLibrary.simpleMessage("Gửi lại OTP thành công."),
         "messages_server_internal_error":
@@ -65,6 +77,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resend": MessageLookupByLibrary.simpleMessage("Gửi lại"),
         "resend_the_code_later":
             MessageLookupByLibrary.simpleMessage("Gửi lại mã sau?"),
+        "search": MessageLookupByLibrary.simpleMessage("Tìm kiếm"),
         "terms_of_service_and_policies": MessageLookupByLibrary.simpleMessage(
             "Điều khoản dịch vụ và Chính sách"),
         "validation_invalid": m0,

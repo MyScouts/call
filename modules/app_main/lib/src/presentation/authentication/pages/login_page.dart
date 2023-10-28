@@ -20,6 +20,7 @@ class LoginWidget extends StatefulWidget {
 
 class _LoginWidgetState extends State<LoginWidget> with ValidationMixin {
   bool _buttonDisabled = true;
+  String _phoneCode = "+84";
   final _phoneCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
 
@@ -170,7 +171,7 @@ class _LoginWidgetState extends State<LoginWidget> with ValidationMixin {
             AuthenticationPhonePayload(
               phoneNumber: _phoneCtrl.text.trim(),
               password: _passwordCtrl.text,
-              phoneCode: "84",
+              phoneCode: _phoneCode.replaceAll("+", ""),
             ),
           );
       return;
@@ -203,9 +204,13 @@ class _LoginWidgetState extends State<LoginWidget> with ValidationMixin {
           child: CountryCodePicker(
             hideSearch: true,
             onChanged: (value) {
-              debugPrint("$value");
+              if (value.dialCode != null) {
+                _phoneCode = value.dialCode!;
+                debugPrint("$value");
+                setState(() {});
+              }
             },
-            initialSelection: '+84',
+            initialSelection: _phoneCode,
             showCountryOnly: false,
             showOnlyCountryWhenClosed: false,
             alignLeft: false,

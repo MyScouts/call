@@ -5,9 +5,13 @@ class IconAppConstants {
   static String icErrorCircle = IconApp.icErrorCircle.path;
   static String icVnFlag = IconApp.iconVnFlag.path;
   static String icArrowLeft = IconApp.icArrowLeft.path;
+  static String icHamburger = IconApp.icHamburger.path;
+  static String icSearch = IconApp.icSearch.path;
 }
 
 enum IconApp {
+  icHamburger('assets/icons/ic_hamburger.svg'),
+  icSearch('assets/icons/ic_search.svg'),
   iconPhone('assets/icons/ic_phone.png'),
   iconUnCheckCircle('assets/icons/ic_uncheck-circle.svg'),
   icCheckCircle('assets/icons/ic_check_circle.png'),

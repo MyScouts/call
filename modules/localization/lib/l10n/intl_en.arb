@@ -3,6 +3,12 @@
     "messages_server_internal_error": "server internal error",
     "messages_login_fail": "Login failed.",
     "messages_resend_otp_success": "Resend OTP success.",
+    "message_password_invalid":"password invalid.",
+    "message_user_not_found": "User not found.",
+    "message_user_exits": "User exits",
+    "message_register_fail":"register fail.",
+    "message_otp_not_match": "OTP invalid.",
+    "messages_resend_otp_fail": "resend OTP fail.",
 
     "validation_required": "{field} is required.",
     "validation_invalid": "{field} invalid.",
@@ -13,6 +19,7 @@
     "lbl_password_confirm": "Password Confirm",
     "lbl_continue": "Continue",
 
+    "search": "search",
     "phone_placeholder": "enter phone number",
     "minium_8_character": "Minimum of 8 characters",
     "least_one_uppercase_character": "Contains at least one uppercase character",

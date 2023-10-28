@@ -35,19 +35,21 @@ class UserCubit extends Cubit<UserState> {
     } on DioException catch (error) {
       final data = error.response!.data;
       debugPrint("phoneRegister: $error");
-      String err = "international_error";
-      switch (data['statusCode']) {
-        case 406:
-          err = "Tài khoản đã tồn tại";
+      String err = S.current.messages_server_internal_error.capitalize();
+      switch (data['code']) {
+        case "USER_EXISTED":
+          err = S.current.message_user_exits.capitalize();
           break;
         default:
-          err = "Đăng ký không thành công";
+          err = S.current.message_register_fail.capitalize();
           break;
       }
       emit(PhoneRegisterFail(message: err));
     } catch (error) {
       debugPrint("phoneRegister: $error");
-      emit(PhoneRegisterFail(message: "international_error"));
+      emit(PhoneRegisterFail(
+        message: S.current.messages_server_internal_error.capitalize(),
+      ));
     }
   }
 
@@ -60,19 +62,22 @@ class UserCubit extends Cubit<UserState> {
     } on DioException catch (error) {
       final data = error.response!.data;
       debugPrint("phoneRegister: $error");
-      String err = "international_error";
-      switch (data['statusCode']) {
-        case 406:
-          err = "Mã OTP không hợp lệ";
+      String err = S.current.messages_server_internal_error.capitalize();
+      switch (data['code']) {
+        case "OTP_NOT_MATCH":
+          err = S.current.message_otp_not_match;
+        case "USER_NOT_FOUND":
           break;
         default:
-          err = "Xác minh không thành công!";
+          err = S.current.message_otp_not_match;
           break;
       }
       emit(PhoneCompletedRegisterFail(message: err));
     } catch (error) {
       debugPrint("phoneRegister: $error");
-      emit(PhoneCompletedRegisterFail(message: "international_error"));
+      emit(PhoneCompletedRegisterFail(
+        message: S.current.messages_server_internal_error.capitalize(),
+      ));
     }
   }
 
@@ -85,11 +90,13 @@ class UserCubit extends Cubit<UserState> {
     } on DioException catch (error) {
       final data = error.response!.data;
       debugPrint("phoneRegister: $error");
-      String err = "international_error";
-      switch (data['statusCode']) {
-        case 406:
-          err = S.current.messages_login_fail.capitalize();
+      String err = S.current.messages_server_internal_error.capitalize();
+      switch (data['code']) {
+        case "INVALID_PASSWORD":
+          err = S.current.message_password_invalid.capitalize();
           break;
+        case "USER_NOT_FOUND":
+          err = S.current.message_user_not_found.capitalize();
         default:
           err = S.current.messages_login_fail.capitalize();
           break;
@@ -112,17 +119,8 @@ class UserCubit extends Cubit<UserState> {
       await _authenticationUsecase.registerWithPhone(payload);
       emit(ResendOTPSuccess());
     } on DioException catch (error) {
-      final data = error.response!.data;
       debugPrint("phoneRegister: $error");
-      String err = "international_error";
-      switch (data['statusCode']) {
-        case 406:
-          err = "Mã OTP không hợp lệ";
-          break;
-        default:
-          err = "Xác minh không thành công!";
-          break;
-      }
+      String err = S.current.messages_resend_otp_fail.capitalize();
       emit(ResendOTPFail(message: err));
     } catch (error) {
       debugPrint("phoneRegister: $error");
