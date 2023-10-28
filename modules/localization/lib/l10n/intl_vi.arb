@@ -30,5 +30,8 @@
     "resend_the_code_later": "Gửi lại mã sau?",
     "resend": "Gửi lại",
     "congratulations_on_your_successful_registration": "Chúc mừng bạn đã đăng ký thành công",
-    "wish_you_have_great_experiences_on_our_products": "Chúc bạn có những trải nghiệm tuyệt vời trên sản phẩm của chúng tôi"
+    "wish_you_have_great_experiences_on_our_products": "Chúc bạn có những trải nghiệm tuyệt vời trên sản phẩm của chúng tôi",
+    "validate_PleaseEnterInfo": "Vui lòng nhập thông tin",
+    "pdoneAction_registerPDone": "Đăng ký P-Done",
+    "pdoneAction_registerCollaboratorsAndLink": "Đăng ký JA"
 }

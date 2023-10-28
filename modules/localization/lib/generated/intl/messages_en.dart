@@ -57,6 +57,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Minimum of 8 characters"),
         "note_about_passwords":
             MessageLookupByLibrary.simpleMessage("Note about passwords"),
+        "pdoneAction_registerCollaboratorsAndLink":
+            MessageLookupByLibrary.simpleMessage("Register JA"),
+        "pdoneAction_registerPDone":
+            MessageLookupByLibrary.simpleMessage("Register P-Done"),
         "phone_placeholder":
             MessageLookupByLibrary.simpleMessage("enter phone number"),
         "register": MessageLookupByLibrary.simpleMessage("Register"),
@@ -67,6 +71,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Resend the code later?"),
         "terms_of_service_and_policies": MessageLookupByLibrary.simpleMessage(
             "terms_of_service_and_policies"),
+        "validate_PleaseEnterInfo":
+            MessageLookupByLibrary.simpleMessage("Please enter info"),
         "validation_invalid": m0,
         "validation_password_match":
             MessageLookupByLibrary.simpleMessage("Password confirm not match"),

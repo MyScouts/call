@@ -329,6 +329,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Please enter info`
+  String get validate_PleaseEnterInfo {
+    return Intl.message(
+      'Please enter info',
+      name: 'validate_PleaseEnterInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register P-Done`
+  String get pdoneAction_registerPDone {
+    return Intl.message(
+      'Register P-Done',
+      name: 'pdoneAction_registerPDone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Register JA`
+  String get pdoneAction_registerCollaboratorsAndLink {
+    return Intl.message(
+      'Register JA',
+      name: 'pdoneAction_registerCollaboratorsAndLink',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

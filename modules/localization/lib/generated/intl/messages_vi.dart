@@ -57,6 +57,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Tối thiểu 8 ký tự"),
         "note_about_passwords":
             MessageLookupByLibrary.simpleMessage("Lưu ý về mật khẩu"),
+        "pdoneAction_registerCollaboratorsAndLink":
+            MessageLookupByLibrary.simpleMessage("Đăng ký JA"),
+        "pdoneAction_registerPDone":
+            MessageLookupByLibrary.simpleMessage("Đăng ký P-Done"),
         "phone_placeholder":
             MessageLookupByLibrary.simpleMessage("nhập số điện thoại"),
         "register": MessageLookupByLibrary.simpleMessage("Đăng ký"),
@@ -67,6 +71,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Gửi lại mã sau?"),
         "terms_of_service_and_policies": MessageLookupByLibrary.simpleMessage(
             "Điều khoản dịch vụ và Chính sách"),
+        "validate_PleaseEnterInfo":
+            MessageLookupByLibrary.simpleMessage("Vui lòng nhập thông tin"),
         "validation_invalid": m0,
         "validation_password_match": MessageLookupByLibrary.simpleMessage(
             "Mật khẩu xác nhận không khớp"),
