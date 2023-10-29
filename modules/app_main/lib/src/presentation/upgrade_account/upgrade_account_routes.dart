@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
@@ -31,6 +32,31 @@ class UpgradeAccountRoutes extends RouteModule {
               ),
             ],
             child: UpgradeJAScreen(team: args['team']),
+          );
+        },
+        UpgradePDoneScreen.routeName: (context) {
+          // final args = settings.arguments as Map;
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<UpgradeAccountBloc>(
+                create: (context) => injector.get(),
+              ),
+              BlocProvider<GetListGroupsBloc>(
+                create: (context) => injector.get()..add(GetListDataEvent()),
+              ),
+              BlocProvider<GetListTeamsBloc>(
+                create: (context) => injector.get(),
+              ),
+              BlocProvider<GetListBanksBloc>(
+                create: (context) => injector.get(),
+              ),
+              BlocProvider<GetGroupDetailByBossIDBloc>(
+                create: (context) => injector.get(),
+              ),
+            ],
+            child: const UpgradePDoneScreen(
+              currentStep: 0,
+            ),
           );
         },
       };

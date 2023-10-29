@@ -233,4 +233,350 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
 
     return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
+
+  @override
+  Future<ApiResponse<RegisterPDoneResponse>> checkProtector(
+      {required payload}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = payload;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<RegisterPDoneResponse>>(Options(
+          method: 'POST',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          'api/account-p-done/profile/check-protector',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<RegisterPDoneResponse>.fromJson(
+      _result.data!,
+          (json) => RegisterPDoneResponse.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<dynamic>> checkProtectorVerifyOTP(
+      {required payload}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = payload;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<dynamic>>(Options(
+          method: 'POST',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          'api/account-p-done/profile/check-protector/verify',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<dynamic>.fromJson(
+      _result.data!,
+          (json) => json as dynamic,
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<KycStatus>> currentStep() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<KycStatus>>(Options(
+          method: 'GET',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          'api/account-p-done/current-step',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<KycStatus>.fromJson(
+      _result.data!,
+          (json) => KycStatus.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<UpgradeAccount>> getListData() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<UpgradeAccount>>(Options(
+          method: 'GET',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          'api/master',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<UpgradeAccount>.fromJson(
+      _result.data!,
+          (json) => UpgradeAccount.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<RegisterPDoneResponse>> registerPDoneAccount(
+      {required payload}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = payload;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<RegisterPDoneResponse>>(Options(
+          method: 'POST',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          'api/account-p-done/profile/register-p-done',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<RegisterPDoneResponse>.fromJson(
+      _result.data!,
+          (json) => RegisterPDoneResponse.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<dynamic>> registerPDoneVerifyPhone(
+      {required payload}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = payload;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<dynamic>>(Options(
+          method: 'POST',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          'api/account-p-done/profile/phone/confirm',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<dynamic>.fromJson(
+      _result.data!,
+          (json) => json as dynamic,
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<dynamic>> registerPDoneVerifyEmail(
+      {required payload}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = payload;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<dynamic>>(Options(
+          method: 'POST',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          'api/account-p-done/profile/email/confirm',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<dynamic>.fromJson(
+      _result.data!,
+          (json) => json as dynamic,
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<UpgradeAccountResponse>> registerVShop() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<UpgradeAccountResponse>>(Options(
+          method: 'POST',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          'api/register-community/register-v-shop',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<UpgradeAccountResponse>.fromJson(
+      _result.data!,
+          (json) => UpgradeAccountResponse.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<bool>> registerVShopVerifyOtp({required payload}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = payload;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<bool>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+      _dio.options,
+      'api/register-community/register-v-shop/verify-otp',
+      queryParameters: queryParameters,
+      data: _data,
+    )
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<bool>.fromJson(
+      _result.data!,
+          (json) => json as bool,
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<RegisterPDoneResponse>> resendOtpEmail(
+      {required payload}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = payload;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<RegisterPDoneResponse>>(Options(
+          method: 'POST',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          'api/account-p-done/profile/email/resend',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<RegisterPDoneResponse>.fromJson(
+      _result.data!,
+          (json) => RegisterPDoneResponse.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<RegisterPDoneResponse>> resendOtpPhone(
+      {required payload}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = payload;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<RegisterPDoneResponse>>(Options(
+          method: 'POST',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          'api/account-p-done/profile/phone/resend',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<RegisterPDoneResponse>.fromJson(
+      _result.data!,
+          (json) => RegisterPDoneResponse.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+
+  @override
+  Future<ApiResponse<dynamic>> updateKyc({required payload}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = payload;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<dynamic>>(Options(
+          method: 'POST',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          'api/account-p-done/add-kyc',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<dynamic>.fromJson(
+      _result.data!,
+          (json) => json as dynamic,
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<dynamic>> updatePDoneProfile({required payload}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = payload;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<dynamic>>(Options(
+          method: 'PUT',
+          headers: _headers,
+          extra: _extra,
+        )
+            .compose(
+          _dio.options,
+          'api/account-p-done/profile',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ApiResponse<dynamic>.fromJson(
+      _result.data!,
+          (json) => json as dynamic,
+    );
+    return value;
+  }
 }

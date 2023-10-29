@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ui/ui.dart';
 
 import 'upgrade_ja/upgrade_ja_screen.dart';
+import 'upgrade_pdone/upgrade_pdone_screen.dart';
 
 extension UpgradeAccountCoordinator on BuildContext {
   // Future<T?> startUpgradePDoneAccount<T>(int currentStep) {
@@ -151,6 +152,12 @@ extension UpgradeAccountCoordinator on BuildContext {
     return Navigator.of(this).pushNamed(
       UpgradeJAScreen.routeName,
       arguments: {'team': team},
+    );
+  }
+
+  Future<T?> startUpgradePDone<T>() {
+    return Navigator.of(this).pushNamed(
+      UpgradePDoneScreen.routeName,
     );
   }
 }

@@ -70,6 +70,43 @@ class S {
     );
   }
 
+  /// `Accept`
+  String get cta_Accept {
+    return Intl.message(
+      'Accept',
+      name: 'cta_Accept',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cta_Cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cta_Cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{date} | {time} `
+  String formatDateDDmmYYYYhhMM(DateTime date, DateTime time) {
+    final DateFormat dateDateFormat = DateFormat.yMd(Intl.getCurrentLocale());
+    final String dateString = dateDateFormat.format(date);
+
+    final DateFormat timeDateFormat =
+        DateFormat('hh:mm a', Intl.getCurrentLocale());
+    final String timeString = timeDateFormat.format(time);
+
+    return Intl.message(
+      '$dateString | $timeString ',
+      name: 'formatDateDDmmYYYYhhMM',
+      desc: 'format datetime',
+      args: [dateString, timeString],
+    );
+  }
+
   /// `Resend OTP success.`
   String get messages_resend_otp_success {
     return Intl.message(
@@ -373,8 +410,10 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
 
   @override
   bool isSupported(Locale locale) => _isSupported(locale);
+
   @override
   Future<S> load(Locale locale) => S.load(locale);
+
   @override
   bool shouldReload(AppLocalizationDelegate old) => false;
 

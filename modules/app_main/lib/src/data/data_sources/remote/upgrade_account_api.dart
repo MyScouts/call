@@ -5,9 +5,17 @@ import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../domain/entities/bank.dart';
+import '../../../domain/entities/update_account/check_protector_payload.dart';
+import '../../../domain/entities/update_account/kyc_status.dart';
+import '../../../domain/entities/update_account/register_pdone_with_phone_payload.dart';
+import '../../../domain/entities/update_account/update_pdone_kyc_payload.dart';
+import '../../../domain/entities/update_account/update_profile_payload.dart';
+import '../../../domain/entities/update_account/upgrade_account.dart';
+import '../../../domain/entities/update_account/verify_phone_register_pdone_payload.dart';
 import '../../models/payloads/upgrade_account/upgrade_ja/upgrade_ja_payload.dart';
 import '../../models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
 import '../../models/responses/api_response.dart';
+import '../../models/responses/register_pdone_response.dart';
 import '../../models/responses/upgrade_account_response.dart';
 
 part 'upgrade_account_api.g.dart';
@@ -53,46 +61,46 @@ abstract class UpgradeAccountApi {
   @factoryMethod
   factory UpgradeAccountApi(Dio dio) = _UpgradeAccountApi;
 
-  // @GET(UpgradeAccountApiConstants.currentStep)
-  // Future<ApiResponse<KycStatus>> currentStep();
-  //
-  // @POST(UpgradeAccountApiConstants.updateKyc)
-  // Future<ApiResponse<dynamic>> updateKyc({
-  //   @Body() required UpdatePDoneKYCPayload payload,
-  // });
-  //
-  // @POST(UpgradeAccountApiConstants.resendOtpPhone)
-  // Future<ApiResponse<RegisterPDoneResponse>> resendOtpPhone({
-  //   @Body() required RegisterPDoneAccountPayload payload,
-  // });
-  //
-  // @POST(UpgradeAccountApiConstants.resendOtpEmail)
-  // Future<ApiResponse<RegisterPDoneResponse>> resendOtpEmail({
-  //   @Body() required RegisterPDoneAccountPayload payload,
-  // });
-  //
-  // @PUT(UpgradeAccountApiConstants.updatePDoneProfile)
-  // Future<ApiResponse<dynamic>> updatePDoneProfile({
-  //   @Body() required UpdateProfilePayload payload,
-  // });
-  //
-  // @POST(UpgradeAccountApiConstants.registerPDone)
-  // Future<ApiResponse<RegisterPDoneResponse>> registerPDoneAccount({
-  //   @Body() required RegisterPDoneAccountPayload payload,
-  // });
-  //
-  // @POST(UpgradeAccountApiConstants.registerPDoneVerifyPhone)
-  // Future<ApiResponse<dynamic>> registerPDoneVerifyPhone({
-  //   @Body() required VerifyOtpPDonePayload payload,
-  // });
-  //
-  // @POST(UpgradeAccountApiConstants.registerPDoneVerifyEmail)
-  // Future<ApiResponse<dynamic>> registerPDoneVerifyEmail({
-  //   @Body() required VerifyOtpPDonePayload payload,
-  // });
-  //
-  // @GET(UpgradeAccountApiConstants.master)
-  // Future<ApiResponse<UpgradeAccount>> getListData();
+  @GET(UpgradeAccountApiConstants.currentStep)
+  Future<ApiResponse<KycStatus>> currentStep();
+
+  @POST(UpgradeAccountApiConstants.updateKyc)
+  Future<ApiResponse<dynamic>> updateKyc({
+    @Body() required UpdatePDoneKYCPayload payload,
+  });
+
+  @POST(UpgradeAccountApiConstants.resendOtpPhone)
+  Future<ApiResponse<RegisterPDoneResponse>> resendOtpPhone({
+    @Body() required RegisterPDoneAccountPayload payload,
+  });
+
+  @POST(UpgradeAccountApiConstants.resendOtpEmail)
+  Future<ApiResponse<RegisterPDoneResponse>> resendOtpEmail({
+    @Body() required RegisterPDoneAccountPayload payload,
+  });
+
+  @PUT(UpgradeAccountApiConstants.updatePDoneProfile)
+  Future<ApiResponse<dynamic>> updatePDoneProfile({
+    @Body() required UpdateProfilePayload payload,
+  });
+
+  @POST(UpgradeAccountApiConstants.registerPDone)
+  Future<ApiResponse<RegisterPDoneResponse>> registerPDoneAccount({
+    @Body() required RegisterPDoneAccountPayload payload,
+  });
+
+  @POST(UpgradeAccountApiConstants.registerPDoneVerifyPhone)
+  Future<ApiResponse<dynamic>> registerPDoneVerifyPhone({
+    @Body() required VerifyOtpPDonePayload payload,
+  });
+
+  @POST(UpgradeAccountApiConstants.registerPDoneVerifyEmail)
+  Future<ApiResponse<dynamic>> registerPDoneVerifyEmail({
+    @Body() required VerifyOtpPDonePayload payload,
+  });
+
+  @GET(UpgradeAccountApiConstants.master)
+  Future<ApiResponse<UpgradeAccount>> getListData();
 
   @POST(UpgradeAccountApiConstants.registerJA)
   Future<ApiResponse<UpgradeAccountResponse>> registerJA({
@@ -104,13 +112,13 @@ abstract class UpgradeAccountApi {
     @Body() required VerifyPhoneOtpPayload payload,
   });
 
-  // @POST(UpgradeAccountApiConstants.registerVShop)
-  // Future<ApiResponse<UpgradeAccountResponse>> registerVShop();
+  @POST(UpgradeAccountApiConstants.registerVShop)
+  Future<ApiResponse<UpgradeAccountResponse>> registerVShop();
 
-  // @POST(UpgradeAccountApiConstants.registerVShopVerifyOtp)
-  // Future<ApiResponse<bool>> registerVShopVerifyOtp({
-  //   @Body() required VerifyPhoneOtpPayload payload,
-  // });
+  @POST(UpgradeAccountApiConstants.registerVShopVerifyOtp)
+  Future<ApiResponse<bool>> registerVShopVerifyOtp({
+    @Body() required VerifyPhoneOtpPayload payload,
+  });
 
   @POST(UpgradeAccountApiConstants.resendOtpJA)
   Future<ApiResponse<UpgradeAccountResponse>> resendOtpJA();
@@ -124,13 +132,13 @@ abstract class UpgradeAccountApi {
   @GET(UpgradeAccountApiConstants.listBanks)
   Future<ApiResponse<List<Bank>>> listBanks();
 
-  // @POST(UpgradeAccountApiConstants.checkProtector)
-  // Future<ApiResponse<RegisterPDoneResponse>> checkProtector({
-  //   @Body() required CheckProtectorPayload payload,
-  // });
+  @POST(UpgradeAccountApiConstants.checkProtector)
+  Future<ApiResponse<RegisterPDoneResponse>> checkProtector({
+    @Body() required CheckProtectorPayload payload,
+  });
 
-  // @POST(UpgradeAccountApiConstants.checkProtectorVerifyOTP)
-  // Future<ApiResponse<dynamic>> checkProtectorVerifyOTP({
-  //   @Body() required VerifyOtpPDonePayload payload,
-  // });
+  @POST(UpgradeAccountApiConstants.checkProtectorVerifyOTP)
+  Future<ApiResponse<dynamic>> checkProtectorVerifyOTP({
+    @Body() required VerifyOtpPDonePayload payload,
+  });
 }

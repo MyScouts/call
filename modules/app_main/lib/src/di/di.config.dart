@@ -50,6 +50,10 @@ import '../presentation/upgrade_account/upgrade_account_routes.dart' as _i11;
 import '../presentation/upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart'
     as _i38;
 import 'modules/data_source_module.dart' as _i36;
+import '../presentation/upgrade_account/upgrade_pdone/bloc/upgrade_pdone/upgrade_pdone_bloc.dart'
+    as _i37;
+import '../domain/usecases/upgrade_account_usecase.dart' as _i38;
+import '../domain/usecases/resource_usecase.dart' as _i39;
 
 const String _prod = 'prod';
 
@@ -133,6 +137,11 @@ Future<_i1.GetIt> init(
       () => _i34.UserCubit(gh<_i23.AuthenticationUsecase>()));
   gh.singleton<_i35.AppSettingBloc>(
       _i35.AppSettingBloc(gh<_i23.AuthenticationUsecase>()));
+  gh.factory<_i37.UpgradePDoneBloc>(() => _i37.UpgradePDoneBloc(
+    gh<_i38.UpgradeAccountUsecase>(),
+    gh<_i39.ResourceUsecase>(),
+  ));
+
   return getIt;
 }
 
