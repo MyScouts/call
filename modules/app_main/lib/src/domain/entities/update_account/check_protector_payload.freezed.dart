@@ -79,11 +79,12 @@ class _$CheckProtectorPayloadCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_CheckProtectorPayloadCopyWith<$Res>
+abstract class _$$CheckProtectorPayloadImplCopyWith<$Res>
     implements $CheckProtectorPayloadCopyWith<$Res> {
-  factory _$$_CheckProtectorPayloadCopyWith(_$_CheckProtectorPayload value,
-          $Res Function(_$_CheckProtectorPayload) then) =
-      __$$_CheckProtectorPayloadCopyWithImpl<$Res>;
+  factory _$$CheckProtectorPayloadImplCopyWith(
+          _$CheckProtectorPayloadImpl value,
+          $Res Function(_$CheckProtectorPayloadImpl) then) =
+      __$$CheckProtectorPayloadImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -93,11 +94,12 @@ abstract class _$$_CheckProtectorPayloadCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CheckProtectorPayloadCopyWithImpl<$Res>
-    extends _$CheckProtectorPayloadCopyWithImpl<$Res, _$_CheckProtectorPayload>
-    implements _$$_CheckProtectorPayloadCopyWith<$Res> {
-  __$$_CheckProtectorPayloadCopyWithImpl(_$_CheckProtectorPayload _value,
-      $Res Function(_$_CheckProtectorPayload) _then)
+class __$$CheckProtectorPayloadImplCopyWithImpl<$Res>
+    extends _$CheckProtectorPayloadCopyWithImpl<$Res,
+        _$CheckProtectorPayloadImpl>
+    implements _$$CheckProtectorPayloadImplCopyWith<$Res> {
+  __$$CheckProtectorPayloadImplCopyWithImpl(_$CheckProtectorPayloadImpl _value,
+      $Res Function(_$CheckProtectorPayloadImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -107,7 +109,7 @@ class __$$_CheckProtectorPayloadCopyWithImpl<$Res>
     Object? protectorIdentityNumber = freezed,
     Object? protectorPDoneId = freezed,
   }) {
-    return _then(_$_CheckProtectorPayload(
+    return _then(_$CheckProtectorPayloadImpl(
       protectorEmailPhone: freezed == protectorEmailPhone
           ? _value.protectorEmailPhone
           : protectorEmailPhone // ignore: cast_nullable_to_non_nullable
@@ -126,14 +128,14 @@ class __$$_CheckProtectorPayloadCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CheckProtectorPayload implements _CheckProtectorPayload {
-  const _$_CheckProtectorPayload(
+class _$CheckProtectorPayloadImpl implements _CheckProtectorPayload {
+  const _$CheckProtectorPayloadImpl(
       {this.protectorEmailPhone,
       this.protectorIdentityNumber,
       this.protectorPDoneId});
 
-  factory _$_CheckProtectorPayload.fromJson(Map<String, dynamic> json) =>
-      _$$_CheckProtectorPayloadFromJson(json);
+  factory _$CheckProtectorPayloadImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CheckProtectorPayloadImplFromJson(json);
 
   @override
   final String? protectorEmailPhone;
@@ -151,7 +153,7 @@ class _$_CheckProtectorPayload implements _CheckProtectorPayload {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CheckProtectorPayload &&
+            other is _$CheckProtectorPayloadImpl &&
             (identical(other.protectorEmailPhone, protectorEmailPhone) ||
                 other.protectorEmailPhone == protectorEmailPhone) &&
             (identical(
@@ -169,13 +171,13 @@ class _$_CheckProtectorPayload implements _CheckProtectorPayload {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CheckProtectorPayloadCopyWith<_$_CheckProtectorPayload> get copyWith =>
-      __$$_CheckProtectorPayloadCopyWithImpl<_$_CheckProtectorPayload>(
-          this, _$identity);
+  _$$CheckProtectorPayloadImplCopyWith<_$CheckProtectorPayloadImpl>
+      get copyWith => __$$CheckProtectorPayloadImplCopyWithImpl<
+          _$CheckProtectorPayloadImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CheckProtectorPayloadToJson(
+    return _$$CheckProtectorPayloadImplToJson(
       this,
     );
   }
@@ -185,10 +187,10 @@ abstract class _CheckProtectorPayload implements CheckProtectorPayload {
   const factory _CheckProtectorPayload(
       {final String? protectorEmailPhone,
       final String? protectorIdentityNumber,
-      final String? protectorPDoneId}) = _$_CheckProtectorPayload;
+      final String? protectorPDoneId}) = _$CheckProtectorPayloadImpl;
 
   factory _CheckProtectorPayload.fromJson(Map<String, dynamic> json) =
-      _$_CheckProtectorPayload.fromJson;
+      _$CheckProtectorPayloadImpl.fromJson;
 
   @override
   String? get protectorEmailPhone;
@@ -198,6 +200,6 @@ abstract class _CheckProtectorPayload implements CheckProtectorPayload {
   String? get protectorPDoneId;
   @override
   @JsonKey(ignore: true)
-  _$$_CheckProtectorPayloadCopyWith<_$_CheckProtectorPayload> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CheckProtectorPayloadImplCopyWith<_$CheckProtectorPayloadImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

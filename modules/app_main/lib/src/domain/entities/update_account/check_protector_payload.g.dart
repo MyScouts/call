@@ -6,16 +6,16 @@ part of 'check_protector_payload.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_CheckProtectorPayload _$$_CheckProtectorPayloadFromJson(
+_$CheckProtectorPayloadImpl _$$CheckProtectorPayloadImplFromJson(
         Map<String, dynamic> json) =>
-    _$_CheckProtectorPayload(
+    _$CheckProtectorPayloadImpl(
       protectorEmailPhone: json['protectorEmailPhone'] as String?,
       protectorIdentityNumber: json['protectorIdentityNumber'] as String?,
       protectorPDoneId: json['protectorPDoneId'] as String?,
     );
 
-Map<String, dynamic> _$$_CheckProtectorPayloadToJson(
-        _$_CheckProtectorPayload instance) =>
+Map<String, dynamic> _$$CheckProtectorPayloadImplToJson(
+        _$CheckProtectorPayloadImpl instance) =>
     <String, dynamic>{
       'protectorEmailPhone': instance.protectorEmailPhone,
       'protectorIdentityNumber': instance.protectorIdentityNumber,

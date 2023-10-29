@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/update_bank_account_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/ui.dart';
 
@@ -142,7 +143,22 @@ extension UpgradeAccountCoordinator on BuildContext {
         return ActionDialog(
           title: 'Bạn chưa có hồ sơ JA, xác nhận đăng ký mới?',
           actionTitle: 'Xác nhận',
-          onAction: () {},
+          onAction: startUpgradeJA,
+        );
+      },
+    );
+  }
+
+  Future<T?> startDialogUpdateBankAccount<T>() {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: true,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return ActionDialog(
+          title: 'Bạn chưa có tài khoản ngân hàng, xác nhận đăng ký mới?',
+          actionTitle: 'Xác nhận',
+          onAction: startUpdateBankAccount,
         );
       },
     );
@@ -159,5 +175,9 @@ extension UpgradeAccountCoordinator on BuildContext {
     return Navigator.of(this).pushNamed(
       UpgradePDoneScreen.routeName,
     );
+  }
+
+  Future<T?> startUpdateBankAccount<T>() {
+    return Navigator.of(this).pushNamed(UpdateBankAccountScreen.routeName);
   }
 }

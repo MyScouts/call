@@ -102,9 +102,9 @@ class _$KycCopyWithImpl<$Res, $Val extends Kyc> implements $KycCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_KycCopyWith<$Res> implements $KycCopyWith<$Res> {
-  factory _$$_KycCopyWith(_$_Kyc value, $Res Function(_$_Kyc) then) =
-      __$$_KycCopyWithImpl<$Res>;
+abstract class _$$KycImplCopyWith<$Res> implements $KycCopyWith<$Res> {
+  factory _$$KycImplCopyWith(_$KycImpl value, $Res Function(_$KycImpl) then) =
+      __$$KycImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -118,9 +118,9 @@ abstract class _$$_KycCopyWith<$Res> implements $KycCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_KycCopyWithImpl<$Res> extends _$KycCopyWithImpl<$Res, _$_Kyc>
-    implements _$$_KycCopyWith<$Res> {
-  __$$_KycCopyWithImpl(_$_Kyc _value, $Res Function(_$_Kyc) _then)
+class __$$KycImplCopyWithImpl<$Res> extends _$KycCopyWithImpl<$Res, _$KycImpl>
+    implements _$$KycImplCopyWith<$Res> {
+  __$$KycImplCopyWithImpl(_$KycImpl _value, $Res Function(_$KycImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -134,7 +134,7 @@ class __$$_KycCopyWithImpl<$Res> extends _$KycCopyWithImpl<$Res, _$_Kyc>
     Object? kycIdentityBack = freezed,
     Object? portrait = freezed,
   }) {
-    return _then(_$_Kyc(
+    return _then(_$KycImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -169,8 +169,8 @@ class __$$_KycCopyWithImpl<$Res> extends _$KycCopyWithImpl<$Res, _$_Kyc>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Kyc implements _Kyc {
-  const _$_Kyc(
+class _$KycImpl implements _Kyc {
+  const _$KycImpl(
       {this.id,
       this.userId,
       this.status,
@@ -179,7 +179,8 @@ class _$_Kyc implements _Kyc {
       this.kycIdentityBack,
       this.portrait});
 
-  factory _$_Kyc.fromJson(Map<String, dynamic> json) => _$$_KycFromJson(json);
+  factory _$KycImpl.fromJson(Map<String, dynamic> json) =>
+      _$$KycImplFromJson(json);
 
   @override
   final int? id;
@@ -205,7 +206,7 @@ class _$_Kyc implements _Kyc {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Kyc &&
+            other is _$KycImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.status, status) || other.status == status) &&
@@ -227,12 +228,12 @@ class _$_Kyc implements _Kyc {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_KycCopyWith<_$_Kyc> get copyWith =>
-      __$$_KycCopyWithImpl<_$_Kyc>(this, _$identity);
+  _$$KycImplCopyWith<_$KycImpl> get copyWith =>
+      __$$KycImplCopyWithImpl<_$KycImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_KycToJson(
+    return _$$KycImplToJson(
       this,
     );
   }
@@ -246,9 +247,9 @@ abstract class _Kyc implements Kyc {
       final String? kycPassport,
       final String? kycIdentityFront,
       final String? kycIdentityBack,
-      final String? portrait}) = _$_Kyc;
+      final String? portrait}) = _$KycImpl;
 
-  factory _Kyc.fromJson(Map<String, dynamic> json) = _$_Kyc.fromJson;
+  factory _Kyc.fromJson(Map<String, dynamic> json) = _$KycImpl.fromJson;
 
   @override
   int? get id;
@@ -266,5 +267,6 @@ abstract class _Kyc implements Kyc {
   String? get portrait;
   @override
   @JsonKey(ignore: true)
-  _$$_KycCopyWith<_$_Kyc> get copyWith => throw _privateConstructorUsedError;
+  _$$KycImplCopyWith<_$KycImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

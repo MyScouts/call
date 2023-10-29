@@ -82,22 +82,24 @@ class _$RegisterPDoneResponseCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RegisterPDoneResponseCopyWith<$Res>
+abstract class _$$RegisterPDoneResponseImplCopyWith<$Res>
     implements $RegisterPDoneResponseCopyWith<$Res> {
-  factory _$$_RegisterPDoneResponseCopyWith(_$_RegisterPDoneResponse value,
-          $Res Function(_$_RegisterPDoneResponse) then) =
-      __$$_RegisterPDoneResponseCopyWithImpl<$Res>;
+  factory _$$RegisterPDoneResponseImplCopyWith(
+          _$RegisterPDoneResponseImpl value,
+          $Res Function(_$RegisterPDoneResponseImpl) then) =
+      __$$RegisterPDoneResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String token, String? phone, String? email, String? phoneCode});
 }
 
 /// @nodoc
-class __$$_RegisterPDoneResponseCopyWithImpl<$Res>
-    extends _$RegisterPDoneResponseCopyWithImpl<$Res, _$_RegisterPDoneResponse>
-    implements _$$_RegisterPDoneResponseCopyWith<$Res> {
-  __$$_RegisterPDoneResponseCopyWithImpl(_$_RegisterPDoneResponse _value,
-      $Res Function(_$_RegisterPDoneResponse) _then)
+class __$$RegisterPDoneResponseImplCopyWithImpl<$Res>
+    extends _$RegisterPDoneResponseCopyWithImpl<$Res,
+        _$RegisterPDoneResponseImpl>
+    implements _$$RegisterPDoneResponseImplCopyWith<$Res> {
+  __$$RegisterPDoneResponseImplCopyWithImpl(_$RegisterPDoneResponseImpl _value,
+      $Res Function(_$RegisterPDoneResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -108,7 +110,7 @@ class __$$_RegisterPDoneResponseCopyWithImpl<$Res>
     Object? email = freezed,
     Object? phoneCode = freezed,
   }) {
-    return _then(_$_RegisterPDoneResponse(
+    return _then(_$RegisterPDoneResponseImpl(
       token: null == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
@@ -131,12 +133,12 @@ class __$$_RegisterPDoneResponseCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_RegisterPDoneResponse implements _RegisterPDoneResponse {
-  const _$_RegisterPDoneResponse(
+class _$RegisterPDoneResponseImpl implements _RegisterPDoneResponse {
+  const _$RegisterPDoneResponseImpl(
       {required this.token, this.phone, this.email, this.phoneCode});
 
-  factory _$_RegisterPDoneResponse.fromJson(Map<String, dynamic> json) =>
-      _$$_RegisterPDoneResponseFromJson(json);
+  factory _$RegisterPDoneResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RegisterPDoneResponseImplFromJson(json);
 
   @override
   final String token;
@@ -156,7 +158,7 @@ class _$_RegisterPDoneResponse implements _RegisterPDoneResponse {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RegisterPDoneResponse &&
+            other is _$RegisterPDoneResponseImpl &&
             (identical(other.token, token) || other.token == token) &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.email, email) || other.email == email) &&
@@ -171,13 +173,13 @@ class _$_RegisterPDoneResponse implements _RegisterPDoneResponse {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RegisterPDoneResponseCopyWith<_$_RegisterPDoneResponse> get copyWith =>
-      __$$_RegisterPDoneResponseCopyWithImpl<_$_RegisterPDoneResponse>(
-          this, _$identity);
+  _$$RegisterPDoneResponseImplCopyWith<_$RegisterPDoneResponseImpl>
+      get copyWith => __$$RegisterPDoneResponseImplCopyWithImpl<
+          _$RegisterPDoneResponseImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RegisterPDoneResponseToJson(
+    return _$$RegisterPDoneResponseImplToJson(
       this,
     );
   }
@@ -188,10 +190,10 @@ abstract class _RegisterPDoneResponse implements RegisterPDoneResponse {
       {required final String token,
       final String? phone,
       final String? email,
-      final String? phoneCode}) = _$_RegisterPDoneResponse;
+      final String? phoneCode}) = _$RegisterPDoneResponseImpl;
 
   factory _RegisterPDoneResponse.fromJson(Map<String, dynamic> json) =
-      _$_RegisterPDoneResponse.fromJson;
+      _$RegisterPDoneResponseImpl.fromJson;
 
   @override
   String get token;
@@ -203,6 +205,6 @@ abstract class _RegisterPDoneResponse implements RegisterPDoneResponse {
   String? get phoneCode;
   @override
   @JsonKey(ignore: true)
-  _$$_RegisterPDoneResponseCopyWith<_$_RegisterPDoneResponse> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$RegisterPDoneResponseImplCopyWith<_$RegisterPDoneResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

@@ -6,9 +6,9 @@ part of 'update_profile_payload.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_UpdateProfilePayload _$$_UpdateProfilePayloadFromJson(
+_$UpdateProfilePayloadImpl _$$UpdateProfilePayloadImplFromJson(
         Map<String, dynamic> json) =>
-    _$_UpdateProfilePayload(
+    _$UpdateProfilePayloadImpl(
       firstName: json['firstName'] as String?,
       lastName: json['lastName'] as String?,
       middleName: json['middleName'] as String?,
@@ -40,8 +40,8 @@ _$_UpdateProfilePayload _$$_UpdateProfilePayloadFromJson(
       protectorEmailPhone: json['protectorEmailPhone'] as String?,
     );
 
-Map<String, dynamic> _$$_UpdateProfilePayloadToJson(
-    _$_UpdateProfilePayload instance) {
+Map<String, dynamic> _$$UpdateProfilePayloadImplToJson(
+    _$UpdateProfilePayloadImpl instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {

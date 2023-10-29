@@ -6,8 +6,8 @@ part of 'pdone_account.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_PDoneAccount _$$_PDoneAccountFromJson(Map<String, dynamic> json) =>
-    _$_PDoneAccount(
+_$PDoneAccountImpl _$$PDoneAccountImplFromJson(Map<String, dynamic> json) =>
+    _$PDoneAccountImpl(
       id: json['id'] as int?,
       avatar: json['avatar'] as String?,
       backgroundImages: (json['backgroundImages'] as List<dynamic>?)
@@ -29,7 +29,7 @@ _$_PDoneAccount _$$_PDoneAccountFromJson(Map<String, dynamic> json) =>
       isPDone: json['isPDone'] as bool?,
     );
 
-Map<String, dynamic> _$$_PDoneAccountToJson(_$_PDoneAccount instance) =>
+Map<String, dynamic> _$$PDoneAccountImplToJson(_$PDoneAccountImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'avatar': instance.avatar,

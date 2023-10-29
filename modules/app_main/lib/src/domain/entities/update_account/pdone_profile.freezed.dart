@@ -368,11 +368,11 @@ class _$PDoneProfileCopyWithImpl<$Res, $Val extends PDoneProfile>
 }
 
 /// @nodoc
-abstract class _$$_PDoneProfileCopyWith<$Res>
+abstract class _$$PDoneProfileImplCopyWith<$Res>
     implements $PDoneProfileCopyWith<$Res> {
-  factory _$$_PDoneProfileCopyWith(
-          _$_PDoneProfile value, $Res Function(_$_PDoneProfile) then) =
-      __$$_PDoneProfileCopyWithImpl<$Res>;
+  factory _$$PDoneProfileImplCopyWith(
+          _$PDoneProfileImpl value, $Res Function(_$PDoneProfileImpl) then) =
+      __$$PDoneProfileImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -426,11 +426,11 @@ abstract class _$$_PDoneProfileCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PDoneProfileCopyWithImpl<$Res>
-    extends _$PDoneProfileCopyWithImpl<$Res, _$_PDoneProfile>
-    implements _$$_PDoneProfileCopyWith<$Res> {
-  __$$_PDoneProfileCopyWithImpl(
-      _$_PDoneProfile _value, $Res Function(_$_PDoneProfile) _then)
+class __$$PDoneProfileImplCopyWithImpl<$Res>
+    extends _$PDoneProfileCopyWithImpl<$Res, _$PDoneProfileImpl>
+    implements _$$PDoneProfileImplCopyWith<$Res> {
+  __$$PDoneProfileImplCopyWithImpl(
+      _$PDoneProfileImpl _value, $Res Function(_$PDoneProfileImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -461,7 +461,7 @@ class __$$_PDoneProfileCopyWithImpl<$Res>
     Object? talent = freezed,
     Object? protectorInfo = freezed,
   }) {
-    return _then(_$_PDoneProfile(
+    return _then(_$PDoneProfileImpl(
       birthPlace: freezed == birthPlace
           ? _value.birthPlace
           : birthPlace // ignore: cast_nullable_to_non_nullable
@@ -565,8 +565,8 @@ class __$$_PDoneProfileCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true)
-class _$_PDoneProfile implements _PDoneProfile {
-  const _$_PDoneProfile(
+class _$PDoneProfileImpl implements _PDoneProfile {
+  const _$PDoneProfileImpl(
       {this.birthPlace,
       this.currentPlace,
       this.id,
@@ -592,8 +592,8 @@ class _$_PDoneProfile implements _PDoneProfile {
       this.talent,
       this.protectorInfo});
 
-  factory _$_PDoneProfile.fromJson(Map<String, dynamic> json) =>
-      _$$_PDoneProfileFromJson(json);
+  factory _$PDoneProfileImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PDoneProfileImplFromJson(json);
 
   @override
   final PlaceInformation? birthPlace;
@@ -653,7 +653,7 @@ class _$_PDoneProfile implements _PDoneProfile {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PDoneProfile &&
+            other is _$PDoneProfileImpl &&
             (identical(other.birthPlace, birthPlace) ||
                 other.birthPlace == birthPlace) &&
             (identical(other.currentPlace, currentPlace) ||
@@ -730,12 +730,12 @@ class _$_PDoneProfile implements _PDoneProfile {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PDoneProfileCopyWith<_$_PDoneProfile> get copyWith =>
-      __$$_PDoneProfileCopyWithImpl<_$_PDoneProfile>(this, _$identity);
+  _$$PDoneProfileImplCopyWith<_$PDoneProfileImpl> get copyWith =>
+      __$$PDoneProfileImplCopyWithImpl<_$PDoneProfileImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PDoneProfileToJson(
+    return _$$PDoneProfileImplToJson(
       this,
     );
   }
@@ -766,10 +766,10 @@ abstract class _PDoneProfile implements PDoneProfile {
       final Job? job,
       final Interest? interest,
       final Talent? talent,
-      final User? protectorInfo}) = _$_PDoneProfile;
+      final User? protectorInfo}) = _$PDoneProfileImpl;
 
   factory _PDoneProfile.fromJson(Map<String, dynamic> json) =
-      _$_PDoneProfile.fromJson;
+      _$PDoneProfileImpl.fromJson;
 
   @override
   PlaceInformation? get birthPlace;
@@ -821,6 +821,6 @@ abstract class _PDoneProfile implements PDoneProfile {
   User? get protectorInfo;
   @override
   @JsonKey(ignore: true)
-  _$$_PDoneProfileCopyWith<_$_PDoneProfile> get copyWith =>
+  _$$PDoneProfileImplCopyWith<_$PDoneProfileImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

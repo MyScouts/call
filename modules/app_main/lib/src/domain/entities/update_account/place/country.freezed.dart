@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'country.dart';
 
@@ -31,65 +31,70 @@ mixin _$Country {
 /// @nodoc
 abstract class $CountryCopyWith<$Res> {
   factory $CountryCopyWith(Country value, $Res Function(Country) then) =
-      _$CountryCopyWithImpl<$Res>;
+      _$CountryCopyWithImpl<$Res, Country>;
+  @useResult
   $Res call({String? name, String? iso2});
 }
 
 /// @nodoc
-class _$CountryCopyWithImpl<$Res> implements $CountryCopyWith<$Res> {
+class _$CountryCopyWithImpl<$Res, $Val extends Country>
+    implements $CountryCopyWith<$Res> {
   _$CountryCopyWithImpl(this._value, this._then);
 
-  final Country _value;
   // ignore: unused_field
-  final $Res Function(Country) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = freezed,
     Object? iso2 = freezed,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      iso2: iso2 == freezed
+      iso2: freezed == iso2
           ? _value.iso2
           : iso2 // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_CountryCopyWith<$Res> implements $CountryCopyWith<$Res> {
-  factory _$$_CountryCopyWith(
-          _$_Country value, $Res Function(_$_Country) then) =
-      __$$_CountryCopyWithImpl<$Res>;
+abstract class _$$CountryImplCopyWith<$Res> implements $CountryCopyWith<$Res> {
+  factory _$$CountryImplCopyWith(
+          _$CountryImpl value, $Res Function(_$CountryImpl) then) =
+      __$$CountryImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? name, String? iso2});
 }
 
 /// @nodoc
-class __$$_CountryCopyWithImpl<$Res> extends _$CountryCopyWithImpl<$Res>
-    implements _$$_CountryCopyWith<$Res> {
-  __$$_CountryCopyWithImpl(_$_Country _value, $Res Function(_$_Country) _then)
-      : super(_value, (v) => _then(v as _$_Country));
+class __$$CountryImplCopyWithImpl<$Res>
+    extends _$CountryCopyWithImpl<$Res, _$CountryImpl>
+    implements _$$CountryImplCopyWith<$Res> {
+  __$$CountryImplCopyWithImpl(
+      _$CountryImpl _value, $Res Function(_$CountryImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_Country get _value => super._value as _$_Country;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = freezed,
     Object? iso2 = freezed,
   }) {
-    return _then(_$_Country(
-      name: name == freezed
+    return _then(_$CountryImpl(
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      iso2: iso2 == freezed
+      iso2: freezed == iso2
           ? _value.iso2
           : iso2 // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -99,11 +104,11 @@ class __$$_CountryCopyWithImpl<$Res> extends _$CountryCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Country implements _Country {
-  const _$_Country({this.name, this.iso2});
+class _$CountryImpl implements _Country {
+  const _$CountryImpl({this.name, this.iso2});
 
-  factory _$_Country.fromJson(Map<String, dynamic> json) =>
-      _$$_CountryFromJson(json);
+  factory _$CountryImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CountryImplFromJson(json);
 
   @override
   final String? name;
@@ -119,35 +124,34 @@ class _$_Country implements _Country {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Country &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.iso2, iso2));
+            other is _$CountryImpl &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.iso2, iso2) || other.iso2 == iso2));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(iso2));
+  int get hashCode => Object.hash(runtimeType, name, iso2);
 
   @JsonKey(ignore: true)
   @override
-  _$$_CountryCopyWith<_$_Country> get copyWith =>
-      __$$_CountryCopyWithImpl<_$_Country>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$CountryImplCopyWith<_$CountryImpl> get copyWith =>
+      __$$CountryImplCopyWithImpl<_$CountryImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CountryToJson(
+    return _$$CountryImplToJson(
       this,
     );
   }
 }
 
 abstract class _Country implements Country {
-  const factory _Country({final String? name, final String? iso2}) = _$_Country;
+  const factory _Country({final String? name, final String? iso2}) =
+      _$CountryImpl;
 
-  factory _Country.fromJson(Map<String, dynamic> json) = _$_Country.fromJson;
+  factory _Country.fromJson(Map<String, dynamic> json) = _$CountryImpl.fromJson;
 
   @override
   String? get name;
@@ -155,6 +159,6 @@ abstract class _Country implements Country {
   String? get iso2;
   @override
   @JsonKey(ignore: true)
-  _$$_CountryCopyWith<_$_Country> get copyWith =>
+  _$$CountryImplCopyWith<_$CountryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

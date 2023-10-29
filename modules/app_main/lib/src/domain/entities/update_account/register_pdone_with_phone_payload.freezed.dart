@@ -92,12 +92,12 @@ class _$RegisterPDoneAccountPayloadCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_RegisterPDoneAccountPayloadCopyWith<$Res>
+abstract class _$$RegisterPDoneAccountPayloadImplCopyWith<$Res>
     implements $RegisterPDoneAccountPayloadCopyWith<$Res> {
-  factory _$$_RegisterPDoneAccountPayloadCopyWith(
-          _$_RegisterPDoneAccountPayload value,
-          $Res Function(_$_RegisterPDoneAccountPayload) then) =
-      __$$_RegisterPDoneAccountPayloadCopyWithImpl<$Res>;
+  factory _$$RegisterPDoneAccountPayloadImplCopyWith(
+          _$RegisterPDoneAccountPayloadImpl value,
+          $Res Function(_$RegisterPDoneAccountPayloadImpl) then) =
+      __$$RegisterPDoneAccountPayloadImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -108,13 +108,13 @@ abstract class _$$_RegisterPDoneAccountPayloadCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_RegisterPDoneAccountPayloadCopyWithImpl<$Res>
+class __$$RegisterPDoneAccountPayloadImplCopyWithImpl<$Res>
     extends _$RegisterPDoneAccountPayloadCopyWithImpl<$Res,
-        _$_RegisterPDoneAccountPayload>
-    implements _$$_RegisterPDoneAccountPayloadCopyWith<$Res> {
-  __$$_RegisterPDoneAccountPayloadCopyWithImpl(
-      _$_RegisterPDoneAccountPayload _value,
-      $Res Function(_$_RegisterPDoneAccountPayload) _then)
+        _$RegisterPDoneAccountPayloadImpl>
+    implements _$$RegisterPDoneAccountPayloadImplCopyWith<$Res> {
+  __$$RegisterPDoneAccountPayloadImplCopyWithImpl(
+      _$RegisterPDoneAccountPayloadImpl _value,
+      $Res Function(_$RegisterPDoneAccountPayloadImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -125,7 +125,7 @@ class __$$_RegisterPDoneAccountPayloadCopyWithImpl<$Res>
     Object? countryId = freezed,
     Object? email = freezed,
   }) {
-    return _then(_$_RegisterPDoneAccountPayload(
+    return _then(_$RegisterPDoneAccountPayloadImpl(
       phoneNumber: freezed == phoneNumber
           ? _value.phoneNumber
           : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -148,15 +148,17 @@ class __$$_RegisterPDoneAccountPayloadCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_RegisterPDoneAccountPayload implements _RegisterPDoneAccountPayload {
-  const _$_RegisterPDoneAccountPayload(
+class _$RegisterPDoneAccountPayloadImpl
+    implements _RegisterPDoneAccountPayload {
+  const _$RegisterPDoneAccountPayloadImpl(
       {@JsonKey(includeIfNull: false) this.phoneNumber,
       @JsonKey(includeIfNull: false) this.phoneCode,
       @JsonKey(name: 'country_id', includeIfNull: false) this.countryId,
       @JsonKey(includeIfNull: false) this.email});
 
-  factory _$_RegisterPDoneAccountPayload.fromJson(Map<String, dynamic> json) =>
-      _$$_RegisterPDoneAccountPayloadFromJson(json);
+  factory _$RegisterPDoneAccountPayloadImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$RegisterPDoneAccountPayloadImplFromJson(json);
 
   @override
   @JsonKey(includeIfNull: false)
@@ -180,7 +182,7 @@ class _$_RegisterPDoneAccountPayload implements _RegisterPDoneAccountPayload {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RegisterPDoneAccountPayload &&
+            other is _$RegisterPDoneAccountPayloadImpl &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
             (identical(other.phoneCode, phoneCode) ||
@@ -198,13 +200,13 @@ class _$_RegisterPDoneAccountPayload implements _RegisterPDoneAccountPayload {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RegisterPDoneAccountPayloadCopyWith<_$_RegisterPDoneAccountPayload>
-      get copyWith => __$$_RegisterPDoneAccountPayloadCopyWithImpl<
-          _$_RegisterPDoneAccountPayload>(this, _$identity);
+  _$$RegisterPDoneAccountPayloadImplCopyWith<_$RegisterPDoneAccountPayloadImpl>
+      get copyWith => __$$RegisterPDoneAccountPayloadImplCopyWithImpl<
+          _$RegisterPDoneAccountPayloadImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RegisterPDoneAccountPayloadToJson(
+    return _$$RegisterPDoneAccountPayloadImplToJson(
       this,
     );
   }
@@ -217,10 +219,10 @@ abstract class _RegisterPDoneAccountPayload
       @JsonKey(includeIfNull: false) final String? phoneCode,
       @JsonKey(name: 'country_id', includeIfNull: false) final int? countryId,
       @JsonKey(includeIfNull: false)
-      final String? email}) = _$_RegisterPDoneAccountPayload;
+      final String? email}) = _$RegisterPDoneAccountPayloadImpl;
 
   factory _RegisterPDoneAccountPayload.fromJson(Map<String, dynamic> json) =
-      _$_RegisterPDoneAccountPayload.fromJson;
+      _$RegisterPDoneAccountPayloadImpl.fromJson;
 
   @override
   @JsonKey(includeIfNull: false)
@@ -236,6 +238,6 @@ abstract class _RegisterPDoneAccountPayload
   String? get email;
   @override
   @JsonKey(ignore: true)
-  _$$_RegisterPDoneAccountPayloadCopyWith<_$_RegisterPDoneAccountPayload>
+  _$$RegisterPDoneAccountPayloadImplCopyWith<_$RegisterPDoneAccountPayloadImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

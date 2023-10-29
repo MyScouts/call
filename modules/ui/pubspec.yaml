@@ -25,6 +25,8 @@ dependencies:
   design_system:
     path: ../design_system
   dropdown_button2: ^2.3.9
+  flutter_form_builder: ^9.1.1
+
   searchfield:
     git: https://github.com/FightTech-VN/searchfield.git
 

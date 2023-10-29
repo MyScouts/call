@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/update_bank_account_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
@@ -59,5 +60,11 @@ class UpgradeAccountRoutes extends RouteModule {
             ),
           );
         },
+        UpdateBankAccountScreen.routeName: (context) {
+          return BlocProvider<GetListBanksBloc>(
+            create: (context) => injector.get()..add(GetListDataEvent()),
+            child: const UpdateBankAccountScreen(),
+          );
+        }
       };
 }

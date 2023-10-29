@@ -2,7 +2,9 @@ import 'package:app_core/app_core.dart';
 
 abstract class CommunityRepository {
   Future<List<Group>> getGroups();
+
   Future<Group> getGroup(int id);
+
   Future<List<Team>> getTeamByGroupID(int id);
 
   Future<Team> getTeamById(int id);
@@ -30,5 +32,5 @@ abstract class CommunityRepository {
 
   Future<bool> joinFanGroup(int id);
 
-  // Future<bool> updateFanGroup(int id, UpdateCommunityPayload payload);
+// Future<bool> updateFanGroup(int id, UpdateCommunityPayload payload);
 }

@@ -6,12 +6,13 @@ part of 'district.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_District _$$_DistrictFromJson(Map<String, dynamic> json) => _$_District(
+_$DistrictImpl _$$DistrictImplFromJson(Map<String, dynamic> json) =>
+    _$DistrictImpl(
       name: json['name'] as String?,
       code: json['code'] as String?,
     );
 
-Map<String, dynamic> _$$_DistrictToJson(_$_District instance) =>
+Map<String, dynamic> _$$DistrictImplToJson(_$DistrictImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'code': instance.code,

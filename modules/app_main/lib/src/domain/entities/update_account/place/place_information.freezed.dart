@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'place_information.dart';
 
@@ -36,7 +36,8 @@ mixin _$PlaceInformation {
 abstract class $PlaceInformationCopyWith<$Res> {
   factory $PlaceInformationCopyWith(
           PlaceInformation value, $Res Function(PlaceInformation) then) =
-      _$PlaceInformationCopyWithImpl<$Res>;
+      _$PlaceInformationCopyWithImpl<$Res, PlaceInformation>;
+  @useResult
   $Res call(
       {Country? country,
       Province? province,
@@ -51,14 +52,16 @@ abstract class $PlaceInformationCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PlaceInformationCopyWithImpl<$Res>
+class _$PlaceInformationCopyWithImpl<$Res, $Val extends PlaceInformation>
     implements $PlaceInformationCopyWith<$Res> {
   _$PlaceInformationCopyWithImpl(this._value, this._then);
 
-  final PlaceInformation _value;
   // ignore: unused_field
-  final $Res Function(PlaceInformation) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? country = freezed,
@@ -68,81 +71,86 @@ class _$PlaceInformationCopyWithImpl<$Res>
     Object? address = freezed,
   }) {
     return _then(_value.copyWith(
-      country: country == freezed
+      country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as Country?,
-      province: province == freezed
+      province: freezed == province
           ? _value.province
           : province // ignore: cast_nullable_to_non_nullable
               as Province?,
-      district: district == freezed
+      district: freezed == district
           ? _value.district
           : district // ignore: cast_nullable_to_non_nullable
               as District?,
-      ward: ward == freezed
+      ward: freezed == ward
           ? _value.ward
           : ward // ignore: cast_nullable_to_non_nullable
               as Ward?,
-      address: address == freezed
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $CountryCopyWith<$Res>? get country {
     if (_value.country == null) {
       return null;
     }
 
     return $CountryCopyWith<$Res>(_value.country!, (value) {
-      return _then(_value.copyWith(country: value));
+      return _then(_value.copyWith(country: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ProvinceCopyWith<$Res>? get province {
     if (_value.province == null) {
       return null;
     }
 
     return $ProvinceCopyWith<$Res>(_value.province!, (value) {
-      return _then(_value.copyWith(province: value));
+      return _then(_value.copyWith(province: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $DistrictCopyWith<$Res>? get district {
     if (_value.district == null) {
       return null;
     }
 
     return $DistrictCopyWith<$Res>(_value.district!, (value) {
-      return _then(_value.copyWith(district: value));
+      return _then(_value.copyWith(district: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $WardCopyWith<$Res>? get ward {
     if (_value.ward == null) {
       return null;
     }
 
     return $WardCopyWith<$Res>(_value.ward!, (value) {
-      return _then(_value.copyWith(ward: value));
+      return _then(_value.copyWith(ward: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$_PlaceInformationCopyWith<$Res>
+abstract class _$$PlaceInformationImplCopyWith<$Res>
     implements $PlaceInformationCopyWith<$Res> {
-  factory _$$_PlaceInformationCopyWith(
-          _$_PlaceInformation value, $Res Function(_$_PlaceInformation) then) =
-      __$$_PlaceInformationCopyWithImpl<$Res>;
+  factory _$$PlaceInformationImplCopyWith(_$PlaceInformationImpl value,
+          $Res Function(_$PlaceInformationImpl) then) =
+      __$$PlaceInformationImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {Country? country,
       Province? province,
@@ -161,16 +169,14 @@ abstract class _$$_PlaceInformationCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PlaceInformationCopyWithImpl<$Res>
-    extends _$PlaceInformationCopyWithImpl<$Res>
-    implements _$$_PlaceInformationCopyWith<$Res> {
-  __$$_PlaceInformationCopyWithImpl(
-      _$_PlaceInformation _value, $Res Function(_$_PlaceInformation) _then)
-      : super(_value, (v) => _then(v as _$_PlaceInformation));
+class __$$PlaceInformationImplCopyWithImpl<$Res>
+    extends _$PlaceInformationCopyWithImpl<$Res, _$PlaceInformationImpl>
+    implements _$$PlaceInformationImplCopyWith<$Res> {
+  __$$PlaceInformationImplCopyWithImpl(_$PlaceInformationImpl _value,
+      $Res Function(_$PlaceInformationImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_PlaceInformation get _value => super._value as _$_PlaceInformation;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? country = freezed,
@@ -179,24 +185,24 @@ class __$$_PlaceInformationCopyWithImpl<$Res>
     Object? ward = freezed,
     Object? address = freezed,
   }) {
-    return _then(_$_PlaceInformation(
-      country: country == freezed
+    return _then(_$PlaceInformationImpl(
+      country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as Country?,
-      province: province == freezed
+      province: freezed == province
           ? _value.province
           : province // ignore: cast_nullable_to_non_nullable
               as Province?,
-      district: district == freezed
+      district: freezed == district
           ? _value.district
           : district // ignore: cast_nullable_to_non_nullable
               as District?,
-      ward: ward == freezed
+      ward: freezed == ward
           ? _value.ward
           : ward // ignore: cast_nullable_to_non_nullable
               as Ward?,
-      address: address == freezed
+      address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -206,12 +212,12 @@ class __$$_PlaceInformationCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PlaceInformation implements _PlaceInformation {
-  const _$_PlaceInformation(
+class _$PlaceInformationImpl implements _PlaceInformation {
+  const _$PlaceInformationImpl(
       {this.country, this.province, this.district, this.ward, this.address});
 
-  factory _$_PlaceInformation.fromJson(Map<String, dynamic> json) =>
-      _$$_PlaceInformationFromJson(json);
+  factory _$PlaceInformationImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PlaceInformationImplFromJson(json);
 
   @override
   final Country? country;
@@ -233,32 +239,31 @@ class _$_PlaceInformation implements _PlaceInformation {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PlaceInformation &&
-            const DeepCollectionEquality().equals(other.country, country) &&
-            const DeepCollectionEquality().equals(other.province, province) &&
-            const DeepCollectionEquality().equals(other.district, district) &&
-            const DeepCollectionEquality().equals(other.ward, ward) &&
-            const DeepCollectionEquality().equals(other.address, address));
+            other is _$PlaceInformationImpl &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.province, province) ||
+                other.province == province) &&
+            (identical(other.district, district) ||
+                other.district == district) &&
+            (identical(other.ward, ward) || other.ward == ward) &&
+            (identical(other.address, address) || other.address == address));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(country),
-      const DeepCollectionEquality().hash(province),
-      const DeepCollectionEquality().hash(district),
-      const DeepCollectionEquality().hash(ward),
-      const DeepCollectionEquality().hash(address));
+  int get hashCode =>
+      Object.hash(runtimeType, country, province, district, ward, address);
 
   @JsonKey(ignore: true)
   @override
-  _$$_PlaceInformationCopyWith<_$_PlaceInformation> get copyWith =>
-      __$$_PlaceInformationCopyWithImpl<_$_PlaceInformation>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$PlaceInformationImplCopyWith<_$PlaceInformationImpl> get copyWith =>
+      __$$PlaceInformationImplCopyWithImpl<_$PlaceInformationImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PlaceInformationToJson(
+    return _$$PlaceInformationImplToJson(
       this,
     );
   }
@@ -270,10 +275,10 @@ abstract class _PlaceInformation implements PlaceInformation {
       final Province? province,
       final District? district,
       final Ward? ward,
-      final String? address}) = _$_PlaceInformation;
+      final String? address}) = _$PlaceInformationImpl;
 
   factory _PlaceInformation.fromJson(Map<String, dynamic> json) =
-      _$_PlaceInformation.fromJson;
+      _$PlaceInformationImpl.fromJson;
 
   @override
   Country? get country;
@@ -287,6 +292,6 @@ abstract class _PlaceInformation implements PlaceInformation {
   String? get address;
   @override
   @JsonKey(ignore: true)
-  _$$_PlaceInformationCopyWith<_$_PlaceInformation> get copyWith =>
+  _$$PlaceInformationImplCopyWith<_$PlaceInformationImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

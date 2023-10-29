@@ -1,4 +1,3 @@
-
 import '../../data/models/payloads/upgrade_account/upgrade_ja/upgrade_ja_payload.dart';
 import '../../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
 import '../../data/models/responses/register_pdone_response.dart';
@@ -21,19 +20,15 @@ abstract class UpgradeAccountRepository {
 
   Future<bool> updateKyc(UpdatePDoneKYCPayload payload);
 
-  Future<RegisterPDoneResponse> registerPDoneAccount(
-      RegisterPDoneAccountPayload payload);
+  Future<RegisterPDoneResponse> registerPDoneAccount(RegisterPDoneAccountPayload payload);
 
   Future<bool> verifyOtpRegisterPDone(VerifyOtpPDonePayload payload);
 
-  Future<RegisterPDoneResponse> resendOtpPhone(
-      RegisterPDoneAccountPayload payload);
+  Future<RegisterPDoneResponse> resendOtpPhone(RegisterPDoneAccountPayload payload);
 
-  Future<RegisterPDoneResponse> resendOtpEmail(
-      RegisterPDoneAccountPayload payload);
+  Future<RegisterPDoneResponse> resendOtpEmail(RegisterPDoneAccountPayload payload);
 
-  Future<UpgradeAccountResponse> registerJA(
-      {required UpgradeJAPayload payload});
+  Future<UpgradeAccountResponse> registerJA({required UpgradeJAPayload payload});
 
   Future<bool> registerJAVerifyOtp({required VerifyPhoneOtpPayload payload});
 

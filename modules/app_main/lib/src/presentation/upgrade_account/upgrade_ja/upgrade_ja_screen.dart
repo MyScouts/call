@@ -10,7 +10,6 @@ import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
 
 import '../../../data/models/responses/upgrade_account_response.dart';
-import '../../../domain/entities/bank.dart';
 import '../../../domain/usecases/community_usecase.dart';
 import '../../community/groups/group_listing_bloc.dart';
 import 'upgrade_agree_policy.bloc.dart';
@@ -58,19 +57,13 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
 
   Group? _currentGroup;
   Team? _currentTeam;
-  Bank? _currentBank;
 
   final _teamJA = UpdateInformationType.idBossTeamJA;
   final _groupJA = UpdateInformationType.idGroupJA;
-  final _bankJA = UpdateInformationType.bank;
 
   UpgradeAccountBloc get upgradeAccountBloc => context.read();
 
-  GetListGroupsBloc get listGroupsBloc => context.read();
-
   GetListTeamsBloc get listTeamsBloc => context.read();
-
-  GetListBanksBloc get listBanksBloc => context.read();
 
   GetGroupDetailByBossIDBloc get getGroupDetailByBossIDBloc => context.read();
 
@@ -104,7 +97,7 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
       _formBossTeamIDKey.currentState!.validate();
 
       if (res) {
-        // getGroupDetailByBossIDBloc.add(GetDetailDataParam1Event(id));
+        getGroupDetailByBossIDBloc.add(GetDetailDataParam1Event(id));
       }
     } catch (e) {
       validatorBossTeamId = errMsg;

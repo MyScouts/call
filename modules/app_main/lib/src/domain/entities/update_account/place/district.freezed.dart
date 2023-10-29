@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'district.dart';
 
@@ -32,66 +32,71 @@ mixin _$District {
 /// @nodoc
 abstract class $DistrictCopyWith<$Res> {
   factory $DistrictCopyWith(District value, $Res Function(District) then) =
-      _$DistrictCopyWithImpl<$Res>;
+      _$DistrictCopyWithImpl<$Res, District>;
+  @useResult
   $Res call({String? name, String? code});
 }
 
 /// @nodoc
-class _$DistrictCopyWithImpl<$Res> implements $DistrictCopyWith<$Res> {
+class _$DistrictCopyWithImpl<$Res, $Val extends District>
+    implements $DistrictCopyWith<$Res> {
   _$DistrictCopyWithImpl(this._value, this._then);
 
-  final District _value;
   // ignore: unused_field
-  final $Res Function(District) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = freezed,
     Object? code = freezed,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_DistrictCopyWith<$Res> implements $DistrictCopyWith<$Res> {
-  factory _$$_DistrictCopyWith(
-          _$_District value, $Res Function(_$_District) then) =
-      __$$_DistrictCopyWithImpl<$Res>;
+abstract class _$$DistrictImplCopyWith<$Res>
+    implements $DistrictCopyWith<$Res> {
+  factory _$$DistrictImplCopyWith(
+          _$DistrictImpl value, $Res Function(_$DistrictImpl) then) =
+      __$$DistrictImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? name, String? code});
 }
 
 /// @nodoc
-class __$$_DistrictCopyWithImpl<$Res> extends _$DistrictCopyWithImpl<$Res>
-    implements _$$_DistrictCopyWith<$Res> {
-  __$$_DistrictCopyWithImpl(
-      _$_District _value, $Res Function(_$_District) _then)
-      : super(_value, (v) => _then(v as _$_District));
+class __$$DistrictImplCopyWithImpl<$Res>
+    extends _$DistrictCopyWithImpl<$Res, _$DistrictImpl>
+    implements _$$DistrictImplCopyWith<$Res> {
+  __$$DistrictImplCopyWithImpl(
+      _$DistrictImpl _value, $Res Function(_$DistrictImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_District get _value => super._value as _$_District;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = freezed,
     Object? code = freezed,
   }) {
-    return _then(_$_District(
-      name: name == freezed
+    return _then(_$DistrictImpl(
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -101,11 +106,11 @@ class __$$_DistrictCopyWithImpl<$Res> extends _$DistrictCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_District implements _District {
-  const _$_District({this.name, this.code});
+class _$DistrictImpl implements _District {
+  const _$DistrictImpl({this.name, this.code});
 
-  factory _$_District.fromJson(Map<String, dynamic> json) =>
-      _$$_DistrictFromJson(json);
+  factory _$DistrictImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DistrictImplFromJson(json);
 
   @override
   final String? name;
@@ -121,26 +126,24 @@ class _$_District implements _District {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_District &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.code, code));
+            other is _$DistrictImpl &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.code, code) || other.code == code));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(code));
+  int get hashCode => Object.hash(runtimeType, name, code);
 
   @JsonKey(ignore: true)
   @override
-  _$$_DistrictCopyWith<_$_District> get copyWith =>
-      __$$_DistrictCopyWithImpl<_$_District>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$DistrictImplCopyWith<_$DistrictImpl> get copyWith =>
+      __$$DistrictImplCopyWithImpl<_$DistrictImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DistrictToJson(
+    return _$$DistrictImplToJson(
       this,
     );
   }
@@ -148,9 +151,10 @@ class _$_District implements _District {
 
 abstract class _District implements District {
   const factory _District({final String? name, final String? code}) =
-      _$_District;
+      _$DistrictImpl;
 
-  factory _District.fromJson(Map<String, dynamic> json) = _$_District.fromJson;
+  factory _District.fromJson(Map<String, dynamic> json) =
+      _$DistrictImpl.fromJson;
 
   @override
   String? get name;
@@ -158,6 +162,6 @@ abstract class _District implements District {
   String? get code;
   @override
   @JsonKey(ignore: true)
-  _$$_DistrictCopyWith<_$_District> get copyWith =>
+  _$$DistrictImplCopyWith<_$DistrictImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

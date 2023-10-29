@@ -6,8 +6,9 @@ part of 'place_information.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_PlaceInformation _$$_PlaceInformationFromJson(Map<String, dynamic> json) =>
-    _$_PlaceInformation(
+_$PlaceInformationImpl _$$PlaceInformationImplFromJson(
+        Map<String, dynamic> json) =>
+    _$PlaceInformationImpl(
       country: json['country'] == null
           ? null
           : Country.fromJson(json['country'] as Map<String, dynamic>),
@@ -23,7 +24,8 @@ _$_PlaceInformation _$$_PlaceInformationFromJson(Map<String, dynamic> json) =>
       address: json['address'] as String?,
     );
 
-Map<String, dynamic> _$$_PlaceInformationToJson(_$_PlaceInformation instance) =>
+Map<String, dynamic> _$$PlaceInformationImplToJson(
+        _$PlaceInformationImpl instance) =>
     <String, dynamic>{
       'country': instance.country,
       'province': instance.province,

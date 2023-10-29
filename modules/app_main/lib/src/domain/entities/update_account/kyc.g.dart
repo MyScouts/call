@@ -6,7 +6,7 @@ part of 'kyc.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Kyc _$$_KycFromJson(Map<String, dynamic> json) => _$_Kyc(
+_$KycImpl _$$KycImplFromJson(Map<String, dynamic> json) => _$KycImpl(
       id: json['id'] as int?,
       userId: json['userId'] as int?,
       status: json['status'] as int?,
@@ -16,7 +16,7 @@ _$_Kyc _$$_KycFromJson(Map<String, dynamic> json) => _$_Kyc(
       portrait: json['portrait'] as String?,
     );
 
-Map<String, dynamic> _$$_KycToJson(_$_Kyc instance) => <String, dynamic>{
+Map<String, dynamic> _$$KycImplToJson(_$KycImpl instance) => <String, dynamic>{
       'id': instance.id,
       'userId': instance.userId,
       'status': instance.status,

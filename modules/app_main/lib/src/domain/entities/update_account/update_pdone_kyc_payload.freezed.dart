@@ -86,11 +86,12 @@ class _$UpdatePDoneKYCPayloadCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_UpdatePDoneKYCPayloadCopyWith<$Res>
+abstract class _$$UpdatePDoneKYCPayloadImplCopyWith<$Res>
     implements $UpdatePDoneKYCPayloadCopyWith<$Res> {
-  factory _$$_UpdatePDoneKYCPayloadCopyWith(_$_UpdatePDoneKYCPayload value,
-          $Res Function(_$_UpdatePDoneKYCPayload) then) =
-      __$$_UpdatePDoneKYCPayloadCopyWithImpl<$Res>;
+  factory _$$UpdatePDoneKYCPayloadImplCopyWith(
+          _$UpdatePDoneKYCPayloadImpl value,
+          $Res Function(_$UpdatePDoneKYCPayloadImpl) then) =
+      __$$UpdatePDoneKYCPayloadImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -101,11 +102,12 @@ abstract class _$$_UpdatePDoneKYCPayloadCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_UpdatePDoneKYCPayloadCopyWithImpl<$Res>
-    extends _$UpdatePDoneKYCPayloadCopyWithImpl<$Res, _$_UpdatePDoneKYCPayload>
-    implements _$$_UpdatePDoneKYCPayloadCopyWith<$Res> {
-  __$$_UpdatePDoneKYCPayloadCopyWithImpl(_$_UpdatePDoneKYCPayload _value,
-      $Res Function(_$_UpdatePDoneKYCPayload) _then)
+class __$$UpdatePDoneKYCPayloadImplCopyWithImpl<$Res>
+    extends _$UpdatePDoneKYCPayloadCopyWithImpl<$Res,
+        _$UpdatePDoneKYCPayloadImpl>
+    implements _$$UpdatePDoneKYCPayloadImplCopyWith<$Res> {
+  __$$UpdatePDoneKYCPayloadImplCopyWithImpl(_$UpdatePDoneKYCPayloadImpl _value,
+      $Res Function(_$UpdatePDoneKYCPayloadImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -116,7 +118,7 @@ class __$$_UpdatePDoneKYCPayloadCopyWithImpl<$Res>
     Object? kycIdentityBack = freezed,
     Object? portrait = null,
   }) {
-    return _then(_$_UpdatePDoneKYCPayload(
+    return _then(_$UpdatePDoneKYCPayloadImpl(
       kycPassport: freezed == kycPassport
           ? _value.kycPassport
           : kycPassport // ignore: cast_nullable_to_non_nullable
@@ -140,15 +142,15 @@ class __$$_UpdatePDoneKYCPayloadCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true)
-class _$_UpdatePDoneKYCPayload implements _UpdatePDoneKYCPayload {
-  const _$_UpdatePDoneKYCPayload(
+class _$UpdatePDoneKYCPayloadImpl implements _UpdatePDoneKYCPayload {
+  const _$UpdatePDoneKYCPayloadImpl(
       {this.kycPassport,
       this.kycIdentityFront,
       this.kycIdentityBack,
       required this.portrait});
 
-  factory _$_UpdatePDoneKYCPayload.fromJson(Map<String, dynamic> json) =>
-      _$$_UpdatePDoneKYCPayloadFromJson(json);
+  factory _$UpdatePDoneKYCPayloadImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UpdatePDoneKYCPayloadImplFromJson(json);
 
   @override
   final String? kycPassport;
@@ -168,7 +170,7 @@ class _$_UpdatePDoneKYCPayload implements _UpdatePDoneKYCPayload {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UpdatePDoneKYCPayload &&
+            other is _$UpdatePDoneKYCPayloadImpl &&
             (identical(other.kycPassport, kycPassport) ||
                 other.kycPassport == kycPassport) &&
             (identical(other.kycIdentityFront, kycIdentityFront) ||
@@ -187,13 +189,13 @@ class _$_UpdatePDoneKYCPayload implements _UpdatePDoneKYCPayload {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UpdatePDoneKYCPayloadCopyWith<_$_UpdatePDoneKYCPayload> get copyWith =>
-      __$$_UpdatePDoneKYCPayloadCopyWithImpl<_$_UpdatePDoneKYCPayload>(
-          this, _$identity);
+  _$$UpdatePDoneKYCPayloadImplCopyWith<_$UpdatePDoneKYCPayloadImpl>
+      get copyWith => __$$UpdatePDoneKYCPayloadImplCopyWithImpl<
+          _$UpdatePDoneKYCPayloadImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UpdatePDoneKYCPayloadToJson(
+    return _$$UpdatePDoneKYCPayloadImplToJson(
       this,
     );
   }
@@ -204,10 +206,10 @@ abstract class _UpdatePDoneKYCPayload implements UpdatePDoneKYCPayload {
       {final String? kycPassport,
       final String? kycIdentityFront,
       final String? kycIdentityBack,
-      required final String portrait}) = _$_UpdatePDoneKYCPayload;
+      required final String portrait}) = _$UpdatePDoneKYCPayloadImpl;
 
   factory _UpdatePDoneKYCPayload.fromJson(Map<String, dynamic> json) =
-      _$_UpdatePDoneKYCPayload.fromJson;
+      _$UpdatePDoneKYCPayloadImpl.fromJson;
 
   @override
   String? get kycPassport;
@@ -219,6 +221,6 @@ abstract class _UpdatePDoneKYCPayload implements UpdatePDoneKYCPayload {
   String get portrait;
   @override
   @JsonKey(ignore: true)
-  _$$_UpdatePDoneKYCPayloadCopyWith<_$_UpdatePDoneKYCPayload> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$UpdatePDoneKYCPayloadImplCopyWith<_$UpdatePDoneKYCPayloadImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

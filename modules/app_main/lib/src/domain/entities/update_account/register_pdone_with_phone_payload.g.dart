@@ -6,17 +6,17 @@ part of 'register_pdone_with_phone_payload.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_RegisterPDoneAccountPayload _$$_RegisterPDoneAccountPayloadFromJson(
+_$RegisterPDoneAccountPayloadImpl _$$RegisterPDoneAccountPayloadImplFromJson(
         Map<String, dynamic> json) =>
-    _$_RegisterPDoneAccountPayload(
+    _$RegisterPDoneAccountPayloadImpl(
       phoneNumber: json['phoneNumber'] as String?,
       phoneCode: json['phoneCode'] as String?,
       countryId: json['country_id'] as int?,
       email: json['email'] as String?,
     );
 
-Map<String, dynamic> _$$_RegisterPDoneAccountPayloadToJson(
-    _$_RegisterPDoneAccountPayload instance) {
+Map<String, dynamic> _$$RegisterPDoneAccountPayloadImplToJson(
+    _$RegisterPDoneAccountPayloadImpl instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {

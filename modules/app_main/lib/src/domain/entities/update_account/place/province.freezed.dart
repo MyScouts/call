@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'province.dart';
 
@@ -33,66 +33,71 @@ mixin _$Province {
 /// @nodoc
 abstract class $ProvinceCopyWith<$Res> {
   factory $ProvinceCopyWith(Province value, $Res Function(Province) then) =
-      _$ProvinceCopyWithImpl<$Res>;
+      _$ProvinceCopyWithImpl<$Res, Province>;
+  @useResult
   $Res call({String? name, int? stateCode});
 }
 
 /// @nodoc
-class _$ProvinceCopyWithImpl<$Res> implements $ProvinceCopyWith<$Res> {
+class _$ProvinceCopyWithImpl<$Res, $Val extends Province>
+    implements $ProvinceCopyWith<$Res> {
   _$ProvinceCopyWithImpl(this._value, this._then);
 
-  final Province _value;
   // ignore: unused_field
-  final $Res Function(Province) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = freezed,
     Object? stateCode = freezed,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      stateCode: stateCode == freezed
+      stateCode: freezed == stateCode
           ? _value.stateCode
           : stateCode // ignore: cast_nullable_to_non_nullable
               as int?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_ProvinceCopyWith<$Res> implements $ProvinceCopyWith<$Res> {
-  factory _$$_ProvinceCopyWith(
-          _$_Province value, $Res Function(_$_Province) then) =
-      __$$_ProvinceCopyWithImpl<$Res>;
+abstract class _$$ProvinceImplCopyWith<$Res>
+    implements $ProvinceCopyWith<$Res> {
+  factory _$$ProvinceImplCopyWith(
+          _$ProvinceImpl value, $Res Function(_$ProvinceImpl) then) =
+      __$$ProvinceImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? name, int? stateCode});
 }
 
 /// @nodoc
-class __$$_ProvinceCopyWithImpl<$Res> extends _$ProvinceCopyWithImpl<$Res>
-    implements _$$_ProvinceCopyWith<$Res> {
-  __$$_ProvinceCopyWithImpl(
-      _$_Province _value, $Res Function(_$_Province) _then)
-      : super(_value, (v) => _then(v as _$_Province));
+class __$$ProvinceImplCopyWithImpl<$Res>
+    extends _$ProvinceCopyWithImpl<$Res, _$ProvinceImpl>
+    implements _$$ProvinceImplCopyWith<$Res> {
+  __$$ProvinceImplCopyWithImpl(
+      _$ProvinceImpl _value, $Res Function(_$ProvinceImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_Province get _value => super._value as _$_Province;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = freezed,
     Object? stateCode = freezed,
   }) {
-    return _then(_$_Province(
-      name: name == freezed
+    return _then(_$ProvinceImpl(
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      stateCode: stateCode == freezed
+      stateCode: freezed == stateCode
           ? _value.stateCode
           : stateCode // ignore: cast_nullable_to_non_nullable
               as int?,
@@ -102,11 +107,11 @@ class __$$_ProvinceCopyWithImpl<$Res> extends _$ProvinceCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Province implements _Province {
-  const _$_Province({this.name, this.stateCode});
+class _$ProvinceImpl implements _Province {
+  const _$ProvinceImpl({this.name, this.stateCode});
 
-  factory _$_Province.fromJson(Map<String, dynamic> json) =>
-      _$$_ProvinceFromJson(json);
+  factory _$ProvinceImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ProvinceImplFromJson(json);
 
 // int? id,
   @override
@@ -123,26 +128,25 @@ class _$_Province implements _Province {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Province &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.stateCode, stateCode));
+            other is _$ProvinceImpl &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.stateCode, stateCode) ||
+                other.stateCode == stateCode));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(stateCode));
+  int get hashCode => Object.hash(runtimeType, name, stateCode);
 
   @JsonKey(ignore: true)
   @override
-  _$$_ProvinceCopyWith<_$_Province> get copyWith =>
-      __$$_ProvinceCopyWithImpl<_$_Province>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$ProvinceImplCopyWith<_$ProvinceImpl> get copyWith =>
+      __$$ProvinceImplCopyWithImpl<_$ProvinceImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ProvinceToJson(
+    return _$$ProvinceImplToJson(
       this,
     );
   }
@@ -150,9 +154,10 @@ class _$_Province implements _Province {
 
 abstract class _Province implements Province {
   const factory _Province({final String? name, final int? stateCode}) =
-      _$_Province;
+      _$ProvinceImpl;
 
-  factory _Province.fromJson(Map<String, dynamic> json) = _$_Province.fromJson;
+  factory _Province.fromJson(Map<String, dynamic> json) =
+      _$ProvinceImpl.fromJson;
 
   @override // int? id,
   String? get name;
@@ -160,6 +165,6 @@ abstract class _Province implements Province {
   int? get stateCode;
   @override
   @JsonKey(ignore: true)
-  _$$_ProvinceCopyWith<_$_Province> get copyWith =>
+  _$$ProvinceImplCopyWith<_$ProvinceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

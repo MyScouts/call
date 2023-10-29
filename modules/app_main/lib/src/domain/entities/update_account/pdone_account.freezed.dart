@@ -175,11 +175,11 @@ class _$PDoneAccountCopyWithImpl<$Res, $Val extends PDoneAccount>
 }
 
 /// @nodoc
-abstract class _$$_PDoneAccountCopyWith<$Res>
+abstract class _$$PDoneAccountImplCopyWith<$Res>
     implements $PDoneAccountCopyWith<$Res> {
-  factory _$$_PDoneAccountCopyWith(
-          _$_PDoneAccount value, $Res Function(_$_PDoneAccount) then) =
-      __$$_PDoneAccountCopyWithImpl<$Res>;
+  factory _$$PDoneAccountImplCopyWith(
+          _$PDoneAccountImpl value, $Res Function(_$PDoneAccountImpl) then) =
+      __$$PDoneAccountImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -204,11 +204,11 @@ abstract class _$$_PDoneAccountCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PDoneAccountCopyWithImpl<$Res>
-    extends _$PDoneAccountCopyWithImpl<$Res, _$_PDoneAccount>
-    implements _$$_PDoneAccountCopyWith<$Res> {
-  __$$_PDoneAccountCopyWithImpl(
-      _$_PDoneAccount _value, $Res Function(_$_PDoneAccount) _then)
+class __$$PDoneAccountImplCopyWithImpl<$Res>
+    extends _$PDoneAccountCopyWithImpl<$Res, _$PDoneAccountImpl>
+    implements _$$PDoneAccountImplCopyWith<$Res> {
+  __$$PDoneAccountImplCopyWithImpl(
+      _$PDoneAccountImpl _value, $Res Function(_$PDoneAccountImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -228,7 +228,7 @@ class __$$_PDoneAccountCopyWithImpl<$Res>
     Object? kyc = freezed,
     Object? isPDone = freezed,
   }) {
-    return _then(_$_PDoneAccount(
+    return _then(_$PDoneAccountImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -288,8 +288,8 @@ class __$$_PDoneAccountCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true)
-class _$_PDoneAccount implements _PDoneAccount {
-  const _$_PDoneAccount(
+class _$PDoneAccountImpl implements _PDoneAccount {
+  const _$PDoneAccountImpl(
       {this.id,
       this.avatar,
       final List<String>? backgroundImages,
@@ -305,8 +305,8 @@ class _$_PDoneAccount implements _PDoneAccount {
       this.isPDone})
       : _backgroundImages = backgroundImages;
 
-  factory _$_PDoneAccount.fromJson(Map<String, dynamic> json) =>
-      _$$_PDoneAccountFromJson(json);
+  factory _$PDoneAccountImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PDoneAccountImplFromJson(json);
 
   @override
   final int? id;
@@ -354,7 +354,7 @@ class _$_PDoneAccount implements _PDoneAccount {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PDoneAccount &&
+            other is _$PDoneAccountImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.avatar, avatar) || other.avatar == avatar) &&
             const DeepCollectionEquality()
@@ -394,12 +394,12 @@ class _$_PDoneAccount implements _PDoneAccount {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PDoneAccountCopyWith<_$_PDoneAccount> get copyWith =>
-      __$$_PDoneAccountCopyWithImpl<_$_PDoneAccount>(this, _$identity);
+  _$$PDoneAccountImplCopyWith<_$PDoneAccountImpl> get copyWith =>
+      __$$PDoneAccountImplCopyWithImpl<_$PDoneAccountImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PDoneAccountToJson(
+    return _$$PDoneAccountImplToJson(
       this,
     );
   }
@@ -419,10 +419,10 @@ abstract class _PDoneAccount implements PDoneAccount {
       final String? displayName,
       @JsonKey(name: 'profile') final PDoneProfile? profile,
       final Kyc? kyc,
-      final bool? isPDone}) = _$_PDoneAccount;
+      final bool? isPDone}) = _$PDoneAccountImpl;
 
   factory _PDoneAccount.fromJson(Map<String, dynamic> json) =
-      _$_PDoneAccount.fromJson;
+      _$PDoneAccountImpl.fromJson;
 
   @override
   int? get id;
@@ -453,6 +453,6 @@ abstract class _PDoneAccount implements PDoneAccount {
   bool? get isPDone;
   @override
   @JsonKey(ignore: true)
-  _$$_PDoneAccountCopyWith<_$_PDoneAccount> get copyWith =>
+  _$$PDoneAccountImplCopyWith<_$PDoneAccountImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

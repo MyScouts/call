@@ -6,12 +6,13 @@ part of 'ward.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Ward _$$_WardFromJson(Map<String, dynamic> json) => _$_Ward(
+_$WardImpl _$$WardImplFromJson(Map<String, dynamic> json) => _$WardImpl(
       name: json['name'] as String?,
       id: json['id'] as int?,
     );
 
-Map<String, dynamic> _$$_WardToJson(_$_Ward instance) => <String, dynamic>{
+Map<String, dynamic> _$$WardImplToJson(_$WardImpl instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'id': instance.id,
     };

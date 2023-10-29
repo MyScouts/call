@@ -6,8 +6,8 @@ part of 'upgrade_account.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_UpgradeAccount _$$_UpgradeAccountFromJson(Map<String, dynamic> json) =>
-    _$_UpgradeAccount(
+_$UpgradeAccountImpl _$$UpgradeAccountImplFromJson(Map<String, dynamic> json) =>
+    _$UpgradeAccountImpl(
       jobs: (json['jobs'] as List<dynamic>?)
           ?.map((e) => Job.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -34,7 +34,8 @@ _$_UpgradeAccount _$$_UpgradeAccountFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$_UpgradeAccountToJson(_$_UpgradeAccount instance) =>
+Map<String, dynamic> _$$UpgradeAccountImplToJson(
+        _$UpgradeAccountImpl instance) =>
     <String, dynamic>{
       'jobs': instance.jobs,
       'sex': instance.genders,
@@ -46,90 +47,94 @@ Map<String, dynamic> _$$_UpgradeAccountToJson(_$_UpgradeAccount instance) =>
       'talents': instance.talents,
     };
 
-_$_Job _$$_JobFromJson(Map<String, dynamic> json) => _$_Job(
+_$JobImpl _$$JobImplFromJson(Map<String, dynamic> json) => _$JobImpl(
       key: json['key'] as String?,
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$$_JobToJson(_$_Job instance) => <String, dynamic>{
+Map<String, dynamic> _$$JobImplToJson(_$JobImpl instance) => <String, dynamic>{
       'key': instance.key,
       'name': instance.name,
     };
 
-_$_Gender _$$_GenderFromJson(Map<String, dynamic> json) => _$_Gender(
+_$GenderImpl _$$GenderImplFromJson(Map<String, dynamic> json) => _$GenderImpl(
       key: json['key'] as int?,
       value: json['value'] as String?,
     );
 
-Map<String, dynamic> _$$_GenderToJson(_$_Gender instance) => <String, dynamic>{
+Map<String, dynamic> _$$GenderImplToJson(_$GenderImpl instance) =>
+    <String, dynamic>{
       'key': instance.key,
       'value': instance.value,
     };
 
-_$_Protector _$$_ProtectorFromJson(Map<String, dynamic> json) => _$_Protector(
+_$ProtectorImpl _$$ProtectorImplFromJson(Map<String, dynamic> json) =>
+    _$ProtectorImpl(
       id: json['id'] as int?,
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$$_ProtectorToJson(_$_Protector instance) =>
+Map<String, dynamic> _$$ProtectorImplToJson(_$ProtectorImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
     };
 
-_$_BloodGroup _$$_BloodGroupFromJson(Map<String, dynamic> json) =>
-    _$_BloodGroup(
+_$BloodGroupImpl _$$BloodGroupImplFromJson(Map<String, dynamic> json) =>
+    _$BloodGroupImpl(
       id: json['id'] as String?,
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$$_BloodGroupToJson(_$_BloodGroup instance) =>
+Map<String, dynamic> _$$BloodGroupImplToJson(_$BloodGroupImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
     };
 
-_$_MaritalStatus _$$_MaritalStatusFromJson(Map<String, dynamic> json) =>
-    _$_MaritalStatus(
+_$MaritalStatusImpl _$$MaritalStatusImplFromJson(Map<String, dynamic> json) =>
+    _$MaritalStatusImpl(
       key: json['key'] as String?,
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$$_MaritalStatusToJson(_$_MaritalStatus instance) =>
+Map<String, dynamic> _$$MaritalStatusImplToJson(_$MaritalStatusImpl instance) =>
     <String, dynamic>{
       'key': instance.key,
       'name': instance.name,
     };
 
-_$_AcademicLevel _$$_AcademicLevelFromJson(Map<String, dynamic> json) =>
-    _$_AcademicLevel(
+_$AcademicLevelImpl _$$AcademicLevelImplFromJson(Map<String, dynamic> json) =>
+    _$AcademicLevelImpl(
       key: json['key'] as String?,
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$$_AcademicLevelToJson(_$_AcademicLevel instance) =>
+Map<String, dynamic> _$$AcademicLevelImplToJson(_$AcademicLevelImpl instance) =>
     <String, dynamic>{
       'key': instance.key,
       'name': instance.name,
     };
 
-_$_Interest _$$_InterestFromJson(Map<String, dynamic> json) => _$_Interest(
+_$InterestImpl _$$InterestImplFromJson(Map<String, dynamic> json) =>
+    _$InterestImpl(
       key: json['key'] as String?,
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$$_InterestToJson(_$_Interest instance) =>
+Map<String, dynamic> _$$InterestImplToJson(_$InterestImpl instance) =>
     <String, dynamic>{
       'key': instance.key,
       'name': instance.name,
     };
 
-_$_Talent _$$_TalentFromJson(Map<String, dynamic> json) => _$_Talent(
+_$TalentImpl _$$TalentImplFromJson(Map<String, dynamic> json) => _$TalentImpl(
       key: json['key'] as String?,
       name: json['name'] as String?,
     );
 
-Map<String, dynamic> _$$_TalentToJson(_$_Talent instance) => <String, dynamic>{
+Map<String, dynamic> _$$TalentImplToJson(_$TalentImpl instance) =>
+    <String, dynamic>{
       'key': instance.key,
       'name': instance.name,
     };

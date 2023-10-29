@@ -6,18 +6,18 @@ part of 'update_place_information_payload.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_UpdatePlaceInformationPayload _$$_UpdatePlaceInformationPayloadFromJson(
-        Map<String, dynamic> json) =>
-    _$_UpdatePlaceInformationPayload(
-      country: json['country'] as String?,
-      province: json['province'] as int?,
-      district: json['district'] as String?,
-      ward: json['ward'] as int?,
-      address: json['address'] as String?,
-    );
+_$UpdatePlaceInformationPayloadImpl
+    _$$UpdatePlaceInformationPayloadImplFromJson(Map<String, dynamic> json) =>
+        _$UpdatePlaceInformationPayloadImpl(
+          country: json['country'] as String?,
+          province: json['province'] as int?,
+          district: json['district'] as String?,
+          ward: json['ward'] as int?,
+          address: json['address'] as String?,
+        );
 
-Map<String, dynamic> _$$_UpdatePlaceInformationPayloadToJson(
-        _$_UpdatePlaceInformationPayload instance) =>
+Map<String, dynamic> _$$UpdatePlaceInformationPayloadImplToJson(
+        _$UpdatePlaceInformationPayloadImpl instance) =>
     <String, dynamic>{
       'country': instance.country,
       'province': instance.province,

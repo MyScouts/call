@@ -48,7 +48,10 @@ class ActionDialog extends StatelessWidget {
                 Expanded(
                   child: PrimaryButton(
                     title: actionTitle,
-                    onTap: onAction.call,
+                    onTap: () {
+                      Navigator.pop(context);
+                      onAction.call();
+                    },
                     disabled: false,
                   ),
                 ),

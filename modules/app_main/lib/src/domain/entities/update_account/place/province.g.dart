@@ -6,12 +6,13 @@ part of 'province.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Province _$$_ProvinceFromJson(Map<String, dynamic> json) => _$_Province(
+_$ProvinceImpl _$$ProvinceImplFromJson(Map<String, dynamic> json) =>
+    _$ProvinceImpl(
       name: json['name'] as String?,
       stateCode: json['stateCode'] as int?,
     );
 
-Map<String, dynamic> _$$_ProvinceToJson(_$_Province instance) =>
+Map<String, dynamic> _$$ProvinceImplToJson(_$ProvinceImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'stateCode': instance.stateCode,

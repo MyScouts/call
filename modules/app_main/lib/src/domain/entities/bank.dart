@@ -1,6 +1,3 @@
-// Copyright 2022 Fighttech.vn, Ltd. All rights reserved.
-// ignore_for_file: invalid_annotation_target
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'bank.freezed.dart';

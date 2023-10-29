@@ -61,21 +61,22 @@ class _$KycStatusCopyWithImpl<$Res, $Val extends KycStatus>
 }
 
 /// @nodoc
-abstract class _$$_KycStatusCopyWith<$Res> implements $KycStatusCopyWith<$Res> {
-  factory _$$_KycStatusCopyWith(
-          _$_KycStatus value, $Res Function(_$_KycStatus) then) =
-      __$$_KycStatusCopyWithImpl<$Res>;
+abstract class _$$KycStatusImplCopyWith<$Res>
+    implements $KycStatusCopyWith<$Res> {
+  factory _$$KycStatusImplCopyWith(
+          _$KycStatusImpl value, $Res Function(_$KycStatusImpl) then) =
+      __$$KycStatusImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int currentStep});
 }
 
 /// @nodoc
-class __$$_KycStatusCopyWithImpl<$Res>
-    extends _$KycStatusCopyWithImpl<$Res, _$_KycStatus>
-    implements _$$_KycStatusCopyWith<$Res> {
-  __$$_KycStatusCopyWithImpl(
-      _$_KycStatus _value, $Res Function(_$_KycStatus) _then)
+class __$$KycStatusImplCopyWithImpl<$Res>
+    extends _$KycStatusCopyWithImpl<$Res, _$KycStatusImpl>
+    implements _$$KycStatusImplCopyWith<$Res> {
+  __$$KycStatusImplCopyWithImpl(
+      _$KycStatusImpl _value, $Res Function(_$KycStatusImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -83,7 +84,7 @@ class __$$_KycStatusCopyWithImpl<$Res>
   $Res call({
     Object? currentStep = null,
   }) {
-    return _then(_$_KycStatus(
+    return _then(_$KycStatusImpl(
       currentStep: null == currentStep
           ? _value.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
@@ -94,11 +95,11 @@ class __$$_KycStatusCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_KycStatus implements _KycStatus {
-  const _$_KycStatus({required this.currentStep});
+class _$KycStatusImpl implements _KycStatus {
+  const _$KycStatusImpl({required this.currentStep});
 
-  factory _$_KycStatus.fromJson(Map<String, dynamic> json) =>
-      _$$_KycStatusFromJson(json);
+  factory _$KycStatusImpl.fromJson(Map<String, dynamic> json) =>
+      _$$KycStatusImplFromJson(json);
 
   @override
   final int currentStep;
@@ -112,7 +113,7 @@ class _$_KycStatus implements _KycStatus {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_KycStatus &&
+            other is _$KycStatusImpl &&
             (identical(other.currentStep, currentStep) ||
                 other.currentStep == currentStep));
   }
@@ -124,27 +125,27 @@ class _$_KycStatus implements _KycStatus {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_KycStatusCopyWith<_$_KycStatus> get copyWith =>
-      __$$_KycStatusCopyWithImpl<_$_KycStatus>(this, _$identity);
+  _$$KycStatusImplCopyWith<_$KycStatusImpl> get copyWith =>
+      __$$KycStatusImplCopyWithImpl<_$KycStatusImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_KycStatusToJson(
+    return _$$KycStatusImplToJson(
       this,
     );
   }
 }
 
 abstract class _KycStatus implements KycStatus {
-  const factory _KycStatus({required final int currentStep}) = _$_KycStatus;
+  const factory _KycStatus({required final int currentStep}) = _$KycStatusImpl;
 
   factory _KycStatus.fromJson(Map<String, dynamic> json) =
-      _$_KycStatus.fromJson;
+      _$KycStatusImpl.fromJson;
 
   @override
   int get currentStep;
   @override
   @JsonKey(ignore: true)
-  _$$_KycStatusCopyWith<_$_KycStatus> get copyWith =>
+  _$$KycStatusImplCopyWith<_$KycStatusImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

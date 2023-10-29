@@ -97,11 +97,12 @@ class _$VerifyOtpPDonePayloadCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_VerifyOtpPDonePayloadCopyWith<$Res>
+abstract class _$$VerifyOtpPDonePayloadImplCopyWith<$Res>
     implements $VerifyOtpPDonePayloadCopyWith<$Res> {
-  factory _$$_VerifyOtpPDonePayloadCopyWith(_$_VerifyOtpPDonePayload value,
-          $Res Function(_$_VerifyOtpPDonePayload) then) =
-      __$$_VerifyOtpPDonePayloadCopyWithImpl<$Res>;
+  factory _$$VerifyOtpPDonePayloadImplCopyWith(
+          _$VerifyOtpPDonePayloadImpl value,
+          $Res Function(_$VerifyOtpPDonePayloadImpl) then) =
+      __$$VerifyOtpPDonePayloadImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -113,11 +114,12 @@ abstract class _$$_VerifyOtpPDonePayloadCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_VerifyOtpPDonePayloadCopyWithImpl<$Res>
-    extends _$VerifyOtpPDonePayloadCopyWithImpl<$Res, _$_VerifyOtpPDonePayload>
-    implements _$$_VerifyOtpPDonePayloadCopyWith<$Res> {
-  __$$_VerifyOtpPDonePayloadCopyWithImpl(_$_VerifyOtpPDonePayload _value,
-      $Res Function(_$_VerifyOtpPDonePayload) _then)
+class __$$VerifyOtpPDonePayloadImplCopyWithImpl<$Res>
+    extends _$VerifyOtpPDonePayloadCopyWithImpl<$Res,
+        _$VerifyOtpPDonePayloadImpl>
+    implements _$$VerifyOtpPDonePayloadImplCopyWith<$Res> {
+  __$$VerifyOtpPDonePayloadImplCopyWithImpl(_$VerifyOtpPDonePayloadImpl _value,
+      $Res Function(_$VerifyOtpPDonePayloadImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -129,7 +131,7 @@ class __$$_VerifyOtpPDonePayloadCopyWithImpl<$Res>
     Object? email = freezed,
     Object? otp = null,
   }) {
-    return _then(_$_VerifyOtpPDonePayload(
+    return _then(_$VerifyOtpPDonePayloadImpl(
       token: freezed == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
@@ -156,16 +158,16 @@ class __$$_VerifyOtpPDonePayloadCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_VerifyOtpPDonePayload implements _VerifyOtpPDonePayload {
-  const _$_VerifyOtpPDonePayload(
+class _$VerifyOtpPDonePayloadImpl implements _VerifyOtpPDonePayload {
+  const _$VerifyOtpPDonePayloadImpl(
       {@JsonKey(includeIfNull: false) this.token,
       @JsonKey(includeIfNull: false) this.phone,
       @JsonKey(includeIfNull: false) this.phoneCode,
       @JsonKey(includeIfNull: false) this.email,
       required this.otp});
 
-  factory _$_VerifyOtpPDonePayload.fromJson(Map<String, dynamic> json) =>
-      _$$_VerifyOtpPDonePayloadFromJson(json);
+  factory _$VerifyOtpPDonePayloadImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VerifyOtpPDonePayloadImplFromJson(json);
 
   @override
   @JsonKey(includeIfNull: false)
@@ -191,7 +193,7 @@ class _$_VerifyOtpPDonePayload implements _VerifyOtpPDonePayload {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VerifyOtpPDonePayload &&
+            other is _$VerifyOtpPDonePayloadImpl &&
             (identical(other.token, token) || other.token == token) &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.phoneCode, phoneCode) ||
@@ -208,13 +210,13 @@ class _$_VerifyOtpPDonePayload implements _VerifyOtpPDonePayload {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VerifyOtpPDonePayloadCopyWith<_$_VerifyOtpPDonePayload> get copyWith =>
-      __$$_VerifyOtpPDonePayloadCopyWithImpl<_$_VerifyOtpPDonePayload>(
-          this, _$identity);
+  _$$VerifyOtpPDonePayloadImplCopyWith<_$VerifyOtpPDonePayloadImpl>
+      get copyWith => __$$VerifyOtpPDonePayloadImplCopyWithImpl<
+          _$VerifyOtpPDonePayloadImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VerifyOtpPDonePayloadToJson(
+    return _$$VerifyOtpPDonePayloadImplToJson(
       this,
     );
   }
@@ -226,10 +228,10 @@ abstract class _VerifyOtpPDonePayload implements VerifyOtpPDonePayload {
       @JsonKey(includeIfNull: false) final String? phone,
       @JsonKey(includeIfNull: false) final String? phoneCode,
       @JsonKey(includeIfNull: false) final String? email,
-      required final String otp}) = _$_VerifyOtpPDonePayload;
+      required final String otp}) = _$VerifyOtpPDonePayloadImpl;
 
   factory _VerifyOtpPDonePayload.fromJson(Map<String, dynamic> json) =
-      _$_VerifyOtpPDonePayload.fromJson;
+      _$VerifyOtpPDonePayloadImpl.fromJson;
 
   @override
   @JsonKey(includeIfNull: false)
@@ -247,6 +249,6 @@ abstract class _VerifyOtpPDonePayload implements VerifyOtpPDonePayload {
   String get otp;
   @override
   @JsonKey(ignore: true)
-  _$$_VerifyOtpPDonePayloadCopyWith<_$_VerifyOtpPDonePayload> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$VerifyOtpPDonePayloadImplCopyWith<_$VerifyOtpPDonePayloadImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

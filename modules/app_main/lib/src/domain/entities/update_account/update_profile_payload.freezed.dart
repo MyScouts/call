@@ -273,11 +273,11 @@ class _$UpdateProfilePayloadCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_UpdateProfilePayloadCopyWith<$Res>
+abstract class _$$UpdateProfilePayloadImplCopyWith<$Res>
     implements $UpdateProfilePayloadCopyWith<$Res> {
-  factory _$$_UpdateProfilePayloadCopyWith(_$_UpdateProfilePayload value,
-          $Res Function(_$_UpdateProfilePayload) then) =
-      __$$_UpdateProfilePayloadCopyWithImpl<$Res>;
+  factory _$$UpdateProfilePayloadImplCopyWith(_$UpdateProfilePayloadImpl value,
+          $Res Function(_$UpdateProfilePayloadImpl) then) =
+      __$$UpdateProfilePayloadImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -313,11 +313,11 @@ abstract class _$$_UpdateProfilePayloadCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_UpdateProfilePayloadCopyWithImpl<$Res>
-    extends _$UpdateProfilePayloadCopyWithImpl<$Res, _$_UpdateProfilePayload>
-    implements _$$_UpdateProfilePayloadCopyWith<$Res> {
-  __$$_UpdateProfilePayloadCopyWithImpl(_$_UpdateProfilePayload _value,
-      $Res Function(_$_UpdateProfilePayload) _then)
+class __$$UpdateProfilePayloadImplCopyWithImpl<$Res>
+    extends _$UpdateProfilePayloadCopyWithImpl<$Res, _$UpdateProfilePayloadImpl>
+    implements _$$UpdateProfilePayloadImplCopyWith<$Res> {
+  __$$UpdateProfilePayloadImplCopyWithImpl(_$UpdateProfilePayloadImpl _value,
+      $Res Function(_$UpdateProfilePayloadImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -347,7 +347,7 @@ class __$$_UpdateProfilePayloadCopyWithImpl<$Res>
     Object? protectorIdentityNumber = freezed,
     Object? protectorEmailPhone = freezed,
   }) {
-    return _then(_$_UpdateProfilePayload(
+    return _then(_$UpdateProfilePayloadImpl(
       firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -447,8 +447,8 @@ class __$$_UpdateProfilePayloadCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(explicitToJson: true)
-class _$_UpdateProfilePayload implements _UpdateProfilePayload {
-  const _$_UpdateProfilePayload(
+class _$UpdateProfilePayloadImpl implements _UpdateProfilePayload {
+  const _$UpdateProfilePayloadImpl(
       {@JsonKey(includeIfNull: false) this.firstName,
       @JsonKey(includeIfNull: false) this.lastName,
       @JsonKey(includeIfNull: false) this.middleName,
@@ -473,8 +473,8 @@ class _$_UpdateProfilePayload implements _UpdateProfilePayload {
       @JsonKey(includeIfNull: false) this.protectorIdentityNumber,
       @JsonKey(includeIfNull: false) this.protectorEmailPhone});
 
-  factory _$_UpdateProfilePayload.fromJson(Map<String, dynamic> json) =>
-      _$$_UpdateProfilePayloadFromJson(json);
+  factory _$UpdateProfilePayloadImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UpdateProfilePayloadImplFromJson(json);
 
   @override
   @JsonKey(includeIfNull: false)
@@ -555,7 +555,7 @@ class _$_UpdateProfilePayload implements _UpdateProfilePayload {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UpdateProfilePayload &&
+            other is _$UpdateProfilePayloadImpl &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
@@ -632,13 +632,14 @@ class _$_UpdateProfilePayload implements _UpdateProfilePayload {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UpdateProfilePayloadCopyWith<_$_UpdateProfilePayload> get copyWith =>
-      __$$_UpdateProfilePayloadCopyWithImpl<_$_UpdateProfilePayload>(
-          this, _$identity);
+  _$$UpdateProfilePayloadImplCopyWith<_$UpdateProfilePayloadImpl>
+      get copyWith =>
+          __$$UpdateProfilePayloadImplCopyWithImpl<_$UpdateProfilePayloadImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UpdateProfilePayloadToJson(
+    return _$$UpdateProfilePayloadImplToJson(
       this,
     );
   }
@@ -671,10 +672,10 @@ abstract class _UpdateProfilePayload implements UpdateProfilePayload {
           @JsonKey(includeIfNull: false) final String? protectorPDoneId,
           @JsonKey(includeIfNull: false) final String? protectorIdentityNumber,
           @JsonKey(includeIfNull: false) final String? protectorEmailPhone}) =
-      _$_UpdateProfilePayload;
+      _$UpdateProfilePayloadImpl;
 
   factory _UpdateProfilePayload.fromJson(Map<String, dynamic> json) =
-      _$_UpdateProfilePayload.fromJson;
+      _$UpdateProfilePayloadImpl.fromJson;
 
   @override
   @JsonKey(includeIfNull: false)
@@ -747,6 +748,6 @@ abstract class _UpdateProfilePayload implements UpdateProfilePayload {
   String? get protectorEmailPhone;
   @override
   @JsonKey(ignore: true)
-  _$$_UpdateProfilePayloadCopyWith<_$_UpdateProfilePayload> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$UpdateProfilePayloadImplCopyWith<_$UpdateProfilePayloadImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

@@ -6,11 +6,12 @@ part of 'kyc_status.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_KycStatus _$$_KycStatusFromJson(Map<String, dynamic> json) => _$_KycStatus(
+_$KycStatusImpl _$$KycStatusImplFromJson(Map<String, dynamic> json) =>
+    _$KycStatusImpl(
       currentStep: json['currentStep'] as int,
     );
 
-Map<String, dynamic> _$$_KycStatusToJson(_$_KycStatus instance) =>
+Map<String, dynamic> _$$KycStatusImplToJson(_$KycStatusImpl instance) =>
     <String, dynamic>{
       'currentStep': instance.currentStep,
     };

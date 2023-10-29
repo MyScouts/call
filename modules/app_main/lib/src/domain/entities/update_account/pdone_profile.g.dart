@@ -6,8 +6,8 @@ part of 'pdone_profile.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_PDoneProfile _$$_PDoneProfileFromJson(Map<String, dynamic> json) =>
-    _$_PDoneProfile(
+_$PDoneProfileImpl _$$PDoneProfileImplFromJson(Map<String, dynamic> json) =>
+    _$PDoneProfileImpl(
       birthPlace: json['birthPlace'] == null
           ? null
           : PlaceInformation.fromJson(
@@ -64,7 +64,7 @@ _$_PDoneProfile _$$_PDoneProfileFromJson(Map<String, dynamic> json) =>
           : User.fromJson(json['protectorInfo'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_PDoneProfileToJson(_$_PDoneProfile instance) =>
+Map<String, dynamic> _$$PDoneProfileImplToJson(_$PDoneProfileImpl instance) =>
     <String, dynamic>{
       'birthPlace': instance.birthPlace?.toJson(),
       'currentPlace': instance.currentPlace?.toJson(),
