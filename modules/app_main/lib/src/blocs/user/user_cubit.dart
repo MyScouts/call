@@ -7,13 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:localization/localization.dart';
 
+import '../../domain/usecases/user_share_preferences_usecase.dart';
+
 part 'user_state.dart';
 
 @injectable
 class UserCubit extends Cubit<UserState> {
   final AuthenticationUsecase _authenticationUsecase;
+  final UserSharePreferencesUsecase _userSharePreferencesUsecase;
   UserCubit(
     this._authenticationUsecase,
+    this._userSharePreferencesUsecase,
   ) : super(UserInitial());
 
   Future phoneRegister({

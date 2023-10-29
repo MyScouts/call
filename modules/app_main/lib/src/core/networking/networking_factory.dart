@@ -1,3 +1,4 @@
+import 'package:app_main/src/core/networking/interceptors/api_token_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:rxdart/rxdart.dart';
@@ -27,6 +28,9 @@ class NetworkingFactory {
       headers: headers,
     ));
 
+    dio.interceptors.add(
+      ApiTokenInterceptor(sharedPreferences, onLogout: onLogout),
+    );
     if (isDebug) {
       dio.interceptors.add(
         PrettyDioLogger(

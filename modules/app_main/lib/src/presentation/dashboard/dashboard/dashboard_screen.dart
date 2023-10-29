@@ -2,8 +2,14 @@ import 'package:app_main/src/presentation/dashboard/dashboard/widget/statusbar_w
 import 'package:app_main/src/presentation/dashboard/dashboard_contants.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:focused_menu_custom/focused_menu.dart';
+import 'package:focused_menu_custom/modals.dart';
 import 'package:imagewidget/imagewidget.dart';
-import 'package:reorderables/reorderables.dart';
+import 'package:reorderable_staggered_scroll_view/reorderable_staggered_scroll_view.dart';
+
+double calculateItemSize(double maxWith, double padding) {
+  return (maxWith / 4) - padding;
+}
 
 class DashboardScreen extends StatefulWidget {
   static const String routeName = "dashboard";
@@ -77,7 +83,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       height: 10.0,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: _currentPage == index ? Colors.black87 : Colors.black38,
+        color:
+            _currentPage == index ? Colors.white : Colors.white.withOpacity(.2),
       ),
     );
   }
@@ -131,9 +138,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
             bottom: 20.0,
             left: 0.0,
             right: 0.0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(3, _buildDot),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(3, _buildDot),
+                ),
+              ],
             ),
           ),
         ],
@@ -152,29 +163,42 @@ class PageScreen extends StatefulWidget {
 }
 
 class _PageScreenState extends State<PageScreen> {
-  List<Widget> _tiles = [];
+  List<GridItem> _tiles = [];
+  final ValueNotifier<bool> reBuild = ValueNotifier(true);
+  late double space = 0;
 
   @override
   void initState() {
     super.initState();
+    double size = calculateItemSize(widget.maxWidth, paddingHorizontal);
     _tiles = widget.items.map((item) {
-      return GridItem(item: item);
+      return GridItem(item: item, size: size, height: 1, width: 1);
     }).toList();
-    // final size = MediaQuery.of(context).size;
-    final space = (widget.maxWidth - 68 * 4 - 60) / 3;
+    space = (widget.maxWidth - (size + 10) * 4 - (paddingHorizontal)) / 3;
     _tiles.add(GridItem(
       item: AppItem(
         imageUrl: ImageConstants.bgFacebook,
         title: "Facebook",
       ),
-      size: 128 + space,
+      size: size,
+      height: 3,
+      width: 2,
     ));
     _tiles.add(GridItem(
       item: AppItem(
         imageUrl: ImageConstants.bgTiktok,
         title: "Tiktok",
       ),
-      size: 128 + space,
+      height: 2,
+      width: 4,
+    ));
+    _tiles.add(GridItem(
+      item: AppItem(
+        imageUrl: ImageConstants.bgTiktok,
+        title: "Tiktok",
+      ),
+      height: 3,
+      width: 2,
     ));
   }
 
@@ -187,29 +211,83 @@ class _PageScreenState extends State<PageScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final space = (size.width - 68 * 4 - 60) / 3;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         width: size.width,
         height: size.height,
-        child: ReorderableWrap(
-          spacing: space,
-          runSpacing: space - 14,
-          onReorder: _onReorder,
-          onNoReorder: (int index) {
-            //this callback is optional
-            debugPrint(
-                '${DateTime.now().toString().substring(5, 22)} reorder cancelled. index:$index');
-          },
-          buildDraggableFeedback: (context, constraints, child) {
-            return Container(
-              color: Colors.transparent,
-              child: child,
+        child: ValueListenableBuilder(
+          valueListenable: reBuild,
+          builder: (context, value, child) {
+            if (value == false) return Container();
+            return ReorderableStaggeredScrollView.grid(
+              enable: true,
+              padding: const EdgeInsets.all(16),
+              scrollDirection: Axis.vertical,
+              physics: const BouncingScrollPhysics(),
+              crossAxisCount: 4,
+              isLongPressDraggable: false,
+              onDragEnd: (details, item) {
+                print('onDragEnd: $details ${item.key}');
+              },
+              children: _tiles
+                  .map(
+                    (item) => ReorderableStaggeredScrollViewGridItem(
+                      key: ValueKey(item.toString()),
+                      mainAxisCellCount: item.height,
+                      crossAxisCellCount: item.width,
+                      widget: Container(
+                        margin: EdgeInsets.symmetric(vertical: 2),
+                        width: double.infinity,
+                        height: double.infinity,
+                        child: FocusedMenuHolder(
+                          onPressed: () {},
+                          menuItems: [
+                            FocusedMenuItem(
+                              title: Text("delete"),
+                              trailingIcon: Icon(Icons.share),
+                              onPressed: () async {
+                                _tiles
+                                    .removeWhere((element) => element == item);
+                                reBuild.value = false;
+                                await Future.delayed(
+                                  const Duration(milliseconds: 100),
+                                  () {
+                                    reBuild.value = true;
+                                  },
+                                );
+                                print('onDragEnd: ${item.key}');
+                                setState(() {});
+                              },
+                            ),
+                          ],
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: AspectRatio(
+                                    aspectRatio: (item.width) / item.height,
+                                    child: ImageWidget(
+                                      item.item.imageUrl,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              Text("${item.height}:${item.width}"),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
             );
           },
-          children: _tiles,
         ),
       ),
     );
@@ -217,16 +295,24 @@ class _PageScreenState extends State<PageScreen> {
 }
 
 class GridItem extends StatelessWidget {
-  const GridItem({super.key, required this.item, this.size = 60});
+  const GridItem({
+    super.key,
+    required this.item,
+    required this.height,
+    required this.width,
+    this.size = 60,
+  });
   final AppItem item;
   final double size;
+  final int width;
+  final int height;
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: Container(
-        width: size + 8,
+        width: width * size,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -242,8 +328,8 @@ class GridItem extends StatelessWidget {
                   // );
                 },
                 child: Container(
-                  width: size,
-                  height: size,
+                  width: width * size,
+                  height: height * size,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: ImageWidget(item.imageUrl),

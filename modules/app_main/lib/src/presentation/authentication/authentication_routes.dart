@@ -1,8 +1,8 @@
 import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'authenticate_screen.dart';
-import 'verify_otp_screen.dart';
+import 'login/login_screen.dart';
+import 'login/verify_otp_screen.dart';
 
 @injectable
 class AuthenticationRoutes extends RouteModule {

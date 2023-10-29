@@ -7,8 +7,8 @@ import '../../core/services/logger_service.dart';
 import '../entities/user/user.dart';
 
 const _kUserInfo = '_kUserInfo';
-const _kToken = '_keytoken';
-const _keyCurrentRoleVshop = '_keyCurrentRoleVshop';
+const _assessToken = '_assessToken';
+const _refreshToken = '_refreshToken';
 
 @injectable
 class UserInfoSharePreferencesUsecase {
@@ -30,7 +30,8 @@ class UserInfoSharePreferencesUsecase {
         return loginModel;
       } catch (e) {
         //reset wrong _kUserInfo
-        _shared.setString(_kToken, '');
+        _shared.setString(_assessToken, '');
+        _shared.setString(_refreshToken, '');
         _shared.setString(_kUserInfo, '{}');
         LoggerService.print(
             '[UserInfoSharePreferencesUsecase]: ${e.toString()}');
@@ -39,10 +40,4 @@ class UserInfoSharePreferencesUsecase {
     }
     return null;
   }
-
-  // 0: buyer, 1: admin vshop
-  int getCurrentRole() => _shared.getInt(_keyCurrentRoleVshop) ?? 0;
-
-  Future<bool> saveCurrentRole(int role) =>
-      _shared.setInt(_keyCurrentRoleVshop, role);
 }

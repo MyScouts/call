@@ -1,5 +1,5 @@
-import 'package:app_main/src/presentation/authentication/authenticate_screen.dart';
-import 'package:app_main/src/presentation/authentication/verify_otp_screen.dart';
+import 'package:app_main/src/presentation/authentication/login/login_screen.dart';
+import 'package:app_main/src/presentation/authentication/login/verify_otp_screen.dart';
 import 'package:app_main/src/presentation/authentication/widget/congrutulation_dialog.dart';
 import 'package:flutter/material.dart';
 

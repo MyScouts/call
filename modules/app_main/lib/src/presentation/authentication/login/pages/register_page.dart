@@ -10,7 +10,7 @@ import 'package:imagewidget/imagewidget.dart';
 import 'package:localization/localization.dart';
 import 'package:ui/ui.dart';
 
-import '../widget/custom_text_field.dart';
+import '../../widget/custom_text_field.dart';
 
 class RegisterWidget extends StatefulWidget {
   const RegisterWidget({super.key});

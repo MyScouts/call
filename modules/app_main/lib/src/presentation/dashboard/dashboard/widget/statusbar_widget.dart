@@ -19,16 +19,24 @@ class _StatusBarWidgetState extends State<StatusBarWidget> {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(maxHeight: 35),
+      padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
       child: IntrinsicHeight(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Expanded(flex: 1, child: CircleAvatar()),
+            const Expanded(
+              flex: 1,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: CircleAvatar(),
+              ),
+            ),
             Expanded(
-              flex: 2,
+              flex: 4,
               child: Container(
                 height: double.infinity,
+                alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(.1),
@@ -53,6 +61,7 @@ class _StatusBarWidgetState extends State<StatusBarWidget> {
             Expanded(
               flex: 1,
               child: IconButton(
+                alignment: Alignment.centerRight,
                 padding: EdgeInsets.zero,
                 icon: ImageWidget(
                   IconAppConstants.icHamburger,
@@ -122,11 +131,11 @@ class _StatusBarWidgetState extends State<StatusBarWidget> {
               child: child,
             );
           },
-          children: widgets
-              .map((item) => GridItem(
-                    item: item,
-                  ))
-              .toList(),
+          children: widgets.map((item) => Container(
+
+              // height: 1,
+              // width: 1,
+              )).toList(),
         );
       },
     );
