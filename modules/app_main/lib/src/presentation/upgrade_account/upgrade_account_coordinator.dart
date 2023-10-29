@@ -3,7 +3,11 @@ import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/update_bank
 import 'package:flutter/material.dart';
 import 'package:ui/ui.dart';
 
+import '../../data/models/responses/upgrade_account_response.dart';
+import '../../domain/entities/commity_action_type.dart';
+import 'upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'upgrade_ja/upgrade_ja_screen.dart';
+import 'upgrade_ja/widgets/verify_phone_otp_dialog_widget.dart';
 import 'upgrade_pdone/upgrade_pdone_screen.dart';
 
 extension UpgradeAccountCoordinator on BuildContext {
@@ -83,31 +87,30 @@ extension UpgradeAccountCoordinator on BuildContext {
   // }
 
   // Upgrade Account JA, VShop
-  // Future<T?> startDialogVerifyPhoneOTP<T>(
-  //     UpgradeAccountResponse res, PDoneActionType type) {
-  //   return showGeneralDialog<T>(
-  //     context: this,
-  //     barrierDismissible: true,
-  //     barrierLabel: '',
-  //     pageBuilder: (context, animation1, animation2) {
-  //       return MultiBlocProvider(
-  //         providers: [
-  //           BlocProvider<UpgradeAccountVerifyPhoneBloc>(
-  //             create: (context) => injector.get(),
-  //           ),
-  //           BlocProvider<ResendOTPPhoneBloc>(
-  //             create: (context) => injector.get(),
-  //           ),
-  //         ],
-  //         child: AutoHideKeyboard(
-  //           child: DialogContainerWidget(
-  //             child: VerifyPhoneOTPDialogWidget(response: res, type: type),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
+  Future<T?> startDialogVerifyPhoneOTP<T>(UpgradeAccountResponse res, PDoneActionType type) {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: true,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<UpgradeAccountVerifyPhoneBloc>(
+              create: (context) => injector.get(),
+            ),
+            BlocProvider<ResendOTPPhoneBloc>(
+              create: (context) => injector.get(),
+            ),
+          ],
+          child: AutoHideKeyboard(
+            child: DialogContainerWidget(
+              child: VerifyPhoneOTPDialogWidget(response: res, type: type),
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   // Future<T?> startDialogUpgradeAccountSuccess<T>(String text) {
   //   return showGeneralDialog<T>(

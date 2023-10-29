@@ -38,7 +38,7 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                   children: [
                     GestureDetector(
                       onTap: (){
-                        context.startDialogUpdateBankAccount();
+                        context.startUpgradePDone();
                       },
                       child: ImageWidget(
                         ImageConstants.defaultAppLogo,

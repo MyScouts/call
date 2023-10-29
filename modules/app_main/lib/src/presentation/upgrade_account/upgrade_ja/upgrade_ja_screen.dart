@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/shared/extensions/validation_extension.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/widgets/accept_term_with_checkbox_widget.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/widgets/read_more_policy.dart';
 import 'package:flutter/foundation.dart';
@@ -10,6 +11,7 @@ import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
 
 import '../../../data/models/responses/upgrade_account_response.dart';
+import '../../../domain/entities/commity_action_type.dart';
 import '../../../domain/usecases/community_usecase.dart';
 import '../../community/groups/group_listing_bloc.dart';
 import 'upgrade_agree_policy.bloc.dart';
@@ -113,13 +115,14 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
       final dataRes = state.data.copyWith(teamId: _currentTeam?.codeId);
 
       //TODO: go to verify OTP
-      // context.startDialogVerifyPhoneOTP(dataRes, type).then((value) {
-      //   if (value != null && value) {
-      //     delayAndPopScreen(context).then((value) {
-      //       context.read<UserBloc>().add(UserUpgradeAccountEvent(type));
-      //     });
-      //   }
-      // });
+      context.startDialogVerifyPhoneOTP(dataRes, PDoneActionType.registerJA).then((value) {
+        if (value != null && value) {
+          delayAndPopScreen(context).then((value) {
+            // TODO: upgrade account event
+            // context.read<UserBloc>().add(UserUpgradeAccountEvent(type));
+          });
+        }
+      });
     } else if (state is GetDetailError) {
       hideLoading();
       final e = state.error;
@@ -132,6 +135,18 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
         showToastMessage(message, ToastMessageType.error);
       }
     }
+  }
+
+
+  Future<void> delayAndPopScreen(BuildContext context) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    if (!mounted) {
+      return;
+    }
+    Navigator.of(context).pop();
+    //TODO: fetch user again
+    // context.read<UserBloc>().add(FetchUserInfoEvent());
   }
 
   @override
