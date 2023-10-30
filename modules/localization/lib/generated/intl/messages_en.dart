@@ -82,6 +82,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resend_the_code_later":
             MessageLookupByLibrary.simpleMessage("Resend the code later?"),
         "search": MessageLookupByLibrary.simpleMessage("search"),
+        "setting": MessageLookupByLibrary.simpleMessage("setting"),
         "terms_of_service_and_policies": MessageLookupByLibrary.simpleMessage(
             "terms_of_service_and_policies"),
         "validate_PleaseEnterInfo":

@@ -21,7 +21,6 @@ import '../mixin/update_pdone_information_mixin.dart';
 import '../views/widgets/place_information_widget.dart';
 import '../views/widgets/select_information_widget.dart';
 
-
 const msgValidateProtectorOk = 'Thông tin người bảo hộ trùng khớp';
 
 class UpdatePDoneInformationPage extends StatefulWidget {
@@ -388,68 +387,69 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                           ),
                         ),
                         _buildSpacerBetweenFields(),
-                        Expanded(
-                          child: InfomationLayoutFieldWidget(
-                            required: true,
-                            label:
-                                UpdateInformationType.birthDay.title(context),
-                            child: InputDateTimeWidget(
-                              hintText: 'Chọn ngày sinh',
-                              useHorizontalLayout: true,
-                              radius: 17,
-                              date: birthDay,
-                              formatText: (date) => S
-                                  .of(context)
-                                  .formatDateDDmmYYYYhhMM(date, date)
-                                  .split('|')
-                                  .first,
-                              max: DateTime.now(),
-                              onChange: (value) {
-                                if (value != null) {
-                                  birthDay = value;
+                        // TODO: fix heare
+                        // Expanded(
+                        //   child: InfomationLayoutFieldWidget(
+                        //     required: true,
+                        //     label:
+                        //         UpdateInformationType.birthDay.title(context),
+                        //     child: InputDateTimeWidget(
+                        //       hintText: 'Chọn ngày sinh',
+                        //       useHorizontalLayout: true,
+                        //       radius: 17,
+                        //       date: birthDay,
+                        //       formatText: (date) => S
+                        //           .of(context)
+                        //           .formatDateDDmmYYYYhhMM(date, date)
+                        //           .split('|')
+                        //           .first,
+                        //       max: DateTime.now(),
+                        //       onChange: (value) {
+                        //         if (value != null) {
+                        //           birthDay = value;
 
-                                  final isUnder18 = value.isUnder18yearsAgo();
-                                  _showProtectorCtrl.value = isUnder18;
-                                  needValidatingProtector = isUnder18;
+                        //           final isUnder18 = value.isUnder18yearsAgo();
+                        //           _showProtectorCtrl.value = isUnder18;
+                        //           needValidatingProtector = isUnder18;
 
-                                  if (!isUnder18) {
-                                    onUpdatePayload(
-                                      payload.copyWith(
-                                          protector: null,
-                                          protectorPDoneId: null),
-                                    );
-                                    currentProtector = null;
-                                    identifyNumberProtectorCtrl.clear();
-                                    pDoneIdProtectorCtrl.clear();
-                                    emailOrPhoneProtectorCtrl.clear();
-                                  }
+                        //           if (!isUnder18) {
+                        //             onUpdatePayload(
+                        //               payload.copyWith(
+                        //                   protector: null,
+                        //                   protectorPDoneId: null),
+                        //             );
+                        //             currentProtector = null;
+                        //             identifyNumberProtectorCtrl.clear();
+                        //             pDoneIdProtectorCtrl.clear();
+                        //             emailOrPhoneProtectorCtrl.clear();
+                        //           }
 
-                                  final isUnder15 = value.isUnder15yearsAgo();
+                        //           final isUnder15 = value.isUnder15yearsAgo();
 
-                                  if (isUnder15) {
-                                    supplyAddressCtrl.clear();
-                                    identifyNumberCtrl.clear();
-                                    supplyDate = null;
-                                    onUpdatePayload(
-                                      payload.copyWith(
-                                          supplyDate: null,
-                                          identityNumber: null,
-                                          supplyAddress: null),
-                                    );
-                                  }
+                        //           if (isUnder15) {
+                        //             supplyAddressCtrl.clear();
+                        //             identifyNumberCtrl.clear();
+                        //             supplyDate = null;
+                        //             onUpdatePayload(
+                        //               payload.copyWith(
+                        //                   supplyDate: null,
+                        //                   identityNumber: null,
+                        //                   supplyAddress: null),
+                        //             );
+                        //           }
 
-                                  setState(() {});
-                                  onUpdatePayload(
-                                      payload.copyWith(birthday: value.text()));
-                                }
-                              },
-                              validator: (value) => context.validateEmptyInfo(
-                                birthDay?.toString(),
-                                'Vui lòng chọn thông tin',
-                              ),
-                            ),
-                          ),
-                        ),
+                        //           setState(() {});
+                        //           onUpdatePayload(
+                        //               payload.copyWith(birthday: value.text()));
+                        //         }
+                        //       },
+                        //       validator: (value) => context.validateEmptyInfo(
+                        //         birthDay?.toString(),
+                        //         'Vui lòng chọn thông tin',
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
 
@@ -633,42 +633,43 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: InfomationLayoutFieldWidget(
-                            label: UpdateInformationType.dateOfIdNumber
-                                .title(context),
-                            required: checkIsUnder15ShouldEnableField(),
-                            isBold: true,
-                            child: InputDateTimeWidget(
-                              hintText: 'Chọn ngày',
-                              useHorizontalLayout: true,
-                              date: supplyDate,
-                              enabled: checkIsUnder15ShouldEnableField(),
-                              max: DateTime.now(),
-                              radius: 17,
-                              displayValueIsLabel:
-                                  checkIsUnder15ShouldEnableField(),
-                              formatText: (date) => S
-                                  .of(context)
-                                  .formatDateDDmmYYYYhhMM(date, date)
-                                  .split('|')
-                                  .first,
-                              validator: (value) =>
-                                  checkIsUnder15ShouldEnableField()
-                                      ? context.validateEmptyInfo(
-                                          supplyDate?.toString(),
-                                          'Vui lòng chọn ngày cấp')
-                                      : null,
-                              onChange: (value) {
-                                setState(() {
-                                  supplyDate = value;
-                                });
-                                onUpdatePayload(payload.copyWith(
-                                    supplyDate: value?.text()));
-                              },
-                            ),
-                          ),
-                        ),
+                        // TODO: fix heare
+                        // Expanded(
+                        //   child: InfomationLayoutFieldWidget(
+                        //     label: UpdateInformationType.dateOfIdNumber
+                        //         .title(context),
+                        //     required: checkIsUnder15ShouldEnableField(),
+                        //     isBold: true,
+                        //     child: InputDateTimeWidget(
+                        //       hintText: 'Chọn ngày',
+                        //       useHorizontalLayout: true,
+                        //       date: supplyDate,
+                        //       enabled: checkIsUnder15ShouldEnableField(),
+                        //       max: DateTime.now(),
+                        //       radius: 17,
+                        //       displayValueIsLabel:
+                        //           checkIsUnder15ShouldEnableField(),
+                        //       formatText: (date) => S
+                        //           .of(context)
+                        //           .formatDateDDmmYYYYhhMM(date, date)
+                        //           .split('|')
+                        //           .first,
+                        //       validator: (value) =>
+                        //           checkIsUnder15ShouldEnableField()
+                        //               ? context.validateEmptyInfo(
+                        //                   supplyDate?.toString(),
+                        //                   'Vui lòng chọn ngày cấp')
+                        //               : null,
+                        //       onChange: (value) {
+                        //         setState(() {
+                        //           supplyDate = value;
+                        //         });
+                        //         onUpdatePayload(payload.copyWith(
+                        //             supplyDate: value?.text()));
+                        //       },
+                        //     ),
+                        //   ),
+                        // ),
                         _buildSpacerBetweenFields(),
                         Expanded(
                           child: InformationFieldWidget(

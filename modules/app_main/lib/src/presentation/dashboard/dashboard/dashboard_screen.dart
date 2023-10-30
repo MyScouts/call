@@ -1,9 +1,10 @@
+import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_widget.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard/widget/dock_widget.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/statusbar_widget.dart';
-import 'package:app_main/src/presentation/dashboard/dashboard_contants.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:focused_menu_custom/focused_menu.dart';
-import 'package:focused_menu_custom/modals.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:reorderable/reorderable.dart';
 
@@ -21,66 +22,21 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   int _currentPage = 0;
-  late List<AppItem> list1;
-  late List<AppItem> list2;
-  late List<AppItem> list3;
-
+  final appListeners = [
+    ValueNotifier<List<AppItem>>([]),
+    ValueNotifier<List<AppItem>>([]),
+    ValueNotifier<List<AppItem>>([]),
+  ];
   @override
   void initState() {
     super.initState();
-    list1 = [
-      AppItem(
-        imageUrl: ImageConstants.bgFacebook,
-        title: "Facebook",
-      ),
-      AppItem(
-        imageUrl: ImageConstants.bgInstagram,
-        title: "Instagram",
-      ),
-      AppItem(
-        imageUrl: ImageConstants.bgLocket,
-        title: "Locket",
-      ),
-      AppItem(
-        imageUrl: ImageConstants.bgTiktok,
-        title: "Tiktok",
-      ),
-      AppItem(
-        imageUrl: ImageConstants.bgFacebook,
-        title: "Facebook",
-      ),
-      AppItem(
-        imageUrl: ImageConstants.bgInstagram,
-        title: "Instagram",
-      ),
-      AppItem(
-        imageUrl: ImageConstants.bgLocket,
-        title: "Locket",
-      ),
-      AppItem(
-        imageUrl: ImageConstants.bgTiktok,
-        title: "Tiktok",
-      ),
-    ];
-    list2 = [
-      AppItem(
-        imageUrl: ImageConstants.bgLocket,
-        title: "Locket",
-      ),
-    ];
-    list3 = [
-      AppItem(
-        imageUrl: ImageConstants.bgTiktok,
-        title: "Tiktok",
-      ),
-    ];
   }
 
   Widget _buildDot(int index) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 4.0),
-      width: 10.0,
-      height: 10.0,
+      width: 8,
+      height: 8,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color:
@@ -91,7 +47,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final maxWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -107,23 +62,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
             top: MediaQuery.of(context).padding.top,
             child: Column(
               children: [
-                StatusBarWidget(),
+                StatusBarWidget(
+                  openAppStore: () async {
+                    context.showAppStore(
+                      initApp: appListeners[_currentPage].value,
+                      onCompleted: (apps) {
+                        appListeners[_currentPage].value = [];
+                        Future.delayed(const Duration(milliseconds: 100), () {
+                          appListeners[_currentPage].value = apps;
+                        });
+                      },
+                    );
+                  },
+                ),
                 Expanded(
                   child: PageView(
-                    children: [
-                      PageScreen(
-                        items: list1,
-                        maxWidth: maxWidth,
-                      ),
-                      PageScreen(
-                        items: list2,
-                        maxWidth: maxWidth,
-                      ),
-                      PageScreen(
-                        items: list3,
-                        maxWidth: maxWidth,
-                      ),
-                    ],
+                    children: DashboardType.values
+                        .map(
+                          (type) => PageScreen(
+                            type: type,
+                            appListener: appListeners[
+                                DashboardType.values.indexOf(type)],
+                          ),
+                        )
+                        .toList(),
                     onPageChanged: (int index) {
                       setState(() {
                         _currentPage = index;
@@ -136,14 +98,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           Positioned(
             bottom: 20.0,
-            left: 0.0,
-            right: 0.0,
+            left: paddingHorizontal,
+            right: paddingHorizontal,
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(3, _buildDot),
                 ),
+                const SizedBox(height: 15),
+                const DockWidget(),
               ],
             ),
           ),
@@ -154,62 +118,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
 }
 
 class PageScreen extends StatefulWidget {
-  const PageScreen({super.key, required this.items, required this.maxWidth});
-  final List<AppItem> items;
-  final double maxWidth;
+  final DashboardType type;
+  final ValueNotifier<List<AppItem>> appListener;
+  const PageScreen({
+    super.key,
+    required this.type,
+    required this.appListener,
+  });
 
   @override
   State<PageScreen> createState() => _PageScreenState();
 }
 
-class _PageScreenState extends State<PageScreen> {
-  List<GridItem> _tiles = [];
-  final ValueNotifier<bool> reBuild = ValueNotifier(true);
-  late double space = 0;
+class _PageScreenState extends State<PageScreen>
+    with AutomaticKeepAliveClientMixin<PageScreen> {
+  final ValueNotifier<bool> _isLongPress = ValueNotifier(false);
 
   @override
   void initState() {
     super.initState();
-    double size = calculateItemSize(widget.maxWidth, paddingHorizontal);
-    _tiles = widget.items.map((item) {
-      return GridItem(item: item, size: size, height: 1, width: 1);
-    }).toList();
-    space = (widget.maxWidth - (size + 10) * 4 - (paddingHorizontal)) / 3;
-    _tiles.add(GridItem(
-      item: AppItem(
-        imageUrl: ImageConstants.bgFacebook,
-        title: "Facebook",
-      ),
-      size: size,
-      height: 3,
-      width: 2,
-    ));
-    _tiles.add(GridItem(
-      item: AppItem(
-        imageUrl: ImageConstants.bgTiktok,
-        title: "Tiktok",
-      ),
-      height: 2,
-      width: 4,
-    ));
-    _tiles.add(GridItem(
-      item: AppItem(
-        imageUrl: ImageConstants.bgTiktok,
-        title: "Tiktok",
-      ),
-      height: 3,
-      width: 2,
-    ));
-  }
-
-  void _onReorder(int oldIndex, int newIndex) {
-    setState(() {
-      _tiles.insert(newIndex, _tiles.removeAt(oldIndex));
-    });
+    switch (widget.type) {
+      case DashboardType.personal:
+        widget.appListener.value = AppItem.personalApps;
+        break;
+      default:
+        widget.appListener.value = AppItem.personalApps;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -218,137 +157,46 @@ class _PageScreenState extends State<PageScreen> {
         width: size.width,
         height: size.height,
         child: ValueListenableBuilder(
-          valueListenable: reBuild,
-          builder: (context, value, child) {
-            if (value == false) return Container();
+          valueListenable: widget.appListener,
+          builder: (context, apps, child) {
+            if (apps.isEmpty) return Container();
             return ReorderableStaggeredScrollView.grid(
               enable: true,
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.zero,
               scrollDirection: Axis.vertical,
               physics: const BouncingScrollPhysics(),
               crossAxisCount: 4,
-              isLongPressDraggable: false,
-              onDragEnd: (details, item) {
-                print('onDragEnd: $details ${item.key}');
+              onWillAccept: (p0, p1, p2) {
+                final item1 = p0 as ReorderableStaggeredScrollViewGridItem;
+                final item2 = p1 as ReorderableStaggeredScrollViewGridItem;
+                // debugPrint("onWillAccept ${item1.key}");
+                // debugPrint("onWillAccept ${item2.key}");
+                return true;
               },
-              children: _tiles
-                  .map(
-                    (item) => ReorderableStaggeredScrollViewGridItem(
-                      key: ValueKey(item.toString()),
-                      mainAxisCellCount: item.height,
-                      crossAxisCellCount: item.width,
-                      widget: Container(
-                        margin: EdgeInsets.symmetric(vertical: 2),
-                        width: double.infinity,
-                        height: double.infinity,
-                        child: FocusedMenuHolder(
-                          onPressed: () {},
-                          menuItems: [
-                            FocusedMenuItem(
-                              title: Text("delete"),
-                              trailingIcon: Icon(Icons.share),
-                              onPressed: () async {
-                                _tiles
-                                    .removeWhere((element) => element == item);
-                                reBuild.value = false;
-                                await Future.delayed(
-                                  const Duration(milliseconds: 100),
-                                  () {
-                                    reBuild.value = true;
-                                  },
-                                );
-                                print('onDragEnd: ${item.key}');
-                                setState(() {});
-                              },
-                            ),
-                          ],
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: AspectRatio(
-                                    aspectRatio: (item.width) / item.height,
-                                    child: ImageWidget(
-                                      item.item.imageUrl,
-                                      width: double.infinity,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 5),
-                              Text("${item.height}:${item.width}"),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                  .toList(),
+              isLongPressDraggable: true,
+              onDragEnd: (p0, p1) {
+                final data = p1.key;
+                print(data);
+              },
+              children: apps.map((item) {
+                item.sort = apps.indexOf(item);
+                return ReorderableStaggeredScrollViewGridItem(
+                  key: ValueKey(item.id.toString()),
+                  mainAxisCellCount: item.height,
+                  crossAxisCellCount: item.width,
+                  widget: AppWidget(
+                    app: item,
+                    isLongPress: _isLongPress,
+                  ),
+                );
+              }).toList(),
             );
           },
         ),
       ),
     );
   }
-}
-
-class GridItem extends StatelessWidget {
-  const GridItem({
-    super.key,
-    required this.item,
-    required this.height,
-    required this.width,
-    this.size = 60,
-  });
-  final AppItem item;
-  final double size;
-  final int width;
-  final int height;
 
   @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: Container(
-        width: width * size,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              InkWell(
-                onTap: () {
-                  // Navigator.pushNamed(
-                  //   context,
-                  //   AppRoutes.appDetail,
-                  //   arguments: {
-                  //     "app": item,
-                  //   },
-                  // );
-                },
-                child: Container(
-                  width: width * size,
-                  height: height * size,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: ImageWidget(item.imageUrl),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                item.title,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.black,
-                  height: 1,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  bool get wantKeepAlive => true;
 }

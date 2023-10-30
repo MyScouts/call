@@ -82,6 +82,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resend_the_code_later":
             MessageLookupByLibrary.simpleMessage("Gửi lại mã sau?"),
         "search": MessageLookupByLibrary.simpleMessage("Tìm kiếm"),
+        "setting": MessageLookupByLibrary.simpleMessage("cài đặt"),
         "terms_of_service_and_policies": MessageLookupByLibrary.simpleMessage(
             "Điều khoản dịch vụ và Chính sách"),
         "validate_PleaseEnterInfo":

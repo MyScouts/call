@@ -119,3 +119,9 @@ extension StringCheck on String {
   bool get hasNumber => RegExp(r'\d+').hasMatch(this);
   bool get hasUppercase => RegExp(r'[A-Z]').hasMatch(this);
 }
+
+extension CheckIsNumber on String {
+  bool isNumber() {
+    return RegExp(r'^\d+$').hasMatch(this);
+  }
+}

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:app_main/src/blocs/marshop/marshop_cubit.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/presentation/authentication/login/login_screen.dart';
@@ -17,6 +18,7 @@ abstract class IAppDelegate {
   Future<Widget> build(Map<String, dynamic> env);
   Future<void> run(Map<String, dynamic> env);
   UserSharePreferencesUsecase get userSharePreferencesUsecase => injector.get();
+  DeviceService get deviceService => injector.get();
   void reset() {
     injector.reset();
   }
@@ -52,6 +54,7 @@ class AppDelegate extends IAppDelegate {
       isProduction: Configurations.isProduction,
       providers: [
         BlocProvider<UserCubit>(create: (_) => injector.get()),
+        BlocProvider<MarshopCubit>(create: (_) => injector.get()),
       ],
       savedThemeMode: savedThemeMode,
       initialRoute: initialRoute,

@@ -96,20 +96,16 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                     leadingDistribution: TextLeadingDistribution.even),
               ),
               const SizedBox(height: 4),
-              CustomTextField(
+              AppPhoneInput(
                 controller: _phoneCtrl,
-                validator: ValidationHelper.phone,
                 onChange: (value) => onValidation(),
-                prefixIcon: IntrinsicHeight(
-                  child: _buildVgFlag(),
-                ),
-                hintText: S.current.phone_placeholder.capitalize(),
-                hintStyle: const TextStyle(
-                  color: Color(0xFF8C8C8C),
-                  fontSize: 14,
-                  height: 20 / 14,
-                  leadingDistribution: TextLeadingDistribution.even,
-                ),
+                onPhoneCodeChange: (value) {
+                  if (value.dialCode != null) {
+                    _phoneCode = value.dialCode!;
+                    setState(() {});
+                    debugPrint("$value");
+                  }
+                },
               ),
               const SizedBox(height: 16),
               Text(
@@ -253,77 +249,5 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
           password: _passwordCtrl.text,
           phoneCode: _phoneCode.replaceAll("+", ""),
         );
-  }
-
-  _buildVgFlag() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(12),
-          child: ImageWidget(
-            IconAppConstants.icPhone,
-            width: 24,
-            fit: BoxFit.cover,
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 8.0),
-          child: VerticalDivider(
-            color: Color(0xFFD9D9D9),
-            thickness: 1,
-            width: 1,
-          ),
-        ),
-        SizedBox(
-          // width: 100,
-          height: double.infinity,
-          child: CountryCodePicker(
-            hideSearch: true,
-            onChanged: (value) {
-              if (value.dialCode != null) {
-                _phoneCode = value.dialCode!;
-                setState(() {});
-                debugPrint("$value");
-              }
-            },
-            initialSelection: _phoneCode,
-            showCountryOnly: false,
-            showOnlyCountryWhenClosed: false,
-            alignLeft: false,
-            hideMainText: true,
-            dialogSize: Size.fromHeight(
-              MediaQuery.of(context).size.height * .7,
-            ),
-            barrierColor: Colors.transparent,
-            builder: (country) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Row(
-                  children: [
-                    ImageWidget(
-                      country != null
-                          ? "assets/${country.flagUri!}"
-                          : IconAppConstants.icVnFlag,
-                      width: 22,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      country?.dialCode ?? "",
-                      style: const TextStyle(
-                        color: Color(0xFF212121),
-                        height: 20 / 14,
-                        leadingDistribution: TextLeadingDistribution.even,
-                      ),
-                    )
-                  ],
-                ),
-              );
-            },
-          ),
-        )
-      ],
-    );
   }
 }

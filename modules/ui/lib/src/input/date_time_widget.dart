@@ -9,7 +9,6 @@ import 'package:localization/localization.dart';
 
 import '../../ui.dart';
 
-
 class InputDateTimeWidgetConst {
   static const double defaultPickerSheetHeight = 226.0;
 }
@@ -179,34 +178,35 @@ extension _InputDateTimeWidgetStateExt on _InputDateTimeWidgetState {
                 minimum: const EdgeInsets.only(bottom: 16),
                 child: Column(
                   children: [
+                    // TODO: fix heare
                     Padding(
                       padding: const EdgeInsets.all(16),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          InkWell(
-                            onTap: () {
-                              onChange(widget.date);
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(
-                              S.of(context).cta_Cancel,
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor),
-                            ),
-                          ),
+                          // InkWell(
+                          //   onTap: () {
+                          //     onChange(widget.date);
+                          //     Navigator.of(context).pop();
+                          //   },
+                          //   child: Text(
+                          //     S.of(context).cta_Cancel,
+                          //     style: TextStyle(
+                          //         color: Theme.of(context).primaryColor),
+                          //   ),
+                          // ),
                           const Spacer(),
-                          InkWell(
-                            onTap: () {
-                              onChange(valueInit);
-                              Navigator.of(context).pop();
-                            },
-                            child: Text(
-                              S.of(context).cta_Accept,
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor),
-                            ),
-                          ),
+                          // InkWell(
+                          //   onTap: () {
+                          //     onChange(valueInit);
+                          //     Navigator.of(context).pop();
+                          //   },
+                          //   child: Text(
+                          //     S.of(context).cta_Accept,
+                          //     style: TextStyle(
+                          //         color: Theme.of(context).primaryColor),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -239,7 +239,8 @@ extension _InputDateTimeWidgetStateExt on _InputDateTimeWidgetState {
         initialDate: _initialDate,
         firstDate: minimumDate,
         lastDate: maximumDate,
-        confirmText: S.of(context).cta_Accept.toUpperCase(),
+        // TODO: fix heare
+        // confirmText: S.of(context).cta_Accept.toUpperCase(),
         builder: (BuildContext? context, Widget? child) {
           return child!;
         }).then((date) {
