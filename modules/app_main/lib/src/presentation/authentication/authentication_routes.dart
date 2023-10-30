@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'forgot_password/forgot_password_screen.dart';
 import 'login/login_screen.dart';
 import 'login/verify_otp_screen.dart';
 
@@ -18,6 +19,9 @@ class AuthenticationRoutes extends RouteModule {
             phoneNumber: args['phoneNumber'],
             password: args["password"],
           );
+        },
+        ForgotPasswordScreen.routeName: (context) {
+          return const ForgotPasswordScreen();
         },
       };
 }

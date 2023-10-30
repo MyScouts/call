@@ -3,18 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 class CustomBackButton extends StatelessWidget {
-  const CustomBackButton({super.key});
+  final Color? color;
+  final Alignment? alignment;
+  const CustomBackButton({
+    super.key,
+    this.color,
+    this.alignment,
+  });
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
       padding: EdgeInsets.zero,
       onPressed: () => Navigator.pop(context),
-      alignment: Alignment.centerLeft,
+      alignment: alignment ?? Alignment.centerLeft,
       splashColor: Colors.transparent,
       focusColor: Colors.transparent,
       highlightColor: Colors.transparent,
-      icon: ImageWidget(IconAppConstants.icArrowLeft),
+      icon: ImageWidget(
+        IconAppConstants.icArrowLeft,
+        color: color ?? AppColors.black,
+      ),
     );
   }
 }

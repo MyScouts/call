@@ -209,7 +209,7 @@ packages:
     source: hosted
     version: "3.1.1"
   country_code_picker:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: country_code_picker
       sha256: "92818885f0e47486539f80463b66f649970506a91dd3c0731ca3ba5308324a4d"
@@ -387,14 +387,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  focused_menu_custom:
-    dependency: "direct main"
-    description:
-      name: focused_menu_custom
-      sha256: afbadad1405101f19f651581c569d969ad150df91fbac11d2b13b331bc0ed4ad
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.0"
   freezed_annotation:
     dependency: transitive
     description:
@@ -777,14 +769,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.1+1"
-  reorderables:
-    dependency: "direct main"
-    description:
-      name: reorderables
-      sha256: "004a886e4878df1ee27321831c838bc1c976311f4ca6a74ce7d561e506540a77"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.6.0"
   retrofit:
     dependency: "direct main"
     description:

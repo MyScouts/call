@@ -12,6 +12,11 @@ dependencies:
   flutter:
     sdk: flutter
 
+  app_core:
+    path: ../app_core
+  localization:
+    path: ../localization
+
   # features
   universal_platform: ^1.0.0+1
   intl: ^0.18.1
@@ -24,6 +29,7 @@ dependencies:
   design_system:
     path: ../design_system
   dropdown_button2: ^2.3.9
+  country_code_picker: ^3.0.0
 
 dev_dependencies:
   flutter_test:

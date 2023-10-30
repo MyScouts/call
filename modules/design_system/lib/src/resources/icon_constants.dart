@@ -7,9 +7,15 @@ class IconAppConstants {
   static String icArrowLeft = IconApp.icArrowLeft.path;
   static String icHamburger = IconApp.icHamburger.path;
   static String icSearch = IconApp.icSearch.path;
+  static String icECommerce = IconApp.icECommerce.path;
+  static String icVDone = IconApp.icVDone.path;
+  static String icNews = IconApp.icNews.path;
 }
 
 enum IconApp {
+  icVDone('assets/icons/ic_vdone.png'),
+  icNews('assets/icons/ic_news.png'),
+  icECommerce('assets/icons/ic_ecommerce.png'),
   icHamburger('assets/icons/ic_hamburger.svg'),
   icSearch('assets/icons/ic_search.svg'),
   iconPhone('assets/icons/ic_phone.png'),

@@ -1,7 +1,9 @@
 import 'package:app_main/src/presentation/authentication/login/login_screen.dart';
 import 'package:app_main/src/presentation/authentication/login/verify_otp_screen.dart';
-import 'package:app_main/src/presentation/authentication/widget/congrutulation_dialog.dart';
+import 'package:app_main/src/presentation/authentication/widget/congratulation_dialog.dart';
 import 'package:flutter/material.dart';
+
+import 'forgot_password/forgot_password_screen.dart';
 
 extension AuthenticationCoordinator on BuildContext {
   Future<T?> startLogin<T>({bool hasDashboard = false}) {
@@ -15,6 +17,12 @@ extension AuthenticationCoordinator on BuildContext {
     return Navigator.of(this).pushNamedAndRemoveUntil(
       AuthenticateScreen.routeName,
       (route) => false,
+    );
+  }
+
+  Future<T?> startForgotPassword<T>() {
+    return Navigator.of(this).pushNamed(
+      ForgotPasswordScreen.routeName,
     );
   }
 
