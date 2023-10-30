@@ -1,5 +1,4 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,11 @@ import 'package:imagewidget/imagewidget.dart';
 import 'package:localization/localization.dart';
 
 class StatusBarWidget extends StatefulWidget {
-  const StatusBarWidget({super.key});
+  final Function() openAppStore;
+  const StatusBarWidget({
+    super.key,
+    required this.openAppStore,
+  });
 
   @override
   State<StatusBarWidget> createState() => _StatusBarWidgetState();
@@ -68,56 +71,12 @@ class _StatusBarWidgetState extends State<StatusBarWidget> {
                 icon: ImageWidget(
                   IconAppConstants.icHamburger,
                 ),
-                onPressed: _showStoreWidgets,
+                onPressed: widget.openAppStore,
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  void _showStoreWidgets() {
-    final List<AppItem> widgets = [
-      AppItem(
-        avatar: ImageConstants.bgFacebook,
-        title: "Facebook",
-      ),
-      AppItem(
-        avatar: ImageConstants.bgInstagram,
-        title: "Instagram",
-      ),
-      AppItem(
-        avatar: ImageConstants.bgLocket,
-        title: "Locket",
-      ),
-      AppItem(
-        avatar: ImageConstants.bgTiktok,
-        title: "Tiktok",
-      ),
-      AppItem(
-        avatar: ImageConstants.bgFacebook,
-        title: "Facebook",
-      ),
-      AppItem(
-        avatar: ImageConstants.bgInstagram,
-        title: "Instagram",
-      ),
-      AppItem(
-        avatar: ImageConstants.bgLocket,
-        title: "Locket",
-      ),
-      AppItem(
-        avatar: ImageConstants.bgTiktok,
-        title: "Tiktok",
-      ),
-    ];
-
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return Container();
-      },
     );
   }
 }

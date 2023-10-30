@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/marshop/marshop_routes.dart';
+import 'package:app_main/src/presentation/qr_code/qr_code_route.dart';
 import 'package:app_main/src/presentation/settings/setting_routes.dart';
 import 'package:injectable/injectable.dart';
 import 'authentication/authentication_routes.dart';
@@ -13,6 +14,7 @@ class Routes extends RouteModuleBuilder {
         get<AuthenticationRoutes>(),
         get<SettingRoutes>(),
         get<MarkShopRoutes>(),
+        get<QrCodeRoutes>(),
       ];
 
   @override

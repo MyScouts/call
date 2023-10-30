@@ -10,9 +10,21 @@ class IconAppConstants {
   static String icECommerce = IconApp.icECommerce.path;
   static String icVDone = IconApp.icVDone.path;
   static String icNews = IconApp.icNews.path;
+  static String icGroupTeam = IconApp.icGroupTeam.path;
+  static String icPayment = IconApp.icPayment.path;
+  static String icVStore = IconApp.icVStore.path;
+  static String icBToB = IconApp.icBToB.path;
+  static String icChanel = IconApp.icChanel.path;
+  static String icWheelOfFortune = IconApp.icWheelOfFortune.path;
 }
 
 enum IconApp {
+  icWheelOfFortune('assets/icons/wheel_of_fortune.png'),
+  icChanel('assets/icons/ic_chanel.png'),
+  icBToB('assets/icons/ic_b_to_b.png'),
+  icVStore('assets/icons/ic_vstore.png'),
+  icPayment('assets/icons/ic_payment.png'),
+  icGroupTeam('assets/icons/ic_group_team.png'),
   icVDone('assets/icons/ic_vdone.png'),
   icNews('assets/icons/ic_news.png'),
   icECommerce('assets/icons/ic_ecommerce.png'),

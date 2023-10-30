@@ -17,9 +17,9 @@ class _DockWidgetState extends State<DockWidget> {
   final columns = 5;
 
   final List<AppItem> _dockApps = [
-    AppItem(avatar: IconAppConstants.icECommerce, title: ""),
-    AppItem(avatar: IconAppConstants.icVDone, title: ""),
-    AppItem(avatar: IconAppConstants.icNews, title: ""),
+    AppItem(avatar: IconAppConstants.icECommerce, title: "", id: 1),
+    AppItem(avatar: IconAppConstants.icVDone, title: "", id: 2),
+    AppItem(avatar: IconAppConstants.icNews, title: "", id: 3),
   ];
 
   @override

@@ -29,3 +29,4 @@ export 'src/domain/entities/user/user.dart';
 export 'src/domain/usecase/user_share_preferences_usecase.dart';
 export 'src/helpers/validation_helper.dart';
 export 'src/presentation/user_information_bloc.dart';
+export 'src/dependency_injection/appcore_micro.module.dart';

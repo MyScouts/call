@@ -7,6 +7,7 @@ class ImageConstants {
   static String bgTiktok = ImageApp.bgTiktok.path;
   static String bgLocket = ImageApp.bgLocket.path;
   static String defaultBgDashboard = ImageApp.defaultBgDashboard.path;
+  static String warning = ImageApp.warning.path;
 }
 
 enum ImageApp {
@@ -17,7 +18,8 @@ enum ImageApp {
   bgFacebook('assets/images/facebook.jpg'),
   bgInstagram('assets/images/instagram.webp'),
   bgTiktok('assets/images/tiktok.webp'),
-  bgLocket('assets/images/locket.webp');
+  bgLocket('assets/images/locket.webp'),
+  warning('assets/images/warning.png');
 
   const ImageApp(this.path);
   final String path;

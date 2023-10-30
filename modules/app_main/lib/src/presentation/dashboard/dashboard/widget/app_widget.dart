@@ -65,8 +65,12 @@ class AppWidget extends StatelessWidget {
           if (app.title.isNotEmpty)
             Text(
               app.title,
+              maxLines: 1,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
               style: context.text.titleSmall!.copyWith(
                 color: AppColors.white,
+                fontSize: 10,
               ),
             ),
         ],

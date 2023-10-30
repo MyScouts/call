@@ -32,4 +32,11 @@ class ValidationHelper {
     }
     return null;
   }
+
+  static String? requiredValid(String? value, String label) {
+    if (value == null || value.isEmpty) {
+      return S.current.validation_required(label).capitalize();
+    }
+    return null;
+  }
 }

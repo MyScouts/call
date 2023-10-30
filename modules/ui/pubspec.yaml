@@ -30,6 +30,7 @@ dependencies:
     path: ../design_system
   dropdown_button2: ^2.3.9
   country_code_picker: ^3.0.0
+  pin_code_fields: ^8.0.1
 
 dev_dependencies:
   flutter_test:
