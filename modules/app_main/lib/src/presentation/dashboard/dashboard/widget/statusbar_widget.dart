@@ -1,11 +1,9 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_contants.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:localization/localization.dart';
-import 'package:reorderables/reorderables.dart';
 
 class StatusBarWidget extends StatefulWidget {
   const StatusBarWidget({super.key});
@@ -114,29 +112,7 @@ class _StatusBarWidgetState extends State<StatusBarWidget> {
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        return ReorderableWrap(
-          onReorderStarted: (index) {
-            Navigator.pop(context);
-            debugPrint("onReorderStarted");
-          },
-          onReorder: (oldIndex, newIndex) {},
-          onNoReorder: (int index) {
-            //this callback is optional
-            debugPrint(
-                '${DateTime.now().toString().substring(5, 22)} reorder cancelled. index:$index');
-          },
-          buildDraggableFeedback: (context, constraints, child) {
-            return Container(
-              color: Colors.transparent,
-              child: child,
-            );
-          },
-          children: widgets.map((item) => Container(
-
-              // height: 1,
-              // width: 1,
-              )).toList(),
-        );
+        return Container();
       },
     );
   }

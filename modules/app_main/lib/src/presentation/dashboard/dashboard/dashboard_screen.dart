@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:focused_menu_custom/focused_menu.dart';
 import 'package:focused_menu_custom/modals.dart';
 import 'package:imagewidget/imagewidget.dart';
-import 'package:reorderable_staggered_scroll_view/reorderable_staggered_scroll_view.dart';
+import 'package:reorderable/reorderable.dart';
 
 double calculateItemSize(double maxWith, double padding) {
   return (maxWith / 4) - padding;
