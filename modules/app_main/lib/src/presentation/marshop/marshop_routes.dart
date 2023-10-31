@@ -1,4 +1,5 @@
-import 'package:app_main/src/presentation/marshop/upgrade_marshop/register_customer_screen.dart';
+import 'package:app_main/src/presentation/marshop/register_customer/register_customer_screen.dart';
+import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobilehub_core/mobilehub_core.dart';
@@ -9,6 +10,9 @@ class MarkShopRoutes extends RouteModule {
   Map<String, WidgetBuilder> getAll(RouteSettings settings) => {
         RegisterCustomerScreen.routeName: (context) {
           return const RegisterCustomerScreen();
+        },
+        RegisterMarshopScreen.routeName: (context) {
+          return const RegisterMarshopScreen();
         },
       };
 }

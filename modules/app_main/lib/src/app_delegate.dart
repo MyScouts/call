@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:app_main/src/blocs/auth/auth_cubit.dart';
 import 'package:app_main/src/blocs/marshop/marshop_cubit.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
@@ -41,7 +42,7 @@ class AppDelegate extends IAppDelegate {
 
     var initialRoute = AuthenticateScreen.routeName;
     if (userSharePreferencesUsecase.isAuthenticated) {
-      // initialRoute = DashboardScreen.routeName;
+      initialRoute = DashboardScreen.routeName;
     }
 
     if (Configurations.isStudio) {
@@ -55,6 +56,7 @@ class AppDelegate extends IAppDelegate {
       providers: [
         BlocProvider<UserCubit>(create: (_) => injector.get()),
         BlocProvider<MarshopCubit>(create: (_) => injector.get()),
+        BlocProvider<AuthCubit>(create: (_) => injector.get()),
       ],
       savedThemeMode: savedThemeMode,
       initialRoute: initialRoute,

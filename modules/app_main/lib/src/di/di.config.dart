@@ -16,6 +16,7 @@ import 'package:mobilehub_bloc/mobilehub_bloc.dart' as _i45;
 import 'package:shared_preferences/shared_preferences.dart' as _i19;
 
 import '../app_delegate.dart' as _i4;
+import '../blocs/auth/auth_cubit.dart' as _i54;
 import '../blocs/marshop/marshop_cubit.dart' as _i51;
 import '../blocs/user/user_cubit.dart' as _i52;
 import '../core/services/notification/notification_service.dart' as _i11;
@@ -52,7 +53,7 @@ import '../domain/usecases/upgrade_account_usecase.dart' as _i32;
 import '../domain/usecases/user_share_preferences_usecase.dart' as _i21;
 import '../domain/usecases/user_usecase.dart' as _i22;
 import '../presentation/authentication/authentication_routes.dart' as _i5;
-import '../presentation/community/community_module.dart' as _i55;
+import '../presentation/community/community_module.dart' as _i56;
 import '../presentation/dashboard/dashboard_routes.dart' as _i6;
 import '../presentation/general_setting/general_routes.dart' as _i9;
 import '../presentation/marshop/marshop_routes.dart' as _i10;
@@ -65,12 +66,12 @@ import '../presentation/settings/setting_routes.dart' as _i18;
 import '../presentation/shared/app_setting/bloc/app_setting_bloc.dart' as _i53;
 import '../presentation/upgrade_account/upgrade_account_routes.dart' as _i20;
 import '../presentation/upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart'
-    as _i56;
+    as _i57;
 import '../presentation/upgrade_account/upgrade_pdone/bloc/place_information/place_information_bloc.dart'
     as _i28;
 import '../presentation/upgrade_account/upgrade_pdone/bloc/upgrade_pdone/upgrade_pdone_bloc.dart'
     as _i33;
-import 'modules/data_source_module.dart' as _i54;
+import 'modules/data_source_module.dart' as _i55;
 
 const String _prod = 'prod';
 
@@ -168,10 +169,10 @@ Future<_i1.GetIt> init(
       _i45.GetDetailBlocParam2<bool, _i49.VerifyPhoneOtpPayload,
           _i47.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
       .createUpgradeAccountVerifyPhoneBloc(gh<_i32.UpgradeAccountUsecase>()));
-  gh.factory<_i45.GetListBloc<_i50.Bank>>(() => upgradeAgreePolicyBlocFactory
-      .createGetListBanksBloc(gh<_i32.UpgradeAccountUsecase>()));
   gh.factory<_i45.GetListBloc<_i3.Group>>(() =>
       communityModule.createGetListGroupsBloc(gh<_i44.CommunityUsecase>()));
+  gh.factory<_i45.GetListBloc<_i50.Bank>>(() => upgradeAgreePolicyBlocFactory
+      .createGetListBanksBloc(gh<_i32.UpgradeAccountUsecase>()));
   gh.factory<_i45.GetListBlocParam1<_i3.Team, int>>(() =>
       communityModule.createGetListTeamsBloc(gh<_i44.CommunityUsecase>()));
   gh.factory<_i51.MarshopCubit>(
@@ -182,12 +183,14 @@ Future<_i1.GetIt> init(
       ));
   gh.singleton<_i53.AppSettingBloc>(
       _i53.AppSettingBloc(gh<_i40.AuthenticationUsecase>()));
+  gh.factory<_i54.AuthCubit>(
+      () => _i54.AuthCubit(gh<_i40.AuthenticationUsecase>()));
   return getIt;
 }
 
-class _$DataSourceModule extends _i54.DataSourceModule {}
+class _$DataSourceModule extends _i55.DataSourceModule {}
 
-class _$CommunityModule extends _i55.CommunityModule {}
+class _$CommunityModule extends _i56.CommunityModule {}
 
 class _$UpgradeAgreePolicyBlocFactory
-    extends _i56.UpgradeAgreePolicyBlocFactory {}
+    extends _i57.UpgradeAgreePolicyBlocFactory {}

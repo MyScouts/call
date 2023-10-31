@@ -5,7 +5,9 @@ import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payl
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:app_main/src/presentation/authentication/widget/custom_text_field.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
+import 'package:app_main/src/presentation/general_setting/general_coordinator.dart';
 import 'package:design_system/design_system.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:ui/ui.dart';
@@ -118,6 +120,8 @@ class _LoginWidgetState extends State<LoginWidget> with ValidationMixin {
                             text: "${S.current.registration_is_consent_to}\n",
                           ),
                           TextSpan(
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = context.startTermsAndCondition,
                             text: S.current.terms_of_service_and_policies,
                             style: context.text.titleMedium!.copyWith(
                               color: context.theme.primaryColor,

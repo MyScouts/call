@@ -4,10 +4,12 @@ part 'marshop_payload.g.dart';
 
 @JsonSerializable()
 class RegisterCustomerPayload {
+  final String otp;
   final int marshopId;
 
   const RegisterCustomerPayload({
     required this.marshopId,
+    required this.otp,
   });
 
   factory RegisterCustomerPayload.fromJson(Map<String, dynamic> json) =>

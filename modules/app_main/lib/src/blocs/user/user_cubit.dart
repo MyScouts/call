@@ -145,9 +145,6 @@ class UserCubit extends Cubit<UserState> {
       switch (data['code']) {
         case "USER_NOT_FOUND":
           err = S.current.message_user_not_found.capitalize();
-        default:
-          err = S.current.messages_login_fail.capitalize();
-          break;
       }
       emit(ForgotPasswordFail(message: err));
     } catch (error) {

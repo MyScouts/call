@@ -25,8 +25,12 @@ class MarshopCubit extends Cubit<MarshopState> {
       switch (data['code']) {
         case "MARSHOP_NOT_FOUND":
           message = "Không tìm thấy mã Marshop!";
+          break;
         case "ALREADY_MARSHOP_CUSTOMER":
           message = "Bạn đã đăng ký khách hàng thường xuyên!";
+          break;
+        case "OTP_NOT_MATCH":
+          message = S.current.message_otp_not_match.capitalize();
           break;
         default:
       }

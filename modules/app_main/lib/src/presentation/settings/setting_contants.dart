@@ -19,7 +19,7 @@ class Setting {
         Setting(
           text: "Đăng ký và nâng cấp tài khoản",
           icon: IconAppConstants.icECommerce,
-          onPressed: () => context.startUpgradeMarshop(),
+          onPressed: () => context.startRegisterCustomer(),
         ),
       ];
 }

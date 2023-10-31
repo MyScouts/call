@@ -3,7 +3,9 @@ import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/authentication/authentication_constants.dart';
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
+import 'package:app_main/src/presentation/general_setting/general_coordinator.dart';
 import 'package:design_system/design_system.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:localization/localization.dart';
@@ -223,6 +225,8 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                             text: "${S.current.registration_is_consent_to}\n",
                           ),
                           TextSpan(
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = context.startTermsAndCondition,
                             text: S.current.terms_of_service_and_policies,
                             style: context.text.titleMedium!.copyWith(
                               color: context.theme.primaryColor,

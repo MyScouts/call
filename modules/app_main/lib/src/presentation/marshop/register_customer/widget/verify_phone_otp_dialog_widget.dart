@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/auth/auth_cubit.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +8,10 @@ import 'package:ui/ui.dart';
 const showResendOTP = false;
 
 class VerifyPhoneOTPDialogWidget extends StatefulWidget {
+  final Function(String) onVerify;
   const VerifyPhoneOTPDialogWidget({
     super.key,
+    required this.onVerify,
   });
 
   @override
@@ -30,10 +33,9 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
   @override
   int get timeInputLimit => 60;
 
-  void _verifyOTP() {}
-
   void _onTapResendOtp() {
     restartTimer();
+    context.read<AuthCubit>().resendOTP();
     setState(() {});
   }
 
@@ -129,9 +131,13 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
             child: PrimaryButton(
-                title: 'Xác thực',
-                onTap: _isActive ? _verifyOTP : null,
-                disabled: false),
+              title: 'Xác thực',
+              onTap: () {
+                if (!_isActive) return;
+                widget.onVerify(_otpCode.toString());
+              },
+              disabled: false,
+            ),
           ),
         ],
       ),
