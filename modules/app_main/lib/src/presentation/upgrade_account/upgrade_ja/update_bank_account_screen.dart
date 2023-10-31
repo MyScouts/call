@@ -1,5 +1,7 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
 import 'package:app_main/src/presentation/shared/extensions/validation_extension.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
@@ -10,6 +12,7 @@ import 'upgrade_agree_policy.bloc.dart';
 
 class UpdateBankAccountScreen extends StatefulWidget {
   static const String routeName = '/update-bank-account';
+
   const UpdateBankAccountScreen({super.key});
 
   @override
@@ -171,15 +174,15 @@ class _UpdateBankAccountScreenState extends State<UpdateBankAccountScreen> with 
                     child: PrimaryButton(
                       title: 'TIẾP THEO',
                       onTap: () {
-                        // final params = AddBankAccountParams(
-                        //   bank: _selectedBank,
-                        //   bankNumber: _bankNumberCtrl.text,
-                        //   bankHolderName: _bankAccountHolderCtrl.text,
-                        //   qrImage: qrImage,
-                        //   isDefault: false,
-                        // );
-                        // _bloc.setAddBankAccountParams(params);
-                        // _bloc.add(const BankAccountEvent.getOtp());
+                        final payload = UpdateBankAccountPayload(
+                          token: '',
+                          otp: '',
+                          bankHolder: _bankAccountHolderCtrl.text,
+                          bankId: _selectedBank!.id ?? 0,
+                          bankNumber: _bankNumberCtrl.text,
+                          isDefault: false,
+                        );
+                        context.startDialogVerifyBankAccountOTP(payload);
                       },
                       disabled: !validation,
                     ),

@@ -1,3 +1,4 @@
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/models/payloads/upgrade_account/upgrade_ja/upgrade_ja_payload.dart';
@@ -6,8 +7,10 @@ import '../../data/models/responses/register_pdone_response.dart';
 import '../../data/models/responses/upgrade_account_response.dart';
 import '../entities/bank.dart';
 import '../entities/commity_action_type.dart';
+import '../entities/update_account/bank_acount/bank_account.dart';
 import '../entities/update_account/check_protector_payload.dart';
 import '../entities/update_account/kyc_status.dart';
+import '../entities/update_account/otp/otp.dart';
 import '../entities/update_account/register_pdone_with_phone_payload.dart';
 import '../entities/update_account/update_pdone_kyc_payload.dart';
 import '../entities/update_account/update_profile_payload.dart';
@@ -27,18 +30,15 @@ class UpgradeAccountUsecase {
     return _upgradeAccountRepository.getListData();
   }
 
-  Future<RegisterPDoneResponse> registerPDoneAccount(
-      RegisterPDoneAccountPayload payload) {
+  Future<RegisterPDoneResponse> registerPDoneAccount(RegisterPDoneAccountPayload payload) {
     return _upgradeAccountRepository.registerPDoneAccount(payload);
   }
 
-  Future<RegisterPDoneResponse> resendOtpPhone(
-      RegisterPDoneAccountPayload payload) {
+  Future<RegisterPDoneResponse> resendOtpPhone(RegisterPDoneAccountPayload payload) {
     return _upgradeAccountRepository.resendOtpPhone(payload);
   }
 
-  Future<RegisterPDoneResponse> resendOtpEmail(
-      RegisterPDoneAccountPayload payload) {
+  Future<RegisterPDoneResponse> resendOtpEmail(RegisterPDoneAccountPayload payload) {
     return _upgradeAccountRepository.resendOtpEmail(payload);
   }
 
@@ -54,15 +54,13 @@ class UpgradeAccountUsecase {
     return _upgradeAccountRepository.verifyOtpRegisterPDone(payload);
   }
 
-  Future<UpgradeAccountResponse> registerAccount(
-      UpgradeJAPayload? payload, PDoneActionType type) {
+  Future<UpgradeAccountResponse> registerAccount(UpgradeJAPayload? payload, PDoneActionType type) {
     return type == PDoneActionType.registerJA
         ? _upgradeAccountRepository.registerJA(payload: payload!)
         : _upgradeAccountRepository.registerVShop();
   }
 
-  Future<bool> verifyOtpPhone(
-      VerifyPhoneOtpPayload payload, PDoneActionType type) {
+  Future<bool> verifyOtpPhone(VerifyPhoneOtpPayload payload, PDoneActionType type) {
     return type == PDoneActionType.registerJA
         ? _upgradeAccountRepository.registerJAVerifyOtp(payload: payload)
         : _upgradeAccountRepository.registerVShopVerifyOtp(payload: payload);
@@ -82,12 +80,15 @@ class UpgradeAccountUsecase {
     return _upgradeAccountRepository.listBanks();
   }
 
-  Future<RegisterPDoneResponse> checkProtector(
-      CheckProtectorPayload payload) async {
+  Future<RegisterPDoneResponse> checkProtector(CheckProtectorPayload payload) async {
     return _upgradeAccountRepository.checkProtector(payload);
   }
 
   Future<bool> checkProtectorVerifyOTP(VerifyOtpPDonePayload payload) async {
     return _upgradeAccountRepository.checkProtectorVerifyOTP(payload);
+  }
+
+  Future<BankAccount> updateBankAccount(UpdateBankAccountPayload payload) async {
+    return _upgradeAccountRepository.updateBankAccount(payload);
   }
 }

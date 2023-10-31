@@ -2,6 +2,7 @@
 
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
+import 'package:app_main/src/domain/entities/update_account/otp/otp.dart';
 import 'package:app_main/src/domain/usecases/authentication_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -15,6 +16,7 @@ part 'user_state.dart';
 class UserCubit extends Cubit<UserState> {
   final AuthenticationUsecase _authenticationUsecase;
   final UserSharePreferencesUsecase _userSharePreferencesUsecase;
+
   UserCubit(
     this._authenticationUsecase,
     this._userSharePreferencesUsecase,
@@ -129,6 +131,21 @@ class UserCubit extends Cubit<UserState> {
     } catch (error) {
       debugPrint("phoneRegister: $error");
       emit(ResendOTPFail(message: "international_error"));
+    }
+  }
+
+  Future<void> getOtp({bool? isResend}) async {
+    try {
+      emit(GetOTPLoading());
+      final otp = await _authenticationUsecase.getOtp();
+      if (isResend == true) {
+        emit(ResendUserOTPSuccess(otp: otp));
+        return;
+      }
+      emit(GetOTPSuccess(otp: otp));
+    } catch (error) {
+      debugPrint("phoneRegister: $error");
+      emit(GetOTPFail(message: "international_error"));
     }
   }
 }

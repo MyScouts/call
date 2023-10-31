@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../data/models/responses/authenticate_response.dart';
 import '../../data/repositories/auth_repository.dart';
+import '../entities/update_account/otp/otp.dart';
 
 @injectable
 class AuthenticationUsecase {
@@ -52,6 +53,11 @@ class AuthenticationUsecase {
       response.refreshToken,
     );
     return true;
+  }
+
+  Future<Otp> getOtp() async {
+    final response = await _authRepository.getOtp();
+    return response;
   }
 }
 

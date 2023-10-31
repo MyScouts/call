@@ -1,8 +1,11 @@
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
+import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/entities/bank.dart';
 import '../../../domain/entities/update_account/check_protector_payload.dart';
 import '../../../domain/entities/update_account/kyc_status.dart';
+import '../../../domain/entities/update_account/otp/otp.dart';
 import '../../../domain/entities/update_account/register_pdone_with_phone_payload.dart';
 import '../../../domain/entities/update_account/update_pdone_kyc_payload.dart';
 import '../../../domain/entities/update_account/update_profile_payload.dart';
@@ -50,11 +53,9 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   }
 
   @override
-  Future<RegisterPDoneResponse> registerPDoneAccount(
-      RegisterPDoneAccountPayload payload) async {
+  Future<RegisterPDoneResponse> registerPDoneAccount(RegisterPDoneAccountPayload payload) async {
     try {
-      final res =
-          await _upgradeAccountApi.registerPDoneAccount(payload: payload);
+      final res = await _upgradeAccountApi.registerPDoneAccount(payload: payload);
 
       return res.data;
     } catch (e) {
@@ -63,16 +64,14 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   }
 
   @override
-  Future<RegisterPDoneResponse> resendOtpPhone(
-      RegisterPDoneAccountPayload payload) async {
+  Future<RegisterPDoneResponse> resendOtpPhone(RegisterPDoneAccountPayload payload) async {
     final res = await _upgradeAccountApi.resendOtpPhone(payload: payload);
 
     return res.data;
   }
 
   @override
-  Future<RegisterPDoneResponse> resendOtpEmail(
-      RegisterPDoneAccountPayload payload) async {
+  Future<RegisterPDoneResponse> resendOtpEmail(RegisterPDoneAccountPayload payload) async {
     final res = await _upgradeAccountApi.resendOtpEmail(payload: payload);
 
     return res.data;
@@ -95,17 +94,14 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   }
 
   @override
-  Future<UpgradeAccountResponse> registerJA(
-      {required UpgradeJAPayload payload}) async {
+  Future<UpgradeAccountResponse> registerJA({required UpgradeJAPayload payload}) async {
     final response = await _upgradeAccountApi.registerJA(payload: payload);
     return response.data;
   }
 
   @override
-  Future<bool> registerJAVerifyOtp(
-      {required VerifyPhoneOtpPayload payload}) async {
-    final response =
-        await _upgradeAccountApi.registerJAVerifyOtp(payload: payload);
+  Future<bool> registerJAVerifyOtp({required VerifyPhoneOtpPayload payload}) async {
+    final response = await _upgradeAccountApi.registerJAVerifyOtp(payload: payload);
     return response.success;
   }
 
@@ -116,10 +112,8 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   }
 
   @override
-  Future<bool> registerVShopVerifyOtp(
-      {required VerifyPhoneOtpPayload payload}) async {
-    final response =
-        await _upgradeAccountApi.registerVShopVerifyOtp(payload: payload);
+  Future<bool> registerVShopVerifyOtp({required VerifyPhoneOtpPayload payload}) async {
+    final response = await _upgradeAccountApi.registerVShopVerifyOtp(payload: payload);
     return response.data;
   }
 
@@ -147,18 +141,22 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
     return response.data;
   }
 
-
   @override
-  Future<RegisterPDoneResponse> checkProtector(
-      CheckProtectorPayload payload) async {
+  Future<RegisterPDoneResponse> checkProtector(CheckProtectorPayload payload) async {
     final response = await _upgradeAccountApi.checkProtector(payload: payload);
     return response.data;
   }
 
   @override
   Future<bool> checkProtectorVerifyOTP(VerifyOtpPDonePayload payload) async {
-    final response =
-        await _upgradeAccountApi.checkProtectorVerifyOTP(payload: payload);
+    final response = await _upgradeAccountApi.checkProtectorVerifyOTP(payload: payload);
+    return response.data;
+  }
+
+  @override
+  Future<BankAccount> updateBankAccount(UpdateBankAccountPayload payload) async {
+    final response = await _upgradeAccountApi.updateBankAccount(payload: payload);
+
     return response.data;
   }
 }

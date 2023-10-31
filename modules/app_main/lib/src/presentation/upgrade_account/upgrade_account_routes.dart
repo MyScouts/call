@@ -61,8 +61,15 @@ class UpgradeAccountRoutes extends RouteModule {
           );
         },
         UpdateBankAccountScreen.routeName: (context) {
-          return BlocProvider<GetListBanksBloc>(
-            create: (context) => injector.get()..add(GetListDataEvent()),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<GetListBanksBloc>(
+                create: (context) => injector.get()..add(GetListDataEvent()),
+              ),
+              BlocProvider<UpdateBankAccountBloc>(
+                create: (context) => injector.get(),
+              ),
+            ],
             child: const UpdateBankAccountScreen(),
           );
         }

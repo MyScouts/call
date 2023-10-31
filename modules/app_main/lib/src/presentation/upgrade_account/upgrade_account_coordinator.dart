@@ -1,8 +1,10 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/update_bank_account_screen.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/widgets/verify_otp_bank_account_dialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/ui.dart';
 
+import '../../data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
 import '../../data/models/responses/upgrade_account_response.dart';
 import '../../domain/entities/commity_action_type.dart';
 import 'upgrade_ja/upgrade_agree_policy.bloc.dart';
@@ -105,6 +107,31 @@ extension UpgradeAccountCoordinator on BuildContext {
           child: AutoHideKeyboard(
             child: DialogContainerWidget(
               child: VerifyPhoneOTPDialogWidget(response: res, type: type),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<T?> startDialogVerifyBankAccountOTP<T>(UpdateBankAccountPayload payload) {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: true,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<UpgradeAccountVerifyPhoneBloc>(
+              create: (context) => injector.get(),
+            ),
+            BlocProvider<ResendOTPPhoneBloc>(
+              create: (context) => injector.get(),
+            ),
+          ],
+          child: AutoHideKeyboard(
+            child: DialogContainerWidget(
+              child: VerifyOTPBankAccountDialogWidget(payload: payload),
             ),
           ),
         );

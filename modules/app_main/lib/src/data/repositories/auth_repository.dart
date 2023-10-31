@@ -1,5 +1,6 @@
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
 
+import '../../domain/entities/update_account/otp/otp.dart';
 import '../models/responses/authenticate_response.dart';
 
 abstract class AuthRepository {
@@ -20,4 +21,6 @@ abstract class AuthRepository {
 
   /// Logout
   Future<bool> logout();
+
+  Future<Otp> getOtp();
 }

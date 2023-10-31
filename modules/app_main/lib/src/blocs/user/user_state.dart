@@ -44,3 +44,23 @@ final class ResendOTPFail extends UserState {
   final String message;
   ResendOTPFail({required this.message});
 }
+
+// Get OTP
+
+final class GetOTPLoading extends UserState {}
+
+final class ResendUserOTPSuccess extends UserState {
+  final Otp otp;
+  ResendUserOTPSuccess({required this.otp});
+}
+
+final class GetOTPSuccess extends UserState {
+  final Otp otp;
+  GetOTPSuccess({required this.otp});
+}
+
+final class GetOTPFail extends UserState {
+  final String message;
+  GetOTPFail({required this.message});
+}
+

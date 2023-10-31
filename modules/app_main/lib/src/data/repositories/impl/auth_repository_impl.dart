@@ -2,6 +2,7 @@ import 'package:app_main/src/data/data_sources/remote/auth_api.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
 import 'package:app_main/src/data/models/responses/authenticate_response.dart';
 import 'package:app_main/src/data/repositories/auth_repository.dart';
+import 'package:app_main/src/domain/entities/update_account/otp/otp.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: AuthRepository)
@@ -41,5 +42,11 @@ class AuthRepositoryImpl extends AuthRepository {
     CompletedPhoneRegisterPayload payload,
   ) {
     return _authApi.phoneCompleteRegister(payload);
+  }
+
+  @override
+  Future<Otp> getOtp() async {
+    final response = await _authApi.getOtp();
+    return response.data.otp;
   }
 }
