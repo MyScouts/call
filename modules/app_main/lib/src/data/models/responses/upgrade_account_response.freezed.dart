@@ -1,0 +1,211 @@
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+
+part of 'upgrade_account_response.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
+UpgradeAccountResponse _$UpgradeAccountResponseFromJson(
+    Map<String, dynamic> json) {
+  return _UpgradeAccountResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$UpgradeAccountResponse {
+  String get token => throw _privateConstructorUsedError;
+  String? get phone => throw _privateConstructorUsedError;
+  String? get phoneCode => throw _privateConstructorUsedError;
+  String? get teamId => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $UpgradeAccountResponseCopyWith<UpgradeAccountResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $UpgradeAccountResponseCopyWith<$Res> {
+  factory $UpgradeAccountResponseCopyWith(UpgradeAccountResponse value,
+          $Res Function(UpgradeAccountResponse) then) =
+      _$UpgradeAccountResponseCopyWithImpl<$Res, UpgradeAccountResponse>;
+  @useResult
+  $Res call({String token, String? phone, String? phoneCode, String? teamId});
+}
+
+/// @nodoc
+class _$UpgradeAccountResponseCopyWithImpl<$Res,
+        $Val extends UpgradeAccountResponse>
+    implements $UpgradeAccountResponseCopyWith<$Res> {
+  _$UpgradeAccountResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = null,
+    Object? phone = freezed,
+    Object? phoneCode = freezed,
+    Object? teamId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+      phone: freezed == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneCode: freezed == phoneCode
+          ? _value.phoneCode
+          : phoneCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      teamId: freezed == teamId
+          ? _value.teamId
+          : teamId // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$UpgradeAccountResponseImplCopyWith<$Res>
+    implements $UpgradeAccountResponseCopyWith<$Res> {
+  factory _$$UpgradeAccountResponseImplCopyWith(
+          _$UpgradeAccountResponseImpl value,
+          $Res Function(_$UpgradeAccountResponseImpl) then) =
+      __$$UpgradeAccountResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String token, String? phone, String? phoneCode, String? teamId});
+}
+
+/// @nodoc
+class __$$UpgradeAccountResponseImplCopyWithImpl<$Res>
+    extends _$UpgradeAccountResponseCopyWithImpl<$Res,
+        _$UpgradeAccountResponseImpl>
+    implements _$$UpgradeAccountResponseImplCopyWith<$Res> {
+  __$$UpgradeAccountResponseImplCopyWithImpl(
+      _$UpgradeAccountResponseImpl _value,
+      $Res Function(_$UpgradeAccountResponseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? token = null,
+    Object? phone = freezed,
+    Object? phoneCode = freezed,
+    Object? teamId = freezed,
+  }) {
+    return _then(_$UpgradeAccountResponseImpl(
+      token: null == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+      phone: freezed == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneCode: freezed == phoneCode
+          ? _value.phoneCode
+          : phoneCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      teamId: freezed == teamId
+          ? _value.teamId
+          : teamId // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$UpgradeAccountResponseImpl implements _UpgradeAccountResponse {
+  const _$UpgradeAccountResponseImpl(
+      {required this.token, this.phone, this.phoneCode, this.teamId});
+
+  factory _$UpgradeAccountResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UpgradeAccountResponseImplFromJson(json);
+
+  @override
+  final String token;
+  @override
+  final String? phone;
+  @override
+  final String? phoneCode;
+  @override
+  final String? teamId;
+
+  @override
+  String toString() {
+    return 'UpgradeAccountResponse(token: $token, phone: $phone, phoneCode: $phoneCode, teamId: $teamId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UpgradeAccountResponseImpl &&
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.phoneCode, phoneCode) ||
+                other.phoneCode == phoneCode) &&
+            (identical(other.teamId, teamId) || other.teamId == teamId));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, token, phone, phoneCode, teamId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UpgradeAccountResponseImplCopyWith<_$UpgradeAccountResponseImpl>
+      get copyWith => __$$UpgradeAccountResponseImplCopyWithImpl<
+          _$UpgradeAccountResponseImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UpgradeAccountResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _UpgradeAccountResponse implements UpgradeAccountResponse {
+  const factory _UpgradeAccountResponse(
+      {required final String token,
+      final String? phone,
+      final String? phoneCode,
+      final String? teamId}) = _$UpgradeAccountResponseImpl;
+
+  factory _UpgradeAccountResponse.fromJson(Map<String, dynamic> json) =
+      _$UpgradeAccountResponseImpl.fromJson;
+
+  @override
+  String get token;
+  @override
+  String? get phone;
+  @override
+  String? get phoneCode;
+  @override
+  String? get teamId;
+  @override
+  @JsonKey(ignore: true)
+  _$$UpgradeAccountResponseImplCopyWith<_$UpgradeAccountResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}

@@ -19,6 +19,15 @@ class ThemeDecoration {
         ),
       );
 
+  List<BoxShadow> get defaultShadow => [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.2),
+          spreadRadius: 0,
+          blurRadius: 0,
+          offset: const Offset(0, 0), // changes position of shadow
+        ),
+      ];
+
   BoxDecoration get panelBottomShadow => BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -32,23 +41,23 @@ class ThemeDecoration {
       );
 
   BoxDecoration get card => BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8),
         color: Colors.white,
         border: Border.all(color: Colors.grey),
       );
 
   InputBorder get textInputBorder => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8),
         borderSide:
             BorderSide(color: _theme.themeColor.textInputBorderColor, width: 1),
       );
   InputBorder get textInputErrorBorder => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide(color: _theme.themeColor.error, width: 1),
       );
 
   InputBorder get textInputBorderSocial => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8),
         borderSide: const BorderSide(color: Colors.transparent, width: 0),
       );
 

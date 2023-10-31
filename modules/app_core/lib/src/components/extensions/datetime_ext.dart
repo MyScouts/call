@@ -142,6 +142,13 @@ extension DateTimeExt on DateTime {
 
     return isAfter(fifthteenYearsAgo);
   }
+  String text() {
+    return '''${year.toString()}-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}''';
+  }
+
+  String formatDate() {
+    return '''${day.toString().padLeft(2, '0')}/${month.toString().padLeft(2, '0')}/${year.toString()}''';
+  }
 }
 
 extension DateOnlyCompare on DateTime {

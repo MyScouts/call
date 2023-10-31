@@ -37,5 +37,9 @@
     "resend_the_code_later": "Resend the code later?",
     "resend": "Resend",
     "congratulations_on_your_successful_registration": "Congratulations, you have successfully registered!",
-    "wish_you_have_great_experiences_on_our_products": "Wish you have great experiences on our products"
+    "wish_you_have_great_experiences_on_our_products": "Wish you have great experiences on our products",
+    "validate_PleaseEnterInfo": "Please enter info",
+    "pdoneAction_registerPDone": "Register P-Done",
+    "pdoneAction_registerCollaboratorsAndLink": "Register JA",
+    "setting": "setting"
 }

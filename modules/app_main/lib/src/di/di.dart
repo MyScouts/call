@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
@@ -9,8 +10,12 @@ final getIt = GetIt.instance;
   initializerName: 'init', // default
   preferRelativeImports: true, // default
   asExtension: false, // default
+  externalPackageModulesBefore: [
+    ExternalModule(AppCorePackageModule),
+  ],
 )
 Future<void> configureDependencies({
   String? environment,
   EnvironmentFilter? environmentFilter,
-}) async => init(getIt, environment: environment, environmentFilter: environmentFilter);
+}) async =>
+    init(getIt, environment: environment, environmentFilter: environmentFilter);
