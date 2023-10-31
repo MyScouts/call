@@ -36,14 +36,9 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                 width: size.width,
                 child: Column(
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        context.startUpgradePDone();
-                      },
-                      child: ImageWidget(
-                        ImageConstants.defaultAppLogo,
-                        width: 100,
-                      ),
+                    ImageWidget(
+                      ImageConstants.defaultAppLogo,
+                      width: 100,
                     ),
                     const SizedBox(height: 24),
                     Container(

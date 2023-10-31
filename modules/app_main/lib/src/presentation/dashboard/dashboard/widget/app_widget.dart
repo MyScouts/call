@@ -22,6 +22,12 @@ class AppWidget extends StatelessWidget {
         children: [
           Expanded(
             child: GestureDetector(
+              onTap: () {
+                if (app.routeName != null) {
+                  Navigator.of(context).pushNamed(app.routeName!);
+                  return;
+                }
+              },
               // onLongPress: () {
               //   print("object");
               //   isLongPress.value = true;

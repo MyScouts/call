@@ -166,11 +166,11 @@ class _PageScreenState extends State<PageScreen>
               scrollDirection: Axis.vertical,
               physics: const BouncingScrollPhysics(),
               crossAxisCount: 4,
-              onWillAccept: (p0, p1, p2) {
+              onAccept: (p0, p1, p2) {
                 final item1 = p0 as ReorderableStaggeredScrollViewGridItem;
                 final item2 = p1 as ReorderableStaggeredScrollViewGridItem;
-                // debugPrint("onWillAccept ${item1.key}");
-                // debugPrint("onWillAccept ${item2.key}");
+                debugPrint("onAccept ${item1.key}");
+                debugPrint("onAccept ${item2.key}");
                 return true;
               },
               isLongPressDraggable: true,
@@ -181,7 +181,7 @@ class _PageScreenState extends State<PageScreen>
               children: apps.map((item) {
                 item.sort = apps.indexOf(item);
                 return ReorderableStaggeredScrollViewGridItem(
-                  key: ValueKey(item.id.toString()),
+                  key: ValueKey(item.sort.toString()),
                   mainAxisCellCount: item.height,
                   crossAxisCellCount: item.width,
                   widget: AppWidget(

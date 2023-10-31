@@ -26,7 +26,16 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
   final TextEditingController _marshopIdCtrl = TextEditingController();
   final _acceptTerm = ValueNotifier(false);
 
-  bool get isValid => _acceptTerm.value && isValidForm;
+  @override
+  bool get conditionValidator => _acceptTerm.value;
+
+  @override
+  void initState() {
+    super.initState();
+    _acceptTerm.addListener(() {
+      onValidation();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +60,9 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
               const ReadMorePolicy(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: AcceptTermWithCheckboxWidget(acceptTerm: _acceptTerm),
+                child: AcceptTermWithCheckboxWidget(
+                  acceptTerm: _acceptTerm,
+                ),
               ),
               const SizedBox(height: 10),
               Padding(
@@ -73,7 +84,7 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
               ),
               const SizedBox(height: 10),
               validationListenableBuilder(
-                builder: (value) {
+                builder: (isValid) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(
                       vertical: 15,
@@ -85,15 +96,13 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
                       onTap: () => context
                           .read<MarshopCubit>()
                           .registerCustomer(RegisterCustomerPayload(
-                            marshopId: int.parse(
-                              _marshopIdCtrl.text.trim(),
-                            ),
+                            marshopId: int.parse(_marshopIdCtrl.text.trim()),
                           )),
                       disabled: !isValid,
                     ),
                   );
                 },
-              ),
+              )
             ]),
           ),
         ),

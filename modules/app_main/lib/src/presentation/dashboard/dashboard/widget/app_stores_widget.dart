@@ -21,10 +21,12 @@ class AppStoreWidget extends StatefulWidget {
 
 class _AppStoreWidgetState extends State<AppStoreWidget> {
   late List<AppItem> results;
+  late List<AppItem> apps;
   @override
   void initState() {
     super.initState();
     results = widget.initApp;
+    apps = AppItem.personalStore;
   }
 
   @override
@@ -43,7 +45,7 @@ class _AppStoreWidgetState extends State<AppStoreWidget> {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),
-              itemCount: AppItem.personalStore.length,
+              itemCount: apps.length,
               itemBuilder: (context, index) {
                 final app = AppItem.personalStore[index];
                 final foundApp =
