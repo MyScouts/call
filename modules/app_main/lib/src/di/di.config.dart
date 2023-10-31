@@ -25,9 +25,9 @@ import '../data/data_sources/remote/marshop_api.dart' as _i23;
 import '../data/data_sources/remote/upgrade_account_api.dart' as _i29;
 import '../data/data_sources/remote/user_api.dart' as _i34;
 import '../data/models/payloads/upgrade_account/upgrade_ja/upgrade_ja_payload.dart'
-    as _i49;
-import '../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart'
     as _i48;
+import '../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart'
+    as _i49;
 import '../data/models/responses/upgrade_account_response.dart' as _i46;
 import '../data/repositories/auth_repository.dart' as _i38;
 import '../data/repositories/impl/auth_repository_impl.dart' as _i39;
@@ -151,23 +151,23 @@ Future<_i1.GetIt> init(
       () => _i44.CommunityUsecase(gh<_i42.CommunityRepository>()));
   gh.factory<_i45.GetDetailBloc<_i3.FanGroup>>(
       () => communityModule.createGetFanGroupBloc(gh<_i44.CommunityUsecase>()));
-  gh.factory<_i45.GetDetailBlocParam1<_i3.GroupDetail, String>>(() =>
-      upgradeAgreePolicyBlocFactory
-          .createGetGroupDetailByBossIDBloc(gh<_i44.CommunityUsecase>()));
   gh.factory<
       _i45.GetDetailBlocParam1<_i46.UpgradeAccountResponse,
           _i47.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
       .createResendOTPPhoneBloc(gh<_i32.UpgradeAccountUsecase>()));
-  gh.factory<
-      _i45.GetDetailBlocParam2<bool, _i48.VerifyPhoneOtpPayload,
-          _i47.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
-      .createUpgradeAccountVerifyPhoneBloc(gh<_i32.UpgradeAccountUsecase>()));
+  gh.factory<_i45.GetDetailBlocParam1<_i3.GroupDetail, String>>(() =>
+      upgradeAgreePolicyBlocFactory
+          .createGetGroupDetailByBossIDBloc(gh<_i44.CommunityUsecase>()));
   gh.factory<
       _i45.GetDetailBlocParam2<
           _i46.UpgradeAccountResponse,
-          _i49.UpgradeJAPayload?,
+          _i48.UpgradeJAPayload?,
           _i47.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
       .createUpgradeAccountBloc(gh<_i32.UpgradeAccountUsecase>()));
+  gh.factory<
+      _i45.GetDetailBlocParam2<bool, _i49.VerifyPhoneOtpPayload,
+          _i47.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
+      .createUpgradeAccountVerifyPhoneBloc(gh<_i32.UpgradeAccountUsecase>()));
   gh.factory<_i45.GetListBloc<_i50.Bank>>(() => upgradeAgreePolicyBlocFactory
       .createGetListBanksBloc(gh<_i32.UpgradeAccountUsecase>()));
   gh.factory<_i45.GetListBloc<_i3.Group>>(() =>

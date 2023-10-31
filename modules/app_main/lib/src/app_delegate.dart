@@ -41,7 +41,7 @@ class AppDelegate extends IAppDelegate {
 
     var initialRoute = AuthenticateScreen.routeName;
     if (userSharePreferencesUsecase.isAuthenticated) {
-      initialRoute = DashboardScreen.routeName;
+      // initialRoute = DashboardScreen.routeName;
     }
 
     if (Configurations.isStudio) {
