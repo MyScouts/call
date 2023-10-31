@@ -439,6 +439,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Đăng ký V-Shop`
+  String get pdoneAction_registerVShop {
+    return Intl.message(
+      'Đăng ký V-Shop',
+      name: 'pdoneAction_registerVShop',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

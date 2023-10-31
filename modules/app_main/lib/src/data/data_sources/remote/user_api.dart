@@ -9,6 +9,7 @@ part 'user_api.g.dart';
 
 class UserApiConstants {
   static const pDoneProfile = 'api/account-p-done/profile';
+  static const userById = 'api/users/{id}';
 }
 
 @RestApi()
@@ -19,4 +20,9 @@ abstract class UserApi {
 
   @GET(UserApiConstants.pDoneProfile)
   Future<ApiResponse<User?>> getProfile();
+
+  @GET(UserApiConstants.userById)
+  Future<ApiResponse<User?>> getUserById({
+    @Path('id') required int id,
+  });
 }

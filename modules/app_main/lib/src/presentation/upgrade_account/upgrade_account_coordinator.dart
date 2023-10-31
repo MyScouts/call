@@ -5,12 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:ui/ui.dart';
 
 import '../../data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
+import '../../data/models/responses/register_pdone_response.dart';
 import '../../data/models/responses/upgrade_account_response.dart';
 import '../../domain/entities/commity_action_type.dart';
 import 'upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'upgrade_ja/upgrade_ja_screen.dart';
 import 'upgrade_ja/widgets/verify_phone_otp_dialog_widget.dart';
+import 'upgrade_pdone/bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 import 'upgrade_pdone/upgrade_pdone_screen.dart';
+import 'upgrade_pdone/views/widgets/upgrade_account_verify_otp_dialog.dart';
 
 extension UpgradeAccountCoordinator on BuildContext {
   // Future<T?> startUpgradePDoneAccount<T>(int currentStep) {
@@ -41,23 +44,23 @@ extension UpgradeAccountCoordinator on BuildContext {
   // }
 
   // Upgrade Account PDone
-  // Future<T?> startDialogVerifyOTP<T>(RegisterPDoneResponse res) {
-  //   return showGeneralDialog<T>(
-  //     context: this,
-  //     barrierDismissible: true,
-  //     barrierLabel: '',
-  //     pageBuilder: (context, animation1, animation2) {
-  //       return BlocProvider.value(
-  //         value: injector.get<UpgradePDoneBloc>(),
-  //         child: AutoHideKeyboard(
-  //           child: DialogContainerWidget(
-  //             child: UpgradeAccountVerifyOTPWidget(res: res),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
+  Future<T?> startDialogVerifyOTP<T>(RegisterPDoneResponse res) {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: true,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return BlocProvider.value(
+          value: injector.get<UpgradePDoneBloc>(),
+          child: AutoHideKeyboard(
+            child: DialogContainerWidget(
+              child: UpgradeAccountVerifyOTPWidget(res: res),
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   // Future<T?> startDialogCheckProtectorVerifyOTP<T>(
   //     RegisterPDoneResponse res, CheckProtectorPayload payload) {

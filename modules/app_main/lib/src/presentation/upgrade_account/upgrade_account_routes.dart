@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import '../community/groups/group_listing_bloc.dart';
+import '../shared/user/bloc/user_bloc.dart';
 import 'upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'upgrade_ja/upgrade_ja_screen.dart';
+import 'upgrade_pdone/bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 
 @injectable
 class UpgradeAccountRoutes extends RouteModule {
@@ -39,21 +41,12 @@ class UpgradeAccountRoutes extends RouteModule {
           // final args = settings.arguments as Map;
           return MultiBlocProvider(
             providers: [
-              BlocProvider<UpgradeAccountBloc>(
+              BlocProvider<UpgradePDoneBloc>(
                 create: (context) => injector.get(),
               ),
-              BlocProvider<GetListGroupsBloc>(
-                create: (context) => injector.get()..add(GetListDataEvent()),
-              ),
-              BlocProvider<GetListTeamsBloc>(
+              BlocProvider<UserBloc>(
                 create: (context) => injector.get(),
-              ),
-              BlocProvider<GetListBanksBloc>(
-                create: (context) => injector.get(),
-              ),
-              BlocProvider<GetGroupDetailByBossIDBloc>(
-                create: (context) => injector.get(),
-              ),
+              )
             ],
             child: const UpgradePDoneScreen(
               currentStep: 0,

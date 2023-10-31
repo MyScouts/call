@@ -67,6 +67,7 @@ import '../presentation/qr_code/qr_code_route.dart' as _i14;
 import '../presentation/routes.dart' as _i17;
 import '../presentation/settings/setting_routes.dart' as _i18;
 import '../presentation/shared/app_setting/bloc/app_setting_bloc.dart' as _i55;
+import '../presentation/shared/user/bloc/user_bloc.dart' as _i56;
 import '../presentation/upgrade_account/upgrade_account_routes.dart' as _i20;
 import '../presentation/upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart'
     as _i58;
@@ -75,6 +76,9 @@ import '../presentation/upgrade_account/upgrade_pdone/bloc/place_information/pla
 import '../presentation/upgrade_account/upgrade_pdone/bloc/upgrade_pdone/upgrade_pdone_bloc.dart'
     as _i33;
 import 'modules/data_source_module.dart' as _i56;
+import '../data/repositories/impl/resource_repository.impl.dart' as _i57;
+import '../data/data_sources/remote/resource_api.dart' as _i58;
+
 
 const String _prod = 'prod';
 
@@ -104,6 +108,10 @@ Future<_i1.GetIt> init(
   gh.factory<_i12.PlaceInformationUsecase>(() =>
       _i12.PlaceInformationUsecase(gh<_i13.PlaceInformationRepository>()));
   gh.factory<_i14.QrCodeRoutes>(() => _i14.QrCodeRoutes());
+  gh.factory<_i58.ResourceApi>(() => _i58.ResourceApi(gh<_i3.Dio>()));
+  gh.factory<_i16.ResourceRepository>(() => _i57.ResourceRepositoryImpl(
+    gh<_i58.ResourceApi>(),
+  ));
   gh.factory<_i15.ResourceUsecase>(
       () => _i15.ResourceUsecase(gh<_i16.ResourceRepository>()));
   gh.singleton<_i17.Routes>(_i17.Routes());
@@ -115,7 +123,9 @@ Future<_i1.GetIt> init(
   gh.factory<_i20.UpgradeAccountRoutes>(() => _i20.UpgradeAccountRoutes());
   gh.factory<_i21.UserSharePreferencesUsecase>(
       () => _i21.UserSharePreferencesUsecase(gh<_i19.SharedPreferences>()));
-  gh.factory<_i22.UserUsecase>(() => _i22.UserUsecase());
+  gh.factory<_i22.UserUsecase>(() => _i22.UserUsecase(
+        gh<_i35.UserRepository>(),
+      ));
   gh.factory<_i3.Dio>(
     () => dataSourceModule.dioProd(gh<_i19.SharedPreferences>()),
     registerFor: {_prod},
@@ -190,6 +200,15 @@ Future<_i1.GetIt> init(
       ));
   gh.singleton<_i55.AppSettingBloc>(
       _i55.AppSettingBloc(gh<_i40.AuthenticationUsecase>()));
+
+
+  // old logic
+  gh.factory<_i56.UserBloc>(() => _i56.UserBloc(
+    gh<_i40.AuthenticationUsecase>(),
+    gh<_i21.UserSharePreferencesUsecase>(),
+    gh<_i22.UserUsecase>(),
+    gh<_i3.UserInformationCubit>(),
+  ));
   return getIt;
 }
 
