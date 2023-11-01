@@ -9,6 +9,8 @@ enum UpdateInformationType {
   nickName,
   gender,
   birthDay,
+  expiryDate,
+  supplyDate,
   protector, // người bảo hộ
   pDoneID,
   country, // quốc gia
@@ -23,6 +25,7 @@ enum UpdateInformationType {
   height,
   weight,
   bloodType,
+  maritalStatus,
   relationshipStatus,
   academicLevel,
   career,
@@ -126,6 +129,13 @@ extension UpdateInformationTypeExt on UpdateInformationType {
         return 'ID P-Done của người bảo hộ';
       case UpdateInformationType.street:
         return 'Đường/thôn';
+      case UpdateInformationType.maritalStatus:
+        return 'Tình trạng hôn nhân';
+      case UpdateInformationType.expiryDate:
+       return 'Ngày hết hạn thẻ';
+      case UpdateInformationType.supplyDate:
+        return 'Ngày cấp thẻ';
+
     }
   }
 
@@ -211,6 +221,12 @@ extension UpdateInformationTypeExt on UpdateInformationType {
         return 'Nhập ID P-Done của người bảo hộ';
       case UpdateInformationType.street:
         return 'Nhập đường/thôn';
+      case UpdateInformationType.maritalStatus:
+        return 'Tình trạng hôn nhân';
+      case UpdateInformationType.expiryDate:
+        return 'Ngày hết hạn thẻ';
+      case UpdateInformationType.supplyDate:
+        return 'Ngày cấp thẻ';
     }
   }
 }

@@ -33,6 +33,12 @@ extension DateTimeExt on DateTime {
 
     return actualDate;
   }
+  String get toYYYYmmdd {
+    final formatterDate = DateFormat('yyyy-mm-dd');
+    final actualDate = formatterDate.format(this);
+
+    return actualDate;
+  }
 
   String get ddMMyyyy {
     final formatterDate = DateFormat('dd/MM/yyyy');

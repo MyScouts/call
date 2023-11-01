@@ -27,6 +27,12 @@ mixin UpdatePDoneInformationMixin<T extends StatefulWidget> on State<T> {
   final weightCtrl = TextEditingController();
   final heightCtrl = TextEditingController();
   final genderCtrl = TextEditingController();
+  final bloodGroupCtrl = TextEditingController();
+  final maritalStatusCtrl = TextEditingController();
+  final talentCtrl = TextEditingController();
+  final interestCtrl = TextEditingController();
+  final jobCtrl = TextEditingController();
+  final academyCtrl = TextEditingController();
 
 
   /// birth place
@@ -36,6 +42,13 @@ mixin UpdatePDoneInformationMixin<T extends StatefulWidget> on State<T> {
   final bpStreetCtrl = TextEditingController();
   final bpAddressCtrl = TextEditingController();
 
+  /// current place
+  final cProvinceCtrl = TextEditingController();
+  final cDistrictCtrl = TextEditingController();
+  final cWardCtrl = TextEditingController();
+  final cStreetCtrl = TextEditingController();
+  final cAddressCtrl = TextEditingController();
+
   /// Protector
   final identifyNumberProtectorCtrl = TextEditingController();
   final pDoneIdProtectorCtrl = TextEditingController();
@@ -44,18 +57,19 @@ mixin UpdatePDoneInformationMixin<T extends StatefulWidget> on State<T> {
   /// ------------------------------------------
   UpdateProfilePayload payload = const UpdateProfilePayload();
 
-  Gender? currentGender;
+  // Gender? currentGender;
   DateTime? birthDay;
   DateTime? supplyDate;
-  Protector? currentProtector;
-  BloodGroup? bloodGroup;
-  MaritalStatus? maritalStatus;
-  AcademicLevel? academicLevel;
-  Job? job;
-  Talent? talent;
-  Interest? interest;
-  PlaceInformation? birthPlace;
-  PlaceInformation? currentPlace;
+  DateTime? expiryDate;
+  // Protector? currentProtector;
+  // BloodGroup? bloodGroup;
+  // MaritalStatus? maritalStatus;
+  // AcademicLevel? academicLevel;
+  // Job? job;
+  // Talent? talent;
+  // Interest? interest;
+  // PlaceInformation? birthPlace;
+  // PlaceInformation? currentPlace;
 
   void updateInformation(PDoneProfile? pDoneProfile) {
     if (pDoneProfile == null) {
@@ -76,19 +90,19 @@ mixin UpdatePDoneInformationMixin<T extends StatefulWidget> on State<T> {
     weightCtrl.text = (pDoneProfile.weight ?? '').toString();
     heightCtrl.text = (pDoneProfile.height ?? '').toString();
 
-    currentGender = pDoneProfile.sex;
+    // currentGender = pDoneProfile.sex;
     birthDay = pDoneProfile.birthday;
     supplyDate = pDoneProfile.supplyDate;
-    currentProtector = pDoneProfile.protector;
-    bloodGroup = pDoneProfile.bloodGroup;
-    maritalStatus = pDoneProfile.maritalStatus;
-    academicLevel = pDoneProfile.academicLevel;
-    job = pDoneProfile.job;
-    interest = pDoneProfile.interest;
-    talent = pDoneProfile.talent;
-
-    birthPlace = pDoneProfile.birthPlace;
-    currentPlace = pDoneProfile.currentPlace;
+    // currentProtector = pDoneProfile.protector;
+    // bloodGroup = pDoneProfile.bloodGroup;
+    // maritalStatus = pDoneProfile.maritalStatus;
+    // academicLevel = pDoneProfile.academicLevel;
+    // job = pDoneProfile.job;
+    // interest = pDoneProfile.interest;
+    // talent = pDoneProfile.talent;
+    //
+    // birthPlace = pDoneProfile.birthPlace;
+    // currentPlace = pDoneProfile.currentPlace;
 
     payload = copyWithPDoneProfile(pDoneProfile);
   }
@@ -101,7 +115,7 @@ mixin UpdatePDoneInformationMixin<T extends StatefulWidget> on State<T> {
       middleName: profile.middleName,
       sex: profile.sex?.key,
       birthday: profile.birthday?.text(),
-      birthPlace: copyWithPlaceInformation(profile.birthPlace),
+      birthPlace: 'copyWithPlaceInformation(profile.birthPlace)',
       currentPlace: copyWithPlaceInformation(profile.currentPlace),
       identityNumber: profile.identityNumber,
       supplyDate: profile.supplyDate?.text(),
@@ -122,11 +136,11 @@ mixin UpdatePDoneInformationMixin<T extends StatefulWidget> on State<T> {
   UpdatePlaceInformationPayload copyWithPlaceInformation(
       PlaceInformation? placeInformation) {
     return UpdatePlaceInformationPayload(
-      country: placeInformation?.country?.iso2,
-      province: placeInformation?.province?.stateCode,
-      district: placeInformation?.district?.code,
-      ward: placeInformation?.ward?.id,
-      address: placeInformation?.address,
+      // country: placeInformation?.country?.iso2,
+      // province: placeInformation?.province?.stateCode,
+      // district: placeInformation?.district?.code,
+      // ward: placeInformation?.ward?.id,
+      // address: placeInformation?.address,
     );
   }
 

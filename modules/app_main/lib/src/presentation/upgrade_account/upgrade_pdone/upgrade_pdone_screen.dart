@@ -87,7 +87,6 @@ class _UpgradePDoneScreenState extends State<UpgradePDoneScreen>
                 RegisterPDoneAccountPage(
                   onNextPage: () {},
                 )
-
                 // const RegisterStatePage(),
               ],
             ),

@@ -8,6 +8,8 @@ part of 'upgrade_account_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
+const _baseUrlV1 = 'https://dev.vdone.info/api/';
+
 class _UpgradeAccountApi implements UpgradeAccountApi {
   _UpgradeAccountApi(
     this._dio, {
@@ -156,14 +158,14 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
     )
             .compose(
               _dio.options,
-              'api/account-p-done/profile',
+              UpgradeAccountApiConstants.updatePDoneProfile,
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(
                 baseUrl: _combineBaseUrls(
               _dio.options.baseUrl,
-              baseUrl,
+              _baseUrlV1,
             ))));
     final value = ApiResponse<dynamic>.fromJson(
       _result.data!,

@@ -19,7 +19,7 @@ class _ResourceApi implements ResourceApi {
   String? baseUrl;
 
   @override
-  Future<ApiResponse<dynamic>> uploadImage(file) async {
+  Future<ApiResponse<dynamic>> uploadImage(File file) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -44,7 +44,11 @@ class _ResourceApi implements ResourceApi {
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = ApiResponse<dynamic>.fromJson(
       _result.data!,
       (json) => json as dynamic,
@@ -53,7 +57,7 @@ class _ResourceApi implements ResourceApi {
   }
 
   @override
-  Future<ApiResponse<dynamic>> uploadVideo(file) async {
+  Future<ApiResponse<dynamic>> uploadVideo(File file) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -78,7 +82,11 @@ class _ResourceApi implements ResourceApi {
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = ApiResponse<dynamic>.fromJson(
       _result.data!,
       (json) => json as dynamic,
@@ -87,7 +95,7 @@ class _ResourceApi implements ResourceApi {
   }
 
   @override
-  Future<ApiResponse<dynamic>> uploadFile(file) async {
+  Future<ApiResponse<dynamic>> uploadFile(File file) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -112,7 +120,11 @@ class _ResourceApi implements ResourceApi {
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = ApiResponse<dynamic>.fromJson(
       _result.data!,
       (json) => json as dynamic,
@@ -122,14 +134,14 @@ class _ResourceApi implements ResourceApi {
 
   @override
   Future<ApiResponse<List<MediaModel>>> getMedias({
-    required role,
-    required type,
-    required category,
+    required String role,
+    required String type,
+    required String category,
   }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApiResponse<List<MediaModel>>>(Options(
       method: 'GET',
@@ -142,13 +154,19 @@ class _ResourceApi implements ResourceApi {
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = ApiResponse<List<MediaModel>>.fromJson(
       _result.data!,
-      (json) => (json as List<dynamic>)
-          .map<MediaModel>(
-              (i) => MediaModel.fromJson(i as Map<String, dynamic>))
-          .toList(),
+      (json) => json is List<dynamic>
+          ? json
+              .map<MediaModel>(
+                  (i) => MediaModel.fromJson(i as Map<String, dynamic>))
+              .toList()
+          : List.empty(),
     );
     return value;
   }
@@ -164,5 +182,22 @@ class _ResourceApi implements ResourceApi {
       }
     }
     return requestOptions;
+  }
+
+  String _combineBaseUrls(
+    String dioBaseUrl,
+    String? baseUrl,
+  ) {
+    if (baseUrl == null || baseUrl.trim().isEmpty) {
+      return dioBaseUrl;
+    }
+
+    final url = Uri.parse(baseUrl);
+
+    if (url.isAbsolute) {
+      return url.toString();
+    }
+
+    return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
 }

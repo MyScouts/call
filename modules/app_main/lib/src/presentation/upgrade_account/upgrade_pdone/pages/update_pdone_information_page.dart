@@ -66,42 +66,75 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
   final _showResultValidateProtectorCtrl = ValueNotifier<String>('');
 
   void _onListenerBloc(BuildContext context, UpgradePDoneState state) {
-    // if (state is UpdateProfileLoading) {
-    //   showLoading();
-    // } else if (state is UpdateProfileSuccess) {
-    //   // userBloc.add(UserUpdateBirthDayEvent(birthDay!));
-    //   hideLoading();
-    //   if (widget.onNextPage != null) {
-    //     widget.onNextPage!.call();
-    //   }
-    // } else if (state is UpdateProfileFailure) {
-    //   hideLoading();
-    //   showToastMessage(state.errorMessage);
-    // } else if (state is GetMyProfileSuccess) {
-    //   // updateInformation(state.user.profile);
-    // }
+    if (state is UpdateProfileLoading) {
+      showLoading();
+    } else if (state is UpdateProfileSuccess) {
+      // userBloc.add(UserUpdateBirthDayEvent(birthDay!));
+      hideLoading();
+      if (widget.onNextPage != null) {
+        widget.onNextPage!.call();
+      }
+    } else if (state is UpdateProfileFailure) {
+      hideLoading();
+      showToastMessage(state.errorMessage);
+    } else if (state is GetMyProfileSuccess) {
+      // updateInformation(state.user.profile);
+    }
   }
 
   void _onTapNext() {
-    if (_showProtectorCtrl.value && needValidatingProtector) {
-      // showToastMessage('ID P-DONE không hợp lệ', ToastMessageType.error);
-      showToastMessage('Bạn cần nhấn nút kiểm tra lại thông tin người bảo hộ',
-          ToastMessageType.error);
-      return;
-    }
-    if (_showProtectorCtrl.value) {
-      if (_showResultValidateProtectorCtrl.value
-          .contains(msgValidateProtectorOk)) {
-        payload = payload.copyWith(
-          protectorEmailPhone: emailOrPhoneProtectorCtrl.text,
-          protectorPDoneId: pDoneIdProtectorCtrl.text,
-          protectorIdentityNumber: identifyNumberProtectorCtrl.text,
-        );
-        // upgradePDoneBloc.add(UpdatePDoneProfileEvent(payload));
-      }
-    } else {
-      // upgradePDoneBloc.add(UpdatePDoneProfileEvent(payload));
-    }
+    payload = payload.copyWith(
+      firstName: firstNameCtrl.text,
+      lastName: lastNameCtrl.text,
+      middleName: middleNameCtrl.text,
+      nickname: nickNameCtrl.text,
+      sex: genderCtrl.text == 'Nam' ? 1 : 0,
+      birthday: birthDay?.toYYYYmmdd ?? '',
+      birthPlace:
+          '${bpStreetCtrl.text}, ${bpWardCtrl.text}, ${bpDistrictCtrl.text}, ${bpProvinceCtrl.text}',
+      currentPlace: UpdatePlaceInformationPayload(
+        address: cAddressCtrl.text,
+        provinceName: cProvinceCtrl.text,
+        districtName: cDistrictCtrl.text,
+        wardName: cWardCtrl.text,
+        street: cStreetCtrl.text,
+      ),
+      identityNumber: identifyNumberCtrl.text,
+      supplyDate: supplyDate?.toYYYYmmdd ?? '',
+      supplyAddress: supplyAddressCtrl.text,
+      height: int.tryParse(heightCtrl.text) ?? 0,
+      weight: int.tryParse(weightCtrl.text) ?? 0,
+      maritalStatus: maritalStatusCtrl.text,
+      bloodGroup: bloodGroupCtrl.text,
+      academicLevel: academyCtrl.text,
+      job: jobCtrl.text,
+      interest: interestCtrl.text,
+      talent: talentCtrl.text,
+      // protector:,
+      // protectorPDoneId,
+      // protectorIdentityNumber,
+      // protectorEmailPhone,
+    );
+    upgradePDoneBloc.add(UpdatePDoneProfileEvent(payload));
+    // if (_showProtectorCtrl.value && needValidatingProtector) {
+    //   // showToastMessage('ID P-DONE không hợp lệ', ToastMessageType.error);
+    //   showToastMessage('Bạn cần nhấn nút kiểm tra lại thông tin người bảo hộ',
+    //       ToastMessageType.error);
+    //   return;
+    // }
+    // if (_showProtectorCtrl.value) {
+    //   if (_showResultValidateProtectorCtrl.value
+    //       .contains(msgValidateProtectorOk)) {
+    //     payload = payload.copyWith(
+    //       protectorEmailPhone: emailOrPhoneProtectorCtrl.text,
+    //       protectorPDoneId: pDoneIdProtectorCtrl.text,
+    //       protectorIdentityNumber: identifyNumberProtectorCtrl.text,
+    //     );
+    //     upgradePDoneBloc.add(UpdatePDoneProfileEvent(payload));
+    //   }
+    // } else {
+    //   upgradePDoneBloc.add(UpdatePDoneProfileEvent(payload));
+    // }
   }
 
   void onUpdatePayload(UpdateProfilePayload val) {
@@ -288,6 +321,8 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
     bpStreetCtrl.text = eKycData['street'];
     bpWardCtrl.text = eKycData['ward'];
     birthDay = eKycData['birthday'].toString().parseDateTime();
+    supplyDate = eKycData['issue_date'].toString().parseDateTime();
+    expiryDate = eKycData['expiry'].toString().parseDateTime();
   }
 
   @override
@@ -369,13 +404,73 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                     ),
                     maxLength: 40,
                   ),
+                  InfomationLayoutFieldWidget(
+                    required: false,
+                    label: UpdateInformationType.birthDay.title(context),
+                    child: InputDateTimeWidget(
+                      hintText: 'Ngày sinh',
+                      useHorizontalLayout: true,
+                      radius: 17,
+                      date: birthDay,
+                      formatText: (date) => S
+                          .of(context)
+                          .formatDateDDmmYYYYhhMM(date, date)
+                          .split('|')
+                          .first,
+                      max: DateTime.now(),
+                      onChange: (dateTime) {
+                        birthDay = dateTime;
+                      },
+                    ),
+                  ),
+
+                  InfomationLayoutFieldWidget(
+                    required: false,
+                    label: UpdateInformationType.supplyDate.title(context),
+                    child: InputDateTimeWidget(
+                      hintText: 'Ngày cấp thẻ',
+                      useHorizontalLayout: true,
+                      radius: 17,
+                      date: supplyDate,
+                      formatText: (date) => S
+                          .of(context)
+                          .formatDateDDmmYYYYhhMM(date, date)
+                          .split('|')
+                          .first,
+                      max: DateTime.now(),
+                      onChange: (dateTime) {
+                        supplyDate = dateTime;
+                      },
+                    ),
+                  ),
+
+                  InfomationLayoutFieldWidget(
+                    required: false,
+                    label: UpdateInformationType.expiryDate.title(context),
+                    child: InputDateTimeWidget(
+                      hintText: 'Ngày hết hạn thẻ',
+                      useHorizontalLayout: true,
+                      radius: 17,
+                      date: expiryDate,
+                      formatText: (date) => S
+                          .of(context)
+                          .formatDateDDmmYYYYhhMM(date, date)
+                          .split('|')
+                          .first,
+                      max: DateTime.now(),
+                      onChange: (dateTime) {
+                        expiryDate = dateTime;
+                      },
+                    ),
+                  ),
 
                   /// Giới tính - Ngày sinh
                   InformationFieldWidget(
                     required: true,
                     controller: genderCtrl,
                     onChanged: (value) => onUpdatePayload(
-                        payload.copyWith(sex: value == 'Nam' ? 0 : 1)),
+                      payload.copyWith(sex: value == 'Nam' ? 1 : 0),
+                    ),
                     type: UpdateInformationType.gender,
                     validator: (value) => context.validateGender(
                       genderCtrl.text,
@@ -385,221 +480,289 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                   ),
 
                   /// Tài khoản em chưa 18 cần ng bảo hộ
-                  ValueListenableBuilder<bool>(
-                    valueListenable: _showProtectorCtrl,
-                    builder: (context, value, child) {
-                      return value
-                          ? Container(
-                              margin: const EdgeInsets.only(top: 15),
-                              padding:
-                                  const EdgeInsets.fromLTRB(10, 18, 10, 15),
-                              decoration: BoxDecoration(
-                                color: AppColors.grey71,
-                                border: Border.all(color: AppColors.grey10),
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(5),
-                                ),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Text(
-                                    'Trường hợp đăng ký P-done dưới 18 tuổi',
-                                    style:
-                                        Theme.of(context).textTheme.labelMedium,
-                                  ),
-                                  SelectInformationWidget<Protector>(
-                                    required: true,
-                                    builder: (item) =>
-                                        DropdownItemWidget(text: item.name),
-                                    items: dataInfo?.protectors ?? [],
-                                    type: UpdateInformationType.protector,
-                                    onChanged: (val) {
-                                      if (val != null) {
-                                        onUpdatePayload(payload.copyWith(
-                                            protector: val.id));
-                                        setState(() {
-                                          currentProtector = val;
-                                        });
-                                      }
-                                    },
-                                    currentValue: currentProtector?.name,
-                                    validator: (value) =>
-                                        context.validateEmptyInfo(
-                                            currentProtector?.name,
-                                            'Vui lòng chọn người bảo hộ'),
-                                  ),
-                                  InformationFieldWidget(
-                                    required: true,
-                                    controller: pDoneIdProtectorCtrl,
-                                    onChanged: validatePDoneID,
-                                    type: UpdateInformationType
-                                        .pDoneIDOfProtector,
-                                    validator: (text) {
-                                      return validatorPDoneId;
-                                    },
-                                  ),
-                                  InformationFieldWidget(
-                                    required: true,
-                                    controller: emailOrPhoneProtectorCtrl,
-                                    onChanged: _validateEmailOrPhone,
-                                    type: UpdateInformationType.emailAndPhone,
-                                    validator: (text) {
-                                      return validatorEmailOrPhone;
-                                    },
-                                  ),
-
-                                  /// Số ID/CCCD/HC *
-                                  InformationFieldWidget(
-                                    required: true,
-                                    isBold: true,
-                                    maxLength: 12,
-                                    controller: identifyNumberProtectorCtrl,
-                                    onChanged: _validateIdentifyNumber,
-                                    type: UpdateInformationType
-                                        .idNumberOfProtector,
-                                    textInputType: TextInputType.number,
-                                    inputFormatters: <TextInputFormatter>[
-                                      FilteringTextInputFormatter.digitsOnly,
-                                    ],
-                                    validator: (value) {
-                                      return validatorIdentifyNumber;
-                                    },
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 12,
-                                    ),
-                                    child: GradiantButton(
-                                      onPressed: _onValidateProtector,
-                                      child: Text(
-                                        'Kiểm tra thông tin',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge
-                                            ?.copyWith(color: AppColors.white),
-                                      ),
-                                    ),
-                                  ),
-                                  ValueListenableBuilder(
-                                    valueListenable:
-                                        _showResultValidateProtectorCtrl,
-                                    builder: (_, val, __) {
-                                      if (val == '') {
-                                        return const SizedBox();
-                                      }
-                                      return Text(
-                                        val.toString(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelMedium!
-                                            .copyWith(
-                                              color: val.toString() ==
-                                                      msgValidateProtectorOk
-                                                  ? Colors.green
-                                                  : Colors.red,
-                                            ),
-                                      );
-                                    },
-                                  )
-                                ],
-                              ),
-                            )
-                          : const SizedBox();
-                    },
-                  ),
-
-                  // /// sinh
-                  // BlocProvider<PlaceInformationBloc>(
-                  //   create: (context) => injector.get(),
-                  //   child: PlaceInformationWidget(
-                  //     title: 'Nơi sinh',
-                  //     initPlaceInformation: birthPlace,
-                  //     onUpdatePlaceInformation:
-                  //         (UpdatePlaceInformationPayload value) {
-                  //       onUpdatePayload(payload.copyWith(birthPlace: value));
-                  //     },
-                  //     addressCtrl: birthPlaceAddressCtrl,
-                  //     notRelease: AppConstants.notRelease,
-                  //   ),
+                  // ValueListenableBuilder<bool>(
+                  //   valueListenable: _showProtectorCtrl,
+                  //   builder: (context, value, child) {
+                  //     return value
+                  //         ? Container(
+                  //             margin: const EdgeInsets.only(top: 15),
+                  //             padding:
+                  //                 const EdgeInsets.fromLTRB(10, 18, 10, 15),
+                  //             decoration: BoxDecoration(
+                  //               color: AppColors.grey71,
+                  //               border: Border.all(color: AppColors.grey10),
+                  //               borderRadius: const BorderRadius.all(
+                  //                 Radius.circular(5),
+                  //               ),
+                  //             ),
+                  //             child: Column(
+                  //               crossAxisAlignment: CrossAxisAlignment.stretch,
+                  //               children: [
+                  //                 Text(
+                  //                   'Trường hợp đăng ký P-done dưới 18 tuổi',
+                  //                   style:
+                  //                       Theme.of(context).textTheme.labelMedium,
+                  //                 ),
+                  //                 SelectInformationWidget<Protector>(
+                  //                   required: true,
+                  //                   builder: (item) =>
+                  //                       DropdownItemWidget(text: item.name),
+                  //                   items: dataInfo?.protectors ?? [],
+                  //                   type: UpdateInformationType.protector,
+                  //                   onChanged: (val) {
+                  //                     if (val != null) {
+                  //                       onUpdatePayload(payload.copyWith(
+                  //                           protector: val.id));
+                  //                       setState(() {
+                  //                         currentProtector = val;
+                  //                       });
+                  //                     }
+                  //                   },
+                  //                   currentValue: currentProtector?.name,
+                  //                   validator: (value) =>
+                  //                       context.validateEmptyInfo(
+                  //                           currentProtector?.name,
+                  //                           'Vui lòng chọn người bảo hộ'),
+                  //                 ),
+                  //                 InformationFieldWidget(
+                  //                   required: true,
+                  //                   controller: pDoneIdProtectorCtrl,
+                  //                   onChanged: validatePDoneID,
+                  //                   type: UpdateInformationType
+                  //                       .pDoneIDOfProtector,
+                  //                   validator: (text) {
+                  //                     return validatorPDoneId;
+                  //                   },
+                  //                 ),
+                  //                 InformationFieldWidget(
+                  //                   required: true,
+                  //                   controller: emailOrPhoneProtectorCtrl,
+                  //                   onChanged: _validateEmailOrPhone,
+                  //                   type: UpdateInformationType.emailAndPhone,
+                  //                   validator: (text) {
+                  //                     return validatorEmailOrPhone;
+                  //                   },
+                  //                 ),
+                  //
+                  //                 /// Số ID/CCCD/HC *
+                  //                 InformationFieldWidget(
+                  //                   required: true,
+                  //                   isBold: true,
+                  //                   maxLength: 12,
+                  //                   controller: identifyNumberProtectorCtrl,
+                  //                   onChanged: _validateIdentifyNumber,
+                  //                   type: UpdateInformationType
+                  //                       .idNumberOfProtector,
+                  //                   textInputType: TextInputType.number,
+                  //                   inputFormatters: <TextInputFormatter>[
+                  //                     FilteringTextInputFormatter.digitsOnly,
+                  //                   ],
+                  //                   validator: (value) {
+                  //                     return validatorIdentifyNumber;
+                  //                   },
+                  //                 ),
+                  //                 Padding(
+                  //                   padding: const EdgeInsets.symmetric(
+                  //                     vertical: 12,
+                  //                   ),
+                  //                   child: GradiantButton(
+                  //                     onPressed: _onValidateProtector,
+                  //                     child: Text(
+                  //                       'Kiểm tra thông tin',
+                  //                       style: Theme.of(context)
+                  //                           .textTheme
+                  //                           .labelLarge
+                  //                           ?.copyWith(color: AppColors.white),
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //                 ValueListenableBuilder(
+                  //                   valueListenable:
+                  //                       _showResultValidateProtectorCtrl,
+                  //                   builder: (_, val, __) {
+                  //                     if (val == '') {
+                  //                       return const SizedBox();
+                  //                     }
+                  //                     return Text(
+                  //                       val.toString(),
+                  //                       style: Theme.of(context)
+                  //                           .textTheme
+                  //                           .labelMedium!
+                  //                           .copyWith(
+                  //                             color: val.toString() ==
+                  //                                     msgValidateProtectorOk
+                  //                                 ? Colors.green
+                  //                                 : Colors.red,
+                  //                           ),
+                  //                     );
+                  //                   },
+                  //                 )
+                  //               ],
+                  //             ),
+                  //           )
+                  //         : const SizedBox();
+                  //   },
                   // ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: InformationFieldWidget(
-                          required: true,
-                          controller: bpProvinceCtrl,
-                          onChanged: (value) => onUpdatePayload(
-                              payload.copyWith(firstName: value)),
-                          type: UpdateInformationType.province,
-                          validator: (value) => context.validateEmptyInfo(
-                            bpProvinceCtrl.text,
-                            'Vui lòng nhập tỉnh thành',
-                          ),
-                        ),
-                      ),
-                      _buildSpacerBetweenFields(),
-                      Expanded(
-                        child: InformationFieldWidget(
-                          controller: bpDistrictCtrl,
-                          onChanged: (value) => onUpdatePayload(
-                              payload.copyWith(middleName: value)),
-                          type: UpdateInformationType.district,
-                          validator: (value) => context.validateEmptyInfo(
-                            bpDistrictCtrl.text,
-                            'Vui lòng nhập quận/huyện',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
 
-                  Row(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: InformationFieldWidget(
-                          required: true,
-                          controller: bpWardCtrl,
-                          onChanged: (value) => onUpdatePayload(
-                              payload.copyWith(firstName: value)),
-                          type: UpdateInformationType.ward,
-                          validator: (value) => context.validateEmptyInfo(
-                            bpWardCtrl.text,
-                            'Vui lòng nhập xã/phường',
-                          ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Text(
+                          'Nơi sinh',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(fontSize: 14),
                         ),
                       ),
-                      _buildSpacerBetweenFields(),
-                      Expanded(
-                        child: InformationFieldWidget(
-                          controller: bpStreetCtrl,
-                          onChanged: (value) => onUpdatePayload(
-                              payload.copyWith(middleName: value)),
-                          type: UpdateInformationType.street,
-                          validator: (value) => context.validateEmptyInfo(
-                            bpStreetCtrl.text,
-                            'Vui lòng nhập đường/thôn',
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: InformationFieldWidget(
+                              required: true,
+                              controller: bpProvinceCtrl,
+                              onChanged: (value) => onUpdatePayload(
+                                  payload.copyWith(firstName: value)),
+                              type: UpdateInformationType.province,
+                              validator: (value) => context.validateEmptyInfo(
+                                bpProvinceCtrl.text,
+                                'Vui lòng nhập tỉnh thành',
+                              ),
+                            ),
                           ),
-                        ),
+                          _buildSpacerBetweenFields(),
+                          Expanded(
+                            child: InformationFieldWidget(
+                              controller: bpDistrictCtrl,
+                              required: true,
+                              onChanged: (value) => onUpdatePayload(
+                                  payload.copyWith(middleName: value)),
+                              type: UpdateInformationType.district,
+                              validator: (value) => context.validateEmptyInfo(
+                                bpDistrictCtrl.text,
+                                'Vui lòng nhập quận/huyện',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: InformationFieldWidget(
+                              required: true,
+                              controller: bpWardCtrl,
+                              onChanged: (value) => onUpdatePayload(
+                                  payload.copyWith(firstName: value)),
+                              type: UpdateInformationType.ward,
+                              validator: (value) => context.validateEmptyInfo(
+                                bpWardCtrl.text,
+                                'Vui lòng nhập xã/phường',
+                              ),
+                            ),
+                          ),
+                          _buildSpacerBetweenFields(),
+                          Expanded(
+                            child: InformationFieldWidget(
+                              controller: bpStreetCtrl,
+                              required: true,
+                              onChanged: (value) => onUpdatePayload(
+                                  payload.copyWith(middleName: value)),
+                              type: UpdateInformationType.street,
+                              validator: (value) => context.validateEmptyInfo(
+                                bpStreetCtrl.text,
+                                'Vui lòng nhập đường/thôn',
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
 
                   // /// Nơi ở hiện tại
-                  BlocProvider<PlaceInformationBloc>(
-                    create: (context) => injector.get(),
-                    child: PlaceInformationWidget(
-                      title: 'Địa chỉ hiện ở hiện tại',
-                      initPlaceInformation: currentPlace,
-                      onUpdatePlaceInformation:
-                          (UpdatePlaceInformationPayload value) {
-                        onUpdatePayload(payload.copyWith(currentPlace: value));
-                      },
-                      addressCtrl: currentPlaceAddressCtrl,
-                      // notRelease: AppConstants.notRelease,
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Text(
+                          'Nơi ở hiện tại',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(fontSize: 14),
+                        ),
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: InformationFieldWidget(
+                              required: true,
+                              controller: cProvinceCtrl,
+                              onChanged: (value) => onUpdatePayload(
+                                  payload.copyWith(firstName: value)),
+                              type: UpdateInformationType.province,
+                              validator: (value) => context.validateEmptyInfo(
+                                cProvinceCtrl.text,
+                                'Vui lòng nhập tỉnh thành',
+                              ),
+                            ),
+                          ),
+                          _buildSpacerBetweenFields(),
+                          Expanded(
+                            child: InformationFieldWidget(
+                              controller: cDistrictCtrl,
+                              required: true,
+                              onChanged: (value) => onUpdatePayload(
+                                  payload.copyWith(middleName: value)),
+                              type: UpdateInformationType.district,
+                              validator: (value) => context.validateEmptyInfo(
+                                cDistrictCtrl.text,
+                                'Vui lòng nhập quận/huyện',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: InformationFieldWidget(
+                              required: true,
+                              controller: cWardCtrl,
+                              onChanged: (value) => onUpdatePayload(
+                                  payload.copyWith(firstName: value)),
+                              type: UpdateInformationType.ward,
+                              validator: (value) => context.validateEmptyInfo(
+                                cWardCtrl.text,
+                                'Vui lòng nhập xã/phường',
+                              ),
+                            ),
+                          ),
+                          _buildSpacerBetweenFields(),
+                          Expanded(
+                            child: InformationFieldWidget(
+                              controller: cStreetCtrl,
+                              required: true,
+                              onChanged: (value) => onUpdatePayload(
+                                  payload.copyWith(middleName: value)),
+                              type: UpdateInformationType.street,
+                              validator: (value) => context.validateEmptyInfo(
+                                cStreetCtrl.text,
+                                'Vui lòng nhập đường/thôn',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
 
                   /// Số ID/CCCD/HC *
@@ -620,208 +783,90 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                   ),
 
                   /// Ngày Cấp - Nơi Cấp
+                  InformationFieldWidget(
+                    required: checkIsUnder15ShouldEnableField(),
+                    shouldEnabled: checkIsUnder15ShouldEnableField(),
+                    controller: supplyAddressCtrl,
+                    onChanged: (value) {
+                      onUpdatePayload(
+                        payload.copyWith(supplyAddress: value),
+                      );
+                    },
+                    type: UpdateInformationType.placeofIdNumber,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp('[0-9]'))
+                    ],
+                    validator: (value) => checkIsUnder15ShouldEnableField()
+                        ? context.validateEmptyInfo(
+                            supplyAddressCtrl.text, 'Vui lòng nhập nơi cấp')
+                        : null,
+                  ),
+
+                  /// Chiều Cao - Cân Nặng
+                  // if (!AppConstants.notRelease)
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // TODO: fix heare
-                      // Expanded(
-                      //   child: InfomationLayoutFieldWidget(
-                      //     label: UpdateInformationType.dateOfIdNumber
-                      //         .title(context),
-                      //     required: checkIsUnder15ShouldEnableField(),
-                      //     isBold: true,
-                      //     child: InputDateTimeWidget(
-                      //       hintText: 'Chọn ngày',
-                      //       useHorizontalLayout: true,
-                      //       date: supplyDate,
-                      //       enabled: checkIsUnder15ShouldEnableField(),
-                      //       max: DateTime.now(),
-                      //       radius: 17,
-                      //       displayValueIsLabel:
-                      //           checkIsUnder15ShouldEnableField(),
-                      //       formatText: (date) => S
-                      //           .of(context)
-                      //           .formatDateDDmmYYYYhhMM(date, date)
-                      //           .split('|')
-                      //           .first,
-                      //       validator: (value) =>
-                      //           checkIsUnder15ShouldEnableField()
-                      //               ? context.validateEmptyInfo(
-                      //                   supplyDate?.toString(),
-                      //                   'Vui lòng chọn ngày cấp')
-                      //               : null,
-                      //       onChange: (value) {
-                      //         setState(() {
-                      //           supplyDate = value;
-                      //         });
-                      //         onUpdatePayload(payload.copyWith(
-                      //             supplyDate: value?.text()));
-                      //       },
-                      //     ),
-                      //   ),
-                      // ),
+                      Expanded(
+                        child: InformationFieldWidget(
+                          onChanged: (value) => onUpdatePayload(
+                              payload.copyWith(
+                                  height: int.tryParse(value.toString()))),
+                          type: UpdateInformationType.bloodType,
+                          textInputType: TextInputType.text,
+                          controller: bloodGroupCtrl,
+                        ),
+                      ),
                       _buildSpacerBetweenFields(),
                       Expanded(
                         child: InformationFieldWidget(
-                          required: checkIsUnder15ShouldEnableField(),
-                          shouldEnabled: checkIsUnder15ShouldEnableField(),
-                          controller: supplyAddressCtrl,
-                          onChanged: (value) {
-                            onUpdatePayload(
-                              payload.copyWith(supplyAddress: value),
-                            );
-                          },
-                          type: UpdateInformationType.placeofIdNumber,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.deny(RegExp('[0-9]'))
-                          ],
-                          validator: (value) =>
-                              checkIsUnder15ShouldEnableField()
-                                  ? context.validateEmptyInfo(
-                                      supplyAddressCtrl.text,
-                                      'Vui lòng nhập nơi cấp')
-                                  : null,
+                          onChanged: (value) => onUpdatePayload(
+                              payload.copyWith(
+                                  weight: int.tryParse(value.toString()))),
+                          type: UpdateInformationType.maritalStatus,
+                          textInputType: TextInputType.text,
+                          controller: maritalStatusCtrl,
                         ),
                       ),
                     ],
                   ),
 
-                  /// Chiều Cao - Cân Nặng
-                  if (!AppConstants.notRelease)
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: InformationFieldWidget(
-                            onChanged: (value) => onUpdatePayload(
-                                payload.copyWith(
-                                    height: int.tryParse(value.toString()))),
-                            type: UpdateInformationType.height,
-                            suffixText: 'cm',
-                            textInputType: TextInputType.number,
-                            controller: heightCtrl,
-                          ),
-                        ),
-                        _buildSpacerBetweenFields(),
-                        Expanded(
-                          child: InformationFieldWidget(
-                            onChanged: (value) => onUpdatePayload(
-                                payload.copyWith(
-                                    weight: int.tryParse(value.toString()))),
-                            type: UpdateInformationType.weight,
-                            suffixText: 'kg',
-                            textInputType: TextInputType.number,
-                            controller: weightCtrl,
-                          ),
-                        ),
-                      ],
-                    ),
-
-                  /// Nhóm Máu - Tình Trạng Hôn Nhân
-                  if (!AppConstants.notRelease)
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: SearchInputInformationWidget<BloodGroup>(
-                            type: UpdateInformationType.bloodType,
-                            initialValue: bloodGroup != null
-                                ? SuggestionsField(
-                                    name: bloodGroup?.name ?? '',
-                                    data: bloodGroup!)
-                                : null,
-                            // currentValue: bloodGroup?.name,
-                            onSelected: (value) => onUpdatePayload(
-                                payload.copyWith(bloodGroup: value?.id)),
-                            suggestions: (dataInfo?.bloodGroups?.reversed ?? [])
-                                .map((e) => SuggestionsField(
-                                    name: e.name ?? '', data: e))
-                                .toList(),
-                          ),
-                        ),
-                        _buildSpacerBetweenFields(),
-                        Expanded(
-                          child: SearchInputInformationWidget<MaritalStatus>(
-                            type: UpdateInformationType.relationshipStatus,
-                            initialValue: maritalStatus != null
-                                ? SuggestionsField(
-                                    name: maritalStatus?.name ?? '',
-                                    data: maritalStatus!)
-                                : null,
-                            onSelected: (value) => onUpdatePayload(
-                                payload.copyWith(maritalStatus: value?.key)),
-                            suggestions: (dataInfo?.maritalStatus ?? [])
-                                .map((e) => SuggestionsField(
-                                    name: e.name ?? '', data: e))
-                                .toList(),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                  /// Học vấn hiện tại
-                  if (!AppConstants.notRelease)
-                    SearchInputInformationWidget<AcademicLevel>(
-                      type: UpdateInformationType.academicLevel,
-                      onSelected: (value) => onUpdatePayload(
-                          payload.copyWith(academicLevel: value?.key)),
-                      initialValue: academicLevel != null
-                          ? SuggestionsField(
-                              name: academicLevel?.name ?? '',
-                              data: academicLevel!)
-                          : null,
-                      suggestions: (dataInfo?.academicLevels?.reversed ?? [])
-                          .map((e) =>
-                              SuggestionsField(name: e.name ?? '', data: e))
-                          .toList(),
-                    ),
-
                   /// Nghề Nghiệp
-                  if (!AppConstants.notRelease)
-                    SearchInputInformationWidget<Job>(
-                      type: UpdateInformationType.career,
-                      initialValue: job != null
-                          ? SuggestionsField(name: job?.name ?? '', data: job!)
-                          : null,
-                      onSelected: (value) =>
-                          onUpdatePayload(payload.copyWith(job: value?.key)),
-                      suggestions: (dataInfo?.jobs?.reversed ?? [])
-                          .map((e) =>
-                              SuggestionsField(name: e.name ?? '', data: e))
-                          .toList(),
-                    ),
+                  // if (!AppConstants.notRelease)
+
+                  InformationFieldWidget(
+                    type: UpdateInformationType.career,
+                    textInputType: TextInputType.text,
+                    controller: jobCtrl,
+                    onChanged: (String? value) {},
+                  ),
 
                   /// Sở Thích
-                  if (!AppConstants.notRelease)
-                    SearchInputInformationWidget<Interest>(
-                      type: UpdateInformationType.hobby,
-                      initialValue: interest != null
-                          ? SuggestionsField(
-                              name: interest?.name ?? '', data: interest!)
-                          : null,
-                      onSelected: (value) => onUpdatePayload(
-                          payload.copyWith(interest: value?.key)),
-                      suggestions: (dataInfo?.interests?.reversed ?? [])
-                          .map((e) =>
-                              SuggestionsField(name: e.name ?? '', data: e))
-                          .toList(),
-                    ),
+                  // if (!AppConstants.notRelease)
+                  InformationFieldWidget(
+                    type: UpdateInformationType.hobby,
+                    textInputType: TextInputType.text,
+                    controller: interestCtrl,
+                    onChanged: (String? value) {},
+                  ),
 
                   /// Năng Khiếu
-                  if (!AppConstants.notRelease)
-                    SearchInputInformationWidget<Talent>(
-                      type: UpdateInformationType.gifted,
-                      initialValue: talent != null
-                          ? SuggestionsField(
-                              name: talent?.name ?? '', data: talent!)
-                          : null,
-                      onSelected: (value) =>
-                          onUpdatePayload(payload.copyWith(talent: value?.key)),
-                      suggestions: (dataInfo?.talents?.reversed ?? [])
-                          .map((e) =>
-                              SuggestionsField(name: e.name ?? '', data: e))
-                          .toList(),
-                    ),
+                  // if (!AppConstants.notRelease)
+                  InformationFieldWidget(
+                    type: UpdateInformationType.gifted,
+                    textInputType: TextInputType.text,
+                    controller: talentCtrl,
+                    onChanged: (String? value) {},
+                  ),
+
+                  /// Học vấn
+                  // if (!AppConstants.notRelease)
+                  InformationFieldWidget(
+                    type: UpdateInformationType.academicLevel,
+                    textInputType: TextInputType.text,
+                    controller: academyCtrl,
+                    onChanged: (String? value) {},
+                  ),
 
                   validationListenableBuilder(builder: (isValid) {
                     return Padding(
@@ -845,33 +890,6 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
         ),
       ),
     );
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: const Text('Sửa thông tin cá nhân'),
-    //     centerTitle: true,
-    //     titleSpacing: 0,
-    //     elevation: 0,
-    //     leading: IconButton(
-    //       padding: const EdgeInsets.all(2),
-    //       icon: const Icon(Icons.arrow_back),
-    //       onPressed: Navigator.of(context).pop,
-    //     ),
-    //   ),
-    //   // appBar: widget.pDoneProfile != null
-    //   //     ? AppBar(
-    //   //         title: const Text('Sửa thông tin cá nhân'),
-    //   //         centerTitle: true,
-    //   //         titleSpacing: 0,
-    //   //         elevation: 0,
-    //   //         leading: IconButton(
-    //   //           padding: const EdgeInsets.all(2),
-    //   //           icon: const Icon(Icons.arrow_back),
-    //   //           onPressed: Navigator.of(context).pop,
-    //   //         ),
-    //   //       )
-    //   //     : null,
-    //   body:
-    // );
   }
 
   Widget _buildSpacerBetweenFields() {

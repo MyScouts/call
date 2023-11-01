@@ -19,7 +19,7 @@ class UpdateProfilePayload with _$UpdateProfilePayload {
     @JsonKey(includeIfNull: false) String? nickname,
     @JsonKey(includeIfNull: false) int? sex,
     @JsonKey(includeIfNull: false) String? birthday,
-    @JsonKey(includeIfNull: false) UpdatePlaceInformationPayload? birthPlace,
+    @JsonKey(includeIfNull: false) String? birthPlace,
     @JsonKey(includeIfNull: false) UpdatePlaceInformationPayload? currentPlace,
     @JsonKey(includeIfNull: false) String? identityNumber,
     @JsonKey(includeIfNull: false) String? supplyDate,

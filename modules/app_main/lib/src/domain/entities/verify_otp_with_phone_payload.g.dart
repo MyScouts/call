@@ -6,9 +6,9 @@ part of 'verify_otp_with_phone_payload.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_VerifyOtpWithPhonePayload _$$_VerifyOtpWithPhonePayloadFromJson(
+_$VerifyOtpWithPhonePayloadImpl _$$VerifyOtpWithPhonePayloadImplFromJson(
         Map<String, dynamic> json) =>
-    _$_VerifyOtpWithPhonePayload(
+    _$VerifyOtpWithPhonePayloadImpl(
       token: json['token'] as String,
       phone: json['phone'] as String,
       countryId: json['country_id'] as int,
@@ -16,8 +16,8 @@ _$_VerifyOtpWithPhonePayload _$$_VerifyOtpWithPhonePayloadFromJson(
       otp: json['otp'] as String?,
     );
 
-Map<String, dynamic> _$$_VerifyOtpWithPhonePayloadToJson(
-    _$_VerifyOtpWithPhonePayload instance) {
+Map<String, dynamic> _$$VerifyOtpWithPhonePayloadImplToJson(
+    _$VerifyOtpWithPhonePayloadImpl instance) {
   final val = <String, dynamic>{
     'token': instance.token,
     'phone': instance.phone,

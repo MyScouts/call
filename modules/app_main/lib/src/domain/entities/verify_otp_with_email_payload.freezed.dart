@@ -76,25 +76,25 @@ class _$VerifyOtpWithEmailPayloadCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_VerifyOtpWithEmailPayloadCopyWith<$Res>
+abstract class _$$VerifyOtpWithEmailPayloadImplCopyWith<$Res>
     implements $VerifyOtpWithEmailPayloadCopyWith<$Res> {
-  factory _$$_VerifyOtpWithEmailPayloadCopyWith(
-          _$_VerifyOtpWithEmailPayload value,
-          $Res Function(_$_VerifyOtpWithEmailPayload) then) =
-      __$$_VerifyOtpWithEmailPayloadCopyWithImpl<$Res>;
+  factory _$$VerifyOtpWithEmailPayloadImplCopyWith(
+          _$VerifyOtpWithEmailPayloadImpl value,
+          $Res Function(_$VerifyOtpWithEmailPayloadImpl) then) =
+      __$$VerifyOtpWithEmailPayloadImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String email, String otp, String token});
 }
 
 /// @nodoc
-class __$$_VerifyOtpWithEmailPayloadCopyWithImpl<$Res>
+class __$$VerifyOtpWithEmailPayloadImplCopyWithImpl<$Res>
     extends _$VerifyOtpWithEmailPayloadCopyWithImpl<$Res,
-        _$_VerifyOtpWithEmailPayload>
-    implements _$$_VerifyOtpWithEmailPayloadCopyWith<$Res> {
-  __$$_VerifyOtpWithEmailPayloadCopyWithImpl(
-      _$_VerifyOtpWithEmailPayload _value,
-      $Res Function(_$_VerifyOtpWithEmailPayload) _then)
+        _$VerifyOtpWithEmailPayloadImpl>
+    implements _$$VerifyOtpWithEmailPayloadImplCopyWith<$Res> {
+  __$$VerifyOtpWithEmailPayloadImplCopyWithImpl(
+      _$VerifyOtpWithEmailPayloadImpl _value,
+      $Res Function(_$VerifyOtpWithEmailPayloadImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -104,7 +104,7 @@ class __$$_VerifyOtpWithEmailPayloadCopyWithImpl<$Res>
     Object? otp = null,
     Object? token = null,
   }) {
-    return _then(_$_VerifyOtpWithEmailPayload(
+    return _then(_$VerifyOtpWithEmailPayloadImpl(
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -123,12 +123,12 @@ class __$$_VerifyOtpWithEmailPayloadCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_VerifyOtpWithEmailPayload implements _VerifyOtpWithEmailPayload {
-  const _$_VerifyOtpWithEmailPayload(
+class _$VerifyOtpWithEmailPayloadImpl implements _VerifyOtpWithEmailPayload {
+  const _$VerifyOtpWithEmailPayloadImpl(
       {required this.email, required this.otp, required this.token});
 
-  factory _$_VerifyOtpWithEmailPayload.fromJson(Map<String, dynamic> json) =>
-      _$$_VerifyOtpWithEmailPayloadFromJson(json);
+  factory _$VerifyOtpWithEmailPayloadImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VerifyOtpWithEmailPayloadImplFromJson(json);
 
   @override
   final String email;
@@ -146,7 +146,7 @@ class _$_VerifyOtpWithEmailPayload implements _VerifyOtpWithEmailPayload {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VerifyOtpWithEmailPayload &&
+            other is _$VerifyOtpWithEmailPayloadImpl &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.otp, otp) || other.otp == otp) &&
             (identical(other.token, token) || other.token == token));
@@ -159,13 +159,13 @@ class _$_VerifyOtpWithEmailPayload implements _VerifyOtpWithEmailPayload {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VerifyOtpWithEmailPayloadCopyWith<_$_VerifyOtpWithEmailPayload>
-      get copyWith => __$$_VerifyOtpWithEmailPayloadCopyWithImpl<
-          _$_VerifyOtpWithEmailPayload>(this, _$identity);
+  _$$VerifyOtpWithEmailPayloadImplCopyWith<_$VerifyOtpWithEmailPayloadImpl>
+      get copyWith => __$$VerifyOtpWithEmailPayloadImplCopyWithImpl<
+          _$VerifyOtpWithEmailPayloadImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VerifyOtpWithEmailPayloadToJson(
+    return _$$VerifyOtpWithEmailPayloadImplToJson(
       this,
     );
   }
@@ -175,10 +175,10 @@ abstract class _VerifyOtpWithEmailPayload implements VerifyOtpWithEmailPayload {
   const factory _VerifyOtpWithEmailPayload(
       {required final String email,
       required final String otp,
-      required final String token}) = _$_VerifyOtpWithEmailPayload;
+      required final String token}) = _$VerifyOtpWithEmailPayloadImpl;
 
   factory _VerifyOtpWithEmailPayload.fromJson(Map<String, dynamic> json) =
-      _$_VerifyOtpWithEmailPayload.fromJson;
+      _$VerifyOtpWithEmailPayloadImpl.fromJson;
 
   @override
   String get email;
@@ -188,6 +188,6 @@ abstract class _VerifyOtpWithEmailPayload implements VerifyOtpWithEmailPayload {
   String get token;
   @override
   @JsonKey(ignore: true)
-  _$$_VerifyOtpWithEmailPayloadCopyWith<_$_VerifyOtpWithEmailPayload>
+  _$$VerifyOtpWithEmailPayloadImplCopyWith<_$VerifyOtpWithEmailPayloadImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

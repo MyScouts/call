@@ -8,9 +8,9 @@ class StepperVerifyWidget extends StatelessWidget {
   const StepperVerifyWidget({
     super.key,
     this.titles = const [
-      'Xác thực OTP',
+      'Định danh điện tử',
       'Cập nhật thông tin',
-      'Xác thực chứng minh',
+      'Xác minh',
       // 'Trạng thái'
     ],
     required this.currentIndex,
