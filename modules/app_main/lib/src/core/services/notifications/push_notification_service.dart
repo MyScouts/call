@@ -128,8 +128,6 @@ void _onDidReceiveLocalNotification(
     int id, String? title, String? body, String? payload) {}
 
 void showFlutterNotification(RemoteMessage message) {
-  debugPrint('[FCM]: forground $message');
-
   if (isIOS) {
     return;
   }
@@ -137,6 +135,7 @@ void showFlutterNotification(RemoteMessage message) {
   final RemoteNotification? notification = message.notification;
   var payload = message.data;
   final type = intPareSafe(payload['type']);
+  debugPrint('[FCM]: forground $type');
 
   if (type != null) {
     final typeNotification = convertToNotificationType(type);
@@ -167,6 +166,7 @@ void showFlutterNotification(RemoteMessage message) {
     }
   } else {
     final notiData = payload['data'];
+    LoggerService.print("notiData: $notiData");
     if (payload.isNotEmpty) {
       String? title;
       String? body;
@@ -196,6 +196,22 @@ void showFlutterNotification(RemoteMessage message) {
           payload: jsonEncode(payload),
         );
       }
+    } else {
+      flutterLocalNotificationsPlugin.show(
+        notification?.hashCode ?? 0,
+        notification!.title ?? "",
+        notification.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            channelDescription: channel.description,
+            icon: '@drawable/icon_notify',
+            priority: Priority.high,
+          ),
+        ),
+        payload: jsonEncode(payload),
+      );
     }
   }
 }

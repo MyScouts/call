@@ -104,6 +104,7 @@ class NotificationService {
     }));
 
     FirebaseMessaging.onMessage.listen((data) {
+      _loggerService.d("onMessage: $data");
       showFlutterNotification(data);
     });
 

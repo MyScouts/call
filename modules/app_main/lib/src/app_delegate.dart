@@ -13,7 +13,6 @@ import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:app_core/app_core.dart';
 import 'package:rxdart/rxdart.dart';
-
 import 'application.dart';
 import 'core/services/notifications/push_notification_service.dart';
 import 'di/di.dart';

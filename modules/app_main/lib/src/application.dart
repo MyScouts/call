@@ -131,7 +131,7 @@ class _ApplicationState extends State<Application>
   void onListenerOpenNotification(Map<String, dynamic> notification) {}
 
   @override
-  GlobalKey<NavigatorState> get rootKey => throw UnimplementedError();
+  GlobalKey<NavigatorState> get rootKey => AppCoordinator.root;
 }
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
