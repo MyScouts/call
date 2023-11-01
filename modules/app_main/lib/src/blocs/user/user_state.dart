@@ -44,3 +44,36 @@ final class ResendOTPFail extends UserState {
   final String message;
   ResendOTPFail({required this.message});
 }
+
+// Forgot password
+final class OnForgotPassword extends UserState {}
+
+final class ForgotPasswordSuccess extends UserState {}
+
+final class ForgotPasswordFail extends UserState {
+  final String message;
+  ForgotPasswordFail({required this.message});
+}
+
+// Reset password token
+final class OnResetPasswordToken extends UserState {}
+
+final class ResetPasswordTokenSuccess extends UserState {
+  final String ott;
+  ResetPasswordTokenSuccess({required this.ott});
+}
+
+final class ResetPasswordTokenFail extends UserState {
+  final String message;
+  ResetPasswordTokenFail({required this.message});
+}
+
+// Reset password
+final class OnResetPassword extends UserState {}
+
+final class ResetPasswordSuccess extends UserState {}
+
+final class ResetPasswordFail extends UserState {
+  final String message;
+  ResetPasswordFail({required this.message});
+}

@@ -1,3 +1,5 @@
+import 'package:app_main/src/presentation/authentication/forgot_password/forgot_password_verify_otp.dart';
+import 'package:app_main/src/presentation/authentication/forgot_password/reset_password_screen.dart';
 import 'package:app_main/src/presentation/authentication/login/login_screen.dart';
 import 'package:app_main/src/presentation/authentication/login/verify_otp_screen.dart';
 import 'package:app_main/src/presentation/authentication/widget/congratulation_dialog.dart';
@@ -45,6 +47,34 @@ extension AuthenticationCoordinator on BuildContext {
       barrierLabel: '',
       pageBuilder: (context, animation1, animation2) {
         return const CongratulationRegisterDialog();
+      },
+    );
+  }
+
+  Future<T?> startResetPasswordToken<T>({
+    required String phoneNumber,
+    required String phoneCode,
+  }) {
+    return Navigator.of(this).pushNamed(
+      ForgotPasswordVerifyOTPScreen.routerName,
+      arguments: {
+        "phoneNumber": phoneNumber,
+        "phoneCode": phoneCode,
+      },
+    );
+  }
+
+  Future<T?> startResetPasswordScreen<T>({
+    required String phoneNumber,
+    required String phoneCode,
+    required String ott,
+  }) {
+    return Navigator.of(this).pushNamed(
+      ResetPasswordScreen.routerName,
+      arguments: {
+        "phoneNumber": phoneNumber,
+        "phoneCode": phoneCode,
+        "ott": ott,
       },
     );
   }

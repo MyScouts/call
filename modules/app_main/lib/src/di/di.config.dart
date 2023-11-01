@@ -26,9 +26,9 @@ import '../data/data_sources/remote/notification_api.dart' as _i28;
 import '../data/data_sources/remote/upgrade_account_api.dart' as _i33;
 import '../data/data_sources/remote/user_api.dart' as _i38;
 import '../data/models/payloads/upgrade_account/upgrade_ja/upgrade_ja_payload.dart'
-    as _i52;
-import '../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart'
     as _i53;
+import '../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart'
+    as _i52;
 import '../data/models/responses/upgrade_account_response.dart' as _i50;
 import '../data/repositories/auth_repository.dart' as _i42;
 import '../data/repositories/impl/auth_repository_impl.dart' as _i43;
@@ -58,10 +58,10 @@ import '../domain/usecases/user_usecase.dart' as _i22;
 import '../presentation/authentication/authentication_routes.dart' as _i5;
 import '../presentation/community/community_module.dart' as _i59;
 import '../presentation/dashboard/dashboard_routes.dart' as _i6;
-import '../presentation/general_setting/general_routes.dart' as _i9;
+import '../presentation/general_setting/general_routes.dart' as _i8;
 import '../presentation/marshop/marshop_routes.dart' as _i10;
 import '../presentation/marshop/widgets/general_setting/general_routes.dart'
-    as _i8;
+    as _i9;
 import '../presentation/notification/deeplink/bloc/deeplink_bloc.dart' as _i7;
 import '../presentation/qr_code/qr_code_route.dart' as _i14;
 import '../presentation/routes.dart' as _i17;
@@ -171,15 +171,15 @@ Future<_i1.GetIt> init(
       upgradeAgreePolicyBlocFactory
           .createGetGroupDetailByBossIDBloc(gh<_i48.CommunityUsecase>()));
   gh.factory<
-      _i49.GetDetailBlocParam2<
-          _i50.UpgradeAccountResponse,
-          _i52.UpgradeJAPayload?,
-          _i51.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
-      .createUpgradeAccountBloc(gh<_i36.UpgradeAccountUsecase>()));
-  gh.factory<
-      _i49.GetDetailBlocParam2<bool, _i53.VerifyPhoneOtpPayload,
+      _i49.GetDetailBlocParam2<bool, _i52.VerifyPhoneOtpPayload,
           _i51.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
       .createUpgradeAccountVerifyPhoneBloc(gh<_i36.UpgradeAccountUsecase>()));
+  gh.factory<
+      _i49.GetDetailBlocParam2<
+          _i50.UpgradeAccountResponse,
+          _i53.UpgradeJAPayload?,
+          _i51.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
+      .createUpgradeAccountBloc(gh<_i36.UpgradeAccountUsecase>()));
   gh.factory<_i49.GetListBloc<_i54.Bank>>(() => upgradeAgreePolicyBlocFactory
       .createGetListBanksBloc(gh<_i36.UpgradeAccountUsecase>()));
   gh.factory<_i49.GetListBloc<_i3.Group>>(() =>

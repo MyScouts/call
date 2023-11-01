@@ -27,3 +27,29 @@ class PhoneCompleteRegister {
   factory PhoneCompleteRegister.fromJson(Map<String, dynamic> json) =>
       _$PhoneCompleteRegisterFromJson(json);
 }
+
+@JsonSerializable()
+class ResetPasswordTokenResponse {
+  final String ott;
+
+  ResetPasswordTokenResponse({
+    required this.ott,
+  });
+
+  factory ResetPasswordTokenResponse.fromJson(Map<String, dynamic> json) =>
+      _$ResetPasswordTokenResponseFromJson(json);
+}
+
+@JsonSerializable()
+class ResetPasswordResponse {
+  final String accessToken;
+  final String refreshToken;
+
+  ResetPasswordResponse({
+    required this.accessToken,
+    required this.refreshToken,
+  });
+
+  factory ResetPasswordResponse.fromJson(Map<String, dynamic> json) =>
+      _$ResetPasswordResponseFromJson(json);
+}

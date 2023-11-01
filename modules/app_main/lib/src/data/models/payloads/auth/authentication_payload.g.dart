@@ -21,3 +21,47 @@ Map<String, dynamic> _$AuthenticationPayloadToJson(
       'password': instance.password,
       'countryId': instance.countryId,
     };
+
+ForgotPasswordPayload _$ForgotPasswordPayloadFromJson(
+        Map<String, dynamic> json) =>
+    ForgotPasswordPayload(
+      phoneNumber: json['phoneNumber'] as String,
+      phoneCode: json['phoneCode'] as String,
+    );
+
+Map<String, dynamic> _$ForgotPasswordPayloadToJson(
+        ForgotPasswordPayload instance) =>
+    <String, dynamic>{
+      'phoneNumber': instance.phoneNumber,
+      'phoneCode': instance.phoneCode,
+    };
+
+ResetPasswordTokenPayload _$ResetPasswordTokenPayloadFromJson(
+        Map<String, dynamic> json) =>
+    ResetPasswordTokenPayload(
+      phoneNumber: json['phoneNumber'] as String,
+      phoneCode: json['phoneCode'] as String,
+      otp: json['otp'] as String,
+    );
+
+Map<String, dynamic> _$ResetPasswordTokenPayloadToJson(
+        ResetPasswordTokenPayload instance) =>
+    <String, dynamic>{
+      'phoneNumber': instance.phoneNumber,
+      'phoneCode': instance.phoneCode,
+      'otp': instance.otp,
+    };
+
+ResetPasswordPayload _$ResetPasswordPayloadFromJson(
+        Map<String, dynamic> json) =>
+    ResetPasswordPayload(
+      password: json['password'] as String,
+      ott: json['ott'] as String,
+    );
+
+Map<String, dynamic> _$ResetPasswordPayloadToJson(
+        ResetPasswordPayload instance) =>
+    <String, dynamic>{
+      'password': instance.password,
+      'ott': instance.ott,
+    };

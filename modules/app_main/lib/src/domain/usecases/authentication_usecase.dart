@@ -1,4 +1,5 @@
 import 'package:app_main/src/core/services/notifications/notification_service.dart';
+import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
 import 'package:app_main/src/data/repositories/user_repository.dart';
 import 'package:app_main/src/domain/usecases/notification_usecase.dart';
@@ -76,6 +77,25 @@ class AuthenticationUsecase {
         }
       }
     }
+  }
+
+  Future forgotPassword(ForgotPasswordPayload payload) async {
+    await _authRepository.forgotPassword(payload);
+    return true;
+  }
+
+  Future<ResetPasswordTokenResponse> resetPasswordToken(
+      ResetPasswordTokenPayload payload) {
+    return _authRepository.resetPasswordToken(payload);
+  }
+
+  Future resetPassword(ResetPasswordPayload payload) async {
+    final response = await _authRepository.resetPassword(payload);
+    await _userSharePreferencesUsecase.saveToken(
+      response.accessToken,
+      response.refreshToken,
+    );
+    return true;
   }
 }
 
