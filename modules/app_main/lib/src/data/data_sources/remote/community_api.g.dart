@@ -32,7 +32,7 @@ class _CommunityApi implements CommunityApi {
     )
             .compose(
               _dio.options,
-              'api/group',
+              'api/v1/group',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -241,6 +241,72 @@ class _CommunityApi implements CommunityApi {
   }
 
   @override
+  Future<ApiResponse<Group>> updateGroup({
+    required int id,
+    required UpdateCommunityPayload payload,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = payload;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<Group>>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/group/${id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<Group>.fromJson(
+      _result.data!,
+      (json) => Group.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<Team>> updateTeam({
+    required int id,
+    required UpdateCommunityPayload payload,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = payload;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<Team>>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/team/${id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<Team>.fromJson(
+      _result.data!,
+      (json) => Team.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
   Future<ApiResponse<FanGroup>> getFanGroup() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -301,6 +367,52 @@ class _CommunityApi implements CommunityApi {
   }
 
   @override
+  Future<ApiResponse<DataRowsResponse<List<Member>>>> getMembersOfFanGroup({
+    required int id,
+    required int type,
+    int? page,
+    int? pageSize,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'page': page,
+      r'pageSize': pageSize,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<DataRowsResponse<List<Member>>>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/fan-groups/${id}/members?types[]=${type}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<DataRowsResponse<List<Member>>>.fromJson(
+      _result.data!,
+      (json) => DataRowsResponse<List<Member>>.fromJson(
+        json as Map<String, dynamic>,
+        (json) => json is List<dynamic>
+            ? json
+                .map<Member>((i) => Member.fromJson(i as Map<String, dynamic>))
+                .toList()
+            : List.empty(),
+      ),
+    );
+    return value;
+  }
+
+  @override
   Future<ApiResponse<dynamic>> joinFanGroup({required int id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -315,6 +427,39 @@ class _CommunityApi implements CommunityApi {
             .compose(
               _dio.options,
               'api/fan-groups/${id}/join',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<dynamic>.fromJson(
+      _result.data!,
+      (json) => json as dynamic,
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<dynamic>> editFanGroup({
+    required int id,
+    required UpdateCommunityPayload payload,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = payload;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<dynamic>>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/fan-groups/${id}',
               queryParameters: queryParameters,
               data: _data,
             )

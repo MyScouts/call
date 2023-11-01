@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/domain/entities/community/update_community_payload.dart';
+import 'package:app_main/src/domain/usecases/resource_usecase.dart';
 import 'package:injectable/injectable.dart';
 
 import '../repository/community_repository.dart';
@@ -7,9 +11,9 @@ import '../repository/community_repository.dart';
 @injectable
 class CommunityUsecase {
   final CommunityRepository _communityRepository;
-  // final ResourceUsecase _resourceUsecase;
+  final ResourceUsecase _resourceUsecase;
 
-  CommunityUsecase(this._communityRepository);
+  CommunityUsecase(this._communityRepository, this._resourceUsecase);
 
   Future<List<Group>> getGroups() {
     return _communityRepository.getGroups();
@@ -39,18 +43,18 @@ class CommunityUsecase {
     }
   }
 
-  // Future<Group> updateGroup(int id, UpdateCommunityPayload payload) async {
-  //   return _communityRepository.updateGroup(id, payload);
-  // }
-  //
-  // Future<Team> updateTeam(int id, UpdateCommunityPayload payload) async {
-  //   return _communityRepository.updateTeam(id, payload);
-  // }
+  Future<Group> updateGroup(int id, UpdateCommunityPayload payload) async {
+    return _communityRepository.updateGroup(id, payload);
+  }
 
-  // Future<String> uploadNewImage(String image) async {
-  //   // BE return new url avatar
-  //   return _resourceUsecase.uploadImage(File(image));
-  // }
+  Future<Team> updateTeam(int id, UpdateCommunityPayload payload) async {
+    return _communityRepository.updateTeam(id, payload);
+  }
+
+  Future<String> uploadNewImage(String image) async {
+    // BE return new url avatar
+    return _resourceUsecase.uploadImage(File(image));
+  }
 
   Future<FanGroup> getFanGroup() => _communityRepository.getFanGroup();
 
@@ -66,7 +70,7 @@ class CommunityUsecase {
     return _communityRepository.joinFanGroup(id);
   }
 
-  // Future<bool> updateFanGroup(int id, UpdateCommunityPayload payload) async {
-  //   return _communityRepository.updateFanGroup(id, payload);
-  // }
+  Future<bool> updateFanGroup(int id, UpdateCommunityPayload payload) async {
+    return _communityRepository.updateFanGroup(id, payload);
+  }
 }

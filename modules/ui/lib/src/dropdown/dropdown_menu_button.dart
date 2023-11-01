@@ -45,6 +45,9 @@ class DropdownMenuButton<T> extends StatelessWidget {
               onTap?.call();
             }
           },
+          dropdownStyleData: DropdownStyleData(
+            width: dropdownWidth
+          ),
         ),
       ),
     );

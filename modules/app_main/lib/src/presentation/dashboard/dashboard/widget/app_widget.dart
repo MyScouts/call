@@ -23,6 +23,7 @@ class AppWidget extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               onTap: () {
+                print(app.routeName);
                 if (app.routeName != null) {
                   Navigator.of(context).pushNamed(app.routeName!);
                   return;

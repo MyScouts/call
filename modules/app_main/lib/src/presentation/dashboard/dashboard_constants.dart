@@ -1,3 +1,4 @@
+import 'package:app_main/src/presentation/community/groups/groups_listing_widget.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
 import 'package:design_system/design_system.dart';
@@ -26,7 +27,7 @@ class AppItem {
           id: 1,
           avatar: IconAppConstants.icGroupTeam,
           title: "Group/Team",
-          routeName: UpgradePDoneScreen.routeName,
+          routeName: GroupsListingWidget.routeName,
         ),
         AppItem(
           id: 2,

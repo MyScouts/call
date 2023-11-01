@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/domain/entities/community/update_community_payload.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/repository/community_repository.dart';
@@ -59,86 +60,86 @@ class CommunityRepositoryImpl extends CommunityRepository {
     return res.success;
   }
 
-  @override
-  Future<FanGroup> getFanGroup() {
-    // TODO: implement getFanGroup
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<FanGroup> getFanGroupById(int id) {
-    // TODO: implement getFanGroupById
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<Member>> getMembersOfFanGroup(int id, int type, int? page, int? pageSize) {
-    // TODO: implement getMembersOfFanGroup
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> joinFanGroup(int id) {
-    // TODO: implement joinFanGroup
-    throw UnimplementedError();
-  }
+  // @override
+  // Future<FanGroup> getFanGroup() {
+  //   // TODO: implement getFanGroup
+  //   throw UnimplementedError();
+  // }
 
   // @override
-  // Future<Group> updateGroup(int id, UpdateCommunityPayload payload) async {
-  //   final res = await _communityApi.updateGroup(id: id, payload: payload);
-  //   return res.data;
+  // Future<FanGroup> getFanGroupById(int id) {
+  //   // TODO: implement getFanGroupById
+  //   throw UnimplementedError();
+  // }
+
+  // @override
+  // Future<List<Member>> getMembersOfFanGroup(int id, int type, int? page, int? pageSize) {
+  //   // TODO: implement getMembersOfFanGroup
+  //   throw UnimplementedError();
   // }
   //
   // @override
-  // Future<Team> updateTeam(int id, UpdateCommunityPayload payload) async {
-  //   final res = await _communityApi.updateTeam(id: id, payload: payload);
-  //   return res.data;
+  // Future<bool> joinFanGroup(int id) {
+  //   // TODO: implement joinFanGroup
+  //   throw UnimplementedError();
   // }
 
-  // @override
-  // Future<FanGroup> getFanGroup() async {
-  //   final res = await _communityApi.getFanGroup();
-  //   return res.data;
-  // }
-  //
-  // @override
-  // Future<FanGroup> getFanGroupById(int id) async {
-  //   final res = await _communityApi.getFanGroupById(id: id);
-  //   return res.data;
-  // }
+  @override
+  Future<Group> updateGroup(int id, UpdateCommunityPayload payload) async {
+    final res = await _communityApi.updateGroup(id: id, payload: payload);
+    return res.data;
+  }
 
-  // @override
-  // Future<List<Member>> getMembersOfFanGroup(
-  //   int id,
-  //   int type,
-  //   int? page,
-  //   int? pageSize,
-  // ) async {
-  //   final res = await _communityApi.getMembersOfFanGroup(
-  //     id: id,
-  //     type: type,
-  //     page: page,
-  //     pageSize: pageSize,
-  //   );
-  //
-  //   return res.data.rows;
-  // }
+  @override
+  Future<Team> updateTeam(int id, UpdateCommunityPayload payload) async {
+    final res = await _communityApi.updateTeam(id: id, payload: payload);
+    return res.data;
+  }
 
-  // @override
-  // Future<bool> joinFanGroup(int id) async {
-  //   final res = await _communityApi.joinFanGroup(id: id);
-  //   return res.success;
-  // }
-  //
+  @override
+  Future<FanGroup> getFanGroup() async {
+    final res = await _communityApi.getFanGroup();
+    return res.data;
+  }
+
+  @override
+  Future<FanGroup> getFanGroupById(int id) async {
+    final res = await _communityApi.getFanGroupById(id: id);
+    return res.data;
+  }
+
+  @override
+  Future<List<Member>> getMembersOfFanGroup(
+    int id,
+    int type,
+    int? page,
+    int? pageSize,
+  ) async {
+    final res = await _communityApi.getMembersOfFanGroup(
+      id: id,
+      type: type,
+      page: page,
+      pageSize: pageSize,
+    );
+
+    return res.data.rows;
+  }
+
+  @override
+  Future<bool> joinFanGroup(int id) async {
+    final res = await _communityApi.joinFanGroup(id: id);
+    return res.success;
+  }
+
   // @override
   // Future<List<Member>> getMembersOfFanGroup(int id, int type, int? page, int? pageSize) {
   //   // TODO: implement getMembersOfFanGroup
   //   throw UnimplementedError();
   // }
 
-  // @override
-  // Future<bool> updateFanGroup(int id, UpdateCommunityPayload payload) async {
-  //   final res = await _communityApi.editFanGroup(id: id, payload: payload);
-  //   return res.success;
-  // }
+  @override
+  Future<bool> updateFanGroup(int id, UpdateCommunityPayload payload) async {
+    final res = await _communityApi.editFanGroup(id: id, payload: payload);
+    return res.success;
+  }
 }

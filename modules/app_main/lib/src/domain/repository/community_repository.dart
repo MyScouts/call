@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/domain/entities/community/update_community_payload.dart';
 
 abstract class CommunityRepository {
   Future<List<Group>> getGroups();
@@ -15,9 +16,9 @@ abstract class CommunityRepository {
 
   Future<bool> checkBossTeamId(String id);
 
-  // Future<Group> updateGroup(int id, UpdateCommunityPayload payload);
-  //
-  // Future<Team> updateTeam(int id, UpdateCommunityPayload payload);
+  Future<Group> updateGroup(int id, UpdateCommunityPayload payload);
+
+  Future<Team> updateTeam(int id, UpdateCommunityPayload payload);
 
   Future<FanGroup> getFanGroup();
 
@@ -32,5 +33,5 @@ abstract class CommunityRepository {
 
   Future<bool> joinFanGroup(int id);
 
-// Future<bool> updateFanGroup(int id, UpdateCommunityPayload payload);
+  Future<bool> updateFanGroup(int id, UpdateCommunityPayload payload);
 }

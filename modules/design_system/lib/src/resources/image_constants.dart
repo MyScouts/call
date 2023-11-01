@@ -16,6 +16,10 @@ class ImageConstants {
   static String frontCMND = ImageApp.frontCMND.path;
   static String passport = ImageApp.passport.path;
   static String backCMND = ImageApp.backCMND.path;
+  static String emptyDataList = ImageApp.emptyDataList.path;
+  static String communityBanner = ImageApp.communityBanner.path;
+  static String celebrate = ImageApp.celebrate.path;
+
 }
 
 enum ImageApp {
@@ -35,7 +39,12 @@ enum ImageApp {
   passport('assets/images/passport.png'),
   backCMND('assets/images/back_cmnd.png'),
   imgdefault('assets/images/logo.png'),
+  emptyDataList('assets/images/empty_data_list.png'),
+  communityBanner('assets/images/community_banner.png'),
+  //modules/design_system/assets/images/celebrate.png
+  celebrate('assets/images/celebrate.png'),
   warning('assets/images/warning.png');
+
 
   const ImageApp(this.path);
   final String path;

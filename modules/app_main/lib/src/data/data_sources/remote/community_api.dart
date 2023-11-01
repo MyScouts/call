@@ -1,4 +1,6 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/networking/data_rows_response.dart';
+import 'package:app_main/src/domain/entities/community/update_community_payload.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -7,7 +9,7 @@ import '../../models/responses/api_response.dart';
 part 'community_api.g.dart';
 
 class CommunityApiConstants {
-  static const String getGroups = 'api/group';
+  static const String getGroups = 'api/v1/group';
   static const String getGroup = 'api/group/{id}';
   static const String getTeams = 'api/group/{id}/team';
   static const String getTeamById = 'api/team/{id}';
@@ -61,17 +63,17 @@ abstract class CommunityApi {
     @Path('id') required String id,
   });
 
-  // @PUT(CommunityApiConstants.updateGroup)
-  // Future<ApiResponse<Group>> updateGroup({
-  //   @Path('id') required int id,
-  //   @Body() required UpdateCommunityPayload payload,
-  // });
+  @PUT(CommunityApiConstants.updateGroup)
+  Future<ApiResponse<Group>> updateGroup({
+    @Path('id') required int id,
+    @Body() required UpdateCommunityPayload payload,
+  });
 
-  // @PUT(CommunityApiConstants.updateTeam)
-  // Future<ApiResponse<Team>> updateTeam({
-  //   @Path('id') required int id,
-  //   @Body() required UpdateCommunityPayload payload,
-  // });
+  @PUT(CommunityApiConstants.updateTeam)
+  Future<ApiResponse<Team>> updateTeam({
+    @Path('id') required int id,
+    @Body() required UpdateCommunityPayload payload,
+  });
 
   @GET(CommunityApiConstants.getFanGroup)
   Future<ApiResponse<FanGroup>> getFanGroup();
@@ -81,22 +83,22 @@ abstract class CommunityApi {
     @Path('id') required int id,
   });
 
-  // @GET(CommunityApiConstants.getMembersOfFanGroup)
-  // Future<ApiResponse<DataRowsResponse<List<Member>>>> getMembersOfFanGroup({
-  //   @Path('id') required int id,
-  //   @Path('type') required int type,
-  //   @Query('page') int? page,
-  //   @Query('pageSize') int? pageSize,
-  // });
+  @GET(CommunityApiConstants.getMembersOfFanGroup)
+  Future<ApiResponse<DataRowsResponse<List<Member>>>> getMembersOfFanGroup({
+    @Path('id') required int id,
+    @Path('type') required int type,
+    @Query('page') int? page,
+    @Query('pageSize') int? pageSize,
+  });
 
   @POST(CommunityApiConstants.joinFanGroup)
   Future<ApiResponse<dynamic>> joinFanGroup({
     @Path('id') required int id,
   });
 
-  // @PUT(CommunityApiConstants.editFanGroup)
-  // Future<ApiResponse<dynamic>> editFanGroup({
-  //   @Path('id') required int id,
-  //   @Body() required UpdateCommunityPayload payload,
-  // });
+  @PUT(CommunityApiConstants.editFanGroup)
+  Future<ApiResponse<dynamic>> editFanGroup({
+    @Path('id') required int id,
+    @Body() required UpdateCommunityPayload payload,
+  });
 }
