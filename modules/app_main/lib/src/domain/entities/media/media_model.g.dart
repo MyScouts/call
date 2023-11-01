@@ -6,8 +6,8 @@ part of 'media_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_MediaModel _$$_MediaModelFromJson(Map<String, dynamic> json) =>
-    _$_MediaModel(
+_$MediaModelImpl _$$MediaModelImplFromJson(Map<String, dynamic> json) =>
+    _$MediaModelImpl(
       id: json['id'] as int?,
       redirectUrl: json['redirectUrl'] as String?,
       url: json['url'] as String?,
@@ -20,7 +20,7 @@ _$_MediaModel _$$_MediaModelFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['createdAt'] as String),
     );
 
-Map<String, dynamic> _$$_MediaModelToJson(_$_MediaModel instance) =>
+Map<String, dynamic> _$$MediaModelImplToJson(_$MediaModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'redirectUrl': instance.redirectUrl,

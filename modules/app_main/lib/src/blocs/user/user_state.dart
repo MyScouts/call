@@ -1,7 +1,27 @@
 part of 'user_cubit.dart';
 
 @immutable
-sealed class UserState {}
+sealed class UserState {
+  User? get currentUser {
+    final userState = this;
+    if (userState is GetProfileSuccess) {
+      return userState.userInfo;
+    }
+    return null;
+  }
+}
+
+class GetProfileSuccess extends UserState {
+  final User userInfo;
+
+  GetProfileSuccess(this.userInfo);
+}
+
+class GetProfileError extends UserState {
+  final String message;
+
+  GetProfileError(this.message);
+}
 
 final class UserInitial extends UserState {}
 

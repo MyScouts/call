@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
 
 import '../notification_service.dart';
@@ -14,14 +15,14 @@ mixin NotificationMixin<T extends StatefulWidget> on State<T> {
     super.initState();
     notificationService.onListenerAppLife.listen((appState) {
       switch (appState) {
-        case ApplifeNotification.init:
+        case AppLifeNotification.init:
           if (isProduction) {
-            // notificationService.onListenerNotification(rootKey.currentContext!);
+            notificationService.onListenerNotification(rootKey.currentContext!);
           }
           break;
-        case ApplifeNotification.authenticated:
+        case AppLifeNotification.authenticated:
           break;
-        case ApplifeNotification.logouted:
+        case AppLifeNotification.logouted:
           break;
       }
     });
@@ -31,7 +32,7 @@ mixin NotificationMixin<T extends StatefulWidget> on State<T> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 2), () {
-        notificationService.add(ApplifeNotification.init);
+        notificationService.add(AppLifeNotification.init);
       });
     });
   }

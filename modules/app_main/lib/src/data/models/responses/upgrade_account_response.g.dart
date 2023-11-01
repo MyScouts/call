@@ -12,7 +12,6 @@ _$UpgradeAccountResponseImpl _$$UpgradeAccountResponseImplFromJson(
       token: json['token'] as String,
       phone: json['phone'] as String?,
       phoneCode: json['phoneCode'] as String?,
-      teamId: json['teamId'] as String?,
     );
 
 Map<String, dynamic> _$$UpgradeAccountResponseImplToJson(
@@ -21,5 +20,4 @@ Map<String, dynamic> _$$UpgradeAccountResponseImplToJson(
       'token': instance.token,
       'phone': instance.phone,
       'phoneCode': instance.phoneCode,
-      'teamId': instance.teamId,
     };

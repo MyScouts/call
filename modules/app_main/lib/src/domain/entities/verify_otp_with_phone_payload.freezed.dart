@@ -96,12 +96,12 @@ class _$VerifyOtpWithPhonePayloadCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_VerifyOtpWithPhonePayloadCopyWith<$Res>
+abstract class _$$VerifyOtpWithPhonePayloadImplCopyWith<$Res>
     implements $VerifyOtpWithPhonePayloadCopyWith<$Res> {
-  factory _$$_VerifyOtpWithPhonePayloadCopyWith(
-          _$_VerifyOtpWithPhonePayload value,
-          $Res Function(_$_VerifyOtpWithPhonePayload) then) =
-      __$$_VerifyOtpWithPhonePayloadCopyWithImpl<$Res>;
+  factory _$$VerifyOtpWithPhonePayloadImplCopyWith(
+          _$VerifyOtpWithPhonePayloadImpl value,
+          $Res Function(_$VerifyOtpWithPhonePayloadImpl) then) =
+      __$$VerifyOtpWithPhonePayloadImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -113,13 +113,13 @@ abstract class _$$_VerifyOtpWithPhonePayloadCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_VerifyOtpWithPhonePayloadCopyWithImpl<$Res>
+class __$$VerifyOtpWithPhonePayloadImplCopyWithImpl<$Res>
     extends _$VerifyOtpWithPhonePayloadCopyWithImpl<$Res,
-        _$_VerifyOtpWithPhonePayload>
-    implements _$$_VerifyOtpWithPhonePayloadCopyWith<$Res> {
-  __$$_VerifyOtpWithPhonePayloadCopyWithImpl(
-      _$_VerifyOtpWithPhonePayload _value,
-      $Res Function(_$_VerifyOtpWithPhonePayload) _then)
+        _$VerifyOtpWithPhonePayloadImpl>
+    implements _$$VerifyOtpWithPhonePayloadImplCopyWith<$Res> {
+  __$$VerifyOtpWithPhonePayloadImplCopyWithImpl(
+      _$VerifyOtpWithPhonePayloadImpl _value,
+      $Res Function(_$VerifyOtpWithPhonePayloadImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -131,7 +131,7 @@ class __$$_VerifyOtpWithPhonePayloadCopyWithImpl<$Res>
     Object? phoneCode = freezed,
     Object? otp = freezed,
   }) {
-    return _then(_$_VerifyOtpWithPhonePayload(
+    return _then(_$VerifyOtpWithPhonePayloadImpl(
       token: null == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
@@ -158,8 +158,8 @@ class __$$_VerifyOtpWithPhonePayloadCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_VerifyOtpWithPhonePayload implements _VerifyOtpWithPhonePayload {
-  const _$_VerifyOtpWithPhonePayload(
+class _$VerifyOtpWithPhonePayloadImpl implements _VerifyOtpWithPhonePayload {
+  const _$VerifyOtpWithPhonePayloadImpl(
       {required this.token,
       required this.phone,
       @JsonKey(name: 'country_id', includeIfNull: false)
@@ -167,8 +167,8 @@ class _$_VerifyOtpWithPhonePayload implements _VerifyOtpWithPhonePayload {
       @JsonKey(includeIfNull: false) this.phoneCode,
       @JsonKey(includeIfNull: false) this.otp});
 
-  factory _$_VerifyOtpWithPhonePayload.fromJson(Map<String, dynamic> json) =>
-      _$$_VerifyOtpWithPhonePayloadFromJson(json);
+  factory _$VerifyOtpWithPhonePayloadImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VerifyOtpWithPhonePayloadImplFromJson(json);
 
   @override
   final String token;
@@ -193,7 +193,7 @@ class _$_VerifyOtpWithPhonePayload implements _VerifyOtpWithPhonePayload {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VerifyOtpWithPhonePayload &&
+            other is _$VerifyOtpWithPhonePayloadImpl &&
             (identical(other.token, token) || other.token == token) &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.countryId, countryId) ||
@@ -211,13 +211,13 @@ class _$_VerifyOtpWithPhonePayload implements _VerifyOtpWithPhonePayload {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VerifyOtpWithPhonePayloadCopyWith<_$_VerifyOtpWithPhonePayload>
-      get copyWith => __$$_VerifyOtpWithPhonePayloadCopyWithImpl<
-          _$_VerifyOtpWithPhonePayload>(this, _$identity);
+  _$$VerifyOtpWithPhonePayloadImplCopyWith<_$VerifyOtpWithPhonePayloadImpl>
+      get copyWith => __$$VerifyOtpWithPhonePayloadImplCopyWithImpl<
+          _$VerifyOtpWithPhonePayloadImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VerifyOtpWithPhonePayloadToJson(
+    return _$$VerifyOtpWithPhonePayloadImplToJson(
       this,
     );
   }
@@ -231,10 +231,10 @@ abstract class _VerifyOtpWithPhonePayload implements VerifyOtpWithPhonePayload {
           required final int countryId,
           @JsonKey(includeIfNull: false) final String? phoneCode,
           @JsonKey(includeIfNull: false) final String? otp}) =
-      _$_VerifyOtpWithPhonePayload;
+      _$VerifyOtpWithPhonePayloadImpl;
 
   factory _VerifyOtpWithPhonePayload.fromJson(Map<String, dynamic> json) =
-      _$_VerifyOtpWithPhonePayload.fromJson;
+      _$VerifyOtpWithPhonePayloadImpl.fromJson;
 
   @override
   String get token;
@@ -251,6 +251,6 @@ abstract class _VerifyOtpWithPhonePayload implements VerifyOtpWithPhonePayload {
   String? get otp;
   @override
   @JsonKey(ignore: true)
-  _$$_VerifyOtpWithPhonePayloadCopyWith<_$_VerifyOtpWithPhonePayload>
+  _$$VerifyOtpWithPhonePayloadImplCopyWith<_$VerifyOtpWithPhonePayloadImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

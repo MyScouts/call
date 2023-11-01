@@ -46,16 +46,16 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
   int get timeInputLimit => 60;
 
   void _verifyOTP() {
-    bloc.add(
-      GetDetailDataParam2Event(
-        VerifyPhoneOtpPayload(
-          otp: _otpCode!,
-          token: response.token,
-          teamId: response.teamId,
-        ),
-        widget.type,
-      ),
-    );
+    // bloc.add(
+    //   GetDetailDataParam2Event(
+    //     VerifyPhoneOtpPayload(
+    //       otp: _otpCode!,
+    //       token: response.token,
+    //       teamId: response.teamId,
+    //     ),
+    //     widget.type,
+    //   ),
+    // );
   }
 
   void _onTapResendOtp() {
@@ -81,8 +81,8 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
   void _onListenerResendOTPBloc(BuildContext context, GetDetailState state) {
     if (state is GetDetailDataSuccess<UpgradeAccountResponse>) {
       showToastMessage('Yêu cầu gửi lại OTP thành công');
-      final String? teamId = response.teamId;
-      response = state.data.copyWith(teamId: teamId);
+      // final String? teamId = response.teamId;
+      // response = state.data.copyWith(teamId: teamId);
     } else if (state is GetDetailError) {
       showToastMessage(
         'Yêu cầu gửi lại OTP không thành công',

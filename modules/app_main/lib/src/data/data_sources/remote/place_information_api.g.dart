@@ -20,11 +20,11 @@ class _PlaceInformationAPI implements PlaceInformationAPI {
 
   @override
   Future<ApiResponse<List<Province>>> provincesOfCountry(
-      {required iso2}) async {
+      {required String iso2}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApiResponse<List<Province>>>(Options(
       method: 'GET',
@@ -37,25 +37,32 @@ class _PlaceInformationAPI implements PlaceInformationAPI {
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = ApiResponse<List<Province>>.fromJson(
       _result.data!,
-      (json) => (json as List<dynamic>)
-          .map<Province>((i) => Province.fromJson(i as Map<String, dynamic>))
-          .toList(),
+      (json) => json is List<dynamic>
+          ? json
+              .map<Province>(
+                  (i) => Province.fromJson(i as Map<String, dynamic>))
+              .toList()
+          : List.empty(),
     );
     return value;
   }
 
   @override
   Future<ApiResponse<List<District>>> districtsByProvinces({
-    required iso2,
-    required stateCode,
+    required String iso2,
+    required int stateCode,
   }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApiResponse<List<District>>>(Options(
       method: 'GET',
@@ -68,26 +75,33 @@ class _PlaceInformationAPI implements PlaceInformationAPI {
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = ApiResponse<List<District>>.fromJson(
       _result.data!,
-      (json) => (json as List<dynamic>)
-          .map<District>((i) => District.fromJson(i as Map<String, dynamic>))
-          .toList(),
+      (json) => json is List<dynamic>
+          ? json
+              .map<District>(
+                  (i) => District.fromJson(i as Map<String, dynamic>))
+              .toList()
+          : List.empty(),
     );
     return value;
   }
 
   @override
   Future<ApiResponse<List<Ward>>> ward({
-    required iso2,
-    required stateCode,
-    required districtId,
+    required String iso2,
+    required int stateCode,
+    required String districtId,
   }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApiResponse<List<Ward>>>(Options(
       method: 'GET',
@@ -100,12 +114,18 @@ class _PlaceInformationAPI implements PlaceInformationAPI {
               queryParameters: queryParameters,
               data: _data,
             )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = ApiResponse<List<Ward>>.fromJson(
       _result.data!,
-      (json) => (json as List<dynamic>)
-          .map<Ward>((i) => Ward.fromJson(i as Map<String, dynamic>))
-          .toList(),
+      (json) => json is List<dynamic>
+          ? json
+              .map<Ward>((i) => Ward.fromJson(i as Map<String, dynamic>))
+              .toList()
+          : List.empty(),
     );
     return value;
   }
@@ -121,5 +141,22 @@ class _PlaceInformationAPI implements PlaceInformationAPI {
       }
     }
     return requestOptions;
+  }
+
+  String _combineBaseUrls(
+    String dioBaseUrl,
+    String? baseUrl,
+  ) {
+    if (baseUrl == null || baseUrl.trim().isEmpty) {
+      return dioBaseUrl;
+    }
+
+    final url = Uri.parse(baseUrl);
+
+    if (url.isAbsolute) {
+      return url.toString();
+    }
+
+    return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
 }

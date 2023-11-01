@@ -6,12 +6,15 @@ import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/presentation/authentication/login/login_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:app_core/app_core.dart';
 import 'package:rxdart/rxdart.dart';
-
 import 'application.dart';
+import 'core/services/notifications/push_notification_service.dart';
 import 'di/di.dart';
 
 abstract class IAppDelegate {
@@ -33,15 +36,31 @@ class AppDelegate extends IAppDelegate {
   @override
   Future<Widget> build(Map<String, dynamic> env) async {
     WidgetsFlutterBinding.ensureInitialized();
-
+    await Firebase.initializeApp();
     Configurations().setConfigurationValues(env);
     await configureDependencies(environment: Environment.prod);
 
     final savedThemeMode = await AdaptiveTheme.getThemeMode();
 
+    if (isMobile) {
+      /// CONFIG NOTIFICATION
+      /// Set the background messaging handler early on,
+      /// as a named top-level function
+      if (Configurations.isProduction) {
+        FirebaseMessaging.onBackgroundMessage(
+            firebaseMessagingBackgroundHandler);
+        await setupFlutterNotifications();
+      }
+
+      unawaited(SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.portraitUp]));
+      unawaited(deviceService.setStatusBar());
+      unawaited(deviceService.updateNavigationBarColors(false));
+    }
+
     var initialRoute = AuthenticateScreen.routeName;
     if (userSharePreferencesUsecase.isAuthenticated) {
-      initialRoute = DashboardScreen.routeName;
+      // initialRoute = DashboardScreen.routeName;
     }
 
     if (Configurations.isStudio) {
@@ -58,6 +77,7 @@ class AppDelegate extends IAppDelegate {
       ],
       savedThemeMode: savedThemeMode,
       initialRoute: initialRoute,
+      notificationService: injector.get(),
     );
   }
 

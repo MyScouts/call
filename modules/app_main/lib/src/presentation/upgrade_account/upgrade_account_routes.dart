@@ -1,9 +1,11 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/update_bank_account_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
+import '../settings/contract_ja/contract_ja_screen.dart';
 import '../shared/user/bloc/user_bloc.dart';
 import 'upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'upgrade_ja/upgrade_ja_screen.dart';
@@ -15,7 +17,7 @@ class UpgradeAccountRoutes extends RouteModule {
   Map<String, WidgetBuilder> getAll(RouteSettings settings) => {
         UpgradeJAScreen.routeName: (context) {
           Map args = {};
-          if(settings.arguments != null){
+          if (settings.arguments != null) {
             args = settings.arguments as Map;
           }
           return MultiBlocProvider(
@@ -55,6 +57,9 @@ class UpgradeAccountRoutes extends RouteModule {
             ],
             child: const UpdateBankAccountScreen(),
           );
+        },
+        ContractJAScreen.routeName: (context) {
+          return const ContractJAScreen();
         }
       };
 }
