@@ -78,7 +78,11 @@ import '../presentation/upgrade_account/upgrade_pdone/bloc/upgrade_pdone/upgrade
 import 'modules/data_source_module.dart' as _i56;
 import '../data/repositories/impl/resource_repository.impl.dart' as _i57;
 import '../data/data_sources/remote/resource_api.dart' as _i58;
-
+import '../data/repositories/impl/place_information_repository.impl.dart'
+    as _i59;
+import '../data/data_sources/remote/place_information_api.dart' as _i60;
+import '../data/data_sources/remote/place_information_provider.dart' as _i61;
+import '../data/data_sources/ekyc/ekyc_viettel.dart' as _i62;
 
 const String _prod = 'prod';
 
@@ -105,13 +109,11 @@ Future<_i1.GetIt> init(
   gh.factory<_i9.GeneralRoutes>(() => _i9.GeneralRoutes());
   gh.factory<_i10.MarkShopRoutes>(() => _i10.MarkShopRoutes());
   gh.singleton<_i11.NotificationService>(_i11.NotificationService());
+
   gh.factory<_i12.PlaceInformationUsecase>(() =>
       _i12.PlaceInformationUsecase(gh<_i13.PlaceInformationRepository>()));
   gh.factory<_i14.QrCodeRoutes>(() => _i14.QrCodeRoutes());
-  gh.factory<_i58.ResourceApi>(() => _i58.ResourceApi(gh<_i3.Dio>()));
-  gh.factory<_i16.ResourceRepository>(() => _i57.ResourceRepositoryImpl(
-    gh<_i58.ResourceApi>(),
-  ));
+
   gh.factory<_i15.ResourceUsecase>(
       () => _i15.ResourceUsecase(gh<_i16.ResourceRepository>()));
   gh.singleton<_i17.Routes>(_i17.Routes());
@@ -141,11 +143,13 @@ Future<_i1.GetIt> init(
       () => _i29.UpgradeAccountApi(gh<_i3.Dio>()));
   gh.factory<_i30.UpgradeAccountRepository>(
       () => _i31.UpgradeAccountRepositoryImpl(gh<_i29.UpgradeAccountApi>()));
-  gh.factory<_i32.UpgradeAccountUsecase>(
-      () => _i32.UpgradeAccountUsecase(gh<_i30.UpgradeAccountRepository>()));
+  gh.factory<_i62.EKycViettel>(() => _i62.EKycViettel(gh<_i3.Dio>()));
+  gh.factory<_i32.UpgradeAccountUsecase>(() => _i32.UpgradeAccountUsecase(
+      gh<_i30.UpgradeAccountRepository>(), gh<_i62.EKycViettel>()));
   gh.factory<_i33.UpgradePDoneBloc>(() => _i33.UpgradePDoneBloc(
         gh<_i32.UpgradeAccountUsecase>(),
         gh<_i15.ResourceUsecase>(),
+        gh<_i21.UserSharePreferencesUsecase>(),
       ));
   gh.factory<_i34.UserApi>(() => _i34.UserApi(gh<_i3.Dio>()));
   gh.factory<_i35.UserRepository>(
@@ -201,14 +205,30 @@ Future<_i1.GetIt> init(
   gh.singleton<_i55.AppSettingBloc>(
       _i55.AppSettingBloc(gh<_i40.AuthenticationUsecase>()));
 
-
   // old logic
   gh.factory<_i56.UserBloc>(() => _i56.UserBloc(
-    gh<_i40.AuthenticationUsecase>(),
-    gh<_i21.UserSharePreferencesUsecase>(),
-    gh<_i22.UserUsecase>(),
-    gh<_i3.UserInformationCubit>(),
-  ));
+        gh<_i40.AuthenticationUsecase>(),
+        gh<_i21.UserSharePreferencesUsecase>(),
+        gh<_i22.UserUsecase>(),
+        gh<_i3.UserInformationCubit>(),
+      ));
+  final placeModule = _$PlaceModule();
+  // gh.factory<_i61.PlaceInformationProvider>(() => placeModule.placeProviderProd(
+  //       gh<_i19.SharedPreferences>(),
+  //       gh<_i63.PlaceInformationConfigurations>(),
+  //     ));
+  gh.factory<_i60.PlaceInformationAPI>(
+      () => _i60.PlaceInformationAPI(gh<_i3.Dio>()));
+  gh.singleton<_i13.PlaceInformationRepository>(
+      _i59.PlaceInformationRepositoryImpl(gh<_i60.PlaceInformationAPI>()));
+
+  //
+
+  //
+  gh.factory<_i58.ResourceApi>(() => _i58.ResourceApi(gh<_i3.Dio>()));
+  gh.factory<_i16.ResourceRepository>(() => _i57.ResourceRepositoryImpl(
+        gh<_i58.ResourceApi>(),
+      ));
   return getIt;
 }
 
@@ -218,3 +238,5 @@ class _$CommunityModule extends _i57.CommunityModule {}
 
 class _$UpgradeAgreePolicyBlocFactory
     extends _i58.UpgradeAgreePolicyBlocFactory {}
+
+class _$PlaceModule extends _i61.PlaceModule {}

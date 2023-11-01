@@ -26,6 +26,15 @@ mixin UpdatePDoneInformationMixin<T extends StatefulWidget> on State<T> {
 
   final weightCtrl = TextEditingController();
   final heightCtrl = TextEditingController();
+  final genderCtrl = TextEditingController();
+
+
+  /// birth place
+  final bpProvinceCtrl = TextEditingController();
+  final bpDistrictCtrl = TextEditingController();
+  final bpWardCtrl = TextEditingController();
+  final bpStreetCtrl = TextEditingController();
+  final bpAddressCtrl = TextEditingController();
 
   /// Protector
   final identifyNumberProtectorCtrl = TextEditingController();

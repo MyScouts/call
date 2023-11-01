@@ -4,6 +4,8 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'interceptors/dio_curl_interceptor.dart';
+
 class RequestHeaders {
   static const String applicationJson = "application/json";
   static const String contentType = "Content-Type";
@@ -30,6 +32,9 @@ class NetworkingFactory {
 
     dio.interceptors.add(
       ApiTokenInterceptor(sharedPreferences, onLogout: onLogout),
+    );
+    dio.interceptors.add(
+        DioCurlInterceptor()
     );
     if (isDebug) {
       dio.interceptors.add(

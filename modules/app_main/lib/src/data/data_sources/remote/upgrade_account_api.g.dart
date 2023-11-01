@@ -127,7 +127,7 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
               _dio.options,
               'api/account-p-done/profile/email/resend',
               queryParameters: queryParameters,
-              data: _data,
+              data: _data.toJson(),
             )
             .copyWith(
                 baseUrl: _combineBaseUrls(
@@ -189,7 +189,7 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
               _dio.options,
               'api/account-p-done/profile/register-p-done',
               queryParameters: queryParameters,
-              data: _data,
+              data: _data.toJson(),
             )
             .copyWith(
                 baseUrl: _combineBaseUrls(
@@ -423,7 +423,7 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApiResponse<UpgradeAccountResponse>>(Options(
       method: 'POST',

@@ -16,6 +16,7 @@ enum UpdateInformationType {
   district,
   ward,
   address,
+  street,
   idNumber, // CCCD
   dateOfIdNumber, // ngày cấp
   placeofIdNumber, // nơi cấp
@@ -123,6 +124,8 @@ extension UpdateInformationTypeExt on UpdateInformationType {
         return 'Số ID/CCCD/HC';
       case UpdateInformationType.pDoneIDOfProtector:
         return 'ID P-Done của người bảo hộ';
+      case UpdateInformationType.street:
+        return 'Đường/thôn';
     }
   }
 
@@ -206,6 +209,8 @@ extension UpdateInformationTypeExt on UpdateInformationType {
         return 'Nhập số ID/CCCD/HC của người bảo hộ';
       case UpdateInformationType.pDoneIDOfProtector:
         return 'Nhập ID P-Done của người bảo hộ';
+      case UpdateInformationType.street:
+        return 'Nhập đường/thôn';
     }
   }
 }

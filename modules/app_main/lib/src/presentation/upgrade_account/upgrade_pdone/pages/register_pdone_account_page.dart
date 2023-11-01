@@ -31,6 +31,7 @@ class _RegisterPDoneAccountPageState extends State<RegisterPDoneAccountPage>
     with ValidationMixin, HandleErrorMessageMixin {
   bool acceptedPolicy = false;
   final _emailCtrl = TextEditingController();
+  final _phoneCode = TextEditingController(text: '84');
   final _phoneCtrl = TextEditingController();
 
   User? get currentUser => context.read<UserBloc>().state.currentUser;
@@ -80,103 +81,113 @@ class _RegisterPDoneAccountPageState extends State<RegisterPDoneAccountPage>
     return BlocListener<UpgradePDoneBloc, UpgradePDoneState>(
       listener: _onListenerBloc,
       child: AutoHideKeyboard(
-        child: Column(
-          children: [
-            validationFormBuilder(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _labelTextField('Email'),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: UpgradeAccountConstants.horizontalScreen,
+        child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _labelTextField('Email'),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: UpgradeAccountConstants.horizontalScreen,
+                ),
+                child: TextInputUpdateInformationWidget(
+                  type: UpdateInformationType.email,
+                  controller: _emailCtrl,
+                  onChanged: (val) => setState(() {}),
+                  shouldEnabled: currentUser?.email == null,
+                  hintText: 'Email',
+                  textInputType: TextInputType.emailAddress,
+                ),
+              ),
+              _labelTextField('Số điện thoại'),
+
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(
+              //     horizontal: UpgradeAccountConstants.horizontalScreen,
+              //   ),
+              //   child: TextInputUpdateInformationWidget(
+              //     type: UpdateInformationType.phone,
+              //     maxLength: AppConstants.inputPhoneLenght,
+              //     controller: _phoneCtrl,
+              //     shouldEnabled: currentUser?.phone == null,
+              //     onChanged: (val) => setState(() {}),
+              //     hintText: 'Phone',
+              //     textInputType: TextInputType.phone,
+              //   ),
+              // ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: UpgradeAccountConstants.horizontalScreen,
+                ),
+                child: AppPhoneInput(
+                  controller: _phoneCtrl,
+                  onChange: (val) {},
+                  onPhoneCodeChange: (val) {
+                    _phoneCode.text = val.code.toString();
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 6, top: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Checkbox(
+                      value: acceptedPolicy,
+                      activeColor: AppColors.green11,
+                      onChanged: _onChangedCheckbox,
                     ),
-                    child: TextInputUpdateInformationWidget(
-                      type: UpdateInformationType.email,
-                      controller: _emailCtrl,
-                      onChanged: (val) => setState(() {}),
-                      shouldEnabled: currentUser?.email == null,
-                      hintText: 'Email',
-                      textInputType: TextInputType.emailAddress,
-                    ),
-                  ),
-                  _labelTextField('Số điện thoại'),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: UpgradeAccountConstants.horizontalScreen,
-                    ),
-                    child: TextInputUpdateInformationWidget(
-                      type: UpdateInformationType.phone,
-                      maxLength: AppConstants.inputPhoneLenght,
-                      controller: _phoneCtrl,
-                      shouldEnabled: currentUser?.phone == null,
-                      onChanged: (val) => setState(() {}),
-                      hintText: 'Phone',
-                      textInputType: TextInputType.phone,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 6, top: 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Checkbox(
-                          value: acceptedPolicy,
-                          activeColor: AppColors.green11,
-                          onChanged: _onChangedCheckbox,
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 12, right: 12),
-                            child: RichText(
-                              text: TextSpan(
-                                text: 'Tôi đồng ý với ',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall!
-                                    .copyWith(color: AppColors.grey10),
-                                children: [
-                                  TextSpan(
-                                    text: 'Điều khoản dịch vụ và Chính sách ',
-                                    style: const TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      color: AppColors.blue31,
-                                    ),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = _onTapPolicy,
-                                  ),
-                                  const TextSpan(text: 'của VDONE')
-                                ],
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 12, right: 12),
+                        child: RichText(
+                          text: TextSpan(
+                            text: 'Tôi đồng ý với ',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .copyWith(color: AppColors.grey10),
+                            children: [
+                              TextSpan(
+                                text: 'Điều khoản dịch vụ và Chính sách ',
+                                style: const TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: AppColors.blue31,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = _onTapPolicy,
                               ),
-                            ),
+                              const TextSpan(text: 'của VDONE')
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                        UpgradeAccountConstants.horizontalScreen,
-                        30,
-                        UpgradeAccountConstants.horizontalScreen,
-                        0),
-                    child: GradiantButton(
-                      // onPressed: showLoading,
-                      onPressed: enableBtnNext ? _registerAccount : null,
-                      child: Text(
-                        'TIẾP THEO',
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelLarge
-                            ?.copyWith(color: AppColors.white),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                    UpgradeAccountConstants.horizontalScreen,
+                    30,
+                    UpgradeAccountConstants.horizontalScreen,
+                    0),
+                child: GradiantButton(
+                  // onPressed: showLoading,
+                  onPressed: enableBtnNext ? _registerAccount : null,
+                  child: Text(
+                    'TIẾP THEO',
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelLarge
+                        ?.copyWith(color: AppColors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -213,7 +224,12 @@ class _RegisterPDoneAccountPageState extends State<RegisterPDoneAccountPage>
 
     // user register with email
     if (currentUser?.email == null) {
-      upgradePDoneBloc.add(RegisterPDoneAccountEvent(email: text));
+      upgradePDoneBloc.add(
+        RegisterPDoneAccountEvent(
+            email: text,
+            phoneCode: _phoneCode.text,
+            phoneNumber: _phoneCtrl.text),
+      );
       showLoading();
       return;
     }
