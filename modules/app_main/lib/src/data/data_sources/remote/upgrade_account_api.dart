@@ -35,7 +35,7 @@ class UpgradeAccountApiConstants {
 
   static const master = 'api/master';
 
-  static const registerJA = 'api/register-community/register-ja';
+  static const registerJA = '/api/v1/ja/register';
   static const registerJAVerifyOtp = 'api/register-community/register-ja/verify-otp';
   static const resendOtpJA = 'api/register-community/register-ja/re-send-otp';
 
@@ -98,9 +98,7 @@ abstract class UpgradeAccountApi {
   Future<ApiResponse<UpgradeAccount>> getListData();
 
   @POST(UpgradeAccountApiConstants.registerJA)
-  Future<ApiResponse<UpgradeAccountResponse>> registerJA({
-    @Body() required UpgradeJAPayload payload,
-  });
+  Future<ApiResponse<UpgradeAccountResponse>> registerJA();
 
   @POST(UpgradeAccountApiConstants.registerJAVerifyOtp)
   Future<ApiResponse<dynamic>> registerJAVerifyOtp({

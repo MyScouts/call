@@ -94,8 +94,8 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   }
 
   @override
-  Future<UpgradeAccountResponse> registerJA({required UpgradeJAPayload payload}) async {
-    final response = await _upgradeAccountApi.registerJA(payload: payload);
+  Future<UpgradeAccountResponse> registerJA() async {
+    final response = await _upgradeAccountApi.registerJA();
     return response.data;
   }
 

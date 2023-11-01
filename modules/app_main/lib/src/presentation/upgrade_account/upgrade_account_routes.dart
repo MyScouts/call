@@ -4,7 +4,6 @@ import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/update_bank
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
-import '../community/groups/group_listing_bloc.dart';
 import '../shared/user/bloc/user_bloc.dart';
 import 'upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'upgrade_ja/upgrade_ja_screen.dart';
@@ -21,7 +20,7 @@ class UpgradeAccountRoutes extends RouteModule {
           }
           return MultiBlocProvider(
             providers: [
-              BlocProvider<UpgradeAccountBloc>(
+              BlocProvider<UpgradeJABloc>(
                 create: (context) => injector.get(),
               ),
             ],

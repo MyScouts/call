@@ -1,4 +1,5 @@
 import 'package:app_main/src/presentation/marshop/marshop_coordintor.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,11 @@ class Setting {
           text: "Đăng ký và nâng cấp tài khoản",
           icon: IconAppConstants.icECommerce,
           onPressed: () => context.startUpgradeMarshop(),
+        ),
+        Setting(
+          text: "Đăng ký JA",
+          icon: IconAppConstants.icChanel,
+          onPressed: () => context.startUpgradeJA(),
         ),
       ];
 }

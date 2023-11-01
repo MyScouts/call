@@ -2,7 +2,6 @@ import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/upd
 import 'package:injectable/injectable.dart';
 
 import '../../data/data_sources/ekyc/ekyc_viettel.dart';
-import '../../data/models/payloads/upgrade_account/upgrade_ja/upgrade_ja_payload.dart';
 import '../../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
 import '../../data/models/responses/register_pdone_response.dart';
 import '../../data/models/responses/upgrade_account_response.dart';
@@ -11,7 +10,6 @@ import '../entities/commity_action_type.dart';
 import '../entities/update_account/bank_acount/bank_account.dart';
 import '../entities/update_account/check_protector_payload.dart';
 import '../entities/update_account/kyc_status.dart';
-import '../entities/update_account/otp/otp.dart';
 import '../entities/update_account/register_pdone_with_phone_payload.dart';
 import '../entities/update_account/update_pdone_kyc_payload.dart';
 import '../entities/update_account/update_profile_payload.dart';
@@ -59,11 +57,8 @@ class UpgradeAccountUsecase {
     return _upgradeAccountRepository.verifyOtpRegisterPDone(payload);
   }
 
-  Future<UpgradeAccountResponse> registerAccount(
-      UpgradeJAPayload? payload, PDoneActionType type) {
-    return type == PDoneActionType.registerJA
-        ? _upgradeAccountRepository.registerJA(payload: payload!)
-        : _upgradeAccountRepository.registerVShop();
+  Future<UpgradeAccountResponse> registerJA() {
+        return _upgradeAccountRepository.registerJA();
   }
 
   Future<bool> verifyOtpPhone(

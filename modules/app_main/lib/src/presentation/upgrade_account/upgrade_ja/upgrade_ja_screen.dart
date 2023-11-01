@@ -24,7 +24,8 @@ class UpgradeJAScreen extends StatefulWidget {
   State<UpgradeJAScreen> createState() => _UpgradeJAScreenState();
 }
 
-class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin {
+class _UpgradeJAScreenState extends State<UpgradeJAScreen>
+    with ValidationMixin {
   String _getTitleAppBar() {
     if (widget.team != null) {
       return "Đăng ký tham gia ${widget.team?.name ?? ''}";
@@ -62,7 +63,7 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
     super.initState();
   }
 
-  UpgradeAccountBloc get upgradeAccountBloc => context.read();
+  UpgradeJABloc get upgradeJABloc => context.read<UpgradeJABloc>();
 
   void _onListenUpgradeAgreePolicyBloc(BuildContext context, state) {
     if (state is GetDetailDataLoading) {
@@ -83,16 +84,16 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
     }
   }
 
-  Future<void> delayAndPopScreen(BuildContext context) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-
-    if (!mounted) {
-      return;
-    }
-    Navigator.of(context).pop();
-    //TODO: fetch user again
-    // context.read<UserBloc>().add(FetchUserInfoEvent());
-  }
+  // Future<void> delayAndPopScreen(BuildContext context) async {
+  //   await Future.delayed(const Duration(milliseconds: 500));
+  //
+  //   if (!mounted) {
+  //     return;
+  //   }
+  //   Navigator.of(context).pop();
+  //   //TODO: fetch user again
+  //   // context.read<UserBloc>().add(FetchUserInfoEvent());
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +107,10 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
             ),
             Text(
               'Số: VN2A32345678JA',
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: const Color(0xff828282)),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: const Color(0xff828282)),
             ),
           ],
         ),
@@ -119,7 +123,7 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
           onPressed: Navigator.of(context).pop,
         ),
       ),
-      body: BlocConsumer<UpgradeAccountBloc, GetDetailState>(
+      body: BlocConsumer<UpgradeJABloc, GetDetailState>(
         listener: _onListenUpgradeAgreePolicyBloc,
         builder: (context, state) {
           return Column(
@@ -135,7 +139,10 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
                         children: [
                           Text(
                             'Thông tin tài khoản ngân hàng',
-                            style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w600),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
+                                ?.copyWith(fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(height: 10),
                           ..._bankAccountField(
@@ -148,7 +155,8 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
                                 borderRadius: BorderRadius.circular(2),
                                 border: Border.all(color: AppColors.greyBorder),
                               ),
-                              child: Image.network('${defaultBank.bank?.logo}', fit: BoxFit.fill),
+                              child: Image.network('${defaultBank.bank?.logo}',
+                                  fit: BoxFit.fill),
                             ),
                             content: defaultBank.bank?.shortName ?? '',
                           ),
@@ -176,11 +184,16 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
                 valueListenable: _acceptTerm,
                 builder: (_, __, ___) {
                   return Padding(
-                    padding:
-                        EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom, right: 20, left: 20, top: 10),
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).padding.bottom,
+                        right: 20,
+                        left: 20,
+                        top: 10),
                     child: PrimaryButton(
                       title: S.current.register,
-                      onTap: () {},
+                      onTap: () {
+                        upgradeJABloc.add(GetDetailDataEvent());
+                      },
                       disabled: !_acceptTerm.value,
                     ),
                   );
@@ -201,7 +214,10 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
     return [
       Text(
         '$title:',
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w400),
+        style: Theme.of(context)
+            .textTheme
+            .bodyLarge
+            ?.copyWith(fontWeight: FontWeight.w400),
       ),
       const SizedBox(height: 10),
       Container(

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:injectable/injectable.dart';
 
 class EKycIdCardRequest {
   const EKycIdCardRequest({required this.backImg, required this.fontImg});
@@ -10,6 +11,7 @@ class EKycIdCardRequest {
   final String backImg;
 }
 
+@injectable
 class EKycViettel {
   final Dio _dio;
 

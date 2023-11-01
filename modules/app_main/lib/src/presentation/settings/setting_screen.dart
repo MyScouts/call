@@ -10,6 +10,7 @@ import 'package:ui/ui.dart';
 
 class SettingScreen extends StatefulWidget {
   static const String routeName = "settings";
+
   const SettingScreen({super.key});
 
   @override
@@ -92,7 +93,12 @@ class _SettingScreenState extends State<SettingScreen> {
   _buildMenus() {
     return Column(
       children: [
-        _buildSession1(),
+        GestureDetector(
+          onTap: () {
+            context.startUpgradeJA();
+          },
+          child: _buildSession1(),
+        ),
         const SizedBox(height: 10),
         _buildSession2(),
       ],
@@ -111,10 +117,13 @@ class _SettingScreenState extends State<SettingScreen> {
   _buildSession2() {
     return Column(
       children: Setting.session1Menus(context)
-          .map((item) => ItemSettingWidget(
-                name: item.text,
-                icon: item.icon,
-                onPressed: item.onPressed,
+          .map((item) => Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: ItemSettingWidget(
+                  name: item.text,
+                  icon: item.icon,
+                  onPressed: item.onPressed,
+                ),
               ))
           .toList(),
     );

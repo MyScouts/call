@@ -1,7 +1,6 @@
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
 
-import '../../data/models/payloads/upgrade_account/upgrade_ja/upgrade_ja_payload.dart';
 import '../../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
 import '../../data/models/responses/register_pdone_response.dart';
 import '../../data/models/responses/upgrade_account_response.dart';
@@ -31,7 +30,7 @@ abstract class UpgradeAccountRepository {
 
   Future<RegisterPDoneResponse> resendOtpEmail(RegisterPDoneAccountPayload payload);
 
-  Future<UpgradeAccountResponse> registerJA({required UpgradeJAPayload payload});
+  Future<UpgradeAccountResponse> registerJA();
 
   Future<bool> registerJAVerifyOtp({required VerifyPhoneOtpPayload payload});
 

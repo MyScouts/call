@@ -12,7 +12,6 @@ class UpgradeAccountResponse with _$UpgradeAccountResponse {
     required String token,
     String? phone,
     String? phoneCode,
-    String? teamId,
   }) = _UpgradeAccountResponse;
 
   factory UpgradeAccountResponse.fromJson(Map<String, dynamic> json) =>

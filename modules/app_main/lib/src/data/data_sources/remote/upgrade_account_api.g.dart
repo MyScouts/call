@@ -127,7 +127,7 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
               _dio.options,
               'api/account-p-done/profile/email/resend',
               queryParameters: queryParameters,
-              data: _data.toJson(),
+              data: _data,
             )
             .copyWith(
                 baseUrl: _combineBaseUrls(
@@ -189,7 +189,7 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
               _dio.options,
               'api/account-p-done/profile/register-p-done',
               queryParameters: queryParameters,
-              data: _data.toJson(),
+              data: _data,
             )
             .copyWith(
                 baseUrl: _combineBaseUrls(
@@ -296,12 +296,11 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
   }
 
   @override
-  Future<ApiResponse<UpgradeAccountResponse>> registerJA(
-      {required UpgradeJAPayload payload}) async {
+  Future<ApiResponse<UpgradeAccountResponse>> registerJA() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = payload;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApiResponse<UpgradeAccountResponse>>(Options(
       method: 'POST',
@@ -310,7 +309,7 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
     )
             .compose(
               _dio.options,
-              'api/register-community/register-ja',
+              '/api/v1/ja/register',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -423,7 +422,7 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApiResponse<UpgradeAccountResponse>>(Options(
       method: 'POST',
