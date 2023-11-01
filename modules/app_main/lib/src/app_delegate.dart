@@ -47,10 +47,11 @@ class AppDelegate extends IAppDelegate {
       /// CONFIG NOTIFICATION
       /// Set the background messaging handler early on,
       /// as a named top-level function
-      // if (Configurations.isProduction) {
-      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-      await setupFlutterNotifications();
-      // }
+      if (Configurations.isProduction) {
+        FirebaseMessaging.onBackgroundMessage(
+            firebaseMessagingBackgroundHandler);
+        await setupFlutterNotifications();
+      }
 
       unawaited(SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp]));

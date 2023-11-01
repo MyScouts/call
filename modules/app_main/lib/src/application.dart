@@ -21,7 +21,7 @@ class Application extends StatefulWidget {
   final NotificationService notificationService;
 
   const Application({
-    Key? key,
+    super.key,
     this.savedThemeMode,
     required this.initialRoute,
     required this.title,
@@ -29,7 +29,7 @@ class Application extends StatefulWidget {
     required this.notificationService,
     this.isProduction = true,
     // required this.myRouteObserver,
-  }) : super(key: key);
+  });
 
   @override
   State<Application> createState() => _ApplicationState();

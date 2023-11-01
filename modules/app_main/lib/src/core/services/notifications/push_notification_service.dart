@@ -51,6 +51,16 @@ Future<void> setupFlutterNotifications() async {
     return;
   }
 
+  FirebaseMessaging.instance.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
   channel = const AndroidNotificationChannel(
     'high_importance_channel', // id
     'High Importance Notifications', // title
@@ -85,11 +95,11 @@ Future<void> setupFlutterNotifications() async {
 
   /// Update the iOS foreground notification presentation options to allow
   /// heads up notifications.
-  // await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-  //   alert: true,
-  //   badge: true,
-  //   sound: true,
-  // );
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
   isFlutterLocalNotificationsInitialized = true;
 }
 
@@ -190,7 +200,7 @@ void showFlutterNotification(RemoteMessage message) {
   }
 }
 
-void showNotificaitonLocal({required Map<String, dynamic> payload}) {
+void showNotificationLocal({required Map<String, dynamic> payload}) {
   showFlutterNotification(RemoteMessage.fromMap(payload));
 }
 

@@ -65,6 +65,7 @@ class AuthenticationUsecase {
 
   _syncFCMToken() async {
     final fcmToken = await _notificationService.getFCMToken();
+    debugPrint(fcmToken);
     if (fcmToken?.isNotEmpty ?? false) {
       await _userSharePreferencesUsecase.saveFCMToken(fcmToken!);
       try {

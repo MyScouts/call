@@ -59,6 +59,8 @@ class NotificationService {
   }
 
   Future<void> onListenerNotification(BuildContext context) async {
+    debugPrint("onListenerNotification");
+
     if (!isMobile) {
       return;
     }
