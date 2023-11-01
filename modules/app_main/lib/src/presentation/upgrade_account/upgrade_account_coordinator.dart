@@ -117,7 +117,10 @@ extension UpgradeAccountCoordinator on BuildContext {
     );
   }
 
-  Future<T?> startDialogVerifyBankAccountOTP<T>(UpdateBankAccountPayload payload) {
+  Future<T?> startDialogVerifyBankAccountOTP<T>({
+    required UpdateBankAccountBloc bloc,
+    required UpdateBankAccountPayload payload,
+  }) {
     return showGeneralDialog<T>(
       context: this,
       barrierDismissible: true,
@@ -125,8 +128,8 @@ extension UpgradeAccountCoordinator on BuildContext {
       pageBuilder: (context, animation1, animation2) {
         return MultiBlocProvider(
           providers: [
-            BlocProvider<UpgradeAccountVerifyPhoneBloc>(
-              create: (context) => injector.get(),
+            BlocProvider<UpdateBankAccountBloc>.value(
+              value: bloc,
             ),
             BlocProvider<ResendOTPPhoneBloc>(
               create: (context) => injector.get(),
@@ -137,6 +140,22 @@ extension UpgradeAccountCoordinator on BuildContext {
               child: VerifyOTPBankAccountDialogWidget(payload: payload),
             ),
           ),
+        );
+      },
+    );
+  }
+
+  Future<T?> startCongratulationRegisterDialog<T>() {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: false,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return CongratulationDialog(
+          title: "Bạn đã đăng ký tài khoản ngân hàng thành công!",
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, UpgradeJAScreen.routeName);
+          },
         );
       },
     );

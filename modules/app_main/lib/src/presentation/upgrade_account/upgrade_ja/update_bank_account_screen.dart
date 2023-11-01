@@ -182,7 +182,10 @@ class _UpdateBankAccountScreenState extends State<UpdateBankAccountScreen> with 
                           bankNumber: _bankNumberCtrl.text,
                           isDefault: false,
                         );
-                        context.startDialogVerifyBankAccountOTP(payload);
+                        context.startDialogVerifyBankAccountOTP(
+                          bloc: context.read<UpdateBankAccountBloc>(),
+                          payload: payload,
+                        );
                       },
                       disabled: !validation,
                     ),

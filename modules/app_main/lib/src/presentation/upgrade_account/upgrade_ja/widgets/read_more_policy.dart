@@ -27,7 +27,7 @@ class _ReadMorePolicyState extends State<ReadMorePolicy> {
               ),
               Text(
                 policyContents.first['content'].toString(),
-                maxLines: 15,
+                maxLines: 18,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       height: 1.5,

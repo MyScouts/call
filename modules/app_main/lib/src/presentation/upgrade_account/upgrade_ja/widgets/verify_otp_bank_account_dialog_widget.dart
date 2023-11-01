@@ -2,6 +2,8 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
+import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +31,7 @@ class _VerifyOTPBankAccountDialogWidgetState extends State<VerifyOTPBankAccountD
 
   UserCubit get cubit => context.read<UserCubit>();
 
-  ResendOTPPhoneBloc get resendOtpBloc => context.read<ResendOTPPhoneBloc>();
+  UpdateBankAccountBloc get bloc => context.read<UpdateBankAccountBloc>();
 
   @override
   bool get isCountDown => true;
@@ -51,19 +53,7 @@ class _VerifyOTPBankAccountDialogWidgetState extends State<VerifyOTPBankAccountD
       isDefault: true,
       otp: _otpController.text,
     );
-
-    print('UpdateBankAccountPayload: ${payload.toJson()}');
-
-    // bloc.add(
-    //   GetDetailDataParam2Event(
-    //     VerifyPhoneOtpPayload(
-    //       otp: _otpCode!,
-    //       token: response.token,
-    //       teamId: response.teamId,
-    //     ),
-    //     widget.type,
-    //   ),
-    // );
+    bloc.add(GetDetailDataParam1Event(payload));
   }
 
   void _onTapResendOtp() {
@@ -74,10 +64,12 @@ class _VerifyOTPBankAccountDialogWidgetState extends State<VerifyOTPBankAccountD
 
   void _onListenerBloc(BuildContext context, GetDetailState state) {
     if (state is GetDetailDataLoading) {
+      _otpController.clear();
       showLoading();
-    } else if (state is GetDetailDataSuccess<bool>) {
+    } else if (state is GetDetailDataSuccess) {
       hideLoading();
-      Navigator.pop(context, true);
+      Navigator.pop(context);
+      context.startCongratulationRegisterDialog();
     } else if (state is GetDetailError) {
       hideLoading();
       showToastMessage('Mã xác thực không đúng hoặc đã hết hạn', ToastMessageType.error);
@@ -85,7 +77,7 @@ class _VerifyOTPBankAccountDialogWidgetState extends State<VerifyOTPBankAccountD
   }
 
   void _onListenerResendOTPBloc(BuildContext context, UserState state) {
-    if(state is GetOTPSuccess){
+    if (state is GetOTPSuccess) {
       token = state.otp.token ?? '';
     }
     if (state is ResendUserOTPSuccess) {
@@ -112,7 +104,7 @@ class _VerifyOTPBankAccountDialogWidgetState extends State<VerifyOTPBankAccountD
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<UpgradeAccountVerifyPhoneBloc, GetDetailState>(
+    return BlocListener<UpdateBankAccountBloc, GetDetailState>(
       listener: _onListenerBloc,
       child: Material(
         color: Colors.transparent,
@@ -168,7 +160,7 @@ class _VerifyOTPBankAccountDialogWidgetState extends State<VerifyOTPBankAccountD
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
+              padding: const EdgeInsets.fromLTRB(20, 12, 20, 10),
               child: OtpWidget(
                 onOtpChanged: (value) {
                   _otpController.text = value;
@@ -189,14 +181,11 @@ class _VerifyOTPBankAccountDialogWidgetState extends State<VerifyOTPBankAccountD
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 32),
               child: ValueListenableBuilder(
                 valueListenable: ValueNotifier(_isActive),
                 builder: (_, __, ___) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: PrimaryButton(title: 'Tiếp theo', onTap: _updateBankAccount, disabled: !_isActive),
-                  );
+                  return PrimaryButton(title: 'Tiếp theo', onTap: _updateBankAccount, disabled: !_isActive);
                 },
               ),
             ),

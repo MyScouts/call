@@ -58,10 +58,10 @@ import '../domain/usecases/user_usecase.dart' as _i22;
 import '../presentation/authentication/authentication_routes.dart' as _i5;
 import '../presentation/community/community_module.dart' as _i57;
 import '../presentation/dashboard/dashboard_routes.dart' as _i6;
-import '../presentation/general_setting/general_routes.dart' as _i8;
+import '../presentation/general_setting/general_routes.dart' as _i9;
 import '../presentation/marshop/marshop_routes.dart' as _i10;
 import '../presentation/marshop/widgets/general_setting/general_routes.dart'
-    as _i9;
+    as _i8;
 import '../presentation/notification/deeplink/bloc/deeplink_bloc.dart' as _i7;
 import '../presentation/qr_code/qr_code_route.dart' as _i14;
 import '../presentation/routes.dart' as _i17;
@@ -169,13 +169,13 @@ Future<_i1.GetIt> init(
       _i45.GetDetailBlocParam1<_i46.BankAccount,
           _i47.UpdateBankAccountPayload>>(() => upgradeAgreePolicyBlocFactory
       .createUpdateBankAccountBloc(gh<_i32.UpgradeAccountUsecase>()));
-  gh.factory<_i45.GetDetailBlocParam1<_i3.GroupDetail, String>>(() =>
-      upgradeAgreePolicyBlocFactory
-          .createGetGroupDetailByBossIDBloc(gh<_i44.CommunityUsecase>()));
   gh.factory<
       _i45.GetDetailBlocParam1<_i48.UpgradeAccountResponse,
           _i49.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
       .createResendOTPPhoneBloc(gh<_i32.UpgradeAccountUsecase>()));
+  gh.factory<_i45.GetDetailBlocParam1<_i3.GroupDetail, String>>(() =>
+      upgradeAgreePolicyBlocFactory
+          .createGetGroupDetailByBossIDBloc(gh<_i44.CommunityUsecase>()));
   gh.factory<
       _i45.GetDetailBlocParam2<bool, _i50.VerifyPhoneOtpPayload,
           _i49.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
@@ -186,10 +186,10 @@ Future<_i1.GetIt> init(
           _i51.UpgradeJAPayload?,
           _i49.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
       .createUpgradeAccountBloc(gh<_i32.UpgradeAccountUsecase>()));
-  gh.factory<_i45.GetListBloc<_i3.Group>>(() =>
-      communityModule.createGetListGroupsBloc(gh<_i44.CommunityUsecase>()));
   gh.factory<_i45.GetListBloc<_i52.Bank>>(() => upgradeAgreePolicyBlocFactory
       .createGetListBanksBloc(gh<_i32.UpgradeAccountUsecase>()));
+  gh.factory<_i45.GetListBloc<_i3.Group>>(() =>
+      communityModule.createGetListGroupsBloc(gh<_i44.CommunityUsecase>()));
   gh.factory<_i45.GetListBlocParam1<_i3.Team, int>>(() =>
       communityModule.createGetListTeamsBloc(gh<_i44.CommunityUsecase>()));
   gh.factory<_i53.MarshopCubit>(

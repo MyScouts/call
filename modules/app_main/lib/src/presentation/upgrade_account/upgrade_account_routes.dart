@@ -15,22 +15,13 @@ class UpgradeAccountRoutes extends RouteModule {
   @override
   Map<String, WidgetBuilder> getAll(RouteSettings settings) => {
         UpgradeJAScreen.routeName: (context) {
-          final args = settings.arguments as Map;
+          Map args = {};
+          if(settings.arguments != null){
+            args = settings.arguments as Map;
+          }
           return MultiBlocProvider(
             providers: [
               BlocProvider<UpgradeAccountBloc>(
-                create: (context) => injector.get(),
-              ),
-              BlocProvider<GetListGroupsBloc>(
-                create: (context) => injector.get()..add(GetListDataEvent()),
-              ),
-              BlocProvider<GetListTeamsBloc>(
-                create: (context) => injector.get(),
-              ),
-              BlocProvider<GetListBanksBloc>(
-                create: (context) => injector.get(),
-              ),
-              BlocProvider<GetGroupDetailByBossIDBloc>(
                 create: (context) => injector.get(),
               ),
             ],
