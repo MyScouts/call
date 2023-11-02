@@ -34,6 +34,7 @@ extension ErrorMessage on String {
       'MEDIA_NOT_FOUND': 'Media không tồn tại',
       'MEDIA_NOT_VALID': 'Media không hợp lệ',
       'NOT_P_DONE': 'Tài khoản chưa là P Done',
+      'YOU_WERE_JA': 'Tài khoản đã là JA',
       'GENERATE_P_DONE_ID_FAIL': 'Tạo mã P Done thất bại',
       'TEAM_NOT_FOUND': 'Team không tồn tại',
       'ONLY_JOIN_ONE_TEAM': 'Không được tham gia nhiều Team',

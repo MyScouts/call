@@ -9,6 +9,7 @@ import 'package:injectable/injectable.dart';
 import 'package:localization/localization.dart';
 
 import '../../domain/usecases/user_share_preferences_usecase.dart';
+import '../../domain/usecases/user_usecase.dart';
 
 part 'user_state.dart';
 
@@ -16,10 +17,12 @@ part 'user_state.dart';
 class UserCubit extends Cubit<UserState> {
   final AuthenticationUsecase _authenticationUsecase;
   final UserSharePreferencesUsecase _userSharePreferencesUsecase;
+  final UserUsecase _userUsecase;
 
   UserCubit(
     this._authenticationUsecase,
     this._userSharePreferencesUsecase,
+    this._userUsecase,
   ) : super(UserInitial());
 
   Future phoneRegister({
@@ -84,6 +87,30 @@ class UserCubit extends Cubit<UserState> {
       emit(PhoneCompletedRegisterFail(
         message: S.current.messages_server_internal_error.capitalize(),
       ));
+    }
+  }
+
+  Future<void> getProfile() async {
+    try {
+      final user = await _userUsecase.getProfile();
+      _userSharePreferencesUsecase.saveUserInfo(user!);
+      emit(GetProfileSuccess(user));
+    } on DioException catch (error) {
+      final data = error.response!.data;
+      debugPrint("get profile: $error");
+      String err = S.current.messages_server_internal_error.capitalize();
+      switch (data['code']) {
+        case "USER_NOT_FOUND":
+          break;
+        default:
+          err = S.current.messages_server_internal_error.capitalize();
+          break;
+      }
+      emit(GetProfileError(err));
+    } catch (error) {
+      debugPrint("get profile: $error");
+      emit(GetProfileError(
+          S.current.messages_server_internal_error.capitalize()));
     }
   }
 

@@ -19,4 +19,9 @@ class UserUsecase {
 
     return user;
   }
+
+  Future<User?> getProfile() async {
+    final user = await _userRepository.getProfile();
+    return user;
+  }
 }

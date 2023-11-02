@@ -8,6 +8,7 @@ import '../../data/models/payloads/upgrade_account/upgrade_ja/update_bank_accoun
 import '../../data/models/responses/register_pdone_response.dart';
 import '../../data/models/responses/upgrade_account_response.dart';
 import '../../domain/entities/commity_action_type.dart';
+import '../settings/contract_ja/contract_ja_screen.dart';
 import 'upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'upgrade_ja/upgrade_ja_screen.dart';
 import 'upgrade_ja/widgets/verify_phone_otp_dialog_widget.dart';
@@ -221,6 +222,10 @@ extension UpgradeAccountCoordinator on BuildContext {
       UpgradeJAScreen.routeName,
       arguments: {'team': team},
     );
+  }
+
+  Future<T?> startContractJA<T>() {
+    return Navigator.of(this).pushNamed(ContractJAScreen.routeName);
   }
 
   Future<T?> startUpgradePDone<T>() {

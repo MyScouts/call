@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const _assessToken = '_assessToken';
 const _refreshToken = '_refreshToken';
+const _kFCMToken = '_kFCMToken';
+const _keySubTopic = '_keySubTopicFcm';
 
 @injectable
 class UserSharePreferencesUsecase extends UserInfoSharePreferencesUsecase {
@@ -17,5 +19,13 @@ class UserSharePreferencesUsecase extends UserInfoSharePreferencesUsecase {
   }
 
   String? getToken() => _shared.getString(_assessToken);
+
   bool get isAuthenticated => getToken()?.isNotEmpty ?? false;
+
+  Future<bool> saveFCMToken(String token) =>
+      _shared.setString(_kFCMToken, token);
+
+  bool get getSubTopicFCM => _shared.getBool(_keySubTopic) ?? false;
+
+  Future<bool> saveSubTopicFCM() => _shared.setBool(_keySubTopic, true);
 }

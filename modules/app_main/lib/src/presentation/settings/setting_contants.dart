@@ -27,5 +27,10 @@ class Setting {
           icon: IconAppConstants.icChanel,
           onPressed: () => context.startUpgradeJA(),
         ),
+        Setting(
+          text: "JA contract",
+          icon: IconAppConstants.icChanel,
+          onPressed: () => context.startContractJA(),
+        ),
       ];
 }
