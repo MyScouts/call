@@ -152,7 +152,7 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
     final _data = payload;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApiResponse<dynamic>>(Options(
-      method: 'PUT',
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )
@@ -160,7 +160,7 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
               _dio.options,
               UpgradeAccountApiConstants.updatePDoneProfile,
               queryParameters: queryParameters,
-              data: _data,
+              data: _data.toJson(),
             )
             .copyWith(
                 baseUrl: _combineBaseUrls(

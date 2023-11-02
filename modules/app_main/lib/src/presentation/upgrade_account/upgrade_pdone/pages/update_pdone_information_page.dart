@@ -90,8 +90,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       nickname: nickNameCtrl.text,
       sex: genderCtrl.text == 'Nam' ? 1 : 0,
       birthday: birthDay?.toYYYYmmdd ?? '',
-      birthPlace:
-          '${bpStreetCtrl.text}, ${bpWardCtrl.text}, ${bpDistrictCtrl.text}, ${bpProvinceCtrl.text}',
+      birthPlace: bpProvinceCtrl.text,
       currentPlace: UpdatePlaceInformationPayload(
         address: cAddressCtrl.text,
         provinceName: cProvinceCtrl.text,
