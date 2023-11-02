@@ -25,6 +25,9 @@ class UpgradeAccountRoutes extends RouteModule {
               BlocProvider<UpgradeJABloc>(
                 create: (context) => injector.get(),
               ),
+              BlocProvider<UserCubit>.value(
+                value: context.read<UserCubit>(),
+              ),
             ],
             child: UpgradeJAScreen(team: args['team']),
           );

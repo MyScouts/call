@@ -90,27 +90,50 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-  Future<void> getProfile() async {
-    try {
-      final user = await _userUsecase.getProfile();
-      _userSharePreferencesUsecase.saveUserInfo(user!);
-      emit(GetProfileSuccess(user));
-    } on DioException catch (error) {
-      final data = error.response!.data;
-      debugPrint("get profile: $error");
-      String err = S.current.messages_server_internal_error.capitalize();
-      switch (data['code']) {
-        case "USER_NOT_FOUND":
-          break;
-        default:
-          err = S.current.messages_server_internal_error.capitalize();
-          break;
+  // User? user;
+
+  // void getUserInfo() {
+  //   try {
+  //     user = _userSharePreferencesUsecase.getUserInfo();
+  //     emit(GetProfileSuccess(user));
+  //   } catch (error) {
+  //     debugPrint("get profile: $error");
+  //     emit(GetProfileError(
+  //         S.current.messages_server_internal_error.capitalize()));
+  //   }
+  // }
+
+  User? _currentUser;
+
+  User? get currentUser => _userSharePreferencesUsecase.getUserInfo();
+
+  void setCurrentUser(User? user) => _currentUser = user;
+
+  Future<void> fetchUser() async {
+    _currentUser = _userSharePreferencesUsecase.getUserInfo();
+    final id = _currentUser?.id;
+
+    if (id != null) {
+      try {
+        final user = await _userUsecase.geSynctUserById(id);
+
+        if (user != null) {
+          await _userSharePreferencesUsecase.saveUserInfo(user);
+          setCurrentUser(user);
+          emit(GetProfileSuccess(user));
+        }
+      } on DioException catch (error) {
+        debugPrint("phoneRegister: $error");
+        String err = S.current.messages_server_internal_error.capitalize();
+        emit(GetProfileError(err));
+      } catch (error) {
+        debugPrint("phoneRegister: $error");
+        emit(
+          GetProfileError(
+            S.current.messages_server_internal_error.capitalize(),
+          ),
+        );
       }
-      emit(GetProfileError(err));
-    } catch (error) {
-      debugPrint("get profile: $error");
-      emit(GetProfileError(
-          S.current.messages_server_internal_error.capitalize()));
     }
   }
 
@@ -119,6 +142,9 @@ class UserCubit extends Cubit<UserState> {
     try {
       emit(OnPhoneLogin());
       await _authenticationUsecase.login(payload: payload);
+
+      await fetchUser();
+
       emit(PhoneLoginSuccess());
     } on DioException catch (error) {
       final data = error.response!.data;

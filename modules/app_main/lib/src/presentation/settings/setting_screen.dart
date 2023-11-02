@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/presentation/settings/setting_contants.dart';
 import 'package:app_main/src/presentation/settings/widget/item_setting_widget.dart';
 import 'package:design_system/design_system.dart';
@@ -17,6 +18,8 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  late final userCubit = context.read<UserCubit>();
+
   @override
   Widget build(BuildContext context) {
     return ScaffoldHideKeyboard(
@@ -110,7 +113,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   _buildSession2() {
     return Column(
-      children: Setting.session1Menus(context)
+      children: Setting.session1Menus(context, user: userCubit.currentUser)
           .map((item) => Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: ItemSettingWidget(

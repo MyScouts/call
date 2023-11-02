@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/widgets/accept_term_with_checkbox_widget.dart';
@@ -84,16 +85,9 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen>
     }
   }
 
-  // Future<void> delayAndPopScreen(BuildContext context) async {
-  //   await Future.delayed(const Duration(milliseconds: 500));
-  //
-  //   if (!mounted) {
-  //     return;
-  //   }
-  //   Navigator.of(context).pop();
-  //   //TODO: fetch user again
-  //   // context.read<UserBloc>().add(FetchUserInfoEvent());
-  // }
+  late final userCubit = context.read<UserCubit>();
+
+  String get pDoneId => userCubit.currentUser?.pDoneId ?? '';
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +100,7 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen>
               child: Text(_getTitleAppBar()),
             ),
             Text(
-              'Số: VN2A32345678JA',
+              'Số: ${pDoneId}JA',
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium!

@@ -21,8 +21,7 @@ class _ContractJAScreenState extends State<ContractJAScreen> {
 
   @override
   void initState() {
-    //TODO: fetch user
-    userCubit.getProfile();
+    userCubit.fetchUser();
     super.initState();
   }
 
@@ -42,12 +41,9 @@ class _ContractJAScreenState extends State<ContractJAScreen> {
       ),
       body: BlocBuilder<UserCubit, UserState>(
         bloc: userCubit,
-        buildWhen: (previous, current) => current is GetProfileSuccess,
+        buildWhen: (previous, current) => current is GetProfileSuccess || current is GetProfileError,
         builder: (context, state) {
-          showLoading();
-
           if (state is GetProfileSuccess) {
-            hideLoading();
             final user = state.currentUser;
             return AutoHideKeyboard(
               child: TextStaticContentWidget(
