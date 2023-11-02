@@ -84,9 +84,9 @@ class _UpgradePDoneScreenState extends State<UpgradePDoneScreen>
                 UpdateKycPage(onNextPage: () => nextPage(1)),
 
                 UpdatePDoneInformationPage(onNextPage: () => nextPage(2)),
-                RegisterPDoneAccountPage(
-                  onNextPage: () {},
-                )
+                // RegisterPDoneAccountPage(
+                //   onNextPage: () {},
+                // )
                 // const RegisterStatePage(),
               ],
             ),

@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -71,9 +72,10 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
     } else if (state is UpdateProfileSuccess) {
       // userBloc.add(UserUpdateBirthDayEvent(birthDay!));
       hideLoading();
-      if (widget.onNextPage != null) {
-        widget.onNextPage!.call();
-      }
+      // if (widget.onNextPage != null) {
+      //   widget.onNextPage!.call();
+      // }
+      context.upgradePdoneSuccess();
     } else if (state is UpdateProfileFailure) {
       hideLoading();
       showToastMessage(state.errorMessage);

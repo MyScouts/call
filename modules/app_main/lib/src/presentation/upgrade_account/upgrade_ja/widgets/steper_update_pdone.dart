@@ -10,7 +10,7 @@ class StepperVerifyWidget extends StatelessWidget {
     this.titles = const [
       'Định danh điện tử',
       'Cập nhật thông tin',
-      'Xác minh',
+      // 'Xác minh',
       // 'Trạng thái'
     ],
     required this.currentIndex,

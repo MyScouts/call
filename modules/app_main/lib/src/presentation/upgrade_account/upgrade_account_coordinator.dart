@@ -13,6 +13,7 @@ import 'upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'upgrade_ja/upgrade_ja_screen.dart';
 import 'upgrade_ja/widgets/verify_phone_otp_dialog_widget.dart';
 import 'upgrade_pdone/bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
+import 'upgrade_pdone/pages/register_state_page.dart';
 import 'upgrade_pdone/upgrade_pdone_screen.dart';
 import 'upgrade_pdone/views/widgets/upgrade_account_verify_otp_dialog.dart';
 
@@ -117,6 +118,27 @@ extension UpgradeAccountCoordinator on BuildContext {
       },
     );
   }
+
+  Future<T?> upgradePdoneSuccess<T>() {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: false,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return  AlertDialog(
+          contentPadding: const EdgeInsets.only(top: 10, bottom: 10),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          content: RegisterEKycStatePage(onClickBtn: () {
+            Navigator.of(context).pop();
+          },),
+        );
+      },
+    );
+  }
+
+
 
   Future<T?> startDialogVerifyBankAccountOTP<T>({
     required UpdateBankAccountBloc bloc,
