@@ -1,4 +1,6 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
+import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -21,13 +23,11 @@ part 'upgrade_account_api.g.dart';
 class UpgradeAccountApiConstants {
   static const currentStep = 'api/account-p-done/current-step';
 
-  static const updatePDoneProfile = 'api/account-p-done/profile';
+  static const updatePDoneProfile = 'v1/p-done/adult-register';
 
   static const registerPDone = 'api/account-p-done/profile/register-p-done';
-  static const registerPDoneVerifyPhone =
-      'api/account-p-done/profile/phone/confirm';
-  static const registerPDoneVerifyEmail =
-      'api/account-p-done/profile/email/confirm';
+  static const registerPDoneVerifyPhone = 'api/account-p-done/profile/phone/confirm';
+  static const registerPDoneVerifyEmail = 'api/account-p-done/profile/email/confirm';
 
   static const updateKyc = 'api/account-p-done/add-kyc';
   static const resendOtpPhone = 'api/account-p-done/profile/phone/resend';
@@ -35,22 +35,20 @@ class UpgradeAccountApiConstants {
 
   static const master = 'api/master';
 
-  static const registerJA = 'api/register-community/register-ja';
-  static const registerJAVerifyOtp =
-      'api/register-community/register-ja/verify-otp';
-  static const resendOtpJA = 'api/register-community/register-ja/re-send-otp';
+  static const registerJA = '/api/v1/ja/register';
+  static const getJAStatus = '/api/v1/ja';
+  static const registerJAVerifyOtp = '/api/v1/ja/verify-otp';
+  static const resendOtpJA = '/api/v1/ja/resend-otp';
 
   static const registerVShop = 'api/register-community/register-v-shop';
-  static const resendOtpVShop =
-      'api/register-community/register-v-shop/re-send-otp';
-  static const registerVShopVerifyOtp =
-      'api/register-community/register-v-shop/verify-otp';
+  static const resendOtpVShop = 'api/register-community/register-v-shop/re-send-otp';
+  static const registerVShopVerifyOtp = 'api/register-community/register-v-shop/verify-otp';
 
   static const checkIsPDone = 'api/users/check-p-done-id/{id}';
   static const checkProtector = 'api/account-p-done/profile/check-protector';
-  static const checkProtectorVerifyOTP =
-      'api/account-p-done/profile/check-protector/verify';
+  static const checkProtectorVerifyOTP = 'api/account-p-done/profile/check-protector/verify';
   static const listBanks = 'api/master/banks';
+  static const updateBankAccount = '/api/bank-account';
 }
 
 @RestApi()
@@ -101,17 +99,12 @@ abstract class UpgradeAccountApi {
   Future<ApiResponse<UpgradeAccount>> getListData();
 
   @POST(UpgradeAccountApiConstants.registerJA)
-  Future<ApiResponse<UpgradeAccountResponse>> registerJA({
-    @Body() required UpgradeJAPayload payload,
-  });
+  Future<UpgradeAccountResponse> registerJA();
 
   @POST(UpgradeAccountApiConstants.registerJAVerifyOtp)
-  Future<ApiResponse<dynamic>> registerJAVerifyOtp({
+  Future<ApiResponse<bool>> registerJAVerifyOtp({
     @Body() required VerifyPhoneOtpPayload payload,
   });
-
-  @POST(UpgradeAccountApiConstants.registerVShop)
-  Future<ApiResponse<UpgradeAccountResponse>> registerVShop();
 
   @POST(UpgradeAccountApiConstants.registerVShopVerifyOtp)
   Future<ApiResponse<bool>> registerVShopVerifyOtp({
@@ -119,7 +112,7 @@ abstract class UpgradeAccountApi {
   });
 
   @POST(UpgradeAccountApiConstants.resendOtpJA)
-  Future<ApiResponse<UpgradeAccountResponse>> resendOtpJA();
+  Future<UpgradeAccountResponse> resendOtpJA();
 
   @POST(UpgradeAccountApiConstants.resendOtpVShop)
   Future<ApiResponse<UpgradeAccountResponse>> resendOtpVShop();
@@ -138,5 +131,10 @@ abstract class UpgradeAccountApi {
   @POST(UpgradeAccountApiConstants.checkProtectorVerifyOTP)
   Future<ApiResponse<dynamic>> checkProtectorVerifyOTP({
     @Body() required VerifyOtpPDonePayload payload,
+  });
+
+  @POST(UpgradeAccountApiConstants.updateBankAccount)
+  Future<ApiResponse<BankAccount>> updateBankAccount({
+    @Body() required UpdateBankAccountPayload payload,
   });
 }

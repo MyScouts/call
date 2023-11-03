@@ -73,6 +73,13 @@ class _AppPhoneInputState extends State<AppPhoneInput> {
             onChanged: widget.onPhoneCodeChange,
             initialSelection: "+84",
             showCountryOnly: false,
+            countryList: const [
+              {
+                "name": "Việt Nam",
+                "code": "VN",
+                "dial_code": "+84",
+              }
+            ],
             showOnlyCountryWhenClosed: false,
             alignLeft: false,
             hideMainText: true,

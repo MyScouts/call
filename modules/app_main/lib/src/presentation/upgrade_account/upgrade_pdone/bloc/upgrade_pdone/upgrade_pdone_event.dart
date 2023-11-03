@@ -66,3 +66,10 @@ class UploadKYCImageEvent extends UpgradePDoneEvent {
 
   UploadKYCImageEvent(this.image, this.type);
 }
+
+@immutable
+class ExtractingIdCardEvent extends UpgradePDoneEvent {
+  final EKycIdCardRequest eKycIdCardRequest;
+
+  ExtractingIdCardEvent(this.eKycIdCardRequest);
+}

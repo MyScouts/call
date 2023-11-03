@@ -15,10 +15,7 @@ _$UpdateProfilePayloadImpl _$$UpdateProfilePayloadImplFromJson(
       nickname: json['nickname'] as String?,
       sex: json['sex'] as int?,
       birthday: json['birthday'] as String?,
-      birthPlace: json['birthPlace'] == null
-          ? null
-          : UpdatePlaceInformationPayload.fromJson(
-              json['birthPlace'] as Map<String, dynamic>),
+      birthPlace: json['birthPlace'] as String?,
       currentPlace: json['currentPlace'] == null
           ? null
           : UpdatePlaceInformationPayload.fromJson(
@@ -56,7 +53,7 @@ Map<String, dynamic> _$$UpdateProfilePayloadImplToJson(
   writeNotNull('nickname', instance.nickname);
   writeNotNull('sex', instance.sex);
   writeNotNull('birthday', instance.birthday);
-  writeNotNull('birthPlace', instance.birthPlace?.toJson());
+  writeNotNull('birthPlace', instance.birthPlace);
   writeNotNull('currentPlace', instance.currentPlace?.toJson());
   writeNotNull('identityNumber', instance.identityNumber);
   writeNotNull('supplyDate', instance.supplyDate);

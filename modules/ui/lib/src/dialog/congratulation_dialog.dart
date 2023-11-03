@@ -64,7 +64,10 @@ class CongratulationDialog extends StatelessWidget {
                   const SizedBox(height: 25),
                   PrimaryButton(
                     title: S.current.lbl_continue,
-                    onTap: onPressed,
+                    onTap: () {
+                      Navigator.pop(context);
+                      onPressed();
+                    },
                     disabled: false,
                   ),
                 ],

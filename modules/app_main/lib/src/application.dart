@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:app_main/src/core/services/notifications/mixins/notification_mixnin.dart';
+import 'package:app_main/src/core/services/notifications/notification_service.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/routes.dart';
 import 'package:design_system/design_system.dart';
@@ -16,23 +18,25 @@ class Application extends StatefulWidget {
   final String title;
   final List<BlocProvider> providers;
   final bool isProduction;
+  final NotificationService notificationService;
 
   const Application({
-    Key? key,
+    super.key,
     this.savedThemeMode,
     required this.initialRoute,
     required this.title,
     required this.providers,
-    // required this.notificationService,
+    required this.notificationService,
     this.isProduction = true,
     // required this.myRouteObserver,
-  }) : super(key: key);
+  });
 
   @override
   State<Application> createState() => _ApplicationState();
 }
 
-class _ApplicationState extends State<Application> with WidgetsBindingObserver {
+class _ApplicationState extends State<Application>
+    with WidgetsBindingObserver, NotificationMixin {
   Widget _buildMaterialApp({
     required Locale? locale,
     ThemeData? light,
@@ -72,6 +76,12 @@ class _ApplicationState extends State<Application> with WidgetsBindingObserver {
       ],
     );
   }
+
+  @override
+  bool get isProduction => widget.isProduction;
+
+  @override
+  NotificationService get notificationService => widget.notificationService;
 
   @override
   void initState() {
@@ -116,6 +126,12 @@ class _ApplicationState extends State<Application> with WidgetsBindingObserver {
       ),
     );
   }
+
+  @override
+  void onListenerOpenNotification(Map<String, dynamic> notification) {}
+
+  @override
+  GlobalKey<NavigatorState> get rootKey => AppCoordinator.root;
 }
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();

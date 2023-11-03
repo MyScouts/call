@@ -110,3 +110,18 @@ class GetMyProfileSuccessFailure extends UpgradePDoneState {
 
   GetMyProfileSuccessFailure(this.errorMessage);
 }
+
+class ExtractingEKycIdCard extends UpgradePDoneState {
+}
+
+class ExtractedEKycIdCardSuccess extends UpgradePDoneState {
+  final dynamic data;
+
+  ExtractedEKycIdCardSuccess(this.data);
+}
+
+class ExtractedEKycIdCardFailure extends UpgradePDoneState {
+  final String errorMessage;
+
+  ExtractedEKycIdCardFailure(this.errorMessage);
+}

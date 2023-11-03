@@ -1,5 +1,7 @@
+import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
 
+import '../../domain/entities/update_account/otp/otp.dart';
 import '../models/responses/authenticate_response.dart';
 
 abstract class AuthRepository {
@@ -20,4 +22,13 @@ abstract class AuthRepository {
 
   /// Logout
   Future<bool> logout();
+
+  /// Forgot password
+  Future forgotPassword(ForgotPasswordPayload payload);
+  Future<ResetPasswordTokenResponse> resetPasswordToken(
+    ResetPasswordTokenPayload payload,
+  );
+  Future<ResetPasswordResponse> resetPassword(ResetPasswordPayload payload);
+  Future otp();
+  Future<Otp> getOtp();
 }

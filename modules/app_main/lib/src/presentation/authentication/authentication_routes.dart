@@ -1,4 +1,6 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/authentication/forgot_password/forgot_password_verify_otp.dart';
+import 'package:app_main/src/presentation/authentication/forgot_password/reset_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'forgot_password/forgot_password_screen.dart';
@@ -22,6 +24,21 @@ class AuthenticationRoutes extends RouteModule {
         },
         ForgotPasswordScreen.routeName: (context) {
           return const ForgotPasswordScreen();
+        },
+        ForgotPasswordVerifyOTPScreen.routerName: (context) {
+          final args = settings.arguments as Map<String, dynamic>;
+          return ForgotPasswordVerifyOTPScreen(
+            phoneCode: args['phoneCode'],
+            phoneNumber: args['phoneNumber'],
+          );
+        },
+        ResetPasswordScreen.routerName: (context) {
+          final args = settings.arguments as Map<String, dynamic>;
+          return ResetPasswordScreen(
+            phoneCode: args['phoneCode'],
+            phoneNumber: args['phoneNumber'],
+            ott: args['ott'],
+          );
         },
       };
 }

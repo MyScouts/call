@@ -12,36 +12,46 @@ enum KycStep {
 }
 
 enum KycType {
-  idNumber,
-  passport,
+  over15,
+  under15idNumber,
+  under15birthCertificate,
 }
 
 extension CitizenIdentificationExt on KycType {
   String text() {
     switch (this) {
-      case KycType.idNumber:
-        return 'Căn cước công dân';
-      case KycType.passport:
-        return 'Hộ chiếu';
+      case KycType.over15:
+        return 'Trên 15 căn cước công dân';
+      case KycType.under15idNumber:
+        return 'Dưới 15 căn cước công dân';
+      case KycType.under15birthCertificate:
+        return 'Dưới 15 giấy khai sinh';
     }
   }
 
   String description(bool isUnder14) {
     switch (this) {
-      case KycType.idNumber:
+      case KycType.over15:
         if (isUnder14) {
           return 'Xin vui lòng chụp ảnh 2 mặt của Căn cước công dân & '
               'chân dung của Người bảo hộ để hoàn tất hồ sơ.';
         }
         return 'Xin vui lòng chụp ảnh 2 mặt của Căn '
             'cước công dân & chân dung Quý khách để hoàn tất hồ sơ.';
-      case KycType.passport:
+      case KycType.under15idNumber:
         if (isUnder14) {
           return 'Xin vui lòng chụp ảnh trang thông tin Hộ chiếu & '
               'chân dung của Người bảo hộ Quý khách để hoàn tất hồ sơ.';
         }
         return 'Xin vui lòng chụp ảnh trang thông tin '
             'Hộ chiếu & chân dung Quý khách để hoàn tất hồ sơ.';
+      case KycType.under15birthCertificate:
+        if (isUnder14) {
+          return 'Xin vui lòng chụp ảnh trang thông tin Hộ chiếu & '
+              'chân dung của Người bảo hộ Quý khách để hoàn tất hồ sơ.';
+        }
+        return 'Xin vui lòng chụp ảnh giấy khai sinh '
+            '& chân dung Quý khách để hoàn tất hồ sơ.';
     }
   }
 }

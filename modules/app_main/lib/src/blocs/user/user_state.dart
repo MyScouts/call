@@ -1,7 +1,27 @@
 part of 'user_cubit.dart';
 
 @immutable
-sealed class UserState {}
+sealed class UserState {
+  User? get currentUser {
+    final userState = this;
+    if (userState is GetProfileSuccess) {
+      return userState.userInfo;
+    }
+    return null;
+  }
+}
+
+class GetProfileSuccess extends UserState {
+  final User? userInfo;
+
+  GetProfileSuccess(this.userInfo);
+}
+
+class GetProfileError extends UserState {
+  final String message;
+
+  GetProfileError(this.message);
+}
 
 final class UserInitial extends UserState {}
 
@@ -43,4 +63,55 @@ final class ResendOTPSuccess extends UserState {}
 final class ResendOTPFail extends UserState {
   final String message;
   ResendOTPFail({required this.message});
+}
+
+// Forgot password
+final class OnForgotPassword extends UserState {}
+
+final class ForgotPasswordSuccess extends UserState {}
+
+final class ForgotPasswordFail extends UserState {
+  final String message;
+  ForgotPasswordFail({required this.message});
+}
+
+// Reset password token
+final class OnResetPasswordToken extends UserState {}
+
+final class ResetPasswordTokenSuccess extends UserState {
+  final String ott;
+  ResetPasswordTokenSuccess({required this.ott});
+}
+
+final class ResetPasswordTokenFail extends UserState {
+  final String message;
+  ResetPasswordTokenFail({required this.message});
+}
+
+// Reset password
+final class OnResetPassword extends UserState {}
+
+final class ResetPasswordSuccess extends UserState {}
+
+final class ResetPasswordFail extends UserState {
+  final String message;
+  ResetPasswordFail({required this.message});
+}
+// Get OTP
+
+final class GetOTPLoading extends UserState {}
+
+final class ResendUserOTPSuccess extends UserState {
+  final Otp otp;
+  ResendUserOTPSuccess({required this.otp});
+}
+
+final class GetOTPSuccess extends UserState {
+  final Otp otp;
+  GetOTPSuccess({required this.otp});
+}
+
+final class GetOTPFail extends UserState {
+  final String message;
+  GetOTPFail({required this.message});
 }

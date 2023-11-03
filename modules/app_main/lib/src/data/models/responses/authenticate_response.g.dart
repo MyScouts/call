@@ -31,3 +31,29 @@ Map<String, dynamic> _$PhoneCompleteRegisterToJson(
       'accessToken': instance.accessToken,
       'refreshToken': instance.refreshToken,
     };
+
+ResetPasswordTokenResponse _$ResetPasswordTokenResponseFromJson(
+        Map<String, dynamic> json) =>
+    ResetPasswordTokenResponse(
+      ott: json['ott'] as String,
+    );
+
+Map<String, dynamic> _$ResetPasswordTokenResponseToJson(
+        ResetPasswordTokenResponse instance) =>
+    <String, dynamic>{
+      'ott': instance.ott,
+    };
+
+ResetPasswordResponse _$ResetPasswordResponseFromJson(
+        Map<String, dynamic> json) =>
+    ResetPasswordResponse(
+      accessToken: json['accessToken'] as String,
+      refreshToken: json['refreshToken'] as String,
+    );
+
+Map<String, dynamic> _$ResetPasswordResponseToJson(
+        ResetPasswordResponse instance) =>
+    <String, dynamic>{
+      'accessToken': instance.accessToken,
+      'refreshToken': instance.refreshToken,
+    };

@@ -5,6 +5,7 @@ import 'package:app_core/app_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../../data/data_sources/ekyc/ekyc_viettel.dart';
 import '../../../../../data/models/responses/register_pdone_response.dart';
 import '../../../../../domain/entities/update_account/check_protector_payload.dart';
 import '../../../../../domain/entities/update_account/pdone_account.dart';
@@ -15,17 +16,21 @@ import '../../../../../domain/entities/update_account/upgrade_account.dart';
 import '../../../../../domain/entities/update_account/verify_phone_register_pdone_payload.dart';
 import '../../../../../domain/usecases/resource_usecase.dart';
 import '../../../../../domain/usecases/upgrade_account_usecase.dart';
+import '../../../../../domain/usecases/user_share_preferences_usecase.dart';
 import '../../../upgrade_account_constants.dart';
 
 part 'upgrade_pdone_event.dart';
+
 part 'upgrade_pdone_state.dart';
 
 @injectable
 class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
   final UpgradeAccountUsecase _upgradeAccountUsecase;
   final ResourceUsecase _resourceUsecase;
+  final UserSharePreferencesUsecase _userSharePreferencesUsecase;
 
-  UpgradePDoneBloc(this._upgradeAccountUsecase, this._resourceUsecase)
+  UpgradePDoneBloc(this._upgradeAccountUsecase, this._resourceUsecase,
+      this._userSharePreferencesUsecase)
       : super(UpgradePDoneInitial()) {
     on<GetListMasterEvent>(_mapGetListMasterEvent);
     on<RegisterPDoneAccountEvent>(_mapRegisterPDoneAccountEvent);
@@ -34,6 +39,25 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     on<UpdateKYCEvent>(_mapUpdateKYCEvent);
     on<UploadKYCImageEvent>(_mapUploadKYCImageEvent);
     on<ResendOtpEvent>(_mapResendOtpEvent);
+    on<ExtractingIdCardEvent>(_mapExtractingIdCardEvent);
+  }
+
+  FutureOr<void> _mapExtractingIdCardEvent(
+      ExtractingIdCardEvent event, Emitter<UpgradePDoneState> emit) async {
+    emit(ExtractingEKycIdCard());
+    try {
+      final res = await _upgradeAccountUsecase
+          .extractIdCardInformation(event.eKycIdCardRequest);
+      if (res['code'] == 1) {
+        emit(ExtractedEKycIdCardSuccess(res['information']));
+      } else {
+        emit(ExtractedEKycIdCardFailure(res['vi_message']));
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        emit(ExtractedEKycIdCardFailure(e.toString()));
+      }
+    }
   }
 
   FutureOr<void> _mapGetListMasterEvent(
@@ -60,8 +84,20 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
           email: event.email,
         ),
       );
-
       emit(RegisterPDoneAccountSuccess(res));
+      // if (res) {
+      //   emit(
+      //     RegisterPDoneAccountSuccess(
+      //       RegisterPDoneResponse(
+      //           token: _userSharePreferencesUsecase.getToken() ?? '',
+      //           phoneCode: event.phoneCode,
+      //           phone: event.phoneNumber,
+      //           email: event.email),
+      //     ),
+      //   );
+      // } else {
+      //   emit(RegisterPDoneAccountFailure('Something wrong', null));
+      // }
     } catch (e) {
       emit(RegisterPDoneAccountFailure(e.toString(), e));
     }
@@ -127,9 +163,9 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     emit(UploadKYCImageUploading(event.image, event.type));
 
     try {
-      final res = await _resourceUsecase.uploadImage(File(event.image));
+      // final res = await _resourceUsecase.uploadImage(File(event.image));
 
-      emit(UploadKYCImageSuccess(res, event.type));
+      emit(UploadKYCImageSuccess(event.image, event.type));
     } catch (e) {
       emit(UpdateKYCFailure(e.toString()));
     }
@@ -139,10 +175,10 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
       ResendOtpEvent event, Emitter<UpgradePDoneState> emit) async {
     try {
       final payload = RegisterPDoneAccountPayload(
-        phoneCode: event.phoneCode,
-        phoneNumber: event.phoneNumber,
-        email: event.email,
-      );
+          phoneCode: event.phoneCode,
+          phoneNumber: event.phoneNumber,
+          email: event.email,
+          countryId: 240);
 
       final res = event.phoneNumber != null
           ? await _upgradeAccountUsecase.resendOtpPhone(payload)

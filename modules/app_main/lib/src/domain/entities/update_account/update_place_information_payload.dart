@@ -9,11 +9,14 @@ part 'update_place_information_payload.g.dart';
 @freezed
 class UpdatePlaceInformationPayload with _$UpdatePlaceInformationPayload {
   const factory UpdatePlaceInformationPayload({
-    String? country,
-    int? province,
-    String? district,
-    int? ward,
     String? address,
+    String? provinceName,
+    String? districtName,
+    String? wardName,
+    String? street,
+    String? provinceCode,
+    String? districtCode,
+    String? wardCode,
   }) = _UpdatePlaceInformationPayload;
 
   factory UpdatePlaceInformationPayload.fromJson(Map<String, dynamic> json) =>

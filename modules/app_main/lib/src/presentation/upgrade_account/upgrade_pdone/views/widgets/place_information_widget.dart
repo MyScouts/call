@@ -85,12 +85,12 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
         }
       }
 
-      payload = payload.copyWith(
-        country: currentCountry?.iso2,
-        province: currentProvince?.stateCode,
-        district: currentDistrict?.code,
-        ward: currentWard?.id,
-      );
+      // payload = payload.copyWith(
+      //   country: currentCountry?.iso2,
+      //   province: currentProvince?.stateCode,
+      //   district: currentDistrict?.code,
+      //   ward: currentWard?.id,
+      // );
     }
 
     if (widget.addressCtrl.text.isNotEmpty) {
@@ -151,7 +151,7 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
                           wards = [];
 
                           bloc.add(GetListProvincesEvent(value.iso2!));
-                          payload = payload.copyWith(country: value.iso2!);
+                          // payload = payload.copyWith(country: value.iso2!);
 
                           widget.onUpdatePlaceInformation(payload);
                         }
@@ -218,11 +218,11 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
                                 currentCountry!.iso2!, val.stateCode!),
                           );
 
-                          payload = payload.copyWith(
-                            province: val.stateCode!,
-                            district: null,
-                            ward: null,
-                          );
+                          // payload = payload.copyWith(
+                          //   province: val.stateCode!,
+                          //   district: null,
+                          //   ward: null,
+                          // );
 
                           widget.onUpdatePlaceInformation(payload);
                         }
@@ -249,11 +249,11 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
                           wards = [];
                         }
 
-                        payload = payload.copyWith(
-                          province: null,
-                          district: null,
-                          ward: null,
-                        );
+                        // payload = payload.copyWith(
+                        //   province: null,
+                        //   district: null,
+                        //   ward: null,
+                        // );
 
                         widget.onUpdatePlaceInformation(payload);
                       },
@@ -292,10 +292,10 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
                                       currentProvince!.stateCode!, val.code!),
                                 );
 
-                                payload = payload.copyWith(
-                                  district: currentDistrict?.code,
-                                  ward: null,
-                                );
+                                // payload = payload.copyWith(
+                                //   district: currentDistrict?.code,
+                                //   ward: null,
+                                // );
 
                                 widget.onUpdatePlaceInformation(payload);
                               }
@@ -314,8 +314,8 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
                                 wards = [];
                               }
 
-                              payload =
-                                  payload.copyWith(district: null, ward: null);
+                              // payload =
+                              //     payload.copyWith(district: null, ward: null);
 
                               widget.onUpdatePlaceInformation(payload);
                             },
@@ -342,8 +342,8 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
                                   currentWard = val;
                                 });
 
-                                payload =
-                                    payload.copyWith(ward: currentWard?.id);
+                                // payload =
+                                //     payload.copyWith(ward: currentWard?.id);
 
                                 widget.onUpdatePlaceInformation(payload);
                               }
@@ -356,7 +356,7 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
                               }
 
                               currentWard = null;
-                              payload = payload.copyWith(ward: null);
+                              // payload = payload.copyWith(ward: null);
 
                               widget.onUpdatePlaceInformation(payload);
                             },

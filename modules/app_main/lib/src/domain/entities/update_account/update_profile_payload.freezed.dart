@@ -33,8 +33,7 @@ mixin _$UpdateProfilePayload {
   @JsonKey(includeIfNull: false)
   String? get birthday => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
-  UpdatePlaceInformationPayload? get birthPlace =>
-      throw _privateConstructorUsedError;
+  String? get birthPlace => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
   UpdatePlaceInformationPayload? get currentPlace =>
       throw _privateConstructorUsedError;
@@ -88,7 +87,7 @@ abstract class $UpdateProfilePayloadCopyWith<$Res> {
       @JsonKey(includeIfNull: false) String? nickname,
       @JsonKey(includeIfNull: false) int? sex,
       @JsonKey(includeIfNull: false) String? birthday,
-      @JsonKey(includeIfNull: false) UpdatePlaceInformationPayload? birthPlace,
+      @JsonKey(includeIfNull: false) String? birthPlace,
       @JsonKey(includeIfNull: false)
       UpdatePlaceInformationPayload? currentPlace,
       @JsonKey(includeIfNull: false) String? identityNumber,
@@ -107,7 +106,6 @@ abstract class $UpdateProfilePayloadCopyWith<$Res> {
       @JsonKey(includeIfNull: false) String? protectorIdentityNumber,
       @JsonKey(includeIfNull: false) String? protectorEmailPhone});
 
-  $UpdatePlaceInformationPayloadCopyWith<$Res>? get birthPlace;
   $UpdatePlaceInformationPayloadCopyWith<$Res>? get currentPlace;
 }
 
@@ -177,7 +175,7 @@ class _$UpdateProfilePayloadCopyWithImpl<$Res,
       birthPlace: freezed == birthPlace
           ? _value.birthPlace
           : birthPlace // ignore: cast_nullable_to_non_nullable
-              as UpdatePlaceInformationPayload?,
+              as String?,
       currentPlace: freezed == currentPlace
           ? _value.currentPlace
           : currentPlace // ignore: cast_nullable_to_non_nullable
@@ -247,19 +245,6 @@ class _$UpdateProfilePayloadCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $UpdatePlaceInformationPayloadCopyWith<$Res>? get birthPlace {
-    if (_value.birthPlace == null) {
-      return null;
-    }
-
-    return $UpdatePlaceInformationPayloadCopyWith<$Res>(_value.birthPlace!,
-        (value) {
-      return _then(_value.copyWith(birthPlace: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $UpdatePlaceInformationPayloadCopyWith<$Res>? get currentPlace {
     if (_value.currentPlace == null) {
       return null;
@@ -287,7 +272,7 @@ abstract class _$$UpdateProfilePayloadImplCopyWith<$Res>
       @JsonKey(includeIfNull: false) String? nickname,
       @JsonKey(includeIfNull: false) int? sex,
       @JsonKey(includeIfNull: false) String? birthday,
-      @JsonKey(includeIfNull: false) UpdatePlaceInformationPayload? birthPlace,
+      @JsonKey(includeIfNull: false) String? birthPlace,
       @JsonKey(includeIfNull: false)
       UpdatePlaceInformationPayload? currentPlace,
       @JsonKey(includeIfNull: false) String? identityNumber,
@@ -306,8 +291,6 @@ abstract class _$$UpdateProfilePayloadImplCopyWith<$Res>
       @JsonKey(includeIfNull: false) String? protectorIdentityNumber,
       @JsonKey(includeIfNull: false) String? protectorEmailPhone});
 
-  @override
-  $UpdatePlaceInformationPayloadCopyWith<$Res>? get birthPlace;
   @override
   $UpdatePlaceInformationPayloadCopyWith<$Res>? get currentPlace;
 }
@@ -375,7 +358,7 @@ class __$$UpdateProfilePayloadImplCopyWithImpl<$Res>
       birthPlace: freezed == birthPlace
           ? _value.birthPlace
           : birthPlace // ignore: cast_nullable_to_non_nullable
-              as UpdatePlaceInformationPayload?,
+              as String?,
       currentPlace: freezed == currentPlace
           ? _value.currentPlace
           : currentPlace // ignore: cast_nullable_to_non_nullable
@@ -496,7 +479,7 @@ class _$UpdateProfilePayloadImpl implements _UpdateProfilePayload {
   final String? birthday;
   @override
   @JsonKey(includeIfNull: false)
-  final UpdatePlaceInformationPayload? birthPlace;
+  final String? birthPlace;
   @override
   @JsonKey(includeIfNull: false)
   final UpdatePlaceInformationPayload? currentPlace;
@@ -653,8 +636,7 @@ abstract class _UpdateProfilePayload implements UpdateProfilePayload {
           @JsonKey(includeIfNull: false) final String? nickname,
           @JsonKey(includeIfNull: false) final int? sex,
           @JsonKey(includeIfNull: false) final String? birthday,
-          @JsonKey(includeIfNull: false)
-          final UpdatePlaceInformationPayload? birthPlace,
+          @JsonKey(includeIfNull: false) final String? birthPlace,
           @JsonKey(includeIfNull: false)
           final UpdatePlaceInformationPayload? currentPlace,
           @JsonKey(includeIfNull: false) final String? identityNumber,
@@ -697,7 +679,7 @@ abstract class _UpdateProfilePayload implements UpdateProfilePayload {
   String? get birthday;
   @override
   @JsonKey(includeIfNull: false)
-  UpdatePlaceInformationPayload? get birthPlace;
+  String? get birthPlace;
   @override
   @JsonKey(includeIfNull: false)
   UpdatePlaceInformationPayload? get currentPlace;

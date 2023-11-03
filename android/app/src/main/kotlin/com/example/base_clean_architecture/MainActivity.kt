@@ -1,4 +1,4 @@
-package com.example.vdone_app
+package com.app.vdone.staging
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -53,10 +53,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Mật khẩu không hợp lệ."),
         "message_register_fail":
             MessageLookupByLibrary.simpleMessage("Đăng ký không thành công."),
-        "message_user_exits":
-            MessageLookupByLibrary.simpleMessage("Người dùng đã tồn tại"),
+        "message_user_exits": MessageLookupByLibrary.simpleMessage(
+            "Số điện thoại đã được sử dụng."),
         "message_user_not_found":
             MessageLookupByLibrary.simpleMessage("Tài khoản không tồn tại."),
+        "messages_invalid_login_information":
+            MessageLookupByLibrary.simpleMessage(
+                "Thông tin đăng nhập không hợp lệ."),
         "messages_login_fail":
             MessageLookupByLibrary.simpleMessage("Đăng nhập không thành công."),
         "messages_resend_otp_fail": MessageLookupByLibrary.simpleMessage(

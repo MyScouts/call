@@ -76,6 +76,7 @@ extension AppMainCoordinator on BuildContext {
 
   Future<bool?> checkAndRequestPermissionCamera() async {
     final status = await Permission.camera.status;
+
     if (status.isRestricted) {
       final statusRequest = await Permission.camera.request();
       if (statusRequest == PermissionStatus.denied) {
