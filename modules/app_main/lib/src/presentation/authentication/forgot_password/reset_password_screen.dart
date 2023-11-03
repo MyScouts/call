@@ -240,6 +240,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen>
                           onTap: _onResetPassword,
                           color: Colors.white,
                           disabled: !_formValid || !_passwordValid,
+                          width: MediaQuery.of(context).size.width,
                         ),
                       ],
                     ),

@@ -196,7 +196,12 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
               child: ValueListenableBuilder(
                 valueListenable: ValueNotifier(_isActive),
                 builder: (_, __, ___) {
-                  return PrimaryButton(title: 'Xác thực', onTap: _verifyOTP, disabled: !_isActive);
+                  return PrimaryButton(
+                    title: 'Xác thực',
+                    onTap: _verifyOTP,
+                    disabled: !_isActive,
+                    width: MediaQuery.of(context).size.width,
+                  );
                 },
               ),
             ),

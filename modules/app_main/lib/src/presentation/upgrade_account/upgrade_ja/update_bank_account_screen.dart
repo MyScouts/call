@@ -16,17 +16,21 @@ class UpdateBankAccountScreen extends StatefulWidget {
   const UpdateBankAccountScreen({super.key});
 
   @override
-  State<UpdateBankAccountScreen> createState() => _UpdateBankAccountScreenState();
+  State<UpdateBankAccountScreen> createState() =>
+      _UpdateBankAccountScreenState();
 }
 
-class _UpdateBankAccountScreenState extends State<UpdateBankAccountScreen> with ValidationMixin {
+class _UpdateBankAccountScreenState extends State<UpdateBankAccountScreen>
+    with ValidationMixin {
   final _bankCtrl = TextEditingController();
   final _bankAccountHolderCtrl = TextEditingController();
   final _bankNumberCtrl = TextEditingController();
   Bank? _selectedBank;
 
   bool get validation =>
-      _selectedBank != null && _bankAccountHolderCtrl.text.isNotEmpty && _bankNumberCtrl.text.isNotEmpty;
+      _selectedBank != null &&
+      _bankAccountHolderCtrl.text.isNotEmpty &&
+      _bankNumberCtrl.text.isNotEmpty;
 
   final _bankJA = UpdateInformationType.bank;
 
@@ -61,7 +65,8 @@ class _UpdateBankAccountScreenState extends State<UpdateBankAccountScreen> with 
         shape: const Border(bottom: BorderSide(color: Colors.white)),
         title: Text(
           'Thêm tài khoản ngân hàng',
-          style: context.text.titleMedium?.copyWith(fontSize: 16, fontWeight: FontWeight.w600),
+          style: context.text.titleMedium
+              ?.copyWith(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         leading: IconButton(
           padding: const EdgeInsets.all(2),
@@ -111,7 +116,8 @@ class _UpdateBankAccountScreenState extends State<UpdateBankAccountScreen> with 
                                 : null,
                             suggestions: banks
                                 .map(
-                                  (e) => SuggestionsField(name: e.name ?? '', img: e.logo, data: e),
+                                  (e) => SuggestionsField(
+                                      name: e.name ?? '', img: e.logo, data: e),
                                 )
                                 .toList(),
                             validator: (value) => context.validateEmptyInfo(
@@ -119,7 +125,8 @@ class _UpdateBankAccountScreenState extends State<UpdateBankAccountScreen> with 
                               'Bạn phải chọn Ngân hàng',
                             ),
                             onChanged: (val) {
-                              if (val != null && val == (_selectedBank?.name ?? '')) {
+                              if (val != null &&
+                                  val == (_selectedBank?.name ?? '')) {
                                 return;
                               }
                               _bankAccountHolderCtrl.clear();
@@ -164,14 +171,17 @@ class _UpdateBankAccountScreenState extends State<UpdateBankAccountScreen> with 
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).padding.bottom),
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Visibility(
                   visible: !isShowKeyboard,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: context.horizontal),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: context.horizontal),
                     child: PrimaryButton(
+                      width: MediaQuery.of(context).size.width,
                       title: 'TIẾP THEO',
                       onTap: () {
                         final payload = UpdateBankAccountPayload(

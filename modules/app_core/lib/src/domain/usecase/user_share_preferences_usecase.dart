@@ -30,14 +30,18 @@ class UserInfoSharePreferencesUsecase {
         return loginModel;
       } catch (e) {
         //reset wrong _kUserInfo
-        _shared.setString(_assessToken, '');
-        _shared.setString(_refreshToken, '');
-        _shared.setString(_kUserInfo, '{}');
+        clearUserData();
         LoggerService.print(
             '[UserInfoSharePreferencesUsecase]: ${e.toString()}');
         return null;
       }
     }
     return null;
+  }
+
+  Future clearUserData() async {
+    await _shared.setString(_assessToken, '');
+    await _shared.setString(_refreshToken, '');
+    await _shared.setString(_kUserInfo, '{}');
   }
 }

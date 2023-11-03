@@ -201,6 +201,7 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen>
                         left: 20,
                         top: 10),
                     child: PrimaryButton(
+                      width: MediaQuery.of(context).size.width,
                       title: S.current.register,
                       onTap: () {
                         upgradeJABloc.add(GetDetailDataEvent());

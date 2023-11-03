@@ -21,10 +21,12 @@ class VerifyOTPBankAccountDialogWidget extends StatefulWidget {
   });
 
   @override
-  State<VerifyOTPBankAccountDialogWidget> createState() => _VerifyOTPBankAccountDialogWidgetState();
+  State<VerifyOTPBankAccountDialogWidget> createState() =>
+      _VerifyOTPBankAccountDialogWidgetState();
 }
 
-class _VerifyOTPBankAccountDialogWidgetState extends State<VerifyOTPBankAccountDialogWidget> with TimerMixin {
+class _VerifyOTPBankAccountDialogWidgetState
+    extends State<VerifyOTPBankAccountDialogWidget> with TimerMixin {
   bool _isActive = false;
 
   final TextEditingController _otpController = TextEditingController();
@@ -72,7 +74,8 @@ class _VerifyOTPBankAccountDialogWidgetState extends State<VerifyOTPBankAccountD
       context.startCongratulationRegisterDialog();
     } else if (state is GetDetailError) {
       hideLoading();
-      showToastMessage('Mã xác thực không đúng hoặc đã hết hạn', ToastMessageType.error);
+      showToastMessage(
+          'Mã xác thực không đúng hoặc đã hết hạn', ToastMessageType.error);
     }
   }
 
@@ -124,7 +127,10 @@ class _VerifyOTPBankAccountDialogWidgetState extends State<VerifyOTPBankAccountD
             ),
             Text(
               'Mã OTP đã được gửi về số điện thoại',
-              style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w400),
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineMedium!
+                  .copyWith(fontWeight: FontWeight.w400),
             ),
             // Padding(
             //   padding: const EdgeInsets.symmetric(vertical: 8),
@@ -138,21 +144,29 @@ class _VerifyOTPBankAccountDialogWidgetState extends State<VerifyOTPBankAccountD
               child: Center(
                 child: builderTimer(
                   (context, value, child) {
-                    final timerString = value > 0 ? '(${value.toString()}s)' : '';
+                    final timerString =
+                        value > 0 ? '(${value.toString()}s)' : '';
                     if (value > 0) {
                       return Text(
                         'Gửi lại $timerString',
-                        style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: AppColors.blue31),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(color: AppColors.blue31),
                       );
                     }
                     return RichText(
                       text: TextSpan(
                         text: 'Yêu cầu gửi lại mã',
-                        style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
                               color: AppColors.blue31,
                               decoration: TextDecoration.underline,
                             ),
-                        recognizer: TapGestureRecognizer()..onTap = _onTapResendOtp,
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = _onTapResendOtp,
                       ),
                     );
                   },
@@ -185,7 +199,12 @@ class _VerifyOTPBankAccountDialogWidgetState extends State<VerifyOTPBankAccountD
               child: ValueListenableBuilder(
                 valueListenable: ValueNotifier(_isActive),
                 builder: (_, __, ___) {
-                  return PrimaryButton(title: 'Tiếp theo', onTap: _updateBankAccount, disabled: !_isActive);
+                  return PrimaryButton(
+                    title: 'Tiếp theo',
+                    onTap: _updateBankAccount,
+                    disabled: !_isActive,
+                    width: MediaQuery.of(context).size.width,
+                  );
                 },
               ),
             ),

@@ -205,6 +205,7 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                     onTap: _onRegister,
                     color: Colors.white,
                     disabled: !isValid || !_passwordValid,
+                    width: MediaQuery.of(context).size.width,
                   );
                 },
               ),

@@ -45,7 +45,10 @@ class _SettingScreenState extends State<SettingScreen> {
                       ),
                     ),
                     _buildSearch(),
-                    _buildMenus(),
+                    const SizedBox(height: 10),
+                    _buildSession1(),
+                    const SizedBox(height: 10),
+                    _buildSessionMenus(),
                   ],
                 ),
               ))
@@ -92,13 +95,11 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-  _buildMenus() {
+  _buildSessionMenus() {
     return Column(
-      children: [
-        _buildSession1(),
-        const SizedBox(height: 10),
-        _buildSession2(),
-      ],
+      children: Setting.session1Menus(context, user: userCubit.currentUser)
+          .map((settings) => _buildMenus(settings))
+          .toList(),
     );
   }
 
@@ -111,18 +112,27 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-  _buildSession2() {
-    return Column(
-      children: Setting.session1Menus(context, user: userCubit.currentUser)
-          .map((item) => Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: ItemSettingWidget(
-                  name: item.text,
-                  icon: item.icon,
-                  onPressed: item.onPressed,
-                ),
-              ))
-          .toList(),
+  Widget _buildMenus(List<Setting> settings) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Column(
+        children: settings.map((menu) {
+          final index = settings.indexOf(menu);
+          return ItemSettingWidget(
+            name: menu.text,
+            icon: menu.icon,
+            onPressed: menu.onPressed,
+            border: BorderRadius.only(
+              topLeft: Radius.circular(index == 0 ? 10 : 0),
+              topRight: Radius.circular(index == 0 ? 10 : 0),
+              bottomLeft:
+                  Radius.circular(index == settings.length - 1 ? 10 : 0),
+              bottomRight:
+                  Radius.circular(index == settings.length - 1 ? 10 : 0),
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 }

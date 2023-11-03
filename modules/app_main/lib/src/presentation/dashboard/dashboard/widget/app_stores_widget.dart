@@ -100,6 +100,7 @@ class _AppStoreWidgetState extends State<AppStoreWidget> {
               widget.onCompleted(results);
               Navigator.pop(context, results);
             },
+            width: MediaQuery.of(context).size.width,
           )
         ],
       ),

@@ -9,7 +9,7 @@ class ItemSettingWidget extends StatelessWidget {
   final String? summary;
   final String? avatar;
   final String? icon;
-  final bool hasBorder;
+  final BorderRadiusGeometry? border;
   final Function()? onPressed;
 
   const ItemSettingWidget({
@@ -18,9 +18,9 @@ class ItemSettingWidget extends StatelessWidget {
     this.name,
     this.summary,
     this.avatar,
-    this.hasBorder = false,
     this.icon,
     this.onPressed,
+    this.border,
   });
 
   @override
@@ -31,7 +31,7 @@ class ItemSettingWidget extends StatelessWidget {
         padding: const EdgeInsets.only(left: 10),
         decoration: BoxDecoration(
           color: AppColors.white,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: border ?? BorderRadius.circular(10),
           boxShadow: context.theme.themeDecoration.defaultShadow,
         ),
         child: Row(

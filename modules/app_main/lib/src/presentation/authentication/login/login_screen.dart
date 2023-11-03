@@ -1,6 +1,5 @@
 import 'package:app_main/src/presentation/authentication/login/pages/register_page.dart';
 import 'package:app_main/src/presentation/authentication/login/pages/login_page.dart';
-import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';

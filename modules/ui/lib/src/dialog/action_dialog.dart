@@ -36,10 +36,14 @@ class ActionDialog extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 35, left: 32, right: 32),
+              padding: const EdgeInsets.only(
+                  top: 20, bottom: 35, left: 32, right: 32),
               child: Text(
                 title,
-                style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w600),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineMedium!
+                    .copyWith(fontWeight: FontWeight.w600),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -53,6 +57,7 @@ class ActionDialog extends StatelessWidget {
                       onAction.call();
                     },
                     disabled: false,
+                    width: MediaQuery.of(context).size.width,
                   ),
                 ),
                 const SizedBox(width: 20),
