@@ -11,22 +11,26 @@ class DockWidget extends StatefulWidget {
 }
 
 class _DockWidgetState extends State<DockWidget> {
-  final double runSpacing = 20;
-  final double spacing = 20;
-  final int listSize = 3;
-  final columns = 5;
-
-  final List<AppItem> _dockApps = [
-    AppItem(avatar: IconAppConstants.icECommerce, title: "", id: 1),
-    AppItem(avatar: IconAppConstants.icVDone, title: "", id: 2),
-    AppItem(avatar: IconAppConstants.icNews, title: "", id: 3),
+  final List<DashBoardIconItem> _dockApps = [
+    DashBoardIconItem(
+      backgroundImage: IconAppConstants.icECommerce,
+      title: "",
+      id: "ecommerce",
+    ),
+    DashBoardIconItem(
+      backgroundImage: IconAppConstants.icVDone,
+      title: "",
+      id: "vDone",
+    ),
+    DashBoardIconItem(
+      backgroundImage: IconAppConstants.icNews,
+      title: "",
+      id: "news",
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
-    final w = (MediaQuery.of(context).size.width - runSpacing * (columns - 1)) /
-        columns;
-
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       width: double.infinity,
@@ -34,14 +38,19 @@ class _DockWidgetState extends State<DockWidget> {
         color: AppColors.white.withOpacity(.3),
         borderRadius: BorderRadius.circular(40),
       ),
-      child: Wrap(
-        runSpacing: runSpacing,
-        spacing: spacing,
-        alignment: WrapAlignment.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: _dockApps.map((item) {
+          if(_dockApps.first == item || _dockApps.last == item) {
+            return SizedBox(
+              width: 60,
+              height: 60,
+              child: AppWidget(app: item),
+            );
+          }
           return SizedBox(
-            width: w,
-            height: w,
+            width: 80,
+            height: 80,
             child: AppWidget(app: item),
           );
         }).toList(),

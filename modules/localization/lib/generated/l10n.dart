@@ -477,6 +477,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Account profile`
+  String get account_profile {
+    return Intl.message(
+      'Account profile',
+      name: 'account_profile',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

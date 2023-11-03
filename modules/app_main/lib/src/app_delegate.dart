@@ -6,7 +6,6 @@ import 'package:app_main/src/blocs/marshop/marshop_cubit.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/presentation/authentication/login/login_screen.dart';
-import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';

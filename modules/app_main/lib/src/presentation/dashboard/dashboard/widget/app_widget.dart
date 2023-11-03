@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 class AppWidget extends StatelessWidget {
-  final AppItem app;
-  final ValueNotifier<bool>? isLongPress;
+  final DashBoardItem app;
+
   const AppWidget({
     super.key,
     required this.app,
-    this.isLongPress,
+    this.textColor,
   });
+  final Color? textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -23,41 +24,37 @@ class AppWidget extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               onTap: () {
-                if (app.routeName != null) {
-                  Navigator.of(context).pushNamed(app.routeName!);
+                if (app.path != null) {
+                  Navigator.of(context).pushNamed(app.path!);
                   return;
                 }
               },
-              // onLongPress: () {
-              //   print("object");
-              //   isLongPress.value = true;
-              // },
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  if (isLongPress != null)
-                    ValueListenableBuilder(
-                      valueListenable: isLongPress!,
-                      builder: (context, value, child) {
-                        if (value) {
-                          return Positioned(
-                            left: 0,
-                            top: 0,
-                            child: Container(
-                              child: Icon(Icons.remove),
-                            ),
-                          );
-                        } else {
-                          return const SizedBox.shrink();
-                        }
-                      },
-                    ),
+                  // if (isLongPress != null)
+                  //   ValueListenableBuilder(
+                  //     valueListenable: isLongPress!,
+                  //     builder: (context, value, child) {
+                  //       if (value) {
+                  //         return Positioned(
+                  //           left: 0,
+                  //           top: 0,
+                  //           child: Container(
+                  //             child: Icon(Icons.remove),
+                  //           ),
+                  //         );
+                  //       } else {
+                  //         return const SizedBox.shrink();
+                  //       }
+                  //     },
+                  //   ),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: AspectRatio(
                       aspectRatio: (app.width) / app.height,
                       child: ImageWidget(
-                        app.avatar,
+                        app.backgroundImage,
                         width: double.infinity,
                         fit: BoxFit.cover,
                       ),
@@ -75,8 +72,9 @@ class AppWidget extends StatelessWidget {
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               style: context.text.titleSmall!.copyWith(
-                color: AppColors.white,
-                fontSize: 10,
+                color: textColor ?? AppColors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
               ),
             ),
         ],

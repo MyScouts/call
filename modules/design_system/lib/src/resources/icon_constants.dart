@@ -21,6 +21,10 @@ class IconAppConstants {
   static String icBToB = IconApp.icBToB.path;
   static String icChanel = IconApp.icChanel.path;
   static String icWheelOfFortune = IconApp.icWheelOfFortune.path;
+  static String icDashboardContact = IconApp.icDashboardContact.path;
+  static String icTv = IconApp.icTv.path;
+  static String icBird = IconApp.icBird.path;
+  static String icClock = IconApp.icClock.path;
 }
 
 enum IconApp {
@@ -45,7 +49,11 @@ enum IconApp {
   star('assets/icons/star.png'),
   proAds('assets/icons/pro_ads.png'),
   pro('assets/icons/pro.png'),
-  icArrowLeft('assets/icons/ic_arrow_left.svg');
+  icArrowLeft('assets/icons/ic_arrow_left.svg'),
+  icTv('assets/icons/ic_tv.png'),
+  icBird('assets/icons/ic_bird.png'),
+  icClock('assets/icons/ic_clock.png'),
+  icDashboardContact('assets/icons/ic_dashboard_contact.png');
 
   const IconApp(this.path);
   final String path;

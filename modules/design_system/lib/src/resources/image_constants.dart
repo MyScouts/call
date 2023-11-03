@@ -16,6 +16,8 @@ class ImageConstants {
   static String frontCMND = ImageApp.frontCMND.path;
   static String passport = ImageApp.passport.path;
   static String backCMND = ImageApp.backCMND.path;
+  static String live = ImageApp.live.path;
+  static String banner = ImageApp.banner.path;
 }
 
 enum ImageApp {
@@ -35,7 +37,9 @@ enum ImageApp {
   passport('assets/images/passport.png'),
   backCMND('assets/images/back_cmnd.png'),
   imgdefault('assets/images/logo.png'),
-  warning('assets/images/warning.png');
+  warning('assets/images/warning.png'),
+  banner('assets/images/banner.png'),
+  live('assets/images/live.png');
 
   const ImageApp(this.path);
   final String path;

@@ -1,6 +1,8 @@
 import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
 import 'package:design_system/design_system.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 class AppItem {
   final int id;
@@ -9,7 +11,6 @@ class AppItem {
   final String? routeName;
   final int width;
   final int height;
-  int sort;
 
   AppItem({
     required this.id,
@@ -18,7 +19,6 @@ class AppItem {
     this.routeName,
     this.height = 1,
     this.width = 1,
-    this.sort = 0,
   });
 
   static List<AppItem> get personalApps => [
@@ -84,3 +84,97 @@ class AppItem {
 }
 
 enum DashboardType { community, personal, ecommerce }
+
+abstract class DashBoardItem extends Equatable {
+  final String id;
+  final String title;
+  final String backgroundImage;
+  final String? path;
+  final int width;
+  final int height;
+
+  const DashBoardItem({
+    required this.id,
+    required this.title,
+    required this.backgroundImage,
+    required this.width,
+    required this.height,
+    this.path,
+  });
+
+  bool get isWidget => this is DashBoardWidgetItem;
+}
+
+class DashBoardIconItem extends DashBoardItem {
+  const DashBoardIconItem({
+    required super.id,
+    required super.title,
+    required super.backgroundImage,
+    super.path,
+    int? width,
+    int? height,
+  }) : super(width: 1, height: 1);
+
+  @override
+  List<Object?> get props => [id];
+
+  factory DashBoardIconItem.empty() => const DashBoardIconItem(
+        id: '',
+        title: '',
+        backgroundImage: '',
+        width: 1,
+        height: 1,
+      );
+}
+
+class DashBoardWidgetItem extends DashBoardItem {
+  const DashBoardWidgetItem({
+    required super.id,
+    required super.title,
+    required super.backgroundImage,
+    required super.width,
+    required super.height,
+    super.path,
+  });
+
+  @override
+  List<Object?> get props => [id];
+}
+
+final Map<String, DashBoardItem> mapItems = {
+  'weather': DashBoardWidgetItem(
+    id: 'weather',
+    title: 'Thời tiết',
+    backgroundImage: IconAppConstants.icClock,
+    width: 2,
+    height: 2,
+  ),
+  'clock': DashBoardWidgetItem(
+    id: 'clock',
+    title: 'Đồng hồ',
+    backgroundImage: IconAppConstants.icClock,
+    width: 2,
+    height: 2,
+  ),
+  'contact': DashBoardIconItem(
+    id: 'contact',
+    title: 'Danh bạ',
+    backgroundImage: IconAppConstants.icDashboardContact,
+    width: 1,
+    height: 1,
+  ),
+  'group': DashBoardIconItem(
+    id: 'group',
+    title: 'Group',
+    backgroundImage: IconAppConstants.icDashboardContact,
+    width: 1,
+    height: 1,
+  ),
+  'team': DashBoardIconItem(
+    id: 'Team',
+    title: 'Team',
+    backgroundImage: IconAppConstants.icDashboardContact,
+    width: 1,
+    height: 1,
+  ),
+};

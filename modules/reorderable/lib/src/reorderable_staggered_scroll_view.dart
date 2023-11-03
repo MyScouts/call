@@ -123,6 +123,9 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
   /// A callback called when a drag operation is completed.
   final void Function(ReorderableStaggeredScrollViewListItem)? onDragCompleted;
 
+  final void Function(ReorderableStaggeredScrollViewListItem,
+      ReorderableStaggeredScrollViewListItem)? onGroup;
+
   /// The scroll controller for the scroll view.
   final ScrollController? scrollController;
 
@@ -180,6 +183,8 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
   /// The axis direction of the grid, if applicable.
   final AxisDirection? axisDirection;
 
+  final List<ReorderableStaggeredScrollViewListItem>? onChildrenChanged;
+
   /// Constructor for creating a ReorderableStaggeredScrollView in a list layout.
   const ReorderableStaggeredScrollView.list({
     super.key,
@@ -215,6 +220,8 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
     this.edgeScroll = 0.1,
     this.edgeScrollSpeedMilliseconds = 100,
     this.isNotDragList,
+    this.onGroup,
+    this.onChildrenChanged,
   })  : axisDirection = null,
         isList = true,
         crossAxisCount = 1;
@@ -238,6 +245,7 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
     this.clipBehavior = Clip.hardEdge,
     this.axis,
     this.hitTestBehavior = HitTestBehavior.translucent,
+    this.onChildrenChanged,
 
     /// A function that builds the feedback widget during dragging.
     Widget Function(ReorderableStaggeredScrollViewGridItem, Widget, Size)?
@@ -256,6 +264,9 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
     void Function(DraggableDetails, ReorderableStaggeredScrollViewGridItem)?
         onDragEnd,
     void Function(ReorderableStaggeredScrollViewGridItem)? onDragCompleted,
+    void Function(ReorderableStaggeredScrollViewListItem,
+            ReorderableStaggeredScrollViewListItem)?
+        onGroup,
     this.scrollController,
     this.isDragNotification = false,
     this.draggingWidgetOpacity = 0.5,
@@ -293,7 +304,10 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
                 onDragEnd(
                     details, item as ReorderableStaggeredScrollViewGridItem)),
         onDragCompleted = onDragCompleted as void Function(
-            ReorderableStaggeredScrollViewListItem)?;
+            ReorderableStaggeredScrollViewListItem)?,
+        onGroup = onGroup as void Function(
+            ReorderableStaggeredScrollViewListItem,
+            ReorderableStaggeredScrollViewListItem);
 
   @override
   State<ReorderableStaggeredScrollView> createState() =>
@@ -309,6 +323,16 @@ class _ReorderableStaggeredScrollViewState
     super.initState();
 
     _children = widget.children;
+  }
+
+  @override
+  void didUpdateWidget(covariant ReorderableStaggeredScrollView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if(oldWidget.children != widget.children) {
+      if(mounted) {
+        setState(() {});
+      }
+    }
   }
 
   Widget buildContainer({
@@ -337,6 +361,7 @@ class _ReorderableStaggeredScrollViewState
       edgeScroll: widget.edgeScroll,
       edgeScrollSpeedMilliseconds: widget.edgeScrollSpeedMilliseconds,
       isNotDragList: widget.isNotDragList,
+      onGroup: widget.onGroup,
       items: (ReorderableStaggeredScrollViewListItem element,
           DraggableWidget draggableWidget) {
         return widget.isList
@@ -405,6 +430,8 @@ class _ReorderableStaggeredScrollViewState
                     return StaggeredGrid.count(
                       crossAxisCount: widget.crossAxisCount,
                       axisDirection: widget.axisDirection,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
                       children: children,
                     );
                   },
