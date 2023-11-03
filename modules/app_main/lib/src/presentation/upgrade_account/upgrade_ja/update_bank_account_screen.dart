@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
+import 'package:app_main/src/presentation/settings/setting_screen.dart';
 import 'package:app_main/src/presentation/shared/extensions/validation_extension.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
@@ -16,21 +17,25 @@ class UpdateBankAccountScreen extends StatefulWidget {
   const UpdateBankAccountScreen({super.key});
 
   @override
-  State<UpdateBankAccountScreen> createState() => _UpdateBankAccountScreenState();
+  State<UpdateBankAccountScreen> createState() =>
+      _UpdateBankAccountScreenState();
 }
 
-class _UpdateBankAccountScreenState extends State<UpdateBankAccountScreen> with ValidationMixin {
+class _UpdateBankAccountScreenState extends State<UpdateBankAccountScreen>
+    with ValidationMixin {
   final _bankCtrl = TextEditingController();
   final _bankAccountHolderCtrl = TextEditingController();
   final _bankNumberCtrl = TextEditingController();
   Bank? _selectedBank;
 
   bool get validation =>
-      _selectedBank != null && _bankAccountHolderCtrl.text.isNotEmpty && _bankNumberCtrl.text.isNotEmpty;
+      _selectedBank != null &&
+      _bankAccountHolderCtrl.text.isNotEmpty &&
+      _bankNumberCtrl.text.isNotEmpty;
 
   final _bankJA = UpdateInformationType.bank;
 
-  GetListBanksBloc get listBanksBloc => context.read();
+  // GetListBanksBloc get listBanksBloc => context.read();
 
   @override
   void dispose() {
@@ -61,13 +66,17 @@ class _UpdateBankAccountScreenState extends State<UpdateBankAccountScreen> with 
         shape: const Border(bottom: BorderSide(color: Colors.white)),
         title: Text(
           'Thêm tài khoản ngân hàng',
-          style: context.text.titleMedium?.copyWith(fontSize: 16, fontWeight: FontWeight.w600),
+          style: context.text.titleMedium
+              ?.copyWith(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         leading: IconButton(
-          padding: const EdgeInsets.all(2),
-          icon: const Icon(Icons.arrow_back),
-          onPressed: Navigator.of(context).pop,
-        ),
+            padding: const EdgeInsets.all(2),
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).popUntil(
+                ModalRoute.withName(SettingScreen.routeName),
+              );
+            }),
       ),
       body: AutoHideKeyboard(
         child: Stack(
@@ -111,7 +120,8 @@ class _UpdateBankAccountScreenState extends State<UpdateBankAccountScreen> with 
                                 : null,
                             suggestions: banks
                                 .map(
-                                  (e) => SuggestionsField(name: e.name ?? '', img: e.logo, data: e),
+                                  (e) => SuggestionsField(
+                                      name: e.name ?? '', img: e.logo, data: e),
                                 )
                                 .toList(),
                             validator: (value) => context.validateEmptyInfo(
@@ -119,7 +129,8 @@ class _UpdateBankAccountScreenState extends State<UpdateBankAccountScreen> with 
                               'Bạn phải chọn Ngân hàng',
                             ),
                             onChanged: (val) {
-                              if (val != null && val == (_selectedBank?.name ?? '')) {
+                              if (val != null &&
+                                  val == (_selectedBank?.name ?? '')) {
                                 return;
                               }
                               _bankAccountHolderCtrl.clear();
@@ -164,13 +175,15 @@ class _UpdateBankAccountScreenState extends State<UpdateBankAccountScreen> with 
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).padding.bottom),
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Visibility(
                   visible: !isShowKeyboard,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: context.horizontal),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: context.horizontal),
                     child: PrimaryButton(
                       title: 'TIẾP THEO',
                       onTap: () {

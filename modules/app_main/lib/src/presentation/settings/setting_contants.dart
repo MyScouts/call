@@ -1,7 +1,9 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordintor.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 
 class Setting {
   final String text;
@@ -22,10 +24,13 @@ class Setting {
           icon: IconAppConstants.icECommerce,
           onPressed: () => context.startUpgradeMarshop(),
         ),
-        // Setting(
-        //   text: "JA contract",
-        //   icon: IconAppConstants.icChanel,
-        //   onPressed: () => context.startUpgradeJAFlow(user),
-        // ),
+        Setting(
+          text: "JA contract",
+          icon: IconAppConstants.icChanel,
+          onPressed: () {
+            final bloc = context.read<GetJAStatusBloc>();
+            bloc.add(GetDetailDataEvent());
+          },
+        ),
       ];
 }
