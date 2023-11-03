@@ -48,6 +48,7 @@ extension ErrorMessage on String {
       'YOU_NEED_TO_BE_OVER_15_YEARS_OLD':
           'Thành viên đủ 15 tuổi mới có thể đăng ký JA',
       'PASSWORD_NOT_MATCH': 'Mật khẩu sai',
+      'MISSING_DEFAULT_BANK': 'Bạn chưa có Tài khoản thanh toán mặc định',
     };
 
     final message = errorCodeAuthenticationMessage[this];

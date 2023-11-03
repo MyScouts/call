@@ -36,8 +36,9 @@ class UpgradeAccountApiConstants {
   static const master = 'api/master';
 
   static const registerJA = '/api/v1/ja/register';
-  static const registerJAVerifyOtp = 'api/register-community/register-ja/verify-otp';
-  static const resendOtpJA = 'api/register-community/register-ja/re-send-otp';
+  static const getJAStatus = '/api/v1/ja';
+  static const registerJAVerifyOtp = '/api/v1/ja/verify-otp';
+  static const resendOtpJA = '/api/v1/ja/resend-otp';
 
   static const registerVShop = 'api/register-community/register-v-shop';
   static const resendOtpVShop = 'api/register-community/register-v-shop/re-send-otp';
@@ -98,15 +99,12 @@ abstract class UpgradeAccountApi {
   Future<ApiResponse<UpgradeAccount>> getListData();
 
   @POST(UpgradeAccountApiConstants.registerJA)
-  Future<ApiResponse<UpgradeAccountResponse>> registerJA();
+  Future<UpgradeAccountResponse> registerJA();
 
   @POST(UpgradeAccountApiConstants.registerJAVerifyOtp)
-  Future<ApiResponse<dynamic>> registerJAVerifyOtp({
+  Future<ApiResponse<bool>> registerJAVerifyOtp({
     @Body() required VerifyPhoneOtpPayload payload,
   });
-
-  @POST(UpgradeAccountApiConstants.registerVShop)
-  Future<ApiResponse<UpgradeAccountResponse>> registerVShop();
 
   @POST(UpgradeAccountApiConstants.registerVShopVerifyOtp)
   Future<ApiResponse<bool>> registerVShopVerifyOtp({
@@ -114,7 +112,7 @@ abstract class UpgradeAccountApi {
   });
 
   @POST(UpgradeAccountApiConstants.resendOtpJA)
-  Future<ApiResponse<UpgradeAccountResponse>> resendOtpJA();
+  Future<UpgradeAccountResponse> resendOtpJA();
 
   @POST(UpgradeAccountApiConstants.resendOtpVShop)
   Future<ApiResponse<UpgradeAccountResponse>> resendOtpVShop();

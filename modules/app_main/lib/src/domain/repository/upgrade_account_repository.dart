@@ -34,10 +34,6 @@ abstract class UpgradeAccountRepository {
 
   Future<bool> registerJAVerifyOtp({required VerifyPhoneOtpPayload payload});
 
-  Future<UpgradeAccountResponse> registerVShop();
-
-  Future<bool> registerVShopVerifyOtp({required VerifyPhoneOtpPayload payload});
-
   Future<UpgradeAccountResponse> resendOtpJA();
 
   Future<UpgradeAccountResponse> resendOtpVShop();

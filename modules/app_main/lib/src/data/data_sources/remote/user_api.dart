@@ -1,4 +1,6 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/domain/entities/update_account/pdone_account.dart';
+import 'package:app_main/src/domain/entities/update_account/pdone_profile.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';

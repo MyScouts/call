@@ -7,7 +7,6 @@ import 'package:ui/ui.dart';
 import '../../data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
 import '../../data/models/responses/register_pdone_response.dart';
 import '../../data/models/responses/upgrade_account_response.dart';
-import '../../domain/entities/commity_action_type.dart';
 import '../settings/contract_ja/contract_ja_screen.dart';
 import 'upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'upgrade_ja/upgrade_ja_screen.dart';
@@ -18,34 +17,6 @@ import 'upgrade_pdone/upgrade_pdone_screen.dart';
 import 'upgrade_pdone/views/widgets/upgrade_account_verify_otp_dialog.dart';
 
 extension UpgradeAccountCoordinator on BuildContext {
-  // Future<T?> startUpgradePDoneAccount<T>(int currentStep) {
-  //   return Navigator.of(this)
-  //       .pushNamed(UpgradePDoneScreen.routeName, arguments: {
-  //     'currentStep': currentStep,
-  //   });
-  // }
-
-  // Future<T?> startDialogUpgradeKYC<T>() {
-  //   return showDialog<T>(
-  //     context: this,
-  //     barrierDismissible: true,
-  //     builder: (context) {
-  //       return Dialog(
-  //         backgroundColor: Colors.transparent,
-  //         elevation: 0,
-  //         shape: const RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.all(Radius.circular(12)),
-  //         ),
-  //         child: BlocProvider<UpgradeAccountKycBloc>(
-  //           create: (context) => injector.get(),
-  //           child: const UpgradeKycWidget(),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
-  // Upgrade Account PDone
   Future<T?> startDialogVerifyOTP<T>(RegisterPDoneResponse res) {
     return showGeneralDialog<T>(
       context: this,
@@ -64,37 +35,7 @@ extension UpgradeAccountCoordinator on BuildContext {
     );
   }
 
-  // Future<T?> startDialogCheckProtectorVerifyOTP<T>(
-  //     RegisterPDoneResponse res, CheckProtectorPayload payload) {
-  //   return showGeneralDialog<T>(
-  //     context: this,
-  //     barrierDismissible: true,
-  //     barrierLabel: '',
-  //     pageBuilder: (context, animation1, animation2) {
-  //       return MultiBlocProvider(
-  //         providers: [
-  //           BlocProvider<CheckProtectorBloc>(
-  //             create: (context) => injector.get(),
-  //           ),
-  //           BlocProvider<CheckProtectorVerifyOTPBloc>(
-  //             create: (context) => injector.get(),
-  //           ),
-  //         ],
-  //         child: AutoHideKeyboard(
-  //           child: DialogContainerWidget(
-  //             child: CheckProtectorVerifyOTPDialogWidget(
-  //               res: res,
-  //               payload: payload,
-  //             ),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
-  // Upgrade Account JA, VShop
-  Future<T?> startDialogVerifyPhoneOTP<T>(UpgradeAccountResponse res, PDoneActionType type) {
+  Future<T?> startDialogVerifyPhoneOTP<T>(UpgradeAccountResponse res) {
     return showGeneralDialog<T>(
       context: this,
       barrierDismissible: true,
@@ -111,7 +52,7 @@ extension UpgradeAccountCoordinator on BuildContext {
           ],
           child: AutoHideKeyboard(
             child: DialogContainerWidget(
-              child: VerifyPhoneOTPDialogWidget(response: res, type: type),
+              child: VerifyPhoneOTPDialogWidget(response: res),
             ),
           ),
         );
@@ -154,9 +95,6 @@ extension UpgradeAccountCoordinator on BuildContext {
             BlocProvider<UpdateBankAccountBloc>.value(
               value: bloc,
             ),
-            BlocProvider<ResendOTPPhoneBloc>(
-              create: (context) => injector.get(),
-            ),
           ],
           child: AutoHideKeyboard(
             child: DialogContainerWidget(
@@ -195,16 +133,13 @@ extension UpgradeAccountCoordinator on BuildContext {
   //   );
   // }
 
-  Future<T?> startDialogWarningUpgradeJA<T>() {
+  Future<T?> startDialogWarningUpgradeJA<T>({required String title}) {
     return showGeneralDialog<T>(
       context: this,
       barrierDismissible: true,
       barrierLabel: '',
       pageBuilder: (context, animation1, animation2) {
-        return const WarningDialog(
-          title: 'Thành viên đủ 15 tuổi mới có thể đăng ký JA',
-          content: '',
-        );
+        return WarningDialog(title: title, content: '');
       },
     );
   }
@@ -258,5 +193,24 @@ extension UpgradeAccountCoordinator on BuildContext {
 
   Future<T?> startUpdateBankAccount<T>() {
     return Navigator.of(this).pushNamed(UpdateBankAccountScreen.routeName);
+  }
+
+  void startUpgradeJAFlow(User? user) {
+    if (user?.isPDone != true) {
+      startDialogWarningUpgradeJA(title: 'Bạn cần đăng ký PDone trước.');
+    } else {
+      if (user?.isJA == true) {
+        startContractJA();
+      } else {
+        final isUnder15 = user?.birthday?.isUnder15yearsAgo() ?? true;
+        if (isUnder15) {
+          startDialogWarningUpgradeJA(
+            title: 'Thành viên đủ 15 tuổi mới có thể đăng ký JA',
+          );
+        } else {
+          startUpgradeJA();
+        }
+      }
+    }
   }
 }

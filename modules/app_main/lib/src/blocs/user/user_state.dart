@@ -12,7 +12,7 @@ sealed class UserState {
 }
 
 class GetProfileSuccess extends UserState {
-  final User userInfo;
+  final User? userInfo;
 
   GetProfileSuccess(this.userInfo);
 }
