@@ -9,7 +9,7 @@
     "validation_password_match": "Mật khẩu xác nhận không khớp",
     "message_password_invalid": "Mật khẩu không hợp lệ.",
     "message_user_not_found": "Tài khoản không tồn tại.",
-    "message_user_exits": "Người dùng đã tồn tại",
+    "message_user_exits": "Số điện thoại đã được sử dụng.",
     "message_register_fail":"Đăng ký không thành công.",
     "message_otp_not_match":"Mã OTP không hợp lệ.",
     "messages_resend_otp_fail": "Gửi lại OTP không thành công.",
