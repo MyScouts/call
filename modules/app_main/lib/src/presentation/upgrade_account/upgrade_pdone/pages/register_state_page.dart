@@ -41,3 +41,49 @@ class RegisterStatePage extends StatelessWidget {
     );
   }
 }
+
+
+class RegisterEKycStatePage extends StatelessWidget {
+
+  const RegisterEKycStatePage({
+    required this.onClickBtn,
+    super.key,
+  });
+  final Function() onClickBtn;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(bottom: 42, right: 38, left: 38),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ImageWidget(ImageConstants.pdoneSuccess),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 36),
+            child: Text(
+              'Chúc mừng bạn đã nâng cấp\nP-Done thành công',
+              style: Theme.of(context).textTheme.headlineMedium,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: GradiantButton(
+              onPressed: (){
+                Navigator.of(context).pop();
+                onClickBtn.call();
+              },
+              child: Text(
+                'Trở lại trang V-News',
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge
+                    ?.copyWith(color: AppColors.white),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

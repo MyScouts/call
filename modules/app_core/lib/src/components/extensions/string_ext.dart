@@ -81,6 +81,12 @@ extension DatetimeFormat on String {
 
     return '$date at $time';
   }
+
+  DateTime parseDateTime() {
+    final DateFormat format = DateFormat('dd/MM/yyyy');
+    final DateTime dateTime = format.parse(this);
+    return dateTime;
+  }
 }
 
 extension NullableStringIsNullOrEmptyExtension on String? {

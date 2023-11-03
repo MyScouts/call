@@ -4,6 +4,7 @@ import 'package:localization/localization.dart';
 enum PDoneActionType {
   registerPDone,
   registerJA,
+  registerVShop,
 }
 
 extension PDoneActionTypeExt on PDoneActionType {
@@ -13,6 +14,8 @@ extension PDoneActionTypeExt on PDoneActionType {
         return S.of(context).pdoneAction_registerPDone;
       case PDoneActionType.registerJA:
         return 'Đăng ký JA';
+      case PDoneActionType.registerVShop:
+        return S.of(context).pdoneAction_registerVShop;
     }
   }
 
@@ -22,6 +25,8 @@ extension PDoneActionTypeExt on PDoneActionType {
         return 'PDone';
       case PDoneActionType.registerJA:
         return 'JA';
+      case PDoneActionType.registerVShop:
+        return 'VShop';
     }
   }
 }

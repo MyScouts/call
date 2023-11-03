@@ -7,9 +7,11 @@ class ImageConstants {
   static String bgTiktok = ImageApp.bgTiktok.path;
   static String bgLocket = ImageApp.bgLocket.path;
   static String defaultBgDashboard = ImageApp.defaultBgDashboard.path;
+  static String imgdefault = ImageApp.imgdefault.path;
   static String warning = ImageApp.warning.path;
   static String defaultAvatar = ImageApp.defaultAvatar.path;
   static String rafiki = ImageApp.rafiki.path;
+  static String pdoneSuccess = ImageApp.pdoneSuccess.path;
   static String previewPerson = ImageApp.previewPerson.path;
   static String frontCMND = ImageApp.frontCMND.path;
   static String passport = ImageApp.passport.path;
@@ -27,10 +29,12 @@ enum ImageApp {
   bgLocket('assets/images/locket.webp'),
   defaultAvatar('assets/images/person.png'),
   rafiki('assets/images/rafiki.png'),
+  pdoneSuccess('assets/images/pdone_success.png'),
   previewPerson('assets/images/preview_person.png'),
   frontCMND('assets/images/front_cmnd.png'),
   passport('assets/images/passport.png'),
   backCMND('assets/images/back_cmnd.png'),
+  imgdefault('assets/images/logo.png'),
   warning('assets/images/warning.png');
 
   const ImageApp(this.path);

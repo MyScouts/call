@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordintor.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -15,11 +16,16 @@ class Setting {
     this.onPressed,
   });
 
-  static List<Setting> session1Menus(BuildContext context) => [
+  static List<Setting> session1Menus(BuildContext context, {User? user}) => [
         Setting(
           text: "Đăng ký và nâng cấp tài khoản",
           icon: IconAppConstants.icECommerce,
           onPressed: () => context.startRegisterCustomer(),
         ),
+        // Setting(
+        //   text: "JA contract",
+        //   icon: IconAppConstants.icChanel,
+        //   onPressed: () => context.startUpgradeJAFlow(user),
+        // ),
       ];
 }

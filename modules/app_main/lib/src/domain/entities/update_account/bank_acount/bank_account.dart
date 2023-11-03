@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'bank.dart';
+import '../../bank.dart';
 
 part 'bank_account.freezed.dart';
 

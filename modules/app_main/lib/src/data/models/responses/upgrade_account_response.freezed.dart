@@ -24,7 +24,6 @@ mixin _$UpgradeAccountResponse {
   String get token => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
   String? get phoneCode => throw _privateConstructorUsedError;
-  String? get teamId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,7 +37,7 @@ abstract class $UpgradeAccountResponseCopyWith<$Res> {
           $Res Function(UpgradeAccountResponse) then) =
       _$UpgradeAccountResponseCopyWithImpl<$Res, UpgradeAccountResponse>;
   @useResult
-  $Res call({String token, String? phone, String? phoneCode, String? teamId});
+  $Res call({String token, String? phone, String? phoneCode});
 }
 
 /// @nodoc
@@ -58,7 +57,6 @@ class _$UpgradeAccountResponseCopyWithImpl<$Res,
     Object? token = null,
     Object? phone = freezed,
     Object? phoneCode = freezed,
-    Object? teamId = freezed,
   }) {
     return _then(_value.copyWith(
       token: null == token
@@ -73,10 +71,6 @@ class _$UpgradeAccountResponseCopyWithImpl<$Res,
           ? _value.phoneCode
           : phoneCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      teamId: freezed == teamId
-          ? _value.teamId
-          : teamId // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 }
@@ -90,7 +84,7 @@ abstract class _$$UpgradeAccountResponseImplCopyWith<$Res>
       __$$UpgradeAccountResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String token, String? phone, String? phoneCode, String? teamId});
+  $Res call({String token, String? phone, String? phoneCode});
 }
 
 /// @nodoc
@@ -109,7 +103,6 @@ class __$$UpgradeAccountResponseImplCopyWithImpl<$Res>
     Object? token = null,
     Object? phone = freezed,
     Object? phoneCode = freezed,
-    Object? teamId = freezed,
   }) {
     return _then(_$UpgradeAccountResponseImpl(
       token: null == token
@@ -124,10 +117,6 @@ class __$$UpgradeAccountResponseImplCopyWithImpl<$Res>
           ? _value.phoneCode
           : phoneCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      teamId: freezed == teamId
-          ? _value.teamId
-          : teamId // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -136,7 +125,7 @@ class __$$UpgradeAccountResponseImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UpgradeAccountResponseImpl implements _UpgradeAccountResponse {
   const _$UpgradeAccountResponseImpl(
-      {required this.token, this.phone, this.phoneCode, this.teamId});
+      {required this.token, this.phone, this.phoneCode});
 
   factory _$UpgradeAccountResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$UpgradeAccountResponseImplFromJson(json);
@@ -147,12 +136,10 @@ class _$UpgradeAccountResponseImpl implements _UpgradeAccountResponse {
   final String? phone;
   @override
   final String? phoneCode;
-  @override
-  final String? teamId;
 
   @override
   String toString() {
-    return 'UpgradeAccountResponse(token: $token, phone: $phone, phoneCode: $phoneCode, teamId: $teamId)';
+    return 'UpgradeAccountResponse(token: $token, phone: $phone, phoneCode: $phoneCode)';
   }
 
   @override
@@ -163,13 +150,12 @@ class _$UpgradeAccountResponseImpl implements _UpgradeAccountResponse {
             (identical(other.token, token) || other.token == token) &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.phoneCode, phoneCode) ||
-                other.phoneCode == phoneCode) &&
-            (identical(other.teamId, teamId) || other.teamId == teamId));
+                other.phoneCode == phoneCode));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, token, phone, phoneCode, teamId);
+  int get hashCode => Object.hash(runtimeType, token, phone, phoneCode);
 
   @JsonKey(ignore: true)
   @override
@@ -190,8 +176,7 @@ abstract class _UpgradeAccountResponse implements UpgradeAccountResponse {
   const factory _UpgradeAccountResponse(
       {required final String token,
       final String? phone,
-      final String? phoneCode,
-      final String? teamId}) = _$UpgradeAccountResponseImpl;
+      final String? phoneCode}) = _$UpgradeAccountResponseImpl;
 
   factory _UpgradeAccountResponse.fromJson(Map<String, dynamic> json) =
       _$UpgradeAccountResponseImpl.fromJson;
@@ -202,8 +187,6 @@ abstract class _UpgradeAccountResponse implements UpgradeAccountResponse {
   String? get phone;
   @override
   String? get phoneCode;
-  @override
-  String? get teamId;
   @override
   @JsonKey(ignore: true)
   _$$UpgradeAccountResponseImplCopyWith<_$UpgradeAccountResponseImpl>

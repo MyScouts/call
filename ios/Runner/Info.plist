@@ -38,13 +38,13 @@
 		<string>TLSv1.0</string>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Allow $(APP_NAME) access to your photo library to upload your profile picture?</string>
+	<string>This app needs camera access to scan QR codes</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allow $(APP_NAME) access to your micro phone to make video call?</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Allow $(APP_NAME) access to your photo library to upload your profile picture?</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow $(APP_NAME) access to your photo library to upload your profile picture?</string>
+	<string>Photo Library used for upload product photos</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

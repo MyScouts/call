@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
@@ -46,7 +47,7 @@ class _AcceptTermWithCheckboxWidgetState
             children: [
               Checkbox(
                 value: _acceptTerm.value,
-                activeColor: AppColors.green11,
+                activeColor: context.theme.primaryColor,
                 onChanged: _onChangedCheckbox,
                 visualDensity: const VisualDensity(horizontal: 0),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,

@@ -81,10 +81,12 @@ class _UpgradePDoneScreenState extends State<UpgradePDoneScreen>
               controller: _pageController,
               physics: const NeverScrollableScrollPhysics(),
               children: [
-                RegisterPDoneAccountPage(onNextPage: () => nextPage(1)),
-                UpdatePDoneInformationPage(onNextPage: () => nextPage(2)),
+                UpdateKycPage(onNextPage: () => nextPage(1)),
 
-                UpdateKycPage(onNextPage: () {}),
+                UpdatePDoneInformationPage(onNextPage: () => nextPage(2)),
+                // RegisterPDoneAccountPage(
+                //   onNextPage: () {},
+                // )
                 // const RegisterStatePage(),
               ],
             ),

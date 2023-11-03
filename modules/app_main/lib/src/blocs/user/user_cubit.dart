@@ -3,12 +3,14 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
+import 'package:app_main/src/domain/entities/update_account/otp/otp.dart';
 import 'package:app_main/src/domain/usecases/authentication_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:localization/localization.dart';
 
 import '../../domain/usecases/user_share_preferences_usecase.dart';
+import '../../domain/usecases/user_usecase.dart';
 
 part 'user_state.dart';
 
@@ -16,9 +18,12 @@ part 'user_state.dart';
 class UserCubit extends Cubit<UserState> {
   final AuthenticationUsecase _authenticationUsecase;
   final UserSharePreferencesUsecase _userSharePreferencesUsecase;
+  final UserUsecase _userUsecase;
+
   UserCubit(
     this._authenticationUsecase,
     this._userSharePreferencesUsecase,
+    this._userUsecase,
   ) : super(UserInitial());
 
   Future phoneRegister({
@@ -86,11 +91,61 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
+  // User? user;
+
+  // void getUserInfo() {
+  //   try {
+  //     user = _userSharePreferencesUsecase.getUserInfo();
+  //     emit(GetProfileSuccess(user));
+  //   } catch (error) {
+  //     debugPrint("get profile: $error");
+  //     emit(GetProfileError(
+  //         S.current.messages_server_internal_error.capitalize()));
+  //   }
+  // }
+
+  User? _currentUser;
+
+  User? get currentUser => _userSharePreferencesUsecase.getUserInfo();
+
+  void setCurrentUser(User? user) => _currentUser = user;
+
+  Future<void> fetchUser() async {
+    _currentUser = _userSharePreferencesUsecase.getUserInfo();
+    final id = _currentUser?.id;
+
+    if (id != null) {
+      try {
+        final user = await _userUsecase.geSynctUserById(id);
+
+        if (user != null) {
+          await _userSharePreferencesUsecase.saveUserInfo(user);
+          setCurrentUser(user);
+          emit(GetProfileSuccess(user));
+        }
+      } on DioException catch (error) {
+        debugPrint("phoneRegister: $error");
+        String err = S.current.messages_server_internal_error.capitalize();
+        emit(GetProfileError(err));
+      } catch (error) {
+        debugPrint("phoneRegister: $error");
+        emit(
+          GetProfileError(
+            S.current.messages_server_internal_error.capitalize(),
+          ),
+        );
+      }
+    }
+  }
+
   Future phoneLogin(AuthenticationPhonePayload payload) async {
     if (state is OnPhoneLogin) return;
     try {
       emit(OnPhoneLogin());
       await _authenticationUsecase.login(payload: payload);
+
+      await fetchUser();
+
       emit(PhoneLoginSuccess());
     } on DioException catch (error) {
       final data = error.response!.data;
@@ -203,6 +258,21 @@ class UserCubit extends Cubit<UserState> {
       emit(ResetPasswordFail(message: err));
     } catch (error) {
       emit(ResetPasswordFail(message: "international_error"));
+    }
+  }
+
+  Future<void> getOtp({bool? isResend}) async {
+    try {
+      emit(GetOTPLoading());
+      final otp = await _authenticationUsecase.getOtp();
+      if (isResend == true) {
+        emit(ResendUserOTPSuccess(otp: otp));
+        return;
+      }
+      emit(GetOTPSuccess(otp: otp));
+    } catch (error) {
+      debugPrint("phoneRegister: $error");
+      emit(GetOTPFail(message: "international_error"));
     }
   }
 }

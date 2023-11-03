@@ -179,8 +179,8 @@ extension _InputDateTimeWidgetStateExt on _InputDateTimeWidgetState {
                 child: Column(
                   children: [
                     // TODO: fix heare
-                    Padding(
-                      padding: const EdgeInsets.all(16),
+                    const Padding(
+                      padding: EdgeInsets.all(16),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -195,7 +195,7 @@ extension _InputDateTimeWidgetStateExt on _InputDateTimeWidgetState {
                           //         color: Theme.of(context).primaryColor),
                           //   ),
                           // ),
-                          const Spacer(),
+                          Spacer(),
                           // InkWell(
                           //   onTap: () {
                           //     onChange(valueInit);

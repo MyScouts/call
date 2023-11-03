@@ -28,6 +28,7 @@ dependencies:
     path: ../reorderable
 
   intl: ^0.18.1
+  http_parser: ^4.0.2
   freezed_annotation: ^2.4.1
   easy_device_media: ^1.0.0
   permission_handler: ^11.0.1

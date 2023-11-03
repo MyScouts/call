@@ -1,19 +1,15 @@
-import 'package:app_main/src/core/services/notifications/notification_service.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
 import 'package:app_main/src/data/repositories/user_repository.dart';
-import 'package:app_main/src/domain/usecases/notification_usecase.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
-import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/models/responses/authenticate_response.dart';
 import '../../data/repositories/auth_repository.dart';
+import '../entities/update_account/otp/otp.dart';
 
 @injectable
 class AuthenticationUsecase {
-  final NotificationService _notificationService;
-  final NotificationUsecase _notificationUsecase;
   final AuthRepository _authRepository;
   final UserRepository _userRepository;
   final UserSharePreferencesUsecase _userSharePreferencesUsecase;
@@ -22,8 +18,6 @@ class AuthenticationUsecase {
     this._authRepository,
     this._userSharePreferencesUsecase,
     this._userRepository,
-    this._notificationService,
-    this._notificationUsecase,
   );
 
   Future<void> signOut([bool forceLogout = false]) async {
@@ -42,7 +36,6 @@ class AuthenticationUsecase {
     );
     final user = await _userRepository.getProfile();
     _userSharePreferencesUsecase.saveUserInfo(user!);
-    await _syncFCMToken();
     return response;
   }
 
@@ -60,23 +53,12 @@ class AuthenticationUsecase {
       response.accessToken,
       response.refreshToken,
     );
-    await _syncFCMToken();
     return true;
   }
 
-  _syncFCMToken() async {
-    final fcmToken = await _notificationService.getFCMToken();
-    debugPrint(fcmToken);
-    if (fcmToken?.isNotEmpty ?? false) {
-      await _userSharePreferencesUsecase.saveFCMToken(fcmToken!);
-      try {
-        await _notificationUsecase.register(fcmToken);
-      } catch (e) {
-        if (kDebugMode) {
-          // throw Exception(e.toString());
-        }
-      }
-    }
+  Future<Otp> getOtp() async {
+    final response = await _authRepository.getOtp();
+    return response;
   }
 
   Future forgotPassword(ForgotPasswordPayload payload) async {

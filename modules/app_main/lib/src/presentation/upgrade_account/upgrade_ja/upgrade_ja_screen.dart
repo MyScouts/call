@@ -1,9 +1,11 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
-import 'package:app_main/src/presentation/shared/extensions/validation_extension.dart';
+import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/widgets/accept_term_with_checkbox_widget.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/widgets/read_more_policy.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
@@ -11,9 +13,7 @@ import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
 
 import '../../../data/models/responses/upgrade_account_response.dart';
-import '../../../domain/entities/commity_action_type.dart';
-import '../../../domain/usecases/community_usecase.dart';
-import '../../community/groups/group_listing_bloc.dart';
+import '../../../domain/entities/bank.dart';
 import 'upgrade_agree_policy.bloc.dart';
 
 class UpgradeJAScreen extends StatefulWidget {
@@ -26,7 +26,8 @@ class UpgradeJAScreen extends StatefulWidget {
   State<UpgradeJAScreen> createState() => _UpgradeJAScreenState();
 }
 
-class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin {
+class _UpgradeJAScreenState extends State<UpgradeJAScreen>
+    with ValidationMixin {
   String _getTitleAppBar() {
     if (widget.team != null) {
       return "Đăng ký tham gia ${widget.team?.name ?? ''}";
@@ -36,91 +37,45 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
 
   final _acceptTerm = ValueNotifier(false);
 
-  bool get isValid => widget.team != null
-      ? _acceptTerm.value
-      : _acceptTerm.value && _teamIDCtrl.text.isNotEmpty && _groupIDCtrl.text.isNotEmpty;
-
-  final _teamIDCtrl = TextEditingController();
-  final _groupIDCtrl = TextEditingController();
-  final _bossTeamIDCtrl = TextEditingController();
-
   @override
   void dispose() {
-    _teamIDCtrl.dispose();
     _acceptTerm.dispose();
-    _groupIDCtrl.dispose();
-
     super.dispose();
   }
 
-  // validator Boss Team Id
-  String? validatorBossTeamId;
-  final GlobalKey<FormState> _formBossTeamIDKey = GlobalKey();
+  late final BankAccount defaultBank;
 
-  Group? _currentGroup;
-  Team? _currentTeam;
-
-  final _teamJA = UpdateInformationType.idBossTeamJA;
-  final _groupJA = UpdateInformationType.idGroupJA;
-
-  UpgradeAccountBloc get upgradeAccountBloc => context.read();
-
-  GetListTeamsBloc get listTeamsBloc => context.read();
-
-  GetGroupDetailByBossIDBloc get getGroupDetailByBossIDBloc => context.read();
-
-  Future<void> validateBossTeamID(String? text) async {
-    final validate = context.validateformatPDoneAccount(text, 'Boss Team ID không hợp lệ!');
-
-    if (validate != null) {
-      validatorBossTeamId = validate;
-      _formBossTeamIDKey.currentState!.validate();
-      if (_currentGroup != null || _currentGroup != null) {
-        if (_currentGroup != null) {
-          _currentGroup = null;
-          _groupIDCtrl.clear();
-        }
-
-        if (_currentTeam != null) {
-          _currentTeam = null;
-          _teamIDCtrl.clear();
-        }
-        setState(() {});
-      }
-      return;
-    }
-
-    final id = text!.trim();
-    const errMsg = 'Boss Team ID không tồn tại';
-
-    try {
-      final res = await injector.get<CommunityUsecase>().checkBossTeamId(id);
-      validatorBossTeamId = res ? null : errMsg;
-      _formBossTeamIDKey.currentState!.validate();
-
-      if (res) {
-        getGroupDetailByBossIDBloc.add(GetDetailDataParam1Event(id));
-      }
-    } catch (e) {
-      validatorBossTeamId = errMsg;
-      _formBossTeamIDKey.currentState!.validate();
-    }
+  @override
+  void initState() {
+    defaultBank = BankAccount(
+      id: 108,
+      userId: 301,
+      bankNumber: "23232323",
+      bankHolder: "SFSFSDF",
+      qrImage: null,
+      isDefault: true,
+      createdAt: DateTime.now(),
+      bank: const Bank(
+        id: 3,
+        name: "Ngân hàng TMCP Bắc Á",
+        logo: "https://api.vietqr.io/img/BAB.png",
+        shortName: 'BacABank',
+      ),
+    );
+    super.initState();
   }
+
+  UpgradeJABloc get upgradeJABloc => context.read<UpgradeJABloc>();
 
   void _onListenUpgradeAgreePolicyBloc(BuildContext context, state) {
     if (state is GetDetailDataLoading) {
       showLoading();
     } else if (state is GetDetailDataSuccess<UpgradeAccountResponse>) {
       hideLoading();
-      final dataRes = state.data.copyWith(teamId: _currentTeam?.codeId);
 
-      //TODO: go to verify OTP
-      context.startDialogVerifyPhoneOTP(dataRes, PDoneActionType.registerJA).then((value) {
+      context.startDialogVerifyPhoneOTP(state.data).then((value) {
         if (value != null && value) {
-          delayAndPopScreen(context).then((value) {
-            // TODO: upgrade account event
-            // context.read<UserBloc>().add(UserUpgradeAccountEvent(type));
-          });
+          delayAndPopScreen(context);
         }
       });
     } else if (state is GetDetailError) {
@@ -137,7 +92,6 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
     }
   }
 
-
   Future<void> delayAndPopScreen(BuildContext context) async {
     await Future.delayed(const Duration(milliseconds: 500));
 
@@ -145,9 +99,12 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
       return;
     }
     Navigator.of(context).pop();
-    //TODO: fetch user again
-    // context.read<UserBloc>().add(FetchUserInfoEvent());
+    userCubit.fetchUser();
   }
+
+  late final userCubit = context.read<UserCubit>();
+
+  String get pDoneId => userCubit.currentUser?.pDoneId ?? '';
 
   @override
   Widget build(BuildContext context) {
@@ -159,21 +116,12 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
               padding: const EdgeInsets.only(bottom: 8),
               child: Text(_getTitleAppBar()),
             ),
-            // BlocBuilder<UserCubit, UserState>(
-            //   builder: (context, state) {
-            //     final pDoneId = state.currentUser?.pDoneId ?? '';
-            //     return Text(
-            //       'Số: ${pDoneId}JA',
-            //       style: Theme.of(context)
-            //           .textTheme
-            //           .bodyMedium!
-            //           .copyWith(color: const Color(0xff828282)),
-            //     );
-            //   },
-            // ),
             Text(
-              'Số: VN2A32345678JA',
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: const Color(0xff828282)),
+              'Số: ${pDoneId}JA',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: const Color(0xff828282)),
             ),
           ],
         ),
@@ -186,156 +134,122 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
           onPressed: Navigator.of(context).pop,
         ),
       ),
-      body: BlocConsumer<UpgradeAccountBloc, GetDetailState>(
-          listener: _onListenUpgradeAgreePolicyBloc,
-          builder: (context, state) {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  const ReadMorePolicy(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: AcceptTermWithCheckboxWidget(acceptTerm: _acceptTerm),
-                  ),
-                  if (widget.team == null)
+      body: BlocConsumer<UpgradeJABloc, GetDetailState>(
+        listener: _onListenUpgradeAgreePolicyBloc,
+        builder: (context, state) {
+          return Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  children: [
+                    const ReadMorePolicy(),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(20, 10, 20, MediaQuery.of(context).padding.bottom + 10),
+                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Form(
-                            key: _formBossTeamIDKey,
-                            child: InformationFieldWidget(
-                              required: false,
-                              onChanged: validateBossTeamID,
-                              controller: _bossTeamIDCtrl,
-                              type: UpdateInformationType.bossTeamId,
-                              validator: (text) {
-                                return validatorBossTeamId;
-                              },
+                          Text(
+                            'Thông tin tài khoản ngân hàng',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
+                                ?.copyWith(fontWeight: FontWeight.w600),
+                          ),
+                          const SizedBox(height: 10),
+                          ..._bankAccountField(
+                            title: 'Tên ngân hàng',
+                            leading: Container(
+                              height: 35,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                color: AppColors.white,
+                                borderRadius: BorderRadius.circular(2),
+                                border: Border.all(color: AppColors.greyBorder),
+                              ),
+                              child: Image.network('${defaultBank.bank?.logo}',
+                                  fit: BoxFit.fill),
                             ),
+                            content: defaultBank.bank?.shortName ?? '',
                           ),
-                          BlocBuilder<GetListGroupsBloc, GetListState>(
-                            builder: (context, state) {
-                              var groups = <Group>[];
-                              if (state is GetListDataSuccess<Group>) {
-                                groups = state.data;
-                              }
-
-                              return SearchInputInformationWidget<Group>(
-                                type: _groupJA,
-                                required: true,
-                                controller: _groupIDCtrl,
-                                maxSuggestionsInViewPort: 4,
-                                onSelected: (value) {
-                                  if (value != null) {
-                                    _currentGroup = value;
-                                    listTeamsBloc.add(
-                                      GetListDataParam1Event(value.id),
-                                    );
-                                  }
-                                },
-                                initialValue: _currentGroup != null
-                                    ? SuggestionsField(
-                                        name: _currentGroup?.name ?? '',
-                                        data: _currentGroup!,
-                                        avatar: _currentGroup?.avatar,
-                                      )
-                                    : null,
-                                suggestions: groups
-                                    .map(
-                                      (e) => SuggestionsField(
-                                        name: e.name ?? '',
-                                        data: e,
-                                        avatar: e.avatar,
-                                      ),
-                                    )
-                                    .toList(),
-                                onChanged: (val) {
-                                  if (val != null && val == (_currentGroup?.name ?? '')) {
-                                    return;
-                                  }
-                                  if (val != (_currentGroup?.name ?? '')) {
-                                    _teamIDCtrl.clear();
-                                    _bossTeamIDCtrl.clear();
-                                    setState(() {
-                                      _currentGroup = null;
-                                      _currentTeam = null;
-                                    });
-                                  }
-                                },
-                              );
-                            },
+                          const SizedBox(height: 15),
+                          ..._bankAccountField(
+                            title: 'Số tài khoản',
+                            content: defaultBank.bankNumber ?? '',
                           ),
-                          BlocBuilder<GetListTeamsBloc, GetListState>(
-                            builder: (context, state) {
-                              var teams = <Team>[];
-                              if (state is GetListDataSuccess<Team>) {
-                                teams = state.data;
-                              }
-
-                              return SearchInputInformationWidget<Team>(
-                                type: _teamJA,
-                                controller: _teamIDCtrl,
-                                required: true,
-                                maxSuggestionsInViewPort: 7,
-                                initialValue: _currentTeam != null
-                                    ? SuggestionsField(
-                                        name: _currentTeam?.name ?? '',
-                                        data: _currentTeam!,
-                                        avatar: _currentTeam?.avatar,
-                                      )
-                                    : null,
-                                onSelected: (value) {
-                                  setState(() {
-                                    _currentTeam = value;
-                                  });
-                                },
-                                suggestions: teams.reversed
-                                    .map(
-                                      (e) => SuggestionsField(
-                                        name: e.name ?? '',
-                                        data: e,
-                                        avatar: e.avatar,
-                                      ),
-                                    )
-                                    .toList(),
-                                onChanged: (val) {
-                                  if (val != null && val == (_currentTeam?.name ?? '')) {
-                                    return;
-                                  }
-
-                                  if (val != (_currentTeam?.name ?? '')) {
-                                    setState(() {
-                                      _currentTeam = null;
-                                    });
-                                  }
-                                },
-                              );
-                            },
-                          ),
-                          ValueListenableBuilder(
-                            valueListenable: _acceptTerm,
-                            builder: (_, __, ___) {
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 15),
-                                child: PrimaryButton(
-                                  title: S.current.register,
-                                  onTap: () {
-
-                                  },
-                                  disabled: !isValid
-                                ),
-                              );
-                            },
+                          const SizedBox(height: 15),
+                          ..._bankAccountField(
+                            title: 'Tên chủ tài khoản',
+                            content: defaultBank.bankHolder ?? '',
                           ),
                         ],
                       ),
                     ),
-                ],
+                  ],
+                ),
               ),
-            );
-          }),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: AcceptTermWithCheckboxWidget(acceptTerm: _acceptTerm),
+              ),
+              ValueListenableBuilder(
+                valueListenable: _acceptTerm,
+                builder: (_, __, ___) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).padding.bottom,
+                        right: 20,
+                        left: 20,
+                        top: 10),
+                    child: PrimaryButton(
+                      title: S.current.register,
+                      onTap: () {
+                        upgradeJABloc.add(GetDetailDataEvent());
+                      },
+                      disabled: !_acceptTerm.value,
+                    ),
+                  );
+                },
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
+
+  List<Widget> _bankAccountField({
+    required String title,
+    Widget? leading,
+    required String content,
+  }) {
+    return [
+      Text(
+        '$title:',
+        style: Theme.of(context)
+            .textTheme
+            .bodyLarge
+            ?.copyWith(fontWeight: FontWeight.w400),
+      ),
+      const SizedBox(height: 10),
+      Container(
+        decoration: BoxDecoration(
+          color: AppColors.grey12,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: ListTile(
+          leading: leading,
+          title: Text(
+            content,
+            style: context.text.titleSmall?.copyWith(fontSize: 14),
+          ),
+        ),
+      )
+    ];
+  }
+}
+
+enum BankAccountField {
+  name,
+  bankNumber,
+  bankAccountHolder,
 }

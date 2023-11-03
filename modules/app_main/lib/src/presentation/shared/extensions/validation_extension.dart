@@ -77,6 +77,15 @@ extension BuildContextExtValidation on BuildContext {
     return null;
   }
 
+  String? validateGender(String? value, String messageError) {
+    print(value);
+    if (value != 'Nam' && value != 'Nữ') {
+      return messageError;
+    }
+
+    return null;
+  }
+
   String? validateRetypePassword(
       String? value, String messageError, String password) {
     final isNullOrEmpty = value?.isEmpty ?? true;

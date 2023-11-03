@@ -21,11 +21,14 @@ UpdatePlaceInformationPayload _$UpdatePlaceInformationPayloadFromJson(
 
 /// @nodoc
 mixin _$UpdatePlaceInformationPayload {
-  String? get country => throw _privateConstructorUsedError;
-  int? get province => throw _privateConstructorUsedError;
-  String? get district => throw _privateConstructorUsedError;
-  int? get ward => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
+  String? get provinceName => throw _privateConstructorUsedError;
+  String? get districtName => throw _privateConstructorUsedError;
+  String? get wardName => throw _privateConstructorUsedError;
+  String? get street => throw _privateConstructorUsedError;
+  String? get provinceCode => throw _privateConstructorUsedError;
+  String? get districtCode => throw _privateConstructorUsedError;
+  String? get wardCode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,11 +45,14 @@ abstract class $UpdatePlaceInformationPayloadCopyWith<$Res> {
           UpdatePlaceInformationPayload>;
   @useResult
   $Res call(
-      {String? country,
-      int? province,
-      String? district,
-      int? ward,
-      String? address});
+      {String? address,
+      String? provinceName,
+      String? districtName,
+      String? wardName,
+      String? street,
+      String? provinceCode,
+      String? districtCode,
+      String? wardCode});
 }
 
 /// @nodoc
@@ -63,32 +69,47 @@ class _$UpdatePlaceInformationPayloadCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? country = freezed,
-    Object? province = freezed,
-    Object? district = freezed,
-    Object? ward = freezed,
     Object? address = freezed,
+    Object? provinceName = freezed,
+    Object? districtName = freezed,
+    Object? wardName = freezed,
+    Object? street = freezed,
+    Object? provinceCode = freezed,
+    Object? districtCode = freezed,
+    Object? wardCode = freezed,
   }) {
     return _then(_value.copyWith(
-      country: freezed == country
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String?,
-      province: freezed == province
-          ? _value.province
-          : province // ignore: cast_nullable_to_non_nullable
-              as int?,
-      district: freezed == district
-          ? _value.district
-          : district // ignore: cast_nullable_to_non_nullable
-              as String?,
-      ward: freezed == ward
-          ? _value.ward
-          : ward // ignore: cast_nullable_to_non_nullable
-              as int?,
       address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
+              as String?,
+      provinceName: freezed == provinceName
+          ? _value.provinceName
+          : provinceName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      districtName: freezed == districtName
+          ? _value.districtName
+          : districtName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      wardName: freezed == wardName
+          ? _value.wardName
+          : wardName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      street: freezed == street
+          ? _value.street
+          : street // ignore: cast_nullable_to_non_nullable
+              as String?,
+      provinceCode: freezed == provinceCode
+          ? _value.provinceCode
+          : provinceCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      districtCode: freezed == districtCode
+          ? _value.districtCode
+          : districtCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      wardCode: freezed == wardCode
+          ? _value.wardCode
+          : wardCode // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -104,11 +125,14 @@ abstract class _$$UpdatePlaceInformationPayloadImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? country,
-      int? province,
-      String? district,
-      int? ward,
-      String? address});
+      {String? address,
+      String? provinceName,
+      String? districtName,
+      String? wardName,
+      String? street,
+      String? provinceCode,
+      String? districtCode,
+      String? wardCode});
 }
 
 /// @nodoc
@@ -124,32 +148,47 @@ class __$$UpdatePlaceInformationPayloadImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? country = freezed,
-    Object? province = freezed,
-    Object? district = freezed,
-    Object? ward = freezed,
     Object? address = freezed,
+    Object? provinceName = freezed,
+    Object? districtName = freezed,
+    Object? wardName = freezed,
+    Object? street = freezed,
+    Object? provinceCode = freezed,
+    Object? districtCode = freezed,
+    Object? wardCode = freezed,
   }) {
     return _then(_$UpdatePlaceInformationPayloadImpl(
-      country: freezed == country
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String?,
-      province: freezed == province
-          ? _value.province
-          : province // ignore: cast_nullable_to_non_nullable
-              as int?,
-      district: freezed == district
-          ? _value.district
-          : district // ignore: cast_nullable_to_non_nullable
-              as String?,
-      ward: freezed == ward
-          ? _value.ward
-          : ward // ignore: cast_nullable_to_non_nullable
-              as int?,
       address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
+              as String?,
+      provinceName: freezed == provinceName
+          ? _value.provinceName
+          : provinceName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      districtName: freezed == districtName
+          ? _value.districtName
+          : districtName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      wardName: freezed == wardName
+          ? _value.wardName
+          : wardName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      street: freezed == street
+          ? _value.street
+          : street // ignore: cast_nullable_to_non_nullable
+              as String?,
+      provinceCode: freezed == provinceCode
+          ? _value.provinceCode
+          : provinceCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      districtCode: freezed == districtCode
+          ? _value.districtCode
+          : districtCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      wardCode: freezed == wardCode
+          ? _value.wardCode
+          : wardCode // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -160,26 +199,39 @@ class __$$UpdatePlaceInformationPayloadImplCopyWithImpl<$Res>
 class _$UpdatePlaceInformationPayloadImpl
     implements _UpdatePlaceInformationPayload {
   const _$UpdatePlaceInformationPayloadImpl(
-      {this.country, this.province, this.district, this.ward, this.address});
+      {this.address,
+      this.provinceName,
+      this.districtName,
+      this.wardName,
+      this.street,
+      this.provinceCode,
+      this.districtCode,
+      this.wardCode});
 
   factory _$UpdatePlaceInformationPayloadImpl.fromJson(
           Map<String, dynamic> json) =>
       _$$UpdatePlaceInformationPayloadImplFromJson(json);
 
   @override
-  final String? country;
-  @override
-  final int? province;
-  @override
-  final String? district;
-  @override
-  final int? ward;
-  @override
   final String? address;
+  @override
+  final String? provinceName;
+  @override
+  final String? districtName;
+  @override
+  final String? wardName;
+  @override
+  final String? street;
+  @override
+  final String? provinceCode;
+  @override
+  final String? districtCode;
+  @override
+  final String? wardCode;
 
   @override
   String toString() {
-    return 'UpdatePlaceInformationPayload(country: $country, province: $province, district: $district, ward: $ward, address: $address)';
+    return 'UpdatePlaceInformationPayload(address: $address, provinceName: $provinceName, districtName: $districtName, wardName: $wardName, street: $street, provinceCode: $provinceCode, districtCode: $districtCode, wardCode: $wardCode)';
   }
 
   @override
@@ -187,19 +239,26 @@ class _$UpdatePlaceInformationPayloadImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UpdatePlaceInformationPayloadImpl &&
-            (identical(other.country, country) || other.country == country) &&
-            (identical(other.province, province) ||
-                other.province == province) &&
-            (identical(other.district, district) ||
-                other.district == district) &&
-            (identical(other.ward, ward) || other.ward == ward) &&
-            (identical(other.address, address) || other.address == address));
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.provinceName, provinceName) ||
+                other.provinceName == provinceName) &&
+            (identical(other.districtName, districtName) ||
+                other.districtName == districtName) &&
+            (identical(other.wardName, wardName) ||
+                other.wardName == wardName) &&
+            (identical(other.street, street) || other.street == street) &&
+            (identical(other.provinceCode, provinceCode) ||
+                other.provinceCode == provinceCode) &&
+            (identical(other.districtCode, districtCode) ||
+                other.districtCode == districtCode) &&
+            (identical(other.wardCode, wardCode) ||
+                other.wardCode == wardCode));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, country, province, district, ward, address);
+  int get hashCode => Object.hash(runtimeType, address, provinceName,
+      districtName, wardName, street, provinceCode, districtCode, wardCode);
 
   @JsonKey(ignore: true)
   @override
@@ -220,25 +279,34 @@ class _$UpdatePlaceInformationPayloadImpl
 abstract class _UpdatePlaceInformationPayload
     implements UpdatePlaceInformationPayload {
   const factory _UpdatePlaceInformationPayload(
-      {final String? country,
-      final int? province,
-      final String? district,
-      final int? ward,
-      final String? address}) = _$UpdatePlaceInformationPayloadImpl;
+      {final String? address,
+      final String? provinceName,
+      final String? districtName,
+      final String? wardName,
+      final String? street,
+      final String? provinceCode,
+      final String? districtCode,
+      final String? wardCode}) = _$UpdatePlaceInformationPayloadImpl;
 
   factory _UpdatePlaceInformationPayload.fromJson(Map<String, dynamic> json) =
       _$UpdatePlaceInformationPayloadImpl.fromJson;
 
   @override
-  String? get country;
-  @override
-  int? get province;
-  @override
-  String? get district;
-  @override
-  int? get ward;
-  @override
   String? get address;
+  @override
+  String? get provinceName;
+  @override
+  String? get districtName;
+  @override
+  String? get wardName;
+  @override
+  String? get street;
+  @override
+  String? get provinceCode;
+  @override
+  String? get districtCode;
+  @override
+  String? get wardCode;
   @override
   @JsonKey(ignore: true)
   _$$UpdatePlaceInformationPayloadImplCopyWith<

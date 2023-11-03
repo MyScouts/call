@@ -70,6 +70,24 @@ class S {
     );
   }
 
+  /// `{date} | {time} `
+  String formatDateDDmmYYYYhhMM(DateTime date, DateTime time) {
+    final DateFormat dateDateFormat = DateFormat.yMd(Intl.getCurrentLocale());
+    final String dateString = dateDateFormat.format(date);
+
+    final DateFormat timeDateFormat =
+    DateFormat('hh:mm a', Intl.getCurrentLocale());
+    final String timeString = timeDateFormat.format(time);
+
+    return Intl.message(
+      '$dateString | $timeString ',
+      name: 'formatDateDDmmYYYYhhMM',
+      desc: 'format datetime',
+      args: [dateString, timeString],
+    );
+  }
+
+
   /// `Resend OTP success.`
   String get messages_resend_otp_success {
     return Intl.message(
@@ -445,6 +463,16 @@ class S {
     return Intl.message(
       'setting',
       name: 'setting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Đăng ký V-Shop`
+  String get pdoneAction_registerVShop {
+    return Intl.message(
+      'Đăng ký V-Shop',
+      name: 'pdoneAction_registerVShop',
       desc: '',
       args: [],
     );

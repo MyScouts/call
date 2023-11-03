@@ -16,4 +16,11 @@ class AuthRepositoryImpl extends UserRepository {
     final res = await _userAPI.getProfile();
     return res.data;
   }
+
+  @override
+  Future<User?> getUserById({required int id}) async {
+    final res = await _userAPI.getUserById(id: id);
+
+    return res.data;
+  }
 }
