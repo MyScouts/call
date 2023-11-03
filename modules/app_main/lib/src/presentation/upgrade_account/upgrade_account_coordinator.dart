@@ -7,7 +7,6 @@ import 'package:ui/ui.dart';
 import '../../data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
 import '../../data/models/responses/register_pdone_response.dart';
 import '../../data/models/responses/upgrade_account_response.dart';
-import '../../domain/entities/commity_action_type.dart';
 import '../settings/contract_ja/contract_ja_screen.dart';
 import 'upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'upgrade_ja/upgrade_ja_screen.dart';
@@ -18,7 +17,6 @@ import 'upgrade_pdone/upgrade_pdone_screen.dart';
 import 'upgrade_pdone/views/widgets/upgrade_account_verify_otp_dialog.dart';
 
 extension UpgradeAccountCoordinator on BuildContext {
-  // Upgrade Account PDone
   Future<T?> startDialogVerifyOTP<T>(RegisterPDoneResponse res) {
     return showGeneralDialog<T>(
       context: this,
@@ -37,38 +35,7 @@ extension UpgradeAccountCoordinator on BuildContext {
     );
   }
 
-  // Future<T?> startDialogCheckProtectorVerifyOTP<T>(
-  //     RegisterPDoneResponse res, CheckProtectorPayload payload) {
-  //   return showGeneralDialog<T>(
-  //     context: this,
-  //     barrierDismissible: true,
-  //     barrierLabel: '',
-  //     pageBuilder: (context, animation1, animation2) {
-  //       return MultiBlocProvider(
-  //         providers: [
-  //           BlocProvider<CheckProtectorBloc>(
-  //             create: (context) => injector.get(),
-  //           ),
-  //           BlocProvider<CheckProtectorVerifyOTPBloc>(
-  //             create: (context) => injector.get(),
-  //           ),
-  //         ],
-  //         child: AutoHideKeyboard(
-  //           child: DialogContainerWidget(
-  //             child: CheckProtectorVerifyOTPDialogWidget(
-  //               res: res,
-  //               payload: payload,
-  //             ),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
-  // Upgrade Account JA, VShop
-  Future<T?> startDialogVerifyPhoneOTP<T>(
-      UpgradeAccountResponse res, PDoneActionType type) {
+  Future<T?> startDialogVerifyPhoneOTP<T>(UpgradeAccountResponse res) {
     return showGeneralDialog<T>(
       context: this,
       barrierDismissible: true,
@@ -85,7 +52,7 @@ extension UpgradeAccountCoordinator on BuildContext {
           ],
           child: AutoHideKeyboard(
             child: DialogContainerWidget(
-              child: VerifyPhoneOTPDialogWidget(response: res, type: type),
+              child: VerifyPhoneOTPDialogWidget(response: res),
             ),
           ),
         );
@@ -127,9 +94,6 @@ extension UpgradeAccountCoordinator on BuildContext {
           providers: [
             BlocProvider<UpdateBankAccountBloc>.value(
               value: bloc,
-            ),
-            BlocProvider<ResendOTPPhoneBloc>(
-              create: (context) => injector.get(),
             ),
           ],
           child: AutoHideKeyboard(
@@ -244,7 +208,7 @@ extension UpgradeAccountCoordinator on BuildContext {
             title: 'Thành viên đủ 15 tuổi mới có thể đăng ký JA',
           );
         } else {
-          startDialogUpdateBankAccount();
+          startUpgradeJA();
         }
       }
     }

@@ -58,20 +58,15 @@ class UpgradeAccountUsecase {
   }
 
   Future<UpgradeAccountResponse> registerJA() {
-        return _upgradeAccountRepository.registerJA();
+    return _upgradeAccountRepository.registerJA();
   }
 
-  Future<bool> verifyOtpPhone(
-      VerifyPhoneOtpPayload payload, PDoneActionType type) {
-    return type == PDoneActionType.registerJA
-        ? _upgradeAccountRepository.registerJAVerifyOtp(payload: payload)
-        : _upgradeAccountRepository.registerVShopVerifyOtp(payload: payload);
+  Future<bool> verifyOtpPhone(VerifyPhoneOtpPayload payload) {
+    return _upgradeAccountRepository.registerJAVerifyOtp(payload: payload);
   }
 
-  Future<UpgradeAccountResponse> resendOtpPhoneJAVShop(PDoneActionType type) {
-    return type == PDoneActionType.registerJA
-        ? _upgradeAccountRepository.resendOtpJA()
-        : _upgradeAccountRepository.resendOtpVShop();
+  Future<UpgradeAccountResponse> resendOtpPhoneJA(PDoneActionType type) {
+    return _upgradeAccountRepository.resendOtpJA();
   }
 
   Future<bool> checkIsPDone(String id) async {
@@ -96,7 +91,8 @@ class UpgradeAccountUsecase {
     return _upgradeAccountRepository.updateBankAccount(payload);
   }
 
-  Future<Map<String, dynamic>> extractIdCardInformation(EKycIdCardRequest request) async {
+  Future<Map<String, dynamic>> extractIdCardInformation(
+      EKycIdCardRequest request) async {
     return _eKycViettel.extractIdCard(request);
   }
 }

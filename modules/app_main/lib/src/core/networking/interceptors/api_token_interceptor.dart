@@ -24,6 +24,7 @@ class ApiTokenInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     final accessToken = _sharedPreferences.getString(_assessToken);
     if (accessToken?.isNotEmpty ?? false) {
+      print('accessToken: $accessToken');
       options.headers[keyAuthentication] = '$keyBear $accessToken';
     }
     super.onRequest(options, handler);

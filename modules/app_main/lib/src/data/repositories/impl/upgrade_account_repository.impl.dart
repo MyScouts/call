@@ -5,7 +5,6 @@ import 'package:injectable/injectable.dart';
 import '../../../domain/entities/bank.dart';
 import '../../../domain/entities/update_account/check_protector_payload.dart';
 import '../../../domain/entities/update_account/kyc_status.dart';
-import '../../../domain/entities/update_account/otp/otp.dart';
 import '../../../domain/entities/update_account/register_pdone_with_phone_payload.dart';
 import '../../../domain/entities/update_account/update_pdone_kyc_payload.dart';
 import '../../../domain/entities/update_account/update_profile_payload.dart';
@@ -13,7 +12,6 @@ import '../../../domain/entities/update_account/upgrade_account.dart';
 import '../../../domain/entities/update_account/verify_phone_register_pdone_payload.dart';
 import '../../../domain/repository/upgrade_account_repository.dart';
 import '../../data_sources/remote/upgrade_account_api.dart';
-import '../../models/payloads/upgrade_account/upgrade_ja/upgrade_ja_payload.dart';
 import '../../models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
 import '../../models/responses/register_pdone_response.dart';
 import '../../models/responses/upgrade_account_response.dart';
@@ -96,7 +94,7 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   @override
   Future<UpgradeAccountResponse> registerJA() async {
     final response = await _upgradeAccountApi.registerJA();
-    return response.data;
+    return response;
   }
 
   @override
@@ -106,21 +104,9 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   }
 
   @override
-  Future<UpgradeAccountResponse> registerVShop() async {
-    final response = await _upgradeAccountApi.registerVShop();
-    return response.data;
-  }
-
-  @override
-  Future<bool> registerVShopVerifyOtp({required VerifyPhoneOtpPayload payload}) async {
-    final response = await _upgradeAccountApi.registerVShopVerifyOtp(payload: payload);
-    return response.data;
-  }
-
-  @override
   Future<UpgradeAccountResponse> resendOtpJA() async {
     final response = await _upgradeAccountApi.resendOtpJA();
-    return response.data;
+    return response;
   }
 
   @override

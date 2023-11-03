@@ -15,24 +15,25 @@ const showResendOTP = false;
 
 class VerifyPhoneOTPDialogWidget extends StatefulWidget {
   final UpgradeAccountResponse response;
-  final PDoneActionType type;
 
   const VerifyPhoneOTPDialogWidget({
     super.key,
     required this.response,
-    required this.type,
   });
 
   @override
-  State<VerifyPhoneOTPDialogWidget> createState() => _VerifyPhoneOTPDialogWidgetState();
+  State<VerifyPhoneOTPDialogWidget> createState() =>
+      _VerifyPhoneOTPDialogWidgetState();
 }
 
-class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget> with TimerMixin {
+class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
+    with TimerMixin {
   late UpgradeAccountResponse response;
   bool _isActive = false;
   String? _otpCode;
 
-  UpgradeAccountVerifyPhoneBloc get bloc => context.read<UpgradeAccountVerifyPhoneBloc>();
+  UpgradeAccountVerifyPhoneBloc get bloc =>
+      context.read<UpgradeAccountVerifyPhoneBloc>();
 
   ResendOTPPhoneBloc get resendOtpBloc => context.read<ResendOTPPhoneBloc>();
 
@@ -46,23 +47,21 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
   int get timeInputLimit => 60;
 
   void _verifyOTP() {
-    // bloc.add(
-    //   GetDetailDataParam2Event(
-    //     VerifyPhoneOtpPayload(
-    //       otp: _otpCode!,
-    //       token: response.token,
-    //       teamId: response.teamId,
-    //     ),
-    //     widget.type,
-    //   ),
-    // );
+    bloc.add(
+      GetDetailDataParam1Event(
+        VerifyPhoneOtpPayload(
+          otp: _otpCode!,
+          token: response.token,
+        ),
+      ),
+    );
   }
 
   void _onTapResendOtp() {
     restartTimer();
     setState(() {});
 
-    resendOtpBloc.add(GetDetailDataParam1Event(widget.type));
+    resendOtpBloc.add(GetDetailDataParam1Event(PDoneActionType.registerJA));
   }
 
   void _onListenerBloc(BuildContext context, GetDetailState state) {
@@ -74,15 +73,14 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
       Navigator.pop(context, true);
     } else if (state is GetDetailError) {
       hideLoading();
-      showToastMessage('Mã xác thực không đúng hoặc đã hết hạn', ToastMessageType.error);
+      showToastMessage(
+          'Mã xác thực không đúng hoặc đã hết hạn', ToastMessageType.error);
     }
   }
 
   void _onListenerResendOTPBloc(BuildContext context, GetDetailState state) {
     if (state is GetDetailDataSuccess<UpgradeAccountResponse>) {
       showToastMessage('Yêu cầu gửi lại OTP thành công');
-      // final String? teamId = response.teamId;
-      // response = state.data.copyWith(teamId: teamId);
     } else if (state is GetDetailError) {
       showToastMessage(
         'Yêu cầu gửi lại OTP không thành công',
@@ -124,13 +122,19 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
             ),
             Text(
               'Mã OTP đã được gửi về số điện thoại',
-              style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w400),
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineMedium!
+                  .copyWith(fontWeight: FontWeight.w400),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Text(
                 response.phone.formatPhone ?? '',
-                style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w500),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineMedium!
+                    .copyWith(fontWeight: FontWeight.w500),
               ),
             ),
             BlocListener<ResendOTPPhoneBloc, GetDetailState>(
@@ -138,21 +142,29 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
               child: Center(
                 child: builderTimer(
                   (context, value, child) {
-                    final timerString = value > 0 ? '(${value.toString()}s)' : '';
+                    final timerString =
+                        value > 0 ? '(${value.toString()}s)' : '';
                     if (value > 0) {
                       return Text(
                         'Gửi lại $timerString',
-                        style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: AppColors.blue31),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(color: AppColors.blue31),
                       );
                     }
                     return RichText(
                       text: TextSpan(
                         text: 'Yêu cầu gửi lại mã',
-                        style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
                               color: AppColors.blue31,
                               decoration: TextDecoration.underline,
                             ),
-                        recognizer: TapGestureRecognizer()..onTap = _onTapResendOtp,
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = _onTapResendOtp,
                       ),
                     );
                   },
@@ -180,8 +192,13 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-              child: PrimaryButton(title: 'Xác thực', onTap: _isActive ? _verifyOTP : null, disabled: false),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 32),
+              child: ValueListenableBuilder(
+                valueListenable: ValueNotifier(_isActive),
+                builder: (_, __, ___) {
+                  return PrimaryButton(title: 'Xác thực', onTap: _verifyOTP, disabled: !_isActive);
+                },
+              ),
             ),
           ],
         ),

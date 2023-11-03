@@ -1,6 +1,5 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordintor.dart';
-import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
@@ -23,10 +22,10 @@ class Setting {
           icon: IconAppConstants.icECommerce,
           onPressed: () => context.startUpgradeMarshop(),
         ),
-        Setting(
-          text: "JA contract",
-          icon: IconAppConstants.icChanel,
-          onPressed: () => context.startUpgradeJAFlow(user),
-        ),
+        // Setting(
+        //   text: "JA contract",
+        //   icon: IconAppConstants.icChanel,
+        //   onPressed: () => context.startUpgradeJAFlow(user),
+        // ),
       ];
 }

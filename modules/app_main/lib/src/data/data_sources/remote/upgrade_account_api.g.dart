@@ -8,8 +8,6 @@ part of 'upgrade_account_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-const _baseUrlV1 = 'https://dev.vdone.info/api/';
-
 class _UpgradeAccountApi implements UpgradeAccountApi {
   _UpgradeAccountApi(
     this._dio, {
@@ -152,20 +150,20 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
     final _data = payload;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApiResponse<dynamic>>(Options(
-      method: 'POST',
+      method: 'PUT',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              UpgradeAccountApiConstants.updatePDoneProfile,
+              'v1/p-done/adult-register',
               queryParameters: queryParameters,
-              data: _data.toJson(),
+              data: _data,
             )
             .copyWith(
                 baseUrl: _combineBaseUrls(
               _dio.options.baseUrl,
-              _baseUrlV1,
+              baseUrl,
             ))));
     final value = ApiResponse<dynamic>.fromJson(
       _result.data!,
@@ -298,13 +296,13 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
   }
 
   @override
-  Future<ApiResponse<UpgradeAccountResponse>> registerJA() async {
+  Future<UpgradeAccountResponse> registerJA() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<UpgradeAccountResponse>>(Options(
+        _setStreamType<UpgradeAccountResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -320,29 +318,27 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<UpgradeAccountResponse>.fromJson(
-      _result.data!,
-      (json) => UpgradeAccountResponse.fromJson(json as Map<String, dynamic>),
-    );
+    final value = UpgradeAccountResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<ApiResponse<dynamic>> registerJAVerifyOtp(
+  Future<ApiResponse<bool>> registerJAVerifyOtp(
       {required VerifyPhoneOtpPayload payload}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = payload;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<dynamic>>(Options(
+    final _data = <String, dynamic>{};
+    _data.addAll(payload.toJson());
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<bool>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'api/register-community/register-ja/verify-otp',
+              '/api/v1/ja/verify-otp',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -351,39 +347,9 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<dynamic>.fromJson(
+    final value = ApiResponse<bool>.fromJson(
       _result.data!,
-      (json) => json as dynamic,
-    );
-    return value;
-  }
-
-  @override
-  Future<ApiResponse<UpgradeAccountResponse>> registerVShop() async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<UpgradeAccountResponse>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              'api/register-community/register-v-shop',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = ApiResponse<UpgradeAccountResponse>.fromJson(
-      _result.data!,
-      (json) => UpgradeAccountResponse.fromJson(json as Map<String, dynamic>),
+      (json) => json as bool,
     );
     return value;
   }
@@ -394,7 +360,8 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = payload;
+    final _data = <String, dynamic>{};
+    _data.addAll(payload.toJson());
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<bool>>(Options(
       method: 'POST',
@@ -420,20 +387,20 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
   }
 
   @override
-  Future<ApiResponse<UpgradeAccountResponse>> resendOtpJA() async {
+  Future<UpgradeAccountResponse> resendOtpJA() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<UpgradeAccountResponse>>(Options(
+        _setStreamType<UpgradeAccountResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'api/register-community/register-ja/re-send-otp',
+              '/api/v1/ja/resend-otp',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -442,10 +409,7 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<UpgradeAccountResponse>.fromJson(
-      _result.data!,
-      (json) => UpgradeAccountResponse.fromJson(json as Map<String, dynamic>),
-    );
+    final value = UpgradeAccountResponse.fromJson(_result.data!);
     return value;
   }
 
