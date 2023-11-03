@@ -6,7 +6,8 @@ import 'package:retrofit/retrofit.dart';
 part 'marshop_api.g.dart';
 
 class MarshopApiConstant {
-  static const String register = "api/v1/marshop/customer/register";
+  static const String customerRegister = "api/v1/marshop/customer/register";
+  static const String marshopRegister = "api/v1/marshop/{user}";
 }
 
 @RestApi()
@@ -15,6 +16,6 @@ abstract class MarshopAPI {
   @factoryMethod
   factory MarshopAPI(Dio dio) = _MarshopAPI;
 
-  @POST(MarshopApiConstant.register)
+  @POST(MarshopApiConstant.customerRegister)
   Future register(@Body() RegisterCustomerPayload body);
 }

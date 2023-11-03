@@ -236,39 +236,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen>
                         ),
                         const SizedBox(height: 24),
                         PrimaryButton(
-                          title: S.current.register.capitalize(),
+                          title: S.current.confirm.capitalize(),
                           onTap: _onResetPassword,
                           color: Colors.white,
                           disabled: !_formValid || !_passwordValid,
-                        ),
-                        const SizedBox(height: 24),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: Text.rich(
-                              TextSpan(
-                                  style: context.text.bodyMedium!.copyWith(
-                                    color: context.theme.hintColor,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text:
-                                          "${S.current.registration_is_consent_to}\n",
-                                    ),
-                                    TextSpan(
-                                      text: S.current
-                                          .terms_of_service_and_policies,
-                                      style: context.text.titleMedium!.copyWith(
-                                        color: context.theme.primaryColor,
-                                      ),
-                                    ),
-                                    const TextSpan(text: " "),
-                                    TextSpan(text: S.current.by_vdone),
-                                  ]),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
                         ),
                       ],
                     ),

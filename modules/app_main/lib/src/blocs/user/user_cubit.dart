@@ -42,7 +42,7 @@ class UserCubit extends Cubit<UserState> {
       debugPrint("phoneRegister: $error");
       String err = S.current.messages_server_internal_error.capitalize();
       switch (data['code']) {
-        case "USER_EXISTED":
+        case "USER_EXISTS":
           err = S.current.message_user_exits.capitalize();
           break;
         default:
@@ -98,7 +98,7 @@ class UserCubit extends Cubit<UserState> {
       String err = S.current.messages_server_internal_error.capitalize();
       switch (data['code']) {
         case "INVALID_PASSWORD":
-          err = S.current.message_password_invalid.capitalize();
+          err = S.current.messages_invalid_login_information.capitalize();
           break;
         case "USER_NOT_FOUND":
           err = S.current.message_user_not_found.capitalize();
@@ -145,9 +145,6 @@ class UserCubit extends Cubit<UserState> {
       switch (data['code']) {
         case "USER_NOT_FOUND":
           err = S.current.message_user_not_found.capitalize();
-        default:
-          err = S.current.messages_login_fail.capitalize();
-          break;
       }
       emit(ForgotPasswordFail(message: err));
     } catch (error) {

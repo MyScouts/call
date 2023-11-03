@@ -60,4 +60,9 @@ class AuthRepositoryImpl extends AuthRepository {
   ) {
     return _authApi.resetPasswordToken(payload);
   }
+
+  @override
+  Future otp() {
+    return _authApi.otp();
+  }
 }

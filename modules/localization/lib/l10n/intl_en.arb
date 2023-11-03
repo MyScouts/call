@@ -9,10 +9,10 @@
     "message_register_fail":"register fail.",
     "message_otp_not_match": "OTP invalid.",
     "messages_resend_otp_fail": "resend OTP fail.",
-
     "validation_required": "{field} is required.",
     "validation_invalid": "{field} invalid.",
     "validation_password_match": "Password confirm not match",
+    "messages_invalid_login_information":"Invalid login information.",
 
     "lbl_Phone": "phone number",
     "lbl_password": "password",

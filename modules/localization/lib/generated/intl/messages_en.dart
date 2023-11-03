@@ -57,6 +57,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("User exits"),
         "message_user_not_found":
             MessageLookupByLibrary.simpleMessage("User not found."),
+        "messages_invalid_login_information":
+            MessageLookupByLibrary.simpleMessage("Invalid login information."),
         "messages_login_fail":
             MessageLookupByLibrary.simpleMessage("Login failed."),
         "messages_resend_otp_fail":

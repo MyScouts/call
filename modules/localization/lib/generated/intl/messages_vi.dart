@@ -57,6 +57,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Người dùng đã tồn tại"),
         "message_user_not_found":
             MessageLookupByLibrary.simpleMessage("Tài khoản không tồn tại."),
+        "messages_invalid_login_information":
+            MessageLookupByLibrary.simpleMessage(
+                "Thông tin đăng nhập không hợp lệ."),
         "messages_login_fail":
             MessageLookupByLibrary.simpleMessage("Đăng nhập không thành công."),
         "messages_resend_otp_fail": MessageLookupByLibrary.simpleMessage(

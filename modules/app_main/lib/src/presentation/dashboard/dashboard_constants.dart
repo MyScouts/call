@@ -1,3 +1,4 @@
+import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
 import 'package:design_system/design_system.dart';
 
@@ -36,6 +37,7 @@ class AppItem {
           id: 3,
           avatar: IconAppConstants.icVStore,
           title: "VStore",
+          routeName: RegisterMarshopScreen.routeName,
         ),
         AppItem(
           id: 4,
@@ -59,6 +61,7 @@ class AppItem {
           id: 3,
           avatar: IconAppConstants.icVStore,
           title: "VStore",
+          routeName: RegisterMarshopScreen.routeName,
         ),
         AppItem(
           id: 4,

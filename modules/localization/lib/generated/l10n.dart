@@ -170,6 +170,16 @@ class S {
     );
   }
 
+  /// `Invalid login information.`
+  String get messages_invalid_login_information {
+    return Intl.message(
+      'Invalid login information.',
+      name: 'messages_invalid_login_information',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `phone number`
   String get lbl_Phone {
     return Intl.message(

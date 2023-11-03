@@ -1,8 +1,7 @@
-// ignore_for_file: lines_longer_than_80_chars
-
+import 'dart:async';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OTPInputWidget extends StatefulWidget {
   final ValueNotifier<bool> errorCtr;
@@ -23,98 +22,70 @@ class OTPInputWidget extends StatefulWidget {
 
 class _OTPInputWidgetState extends State<OTPInputWidget> {
   final Key fromKey = GlobalKey<FormState>();
-  final List<FocusNode> _focus = [];
-  final List<TextEditingController> _controllers = [];
+  TextEditingController textEditingController = TextEditingController();
+  late StreamController<ErrorAnimationType> errorController;
+  bool hasError = false;
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
+    errorController = StreamController<ErrorAnimationType>();
     super.initState();
-    List.generate(widget.length, (index) {
-      _focus.add(FocusNode());
-      _controllers.add(TextEditingController());
+    widget.errorCtr.addListener(() {
+      hasError = widget.errorCtr.value;
+      if (hasError) {
+        errorController.add(ErrorAnimationType.shake);
+      }
+      setState(() {});
     });
+  }
 
-    // ignore: avoid_function_literals_in_foreach_calls
-    // _controllers.forEach((element) {
-    //   element.addListener(() {
-    //     int index = _controllers.indexOf(element);
-    //     element.addListener(() {
-    //       debugPrint("adalkdadakldj");
-    //     });
-    //   });
-    // });
+  @override
+  void dispose() {
+    errorController.close();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 50,
-      child: Form(
-        key: fromKey,
-        child: ValueListenableBuilder<bool>(
-          valueListenable: widget.errorCtr,
-          builder: (context, isError, child) {
-            return GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: widget.length,
-                childAspectRatio: 1,
-                crossAxisSpacing: 10,
-              ),
-              itemCount: widget.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: isError
-                          ? AppColors.red10.withOpacity(.1)
-                          : AppColors.grey13,
-                      border: Border.all(
-                        color: isError ? AppColors.red10 : Colors.transparent,
-                        width: 1.5,
-                      )),
-                  child: TextFormField(
-                    controller: _controllers[index],
-                    focusNode: _focus[index],
-                    onSaved: (newValue) {
-                      debugPrint(newValue);
-                    },
-                    onChanged: (value) {
-                      widget.onChange();
-                      if (value.length == 1 && index < 5) {
-                        _focus[index + 1].requestFocus();
-                      }
-
-                      if (value.isEmpty && index > 0) {
-                        _focus[index - 1].requestFocus();
-                      }
-                      if (value.isNotEmpty && index + 1 == widget.length) {
-                        final String value =
-                            _controllers.map((e) => e.text.trim()).join();
-                        widget.onCompleted(value);
-                      }
-                    },
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.center,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(1),
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
-                    style: context.text.bodyLarge,
-                    decoration: const InputDecoration(
-                      isDense: false,
-                      contentPadding: EdgeInsets.zero,
-                      border: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      filled: false,
-                    ),
-                  ),
-                );
-              },
-            );
-          },
+      child: PinCodeTextField(
+        length: widget.length,
+        obscureText: false,
+        keyboardType: TextInputType.number,
+        animationType: AnimationType.fade,
+        pinTheme: PinTheme(
+          shape: PinCodeFieldShape.box,
+          borderRadius: BorderRadius.circular(5),
+          // fieldHeight: 50,
+          // fieldWidth: 40,
+          activeColor: AppColors.grey13,
+          activeFillColor:
+              hasError ? AppColors.red10.withOpacity(.3) : AppColors.grey13,
+          errorBorderColor: Colors.red,
+          inactiveFillColor: AppColors.grey13,
+          inactiveColor: AppColors.grey13,
+          selectedFillColor: AppColors.grey13,
+          selectedColor: AppColors.grey13,
         ),
+        animationDuration: const Duration(milliseconds: 300),
+        enableActiveFill: true,
+        errorAnimationController: errorController,
+        controller: textEditingController,
+        onCompleted: (v) {
+          widget.onCompleted(v);
+        },
+        onChanged: (value) {
+          hasError = false;
+          widget.errorCtr.value = false;
+          setState(() {});
+        },
+        beforeTextPaste: (text) {
+          print("Allowing to paste $text");
+          return true;
+        },
+        appContext: context,
       ),
     );
   }

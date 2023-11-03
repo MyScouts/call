@@ -97,6 +97,10 @@ class AuthenticationUsecase {
     );
     return true;
   }
+
+  Future otp() async {
+    return _authRepository.otp();
+  }
 }
 
 enum CredentialType { phone, email }
