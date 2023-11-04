@@ -9,7 +9,7 @@ class PrimaryButton extends StatelessWidget {
     this.color,
     required this.disabled,
     this.backgroundColor,
-    this.width,
+    required this.width,
     this.height,
     this.prefix,
     this.isLoading = false,
@@ -26,12 +26,12 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final maxWidth = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: isLoading || disabled ? null : onTap,
       child: Container(
-        width: width ?? maxWidth,
+        width: width,
         height: height ?? 48,
+        padding: EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: disabled ? AppColors.grey12 : backgroundColor,

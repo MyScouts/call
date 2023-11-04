@@ -121,6 +121,7 @@ class _ForgotPasswordVerifyOTPScreenState
                     onTap: _onVerify,
                     color: Colors.white,
                     disabled: _disabled,
+                    width: MediaQuery.of(context).size.width,
                   ),
                   const SizedBox(height: 20),
                   ValueListenableBuilder(

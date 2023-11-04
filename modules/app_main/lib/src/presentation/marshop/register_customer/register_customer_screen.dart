@@ -111,6 +111,7 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
                       horizontal: paddingHorizontal,
                     ),
                     child: PrimaryButton(
+                      width: MediaQuery.of(context).size.width,
                       title: S.current.register,
                       onTap: () {
                         showLoading();

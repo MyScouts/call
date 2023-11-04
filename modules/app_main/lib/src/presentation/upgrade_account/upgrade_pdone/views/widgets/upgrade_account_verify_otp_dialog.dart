@@ -45,6 +45,7 @@ class _UpgradeAccountVerifyOTPWidgetState
       hideLoading();
       showToastMessage('Xác thực thành công');
       Navigator.pop(context, true);
+
     } else if (state is VerifyOtpFailure) {
       hideLoading();
       showToastMessage(

@@ -130,6 +130,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
                         context.read<AuthCubit>().sendOTP();
                       },
                       disabled: !isValid,
+                      width: MediaQuery.of(context).size.width,
                     ),
                   );
                 },

@@ -22,6 +22,9 @@ class UpgradeAccountRoutes extends RouteModule {
           }
           return MultiBlocProvider(
             providers: [
+              BlocProvider<GetDefaultBankBloc>(
+                create: (context) => injector.get()..add(GetDetailDataEvent()),
+              ),
               BlocProvider<UpgradeJABloc>(
                 create: (context) => injector.get(),
               ),

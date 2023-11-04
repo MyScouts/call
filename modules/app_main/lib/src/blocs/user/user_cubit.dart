@@ -275,4 +275,15 @@ class UserCubit extends Cubit<UserState> {
       emit(GetOTPFail(message: "international_error"));
     }
   }
+
+  Future<void> onLogout() async {
+    try {
+      emit(OnLogout());
+      await _authenticationUsecase.logout();
+      emit(LogoutSuccess());
+    } catch (error) {
+      String err = S.current.messages_server_internal_error.capitalize();
+      emit(ResetPasswordFail(message: err));
+    }
+  }
 }

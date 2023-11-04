@@ -69,6 +69,7 @@ class CongratulationDialog extends StatelessWidget {
                       onPressed();
                     },
                     disabled: false,
+                    width: MediaQuery.of(context).size.width,
                   ),
                 ],
               ),

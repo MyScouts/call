@@ -21,9 +21,11 @@ class IconAppConstants {
   static String icBToB = IconApp.icBToB.path;
   static String icChanel = IconApp.icChanel.path;
   static String icWheelOfFortune = IconApp.icWheelOfFortune.path;
+  static String icLogout = IconApp.icLogout.path;
 }
 
 enum IconApp {
+  icLogout('assets/icons/ic_logout.png'),
   icWheelOfFortune('assets/icons/wheel_of_fortune.png'),
   icChanel('assets/icons/ic_chanel.png'),
   icBToB('assets/icons/ic_b_to_b.png'),

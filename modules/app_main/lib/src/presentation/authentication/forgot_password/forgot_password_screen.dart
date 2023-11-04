@@ -135,6 +135,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen>
                             ),
                           );
                     },
+                    width: MediaQuery.of(context).size.width,
                     disabled: !isValid,
                   );
                 },

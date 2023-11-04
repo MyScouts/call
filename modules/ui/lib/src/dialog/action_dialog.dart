@@ -11,12 +11,14 @@ class ActionDialog extends StatelessWidget {
   final String title;
   final String actionTitle;
   final VoidCallback onAction;
+  final VoidCallback? onCancel;
 
   const ActionDialog({
     super.key,
     required this.title,
     required this.actionTitle,
     required this.onAction,
+    this.onCancel,
   });
 
   @override
@@ -27,19 +29,24 @@ class ActionDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              alignment: Alignment.centerRight,
-              margin: const EdgeInsets.only(bottom: 10),
-              child: GestureDetector(
-                onTap: Navigator.of(context).pop,
-                child: const Icon(Icons.close, color: AppColors.grey8),
+            if (onCancel == null)
+              Container(
+                alignment: Alignment.centerRight,
+                margin: const EdgeInsets.only(bottom: 10),
+                child: GestureDetector(
+                  onTap: Navigator.of(context).pop,
+                  child: const Icon(Icons.close, color: AppColors.grey8),
+                ),
               ),
-            ),
             Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 35, left: 32, right: 32),
+              padding: const EdgeInsets.only(
+                  top: 20, bottom: 35, left: 32, right: 32),
               child: Text(
                 title,
-                style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w600),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineMedium!
+                    .copyWith(fontWeight: FontWeight.w600),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -53,12 +60,16 @@ class ActionDialog extends StatelessWidget {
                       onAction.call();
                     },
                     disabled: false,
+                    width: MediaQuery.of(context).size.width,
                   ),
                 ),
                 const SizedBox(width: 20),
                 Expanded(
                   child: CommonOutlineButton(
-                    onPressed: Navigator.of(context).pop,
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      onCancel?.call();
+                    },
                     label: 'Huỷ',
                   ),
                 ),

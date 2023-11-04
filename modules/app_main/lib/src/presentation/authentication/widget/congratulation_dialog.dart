@@ -62,6 +62,7 @@ class CongratulationRegisterDialog extends StatelessWidget {
                     title: S.current.lbl_continue,
                     onTap: () => context.startDashboardUtil(),
                     disabled: false,
+                    width: MediaQuery.of(context).size.width,
                   ),
                 ],
               ),

@@ -83,6 +83,10 @@ class AuthenticationUsecase {
   Future otp() async {
     return _authRepository.otp();
   }
+
+  Future logout() async {
+    await _userSharePreferencesUsecase.clearUserData();
+  }
 }
 
 enum CredentialType { phone, email }

@@ -140,6 +140,7 @@ class _LoginWidgetState extends State<LoginWidget> with ValidationMixin {
                 onTap: _onLogin,
                 color: Colors.white,
                 disabled: _buttonDisabled,
+                width: MediaQuery.of(context).size.width,
               ),
               const SizedBox(height: 20),
               Center(
