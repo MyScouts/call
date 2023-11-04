@@ -1,4 +1,7 @@
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/confirm_register_ja_payload.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
+import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
+import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
 
 import '../../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
@@ -22,21 +25,22 @@ abstract class UpgradeAccountRepository {
 
   Future<bool> updateKyc(UpdatePDoneKYCPayload payload);
 
-  Future<RegisterPDoneResponse> registerPDoneAccount(RegisterPDoneAccountPayload payload);
+  Future<RegisterPDoneResponse> registerPDoneAccount(
+      RegisterPDoneAccountPayload payload);
 
   Future<bool> verifyOtpRegisterPDone(VerifyOtpPDonePayload payload);
 
-  Future<RegisterPDoneResponse> resendOtpPhone(RegisterPDoneAccountPayload payload);
+  Future<RegisterPDoneResponse> resendOtpPhone(
+      RegisterPDoneAccountPayload payload);
 
-  Future<RegisterPDoneResponse> resendOtpEmail(RegisterPDoneAccountPayload payload);
+  Future<RegisterPDoneResponse> resendOtpEmail(
+      RegisterPDoneAccountPayload payload);
 
   Future<UpgradeAccountResponse> registerJA();
 
   Future<bool> registerJAVerifyOtp({required VerifyPhoneOtpPayload payload});
 
   Future<UpgradeAccountResponse> resendOtpJA();
-
-  Future<UpgradeAccountResponse> resendOtpVShop();
 
   Future<bool> checkIsPDone(String id);
 
@@ -47,4 +51,11 @@ abstract class UpgradeAccountRepository {
   Future<bool> checkProtectorVerifyOTP(VerifyOtpPDonePayload payload);
 
   Future<BankAccount> updateBankAccount(UpdateBankAccountPayload payload);
+
+  Future<JAStatusResponse> getJAStatus();
+
+  Future<ConfirmRegisterJAResponse> confirmJARegister(
+      ConfirmRegisterJAPayload payload);
+
+  Future<BankAccount> getDefaultBank();
 }

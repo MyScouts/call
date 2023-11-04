@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
+import 'package:app_main/src/presentation/settings/setting_screen.dart';
 import 'package:app_main/src/presentation/shared/extensions/validation_extension.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
@@ -34,7 +35,7 @@ class _UpdateBankAccountScreenState extends State<UpdateBankAccountScreen>
 
   final _bankJA = UpdateInformationType.bank;
 
-  GetListBanksBloc get listBanksBloc => context.read();
+  // GetListBanksBloc get listBanksBloc => context.read();
 
   @override
   void dispose() {
@@ -69,10 +70,13 @@ class _UpdateBankAccountScreenState extends State<UpdateBankAccountScreen>
               ?.copyWith(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         leading: IconButton(
-          padding: const EdgeInsets.all(2),
-          icon: const Icon(Icons.arrow_back),
-          onPressed: Navigator.of(context).pop,
-        ),
+            padding: const EdgeInsets.all(2),
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).popUntil(
+                ModalRoute.withName(SettingScreen.routeName),
+              );
+            }),
       ),
       body: AutoHideKeyboard(
         child: Stack(

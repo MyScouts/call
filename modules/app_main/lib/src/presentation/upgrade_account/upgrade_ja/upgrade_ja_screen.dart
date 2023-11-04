@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
+import 'package:app_main/src/presentation/settings/setting_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/widgets/accept_term_with_checkbox_widget.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/widgets/read_more_policy.dart';
@@ -13,7 +14,6 @@ import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
 
 import '../../../data/models/responses/upgrade_account_response.dart';
-import '../../../domain/entities/bank.dart';
 import 'upgrade_agree_policy.bloc.dart';
 
 class UpgradeJAScreen extends StatefulWidget {
@@ -37,33 +37,16 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen>
 
   final _acceptTerm = ValueNotifier(false);
 
+  late final GetDefaultBankBloc getDefaultBankBloc =
+      context.read<GetDefaultBankBloc>();
+
   @override
   void dispose() {
     _acceptTerm.dispose();
     super.dispose();
   }
 
-  late final BankAccount defaultBank;
-
-  @override
-  void initState() {
-    defaultBank = BankAccount(
-      id: 108,
-      userId: 301,
-      bankNumber: "23232323",
-      bankHolder: "SFSFSDF",
-      qrImage: null,
-      isDefault: true,
-      createdAt: DateTime.now(),
-      bank: const Bank(
-        id: 3,
-        name: "Ngân hàng TMCP Bắc Á",
-        logo: "https://api.vietqr.io/img/BAB.png",
-        shortName: 'BacABank',
-      ),
-    );
-    super.initState();
-  }
+  BankAccount? defaultBank;
 
   UpgradeJABloc get upgradeJABloc => context.read<UpgradeJABloc>();
 
@@ -73,11 +56,8 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen>
     } else if (state is GetDetailDataSuccess<UpgradeAccountResponse>) {
       hideLoading();
 
-      context.startDialogVerifyPhoneOTP(state.data).then((value) {
-        if (value != null && value) {
-          delayAndPopScreen(context);
-        }
-      });
+      context.startDialogVerifyPhoneOTP(state.data);
+
     } else if (state is GetDetailError) {
       hideLoading();
       final e = state.error;
@@ -92,14 +72,19 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen>
     }
   }
 
-  Future<void> delayAndPopScreen(BuildContext context) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-
-    if (!mounted) {
-      return;
+  void _onListenGetDefaultBankBloc(BuildContext context, state) {
+    if (state is GetDetailDataSuccess<BankAccount>) {
+      defaultBank = state.data;
+    } else if (state is GetDetailError) {
+      final e = state.error;
+      if (e is DioError) {
+        context.startDialogUpdateBankAccount();
+      } else {
+        final message = 'Đã có lỗi xảy ra, vui lòng thử lại.'
+            ' ${kDebugMode ? state.error.toString() : ''}';
+        showToastMessage(message, ToastMessageType.error);
+      }
     }
-    Navigator.of(context).pop();
-    userCubit.fetchUser();
   }
 
   late final userCubit = context.read<UserCubit>();
@@ -131,58 +116,77 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen>
         leading: IconButton(
           padding: const EdgeInsets.all(2),
           icon: const Icon(Icons.arrow_back),
-          onPressed: Navigator.of(context).pop,
+          onPressed: () => Navigator.of(context).popUntil(
+            ModalRoute.withName(SettingScreen.routeName),
+          ),
         ),
       ),
-      body: BlocConsumer<UpgradeJABloc, GetDetailState>(
-        listener: _onListenUpgradeAgreePolicyBloc,
-        builder: (context, state) {
-          return Column(
+      body: BlocListener<UpgradeJABloc, GetDetailState>(
+          listener: _onListenUpgradeAgreePolicyBloc,
+          child: Column(
             children: [
               Expanded(
                 child: ListView(
                   children: [
                     const ReadMorePolicy(),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Thông tin tài khoản ngân hàng',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineMedium
-                                ?.copyWith(fontWeight: FontWeight.w600),
-                          ),
-                          const SizedBox(height: 10),
-                          ..._bankAccountField(
-                            title: 'Tên ngân hàng',
-                            leading: Container(
-                              height: 35,
-                              width: 60,
-                              decoration: BoxDecoration(
-                                color: AppColors.white,
-                                borderRadius: BorderRadius.circular(2),
-                                border: Border.all(color: AppColors.greyBorder),
-                              ),
-                              child: Image.network('${defaultBank.bank?.logo}',
-                                  fit: BoxFit.fill),
+                    BlocConsumer<GetDefaultBankBloc, GetDetailState>(
+                      listener: _onListenGetDefaultBankBloc,
+                      builder: (context, state) {
+                        if (state is GetDetailDataSuccess<BankAccount>) {
+                          defaultBank = state.data;
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Thông tin tài khoản ngân hàng',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium
+                                      ?.copyWith(fontWeight: FontWeight.w600),
+                                ),
+                                const SizedBox(height: 10),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ..._bankAccountField(
+                                      title: 'Tên ngân hàng',
+                                      leading: Container(
+                                        height: 35,
+                                        width: 60,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(2),
+                                          border: Border.all(
+                                              color: AppColors.greyBorder),
+                                        ),
+                                        child: Image.network(
+                                            '${defaultBank?.bank?.logo}',
+                                            fit: BoxFit.fill),
+                                      ),
+                                      content:
+                                          defaultBank?.bank?.shortName ?? '',
+                                    ),
+                                    const SizedBox(height: 15),
+                                    ..._bankAccountField(
+                                      title: 'Số tài khoản',
+                                      content: defaultBank?.bankNumber ?? '',
+                                    ),
+                                    const SizedBox(height: 15),
+                                    ..._bankAccountField(
+                                      title: 'Tên chủ tài khoản',
+                                      content: defaultBank?.bankHolder ?? '',
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                            content: defaultBank.bank?.shortName ?? '',
-                          ),
-                          const SizedBox(height: 15),
-                          ..._bankAccountField(
-                            title: 'Số tài khoản',
-                            content: defaultBank.bankNumber ?? '',
-                          ),
-                          const SizedBox(height: 15),
-                          ..._bankAccountField(
-                            title: 'Tên chủ tài khoản',
-                            content: defaultBank.bankHolder ?? '',
-                          ),
-                        ],
-                      ),
+                          );
+                        }
+                        return const SizedBox();
+                      },
                     ),
                   ],
                 ),
@@ -212,9 +216,7 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen>
                 },
               ),
             ],
-          );
-        },
-      ),
+          )),
     );
   }
 

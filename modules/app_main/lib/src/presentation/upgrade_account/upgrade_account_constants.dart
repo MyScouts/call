@@ -73,3 +73,16 @@ enum ImageKYCType {
 const String securityInformation = '''
 Toàn bộ thông tin cá nhân của Quý khách đều được P-Done đảm bảo an toàn bảo mật.
 ''';
+
+
+enum JAStatus {
+  pending(0),
+  waitingForUserConfirmation(1),
+  adminRejected(11),
+  userRejected(12),
+  accepted(10);
+
+  const JAStatus(this.value);
+
+  final num value;
+}
