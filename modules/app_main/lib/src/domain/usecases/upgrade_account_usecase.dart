@@ -1,8 +1,11 @@
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/confirm_register_ja_payload.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
+import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/data_sources/ekyc/ekyc_viettel.dart';
 import '../../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
+import '../../data/models/responses/confirm_register_ja_response.dart';
 import '../../data/models/responses/register_pdone_response.dart';
 import '../../data/models/responses/upgrade_account_response.dart';
 import '../entities/bank.dart';
@@ -94,5 +97,20 @@ class UpgradeAccountUsecase {
   Future<Map<String, dynamic>> extractIdCardInformation(
       EKycIdCardRequest request) async {
     return _eKycViettel.extractIdCard(request);
+  }
+
+  Future<BankAccount> getDefaultBank() async {
+    final response = await _upgradeAccountRepository.getDefaultBank();
+    return response;
+  }
+
+  Future<JAStatusResponse> getJAStatus() async {
+    final response = await _upgradeAccountRepository.getJAStatus();
+    return response;
+  }
+
+  Future<ConfirmRegisterJAResponse> confirmJARegister(
+      ConfirmRegisterJAPayload payload) async {
+    return await _upgradeAccountRepository.confirmJARegister(payload);
   }
 }

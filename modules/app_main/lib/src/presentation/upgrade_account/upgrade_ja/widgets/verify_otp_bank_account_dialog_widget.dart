@@ -2,7 +2,6 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
-import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/gestures.dart';
@@ -71,7 +70,7 @@ class _VerifyOTPBankAccountDialogWidgetState
     } else if (state is GetDetailDataSuccess) {
       hideLoading();
       Navigator.pop(context);
-      context.startCongratulationRegisterDialog();
+      context.startDialogCongratulationRegisterBank();
     } else if (state is GetDetailError) {
       hideLoading();
       showToastMessage(

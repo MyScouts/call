@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
     with TimerMixin {
   late UpgradeAccountResponse response;
   bool _isActive = false;
-  String? _otpCode;
+  final TextEditingController _otpController = TextEditingController();
 
   UpgradeAccountVerifyPhoneBloc get bloc =>
       context.read<UpgradeAccountVerifyPhoneBloc>();
@@ -50,7 +51,7 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
     bloc.add(
       GetDetailDataParam1Event(
         VerifyPhoneOtpPayload(
-          otp: _otpCode!,
+          otp: _otpController.text,
           token: response.token,
         ),
       ),
@@ -69,10 +70,11 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
       showLoading();
     } else if (state is GetDetailDataSuccess<bool>) {
       hideLoading();
-      showToastMessage('Xác thực thành công');
       Navigator.pop(context, true);
+      context.startDialogSendRequestJASuccess();
     } else if (state is GetDetailError) {
       hideLoading();
+      _otpController.clear();
       showToastMessage(
           'Mã xác thực không đúng hoặc đã hết hạn', ToastMessageType.error);
     }
@@ -81,6 +83,7 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
   void _onListenerResendOTPBloc(BuildContext context, GetDetailState state) {
     if (state is GetDetailDataSuccess<UpgradeAccountResponse>) {
       showToastMessage('Yêu cầu gửi lại OTP thành công');
+      _otpController.clear();
     } else if (state is GetDetailError) {
       showToastMessage(
         'Yêu cầu gửi lại OTP không thành công',
@@ -98,6 +101,14 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
     });
 
     response = widget.response;
+  }
+
+  @override
+  void dispose() {
+    if (!mounted) {
+      _otpController.dispose();
+    }
+    super.dispose();
   }
 
   @override
@@ -174,8 +185,9 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
               child: OtpWidget(
+                controller: _otpController,
                 onOtpChanged: (value) {
-                  _otpCode = value;
+                  _otpController.text = value;
                   if (value.length == 6 && _isActive == false) {
                     setState(() {
                       _isActive = true;

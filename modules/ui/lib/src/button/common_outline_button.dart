@@ -10,14 +10,14 @@ class CommonOutlineButton extends StatelessWidget {
   final String? label;
 
   const CommonOutlineButton({
-    Key? key,
+    super.key,
     required this.onPressed,
     this.child,
     this.borderRadius,
     this.width,
     this.height = 48.0,
     this.label,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
