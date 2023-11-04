@@ -24,10 +24,28 @@ abstract class DashboardBaseBloc
     );
     on<ChangeItem>(onChangeItem);
     on<AddItemToGroup>(onAddItemToGroup);
+    on<ChangeGroup>(onChangeGroup);
     add(_FetchDashBoardItems());
   }
 
   String cacheKey = '';
+
+  void onChangeGroup(
+    ChangeGroup event,
+    Emitter<DashboardBaseState> emit,
+  ) {
+    if (state is DashboardBaseInitial) return;
+    final s = (state as DashboardBaseFetchDataSuccess);
+    final result = s.items.map((e) {
+      if (e.id == event.group.id) return event.group;
+      return e;
+    }).toList();
+    dashboardSharePreferenceUseCase.saveDashboardItems(
+      cacheKey,
+      result.map((e) => e).toList(),
+    );
+    emit(DashboardBaseFetchDataSuccess(items: result));
+  }
 
   void onAddItemToGroup(
     AddItemToGroup event,
@@ -180,6 +198,12 @@ class AddItemToGroup extends DashboardBaseEvent {
   final List<DashBoardItem> newItems;
 
   AddItemToGroup(this.group, this.newItems);
+}
+
+class ChangeGroup extends DashboardBaseEvent {
+  final DashBoardGroupItem group;
+
+  ChangeGroup(this.group);
 }
 
 abstract class DashboardBaseState {}

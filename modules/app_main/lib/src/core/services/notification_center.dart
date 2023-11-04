@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 const String addDashBoardItemEvent = 'addDashBoardItemEvent';
+const String changeGroupEvent = 'changeGroupEvent';
 
 typedef ObserverCallback = void Function(dynamic options);
 

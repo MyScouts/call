@@ -53,7 +53,7 @@ class DashBoardIconItem extends DashBoardItem {
   }) : super(width: 1, height: 1);
 
   @override
-  List<Object?> get props => [id];
+  List<Object?> get props => [id, title];
 
   factory DashBoardIconItem.empty() => const DashBoardIconItem(
         id: 'ic_',
@@ -114,7 +114,7 @@ class DashBoardGroupItem extends DashBoardItem {
   }) : super(width: 1, height: 1);
 
   @override
-  List<Object?> get props => [items, id];
+  List<Object?> get props => [items, id, title];
 
   @override
   Map<String, dynamic> childToJson() {

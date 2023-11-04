@@ -48,12 +48,34 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
         }
       },
     );
+
+    NotificationCenter.subscribe(
+      channel: changeGroupEvent,
+      observer: this,
+      onNotification: (data) {
+        final controller = context
+            .findAncestorWidgetOfExactType<DashBoardInheritedData>()
+            ?.pageController;
+        if (controller == null) return;
+        if (controller.page == 0 && S == DashBoardCommunityTab) {
+          bloc.add(ChangeGroup(data));
+        } else if (controller.page == 1 && S == DashBoardPersonalTab) {
+          bloc.add(ChangeGroup(data));
+        } else if (controller.page == 2 && S == DashBoardEcommerceTab) {
+          bloc.add(ChangeGroup(data));
+        }
+      },
+    );
   }
 
   @override
   void dispose() {
     NotificationCenter.unsubscribe(
       channel: addDashBoardItemEvent,
+      observer: this,
+    );
+    NotificationCenter.unsubscribe(
+      channel: changeGroupEvent,
       observer: this,
     );
     super.dispose();
@@ -116,7 +138,7 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
                   },
                   isLongPressDraggable: true,
                   onDragEnd: (p0, p1) {
-                    (trashKey.currentState as _TrashIconState).disable();
+                    // (trashKey.currentState as _TrashIconState).disable();
                   },
                   onGroup: (moveData, data) {
                     final item1 =
@@ -161,9 +183,9 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
                       ),
                     );
                   },
-                  onDragStarted: (item) {
-                    (trashKey.currentState as _TrashIconState).enable();
-                  },
+                  // onDragStarted: (item) {
+                  //   (trashKey.currentState as _TrashIconState).enable();
+                  // },
                   children: items.map((item) {
                     if (item is DashBoardGroupItem) {
                       return ReorderableStaggeredScrollViewGridItem(

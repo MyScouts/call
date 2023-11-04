@@ -7,12 +7,12 @@ class DashBoardGroupScreen extends StatefulWidget {
   const DashBoardGroupScreen({
     super.key,
     required this.group,
-    required this.moveItem,
+    this.moveItem,
     required this.onGroupCreated,
   });
 
   final DashBoardGroupItem group;
-  final DashBoardItem moveItem;
+  final DashBoardItem? moveItem;
   final Function(DashBoardGroupItem group) onGroupCreated;
 
   @override
@@ -54,7 +54,8 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
                 backgroundImage: '',
                 items: [
                   ...widget.group.items,
-                  widget.moveItem as DashBoardIconItem
+                  if (widget.moveItem != null)
+                    widget.moveItem as DashBoardIconItem
                 ],
               ),
             );
@@ -143,7 +144,8 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
                                     ...widget.group.items.map(
                                       (e) => AppWidget(app: e),
                                     ),
-                                    AppWidget(app: widget.moveItem),
+                                    if (widget.moveItem != null)
+                                      AppWidget(app: widget.moveItem!),
                                   ],
                                 ),
                               ),
