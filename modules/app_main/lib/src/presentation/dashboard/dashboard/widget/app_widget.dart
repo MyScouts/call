@@ -10,8 +10,11 @@ class AppWidget extends StatelessWidget {
     super.key,
     required this.app,
     this.textColor,
+    this.disablePress = false,
   });
+
   final Color? textColor;
+  final bool disablePress;
 
   @override
   Widget build(BuildContext context) {
@@ -22,45 +25,26 @@ class AppWidget extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            child: GestureDetector(
-              onTap: () {
-                if (app.path != null) {
-                  Navigator.of(context).pushNamed(app.path!);
-                  return;
-                }
-              },
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  // if (isLongPress != null)
-                  //   ValueListenableBuilder(
-                  //     valueListenable: isLongPress!,
-                  //     builder: (context, value, child) {
-                  //       if (value) {
-                  //         return Positioned(
-                  //           left: 0,
-                  //           top: 0,
-                  //           child: Container(
-                  //             child: Icon(Icons.remove),
-                  //           ),
-                  //         );
-                  //       } else {
-                  //         return const SizedBox.shrink();
-                  //       }
-                  //     },
-                  //   ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: AspectRatio(
-                      aspectRatio: (app.width) / app.height,
-                      child: ImageWidget(
-                        app.backgroundImage,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
+            child: IgnorePointer(
+              ignoring: disablePress,
+              child: GestureDetector(
+                onTap: () {
+                  if (app.path != null) {
+                    Navigator.of(context).pushNamed(app.path!);
+                    return;
+                  }
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: AspectRatio(
+                    aspectRatio: (app.width) / app.height,
+                    child: ImageWidget(
+                      app.backgroundImage,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           ),

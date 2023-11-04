@@ -3,6 +3,8 @@ import 'package:app_main/src/domain/usecases/dashboard_share_preferences_usecase
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
 import 'package:design_system/design_system.dart';
+import 'package:equatable/equatable.dart';
+import 'package:imagewidget/imagewidget.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class DashboardBaseBloc
@@ -21,22 +23,42 @@ abstract class DashboardBaseBloc
       transformer: (event, mapper) => event.asyncExpand(mapper),
     );
     on<ChangeItem>(onChangeItem);
+    on<AddItemToGroup>(onAddItemToGroup);
     add(_FetchDashBoardItems());
+  }
+
+  String cacheKey = '';
+
+  void onAddItemToGroup(
+    AddItemToGroup event,
+    Emitter<DashboardBaseState> emit,
+  ) {
+    if (state is DashboardBaseInitial) return;
+    final s = (state as DashboardBaseFetchDataSuccess);
+    final ids = event.newItems.map((e) => e.id).toList();
+    List<DashBoardItem> result =
+        s.items.where((e) => !ids.contains(e.id)).toList();
+    result = result.map((e) {
+      if (e.id == event.group.id) return event.group;
+      return e;
+    }).toList();
+    dashboardSharePreferenceUseCase.saveDashboardItems(
+      cacheKey,
+      result.map((e) => e).toList(),
+    );
+    emit(DashboardBaseFetchDataSuccess(items: result));
   }
 
   void onFetchDashBoardItems(
     _FetchDashBoardItems event,
     Emitter<DashboardBaseState> emit,
   ) {
-    final res = dashboardSharePreferenceUseCase.getDashBoardItems();
+    final res = dashboardSharePreferenceUseCase.getDashBoardItems(cacheKey);
     if (res.isEmpty) {
       setDashboardDefault();
       return;
     }
-    final list = res
-        .map<DashBoardItem>((e) => mapItems[e] ?? DashBoardIconItem.empty())
-        .toList();
-    emit(DashboardBaseFetchDataSuccess(item: list));
+    emit(DashboardBaseFetchDataSuccess(items: res));
   }
 
   void onAddItem(
@@ -45,10 +67,17 @@ abstract class DashboardBaseBloc
   ) {
     if (state is DashboardBaseInitial) return;
     final s = state as DashboardBaseFetchDataSuccess;
-    final list = [...s.item, event.item];
-    dashboardSharePreferenceUseCase
-        .saveDashboardItems(list.map((e) => e.id).toList());
-    emit(DashboardBaseFetchDataSuccess(item: list));
+    List<DashBoardItem> list = [...s.items, event.item];
+    if (event.item is DashBoardGroupItem) {
+      final gIds =
+          (event.item as DashBoardGroupItem).items.map((e) => e.id).toList();
+      list = list.where((e) => !gIds.contains(e.id)).toList();
+    }
+    dashboardSharePreferenceUseCase.saveDashboardItems(
+      cacheKey,
+      list.map((e) => e).toList(),
+    );
+    emit(DashboardBaseFetchDataSuccess(items: list));
   }
 
   void onRemoveItem(
@@ -57,15 +86,19 @@ abstract class DashboardBaseBloc
   ) {
     if (state is DashboardBaseInitial) return;
     final s = state as DashboardBaseFetchDataSuccess;
-    final list = s.item.where((e) => e.id != event.item.id).toList();
-    dashboardSharePreferenceUseCase
-        .saveDashboardItems(list.map((e) => e.id).toList());
-    emit(DashboardBaseFetchDataSuccess(item: list));
+    final list = s.items.where((e) => e.id != event.item.id).toList();
+    dashboardSharePreferenceUseCase.saveDashboardItems(
+      cacheKey,
+      list.map((e) => e).toList(),
+    );
+    emit(DashboardBaseFetchDataSuccess(items: list));
   }
 
   void onChangeItem(ChangeItem event, Emitter<DashboardBaseState> emit) {
     if (state is DashboardBaseInitial) return;
-    emit(DashboardBaseFetchDataSuccess(item: event.item));
+    dashboardSharePreferenceUseCase.saveDashboardItems(
+        cacheKey, event.item.map((e) => e).toList());
+    emit(DashboardBaseFetchDataSuccess(items: event.item));
   }
 
   void setDashboardDefault();
@@ -79,39 +112,13 @@ class DashboardCommunityBloc extends DashboardBaseBloc {
   void setDashboardDefault() {
     emit(
       DashboardBaseFetchDataSuccess(
-        item: [
-          DashBoardWidgetItem(
-            id: 'custom_widget',
-            title: 'shop live',
-            backgroundImage: ImageApp.live.path,
-            width: 2,
-            height: 4,
-          ),
-          DashBoardWidgetItem(
-            id: 'widget',
-            title: 'Vòng quay trúng thưởng',
-            backgroundImage: IconApp.icWheelOfFortune.path,
-            width: 2,
-            height: 2,
-          ),
-          DashBoardIconItem(
-            id: 'tv',
-            title: 'Kênh',
-            backgroundImage: IconAppConstants.icTv,
-            width: 1,
-            height: 1,
-          ),
-          DashBoardIconItem(
-            id: 'bird',
-            title: 'Nữ thần hoà bình',
-            backgroundImage: IconAppConstants.icBird,
-            width: 1,
-            height: 1,
-          ),
-        ],
+        items: communityDefault.values.toList(),
       ),
     );
   }
+
+  @override
+  String get cacheKey => 'community';
 }
 
 @injectable
@@ -122,33 +129,13 @@ class DashboardPersonalBloc extends DashboardBaseBloc {
   void setDashboardDefault() {
     emit(
       DashboardBaseFetchDataSuccess(
-        item: [
-          DashBoardIconItem(
-            id: 'tv',
-            title: 'Kênh',
-            backgroundImage: IconAppConstants.icTv,
-            width: 1,
-            height: 1,
-          ),
-          DashBoardIconItem(
-            id: 'bird',
-            title: 'Nữ thần hoà bình',
-            backgroundImage: IconAppConstants.icBird,
-            width: 1,
-            height: 1,
-          ),
-          DashBoardIconItem(
-            id: 'group/team',
-            title: 'Group/Team',
-            backgroundImage: IconAppConstants.icGroupTeam,
-            path: UpgradePDoneScreen.routeName,
-            width: 1,
-            height: 1,
-          ),
-        ],
+        items: personalDefault.values.toList(),
       ),
     );
   }
+
+  @override
+  String get cacheKey => 'personal';
 }
 
 @injectable
@@ -158,49 +145,13 @@ class DashboardEcommerceBloc extends DashboardBaseBloc {
   @override
   void setDashboardDefault() {
     emit(
-      DashboardBaseFetchDataSuccess(
-        item: [
-          DashBoardWidgetItem(
-            id: 'banner_widget',
-            title: 'Big Sale',
-            backgroundImage: ImageApp.banner.path,
-            width: 4,
-            height: 2,
-          ),
-          DashBoardWidgetItem(
-            id: 'custom_widget',
-            title: 'shop live',
-            backgroundImage: ImageApp.live.path,
-            width: 2,
-            height: 4,
-          ),
-          DashBoardWidgetItem(
-            id: 'widget',
-            title: 'Vòng quay trúng thưởng',
-            backgroundImage: IconApp.icWheelOfFortune.path,
-            width: 2,
-            height: 2,
-          ),
-          DashBoardIconItem(
-            id: 'tv',
-            title: 'Kênh',
-            backgroundImage: IconAppConstants.icTv,
-            width: 1,
-            height: 1,
-          ),
-          DashBoardIconItem(
-            id: 'bird',
-            title: 'Nữ thần hoà bình',
-            backgroundImage: IconAppConstants.icBird,
-            width: 1,
-            height: 1,
-          ),
-        ],
-      ),
+      DashboardBaseFetchDataSuccess(items: eCommerceDefault.values.toList()),
     );
   }
-}
 
+  @override
+  String get cacheKey => 'ecommerce';
+}
 
 abstract class DashboardBaseEvent {}
 
@@ -224,12 +175,23 @@ class ChangeItem extends DashboardBaseEvent {
   ChangeItem(this.item);
 }
 
+class AddItemToGroup extends DashboardBaseEvent {
+  final DashBoardGroupItem group;
+  final List<DashBoardItem> newItems;
+
+  AddItemToGroup(this.group, this.newItems);
+}
+
 abstract class DashboardBaseState {}
 
 class DashboardBaseInitial extends DashboardBaseState {}
 
-class DashboardBaseFetchDataSuccess extends DashboardBaseState {
-  final List<DashBoardItem> item;
+class DashboardBaseFetchDataSuccess extends DashboardBaseState
+    with EquatableMixin {
+  final List<DashBoardItem> items;
 
-  DashboardBaseFetchDataSuccess({this.item = const []});
+  DashboardBaseFetchDataSuccess({this.items = const []});
+
+  @override
+  List<Object?> get props => [items];
 }

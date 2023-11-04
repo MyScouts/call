@@ -210,12 +210,12 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
           final height = mapSize[data]?.height ?? 0;
 
           if (dy + height * 0.7 > (_dragPosition?.dy ?? 0)) {
-            if(moveData == null) return;
+            if (moveData == null) return;
             groupActiveStart(moveData, data);
             return;
           }
 
-          if(_onGroupActive != null) _onGroupActive?.cancel();
+          if (_onGroupActive != null) _onGroupActive?.cancel();
 
           if (moveData != null) {
             setState(() {
@@ -290,8 +290,13 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
                         },
                         onAccept: widget.onAccept == null
                             ? null
-                            : (T moveData) =>
-                                widget.onAccept?.call(moveData, data, true),
+                            : (T moveData) {
+                                if (_onGroupActive != null) {
+                                  _onGroupActive?.cancel();
+                                }
+                                return widget.onAccept
+                                    ?.call(moveData, data, true);
+                              },
                         onLeave: widget.onLeave == null
                             ? null
                             : (T? moveData) =>
@@ -315,8 +320,11 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
                         },
                         onAccept: widget.onAccept == null
                             ? null
-                            : (T moveData) =>
-                                widget.onAccept?.call(moveData, data, false),
+                            : (T moveData) {
+                                if (_onGroupActive != null)
+                                  _onGroupActive?.cancel();
+                                widget.onAccept?.call(moveData, data, false);
+                              },
                         onLeave: widget.onLeave == null
                             ? null
                             : (T? moveData) =>

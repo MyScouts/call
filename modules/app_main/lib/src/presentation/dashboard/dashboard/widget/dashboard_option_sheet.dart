@@ -1,4 +1,6 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/services/notification_center.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard/state/dashboard_base_bloc.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -101,7 +103,21 @@ class _DashBoardOptionSheetState extends State<DashBoardOptionSheet> {
                     (e) => StaggeredGridTile.count(
                       crossAxisCellCount: e.height,
                       mainAxisCellCount: e.width,
-                      child: AppWidget(app: e, textColor: Colors.black),
+                      child: GestureDetector(
+                        onTap: () {
+                          NotificationCenter.post(
+                            channel: addDashBoardItemEvent,
+                            options: e,
+                          );
+                          Navigator.of(context).pop();
+                        },
+                        behavior: HitTestBehavior.opaque,
+                        child: AppWidget(
+                          app: e,
+                          textColor: Colors.black,
+                          disablePress: true,
+                        ),
+                      ),
                     ),
                   )
                   .toList(),

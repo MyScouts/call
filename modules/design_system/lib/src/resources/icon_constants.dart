@@ -25,6 +25,7 @@ class IconAppConstants {
   static String icTv = IconApp.icTv.path;
   static String icBird = IconApp.icBird.path;
   static String icClock = IconApp.icClock.path;
+  static String icDoc = IconApp.icDoc.path;
 }
 
 enum IconApp {
@@ -53,6 +54,7 @@ enum IconApp {
   icTv('assets/icons/ic_tv.png'),
   icBird('assets/icons/ic_bird.png'),
   icClock('assets/icons/ic_clock.png'),
+  icDoc('assets/icons/ic_doc.png'),
   icDashboardContact('assets/icons/ic_dashboard_contact.png');
 
   const IconApp(this.path);

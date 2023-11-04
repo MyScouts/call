@@ -256,7 +256,7 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
             ReorderableStaggeredScrollViewGridItem, bool)?
         onLeave,
     dynamic onMove,
-    void Function(ReorderableStaggeredScrollViewGridItem)? onDragStarted,
+    void Function(ReorderableStaggeredScrollViewListItem)? onDragStarted,
     void Function(DragUpdateDetails, ReorderableStaggeredScrollViewGridItem)?
         onDragUpdate,
     void Function(Velocity, Offset, ReorderableStaggeredScrollViewGridItem)?
@@ -328,11 +328,6 @@ class _ReorderableStaggeredScrollViewState
   @override
   void didUpdateWidget(covariant ReorderableStaggeredScrollView oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if(oldWidget.children != widget.children) {
-      if(mounted) {
-        setState(() {});
-      }
-    }
   }
 
   Widget buildContainer({

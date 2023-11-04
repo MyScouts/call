@@ -221,6 +221,19 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 
+class DashBoardInheritedData extends InheritedWidget {
+  final PageController pageController;
+
+  const DashBoardInheritedData({
+    super.key,
+    required super.child,
+    required this.pageController,
+  });
+
+  @override
+  bool updateShouldNotify(covariant InheritedWidget oldWidget) => false;
+}
+
 class DashBoardScreen extends StatefulWidget {
   static const String routeName = "dashboard";
 
@@ -237,15 +250,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     return AnimatedBuilder(
       animation: _pageController,
       builder: (_, __) {
+        final page = _pageController.page ?? 0;
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 4.0),
           width: 8,
           height: 8,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: _pageController.page == index
-                ? Colors.white
-                : Colors.white.withOpacity(.2),
+            color: page == index ? Colors.white : Colors.white.withOpacity(.2),
           ),
         );
       },
@@ -254,52 +266,55 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          ImageWidget(
-            ImageConstants.defaultBgDashboard,
-            fit: BoxFit.fill,
-          ),
-          SafeArea(
-            bottom: false,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: StatusBarWidget(
-                    openAppStore: () async {
-                      context.showAppStore();
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: PageView(
-                    controller: _pageController,
-                    children: const [
-                      DashBoardCommunityTab(),
-                      DashBoardPersonalTab(),
-                      DashBoardEcommerceTab(),
-                    ],
-                  ),
-                ),
-                Builder(
-                  builder: (ctx) => Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(
-                      3,
-                      (index) => _buildDot(ctx, index),
+    return DashBoardInheritedData(
+      pageController: _pageController,
+      child: Scaffold(
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            ImageWidget(
+              ImageConstants.defaultBgDashboard,
+              fit: BoxFit.fill,
+            ),
+            SafeArea(
+              bottom: false,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: StatusBarWidget(
+                      openAppStore: () async {
+                        context.showAppStore();
+                      },
                     ),
                   ),
-                ),
-                const SizedBox(height: 15),
-                const DockWidget(),
-              ],
+                  Expanded(
+                    child: PageView(
+                      controller: _pageController,
+                      children: const [
+                        DashBoardCommunityTab(),
+                        DashBoardPersonalTab(),
+                        DashBoardEcommerceTab(),
+                      ],
+                    ),
+                  ),
+                  Builder(
+                    builder: (ctx) => Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        3,
+                        (index) => _buildDot(ctx, index),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  const DockWidget(),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
