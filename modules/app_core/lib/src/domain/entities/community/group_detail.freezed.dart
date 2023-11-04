@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'group_detail.dart';
 
@@ -33,7 +33,8 @@ mixin _$GroupDetail {
 abstract class $GroupDetailCopyWith<$Res> {
   factory $GroupDetailCopyWith(
           GroupDetail value, $Res Function(GroupDetail) then) =
-      _$GroupDetailCopyWithImpl<$Res>;
+      _$GroupDetailCopyWithImpl<$Res, GroupDetail>;
+  @useResult
   $Res call({Team? team, Group? group});
 
   $TeamCopyWith<$Res>? get team;
@@ -41,60 +42,66 @@ abstract class $GroupDetailCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$GroupDetailCopyWithImpl<$Res> implements $GroupDetailCopyWith<$Res> {
+class _$GroupDetailCopyWithImpl<$Res, $Val extends GroupDetail>
+    implements $GroupDetailCopyWith<$Res> {
   _$GroupDetailCopyWithImpl(this._value, this._then);
 
-  final GroupDetail _value;
   // ignore: unused_field
-  final $Res Function(GroupDetail) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? team = freezed,
     Object? group = freezed,
   }) {
     return _then(_value.copyWith(
-      team: team == freezed
+      team: freezed == team
           ? _value.team
           : team // ignore: cast_nullable_to_non_nullable
               as Team?,
-      group: group == freezed
+      group: freezed == group
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as Group?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $TeamCopyWith<$Res>? get team {
     if (_value.team == null) {
       return null;
     }
 
     return $TeamCopyWith<$Res>(_value.team!, (value) {
-      return _then(_value.copyWith(team: value));
+      return _then(_value.copyWith(team: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $GroupCopyWith<$Res>? get group {
     if (_value.group == null) {
       return null;
     }
 
     return $GroupCopyWith<$Res>(_value.group!, (value) {
-      return _then(_value.copyWith(group: value));
+      return _then(_value.copyWith(group: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$_GroupDetailCopyWith<$Res>
+abstract class _$$GroupDetailImplCopyWith<$Res>
     implements $GroupDetailCopyWith<$Res> {
-  factory _$$_GroupDetailCopyWith(
-          _$_GroupDetail value, $Res Function(_$_GroupDetail) then) =
-      __$$_GroupDetailCopyWithImpl<$Res>;
+  factory _$$GroupDetailImplCopyWith(
+          _$GroupDetailImpl value, $Res Function(_$GroupDetailImpl) then) =
+      __$$GroupDetailImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({Team? team, Group? group});
 
   @override
@@ -104,26 +111,25 @@ abstract class _$$_GroupDetailCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_GroupDetailCopyWithImpl<$Res> extends _$GroupDetailCopyWithImpl<$Res>
-    implements _$$_GroupDetailCopyWith<$Res> {
-  __$$_GroupDetailCopyWithImpl(
-      _$_GroupDetail _value, $Res Function(_$_GroupDetail) _then)
-      : super(_value, (v) => _then(v as _$_GroupDetail));
+class __$$GroupDetailImplCopyWithImpl<$Res>
+    extends _$GroupDetailCopyWithImpl<$Res, _$GroupDetailImpl>
+    implements _$$GroupDetailImplCopyWith<$Res> {
+  __$$GroupDetailImplCopyWithImpl(
+      _$GroupDetailImpl _value, $Res Function(_$GroupDetailImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_GroupDetail get _value => super._value as _$_GroupDetail;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? team = freezed,
     Object? group = freezed,
   }) {
-    return _then(_$_GroupDetail(
-      team: team == freezed
+    return _then(_$GroupDetailImpl(
+      team: freezed == team
           ? _value.team
           : team // ignore: cast_nullable_to_non_nullable
               as Team?,
-      group: group == freezed
+      group: freezed == group
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as Group?,
@@ -133,11 +139,11 @@ class __$$_GroupDetailCopyWithImpl<$Res> extends _$GroupDetailCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_GroupDetail implements _GroupDetail {
-  const _$_GroupDetail({this.team, this.group});
+class _$GroupDetailImpl implements _GroupDetail {
+  const _$GroupDetailImpl({this.team, this.group});
 
-  factory _$_GroupDetail.fromJson(Map<String, dynamic> json) =>
-      _$$_GroupDetailFromJson(json);
+  factory _$GroupDetailImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GroupDetailImplFromJson(json);
 
   @override
   final Team? team;
@@ -153,26 +159,24 @@ class _$_GroupDetail implements _GroupDetail {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_GroupDetail &&
-            const DeepCollectionEquality().equals(other.team, team) &&
-            const DeepCollectionEquality().equals(other.group, group));
+            other is _$GroupDetailImpl &&
+            (identical(other.team, team) || other.team == team) &&
+            (identical(other.group, group) || other.group == group));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(team),
-      const DeepCollectionEquality().hash(group));
+  int get hashCode => Object.hash(runtimeType, team, group);
 
   @JsonKey(ignore: true)
   @override
-  _$$_GroupDetailCopyWith<_$_GroupDetail> get copyWith =>
-      __$$_GroupDetailCopyWithImpl<_$_GroupDetail>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$GroupDetailImplCopyWith<_$GroupDetailImpl> get copyWith =>
+      __$$GroupDetailImplCopyWithImpl<_$GroupDetailImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_GroupDetailToJson(
+    return _$$GroupDetailImplToJson(
       this,
     );
   }
@@ -180,10 +184,10 @@ class _$_GroupDetail implements _GroupDetail {
 
 abstract class _GroupDetail implements GroupDetail {
   const factory _GroupDetail({final Team? team, final Group? group}) =
-      _$_GroupDetail;
+      _$GroupDetailImpl;
 
   factory _GroupDetail.fromJson(Map<String, dynamic> json) =
-      _$_GroupDetail.fromJson;
+      _$GroupDetailImpl.fromJson;
 
   @override
   Team? get team;
@@ -191,6 +195,6 @@ abstract class _GroupDetail implements GroupDetail {
   Group? get group;
   @override
   @JsonKey(ignore: true)
-  _$$_GroupDetailCopyWith<_$_GroupDetail> get copyWith =>
+  _$$GroupDetailImplCopyWith<_$GroupDetailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

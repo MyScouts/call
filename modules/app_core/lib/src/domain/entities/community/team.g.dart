@@ -6,7 +6,7 @@ part of 'team.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Team _$$_TeamFromJson(Map<String, dynamic> json) => _$_Team(
+_$TeamImpl _$$TeamImplFromJson(Map<String, dynamic> json) => _$TeamImpl(
       id: json['id'] as int?,
       codeId: json['codeId'] as String?,
       name: json['name'] as String?,
@@ -19,7 +19,8 @@ _$_Team _$$_TeamFromJson(Map<String, dynamic> json) => _$_Team(
       isJoined: json['isJoined'] as bool?,
     );
 
-Map<String, dynamic> _$$_TeamToJson(_$_Team instance) => <String, dynamic>{
+Map<String, dynamic> _$$TeamImplToJson(_$TeamImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'codeId': instance.codeId,
       'name': instance.name,

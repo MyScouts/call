@@ -1,6 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
-import 'package:app_main/src/presentation/settings/setting_contants.dart';
+import 'package:app_main/src/presentation/settings/setting_constants.dart';
 import 'package:app_main/src/presentation/settings/widget/item_setting_widget.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +19,13 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   late final userCubit = context.read<UserCubit>();
+  late User _authInfo;
+
+  @override
+  void initState() {
+    super.initState();
+    _authInfo = userCubit.currentUser!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,10 +111,10 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   _buildSession1() {
-    return const ItemSettingWidget(
+    return ItemSettingWidget(
       title: "Hồ sơ tài khoản",
-      name: "Thanh Nguyễn",
-      summary: "ID: VN4444406541234",
+      name: _authInfo.email,
+      summary: "ID: ${_authInfo.pDoneId}",
       avatar: "avatar",
     );
   }
