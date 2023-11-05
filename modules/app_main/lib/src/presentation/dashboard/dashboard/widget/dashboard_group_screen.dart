@@ -1,3 +1,4 @@
+import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_widget.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +26,23 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
     text: widget.group.title,
   );
 
+  bool enableRemoveButton = false;
+
+  bool isChanged = false;
+
+  late DashBoardGroupItem _group;
+
+  @override
+  void initState() {
+    _group = widget.group;
+    super.initState();
+  }
+
   @override
   void dispose() {
+    if(isChanged) {
+      NotificationCenter.post(channel: changeGroupEvent, options: _group);
+    }
     controller.dispose();
     node.dispose();
     super.dispose();
@@ -48,15 +64,13 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
               return;
             }
             widget.onGroupCreated.call(
-              DashBoardGroupItem(
-                id: widget.group.id,
-                title: controller.text,
-                backgroundImage: '',
+              widget.group.copyWith(
                 items: [
                   ...widget.group.items,
                   if (widget.moveItem != null)
                     widget.moveItem as DashBoardIconItem
                 ],
+                title: controller.text,
               ),
             );
             Navigator.of(context).pop();
@@ -117,8 +131,13 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
                   },
                 ),
                 const SizedBox(height: 40),
-                IgnorePointer(
-                  ignoring: true,
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      enableRemoveButton = false;
+                    });
+                  },
+                  behavior: HitTestBehavior.opaque,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(32),
                     child: ClipRect(
@@ -141,8 +160,29 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
                                   padding: const EdgeInsets.all(16.0),
                                   crossAxisCount: 4,
                                   children: [
-                                    ...widget.group.items.map(
-                                      (e) => AppWidget(app: e),
+                                    ..._group.items.map(
+                                      (e) => GestureDetector(
+                                        onLongPress: () {
+                                          setState(() {
+                                            enableRemoveButton = true;
+                                          });
+                                        },
+                                        behavior: HitTestBehavior.opaque,
+                                        child: AppWidget(
+                                          app: e,
+                                          enableRemoveIcon: enableRemoveButton,
+                                          onRemoved: () {
+                                            isChanged = true;
+                                            setState(() {
+                                              _group = _group.copyWith(
+                                                items: _group.items
+                                                    .where((i) => i.id != e.id)
+                                                    .toList(),
+                                              );
+                                            });
+                                          },
+                                        ),
+                                      ),
                                     ),
                                     if (widget.moveItem != null)
                                       AppWidget(app: widget.moveItem!),

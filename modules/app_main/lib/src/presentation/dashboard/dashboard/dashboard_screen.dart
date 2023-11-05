@@ -246,21 +246,20 @@ class DashBoardScreen extends StatefulWidget {
 class _DashBoardScreenState extends State<DashBoardScreen> {
   final PageController _pageController = PageController();
 
+  String _imgBg = ImageConstants.cmBg;
+
+  int _page = 0;
+
   Widget _buildDot(BuildContext context, int index) {
-    return AnimatedBuilder(
-      animation: _pageController,
-      builder: (_, __) {
-        final page = _pageController.page ?? 0;
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 4.0),
-          width: 8,
-          height: 8,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: page == index ? Colors.white : Colors.white.withOpacity(.2),
-          ),
-        );
-      },
+    final page = _page;
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 4.0),
+      width: 8,
+      height: 8,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: page == index ? Colors.white : Colors.white.withOpacity(.2),
+      ),
     );
   }
 
@@ -272,10 +271,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         body: Stack(
           fit: StackFit.expand,
           children: [
-            ImageWidget(
-              ImageConstants.defaultBgDashboard,
-              fit: BoxFit.fill,
-            ),
+            ImageWidget(_imgBg, fit: BoxFit.fill),
             SafeArea(
               bottom: false,
               child: Column(
@@ -297,6 +293,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         DashBoardPersonalTab(),
                         DashBoardEcommerceTab(),
                       ],
+                      onPageChanged: (page) {
+                        if(page == 0) _imgBg = ImageConstants.cmBg;
+                        if(page == 1) _imgBg = ImageConstants.perBg;
+                        if(page == 2) _imgBg = ImageConstants.ecomBg;
+                        setState(() {
+                          _page = page;
+                        });
+                      },
                     ),
                   ),
                   Builder(
@@ -308,8 +312,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 15),
-                  const DockWidget(),
+                  const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: DockWidget(),
+                  ),
                 ],
               ),
             ),

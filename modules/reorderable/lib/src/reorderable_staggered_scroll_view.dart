@@ -183,7 +183,8 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
   /// The axis direction of the grid, if applicable.
   final AxisDirection? axisDirection;
 
-  final List<ReorderableStaggeredScrollViewListItem>? onChildrenChanged;
+  final Function(List<ReorderableStaggeredScrollViewListItem>? list)
+      onChildrenChanged;
 
   /// Constructor for creating a ReorderableStaggeredScrollView in a list layout.
   const ReorderableStaggeredScrollView.list({
@@ -221,7 +222,7 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
     this.edgeScrollSpeedMilliseconds = 100,
     this.isNotDragList,
     this.onGroup,
-    this.onChildrenChanged,
+    required this.onChildrenChanged,
   })  : axisDirection = null,
         isList = true,
         crossAxisCount = 1;
@@ -245,7 +246,7 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
     this.clipBehavior = Clip.hardEdge,
     this.axis,
     this.hitTestBehavior = HitTestBehavior.translucent,
-    this.onChildrenChanged,
+    required this.onChildrenChanged,
 
     /// A function that builds the feedback widget during dragging.
     Widget Function(ReorderableStaggeredScrollViewGridItem, Widget, Size)?
@@ -357,6 +358,7 @@ class _ReorderableStaggeredScrollViewState
       edgeScrollSpeedMilliseconds: widget.edgeScrollSpeedMilliseconds,
       isNotDragList: widget.isNotDragList,
       onGroup: widget.onGroup,
+      onDataChanged: (list) => widget.onChildrenChanged(list),
       items: (ReorderableStaggeredScrollViewListItem element,
           DraggableWidget draggableWidget) {
         return widget.isList

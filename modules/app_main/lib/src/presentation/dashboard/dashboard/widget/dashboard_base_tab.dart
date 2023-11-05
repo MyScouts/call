@@ -18,12 +18,12 @@ import 'dashboard_group_screen.dart';
 class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
     extends State<S> with AutomaticKeepAliveClientMixin {
   late final T bloc;
-
-  final GlobalKey trashKey = GlobalKey<_TrashIconState>();
+  late final DashBoardController dashBoardController;
 
   @override
   void initState() {
     bloc = getIt<T>();
+    dashBoardController = DashBoardController();
     super.initState();
   }
 
@@ -57,13 +57,14 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
             .findAncestorWidgetOfExactType<DashBoardInheritedData>()
             ?.pageController;
         if (controller == null) return;
-        if (controller.page == 0 && S == DashBoardCommunityTab) {
-          bloc.add(ChangeGroup(data));
-        } else if (controller.page == 1 && S == DashBoardPersonalTab) {
-          bloc.add(ChangeGroup(data));
-        } else if (controller.page == 2 && S == DashBoardEcommerceTab) {
-          bloc.add(ChangeGroup(data));
+        if (!(controller.page == 0 && S == DashBoardCommunityTab) &&
+            !(controller.page == 1 && S == DashBoardPersonalTab) &&
+            !(controller.page == 2 && S == DashBoardEcommerceTab)) return;
+        if ((data as DashBoardGroupItem).items.isEmpty) {
+          bloc.add(RemoveItem(data));
+          return;
         }
+        bloc.add(ChangeGroup(data));
       },
     );
   }
@@ -120,92 +121,108 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
 
           return Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Stack(
-              children: [
-                ReorderableStaggeredScrollView.grid(
-                  key: UniqueKey(),
-                  enable: true,
-                  padding: EdgeInsets.zero,
-                  scrollDirection: Axis.vertical,
-                  physics: const BouncingScrollPhysics(),
-                  crossAxisCount: 4,
-                  onAccept: (p0, p1, p2) {
-                    final item1 = p0 as ReorderableStaggeredScrollViewGridItem;
-                    final item2 = p1 as ReorderableStaggeredScrollViewGridItem;
-                    debugPrint("onAccept ${item1.key}");
-                    debugPrint("onAccept ${item2.key}");
-                    return true;
-                  },
-                  isLongPressDraggable: true,
-                  onDragEnd: (p0, p1) {
-                    // (trashKey.currentState as _TrashIconState).disable();
-                  },
-                  onGroup: (moveData, data) {
-                    final item1 =
-                        moveData as ReorderableStaggeredScrollViewGridItem;
-                    final item2 =
-                        data as ReorderableStaggeredScrollViewGridItem;
-                    debugPrint("onGroup ${item1.key}");
-                    debugPrint("onGroup ${item2.key}");
+            child: GestureDetector(
+              onTap: () {
+                dashBoardController.enableRemoveIcon = false;
+              },
+              behavior: HitTestBehavior.opaque,
+              child: Stack(
+                children: [
+                  ReorderableStaggeredScrollView.grid(
+                    key: UniqueKey(),
+                    enable: true,
+                    padding: EdgeInsets.zero,
+                    scrollDirection: Axis.vertical,
+                    physics: const BouncingScrollPhysics(),
+                    crossAxisCount: 4,
+                    onChildrenChanged: (list) {
+                      final items = (list ?? [])
+                          .map((e) => (e.widget as AppWidget).app)
+                          .toList();
+                      ctx.read<T>().add(ChangeItem(items));
+                    },
+                    onAccept: (p0, p1, p2) {
+                      final item1 =
+                          p0 as ReorderableStaggeredScrollViewGridItem;
+                      final item2 =
+                          p1 as ReorderableStaggeredScrollViewGridItem;
+                      debugPrint("onAccept ${item1.key}");
+                      debugPrint("onAccept ${item2.key}");
+                      return true;
+                    },
+                    onDragStarted: (_) =>
+                        dashBoardController.enableRemoveIcon = true,
+                    isLongPressDraggable: true,
+                    onDragEnd: (p0, p1) {},
+                    onGroup: (moveData, data) {
+                      final item1 =
+                          moveData as ReorderableStaggeredScrollViewGridItem;
+                      final item2 =
+                          data as ReorderableStaggeredScrollViewGridItem;
+                      debugPrint("onGroup ${item1.key}");
+                      debugPrint("onGroup ${item2.key}");
 
-                    final icon1 = (item1.widget as AppWidget).app;
-                    final icon2 = (item2.widget as AppWidget).app;
+                      final icon1 = (item1.widget as AppWidget).app;
+                      final icon2 = (item2.widget as AppWidget).app;
 
-                    if (!validateGroupItem(icon1, icon2)) return;
+                      if (!validateGroupItem(icon1, icon2)) return;
 
-                    final isGroup = icon2 is DashBoardGroupItem;
-                    DashBoardGroupItem groupItem;
-                    if (isGroup) {
-                      groupItem = icon2;
-                    } else {
-                      groupItem = DashBoardGroupItem(
-                        id: UniqueKey().toString(),
-                        items: [icon2 as DashBoardIconItem],
-                        title: 'Thư mục',
-                        backgroundImage: '',
+                      final isGroup = icon2 is DashBoardGroupItem;
+                      DashBoardGroupItem groupItem;
+                      if (isGroup) {
+                        groupItem = icon2;
+                      } else {
+                        groupItem = DashBoardGroupItem(
+                          id: UniqueKey().toString(),
+                          items: [icon2 as DashBoardIconItem],
+                          title: 'Thư mục',
+                          backgroundImage: '',
+                        );
+                      }
+
+                      showDialog(
+                        useSafeArea: false,
+                        barrierColor: Colors.transparent,
+                        context: context,
+                        builder: (_) => DashBoardGroupScreen(
+                          group: groupItem,
+                          moveItem: icon1,
+                          onGroupCreated: (DashBoardGroupItem group) {
+                            if (isGroup) {
+                              ctx.read<T>().add(AddItemToGroup(group, [icon1]));
+                            } else {
+                              ctx.read<T>().add(AddItem(group));
+                            }
+                          },
+                        ),
                       );
-                    }
+                    },
+                    children: items.map((item) {
+                      if (item is DashBoardGroupItem) {
+                        return ReorderableStaggeredScrollViewGridItem(
+                          key: ValueKey(item.id),
+                          mainAxisCellCount: item.height,
+                          crossAxisCellCount: item.width,
+                          widget: AppGroupWidget(app: item),
+                        );
+                      }
 
-                    showDialog(
-                      useSafeArea: false,
-                      barrierColor: Colors.transparent,
-                      context: context,
-                      builder: (_) => DashBoardGroupScreen(
-                        group: groupItem,
-                        moveItem: icon1,
-                        onGroupCreated: (DashBoardGroupItem group) {
-                          if (isGroup) {
-                            ctx.read<T>().add(AddItemToGroup(group, [icon1]));
-                          } else {
-                            ctx.read<T>().add(AddItem(group));
-                          }
-                        },
-                      ),
-                    );
-                  },
-                  // onDragStarted: (item) {
-                  //   (trashKey.currentState as _TrashIconState).enable();
-                  // },
-                  children: items.map((item) {
-                    if (item is DashBoardGroupItem) {
                       return ReorderableStaggeredScrollViewGridItem(
                         key: ValueKey(item.id),
                         mainAxisCellCount: item.height,
                         crossAxisCellCount: item.width,
-                        widget: AppGroupWidget(app: item),
+                        widget: AppWidgetBuilder(
+                          app: item,
+                          controller: dashBoardController,
+                          onRemoved: () {
+                            bloc.add(RemoveItem(item));
+                          },
+                        ),
                       );
-                    }
-
-                    return ReorderableStaggeredScrollViewGridItem(
-                      key: ValueKey(item.id),
-                      mainAxisCellCount: item.height,
-                      crossAxisCellCount: item.width,
-                      widget: AppWidget(app: item),
-                    );
-                  }).toList(),
-                ),
-                TrashIcon(key: trashKey)
-              ],
+                    }).toList(),
+                  ),
+                ],
+              ),
             ),
           );
         },
@@ -217,56 +234,13 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
   bool get wantKeepAlive => true;
 }
 
-class TrashIcon extends StatefulWidget {
-  const TrashIcon({super.key});
+class DashBoardController extends ChangeNotifier {
+  bool _enableRemoveIcon = false;
 
-  @override
-  State<TrashIcon> createState() => _TrashIconState();
-}
-
-class _TrashIconState extends State<TrashIcon> {
-  bool showIcon = false;
-
-  void enable() {
-    if (mounted) {
-      setState(() {
-        showIcon = true;
-      });
-    }
+  set enableRemoveIcon(bool value) {
+    _enableRemoveIcon = value;
+    notifyListeners();
   }
 
-  void disable() {
-    if (mounted) {
-      setState(() {
-        showIcon = false;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (showIcon) {
-      return DragTarget(
-        onWillAccept: (move) {
-          return false;
-        },
-        onAccept: (_) {
-        },
-        builder: (_, __, ___) {
-          return Align(
-            alignment: Alignment.bottomCenter,
-            child: CircleAvatar(
-              backgroundColor: Colors.grey.withOpacity(.5),
-              radius: 20,
-              child: const Icon(
-                Icons.restore_from_trash,
-                color: Colors.white,
-              ),
-            ),
-          );
-        },
-      );
-    }
-    return const SizedBox.shrink();
-  }
+  bool get enableRemoveIcon => _enableRemoveIcon;
 }

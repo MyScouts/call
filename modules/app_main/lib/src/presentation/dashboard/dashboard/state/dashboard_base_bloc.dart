@@ -114,9 +114,10 @@ abstract class DashboardBaseBloc
 
   void onChangeItem(ChangeItem event, Emitter<DashboardBaseState> emit) {
     if (state is DashboardBaseInitial) return;
+    final list = event.item.map((e) => e).toList();
     dashboardSharePreferenceUseCase.saveDashboardItems(
-        cacheKey, event.item.map((e) => e).toList());
-    emit(DashboardBaseFetchDataSuccess(items: event.item));
+        cacheKey, list);
+    emit(DashboardBaseFetchDataSuccess(items: list));
   }
 
   void setDashboardDefault();

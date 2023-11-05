@@ -1,3 +1,4 @@
+import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_base_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +12,14 @@ class AppWidget extends StatelessWidget {
     required this.app,
     this.textColor,
     this.disablePress = false,
+    this.enableRemoveIcon = false,
+    this.onRemoved,
   });
 
   final Color? textColor;
   final bool disablePress;
+  final bool enableRemoveIcon;
+  final Function()? onRemoved;
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +39,38 @@ class AppWidget extends StatelessWidget {
                     return;
                   }
                 },
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: AspectRatio(
-                    aspectRatio: (app.width) / app.height,
-                    child: ImageWidget(
-                      app.backgroundImage,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
+                child: AspectRatio(
+                  aspectRatio: (app.width) / app.height,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(14),
+                        child: ImageWidget(
+                          app.backgroundImage,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      if (enableRemoveIcon)
+                        Positioned(
+                          left: -10,
+                          top: -10,
+                          child: GestureDetector(
+                            onTap: onRemoved,
+                            behavior: HitTestBehavior.opaque,
+                            child: const CircleAvatar(
+                              backgroundColor: Colors.grey,
+                              radius: 10,
+                              child: Icon(
+                                Icons.remove,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                 ),
               ),
@@ -63,6 +91,31 @@ class AppWidget extends StatelessWidget {
             ),
         ],
       ),
+    );
+  }
+}
+
+class AppWidgetBuilder extends AppWidget {
+  const AppWidgetBuilder({
+    super.key,
+    required super.app,
+    required this.controller,
+    required super.onRemoved,
+  });
+
+  final DashBoardController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: controller,
+      builder: (_, __) {
+        return AppWidget(
+          app: app,
+          enableRemoveIcon: controller.enableRemoveIcon,
+          onRemoved: onRemoved,
+        );
+      },
     );
   }
 }

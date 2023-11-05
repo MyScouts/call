@@ -96,8 +96,8 @@ class _DashBoardOptionSheetState extends State<DashBoardOptionSheet> {
           Expanded(
             child: StaggeredGrid.count(
               crossAxisCount: 4,
-              mainAxisSpacing: 30,
-              crossAxisSpacing: 24,
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 18,
               children: mapItems.values
                   .map(
                     (e) => StaggeredGridTile.count(

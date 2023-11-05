@@ -18,6 +18,9 @@ class ImageConstants {
   static String backCMND = ImageApp.backCMND.path;
   static String live = ImageApp.live.path;
   static String banner = ImageApp.banner.path;
+  static String cmBg = ImageApp.cmBg.path;
+  static String perBg = ImageApp.perBg.path;
+  static String ecomBg = ImageApp.ecomBg.path;
 }
 
 enum ImageApp {
@@ -39,6 +42,9 @@ enum ImageApp {
   imgdefault('assets/images/logo.png'),
   warning('assets/images/warning.png'),
   banner('assets/images/banner.png'),
+  cmBg('assets/images/cm_bg.png'),
+  perBg('assets/images/per_bg.png'),
+  ecomBg('assets/images/ecom_bg.png'),
   live('assets/images/live.png');
 
   const ImageApp(this.path);

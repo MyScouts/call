@@ -129,9 +129,22 @@ class DashBoardGroupItem extends DashBoardItem {
       title: json['title'],
       backgroundImage: json['background_image'],
       path: json['path'],
-      items: List.from(json['items'])
+      items: List.from(json['items'] ?? [])
           .map((e) => DashBoardIconItem.fromJson(e))
           .toList(),
+    );
+  }
+
+  DashBoardGroupItem copyWith({
+    String? title,
+    List<DashBoardIconItem>? items,
+  }) {
+    return DashBoardGroupItem(
+      id: id,
+      title: title ?? this.title,
+      backgroundImage: backgroundImage,
+      path: path,
+      items: items ?? this.items,
     );
   }
 }
@@ -162,7 +175,7 @@ final Map<String, DashBoardItem> mapItems = {
     backgroundImage: IconAppConstants.icGroupTeam,
   ),
   'ic_team': DashBoardIconItem(
-    id: 'Team',
+    id: 'ic_team',
     title: 'Team',
     backgroundImage: IconAppConstants.icDashboardContact,
   ),
