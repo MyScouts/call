@@ -57,7 +57,6 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen>
       hideLoading();
 
       context.startDialogVerifyPhoneOTP(state.data);
-
     } else if (state is GetDetailError) {
       hideLoading();
       final e = state.error;
@@ -208,6 +207,9 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen>
                       width: MediaQuery.of(context).size.width,
                       title: S.current.register,
                       onTap: () {
+                        if (defaultBank == null) {
+                          return context.startDialogUpdateBankAccount();
+                        }
                         upgradeJABloc.add(GetDetailDataEvent());
                       },
                       disabled: !_acceptTerm.value,
