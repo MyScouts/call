@@ -28,7 +28,7 @@ class Setting {
           Setting(
             text: "Quét mã QR",
             icon: IconAppConstants.icPayment,
-            onPressed: () => context.startScanQrCode(),
+            onPressed: () => context.startScanQrCode(showMyQr: true),
           ),
           Setting(
             text: "Đăng ký khách hàng thường xuyên",

@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/blocs/user_action/user_action_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/social/profile/profile_bloc.dart';
@@ -19,15 +20,18 @@ class DiaryScreen extends StatefulWidget {
 }
 
 class _DiaryScreenState extends State<DiaryScreen> {
-  late User? _userInfo;
-
-  GetUserByIdBloc get _userByIdBloc => context.read<GetUserByIdBloc>();
   final ValueNotifier<bool> _friendStatus = ValueNotifier(false);
   UserActionCubit get _actionBloc => injector.get<UserActionCubit>();
+  GetUserByIdBloc get _userByIdBloc => context.read<GetUserByIdBloc>();
+  late final _userCubit = context.read<UserCubit>();
+  late User _authInfo;
+
+  bool get isMe => _authInfo.id.toString() == widget.userId;
 
   @override
   void initState() {
     super.initState();
+    _authInfo = _userCubit.currentUser!;
     _userByIdBloc.add(GetDetailDataParam1Event(int.parse(widget.userId!)));
   }
 
@@ -87,6 +91,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
                     UserInfoHeader(
                       userInfo: userInfo,
                       friendStatusCtrl: _friendStatus,
+                      isMe: isMe,
                     ),
                   ],
                 );

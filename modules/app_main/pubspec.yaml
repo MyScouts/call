@@ -63,6 +63,7 @@ dependencies:
   path_provider: ^2.1.1
   qrscan: ^0.3.3
   image_picker: ^1.0.4
+  qr_code_dart_scan: ^0.7.3
 
 dev_dependencies:
   flutter_test:

@@ -6,8 +6,11 @@ import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
 import 'package:flutter/material.dart';
 
 extension DeeplinkCoordinator on BuildContext {
-  Future<T?> startScanQrCode<T>() {
-    return Navigator.of(this).pushNamed(ScanQrCodeScanScreen.routeName);
+  Future<T?> startScanQrCode<T>({bool? showMyQr}) {
+    return Navigator.of(this)
+        .pushNamed(ScanQrCodeScanScreen.routeName, arguments: {
+      "showMyQr": showMyQr,
+    });
   }
 
   Future<T?> startQrCode<T>({required User userInfo}) {

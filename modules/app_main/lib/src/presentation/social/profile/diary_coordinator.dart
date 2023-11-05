@@ -21,6 +21,17 @@ extension AuthenticationCoordinator on BuildContext {
     );
   }
 
+  Future<T?> startReplaceDiary<T>({
+    String? userId,
+  }) {
+    return Navigator.of(this).pushReplacementNamed(
+      DiaryScreen.routeName,
+      arguments: {
+        "userId": userId,
+      },
+    );
+  }
+
   Future<T?> showDiaryActions<T>({required User userInfo}) {
     return showModalBottomSheet(
       context: this,

@@ -12,10 +12,12 @@ import 'package:ui/ui.dart';
 class UserInfoHeader extends StatefulWidget {
   final User userInfo;
   final ValueNotifier<bool> friendStatusCtrl;
+  final bool isMe;
   const UserInfoHeader({
     super.key,
     required this.userInfo,
     required this.friendStatusCtrl,
+    this.isMe = false,
   });
 
   @override
@@ -154,8 +156,8 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
           _buildInfomation(),
           const SizedBox(height: 10),
           _buildFriendInfo(),
-          const SizedBox(height: 20),
-          _buildProfileAction(),
+          if (!widget.isMe) const SizedBox(height: 20),
+          if (!widget.isMe) _buildProfileAction(),
         ],
       ),
     );
@@ -338,6 +340,7 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
             return Expanded(
               flex: 2,
               child: PrimarySolidButton(
+                height: 40,
                 title: friendStatusStr(
                   isFriend: isFriend,
                   isFollowed: value,
@@ -353,6 +356,7 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
         ),
         // const SizedBox(width: 10),
         // CommonOutlineButton(
+        //   height: 40,
         //   onPressed: () {},
         //   label: "Nhắn tin",
         // ),
@@ -360,8 +364,8 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
         GestureDetector(
           onTap: () => context.startQrCode(userInfo: userInfo),
           child: Container(
-            height: 48,
-            width: 48,
+            height: 40,
+            width: 40,
             padding: const EdgeInsets.all(13),
             decoration: BoxDecoration(
               color: const Color(0XFFE8F0FE),
@@ -387,8 +391,8 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
             }
           },
           child: Container(
-            height: 48,
-            width: 48,
+            height: 40,
+            width: 40,
             padding: const EdgeInsets.all(13),
             decoration: BoxDecoration(
               color: const Color(0XFFE8F0FE),
