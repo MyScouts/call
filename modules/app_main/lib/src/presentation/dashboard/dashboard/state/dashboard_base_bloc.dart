@@ -85,6 +85,8 @@ abstract class DashboardBaseBloc
   ) {
     if (state is DashboardBaseInitial) return;
     final s = state as DashboardBaseFetchDataSuccess;
+    final ids = s.items.map((e) => e.id).toList();
+    if (ids.contains(event.item.id)) return;
     List<DashBoardItem> list = [...s.items, event.item];
     if (event.item is DashBoardGroupItem) {
       final gIds =
@@ -115,8 +117,7 @@ abstract class DashboardBaseBloc
   void onChangeItem(ChangeItem event, Emitter<DashboardBaseState> emit) {
     if (state is DashboardBaseInitial) return;
     final list = event.item.map((e) => e).toList();
-    dashboardSharePreferenceUseCase.saveDashboardItems(
-        cacheKey, list);
+    dashboardSharePreferenceUseCase.saveDashboardItems(cacheKey, list);
     emit(DashboardBaseFetchDataSuccess(items: list));
   }
 
