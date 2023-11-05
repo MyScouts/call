@@ -1,6 +1,7 @@
 import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_stores_widget.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
+import 'package:app_main/src/presentation/dashboard/search/search_screen.dart';
 import 'package:flutter/material.dart';
 
 extension AuthenticationCoordinator on BuildContext {
@@ -22,5 +23,9 @@ extension AuthenticationCoordinator on BuildContext {
         onCompleted: onCompleted,
       ),
     );
+  }
+
+  Future<T?> startSearch<T>() {
+    return Navigator.of(this).pushNamed(SearchScreen.routeName);
   }
 }

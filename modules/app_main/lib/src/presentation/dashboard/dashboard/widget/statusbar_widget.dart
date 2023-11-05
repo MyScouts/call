@@ -1,6 +1,6 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
-import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -21,7 +21,7 @@ class _StatusBarWidgetState extends State<StatusBarWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.startDiary(userId: "301"),
+      onTap: () => context.startSearch(),
       child: Container(
         constraints: const BoxConstraints(maxHeight: 35),
         padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),

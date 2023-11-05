@@ -16,9 +16,15 @@ class ImageConstants {
   static String frontCMND = ImageApp.frontCMND.path;
   static String passport = ImageApp.passport.path;
   static String backCMND = ImageApp.backCMND.path;
+  static String defaultUserAvatar = ImageApp.defaultUserAvatar.path;
+  static String defaultUserBackground = ImageApp.defaultUserBackground.path;
+  static String bgQrCode = ImageApp.bgQrCode.path;
 }
 
 enum ImageApp {
+  bgQrCode('assets/images/bg_qrcode.png'),
+  defaultUserAvatar('assets/images/avatar.png'),
+  defaultUserBackground('assets/images/bg_diary.jpeg'),
   defaultBgDashboard('assets/images/bg_dashboard.jpeg'),
   defaultAppLogo('assets/images/vdone_logo.png'),
   authBackground('assets/images/bg_auth.png'),

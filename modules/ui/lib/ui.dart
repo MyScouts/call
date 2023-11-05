@@ -1,8 +1,11 @@
 library ui;
 
 export 'src/appbar/base_appbar.dart';
+export 'src/button/common_outline_button.dart';
 export 'src/button/custom_back_button.dart';
+export 'src/button/custom_close_button.dart';
 export 'src/button/primary_button.dart';
+export 'src/button/primary_solid_button.dart';
 export 'src/dialog/action_dialog.dart';
 export 'src/dialog/congratulation_dialog.dart';
 export 'src/dialog/request_permission_dialog_widget.dart';

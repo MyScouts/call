@@ -178,7 +178,7 @@ class _SettingScreenState extends State<SettingScreen> {
   _buildSession1() {
     return ItemSettingWidget(
       title: "Hồ sơ tài khoản",
-      name: _authInfo.email,
+      name: _authInfo.getdisplayName,
       summary: "ID: ${_authInfo.pDoneId}",
       avatar: "avatar",
     );

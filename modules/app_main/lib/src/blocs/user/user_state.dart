@@ -122,3 +122,16 @@ final class OnLogout extends UserState {}
 final class LogoutSuccess extends UserState {}
 
 final class LogoutFail extends UserState {}
+
+// Get user info
+final class OnGetUserInfo extends UserState {}
+
+final class GetUserInfoSuccess extends UserState {
+  final User? userInfo;
+  GetUserInfoSuccess(this.userInfo);
+}
+
+final class GetUserInfoFail extends UserState {
+  final String message;
+  GetUserInfoFail({required this.message});
+}
