@@ -6,7 +6,8 @@ part of 'fan_group.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_FanGroup _$$_FanGroupFromJson(Map<String, dynamic> json) => _$_FanGroup(
+_$FanGroupImpl _$$FanGroupImplFromJson(Map<String, dynamic> json) =>
+    _$FanGroupImpl(
       id: json['id'] as int?,
       name: json['name'] as String?,
       avatar: json['avatar'] as String?,
@@ -23,7 +24,7 @@ _$_FanGroup _$$_FanGroupFromJson(Map<String, dynamic> json) => _$_FanGroup(
       totalMember: json['totalMember'] as int?,
     );
 
-Map<String, dynamic> _$$_FanGroupToJson(_$_FanGroup instance) =>
+Map<String, dynamic> _$$FanGroupImplToJson(_$FanGroupImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

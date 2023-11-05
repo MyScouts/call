@@ -53,8 +53,9 @@ class _StatusBarWidgetState extends State<StatusBarWidget> {
                       IconAppConstants.icSearch,
                       color: Colors.white,
                     ),
+                    const SizedBox(width: 6),
                     Text(
-                      "${S.current.search.capitalize()}...",
+                      S.current.search.capitalize(),
                       style: context.text.bodyMedium!.copyWith(
                         color: Colors.white.withOpacity(.8),
                       ),

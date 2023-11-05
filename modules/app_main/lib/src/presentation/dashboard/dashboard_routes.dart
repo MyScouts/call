@@ -7,8 +7,8 @@ import 'package:mobilehub_core/mobilehub_core.dart';
 class DashboardRoutes extends RouteModule {
   @override
   Map<String, WidgetBuilder> getAll(RouteSettings settings) => {
-        DashboardScreen.routeName: (context) {
-          return const DashboardScreen();
+        DashBoardScreen.routeName: (context) {
+          return const DashBoardScreen();
         },
       };
 }

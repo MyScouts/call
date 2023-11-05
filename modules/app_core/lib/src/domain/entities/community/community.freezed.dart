@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'community.dart';
 
@@ -31,7 +31,8 @@ mixin _$Community {
 /// @nodoc
 abstract class $CommunityCopyWith<$Res> {
   factory $CommunityCopyWith(Community value, $Res Function(Community) then) =
-      _$CommunityCopyWithImpl<$Res>;
+      _$CommunityCopyWithImpl<$Res, Community>;
+  @useResult
   $Res call(
       {int? id,
       String? name,
@@ -42,13 +43,16 @@ abstract class $CommunityCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CommunityCopyWithImpl<$Res> implements $CommunityCopyWith<$Res> {
+class _$CommunityCopyWithImpl<$Res, $Val extends Community>
+    implements $CommunityCopyWith<$Res> {
   _$CommunityCopyWithImpl(this._value, this._then);
 
-  final Community _value;
   // ignore: unused_field
-  final $Res Function(Community) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -59,40 +63,42 @@ class _$CommunityCopyWithImpl<$Res> implements $CommunityCopyWith<$Res> {
     Object? isProvincialGroup = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      avatar: avatar == freezed
+      avatar: freezed == avatar
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String?,
-      banner: banner == freezed
+      banner: freezed == banner
           ? _value.banner
           : banner // ignore: cast_nullable_to_non_nullable
               as String?,
-      introduction: introduction == freezed
+      introduction: freezed == introduction
           ? _value.introduction
           : introduction // ignore: cast_nullable_to_non_nullable
               as String?,
-      isProvincialGroup: isProvincialGroup == freezed
+      isProvincialGroup: freezed == isProvincialGroup
           ? _value.isProvincialGroup
           : isProvincialGroup // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_CommunityCopyWith<$Res> implements $CommunityCopyWith<$Res> {
-  factory _$$_CommunityCopyWith(
-          _$_Community value, $Res Function(_$_Community) then) =
-      __$$_CommunityCopyWithImpl<$Res>;
+abstract class _$$CommunityImplCopyWith<$Res>
+    implements $CommunityCopyWith<$Res> {
+  factory _$$CommunityImplCopyWith(
+          _$CommunityImpl value, $Res Function(_$CommunityImpl) then) =
+      __$$CommunityImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       String? name,
@@ -103,15 +109,14 @@ abstract class _$$_CommunityCopyWith<$Res> implements $CommunityCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_CommunityCopyWithImpl<$Res> extends _$CommunityCopyWithImpl<$Res>
-    implements _$$_CommunityCopyWith<$Res> {
-  __$$_CommunityCopyWithImpl(
-      _$_Community _value, $Res Function(_$_Community) _then)
-      : super(_value, (v) => _then(v as _$_Community));
+class __$$CommunityImplCopyWithImpl<$Res>
+    extends _$CommunityCopyWithImpl<$Res, _$CommunityImpl>
+    implements _$$CommunityImplCopyWith<$Res> {
+  __$$CommunityImplCopyWithImpl(
+      _$CommunityImpl _value, $Res Function(_$CommunityImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_Community get _value => super._value as _$_Community;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -121,28 +126,28 @@ class __$$_CommunityCopyWithImpl<$Res> extends _$CommunityCopyWithImpl<$Res>
     Object? introduction = freezed,
     Object? isProvincialGroup = freezed,
   }) {
-    return _then(_$_Community(
-      id: id == freezed
+    return _then(_$CommunityImpl(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      avatar: avatar == freezed
+      avatar: freezed == avatar
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String?,
-      banner: banner == freezed
+      banner: freezed == banner
           ? _value.banner
           : banner // ignore: cast_nullable_to_non_nullable
               as String?,
-      introduction: introduction == freezed
+      introduction: freezed == introduction
           ? _value.introduction
           : introduction // ignore: cast_nullable_to_non_nullable
               as String?,
-      isProvincialGroup: isProvincialGroup == freezed
+      isProvincialGroup: freezed == isProvincialGroup
           ? _value.isProvincialGroup
           : isProvincialGroup // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -152,8 +157,8 @@ class __$$_CommunityCopyWithImpl<$Res> extends _$CommunityCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Community implements _Community {
-  const _$_Community(
+class _$CommunityImpl implements _Community {
+  const _$CommunityImpl(
       {this.id,
       this.name,
       this.avatar,
@@ -183,31 +188,26 @@ class _$_Community implements _Community {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Community &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.avatar, avatar) &&
-            const DeepCollectionEquality().equals(other.banner, banner) &&
-            const DeepCollectionEquality()
-                .equals(other.introduction, introduction) &&
-            const DeepCollectionEquality()
-                .equals(other.isProvincialGroup, isProvincialGroup));
+            other is _$CommunityImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.avatar, avatar) || other.avatar == avatar) &&
+            (identical(other.banner, banner) || other.banner == banner) &&
+            (identical(other.introduction, introduction) ||
+                other.introduction == introduction) &&
+            (identical(other.isProvincialGroup, isProvincialGroup) ||
+                other.isProvincialGroup == isProvincialGroup));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(avatar),
-      const DeepCollectionEquality().hash(banner),
-      const DeepCollectionEquality().hash(introduction),
-      const DeepCollectionEquality().hash(isProvincialGroup));
+      runtimeType, id, name, avatar, banner, introduction, isProvincialGroup);
 
   @JsonKey(ignore: true)
   @override
-  _$$_CommunityCopyWith<_$_Community> get copyWith =>
-      __$$_CommunityCopyWithImpl<_$_Community>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$CommunityImplCopyWith<_$CommunityImpl> get copyWith =>
+      __$$CommunityImplCopyWithImpl<_$CommunityImpl>(this, _$identity);
 }
 
 abstract class _Community implements Community {
@@ -217,7 +217,7 @@ abstract class _Community implements Community {
       final String? avatar,
       final String? banner,
       final String? introduction,
-      final bool? isProvincialGroup}) = _$_Community;
+      final bool? isProvincialGroup}) = _$CommunityImpl;
 
   @override
   int? get id;
@@ -233,6 +233,6 @@ abstract class _Community implements Community {
   bool? get isProvincialGroup;
   @override
   @JsonKey(ignore: true)
-  _$$_CommunityCopyWith<_$_Community> get copyWith =>
+  _$$CommunityImplCopyWith<_$CommunityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

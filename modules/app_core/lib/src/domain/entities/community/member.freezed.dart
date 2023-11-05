@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'member.dart';
 
@@ -32,20 +32,24 @@ mixin _$Member {
 /// @nodoc
 abstract class $MemberCopyWith<$Res> {
   factory $MemberCopyWith(Member value, $Res Function(Member) then) =
-      _$MemberCopyWithImpl<$Res>;
+      _$MemberCopyWithImpl<$Res, Member>;
+  @useResult
   $Res call({int? id, int? userId, User? user});
 
   $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
-class _$MemberCopyWithImpl<$Res> implements $MemberCopyWith<$Res> {
+class _$MemberCopyWithImpl<$Res, $Val extends Member>
+    implements $MemberCopyWith<$Res> {
   _$MemberCopyWithImpl(this._value, this._then);
 
-  final Member _value;
   // ignore: unused_field
-  final $Res Function(Member) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -53,38 +57,41 @@ class _$MemberCopyWithImpl<$Res> implements $MemberCopyWith<$Res> {
     Object? user = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      userId: userId == freezed
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int?,
-      user: user == freezed
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $UserCopyWith<$Res>? get user {
     if (_value.user == null) {
       return null;
     }
 
     return $UserCopyWith<$Res>(_value.user!, (value) {
-      return _then(_value.copyWith(user: value));
+      return _then(_value.copyWith(user: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$_MemberCopyWith<$Res> implements $MemberCopyWith<$Res> {
-  factory _$$_MemberCopyWith(_$_Member value, $Res Function(_$_Member) then) =
-      __$$_MemberCopyWithImpl<$Res>;
+abstract class _$$MemberImplCopyWith<$Res> implements $MemberCopyWith<$Res> {
+  factory _$$MemberImplCopyWith(
+          _$MemberImpl value, $Res Function(_$MemberImpl) then) =
+      __$$MemberImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int? id, int? userId, User? user});
 
   @override
@@ -92,30 +99,30 @@ abstract class _$$_MemberCopyWith<$Res> implements $MemberCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_MemberCopyWithImpl<$Res> extends _$MemberCopyWithImpl<$Res>
-    implements _$$_MemberCopyWith<$Res> {
-  __$$_MemberCopyWithImpl(_$_Member _value, $Res Function(_$_Member) _then)
-      : super(_value, (v) => _then(v as _$_Member));
+class __$$MemberImplCopyWithImpl<$Res>
+    extends _$MemberCopyWithImpl<$Res, _$MemberImpl>
+    implements _$$MemberImplCopyWith<$Res> {
+  __$$MemberImplCopyWithImpl(
+      _$MemberImpl _value, $Res Function(_$MemberImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_Member get _value => super._value as _$_Member;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
     Object? userId = freezed,
     Object? user = freezed,
   }) {
-    return _then(_$_Member(
-      id: id == freezed
+    return _then(_$MemberImpl(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      userId: userId == freezed
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int?,
-      user: user == freezed
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
@@ -125,11 +132,11 @@ class __$$_MemberCopyWithImpl<$Res> extends _$MemberCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Member implements _Member {
-  const _$_Member({this.id, this.userId, this.user});
+class _$MemberImpl implements _Member {
+  const _$MemberImpl({this.id, this.userId, this.user});
 
-  factory _$_Member.fromJson(Map<String, dynamic> json) =>
-      _$$_MemberFromJson(json);
+  factory _$MemberImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MemberImplFromJson(json);
 
   @override
   final int? id;
@@ -147,28 +154,25 @@ class _$_Member implements _Member {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Member &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality().equals(other.user, user));
+            other is _$MemberImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(userId),
-      const DeepCollectionEquality().hash(user));
+  int get hashCode => Object.hash(runtimeType, id, userId, user);
 
   @JsonKey(ignore: true)
   @override
-  _$$_MemberCopyWith<_$_Member> get copyWith =>
-      __$$_MemberCopyWithImpl<_$_Member>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$MemberImplCopyWith<_$MemberImpl> get copyWith =>
+      __$$MemberImplCopyWithImpl<_$MemberImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MemberToJson(
+    return _$$MemberImplToJson(
       this,
     );
   }
@@ -176,9 +180,9 @@ class _$_Member implements _Member {
 
 abstract class _Member implements Member {
   const factory _Member({final int? id, final int? userId, final User? user}) =
-      _$_Member;
+      _$MemberImpl;
 
-  factory _Member.fromJson(Map<String, dynamic> json) = _$_Member.fromJson;
+  factory _Member.fromJson(Map<String, dynamic> json) = _$MemberImpl.fromJson;
 
   @override
   int? get id;
@@ -188,6 +192,6 @@ abstract class _Member implements Member {
   User? get user;
   @override
   @JsonKey(ignore: true)
-  _$$_MemberCopyWith<_$_Member> get copyWith =>
+  _$$MemberImplCopyWith<_$MemberImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

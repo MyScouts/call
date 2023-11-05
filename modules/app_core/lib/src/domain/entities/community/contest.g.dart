@@ -6,14 +6,15 @@ part of 'contest.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Contest _$$_ContestFromJson(Map<String, dynamic> json) => _$_Contest(
+_$ContestImpl _$$ContestImplFromJson(Map<String, dynamic> json) =>
+    _$ContestImpl(
       id: json['id'] as int?,
       contestId: json['contestId'] as int?,
       name: json['name'] as String?,
       status: json['status'] as String?,
     );
 
-Map<String, dynamic> _$$_ContestToJson(_$_Contest instance) =>
+Map<String, dynamic> _$$ContestImplToJson(_$ContestImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'contestId': instance.contestId,

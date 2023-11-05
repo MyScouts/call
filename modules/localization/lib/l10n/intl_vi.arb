@@ -42,5 +42,6 @@
     "validate_PleaseEnterInfo": "Vui lòng nhập thông tin",
     "pdoneAction_registerPDone": "Đăng ký P-Done",
     "pdoneAction_registerCollaboratorsAndLink": "Đăng ký JA",
-    "setting": "cài đặt"
+    "setting": "cài đặt",
+    "account_profile": "Hồ sơ tài khoản"
 }

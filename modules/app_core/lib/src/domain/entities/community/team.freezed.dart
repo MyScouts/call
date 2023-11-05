@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'team.dart';
 
@@ -37,7 +37,8 @@ mixin _$Team {
 /// @nodoc
 abstract class $TeamCopyWith<$Res> {
   factory $TeamCopyWith(Team value, $Res Function(Team) then) =
-      _$TeamCopyWithImpl<$Res>;
+      _$TeamCopyWithImpl<$Res, Team>;
+  @useResult
   $Res call(
       {int? id,
       String? codeId,
@@ -52,13 +53,16 @@ abstract class $TeamCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TeamCopyWithImpl<$Res> implements $TeamCopyWith<$Res> {
+class _$TeamCopyWithImpl<$Res, $Val extends Team>
+    implements $TeamCopyWith<$Res> {
   _$TeamCopyWithImpl(this._value, this._then);
 
-  final Team _value;
   // ignore: unused_field
-  final $Res Function(Team) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -71,58 +75,61 @@ class _$TeamCopyWithImpl<$Res> implements $TeamCopyWith<$Res> {
     Object? isJoined = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      codeId: codeId == freezed
+      codeId: freezed == codeId
           ? _value.codeId
           : codeId // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      avatar: avatar == freezed
+      avatar: freezed == avatar
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String?,
-      banner: banner == freezed
+      banner: freezed == banner
           ? _value.banner
           : banner // ignore: cast_nullable_to_non_nullable
               as String?,
-      introduction: introduction == freezed
+      introduction: freezed == introduction
           ? _value.introduction
           : introduction // ignore: cast_nullable_to_non_nullable
               as String?,
-      boss: boss == freezed
+      boss: freezed == boss
           ? _value.boss
           : boss // ignore: cast_nullable_to_non_nullable
               as User?,
-      isJoined: isJoined == freezed
+      isJoined: freezed == isJoined
           ? _value.isJoined
           : isJoined // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $UserCopyWith<$Res>? get boss {
     if (_value.boss == null) {
       return null;
     }
 
     return $UserCopyWith<$Res>(_value.boss!, (value) {
-      return _then(_value.copyWith(boss: value));
+      return _then(_value.copyWith(boss: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$_TeamCopyWith<$Res> implements $TeamCopyWith<$Res> {
-  factory _$$_TeamCopyWith(_$_Team value, $Res Function(_$_Team) then) =
-      __$$_TeamCopyWithImpl<$Res>;
+abstract class _$$TeamImplCopyWith<$Res> implements $TeamCopyWith<$Res> {
+  factory _$$TeamImplCopyWith(
+          _$TeamImpl value, $Res Function(_$TeamImpl) then) =
+      __$$TeamImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       String? codeId,
@@ -138,14 +145,13 @@ abstract class _$$_TeamCopyWith<$Res> implements $TeamCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_TeamCopyWithImpl<$Res> extends _$TeamCopyWithImpl<$Res>
-    implements _$$_TeamCopyWith<$Res> {
-  __$$_TeamCopyWithImpl(_$_Team _value, $Res Function(_$_Team) _then)
-      : super(_value, (v) => _then(v as _$_Team));
+class __$$TeamImplCopyWithImpl<$Res>
+    extends _$TeamCopyWithImpl<$Res, _$TeamImpl>
+    implements _$$TeamImplCopyWith<$Res> {
+  __$$TeamImplCopyWithImpl(_$TeamImpl _value, $Res Function(_$TeamImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_Team get _value => super._value as _$_Team;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -157,36 +163,36 @@ class __$$_TeamCopyWithImpl<$Res> extends _$TeamCopyWithImpl<$Res>
     Object? boss = freezed,
     Object? isJoined = freezed,
   }) {
-    return _then(_$_Team(
-      id: id == freezed
+    return _then(_$TeamImpl(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      codeId: codeId == freezed
+      codeId: freezed == codeId
           ? _value.codeId
           : codeId // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      avatar: avatar == freezed
+      avatar: freezed == avatar
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String?,
-      banner: banner == freezed
+      banner: freezed == banner
           ? _value.banner
           : banner // ignore: cast_nullable_to_non_nullable
               as String?,
-      introduction: introduction == freezed
+      introduction: freezed == introduction
           ? _value.introduction
           : introduction // ignore: cast_nullable_to_non_nullable
               as String?,
-      boss: boss == freezed
+      boss: freezed == boss
           ? _value.boss
           : boss // ignore: cast_nullable_to_non_nullable
               as User?,
-      isJoined: isJoined == freezed
+      isJoined: freezed == isJoined
           ? _value.isJoined
           : isJoined // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -196,8 +202,8 @@ class __$$_TeamCopyWithImpl<$Res> extends _$TeamCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Team implements _Team {
-  const _$_Team(
+class _$TeamImpl implements _Team {
+  const _$TeamImpl(
       {this.id,
       this.codeId,
       this.name,
@@ -207,7 +213,8 @@ class _$_Team implements _Team {
       this.boss,
       this.isJoined});
 
-  factory _$_Team.fromJson(Map<String, dynamic> json) => _$$_TeamFromJson(json);
+  factory _$TeamImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TeamImplFromJson(json);
 
   @override
   final int? id;
@@ -235,39 +242,33 @@ class _$_Team implements _Team {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Team &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.codeId, codeId) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.avatar, avatar) &&
-            const DeepCollectionEquality().equals(other.banner, banner) &&
-            const DeepCollectionEquality()
-                .equals(other.introduction, introduction) &&
-            const DeepCollectionEquality().equals(other.boss, boss) &&
-            const DeepCollectionEquality().equals(other.isJoined, isJoined));
+            other is _$TeamImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.codeId, codeId) || other.codeId == codeId) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.avatar, avatar) || other.avatar == avatar) &&
+            (identical(other.banner, banner) || other.banner == banner) &&
+            (identical(other.introduction, introduction) ||
+                other.introduction == introduction) &&
+            (identical(other.boss, boss) || other.boss == boss) &&
+            (identical(other.isJoined, isJoined) ||
+                other.isJoined == isJoined));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(codeId),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(avatar),
-      const DeepCollectionEquality().hash(banner),
-      const DeepCollectionEquality().hash(introduction),
-      const DeepCollectionEquality().hash(boss),
-      const DeepCollectionEquality().hash(isJoined));
+  int get hashCode => Object.hash(runtimeType, id, codeId, name, avatar, banner,
+      introduction, boss, isJoined);
 
   @JsonKey(ignore: true)
   @override
-  _$$_TeamCopyWith<_$_Team> get copyWith =>
-      __$$_TeamCopyWithImpl<_$_Team>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$TeamImplCopyWith<_$TeamImpl> get copyWith =>
+      __$$TeamImplCopyWithImpl<_$TeamImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TeamToJson(
+    return _$$TeamImplToJson(
       this,
     );
   }
@@ -282,9 +283,9 @@ abstract class _Team implements Team {
       final String? banner,
       final String? introduction,
       final User? boss,
-      final bool? isJoined}) = _$_Team;
+      final bool? isJoined}) = _$TeamImpl;
 
-  factory _Team.fromJson(Map<String, dynamic> json) = _$_Team.fromJson;
+  factory _Team.fromJson(Map<String, dynamic> json) = _$TeamImpl.fromJson;
 
   @override
   int? get id;
@@ -304,5 +305,6 @@ abstract class _Team implements Team {
   bool? get isJoined;
   @override
   @JsonKey(ignore: true)
-  _$$_TeamCopyWith<_$_Team> get copyWith => throw _privateConstructorUsedError;
+  _$$TeamImplCopyWith<_$TeamImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
