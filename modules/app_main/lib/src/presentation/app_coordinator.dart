@@ -30,7 +30,7 @@ extension AppMainCoordinator on BuildContext {
 
   Future<T?> startDashboard<T>() {
     return Navigator.of(this)
-        .pushNamedAndRemoveUntil(DashboardScreen.routeName, (route) => false);
+        .pushNamedAndRemoveUntil(DashBoardScreen.routeName, (route) => false);
   }
 
   // Future<T?> startPDoneTab<T>() {

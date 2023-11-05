@@ -9,87 +9,90 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:app_core/app_core.dart' as _i3;
-import 'package:dio/dio.dart' as _i19;
+import 'package:dio/dio.dart' as _i20;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
-import 'package:mobilehub_bloc/mobilehub_bloc.dart' as _i54;
+import 'package:mobilehub_bloc/mobilehub_bloc.dart' as _i56;
 import 'package:shared_preferences/shared_preferences.dart' as _i15;
 
 import '../app_delegate.dart' as _i4;
-import '../blocs/auth/auth_cubit.dart' as _i69;
-import '../blocs/marshop/marshop_cubit.dart' as _i64;
-import '../blocs/user/user_cubit.dart' as _i67;
+import '../blocs/auth/auth_cubit.dart' as _i71;
+import '../blocs/marshop/marshop_cubit.dart' as _i66;
+import '../blocs/user/user_cubit.dart' as _i69;
 import '../core/services/notifications/notification_service.dart' as _i11;
-import '../data/data_sources/ekyc/ekyc_viettel.dart' as _i18;
-import '../data/data_sources/remote/auth_api.dart' as _i46;
-import '../data/data_sources/remote/community_api.dart' as _i50;
-import '../data/data_sources/remote/marshop_api.dart' as _i20;
-import '../data/data_sources/remote/notification_api.dart' as _i24;
-import '../data/data_sources/remote/place_information_api.dart' as _i28;
-import '../data/data_sources/remote/place_information_provider.dart' as _i29;
-import '../data/data_sources/remote/resource_api.dart' as _i33;
-import '../data/data_sources/remote/upgrade_account_api.dart' as _i37;
-import '../data/data_sources/remote/user_api.dart' as _i42;
+import '../data/data_sources/ekyc/ekyc_viettel.dart' as _i19;
+import '../data/data_sources/remote/auth_api.dart' as _i47;
+import '../data/data_sources/remote/community_api.dart' as _i51;
+import '../data/data_sources/remote/marshop_api.dart' as _i21;
+import '../data/data_sources/remote/notification_api.dart' as _i25;
+import '../data/data_sources/remote/place_information_api.dart' as _i29;
+import '../data/data_sources/remote/place_information_provider.dart' as _i30;
+import '../data/data_sources/remote/resource_api.dart' as _i34;
+import '../data/data_sources/remote/upgrade_account_api.dart' as _i38;
+import '../data/data_sources/remote/user_api.dart' as _i43;
 import '../data/models/payloads/upgrade_account/upgrade_ja/confirm_register_ja_payload.dart'
-    as _i61;
+    as _i64;
 import '../data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart'
-    as _i59;
+    as _i60;
 import '../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart'
-    as _i58;
-import '../data/models/responses/confirm_register_ja_response.dart' as _i60;
-import '../data/models/responses/ja_status_response.dart' as _i55;
+    as _i62;
+import '../data/models/responses/confirm_register_ja_response.dart' as _i63;
+import '../data/models/responses/ja_status_response.dart' as _i59;
 import '../data/models/responses/upgrade_account_response.dart' as _i57;
-import '../data/repositories/auth_repository.dart' as _i47;
-import '../data/repositories/impl/auth_repository_impl.dart' as _i48;
-import '../data/repositories/impl/community_repository.impl.dart' as _i52;
-import '../data/repositories/impl/marshop_repository_impl.dart' as _i22;
-import '../data/repositories/impl/notification_repository.impl.dart' as _i26;
+import '../data/repositories/auth_repository.dart' as _i48;
+import '../data/repositories/impl/auth_repository_impl.dart' as _i49;
+import '../data/repositories/impl/community_repository.impl.dart' as _i53;
+import '../data/repositories/impl/marshop_repository_impl.dart' as _i23;
+import '../data/repositories/impl/notification_repository.impl.dart' as _i27;
 import '../data/repositories/impl/place_information_repository.impl.dart'
-    as _i31;
-import '../data/repositories/impl/resource_repository.impl.dart' as _i35;
-import '../data/repositories/impl/upgrade_account_repository.impl.dart' as _i39;
-import '../data/repositories/impl/user_repository_impl.dart' as _i44;
-import '../data/repositories/marshop_repository.dart' as _i21;
-import '../data/repositories/notification_repository.dart' as _i25;
-import '../data/repositories/user_repository.dart' as _i43;
-import '../domain/entities/bank.dart' as _i63;
-import '../domain/entities/commity_action_type.dart' as _i62;
+    as _i32;
+import '../data/repositories/impl/resource_repository.impl.dart' as _i36;
+import '../data/repositories/impl/upgrade_account_repository.impl.dart' as _i40;
+import '../data/repositories/impl/user_repository_impl.dart' as _i45;
+import '../data/repositories/marshop_repository.dart' as _i22;
+import '../data/repositories/notification_repository.dart' as _i26;
+import '../data/repositories/user_repository.dart' as _i44;
+import '../domain/entities/bank.dart' as _i65;
+import '../domain/entities/commity_action_type.dart' as _i61;
 import '../domain/entities/update_account/bank_acount/bank_account.dart'
-    as _i56;
-import '../domain/repository/community_repository.dart' as _i51;
-import '../domain/repository/place_information_repository.dart' as _i30;
-import '../domain/repository/resource_responsitory.dart' as _i34;
-import '../domain/repository/upgrade_account_repository.dart' as _i38;
-import '../domain/usecases/authentication_usecase.dart' as _i49;
-import '../domain/usecases/community_usecase.dart' as _i53;
-import '../domain/usecases/marshop_usecase.dart' as _i23;
-import '../domain/usecases/notification_usecase.dart' as _i27;
-import '../domain/usecases/place_information_usecase.dart' as _i32;
-import '../domain/usecases/resource_usecase.dart' as _i36;
-import '../domain/usecases/upgrade_account_usecase.dart' as _i40;
+    as _i58;
+import '../domain/repository/community_repository.dart' as _i52;
+import '../domain/repository/place_information_repository.dart' as _i31;
+import '../domain/repository/resource_responsitory.dart' as _i35;
+import '../domain/repository/upgrade_account_repository.dart' as _i39;
+import '../domain/usecases/authentication_usecase.dart' as _i50;
+import '../domain/usecases/community_usecase.dart' as _i54;
+import '../domain/usecases/dashboard_share_preferences_usecase.dart' as _i18;
+import '../domain/usecases/marshop_usecase.dart' as _i24;
+import '../domain/usecases/notification_usecase.dart' as _i28;
+import '../domain/usecases/place_information_usecase.dart' as _i33;
+import '../domain/usecases/resource_usecase.dart' as _i37;
+import '../domain/usecases/upgrade_account_usecase.dart' as _i41;
 import '../domain/usecases/user_share_preferences_usecase.dart' as _i17;
-import '../domain/usecases/user_usecase.dart' as _i45;
+import '../domain/usecases/user_usecase.dart' as _i46;
 import '../presentation/authentication/authentication_routes.dart' as _i5;
-import '../presentation/community/community_module.dart' as _i71;
+import '../presentation/community/community_module.dart' as _i74;
+import '../presentation/dashboard/dashboard/state/dashboard_base_bloc.dart'
+    as _i55;
 import '../presentation/dashboard/dashboard_routes.dart' as _i6;
-import '../presentation/general_setting/general_routes.dart' as _i9;
+import '../presentation/general_setting/general_routes.dart' as _i8;
 import '../presentation/marshop/marshop_routes.dart' as _i10;
 import '../presentation/marshop/widgets/general_setting/general_routes.dart'
-    as _i8;
+    as _i9;
 import '../presentation/notification/deeplink/bloc/deeplink_bloc.dart' as _i7;
 import '../presentation/qr_code/qr_code_route.dart' as _i12;
 import '../presentation/routes.dart' as _i13;
 import '../presentation/settings/setting_routes.dart' as _i14;
-import '../presentation/shared/app_setting/bloc/app_setting_bloc.dart' as _i68;
-import '../presentation/shared/user/bloc/user_bloc.dart' as _i66;
+import '../presentation/shared/app_setting/bloc/app_setting_bloc.dart' as _i70;
+import '../presentation/shared/user/bloc/user_bloc.dart' as _i68;
 import '../presentation/upgrade_account/upgrade_account_routes.dart' as _i16;
 import '../presentation/upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart'
-    as _i72;
+    as _i73;
 import '../presentation/upgrade_account/upgrade_pdone/bloc/place_information/place_information_bloc.dart'
-    as _i65;
+    as _i67;
 import '../presentation/upgrade_account/upgrade_pdone/bloc/upgrade_pdone/upgrade_pdone_bloc.dart'
-    as _i41;
-import 'modules/data_source_module.dart' as _i70;
+    as _i42;
+import 'modules/data_source_module.dart' as _i72;
 
 const String _prod = 'prod';
 
@@ -107,8 +110,8 @@ Future<_i1.GetIt> init(
   await _i3.AppCorePackageModule().init(gh);
   final dataSourceModule = _$DataSourceModule();
   final placeModule = _$PlaceModule();
-  final upgradeAgreePolicyBlocFactory = _$UpgradeAgreePolicyBlocFactory();
   final communityModule = _$CommunityModule();
+  final upgradeAgreePolicyBlocFactory = _$UpgradeAgreePolicyBlocFactory();
   gh.singleton<_i4.AppDelegate>(_i4.AppDelegate());
   gh.factory<_i5.AuthenticationRoutes>(() => _i5.AuthenticationRoutes());
   gh.factory<_i6.DashboardRoutes>(() => _i6.DashboardRoutes());
@@ -128,126 +131,134 @@ Future<_i1.GetIt> init(
   gh.factory<_i16.UpgradeAccountRoutes>(() => _i16.UpgradeAccountRoutes());
   gh.factory<_i17.UserSharePreferencesUsecase>(
       () => _i17.UserSharePreferencesUsecase(gh<_i15.SharedPreferences>()));
+  gh.factory<_i18.DashboardSharePreferenceUseCase>(
+      () => _i18.DashboardSharePreferenceUseCase(gh<_i15.SharedPreferences>()));
   gh.factory<_i3.Dio>(
     () => dataSourceModule.dioProd(gh<_i15.SharedPreferences>()),
     registerFor: {_prod},
   );
-  gh.factory<_i18.EKycViettel>(() => _i18.EKycViettel(gh<_i19.Dio>()));
-  gh.factory<_i20.MarshopAPI>(() => _i20.MarshopAPI(gh<_i19.Dio>()));
-  gh.factory<_i21.MarshopRepository>(
-      () => _i22.MarshopRepositoryImpl(gh<_i20.MarshopAPI>()));
-  gh.factory<_i23.MarshopUsecase>(
-      () => _i23.MarshopUsecase(gh<_i21.MarshopRepository>()));
-  gh.factory<_i24.NotificationAPI>(() => _i24.NotificationAPI(gh<_i3.Dio>()));
-  gh.factory<_i25.NotificationRepository>(
-      () => _i26.NotificationRepositoryImpl(gh<_i24.NotificationAPI>()));
-  gh.factory<_i27.NotificationUsecase>(
-      () => _i27.NotificationUsecase(gh<_i25.NotificationRepository>()));
-  gh.factory<_i28.PlaceInformationAPI>(
-      () => _i28.PlaceInformationAPI(gh<_i3.Dio>()));
-  gh.factory<_i29.PlaceInformationProvider>(() => placeModule.placeProviderProd(
+  gh.factory<_i19.EKycViettel>(() => _i19.EKycViettel(gh<_i20.Dio>()));
+  gh.factory<_i21.MarshopAPI>(() => _i21.MarshopAPI(gh<_i20.Dio>()));
+  gh.factory<_i22.MarshopRepository>(
+      () => _i23.MarshopRepositoryImpl(gh<_i21.MarshopAPI>()));
+  gh.factory<_i24.MarshopUsecase>(
+      () => _i24.MarshopUsecase(gh<_i22.MarshopRepository>()));
+  gh.factory<_i25.NotificationAPI>(() => _i25.NotificationAPI(gh<_i3.Dio>()));
+  gh.factory<_i26.NotificationRepository>(
+      () => _i27.NotificationRepositoryImpl(gh<_i25.NotificationAPI>()));
+  gh.factory<_i28.NotificationUsecase>(
+      () => _i28.NotificationUsecase(gh<_i26.NotificationRepository>()));
+  gh.factory<_i29.PlaceInformationAPI>(
+      () => _i29.PlaceInformationAPI(gh<_i3.Dio>()));
+  gh.factory<_i30.PlaceInformationProvider>(() => placeModule.placeProviderProd(
         gh<_i15.SharedPreferences>(),
-        gh<_i29.PlaceInformationConfigurations>(),
+        gh<_i30.PlaceInformationConfigurations>(),
       ));
-  gh.factory<_i30.PlaceInformationRepository>(() =>
-      _i31.PlaceInformationRepositoryImpl(gh<_i28.PlaceInformationAPI>()));
-  gh.factory<_i32.PlaceInformationUsecase>(() =>
-      _i32.PlaceInformationUsecase(gh<_i30.PlaceInformationRepository>()));
-  gh.factory<_i33.ResourceApi>(() => _i33.ResourceApi(gh<_i19.Dio>()));
-  gh.factory<_i34.ResourceRepository>(
-      () => _i35.ResourceRepositoryImpl(gh<_i33.ResourceApi>()));
-  gh.factory<_i36.ResourceUsecase>(
-      () => _i36.ResourceUsecase(gh<_i34.ResourceRepository>()));
-  gh.factory<_i37.UpgradeAccountApi>(
-      () => _i37.UpgradeAccountApi(gh<_i3.Dio>()));
-  gh.factory<_i38.UpgradeAccountRepository>(
-      () => _i39.UpgradeAccountRepositoryImpl(gh<_i37.UpgradeAccountApi>()));
-  gh.factory<_i40.UpgradeAccountUsecase>(() => _i40.UpgradeAccountUsecase(
-        gh<_i38.UpgradeAccountRepository>(),
-        gh<_i18.EKycViettel>(),
+  gh.factory<_i31.PlaceInformationRepository>(() =>
+      _i32.PlaceInformationRepositoryImpl(gh<_i29.PlaceInformationAPI>()));
+  gh.factory<_i33.PlaceInformationUsecase>(() =>
+      _i33.PlaceInformationUsecase(gh<_i31.PlaceInformationRepository>()));
+  gh.factory<_i34.ResourceApi>(() => _i34.ResourceApi(gh<_i20.Dio>()));
+  gh.factory<_i35.ResourceRepository>(
+      () => _i36.ResourceRepositoryImpl(gh<_i34.ResourceApi>()));
+  gh.factory<_i37.ResourceUsecase>(
+      () => _i37.ResourceUsecase(gh<_i35.ResourceRepository>()));
+  gh.factory<_i38.UpgradeAccountApi>(
+      () => _i38.UpgradeAccountApi(gh<_i3.Dio>()));
+  gh.factory<_i39.UpgradeAccountRepository>(
+      () => _i40.UpgradeAccountRepositoryImpl(gh<_i38.UpgradeAccountApi>()));
+  gh.factory<_i41.UpgradeAccountUsecase>(() => _i41.UpgradeAccountUsecase(
+        gh<_i39.UpgradeAccountRepository>(),
+        gh<_i19.EKycViettel>(),
       ));
-  gh.factory<_i41.UpgradePDoneBloc>(() => _i41.UpgradePDoneBloc(
-        gh<_i40.UpgradeAccountUsecase>(),
-        gh<_i36.ResourceUsecase>(),
+  gh.factory<_i42.UpgradePDoneBloc>(() => _i42.UpgradePDoneBloc(
+        gh<_i41.UpgradeAccountUsecase>(),
+        gh<_i37.ResourceUsecase>(),
         gh<_i17.UserSharePreferencesUsecase>(),
       ));
-  gh.factory<_i42.UserApi>(() => _i42.UserApi(gh<_i3.Dio>()));
-  gh.factory<_i43.UserRepository>(
-      () => _i44.AuthRepositoryImpl(gh<_i42.UserApi>()));
-  gh.factory<_i45.UserUsecase>(
-      () => _i45.UserUsecase(gh<_i43.UserRepository>()));
-  gh.factory<_i46.AuthApi>(() => _i46.AuthApi(gh<_i19.Dio>()));
-  gh.factory<_i47.AuthRepository>(
-      () => _i48.AuthRepositoryImpl(gh<_i46.AuthApi>()));
-  gh.factory<_i49.AuthenticationUsecase>(() => _i49.AuthenticationUsecase(
-        gh<_i47.AuthRepository>(),
+  gh.factory<_i43.UserApi>(() => _i43.UserApi(gh<_i3.Dio>()));
+  gh.factory<_i44.UserRepository>(
+      () => _i45.AuthRepositoryImpl(gh<_i43.UserApi>()));
+  gh.factory<_i46.UserUsecase>(
+      () => _i46.UserUsecase(gh<_i44.UserRepository>()));
+  gh.factory<_i47.AuthApi>(() => _i47.AuthApi(gh<_i20.Dio>()));
+  gh.factory<_i48.AuthRepository>(
+      () => _i49.AuthRepositoryImpl(gh<_i47.AuthApi>()));
+  gh.factory<_i50.AuthenticationUsecase>(() => _i50.AuthenticationUsecase(
+        gh<_i48.AuthRepository>(),
         gh<_i17.UserSharePreferencesUsecase>(),
-        gh<_i43.UserRepository>(),
+        gh<_i44.UserRepository>(),
       ));
-  gh.factory<_i50.CommunityApi>(() => _i50.CommunityApi(gh<_i3.Dio>()));
-  gh.factory<_i51.CommunityRepository>(
-      () => _i52.CommunityRepositoryImpl(gh<_i50.CommunityApi>()));
-  gh.factory<_i53.CommunityUsecase>(
-      () => _i53.CommunityUsecase(gh<_i51.CommunityRepository>()));
-  gh.factory<_i54.GetDetailBloc<_i55.JAStatusResponse>>(() =>
+  gh.factory<_i51.CommunityApi>(() => _i51.CommunityApi(gh<_i3.Dio>()));
+  gh.factory<_i52.CommunityRepository>(
+      () => _i53.CommunityRepositoryImpl(gh<_i51.CommunityApi>()));
+  gh.factory<_i54.CommunityUsecase>(
+      () => _i54.CommunityUsecase(gh<_i52.CommunityRepository>()));
+  gh.factory<_i55.DashboardCommunityBloc>(() =>
+      _i55.DashboardCommunityBloc(gh<_i18.DashboardSharePreferenceUseCase>()));
+  gh.factory<_i55.DashboardEcommerceBloc>(() =>
+      _i55.DashboardEcommerceBloc(gh<_i18.DashboardSharePreferenceUseCase>()));
+  gh.factory<_i55.DashboardPersonalBloc>(() =>
+      _i55.DashboardPersonalBloc(gh<_i18.DashboardSharePreferenceUseCase>()));
+  gh.factory<_i56.GetDetailBloc<_i3.FanGroup>>(
+      () => communityModule.createGetFanGroupBloc(gh<_i54.CommunityUsecase>()));
+  gh.factory<_i56.GetDetailBloc<_i57.UpgradeAccountResponse>>(() =>
       upgradeAgreePolicyBlocFactory
-          .createGetJAStatusBloc(gh<_i40.UpgradeAccountUsecase>()));
-  gh.factory<_i54.GetDetailBloc<_i56.BankAccount>>(() =>
+          .createUpgradeAccountBloc(gh<_i41.UpgradeAccountUsecase>()));
+  gh.factory<_i56.GetDetailBloc<_i58.BankAccount>>(() =>
       upgradeAgreePolicyBlocFactory
-          .createGetDefaultBankBloc(gh<_i40.UpgradeAccountUsecase>()));
-  gh.factory<_i54.GetDetailBloc<_i57.UpgradeAccountResponse>>(() =>
+          .createGetDefaultBankBloc(gh<_i41.UpgradeAccountUsecase>()));
+  gh.factory<_i56.GetDetailBloc<_i59.JAStatusResponse>>(() =>
       upgradeAgreePolicyBlocFactory
-          .createUpgradeAccountBloc(gh<_i40.UpgradeAccountUsecase>()));
-  gh.factory<_i54.GetDetailBloc<_i3.FanGroup>>(
-      () => communityModule.createGetFanGroupBloc(gh<_i53.CommunityUsecase>()));
-  gh.factory<_i54.GetDetailBlocParam1<bool, _i58.VerifyPhoneOtpPayload>>(() =>
+          .createGetJAStatusBloc(gh<_i41.UpgradeAccountUsecase>()));
+  gh.factory<
+      _i56.GetDetailBlocParam1<_i58.BankAccount,
+          _i60.UpdateBankAccountPayload>>(() => upgradeAgreePolicyBlocFactory
+      .createUpdateBankAccountBloc(gh<_i41.UpgradeAccountUsecase>()));
+  gh.factory<
+      _i56.GetDetailBlocParam1<_i57.UpgradeAccountResponse,
+          _i61.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
+      .createResendOTPPhoneBloc(gh<_i41.UpgradeAccountUsecase>()));
+  gh.factory<_i56.GetDetailBlocParam1<bool, _i62.VerifyPhoneOtpPayload>>(() =>
       upgradeAgreePolicyBlocFactory.createUpgradeAccountVerifyPhoneBloc(
-          gh<_i40.UpgradeAccountUsecase>()));
+          gh<_i41.UpgradeAccountUsecase>()));
   gh.factory<
-      _i54.GetDetailBlocParam1<_i56.BankAccount,
-          _i59.UpdateBankAccountPayload>>(() => upgradeAgreePolicyBlocFactory
-      .createUpdateBankAccountBloc(gh<_i40.UpgradeAccountUsecase>()));
-  gh.factory<
-      _i54.GetDetailBlocParam1<_i60.ConfirmRegisterJAResponse,
-          _i61.ConfirmRegisterJAPayload>>(() => upgradeAgreePolicyBlocFactory
-      .createConfirmRegisterJABloc(gh<_i40.UpgradeAccountUsecase>()));
-  gh.factory<
-      _i54.GetDetailBlocParam1<_i57.UpgradeAccountResponse,
-          _i62.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
-      .createResendOTPPhoneBloc(gh<_i40.UpgradeAccountUsecase>()));
-  gh.factory<_i54.GetListBloc<_i63.Bank>>(() => upgradeAgreePolicyBlocFactory
-      .createGetListBanksBloc(gh<_i40.UpgradeAccountUsecase>()));
-  gh.factory<_i54.GetListBloc<_i3.Group>>(() =>
-      communityModule.createGetListGroupsBloc(gh<_i53.CommunityUsecase>()));
-  gh.factory<_i54.GetListBlocParam1<_i3.Team, int>>(() =>
-      communityModule.createGetListTeamsBloc(gh<_i53.CommunityUsecase>()));
-  gh.factory<_i64.MarshopCubit>(
-      () => _i64.MarshopCubit(gh<_i23.MarshopUsecase>()));
-  gh.factory<_i65.PlaceInformationBloc>(
-      () => _i65.PlaceInformationBloc(gh<_i32.PlaceInformationUsecase>()));
-  gh.factory<_i66.UserBloc>(() => _i66.UserBloc(
-        gh<_i49.AuthenticationUsecase>(),
+      _i56.GetDetailBlocParam1<_i63.ConfirmRegisterJAResponse,
+          _i64.ConfirmRegisterJAPayload>>(() => upgradeAgreePolicyBlocFactory
+      .createConfirmRegisterJABloc(gh<_i41.UpgradeAccountUsecase>()));
+  gh.factory<_i56.GetListBloc<_i3.Group>>(() =>
+      communityModule.createGetListGroupsBloc(gh<_i54.CommunityUsecase>()));
+  gh.factory<_i56.GetListBloc<_i65.Bank>>(() => upgradeAgreePolicyBlocFactory
+      .createGetListBanksBloc(gh<_i41.UpgradeAccountUsecase>()));
+  gh.factory<_i56.GetListBlocParam1<_i3.Team, int>>(() =>
+      communityModule.createGetListTeamsBloc(gh<_i54.CommunityUsecase>()));
+  gh.factory<_i66.MarshopCubit>(
+      () => _i66.MarshopCubit(gh<_i24.MarshopUsecase>()));
+  gh.factory<_i67.PlaceInformationBloc>(
+      () => _i67.PlaceInformationBloc(gh<_i33.PlaceInformationUsecase>()));
+  gh.factory<_i68.UserBloc>(() => _i68.UserBloc(
+        gh<_i50.AuthenticationUsecase>(),
         gh<_i17.UserSharePreferencesUsecase>(),
-        gh<_i45.UserUsecase>(),
+        gh<_i46.UserUsecase>(),
         gh<_i3.UserInformationCubit>(),
       ));
-  gh.factory<_i67.UserCubit>(() => _i67.UserCubit(
-        gh<_i49.AuthenticationUsecase>(),
+  gh.factory<_i69.UserCubit>(() => _i69.UserCubit(
+        gh<_i50.AuthenticationUsecase>(),
         gh<_i17.UserSharePreferencesUsecase>(),
-        gh<_i45.UserUsecase>(),
+        gh<_i46.UserUsecase>(),
       ));
-  gh.singleton<_i68.AppSettingBloc>(
-      _i68.AppSettingBloc(gh<_i49.AuthenticationUsecase>()));
-  gh.factory<_i69.AuthCubit>(
-      () => _i69.AuthCubit(gh<_i49.AuthenticationUsecase>()));
+  gh.singleton<_i70.AppSettingBloc>(
+      _i70.AppSettingBloc(gh<_i50.AuthenticationUsecase>()));
+  gh.factory<_i71.AuthCubit>(
+      () => _i71.AuthCubit(gh<_i50.AuthenticationUsecase>()));
   return getIt;
 }
 
-class _$DataSourceModule extends _i70.DataSourceModule {}
+class _$DataSourceModule extends _i72.DataSourceModule {}
 
-class _$PlaceModule extends _i29.PlaceModule {}
-
-class _$CommunityModule extends _i71.CommunityModule {}
+class _$PlaceModule extends _i30.PlaceModule {}
 
 class _$UpgradeAgreePolicyBlocFactory
-    extends _i72.UpgradeAgreePolicyBlocFactory {}
+    extends _i73.UpgradeAgreePolicyBlocFactory {}
+
+class _$CommunityModule extends _i74.CommunityModule {}
