@@ -6,26 +6,29 @@ part of 'team.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Team _$$_TeamFromJson(Map<String, dynamic> json) => _$_Team(
-      id: json['id'] as int?,
-      codeId: json['codeId'] as String?,
+_$TeamImpl _$$TeamImplFromJson(Map<String, dynamic> json) => _$TeamImpl(
+      id: json['id'] as String?,
+      groupId: json['groupId'] as String?,
       name: json['name'] as String?,
       avatar: json['avatar'] as String?,
       banner: json['banner'] as String?,
+      status: json['status'] as int?,
       introduction: json['introduction'] as String?,
       boss: json['boss'] == null
           ? null
           : User.fromJson(json['boss'] as Map<String, dynamic>),
-      isJoined: json['isJoined'] as bool?,
+      memberCount: json['memberCount'] as int?,
     );
 
-Map<String, dynamic> _$$_TeamToJson(_$_Team instance) => <String, dynamic>{
+Map<String, dynamic> _$$TeamImplToJson(_$TeamImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
-      'codeId': instance.codeId,
+      'groupId': instance.groupId,
       'name': instance.name,
       'avatar': instance.avatar,
       'banner': instance.banner,
+      'status': instance.status,
       'introduction': instance.introduction,
       'boss': instance.boss,
-      'isJoined': instance.isJoined,
+      'memberCount': instance.memberCount,
     };

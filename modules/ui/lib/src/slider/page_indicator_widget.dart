@@ -48,7 +48,8 @@ class PageIndicatorWidget extends StatefulWidget {
 class _PageIndicatorWidgetState extends State<PageIndicatorWidget> {
   double _pageCurrent = 0;
 
-  void _actionGotoPage(double page) {
+  void _actionGotoPage(int currentPage) {
+    final page = currentPage.toDouble();
     if (widget.controller != null) {
       if (widget.onChangePage != null) {
         widget.onChangePage!(page);
@@ -93,7 +94,7 @@ class _PageIndicatorWidgetState extends State<PageIndicatorWidget> {
 
     return DotsIndicator(
       dotsCount: widget.countItem,
-      position: _pageCurrent,
+      position: _pageCurrent.toInt(),
       onTap: _actionGotoPage,
       decorator: DotsDecorator(
         color: colorDot,

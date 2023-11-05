@@ -15,32 +15,32 @@ class CommunityRepositoryImpl extends CommunityRepository {
   Future<List<Group>> getGroups() async {
     final res = await _communityApi.getGroups();
 
-    return res.data;
+    return res.groups;
   }
 
   @override
-  Future<List<Team>> getTeamByGroupID(int id) async {
+  Future<List<Team>> getTeamByGroupID(String id) async {
     final res = await _communityApi.getTeams(id: id);
 
     return res.data;
   }
 
   @override
-  Future<Group> getGroup(int id) async {
-    final res = await _communityApi.getGroup(id);
+  Future<Group> getGroup(String id) async {
+    final res = await _communityApi.getGroupById(id);
 
-    return res.data;
+    return res.group;
   }
 
   @override
-  Future<Team> getTeamById(int id) async {
+  Future<Team> getTeamById(String id) async {
     final res = await _communityApi.getTeamById(id);
 
-    return res.data;
+    return res.team;
   }
 
   @override
-  Future<List<Member>> getMembers(int id) async {
+  Future<List<Member>> getMembers(String id) async {
     final res = await _communityApi.getMembers(id: id);
 
     return res.data;
@@ -85,13 +85,13 @@ class CommunityRepositoryImpl extends CommunityRepository {
   // }
 
   @override
-  Future<Group> updateGroup(int id, UpdateCommunityPayload payload) async {
+  Future<Group> updateGroup(String id, UpdateCommunityPayload payload) async {
     final res = await _communityApi.updateGroup(id: id, payload: payload);
     return res.data;
   }
 
   @override
-  Future<Team> updateTeam(int id, UpdateCommunityPayload payload) async {
+  Future<Team> updateTeam(String id, UpdateCommunityPayload payload) async {
     final res = await _communityApi.updateTeam(id: id, payload: payload);
     return res.data;
   }
@@ -141,5 +141,21 @@ class CommunityRepositoryImpl extends CommunityRepository {
   Future<bool> updateFanGroup(int id, UpdateCommunityPayload payload) async {
     final res = await _communityApi.editFanGroup(id: id, payload: payload);
     return res.success;
+  }
+
+  @override
+  Future<List<Team>> getTeamList({
+    required int page,
+    required int pageSize,
+    String? groupId,
+    String? bossId,
+  }) async {
+    final res = await _communityApi.getTeamList(
+      page: page,
+      pageSize: pageSize,
+      groupId: groupId,
+      bossId: bossId,
+    );
+    return res.teams;
   }
 }

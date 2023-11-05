@@ -1,19 +1,22 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/networking/data_rows_response.dart';
+import 'package:app_main/src/data/models/responses/team_response.dart';
 import 'package:app_main/src/domain/entities/community/update_community_payload.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../models/responses/api_response.dart';
+import '../../models/responses/group_response.dart';
 
 part 'community_api.g.dart';
 
 class CommunityApiConstants {
   static const String getGroups = 'api/v1/group';
-  static const String getGroup = 'api/group/{id}';
+  static const String getGroupById = 'api/v1/group/{id}';
   static const String getTeams = 'api/group/{id}/team';
-  static const String getTeamById = 'api/team/{id}';
+  static const String getTeamById = 'api/v1/team/{id}';
   static const String getMembers = 'api/team/{id}/get-member';
+  static const String getTeamList = 'api/v1/team/list';
 
   /// get Team & Group By BossId
   static const String getGroupDetail = 'api/group/boss-team/{id}';
@@ -35,22 +38,22 @@ abstract class CommunityApi {
   factory CommunityApi(Dio dio) = _CommunityApi;
 
   @GET(CommunityApiConstants.getGroups)
-  Future<ApiResponse<List<Group>>> getGroups();
+  Future<GroupResponse> getGroups();
 
-  @GET(CommunityApiConstants.getGroup)
-  Future<ApiResponse<Group>> getGroup(@Path('id') int id);
+  @GET(CommunityApiConstants.getGroupById)
+  Future<GroupByIdResponse> getGroupById(@Path('id') String id);
 
   @GET(CommunityApiConstants.getTeams)
   Future<ApiResponse<List<Team>>> getTeams({
-    @Path('id') required int id,
+    @Path('id') required String id,
   });
 
   @GET(CommunityApiConstants.getTeamById)
-  Future<ApiResponse<Team>> getTeamById(@Path('id') int id);
+  Future<TeamByIdResponse> getTeamById(@Path('id') String id);
 
   @GET(CommunityApiConstants.getMembers)
   Future<ApiResponse<List<Member>>> getMembers({
-    @Path('id') required int id,
+    @Path('id') required String id,
   });
 
   @GET(CommunityApiConstants.getGroupDetail)
@@ -65,13 +68,21 @@ abstract class CommunityApi {
 
   @PUT(CommunityApiConstants.updateGroup)
   Future<ApiResponse<Group>> updateGroup({
-    @Path('id') required int id,
+    @Path('id') required String id,
     @Body() required UpdateCommunityPayload payload,
+  });
+
+  @GET(CommunityApiConstants.getTeamList)
+  Future<TeamResponse> getTeamList({
+    @Query('page') required int page,
+    @Query('pageSize') required int pageSize,
+    @Query('groupId') String? groupId,
+    @Query('bossId') String? bossId,
   });
 
   @PUT(CommunityApiConstants.updateTeam)
   Future<ApiResponse<Team>> updateTeam({
-    @Path('id') required int id,
+    @Path('id') required String id,
     @Body() required UpdateCommunityPayload payload,
   });
 

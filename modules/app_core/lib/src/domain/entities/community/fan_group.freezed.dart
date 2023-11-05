@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'fan_group.dart';
 
@@ -40,7 +40,8 @@ mixin _$FanGroup {
 /// @nodoc
 abstract class $FanGroupCopyWith<$Res> {
   factory $FanGroupCopyWith(FanGroup value, $Res Function(FanGroup) then) =
-      _$FanGroupCopyWithImpl<$Res>;
+      _$FanGroupCopyWithImpl<$Res, FanGroup>;
+  @useResult
   $Res call(
       {int? id,
       String? name,
@@ -57,13 +58,16 @@ abstract class $FanGroupCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$FanGroupCopyWithImpl<$Res> implements $FanGroupCopyWith<$Res> {
+class _$FanGroupCopyWithImpl<$Res, $Val extends FanGroup>
+    implements $FanGroupCopyWith<$Res> {
   _$FanGroupCopyWithImpl(this._value, this._then);
 
-  final FanGroup _value;
   // ignore: unused_field
-  final $Res Function(FanGroup) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -78,67 +82,70 @@ class _$FanGroupCopyWithImpl<$Res> implements $FanGroupCopyWith<$Res> {
     Object? totalMember = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      avatar: avatar == freezed
+      avatar: freezed == avatar
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String?,
-      banner: banner == freezed
+      banner: freezed == banner
           ? _value.banner
           : banner // ignore: cast_nullable_to_non_nullable
               as String?,
-      introduction: introduction == freezed
+      introduction: freezed == introduction
           ? _value.introduction
           : introduction // ignore: cast_nullable_to_non_nullable
               as String?,
-      boss: boss == freezed
+      boss: freezed == boss
           ? _value.boss
           : boss // ignore: cast_nullable_to_non_nullable
               as User?,
-      contests: contests == freezed
+      contests: freezed == contests
           ? _value.contests
           : contests // ignore: cast_nullable_to_non_nullable
               as List<Contest>?,
-      totalBossGroup: totalBossGroup == freezed
+      totalBossGroup: freezed == totalBossGroup
           ? _value.totalBossGroup
           : totalBossGroup // ignore: cast_nullable_to_non_nullable
               as int?,
-      totalBossTeam: totalBossTeam == freezed
+      totalBossTeam: freezed == totalBossTeam
           ? _value.totalBossTeam
           : totalBossTeam // ignore: cast_nullable_to_non_nullable
               as int?,
-      totalMember: totalMember == freezed
+      totalMember: freezed == totalMember
           ? _value.totalMember
           : totalMember // ignore: cast_nullable_to_non_nullable
               as int?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $UserCopyWith<$Res>? get boss {
     if (_value.boss == null) {
       return null;
     }
 
     return $UserCopyWith<$Res>(_value.boss!, (value) {
-      return _then(_value.copyWith(boss: value));
+      return _then(_value.copyWith(boss: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$_FanGroupCopyWith<$Res> implements $FanGroupCopyWith<$Res> {
-  factory _$$_FanGroupCopyWith(
-          _$_FanGroup value, $Res Function(_$_FanGroup) then) =
-      __$$_FanGroupCopyWithImpl<$Res>;
+abstract class _$$FanGroupImplCopyWith<$Res>
+    implements $FanGroupCopyWith<$Res> {
+  factory _$$FanGroupImplCopyWith(
+          _$FanGroupImpl value, $Res Function(_$FanGroupImpl) then) =
+      __$$FanGroupImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       String? name,
@@ -156,15 +163,14 @@ abstract class _$$_FanGroupCopyWith<$Res> implements $FanGroupCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_FanGroupCopyWithImpl<$Res> extends _$FanGroupCopyWithImpl<$Res>
-    implements _$$_FanGroupCopyWith<$Res> {
-  __$$_FanGroupCopyWithImpl(
-      _$_FanGroup _value, $Res Function(_$_FanGroup) _then)
-      : super(_value, (v) => _then(v as _$_FanGroup));
+class __$$FanGroupImplCopyWithImpl<$Res>
+    extends _$FanGroupCopyWithImpl<$Res, _$FanGroupImpl>
+    implements _$$FanGroupImplCopyWith<$Res> {
+  __$$FanGroupImplCopyWithImpl(
+      _$FanGroupImpl _value, $Res Function(_$FanGroupImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_FanGroup get _value => super._value as _$_FanGroup;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -178,44 +184,44 @@ class __$$_FanGroupCopyWithImpl<$Res> extends _$FanGroupCopyWithImpl<$Res>
     Object? totalBossTeam = freezed,
     Object? totalMember = freezed,
   }) {
-    return _then(_$_FanGroup(
-      id: id == freezed
+    return _then(_$FanGroupImpl(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      avatar: avatar == freezed
+      avatar: freezed == avatar
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
               as String?,
-      banner: banner == freezed
+      banner: freezed == banner
           ? _value.banner
           : banner // ignore: cast_nullable_to_non_nullable
               as String?,
-      introduction: introduction == freezed
+      introduction: freezed == introduction
           ? _value.introduction
           : introduction // ignore: cast_nullable_to_non_nullable
               as String?,
-      boss: boss == freezed
+      boss: freezed == boss
           ? _value.boss
           : boss // ignore: cast_nullable_to_non_nullable
               as User?,
-      contests: contests == freezed
+      contests: freezed == contests
           ? _value._contests
           : contests // ignore: cast_nullable_to_non_nullable
               as List<Contest>?,
-      totalBossGroup: totalBossGroup == freezed
+      totalBossGroup: freezed == totalBossGroup
           ? _value.totalBossGroup
           : totalBossGroup // ignore: cast_nullable_to_non_nullable
               as int?,
-      totalBossTeam: totalBossTeam == freezed
+      totalBossTeam: freezed == totalBossTeam
           ? _value.totalBossTeam
           : totalBossTeam // ignore: cast_nullable_to_non_nullable
               as int?,
-      totalMember: totalMember == freezed
+      totalMember: freezed == totalMember
           ? _value.totalMember
           : totalMember // ignore: cast_nullable_to_non_nullable
               as int?,
@@ -225,8 +231,8 @@ class __$$_FanGroupCopyWithImpl<$Res> extends _$FanGroupCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_FanGroup implements _FanGroup {
-  const _$_FanGroup(
+class _$FanGroupImpl implements _FanGroup {
+  const _$FanGroupImpl(
       {this.id,
       this.name,
       this.avatar,
@@ -239,8 +245,8 @@ class _$_FanGroup implements _FanGroup {
       this.totalMember})
       : _contests = contests;
 
-  factory _$_FanGroup.fromJson(Map<String, dynamic> json) =>
-      _$$_FanGroupFromJson(json);
+  factory _$FanGroupImpl.fromJson(Map<String, dynamic> json) =>
+      _$$FanGroupImplFromJson(json);
 
   @override
   final int? id;
@@ -259,6 +265,7 @@ class _$_FanGroup implements _FanGroup {
   List<Contest>? get contests {
     final value = _contests;
     if (value == null) return null;
+    if (_contests is EqualUnmodifiableListView) return _contests;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -279,46 +286,47 @@ class _$_FanGroup implements _FanGroup {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_FanGroup &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.avatar, avatar) &&
-            const DeepCollectionEquality().equals(other.banner, banner) &&
-            const DeepCollectionEquality()
-                .equals(other.introduction, introduction) &&
-            const DeepCollectionEquality().equals(other.boss, boss) &&
+            other is _$FanGroupImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.avatar, avatar) || other.avatar == avatar) &&
+            (identical(other.banner, banner) || other.banner == banner) &&
+            (identical(other.introduction, introduction) ||
+                other.introduction == introduction) &&
+            (identical(other.boss, boss) || other.boss == boss) &&
             const DeepCollectionEquality().equals(other._contests, _contests) &&
-            const DeepCollectionEquality()
-                .equals(other.totalBossGroup, totalBossGroup) &&
-            const DeepCollectionEquality()
-                .equals(other.totalBossTeam, totalBossTeam) &&
-            const DeepCollectionEquality()
-                .equals(other.totalMember, totalMember));
+            (identical(other.totalBossGroup, totalBossGroup) ||
+                other.totalBossGroup == totalBossGroup) &&
+            (identical(other.totalBossTeam, totalBossTeam) ||
+                other.totalBossTeam == totalBossTeam) &&
+            (identical(other.totalMember, totalMember) ||
+                other.totalMember == totalMember));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(avatar),
-      const DeepCollectionEquality().hash(banner),
-      const DeepCollectionEquality().hash(introduction),
-      const DeepCollectionEquality().hash(boss),
+      id,
+      name,
+      avatar,
+      banner,
+      introduction,
+      boss,
       const DeepCollectionEquality().hash(_contests),
-      const DeepCollectionEquality().hash(totalBossGroup),
-      const DeepCollectionEquality().hash(totalBossTeam),
-      const DeepCollectionEquality().hash(totalMember));
+      totalBossGroup,
+      totalBossTeam,
+      totalMember);
 
   @JsonKey(ignore: true)
   @override
-  _$$_FanGroupCopyWith<_$_FanGroup> get copyWith =>
-      __$$_FanGroupCopyWithImpl<_$_FanGroup>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$FanGroupImplCopyWith<_$FanGroupImpl> get copyWith =>
+      __$$FanGroupImplCopyWithImpl<_$FanGroupImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_FanGroupToJson(
+    return _$$FanGroupImplToJson(
       this,
     );
   }
@@ -335,9 +343,10 @@ abstract class _FanGroup implements FanGroup {
       final List<Contest>? contests,
       final int? totalBossGroup,
       final int? totalBossTeam,
-      final int? totalMember}) = _$_FanGroup;
+      final int? totalMember}) = _$FanGroupImpl;
 
-  factory _FanGroup.fromJson(Map<String, dynamic> json) = _$_FanGroup.fromJson;
+  factory _FanGroup.fromJson(Map<String, dynamic> json) =
+      _$FanGroupImpl.fromJson;
 
   @override
   int? get id;
@@ -361,6 +370,6 @@ abstract class _FanGroup implements FanGroup {
   int? get totalMember;
   @override
   @JsonKey(ignore: true)
-  _$$_FanGroupCopyWith<_$_FanGroup> get copyWith =>
+  _$$FanGroupImplCopyWith<_$FanGroupImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

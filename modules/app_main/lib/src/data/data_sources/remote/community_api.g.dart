@@ -19,13 +19,13 @@ class _CommunityApi implements CommunityApi {
   String? baseUrl;
 
   @override
-  Future<ApiResponse<List<Group>>> getGroups() async {
+  Future<GroupResponse> getGroups() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<List<Group>>>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<GroupResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -41,32 +41,25 @@ class _CommunityApi implements CommunityApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<List<Group>>.fromJson(
-      _result.data!,
-      (json) => json is List<dynamic>
-          ? json
-              .map<Group>((i) => Group.fromJson(i as Map<String, dynamic>))
-              .toList()
-          : List.empty(),
-    );
+    final value = GroupResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<ApiResponse<Group>> getGroup(int id) async {
+  Future<GroupByIdResponse> getGroupById(String id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<Group>>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<GroupByIdResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'api/group/${id}',
+              'api/v1/group/${id}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -75,15 +68,12 @@ class _CommunityApi implements CommunityApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<Group>.fromJson(
-      _result.data!,
-      (json) => Group.fromJson(json as Map<String, dynamic>),
-    );
+    final value = GroupByIdResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<ApiResponse<List<Team>>> getTeams({required int id}) async {
+  Future<ApiResponse<List<Team>>> getTeams({required String id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -117,20 +107,20 @@ class _CommunityApi implements CommunityApi {
   }
 
   @override
-  Future<ApiResponse<Team>> getTeamById(int id) async {
+  Future<TeamByIdResponse> getTeamById(String id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<Team>>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<TeamByIdResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'api/team/${id}',
+              'api/v1/team/${id}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -139,15 +129,12 @@ class _CommunityApi implements CommunityApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<Team>.fromJson(
-      _result.data!,
-      (json) => Team.fromJson(json as Map<String, dynamic>),
-    );
+    final value = TeamByIdResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<ApiResponse<List<Member>>> getMembers({required int id}) async {
+  Future<ApiResponse<List<Member>>> getMembers({required String id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -242,7 +229,7 @@ class _CommunityApi implements CommunityApi {
 
   @override
   Future<ApiResponse<Group>> updateGroup({
-    required int id,
+    required String id,
     required UpdateCommunityPayload payload,
   }) async {
     const _extra = <String, dynamic>{};
@@ -274,8 +261,46 @@ class _CommunityApi implements CommunityApi {
   }
 
   @override
+  Future<TeamResponse> getTeamList({
+    required int page,
+    required int pageSize,
+    String? groupId,
+    String? bossId,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'page': page,
+      r'pageSize': pageSize,
+      r'groupId': groupId,
+      r'bossId': bossId,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<TeamResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/v1/team/list',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = TeamResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<ApiResponse<Team>> updateTeam({
-    required int id,
+    required String id,
     required UpdateCommunityPayload payload,
   }) async {
     const _extra = <String, dynamic>{};

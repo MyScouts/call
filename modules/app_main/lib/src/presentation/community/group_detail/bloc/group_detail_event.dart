@@ -4,7 +4,7 @@ part of 'group_detail_bloc.dart';
 abstract class GroupDetailEvent {}
 
 class FetchGroupDetailEvent extends GroupDetailEvent {
-  final int id;
+  final String id;
 
   FetchGroupDetailEvent(this.id);
 }

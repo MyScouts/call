@@ -4,6 +4,7 @@ import 'package:app_main/src/presentation/shared/user/bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:mobilehub_core/mobilehub_core.dart';
 
 import 'edit_community_detail/bloc/edit_community_detail_bloc.dart';
@@ -25,7 +26,7 @@ class CommunityRoutes extends RouteModule {
           return MultiBlocProvider(
             providers: [
               BlocProvider<GetListGroupsBloc>(
-                create: (context) => injector.get(),
+                create: (context) => injector.get()..add(GetListDataEvent()),
               ),
               BlocProvider<GetFanGroupBloc>(
                 create: (context) => injector.get(),

@@ -11,14 +11,15 @@ part 'team.g.dart';
 @freezed
 class Team with _$Team {
   const factory Team({
-    int? id,
-    String? codeId,
+    String? id,
+    String? groupId,
     String? name,
     String? avatar,
     String? banner,
+    int? status,
     String? introduction,
     User? boss,
-    bool? isJoined,
+    int? memberCount,
   }) = _Team;
 
   factory Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson(json);

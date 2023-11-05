@@ -15,6 +15,7 @@ import '../../data/models/responses/upgrade_account_response.dart';
 import '../settings/contract_ja/contract_ja_screen.dart';
 import 'upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'upgrade_ja/upgrade_ja_screen.dart';
+import 'upgrade_ja/widgets/upgrade_success_widget.dialog.dart';
 import 'upgrade_ja/widgets/verify_phone_otp_dialog_widget.dart';
 import 'upgrade_pdone/bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 import 'upgrade_pdone/pages/register_state_page.dart';
@@ -161,16 +162,16 @@ extension UpgradeAccountCoordinator on BuildContext {
     );
   }
 
-  // Future<T?> startDialogUpgradeAccountSuccess<T>(String text) {
-  //   return showGeneralDialog<T>(
-  //     context: this,
-  //     barrierDismissible: true,
-  //     barrierLabel: '',
-  //     pageBuilder: (context, animation1, animation2) {
-  //       return UpgradeSuccessDialogWidget(text: text);
-  //     },
-  //   );
-  // }
+  Future<T?> startDialogUpgradeAccountSuccess<T>(String text) {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: true,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return UpgradeSuccessDialogWidget(text: text);
+      },
+    );
+  }
 
   Future<T?> startDialogWarningUpgradeJA<T>({required String title}) {
     return showGeneralDialog<T>(

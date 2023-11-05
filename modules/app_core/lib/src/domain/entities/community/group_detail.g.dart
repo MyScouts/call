@@ -6,8 +6,8 @@ part of 'group_detail.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_GroupDetail _$$_GroupDetailFromJson(Map<String, dynamic> json) =>
-    _$_GroupDetail(
+_$GroupDetailImpl _$$GroupDetailImplFromJson(Map<String, dynamic> json) =>
+    _$GroupDetailImpl(
       team: json['team'] == null
           ? null
           : Team.fromJson(json['team'] as Map<String, dynamic>),
@@ -16,7 +16,7 @@ _$_GroupDetail _$$_GroupDetailFromJson(Map<String, dynamic> json) =>
           : Group.fromJson(json['group'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_GroupDetailToJson(_$_GroupDetail instance) =>
+Map<String, dynamic> _$$GroupDetailImplToJson(_$GroupDetailImpl instance) =>
     <String, dynamic>{
       'team': instance.team,
       'group': instance.group,

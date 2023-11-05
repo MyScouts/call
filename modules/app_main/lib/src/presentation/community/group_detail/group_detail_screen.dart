@@ -24,7 +24,7 @@ class GroupDetailScreen extends StatefulWidget {
 
   final String? groupName;
   final String? cover;
-  final int id;
+  final String id;
 
   @override
   State<GroupDetailScreen> createState() => _GroupDetailScreenState();
@@ -69,6 +69,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.bgColor,
       body: BlocBuilder<GroupDetailBloc, GroupDetailState>(
         builder: (context, state) {
           if (state is LoadingGroupDetail) {
@@ -104,7 +105,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                 margin: const EdgeInsets.only(top: 8),
                 padding: const EdgeInsets.only(bottom: 28.0),
                 child: ImageWidget(
-                  group?.avatar ?? ImageConstants.defaultAvatar,
+                  group?.avatar ?? ImageConstants.imgdefault,
                   width: 100,
                   height: 100,
                   borderRadius: 50,
@@ -123,11 +124,11 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                             group?.name ?? '',
                             style: Theme.of(context).textTheme.labelLarge,
                           ),
-                        if (group?.codeId?.isNotEmpty ?? false)
+                        if (group?.id?.isNotEmpty ?? false)
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5),
                             child: Text(
-                              'ID: ${group?.codeId}',
+                              'ID: ${group?.id}',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall
@@ -213,7 +214,10 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                       if (state is FetchTeamsSuccess) {
                         final teams = state.teams;
                         return SliverPadding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 8)
+                              .copyWith(
+                            bottom: MediaQuery.of(context).padding.bottom,
+                          ),
                           sliver: SliverGrid(
                             delegate: SliverChildBuilderDelegate(
                               (context, index) {
@@ -226,7 +230,10 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                             ),
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
+                              crossAxisCount: 2,
+                              childAspectRatio: 2.0,
+                              mainAxisSpacing: 8,
+                              crossAxisSpacing: 10,
                             ),
                           ),
                         );

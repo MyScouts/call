@@ -4,21 +4,21 @@ import 'package:app_main/src/domain/entities/community/update_community_payload.
 abstract class CommunityRepository {
   Future<List<Group>> getGroups();
 
-  Future<Group> getGroup(int id);
+  Future<Group> getGroup(String id);
 
-  Future<List<Team>> getTeamByGroupID(int id);
+  Future<List<Team>> getTeamByGroupID(String id);
 
-  Future<Team> getTeamById(int id);
+  Future<Team> getTeamById(String id);
 
-  Future<List<Member>> getMembers(int id);
+  Future<List<Member>> getMembers(String id);
 
   Future<GroupDetail> getGroupDetail(String id);
 
   Future<bool> checkBossTeamId(String id);
 
-  Future<Group> updateGroup(int id, UpdateCommunityPayload payload);
+  Future<Group> updateGroup(String id, UpdateCommunityPayload payload);
 
-  Future<Team> updateTeam(int id, UpdateCommunityPayload payload);
+  Future<Team> updateTeam(String id, UpdateCommunityPayload payload);
 
   Future<FanGroup> getFanGroup();
 
@@ -30,6 +30,13 @@ abstract class CommunityRepository {
     int? page,
     int? pageSize,
   );
+
+  Future<List<Team>> getTeamList({
+    required int page,
+    required int pageSize,
+    String? groupId,
+    String? bossId,
+  });
 
   Future<bool> joinFanGroup(int id);
 

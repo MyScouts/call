@@ -4,7 +4,7 @@ part of 'team_detail_bloc.dart';
 abstract class TeamDetailEvent {}
 
 class FetchTeamDetailEvent extends TeamDetailEvent {
-  final int id;
+  final String id;
 
   FetchTeamDetailEvent(this.id);
 }

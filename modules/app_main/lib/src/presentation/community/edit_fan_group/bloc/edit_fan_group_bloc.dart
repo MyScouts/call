@@ -65,4 +65,18 @@ class EditFanGroupBloc extends Bloc<EditFanGroupEvent, EditFanGroupState> {
       emit(UpdateInformationFailure(state.fanGroup, e));
     }
   }
+
+  FutureOr<void> _mapGetTeamListEvent(
+      UpdateFanGroupEvent event, Emitter<EditFanGroupState> emit) async {
+    try {
+      final res =
+          await _communityUsecase.updateFanGroup(event.id, event.payload);
+
+      if (res) {
+        emit(UpdateFanGroupSuccess(state.fanGroup));
+      }
+    } catch (e) {
+      emit(UpdateInformationFailure(state.fanGroup, e));
+    }
+  }
 }

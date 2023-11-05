@@ -1,7 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
 
-import '../authentication/authentication_coordinator.dart';
 import 'community_constants.dart';
 import 'edit_community_detail/edit_community_detail_screen.dart';
 import 'edit_fan_group/edit_fan_group_screen.dart';
@@ -11,7 +10,7 @@ import 'team_detail/team_detail_screen.dart';
 
 extension CommunityCoordinator on BuildContext {
   Future<T?> startGroupDetail<T>(
-      {required int? id, String? groupName, String? cover}) {
+      {required String? id, String? groupName, String? cover}) {
     // if (!isAuthenticated) {
     //   return startLogin<T>(hasDashboard: true);
     // }
@@ -25,7 +24,7 @@ extension CommunityCoordinator on BuildContext {
   }
 
   Future<T?> startTeamDetail<T>(
-      {required int? id, String? name, String? cover}) {
+      {required String? id, String? name, String? cover}) {
     // if (!isAuthenticated) {
     //   return startLogin<T>(hasDashboard: true);
     // }

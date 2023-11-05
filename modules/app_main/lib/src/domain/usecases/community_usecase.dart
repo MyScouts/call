@@ -7,7 +7,6 @@ import 'package:injectable/injectable.dart';
 
 import '../repository/community_repository.dart';
 
-
 @injectable
 class CommunityUsecase {
   final CommunityRepository _communityRepository;
@@ -19,15 +18,15 @@ class CommunityUsecase {
     return _communityRepository.getGroups();
   }
 
-  Future<Group> getGroupDetail(int id) => _communityRepository.getGroup(id);
+  Future<Group> getGroupDetail(String id) => _communityRepository.getGroup(id);
 
-  Future<List<Team>> getTeamByGroupID(int id) {
+  Future<List<Team>> getTeamByGroupID(String id) {
     return _communityRepository.getTeamByGroupID(id);
   }
 
-  Future<Team> getTeamById(int id) => _communityRepository.getTeamById(id);
+  Future<Team> getTeamById(String id) => _communityRepository.getTeamById(id);
 
-  Future<List<Member>> getMembers(int id) {
+  Future<List<Member>> getMembers(String id) {
     return _communityRepository.getMembers(id);
   }
 
@@ -43,11 +42,11 @@ class CommunityUsecase {
     }
   }
 
-  Future<Group> updateGroup(int id, UpdateCommunityPayload payload) async {
+  Future<Group> updateGroup(String id, UpdateCommunityPayload payload) async {
     return _communityRepository.updateGroup(id, payload);
   }
 
-  Future<Team> updateTeam(int id, UpdateCommunityPayload payload) async {
+  Future<Team> updateTeam(String id, UpdateCommunityPayload payload) async {
     return _communityRepository.updateTeam(id, payload);
   }
 
@@ -72,5 +71,19 @@ class CommunityUsecase {
 
   Future<bool> updateFanGroup(int id, UpdateCommunityPayload payload) async {
     return _communityRepository.updateFanGroup(id, payload);
+  }
+
+  Future<List<Team>> getTeamList({
+    required int page,
+    required int pageSize,
+    String? groupId,
+    String? bossId,
+  }) async {
+    return _communityRepository.getTeamList(
+      pageSize: pageSize,
+      page: page,
+      groupId: groupId,
+      bossId: bossId,
+    );
   }
 }

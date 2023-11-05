@@ -26,7 +26,7 @@ class TeamDetailScreen extends StatefulWidget {
     this.name,
   });
 
-  final int id;
+  final String id;
   final String? name;
   final String? cover;
 
@@ -146,14 +146,14 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                                 team?.name ?? '',
                                 style: Theme.of(context).textTheme.labelLarge,
                               ),
-                            if (team?.codeId?.isNotEmpty ?? false)
+                            if (team?.id?.isNotEmpty ?? false)
                               Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 5)
                                     .copyWith(bottom: !isJA ? 20 : 0),
                                 child: GestureDetector(
-                                  onTap: () => copyText('${team?.codeId}'),
+                                  onTap: () => copyText('${team?.id}'),
                                   child: Text(
-                                    'ID: ${team?.codeId}',
+                                    'ID: ${team?.id}',
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodySmall

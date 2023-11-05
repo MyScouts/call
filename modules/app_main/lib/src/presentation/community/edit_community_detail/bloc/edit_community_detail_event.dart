@@ -15,14 +15,14 @@ class UserChangeBannerEvent extends EditCommunityDetailEvent {
 }
 
 class UpdateGroupEvent extends EditCommunityDetailEvent {
-  final int id;
+  final String id;
   final UpdateCommunityPayload payload;
 
   UpdateGroupEvent(this.payload, this.id);
 }
 
 class UpdateTeamEvent extends EditCommunityDetailEvent {
-  final int id;
+  final String id;
   final UpdateCommunityPayload payload;
 
   UpdateTeamEvent(this.payload, this.id);
