@@ -286,4 +286,26 @@ class UserCubit extends Cubit<UserState> {
       emit(ResetPasswordFail(message: err));
     }
   }
+
+  Future<void> getUserById({String? userId}) async {
+    if (state is OnGetUserInfo) return;
+    try {
+      emit(OnGetUserInfo());
+      _currentUser = _userSharePreferencesUsecase.getUserInfo();
+      final id = userId ?? _currentUser?.id.toString();
+      final user = await _userUsecase.geSynctUserById(int.parse(id!));
+      emit(GetUserInfoSuccess(user));
+    } on DioException catch (error) {
+      debugPrint("phoneRegister: $error");
+      String err = S.current.messages_server_internal_error.capitalize();
+      emit(GetUserInfoFail(message: err));
+    } catch (error) {
+      debugPrint("phoneRegister: $error");
+      emit(
+        GetUserInfoFail(
+          message: S.current.messages_server_internal_error.capitalize(),
+        ),
+      );
+    }
+  }
 }

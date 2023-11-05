@@ -47,6 +47,8 @@ mixin _$User {
   int get totalFollower => throw _privateConstructorUsedError;
   int get totalFollowing => throw _privateConstructorUsedError;
   int get totalFriend => throw _privateConstructorUsedError;
+  int get old => throw _privateConstructorUsedError;
+  bool get isBlock => throw _privateConstructorUsedError;
   List<String>? get backgroundImages => throw _privateConstructorUsedError;
   String? get defaultBackground => throw _privateConstructorUsedError;
   bool? get isJA => throw _privateConstructorUsedError;
@@ -99,6 +101,8 @@ abstract class $UserCopyWith<$Res> {
       int totalFollower,
       int totalFollowing,
       int totalFriend,
+      int old,
+      bool isBlock,
       List<String>? backgroundImages,
       String? defaultBackground,
       bool? isJA,
@@ -157,6 +161,8 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? totalFollower = null,
     Object? totalFollowing = null,
     Object? totalFriend = null,
+    Object? old = null,
+    Object? isBlock = null,
     Object? backgroundImages = freezed,
     Object? defaultBackground = freezed,
     Object? isJA = freezed,
@@ -280,6 +286,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.totalFriend
           : totalFriend // ignore: cast_nullable_to_non_nullable
               as int,
+      old: null == old
+          ? _value.old
+          : old // ignore: cast_nullable_to_non_nullable
+              as int,
+      isBlock: null == isBlock
+          ? _value.isBlock
+          : isBlock // ignore: cast_nullable_to_non_nullable
+              as bool,
       backgroundImages: freezed == backgroundImages
           ? _value.backgroundImages
           : backgroundImages // ignore: cast_nullable_to_non_nullable
@@ -395,6 +409,8 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       int totalFollower,
       int totalFollowing,
       int totalFriend,
+      int old,
+      bool isBlock,
       List<String>? backgroundImages,
       String? defaultBackground,
       bool? isJA,
@@ -452,6 +468,8 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? totalFollower = null,
     Object? totalFollowing = null,
     Object? totalFriend = null,
+    Object? old = null,
+    Object? isBlock = null,
     Object? backgroundImages = freezed,
     Object? defaultBackground = freezed,
     Object? isJA = freezed,
@@ -575,6 +593,14 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.totalFriend
           : totalFriend // ignore: cast_nullable_to_non_nullable
               as int,
+      old: null == old
+          ? _value.old
+          : old // ignore: cast_nullable_to_non_nullable
+              as int,
+      isBlock: null == isBlock
+          ? _value.isBlock
+          : isBlock // ignore: cast_nullable_to_non_nullable
+              as bool,
       backgroundImages: freezed == backgroundImages
           ? _value._backgroundImages
           : backgroundImages // ignore: cast_nullable_to_non_nullable
@@ -662,6 +688,8 @@ class _$UserImpl implements _User {
       this.totalFollower = 0,
       this.totalFollowing = 0,
       this.totalFriend = 0,
+      this.old = 0,
+      this.isBlock = false,
       final List<String>? backgroundImages,
       this.defaultBackground,
       this.isJA,
@@ -737,6 +765,12 @@ class _$UserImpl implements _User {
   @override
   @JsonKey()
   final int totalFriend;
+  @override
+  @JsonKey()
+  final int old;
+  @override
+  @JsonKey()
+  final bool isBlock;
   final List<String>? _backgroundImages;
   @override
   List<String>? get backgroundImages {
@@ -775,7 +809,7 @@ class _$UserImpl implements _User {
 
   @override
   String toString() {
-    return 'User(id: $id, username: $username, name: $name, nickname: $nickname, email: $email, phone: $phone, avatar: $avatar, sex: $sex, phoneCode: $phoneCode, address: $address, forgotHash: $forgotHash, status: $status, roleId: $roleId, roleMemberCode: $roleMemberCode, createdById: $createdById, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, pDoneId: $pDoneId, displayName: $displayName, isPDone: $isPDone, isFriend: $isFriend, isFollowing: $isFollowing, isFollowed: $isFollowed, totalFollower: $totalFollower, totalFollowing: $totalFollowing, totalFriend: $totalFriend, backgroundImages: $backgroundImages, defaultBackground: $defaultBackground, isJA: $isJA, isVShop: $isVShop, isLive: $isLive, isSupervisor: $isSupervisor, isModerator: $isModerator, joinedTeam: $joinedTeam, birthday: $birthday, jaAt: $jaAt, vShopId: $vShopId, vShopPDoneId: $vShopPDoneId, fanGroup: $fanGroup)';
+    return 'User(id: $id, username: $username, name: $name, nickname: $nickname, email: $email, phone: $phone, avatar: $avatar, sex: $sex, phoneCode: $phoneCode, address: $address, forgotHash: $forgotHash, status: $status, roleId: $roleId, roleMemberCode: $roleMemberCode, createdById: $createdById, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, pDoneId: $pDoneId, displayName: $displayName, isPDone: $isPDone, isFriend: $isFriend, isFollowing: $isFollowing, isFollowed: $isFollowed, totalFollower: $totalFollower, totalFollowing: $totalFollowing, totalFriend: $totalFriend, old: $old, isBlock: $isBlock, backgroundImages: $backgroundImages, defaultBackground: $defaultBackground, isJA: $isJA, isVShop: $isVShop, isLive: $isLive, isSupervisor: $isSupervisor, isModerator: $isModerator, joinedTeam: $joinedTeam, birthday: $birthday, jaAt: $jaAt, vShopId: $vShopId, vShopPDoneId: $vShopPDoneId, fanGroup: $fanGroup)';
   }
 
   @override
@@ -826,6 +860,8 @@ class _$UserImpl implements _User {
                 other.totalFollowing == totalFollowing) &&
             (identical(other.totalFriend, totalFriend) ||
                 other.totalFriend == totalFriend) &&
+            (identical(other.old, old) || other.old == old) &&
+            (identical(other.isBlock, isBlock) || other.isBlock == isBlock) &&
             const DeepCollectionEquality()
                 .equals(other._backgroundImages, _backgroundImages) &&
             (identical(other.defaultBackground, defaultBackground) ||
@@ -880,6 +916,8 @@ class _$UserImpl implements _User {
         totalFollower,
         totalFollowing,
         totalFriend,
+        old,
+        isBlock,
         const DeepCollectionEquality().hash(_backgroundImages),
         defaultBackground,
         isJA,
@@ -938,6 +976,8 @@ abstract class _User implements User {
       final int totalFollower,
       final int totalFollowing,
       final int totalFriend,
+      final int old,
+      final bool isBlock,
       final List<String>? backgroundImages,
       final String? defaultBackground,
       final bool? isJA,
@@ -1008,6 +1048,10 @@ abstract class _User implements User {
   int get totalFollowing;
   @override
   int get totalFriend;
+  @override
+  int get old;
+  @override
+  bool get isBlock;
   @override
   List<String>? get backgroundImages;
   @override

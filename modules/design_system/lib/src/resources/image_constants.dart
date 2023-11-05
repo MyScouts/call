@@ -21,9 +21,15 @@ class ImageConstants {
   static String cmBg = ImageApp.cmBg.path;
   static String perBg = ImageApp.perBg.path;
   static String ecomBg = ImageApp.ecomBg.path;
+  static String defaultUserAvatar = ImageApp.defaultUserAvatar.path;
+  static String defaultUserBackground = ImageApp.defaultUserBackground.path;
+  static String bgQrCode = ImageApp.bgQrCode.path;
 }
 
 enum ImageApp {
+  bgQrCode('assets/images/bg_qrcode.png'),
+  defaultUserAvatar('assets/images/avatar.png'),
+  defaultUserBackground('assets/images/bg_diary.jpeg'),
   defaultBgDashboard('assets/images/bg_dashboard.jpeg'),
   defaultAppLogo('assets/images/vdone_logo.png'),
   authBackground('assets/images/bg_auth.png'),

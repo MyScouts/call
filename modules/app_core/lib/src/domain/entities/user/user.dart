@@ -1,5 +1,5 @@
-// Copyright 2022 Fighttech.vn, Ltd. All rights reserved.
 import 'package:collection/collection.dart';
+import 'package:design_system/design_system.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../community/team.dart';
@@ -39,6 +39,8 @@ class User with _$User {
     @Default(0) int totalFollower,
     @Default(0) int totalFollowing,
     @Default(0) int totalFriend,
+    @Default(0) int old,
+    @Default(false) bool isBlock,
     List<String>? backgroundImages,
     String? defaultBackground,
     bool? isJA,
@@ -60,6 +62,7 @@ class User with _$User {
 extension UserExtNull on User? {
   String get getdisplayName => [this?.displayName, _userDefaultName]
       .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  bool get getIsPDone => this?.isPDone ?? false;
 }
 
 const _userDefaultName = 'PDone User';
@@ -112,4 +115,17 @@ enum Sex {
   final String title;
 
   const Sex(this.title);
+}
+
+extension SexExt on Sex {
+  String getIcon() {
+    switch (this) {
+      case Sex.female:
+        return IconAppConstants.icFemale;
+      case Sex.male:
+        return IconAppConstants.icMale;
+      default:
+        return IconAppConstants.icMale;
+    }
+  }
 }

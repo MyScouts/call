@@ -7,7 +7,7 @@ part 'marshop_api.g.dart';
 
 class MarshopApiConstant {
   static const String customerRegister = "api/v1/marshop/customer/register";
-  static const String marshopRegister = "api/v1/marshop/{user}";
+  static const String registerMarshop = "api/v1/marshop/{userId}";
 }
 
 @RestApi()
@@ -18,4 +18,7 @@ abstract class MarshopAPI {
 
   @POST(MarshopApiConstant.customerRegister)
   Future register(@Body() RegisterCustomerPayload body);
+
+  @POST(MarshopApiConstant.registerMarshop)
+  Future registerMarshop(@Body() RegisterMarshopPayload body);
 }

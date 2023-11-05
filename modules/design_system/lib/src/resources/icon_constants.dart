@@ -27,9 +27,31 @@ class IconAppConstants {
   static String icBird = IconApp.icBird.path;
   static String icClock = IconApp.icClock.path;
   static String icDoc = IconApp.icDoc.path;
+  static String icFemale = IconApp.icFemale.path;
+  static String icMale = IconApp.icMale.path;
+  static String icUserGroup = IconApp.icUserGroup.path;
+  static String icUserAddSolid = IconApp.icUserAddSolid.path;
+  static String icUserAddOutline = IconApp.icUserAddOutline.path;
+  static String icFlag = IconApp.icFlag.path;
+  static String icQrCode = IconApp.icQrCode.path;
+  static String icChatBan = IconApp.icChatBan.path;
+  static String icFriendBan = IconApp.icFriendBan.path;
+  static String icNewsBan = IconApp.icNewsBan.path;
+  static String icUserRemove = IconApp.icUserRemove.path;
 }
 
 enum IconApp {
+  icFriendBan('assets/icons/ic_friend_ban.svg'),
+  icQrCode('assets/icons/ic_qrcode.svg'),
+  icUserRemove('assets/icons/ic_user_remove.svg'),
+  icNewsBan('assets/icons/ic_newspaper_ban.svg'),
+  icChatBan('assets/icons/ic_chat_ban.svg'),
+  icFlag('assets/icons/ic_flag.svg'),
+  icUserAddOutline('assets/icons/ic_user_add_outline.svg'),
+  icUserAddSolid('assets/icons/ic_user_add_solid.svg'),
+  icUserGroup('assets/icons/ic_user_group.svg'),
+  icFemale('assets/icons/ic_female.png'),
+  icMale('assets/icons/ic_male.png'),
   icLogout('assets/icons/ic_logout.png'),
   icWheelOfFortune('assets/icons/wheel_of_fortune.png'),
   icChanel('assets/icons/ic_chanel.png'),

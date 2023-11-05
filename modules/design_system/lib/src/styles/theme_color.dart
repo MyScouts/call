@@ -115,6 +115,8 @@ class AppColors {
   static const Color red36 = Color(0xffFF0000);
   static const Color red69 = Color(0xffEA5F5F);
 
+  static const Color red500 = Color(0XFFDE372D);
+
   /// purple
   static const Color purple10 = Color(0xff403666);
   static const Color purple20 = Color(0xffA663B5);

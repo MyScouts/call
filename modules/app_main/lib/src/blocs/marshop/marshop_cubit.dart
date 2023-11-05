@@ -39,4 +39,32 @@ class MarshopCubit extends Cubit<MarshopState> {
     }
     emit(RegisterCustomerFailed(message: message));
   }
+
+  Future registerMarshop(RegisterMarshopPayload payload) async {
+    if (state is OnRegisterMarshop) return;
+    String message = S.current.messages_server_internal_error.capitalize();
+    try {
+      emit(OnRegisterMarshop());
+      await _marshopUsecase.registerMarshop(payload);
+      emit(RegisterCustomerSuccess());
+      return;
+    } on DioException catch (error) {
+      final data = error.response!.data;
+      switch (data['code']) {
+        case "MARSHOP_NOT_FOUND":
+          message = "Không tìm thấy mã Marshop!";
+          break;
+        case "NOT_JA":
+          message = "Bạn chưa là JA.";
+          break;
+        case "OTP_NOT_MATCH":
+          message = S.current.message_otp_not_match.capitalize();
+          break;
+        default:
+      }
+    } catch (error) {
+      debugPrint("phoneRegister: $error");
+    }
+    emit(RegisterMarshopFail(message: message));
+  }
 }

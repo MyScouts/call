@@ -26,10 +26,10 @@ class CommonOutlineButton extends StatelessWidget {
       height: height,
       child: TextButton(
         style: TextButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-            side: const BorderSide(color: AppColors.blue10, width: 1),
+            borderRadius: BorderRadius.circular(10),
+            side: const BorderSide(color: AppColors.blue10, width: 2),
           ),
         ),
         onPressed: onPressed,

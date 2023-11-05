@@ -51,6 +51,7 @@ Future<void> setupFlutterNotifications() async {
     return;
   }
 
+  debugPrint("setupFlutterNotifications");
   FirebaseMessaging.instance.requestPermission(
     alert: true,
     announcement: false,
