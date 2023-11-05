@@ -28,55 +28,76 @@ class ItemSettingWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 11),
-        child: IntrinsicHeight(
-          child: Row(
-            children: [
-              if (avatar != null) const CircleAvatar(radius: 32),
-              if (icon != null) ImageWidget(icon!, width: 20),
-              const SizedBox(width: 15),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (title != null)
-                          Text(
-                            title!,
-                            style: context.text.bodyLarge!.copyWith(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        if (name != null) const SizedBox(height: 2),
-                        if (name != null)
-                          Text(
-                            name!,
-                            style: context.text.titleSmall,
-                          ),
-                        if (summary != null)
-                          Text(
-                            summary!,
-                            style: context.text.titleSmall,
-                          )
-                      ],
-                    ),
-                    const RotatedBox(
-                      quarterTurns: 90,
-                      child: Icon(
-                        Icons.keyboard_arrow_left_outlined,
-                        size: 25,
-                        color: AppColors.grey14,
-                      ),
-                    )
-                  ],
+        padding: const EdgeInsets.only(left: 10),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: border ?? BorderRadius.circular(10),
+          boxShadow: context.theme.themeDecoration.defaultShadow,
+        ),
+        child: Row(
+          children: [
+            if (avatar != null) const IntrinsicHeight(child: CircleAvatar()),
+            if (icon != null)
+              IntrinsicHeight(
+                child: ImageWidget(
+                  icon!,
+                  width: 20,
                 ),
               ),
-            ],
-          ),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      width: .5,
+                      color: Color(0xFFF2F2F6),
+                    ),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (title != null)
+                            Text(
+                              title!,
+                              style: context.text.bodyLarge!.copyWith(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          if (name != null) const SizedBox(height: 2),
+                          if (name != null)
+                            Text(
+                              name!,
+                              style: context.text.titleSmall,
+                            ),
+                          if (summary != null)
+                            Text(
+                              summary!,
+                              style: context.text.titleSmall,
+                            )
+                        ],
+                      ),
+                      const RotatedBox(
+                        quarterTurns: 90,
+                        child: Icon(
+                          Icons.keyboard_arrow_left_outlined,
+                          size: 25,
+                          color: AppColors.grey14,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
