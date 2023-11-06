@@ -52,6 +52,8 @@ class IconAppConstants {
   static String icApproved = IconApp.icApproved.path;
   static String icReject = IconApp.icReject.path;
   static String icApprovedTick = IconApp.icApprovedTick.path;
+  static String icShareLinkTeam = IconApp.icShareLinkTeam.path;
+  static String icInviteTeamMember = IconApp.icInviteTeamMember.path;
 }
 
 enum IconApp {
@@ -109,7 +111,9 @@ enum IconApp {
   icApproved('assets/icons/ic_approved.svg'),
   icWaiting('assets/icons/ic_waiting.svg'),
   icReject('assets/icons/ic_reject.svg'),
-  icApprovedTick('assets/icons/ic_approved_tick.svg');
+  icApprovedTick('assets/icons/ic_approved_tick.svg'),
+  icShareLinkTeam('assets/icons/ic_share_link_team.svg'),
+  icInviteTeamMember('assets/icons/ic_invite_team_member.svg');
 
   const IconApp(this.path);
   final String path;

@@ -4,7 +4,8 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
 class ReadMorePolicy extends StatefulWidget {
-  const ReadMorePolicy({super.key});
+  final int? maxLine;
+  const ReadMorePolicy({super.key, this.maxLine});
 
   @override
   State<ReadMorePolicy> createState() => _ReadMorePolicyState();
@@ -27,7 +28,7 @@ class _ReadMorePolicyState extends State<ReadMorePolicy> {
               ),
               Text(
                 policyContents.first['content'].toString(),
-                maxLines: 18,
+                maxLines: widget.maxLine ?? 18,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       height: 1.5,

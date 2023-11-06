@@ -12,7 +12,7 @@ class MemberOfGroupFanPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<FanGroupDetailBloc, FanGroupDetailState>(
       builder: (context, state) {
-        List<Member> lists = [];
+        List<User> lists = [];
 
         if (state is FetchTeamsMemberSuccess) {
           lists = state.members;
@@ -23,7 +23,7 @@ class MemberOfGroupFanPage extends StatelessWidget {
 
         return ListView.builder(
           itemBuilder: (_, int index) {
-            final user = lists[index].user;
+            final user = lists[index];
             if (user != null) {
               return UserHorizontalWidget(user: user);
             }

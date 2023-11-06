@@ -44,10 +44,10 @@ class CommunityRepositoryImpl extends CommunityRepository {
   }
 
   @override
-  Future<List<Member>> getMembers(String id) async {
+  Future<List<User>> getMembers(String id) async {
     final res = await _communityApi.getMembers(id: id);
 
-    return res.data;
+    return res.members ?? [];
   }
 
   @override
@@ -89,7 +89,7 @@ class CommunityRepositoryImpl extends CommunityRepository {
   }
 
   @override
-  Future<List<Member>> getMembersOfFanGroup(
+  Future<List<User>> getMembersOfFanGroup(
     int id,
     int type,
     int? page,
@@ -160,5 +160,10 @@ class CommunityRepositoryImpl extends CommunityRepository {
       String id, ReplyGiveUpBossTeamRolePayload payload) async {
     return await _communityApi.replyGiveUpBossTeamRole(
         id: id, payload: payload);
+  }
+
+  @override
+  Future<ConfirmResponse> askToJoinTeam(String id) async {
+    return await _communityApi.askToJoinTeam(id: id);
   }
 }

@@ -5,14 +5,14 @@ import 'package:imagewidget/imagewidget.dart';
 
 class TeamCardWidget extends StatelessWidget {
   final Team team;
-  final ValueChanged<Team>? onTap;
+  final VoidCallback? onTap;
 
   const TeamCardWidget({super.key, required this.team, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap?.call(team),
+      onTap: () => onTap?.call(),
       child: Container(
         decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,

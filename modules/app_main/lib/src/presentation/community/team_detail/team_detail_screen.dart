@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
-import 'package:app_main/src/presentation/marshop/widgets/gradiant_button.dart';
+import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -8,11 +9,8 @@ import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
 
 import '../../shared/user/bloc/user_bloc.dart';
-import '../../upgrade_account/upgrade_account_coordinator.dart';
 import '../community_constants.dart';
-import '../community_coordinator.dart';
-import '../group_detail/group_detail_constants.dart';
-import '../widgets/dropdown_menu_option_widget.dart';
+import '../widgets/team_member_widget.dart';
 import 'bloc/team_detail_bloc.dart';
 import 'team_detail_constants.dart';
 
@@ -22,13 +20,13 @@ class TeamDetailScreen extends StatefulWidget {
   const TeamDetailScreen({
     super.key,
     required this.id,
-    this.cover,
     this.name,
+    this.bossGroupId,
   });
 
   final String id;
   final String? name;
-  final String? cover;
+  final int? bossGroupId;
 
   @override
   State<TeamDetailScreen> createState() => _TeamDetailScreenState();
@@ -37,32 +35,27 @@ class TeamDetailScreen extends StatefulWidget {
 class _TeamDetailScreenState extends State<TeamDetailScreen>
     with TickerProviderStateMixin {
   late final TabController _tabCtrl;
+
   User? get currentUser => context.read<UserBloc>().state.currentUser;
+
   String? get currUserId => currentUser?.pDoneId;
+
   bool get isJA => currentUser?.isPDone == true && currentUser?.isJA == true;
+
   TeamDetailBloc get teamDetailBloc => context.read();
 
-  void _onTapRegisterTeam(Team team) {
-    final user = context.read<UserBloc>().state.currentUser;
-    if (user?.isPDone == false) {
-      // context.startDialogUpgradeKYC();
-    } else {
-      context.startUpgradeJA(team: team);
-    }
-  }
-
-  void _onTapEdit(Team team) {
-    final boss = team.boss;
-
-    context
-        .startEditInformation(
-            community: Community.copyWithTeam(team), type: CommunityType.team)
-        .then((value) {
-      if (value != null && value is Team) {
-        teamDetailBloc.add(UpdateTeamDetailEvent(value.copyWith(boss: boss)));
-      }
-    });
-  }
+  // void _onTapEdit(Team team) {
+  //   final boss = team.boss;
+  //
+  //   context
+  //       .startEditInformation(
+  //           community: Community.copyWithTeam(team), type: CommunityType.team)
+  //       .then((value) {
+  //     if (value != null && value is Team) {
+  //       teamDetailBloc.add(UpdateTeamDetailEvent(value.copyWith(boss: boss)));
+  //     }
+  //   });
+  // }
 
   @override
   void initState() {
@@ -80,160 +73,84 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<UserBloc, UserState>(
-        listener: (context, state) {
-          if (state is UpgradeAccountSuccess) {
-            context.startDialogUpgradeAccountSuccess(widget.name ?? '');
-          }
-        },
+      body: BlocBuilder<TeamDetailBloc, TeamDetailState>(
+        buildWhen: (prev, current) =>
+            current is FetchTeamDetailSuccess ||
+            current is FetchTeamsMemberSuccess,
         builder: (context, state) {
-          return BlocBuilder<TeamDetailBloc, TeamDetailState>(
-            builder: (context, state) {
-              Team? team;
-              int memberCount = 0;
+          Team? team;
+          List<User> members = [];
 
-              if (state is LoadingTeamDetail) {
-                return const LoadingWidget();
-              }
+          if (state is LoadingTeamDetail) {
+            return const LoadingWidget();
+          }
 
-              if (state is FetchTeamDetailSuccess) {
-                team = state.team;
-              }
-              if (state is FetchTeamsMemberSuccess) {
-                memberCount = state.members.length;
-              }
+          if (state is FetchTeamDetailSuccess) {
+            team = state.team;
+          }
+          if (state is FetchTeamsMemberSuccess) {
+            members = state.members;
+          }
 
-              var banner = ImageConstants.imgdefault;
-              if (team?.banner != null) {
-                banner = team!.banner!.optimizeSize600;
-              }
+          var banner = ImageConstants.imgDefaultTeamBanner;
+          if (team?.banner != null) {
+            banner = team!.banner!.optimizeSize600;
+          }
 
-              return SliverLayoutNestedScrollView(
-                cover: ImageWidget(
-                  banner,
-                  width: MediaQuery.of(context).size.width,
-                ),
-                actionAppBar: currUserId == team?.boss?.pDoneId
-                    ? DropdownMenuOptionWidget(
-                        onChanged: (type) {
-                          if (type == GroupDetailAction.edit) {
-                            _onTapEdit(team!);
-                          }
-                        },
-                      )
-                    : null,
-                bodyBuilder: (ScrollController scrollController) {
-                  return CustomScrollView(
-                    controller: scrollController,
-                    slivers: [
-                      SliverToBoxAdapter(
-                        child: Column(
-                          children: [
-                            Center(
-                              child: Container(
-                                margin: const EdgeInsets.only(top: 8),
-                                padding: const EdgeInsets.only(bottom: 12),
-                                child: ImageWidget(
-                                  team?.avatar ?? ImageConstants.defaultAvatar,
-                                  width: 100,
-                                  height: 100,
-                                  borderRadius: 50,
-                                ),
-                              ),
+          final myId = injector.get<UserCubit>().currentUser?.id;
+          final canUpdateMembers =
+              myId == widget.bossGroupId || myId == team?.boss?.id;
+
+          final isBossGroupButNotBossTeam =
+              myId == widget.bossGroupId && myId != team?.boss?.id;
+          final isBossGroupAndBossTeam =
+              myId == widget.bossGroupId && myId == team?.boss?.id;
+
+          print('myId: $myId');
+          print('widget.bossGroupId: ${widget.bossGroupId}');
+          print('team?.boss?.id: ${team?.boss?.id}');
+
+          return SliverLayoutNestedScrollView(
+            cover: ImageWidget(
+              banner,
+              width: MediaQuery.of(context).size.width,
+            ),
+            actionAppBar: canUpdateMembers
+                ? IconButton(
+                    onPressed: () {
+                      showToastMessage('Tính năng này đang được phát triển',
+                          ToastMessageType.warning);
+                    },
+                    icon: const Icon(Icons.more_vert),
+                  )
+                : null,
+            bodyBuilder: (ScrollController scrollController) {
+              return CustomScrollView(
+                controller: scrollController,
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _teamHeaderWidget(team),
+                          if(canUpdateMembers)_actionButtons(showInvite: !isBossGroupButNotBossTeam),
+                          _introductionWidget(team),
+                          if (!canUpdateMembers)
+                            _askToJoinBtn(
+                              canAskToJoin: members.length < 500,
+                              teamId: '${team?.id}',
                             ),
-                            if (team?.name?.isNotEmpty ?? false)
-                              Text(
-                                team?.name ?? '',
-                                style: Theme.of(context).textTheme.labelLarge,
-                              ),
-                            if (team?.id?.isNotEmpty ?? false)
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 5)
-                                    .copyWith(bottom: !isJA ? 20 : 0),
-                                child: GestureDetector(
-                                  onTap: () => copyText('${team?.id}'),
-                                  child: Text(
-                                    'ID: ${team?.id}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          color: const Color(0xFF828282),
-                                        ),
-                                  ),
-                                ),
-                              ),
-                            if (team != null)
-                              !isJA
-                                  ? Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 28.0),
-                                      child: GradiantButton(
-                                        onPressed: () {
-                                          _onTapRegisterTeam(team!);
-                                        },
-                                        child:
-                                            const Text('Đăng ký tham gia Team'),
-                                      ),
-                                    )
-                                  : const SizedBox(),
-                            // if (team?.introduction?.isNotEmpty ?? false)
-                            team?.introduction?.isNotEmpty ?? false
-                                ? Container(
-                                    alignment: Alignment.centerLeft,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 12, vertical: 27),
-                                    child: Text(team?.introduction ?? ''),
-                                  )
-                                : const SizedBox(height: 27),
-                          ],
-                        ),
+                          const SizedBox(height: 20),
+                          _membersWidget(
+                              members: members,
+                              canUpdateMembers: canUpdateMembers),
+                        ],
                       ),
-                      SliverPersistentHeader(
-                        pinned: false,
-                        delegate: _StickyTabBarDelegate(TabBar(
-                          controller: _tabCtrl,
-                          isScrollable: true,
-                          labelPadding:
-                              const EdgeInsets.symmetric(vertical: 10),
-                          indicator: TabIndicatorDecoration(
-                            width: 8,
-                            weight: 3,
-                            color: AppColors.blue11,
-                          ),
-                          labelColor: AppColors.blue15,
-                          unselectedLabelColor: AppColors.black10,
-                          indicatorColor: AppColors.blue11,
-                          labelStyle: Theme.of(context).textTheme.titleSmall,
-                          unselectedLabelStyle: Theme.of(context)
-                              .textTheme
-                              .titleSmall
-                              ?.copyWith(fontWeight: FontWeight.w500),
-                          tabs: TeamDetailTab.values
-                              .map((e) => Tab(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 12, right: 4),
-                                      child: Text(e.text(context,
-                                          totalMember: memberCount)),
-                                    ),
-                                  ))
-                              .toList(),
-                        )),
-                      ),
-                      if (team != null)
-                        SliverFillRemaining(
-                          child: TabBarView(
-                            controller: _tabCtrl,
-                            children: TeamDetailTab.values
-                                .map((e) => e.build(context, team!))
-                                .toList(),
-                          ),
-                        ),
-                    ],
-                  );
-                },
+                    ),
+                  ),
+                ],
               );
             },
           );
@@ -241,27 +158,254 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
       ),
     );
   }
-}
 
-class _StickyTabBarDelegate extends SliverPersistentHeaderDelegate {
-  const _StickyTabBarDelegate(this.tabBar);
-
-  final TabBar tabBar;
-
-  @override
-  double get minExtent => tabBar.preferredSize.height;
-
-  @override
-  double get maxExtent => tabBar.preferredSize.height;
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return tabBar;
+  Widget _teamHeaderWidget(Team? team) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+      margin: const EdgeInsets.symmetric(vertical: 20),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black.withOpacity(.07),
+              blurRadius: 16,
+              offset: const Offset(0, 4))
+        ],
+      ),
+      child: Row(
+        children: [
+          ImageWidget(
+            team?.avatar ?? ImageConstants.defaultAvatar,
+            width: 60,
+            height: 60,
+          ),
+          const SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 150,
+                child: Text(
+                  '${team?.name}',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Boss Team:',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          height: 1.5,
+                        ),
+                    children: <InlineSpan>[
+                      WidgetSpan(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20, right: 5),
+                          child: AvatarWidget(
+                            avatar: team?.boss?.avatar,
+                            size: 20,
+                          ),
+                        ),
+                        alignment: PlaceholderAlignment.middle,
+                      ),
+                      WidgetSpan(
+                        child: SizedBox(
+                          width: 150,
+                          child: Text(
+                            '${team?.boss.getdisplayName}',
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.5,
+                                    color: const Color(0xFF353DFF)),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Text(
+                'ID: ${team?.id}',
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    height: 1.5,
+                    color: const Color(0xFFACACAC)),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
   }
 
-  @override
-  bool shouldRebuild(_StickyTabBarDelegate oldDelegate) {
-    return tabBar != oldDelegate.tabBar;
+  Widget _actionButtons({required bool showInvite}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: Row(
+        children: [
+          if (showInvite)
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.only(right: 20),
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFE8F0FE),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  children: [
+                    ImageWidget(IconAppConstants.icInviteTeamMember),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        'Mời thêm thành viên',
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: const Color(0xFF4B84F7),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              decoration: BoxDecoration(
+                color: const Color(0xFFE8F0FE),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                children: [
+                  ImageWidget(IconAppConstants.icShareLinkTeam),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Text(
+                      'Chia sẻ link team',
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: const Color(0xFF4B84F7),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _introductionWidget(Team? team) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Lời giới thiệu',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          team?.introduction ?? '',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
+        )
+      ],
+    );
+  }
+
+  Widget _askToJoinBtn({required bool canAskToJoin, required String teamId}) {
+    return PrimaryButton(
+      title: 'Tham gia team',
+      height: 55,
+      onTap: () {
+        context.startAskToJoinTeam(teamId);
+      },
+      disabled: !canAskToJoin,
+      width: MediaQuery.of(context).size.width,
+    );
+  }
+
+  Widget _askToLeaveBtn(bool canAskToJoin) {
+    return PrimaryButton(
+      title: 'Yêu cầu rời Team',
+      height: 55,
+      onTap: () {},
+      disabled: !canAskToJoin,
+      width: MediaQuery.of(context).size.width,
+    );
+  }
+
+  Widget _membersWidget(
+      {required List<User> members, required bool canUpdateMembers}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Danh sách thành viên - (${members.length}/500)',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+        ),
+        ...members.map(
+          (member) => TeamMemberWidget(
+            user: member,
+            trailing: canUpdateMembers
+                ? PopupMenuButton(
+                    onSelected: (value) {
+                      if (value == BossTeamActionToMember.assignBossTeam.name) {
+                        //TODO: assign boss team event
+                      } else {
+                        //TODO: remove member event
+                      }
+                    },
+                    icon:
+                        const Icon(Icons.more_horiz, color: Color(0xFF212121)),
+                    offset: const Offset(0, 30),
+                    itemBuilder: (BuildContext bc) {
+                      return [
+                        ...BossTeamActionToMember.values.map(
+                          (action) => PopupMenuItem(
+                            value: action.name,
+                            child: Text(
+                              action.textMenu,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(color: action.textMenuColor),
+                            ),
+                          ),
+                        )
+                      ];
+                    },
+                  )
+                : null,
+          ),
+        )
+      ],
+    );
   }
 }

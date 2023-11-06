@@ -13,19 +13,19 @@ class FetchFanGroupSuccess extends FanGroupDetailState {
 }
 
 class FetchBossGroupSuccess extends FetchFanGroupSuccess {
-  final List<Member> boss;
+  final List<User> boss;
 
   FetchBossGroupSuccess(this.boss, super.fanGroup);
 }
 
 class FetchBossTeamSuccess extends FetchBossGroupSuccess {
-  final List<Member> bossTeams;
+  final List<User> bossTeams;
 
   FetchBossTeamSuccess(this.bossTeams, super.boss, super.fanGroup);
 }
 
 class FetchTeamsMemberSuccess extends FetchBossTeamSuccess {
-  final List<Member> members;
+  final List<User> members;
 
   FetchTeamsMemberSuccess(
     this.members,
