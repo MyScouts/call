@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_coordinator.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
@@ -23,9 +24,11 @@ class RegisterMarshopScreen extends StatefulWidget {
 
 class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
     with ValidationMixin {
+  late final userCubit = context.read<UserCubit>();
   final TextEditingController _marshopIdCtrl = TextEditingController();
   final TextEditingController _marshopName = TextEditingController();
   final _acceptTerm = ValueNotifier(false);
+  late User _authInfo;
 
   @override
   bool get conditionValidator => _acceptTerm.value;
@@ -33,6 +36,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
   @override
   void initState() {
     super.initState();
+    _authInfo = userCubit.currentUser!;
     _acceptTerm.addListener(() {
       onValidation();
     });
@@ -60,6 +64,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
             if (state is SendOTPSuccess) {
               hideLoading();
               context.startDialogVerifyRegisterMarshop(
+                userId: _authInfo.id!,
                 marshopId: int.parse(_marshopIdCtrl.text.trim()),
                 name: _marshopName.text.trim(),
               );

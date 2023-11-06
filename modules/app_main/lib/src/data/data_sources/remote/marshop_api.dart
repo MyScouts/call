@@ -20,5 +20,8 @@ abstract class MarshopAPI {
   Future register(@Body() RegisterCustomerPayload body);
 
   @POST(MarshopApiConstant.registerMarshop)
-  Future registerMarshop(@Body() RegisterMarshopPayload body);
+  Future registerMarshop(
+    @Path() int userId,
+    @Body() RegisterMarshopPayload body,
+  );
 }

@@ -40,12 +40,12 @@ class MarshopCubit extends Cubit<MarshopState> {
     emit(RegisterCustomerFailed(message: message));
   }
 
-  Future registerMarshop(RegisterMarshopPayload payload) async {
+  Future registerMarshop(int userId, RegisterMarshopPayload payload) async {
     if (state is OnRegisterMarshop) return;
     String message = S.current.messages_server_internal_error.capitalize();
     try {
       emit(OnRegisterMarshop());
-      await _marshopUsecase.registerMarshop(payload);
+      await _marshopUsecase.registerMarshop(userId, payload);
       emit(RegisterCustomerSuccess());
       return;
     } on DioException catch (error) {
@@ -53,6 +53,9 @@ class MarshopCubit extends Cubit<MarshopState> {
       switch (data['code']) {
         case "MARSHOP_NOT_FOUND":
           message = "Không tìm thấy mã Marshop!";
+          break;
+        case "REFERRAL_MUST_BE_MARSHOP":
+          message = "Mã marshop liên kết không hợp lệ.";
           break;
         case "NOT_JA":
           message = "Bạn chưa là JA.";

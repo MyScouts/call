@@ -46,7 +46,10 @@ class _MarshopAPI implements MarshopAPI {
   }
 
   @override
-  Future<dynamic> registerMarshop(RegisterMarshopPayload body) async {
+  Future<dynamic> registerMarshop(
+    int userId,
+    RegisterMarshopPayload body,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -59,7 +62,7 @@ class _MarshopAPI implements MarshopAPI {
     )
         .compose(
           _dio.options,
-          'api/v1/marshop/{userId}',
+          'api/v1/marshop/${userId}',
           queryParameters: queryParameters,
           data: _data,
         )

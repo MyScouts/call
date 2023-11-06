@@ -8,8 +8,11 @@ import 'package:ui/ui.dart';
 import '../register_customer/widget/verify_phone_otp_dialog_widget.dart';
 
 extension RegisterMarshopCoordinator on BuildContext {
-  Future<T?> startDialogVerifyRegisterMarshop<T>(
-      {required int marshopId, required String name}) {
+  Future<T?> startDialogVerifyRegisterMarshop<T>({
+    required int marshopId,
+    required String name,
+    required int userId,
+  }) {
     return showGeneralDialog<T>(
       context: this,
       barrierDismissible: true,
@@ -21,6 +24,7 @@ extension RegisterMarshopCoordinator on BuildContext {
             child: DialogContainerWidget(
               child: VerifyPhoneOTPDialogWidget(onVerify: (otpCode) {
                 context.read<MarshopCubit>().registerMarshop(
+                      userId,
                       RegisterMarshopPayload(
                         name: name,
                         referralId: marshopId,

@@ -2,5 +2,5 @@ import 'package:app_main/src/data/models/payloads/marshop/marshop_payload.dart';
 
 abstract class MarshopRepository {
   Future registerCustomer(RegisterCustomerPayload payload);
-  Future registerMarshop(RegisterMarshopPayload payload);
+  Future registerMarshop(int userId, RegisterMarshopPayload payload);
 }
