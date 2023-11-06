@@ -1,6 +1,6 @@
+import 'package:app_main/src/presentation/community/group_detail/group_request_list_screen.dart';
 import 'package:app_main/src/presentation/community/groups/group_listing_bloc.dart';
 import 'package:app_main/src/presentation/community/groups/groups_listing_widget.dart';
-import 'package:app_main/src/presentation/shared/user/bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -15,6 +15,7 @@ import 'fan_group_detail/bloc/fan_group_detail_bloc.dart';
 import 'fan_group_detail/fan_group_detail_screen.dart';
 import 'group_detail/bloc/group_detail_bloc.dart';
 import 'group_detail/group_detail_screen.dart';
+import 'group_detail/update_community_options_screen.dart';
 import 'team_detail/bloc/team_detail_bloc.dart';
 import 'team_detail/team_detail_screen.dart';
 
@@ -86,6 +87,33 @@ class CommunityRoutes extends RouteModule {
             child: EditFanGroupScreen(
               fanGroup: args['fanGroup'],
             ),
+          );
+        },
+        UpdateCommunityOptionScreen.routeName: (context) {
+          final args = settings.arguments as Map<String, dynamic>;
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<GetBossStatusBloc>(
+                create: (context) => injector.get(),
+              ),
+              BlocProvider<RelinquishBossGroupBloc>(
+                create: (context) => injector.get(),
+              ),
+            ],
+            child: UpdateCommunityOptionScreen(community: args['community']),
+          );
+        },
+        GroupRequestListScreen.routeName: (context) {
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<GetGroupRequestsBloc>(
+                create: (context) => injector.get()..add(GetListDataEvent()),
+              ),
+              BlocProvider<ReplyGiveUpBossTeamBloc>(
+                create: (context) => injector.get(),
+              ),
+            ],
+            child: const GroupRequestListScreen(),
           );
         },
       };

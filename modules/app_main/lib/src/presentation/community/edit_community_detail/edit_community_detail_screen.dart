@@ -1,6 +1,5 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
-import 'package:app_main/src/domain/entities/community/update_community_payload.dart';
 import 'package:app_main/src/presentation/community/edit_community_detail/widgets/upload_avatar_widget.dart';
 import 'package:app_main/src/presentation/marshop/widgets/gradiant_button.dart';
 import 'package:design_system/design_system.dart';
@@ -8,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:ui/ui.dart';
 
+import '../../../data/models/payloads/community/update_community_payload.dart';
 import '../community_constants.dart';
 import 'bloc/edit_community_detail_bloc.dart';
 import 'widgets/information_image_widget.dart';
@@ -33,7 +33,9 @@ class EditCommunityDetailScreen extends StatefulWidget {
 class _EditCommunityDetailScreenState extends State<EditCommunityDetailScreen>
     with ValidationMixin {
   EditCommunityDetailBloc get editDetailBloc => context.read();
+
   Community get community => widget.community;
+
   CommunityType get type => widget.type;
 
   final _nameCtrl = TextEditingController();
@@ -199,20 +201,14 @@ class _EditCommunityDetailScreenState extends State<EditCommunityDetailScreen>
                     validationListenableBuilder(builder: (isValid) {
                       return Padding(
                         padding: const EdgeInsets.only(top: 33, bottom: 73),
-                        child: GradiantButton(
-                          onPressed: isValid &&
-                                  state is! UserChangeBanner &&
-                                  state is! UserChangeAvatar
-                              ? () => _onTapSave(state.community)
-                              : null,
+                        child: PrimaryButton(
+                          disabled: !(isValid &&
+                              state is! UserChangeBanner &&
+                              state is! UserChangeAvatar),
+                          onTap: () => _onTapSave(state.community),
                           height: 45,
-                          child: Text(
-                            'Lưu',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge
-                                ?.copyWith(color: AppColors.white),
-                          ),
+                          title: 'Lưu',
+                          width: MediaQuery.of(context).size.width,
                         ),
                       );
                     })

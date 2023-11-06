@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:app_core/app_core.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../domain/entities/community/update_community_payload.dart';
+import '../../../../data/models/payloads/community/update_community_payload.dart';
 import '../../../../domain/usecases/community_usecase.dart';
 
 part 'edit_fan_group_event.dart';

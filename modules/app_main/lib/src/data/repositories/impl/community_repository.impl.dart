@@ -1,9 +1,13 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/domain/entities/community/update_community_payload.dart';
+import 'package:app_main/src/data/models/payloads/community/reply_give_up_boss_team_role_payload.dart';
+import 'package:app_main/src/data/models/responses/boss_community_status_response.dart';
+import 'package:app_main/src/data/models/responses/confirm_response.dart';
+import 'package:app_main/src/data/models/responses/group_request_response.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/repository/community_repository.dart';
 import '../../data_sources/remote/community_api.dart';
+import '../../models/payloads/community/update_community_payload.dart';
 
 @Injectable(as: CommunityRepository)
 class CommunityRepositoryImpl extends CommunityRepository {
@@ -60,34 +64,10 @@ class CommunityRepositoryImpl extends CommunityRepository {
     return res.success;
   }
 
-  // @override
-  // Future<FanGroup> getFanGroup() {
-  //   // TODO: implement getFanGroup
-  //   throw UnimplementedError();
-  // }
-
-  // @override
-  // Future<FanGroup> getFanGroupById(int id) {
-  //   // TODO: implement getFanGroupById
-  //   throw UnimplementedError();
-  // }
-
-  // @override
-  // Future<List<Member>> getMembersOfFanGroup(int id, int type, int? page, int? pageSize) {
-  //   // TODO: implement getMembersOfFanGroup
-  //   throw UnimplementedError();
-  // }
-  //
-  // @override
-  // Future<bool> joinFanGroup(int id) {
-  //   // TODO: implement joinFanGroup
-  //   throw UnimplementedError();
-  // }
-
   @override
   Future<Group> updateGroup(String id, UpdateCommunityPayload payload) async {
     final res = await _communityApi.updateGroup(id: id, payload: payload);
-    return res.data;
+    return res.group;
   }
 
   @override
@@ -157,5 +137,28 @@ class CommunityRepositoryImpl extends CommunityRepository {
       bossId: bossId,
     );
     return res.teams;
+  }
+
+  @override
+  Future<BossCommunityStatusResponse> getBossGroupStatus(String id) async {
+    return await _communityApi.getBossGroupStatus(id: id);
+  }
+
+  @override
+  Future<ConfirmResponse> relinquishBossGroup(String id) async {
+    return await _communityApi.relinquishBossGroup(id: id);
+  }
+
+  @override
+  Future<List<GroupRequest>> getGroupRequests() async {
+    final result = await _communityApi.getGroupRequests();
+    return result.requests ?? [];
+  }
+
+  @override
+  Future<ConfirmResponse> replyGiveUpBossTeamRole(
+      String id, ReplyGiveUpBossTeamRolePayload payload) async {
+    return await _communityApi.replyGiveUpBossTeamRole(
+        id: id, payload: payload);
   }
 }

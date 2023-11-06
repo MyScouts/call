@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -31,7 +32,7 @@ class GroupDetailScreen extends StatefulWidget {
 }
 
 class _GroupDetailScreenState extends State<GroupDetailScreen> {
-  String? get currUserId => context.read<UserBloc>().state.currentUser?.pDoneId;
+  String? get currUserId => context.read<UserCubit>().currentUser?.pDoneId;
 
   GroupDetailBloc get groupDetailBloc => context.read();
 
@@ -44,20 +45,21 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
   }
 
   void _onTapEdit(Group group) {
-    final boss = group.boss;
+    final boss = group.copyWith;
+    context.startUpdateGroupOptions(community: Community.copyWithGroup(group));
 
-    context
-        .startEditInformation(
-      community: Community.copyWithGroup(group),
-      type: CommunityType.group,
-    )
-        .then((value) {
-      if (value != null && value is Group) {
-        groupDetailBloc.add(
-          UpdateGroupDetailEvent(value.copyWith(boss: boss)),
-        );
-      }
-    });
+    // context
+    //     .startEditInformation(
+    //   community: Community.copyWithGroup(group),
+    //   type: CommunityType.group,
+    // )
+    //     .then((value) {
+    //   if (value != null && value is Group) {
+    //     groupDetailBloc.add(
+    //       UpdateGroupDetailEvent(value.copyWith(boss: boss)),
+    //     );
+    //   }
+    // });
   }
 
   @override
@@ -92,12 +94,16 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
               width: MediaQuery.of(context).size.width,
             ),
             actionAppBar: currUserId == group?.boss?.pDoneId
-                ? DropdownMenuOptionWidget(
-                    onChanged: (type) {
-                      if (type == GroupDetailAction.edit) {
-                        _onTapEdit(group!);
-                      }
-                    },
+                // ? DropdownMenuOptionWidget(
+                //     onChanged: (type) {
+                //       if (type == GroupDetailAction.edit) {
+                //         _onTapEdit(group!);
+                //       }
+                //     },
+                //   )
+                ? IconButton(
+                    onPressed: () => _onTapEdit(group!),
+                    icon: const Icon(Icons.more_vert),
                   )
                 : null,
             header: Center(

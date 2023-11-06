@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:ui/ui.dart';
 
-import '../../../domain/entities/community/update_community_payload.dart';
+import '../../../data/models/payloads/community/update_community_payload.dart';
 import '../community_constants.dart';
 import '../edit_community_detail/widgets/information_image_widget.dart';
 import '../edit_community_detail/widgets/information_layout_text_input_widget.dart';

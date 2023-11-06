@@ -158,6 +158,10 @@ extension DateTimeExt on DateTime {
 }
 
 extension DateOnlyCompare on DateTime {
+  int dayLeft () {
+    return difference(DateTime.now()).inDays;
+  }
+
   bool get isToday {
     return isSameDay(DateTime.now());
   }
