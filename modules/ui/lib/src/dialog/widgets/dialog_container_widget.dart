@@ -4,12 +4,14 @@ class DialogContainerWidget extends StatelessWidget {
   final Widget child;
   final EdgeInsets? marginContent;
   final EdgeInsets? paddingContent;
+  final BorderRadius? borderRadius;
   const DialogContainerWidget({
-    Key? key,
+    super.key,
     required this.child,
     this.marginContent,
     this.paddingContent,
-  }) : super(key: key);
+    this.borderRadius,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class DialogContainerWidget extends StatelessWidget {
         margin: marginContent ?? const EdgeInsets.all(16),
         decoration: BoxDecoration(
           border: Border.all(color: const Color(0xFF696969)),
-          borderRadius: BorderRadiusDirectional.circular(16),
+          borderRadius: borderRadius ?? BorderRadiusDirectional.circular(16),
           color: Colors.white,
         ),
         child: Container(

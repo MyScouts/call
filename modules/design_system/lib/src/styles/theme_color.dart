@@ -72,6 +72,7 @@ class AppColors {
   static const Color black10 = Color(0xff333333);
   static const Color black11 = Color(0xff363636);
   static const Color black12 = Color(0xff383838);
+  static const Color textBlackColor = Color(0xFF130838);
 
   /// blue
   static const Color blue5 = Color(0xffF1F8FF);
@@ -115,6 +116,8 @@ class AppColors {
   static const Color red36 = Color(0xffFF0000);
   static const Color red69 = Color(0xffEA5F5F);
 
+  static const Color red500 = Color(0XFFDE372D);
+
   /// purple
   static const Color purple10 = Color(0xff403666);
   static const Color purple20 = Color(0xffA663B5);
@@ -125,4 +128,7 @@ class AppColors {
 
   /// organge
   static const Color organge1 = Color(0xffFFAD0D);
+
+  static const Color bgColor = Color(0xFFF3F8FF);
+  static const Color borderColor = Color(0xFFF2F2F2);
 }

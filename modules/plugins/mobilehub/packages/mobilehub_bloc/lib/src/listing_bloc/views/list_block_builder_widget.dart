@@ -56,6 +56,9 @@ class _ListBlockBuilderWidgetState<B extends StateStreamable<GetListState>, T>
         completer?.complete();
         completer = null;
       }
+    } else if(state is GetListDataError) {
+      print('eeee: ${state.message}');
+      print('eeee: ${state.error}');
     }
   }
 

@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordintor.dart';
+import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart';
@@ -24,6 +25,11 @@ class Setting {
           {User? user}) =>
       [
         [
+          Setting(
+            text: "Quét mã QR",
+            icon: IconAppConstants.icPayment,
+            onPressed: () => context.startScanQrCode(showMyQr: true),
+          ),
           Setting(
             text: "Đăng ký khách hàng thường xuyên",
             icon: IconAppConstants.icECommerce,

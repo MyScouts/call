@@ -79,6 +79,7 @@ class _OTPInputWidgetState extends State<OTPInputWidget> {
         onChanged: (value) {
           hasError = false;
           widget.errorCtr.value = false;
+          widget.onChange();
           setState(() {});
         },
         beforeTextPaste: (text) {

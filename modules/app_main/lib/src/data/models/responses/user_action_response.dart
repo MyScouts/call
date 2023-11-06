@@ -1,0 +1,15 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'user_action_response.freezed.dart';
+part 'user_action_response.g.dart';
+
+@freezed
+class FollowUserResponse with _$FollowUserResponse {
+  const factory FollowUserResponse({
+    required bool isFriend,
+    required bool isFollowed,
+  }) = _FollowUserResponse;
+
+  factory FollowUserResponse.fromJson(Map<String, dynamic> json) =>
+      _$FollowUserResponseFromJson(json);
+}

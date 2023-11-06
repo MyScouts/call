@@ -32,14 +32,15 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen>
     with ValidationMixin {
   final List<PasswordRules> _rules = [];
   bool _passwordValid = false;
-  bool _formValid = false;
   final _passwordCtrl = TextEditingController();
   final _rePasswordCtrl = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     _passwordCtrl.addListener(() {
       final password = _passwordCtrl.text;
+      _rules.clear();
       if (password.length >= 8) {
         _rules.add(PasswordRules.min8Character);
       } else {
@@ -58,14 +59,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen>
         _rules.removeWhere((element) => element == PasswordRules.hasOneCapital);
       }
 
-      if (_rules.length == PasswordRules.values.length) {
-        _passwordValid = true;
-      }
-      setState(() {});
-    });
-
-    validationListener.addListener(() {
-      _formValid = isValidForm;
+      _passwordValid = _rules.length == PasswordRules.values.length;
       setState(() {});
     });
   }
@@ -235,12 +229,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen>
                           ],
                         ),
                         const SizedBox(height: 24),
-                        PrimaryButton(
-                          title: S.current.confirm.capitalize(),
-                          onTap: _onResetPassword,
-                          color: Colors.white,
-                          disabled: !_formValid || !_passwordValid,
-                          width: MediaQuery.of(context).size.width,
+                        validationListenableBuilder(
+                          builder: (isValid) {
+                            debugPrint("$_rules $_passwordValid");
+                            return PrimaryButton(
+                              title: S.current.confirm.capitalize(),
+                              onTap: _onResetPassword,
+                              color: Colors.white,
+                              disabled: !isValid || !_passwordValid,
+                              width: MediaQuery.of(context).size.width,
+                            );
+                          },
                         ),
                       ],
                     ),

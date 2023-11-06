@@ -16,12 +16,13 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Community {
-  int? get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  String? get groupId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get avatar => throw _privateConstructorUsedError;
   String? get banner => throw _privateConstructorUsedError;
   String? get introduction => throw _privateConstructorUsedError;
-  bool? get isProvincialGroup => throw _privateConstructorUsedError;
+  int? get status => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CommunityCopyWith<Community> get copyWith =>
@@ -34,12 +35,13 @@ abstract class $CommunityCopyWith<$Res> {
       _$CommunityCopyWithImpl<$Res, Community>;
   @useResult
   $Res call(
-      {int? id,
+      {String? id,
+      String? groupId,
       String? name,
       String? avatar,
       String? banner,
       String? introduction,
-      bool? isProvincialGroup});
+      int? status});
 }
 
 /// @nodoc
@@ -56,17 +58,22 @@ class _$CommunityCopyWithImpl<$Res, $Val extends Community>
   @override
   $Res call({
     Object? id = freezed,
+    Object? groupId = freezed,
     Object? name = freezed,
     Object? avatar = freezed,
     Object? banner = freezed,
     Object? introduction = freezed,
-    Object? isProvincialGroup = freezed,
+    Object? status = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
+      groupId: freezed == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -83,10 +90,10 @@ class _$CommunityCopyWithImpl<$Res, $Val extends Community>
           ? _value.introduction
           : introduction // ignore: cast_nullable_to_non_nullable
               as String?,
-      isProvincialGroup: freezed == isProvincialGroup
-          ? _value.isProvincialGroup
-          : isProvincialGroup // ignore: cast_nullable_to_non_nullable
-              as bool?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -100,12 +107,13 @@ abstract class _$$CommunityImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int? id,
+      {String? id,
+      String? groupId,
       String? name,
       String? avatar,
       String? banner,
       String? introduction,
-      bool? isProvincialGroup});
+      int? status});
 }
 
 /// @nodoc
@@ -120,17 +128,22 @@ class __$$CommunityImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? groupId = freezed,
     Object? name = freezed,
     Object? avatar = freezed,
     Object? banner = freezed,
     Object? introduction = freezed,
-    Object? isProvincialGroup = freezed,
+    Object? status = freezed,
   }) {
     return _then(_$CommunityImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
+      groupId: freezed == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -147,10 +160,10 @@ class __$$CommunityImplCopyWithImpl<$Res>
           ? _value.introduction
           : introduction // ignore: cast_nullable_to_non_nullable
               as String?,
-      isProvincialGroup: freezed == isProvincialGroup
-          ? _value.isProvincialGroup
-          : isProvincialGroup // ignore: cast_nullable_to_non_nullable
-              as bool?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -160,14 +173,17 @@ class __$$CommunityImplCopyWithImpl<$Res>
 class _$CommunityImpl implements _Community {
   const _$CommunityImpl(
       {this.id,
+      this.groupId,
       this.name,
       this.avatar,
       this.banner,
       this.introduction,
-      this.isProvincialGroup});
+      this.status});
 
   @override
-  final int? id;
+  final String? id;
+  @override
+  final String? groupId;
   @override
   final String? name;
   @override
@@ -177,11 +193,11 @@ class _$CommunityImpl implements _Community {
   @override
   final String? introduction;
   @override
-  final bool? isProvincialGroup;
+  final int? status;
 
   @override
   String toString() {
-    return 'Community(id: $id, name: $name, avatar: $avatar, banner: $banner, introduction: $introduction, isProvincialGroup: $isProvincialGroup)';
+    return 'Community(id: $id, groupId: $groupId, name: $name, avatar: $avatar, banner: $banner, introduction: $introduction, status: $status)';
   }
 
   @override
@@ -190,18 +206,18 @@ class _$CommunityImpl implements _Community {
         (other.runtimeType == runtimeType &&
             other is _$CommunityImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.groupId, groupId) || other.groupId == groupId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.avatar, avatar) || other.avatar == avatar) &&
             (identical(other.banner, banner) || other.banner == banner) &&
             (identical(other.introduction, introduction) ||
                 other.introduction == introduction) &&
-            (identical(other.isProvincialGroup, isProvincialGroup) ||
-                other.isProvincialGroup == isProvincialGroup));
+            (identical(other.status, status) || other.status == status));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, name, avatar, banner, introduction, isProvincialGroup);
+      runtimeType, id, groupId, name, avatar, banner, introduction, status);
 
   @JsonKey(ignore: true)
   @override
@@ -212,15 +228,18 @@ class _$CommunityImpl implements _Community {
 
 abstract class _Community implements Community {
   const factory _Community(
-      {final int? id,
+      {final String? id,
+      final String? groupId,
       final String? name,
       final String? avatar,
       final String? banner,
       final String? introduction,
-      final bool? isProvincialGroup}) = _$CommunityImpl;
+      final int? status}) = _$CommunityImpl;
 
   @override
-  int? get id;
+  String? get id;
+  @override
+  String? get groupId;
   @override
   String? get name;
   @override
@@ -230,7 +249,7 @@ abstract class _Community implements Community {
   @override
   String? get introduction;
   @override
-  bool? get isProvincialGroup;
+  int? get status;
   @override
   @JsonKey(ignore: true)
   _$$CommunityImplCopyWith<_$CommunityImpl> get copyWith =>

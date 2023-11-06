@@ -466,6 +466,75 @@ class S {
       args: [],
     );
   }
+  /// `Nhóm cộng đồng`
+  String get community_group {
+    return Intl.message(
+      'Nhóm cộng đồng',
+      name: 'community_group',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Khảo sát cộng đồng`
+  String get community_survey {
+    return Intl.message(
+      'Khảo sát cộng đồng',
+      name: 'community_survey',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Từ thiện cộng đồng`
+  String get community_charity {
+    return Intl.message(
+      'Từ thiện cộng đồng',
+      name: 'community_charity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Đào tạo cộng đồng`
+  String get community_training {
+    return Intl.message(
+      'Đào tạo cộng đồng',
+      name: 'community_training',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gallery`
+  String get lbl_Gallery {
+    return Intl.message(
+      'Gallery',
+      name: 'lbl_Gallery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Camera`
+  String get lbl_Camera {
+    return Intl.message(
+      'Camera',
+      name: 'lbl_Camera',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `File`
+  String get lbl_File {
+    return Intl.message(
+      'File',
+      name: 'lbl_File',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Đăng ký V-Shop`
   String get pdoneAction_registerVShop {

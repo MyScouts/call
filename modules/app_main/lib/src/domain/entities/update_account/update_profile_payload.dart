@@ -1,7 +1,5 @@
-// Copyright 2022 Fighttech.vn, Ltd. All rights reserved.
 // ignore_for_file: invalid_annotation_target
 
-import 'package:app_core/app_core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'update_place_information_payload.dart';

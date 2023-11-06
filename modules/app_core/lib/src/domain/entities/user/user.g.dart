@@ -34,6 +34,8 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       totalFollower: json['totalFollower'] as int? ?? 0,
       totalFollowing: json['totalFollowing'] as int? ?? 0,
       totalFriend: json['totalFriend'] as int? ?? 0,
+      old: json['old'] as int? ?? 0,
+      isBlock: json['isBlock'] as bool? ?? false,
       backgroundImages: (json['backgroundImages'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -87,6 +89,8 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'totalFollower': instance.totalFollower,
       'totalFollowing': instance.totalFollowing,
       'totalFriend': instance.totalFriend,
+      'old': instance.old,
+      'isBlock': instance.isBlock,
       'backgroundImages': instance.backgroundImages,
       'defaultBackground': instance.defaultBackground,
       'isJA': instance.isJA,

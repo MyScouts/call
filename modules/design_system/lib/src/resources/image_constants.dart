@@ -21,9 +21,24 @@ class ImageConstants {
   static String cmBg = ImageApp.cmBg.path;
   static String perBg = ImageApp.perBg.path;
   static String ecomBg = ImageApp.ecomBg.path;
+  static String defaultUserAvatar = ImageApp.defaultUserAvatar.path;
+  static String defaultUserBackground = ImageApp.defaultUserBackground.path;
+  static String bgQrCode = ImageApp.bgQrCode.path;
+  static String emptyDataList = ImageApp.emptyDataList.path;
+  static String communityBanner = ImageApp.communityBanner.path;
+  static String communityDuLich = ImageApp.communityDuLich.path;
+  static String communityLuatSu = ImageApp.communityLuatSu.path;
+  static String communityNgheThuat = ImageApp.communityNgheThuat.path;
+  static String communityTruyenThong = ImageApp.communityTruyenThong.path;
+  static String communityXayDung = ImageApp.communityXayDung.path;
+  static String communityViecLam = ImageApp.communityViecLam.path;
+  static String celebrate = ImageApp.celebrate.path;
 }
 
 enum ImageApp {
+  bgQrCode('assets/images/bg_qrcode.png'),
+  defaultUserAvatar('assets/images/avatar.png'),
+  defaultUserBackground('assets/images/bg_diary.jpeg'),
   defaultBgDashboard('assets/images/bg_dashboard.jpeg'),
   defaultAppLogo('assets/images/vdone_logo.png'),
   authBackground('assets/images/bg_auth.png'),
@@ -45,7 +60,17 @@ enum ImageApp {
   cmBg('assets/images/cm_bg.png'),
   perBg('assets/images/per_bg.png'),
   ecomBg('assets/images/ecom_bg.png'),
-  live('assets/images/live.png');
+  live('assets/images/live.png'),
+  emptyDataList('assets/images/empty_data_list.png'),
+  communityBanner('assets/images/community_banner.png'),
+  communityXayDung('assets/images/xaydung.jpg'),
+  communityTruyenThong('assets/images/truyenthong.jpg'),
+  communityViecLam('assets/images/vieclam.jpg'),
+  communityNgheThuat('assets/images/nghethuat.jpg'),
+  communityLuatSu('assets/images/luatsu.png'),
+  communityDuLich('assets/images/dulich.jpg'),
+  //modules/design_system/assets/images/celebrate.png
+  celebrate('assets/images/celebrate.png');
 
   const ImageApp(this.path);
   final String path;

@@ -29,26 +29,17 @@ extension BuildCtxHideKeyboard on BuildContext {
 
 class ScaffoldHideKeyboard extends Scaffold {
   ScaffoldHideKeyboard({
-    Key? key,
-    PreferredSizeWidget? appBar,
+    super.key,
+    super.appBar,
     required Widget body,
-    bool resizeToAvoidBottomInset = true,
-    Widget? floatingActionButton,
-    FloatingActionButtonLocation? floatingActionButtonLocation,
-    Widget? bottomNavigationBar,
-    bool extendBody = false,
-    Color? backgroundColor,
-    Widget? endDrawer,
+    bool super.resizeToAvoidBottomInset = true,
+    super.floatingActionButton,
+    super.floatingActionButtonLocation,
+    super.bottomNavigationBar,
+    super.extendBody,
+    super.backgroundColor,
+    super.endDrawer,
   }) : super(
-          key: key,
-          appBar: appBar,
-          resizeToAvoidBottomInset: resizeToAvoidBottomInset,
           body: AutoHideKeyboard(child: body),
-          floatingActionButton: floatingActionButton,
-          floatingActionButtonLocation: floatingActionButtonLocation,
-          bottomNavigationBar: bottomNavigationBar,
-          extendBody: extendBody,
-          backgroundColor: backgroundColor,
-          endDrawer: endDrawer,
         );
 }

@@ -11,13 +11,14 @@ part 'group.g.dart';
 @freezed
 class Group with _$Group {
   const factory Group({
-    int? id,
-    String? codeId,
+    String? id,
     String? name,
     bool? isProvincialGroup,
     String? avatar,
     String? banner,
     String? introduction,
+    int? teamCount,
+    int? openTeamCount,
     User? boss,
   }) = _Group;
 
