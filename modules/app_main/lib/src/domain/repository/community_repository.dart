@@ -1,5 +1,10 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/domain/entities/community/update_community_payload.dart';
+import 'package:app_main/src/data/models/responses/group_request_response.dart';
+
+import '../../data/models/payloads/community/reply_give_up_boss_team_role_payload.dart';
+import '../../data/models/payloads/community/update_community_payload.dart';
+import '../../data/models/responses/boss_community_status_response.dart';
+import '../../data/models/responses/confirm_response.dart';
 
 abstract class CommunityRepository {
   Future<List<Group>> getGroups();
@@ -41,4 +46,13 @@ abstract class CommunityRepository {
   Future<bool> joinFanGroup(int id);
 
   Future<bool> updateFanGroup(int id, UpdateCommunityPayload payload);
+
+  Future<BossCommunityStatusResponse> getBossGroupStatus(String id);
+
+  Future<ConfirmResponse> relinquishBossGroup(String id);
+
+  Future<List<GroupRequest>> getGroupRequests();
+
+  Future<ConfirmResponse> replyGiveUpBossTeamRole(
+      String id, ReplyGiveUpBossTeamRolePayload payload);
 }

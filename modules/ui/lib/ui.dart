@@ -8,8 +8,10 @@ export 'src/button/primary_button.dart';
 /// decoration
 export 'src/decoration/tab_indicator_decoration.dart';
 export 'src/dialog/action_dialog.dart';
+export 'src/dialog/confirm_dialog.dart';
 export 'src/dialog/congratulation_dialog.dart';
 export 'src/dialog/request_permission_dialog_widget.dart';
+export 'src/dialog/approve_dialog.dart';
 export 'src/dialog/warning_dialog.dart';
 export 'src/dialog/widgets/dialog_container_widget.dart';
 export 'src/dropdown/dropdown_button.dart';

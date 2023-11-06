@@ -1,11 +1,15 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/networking/data_rows_response.dart';
+import 'package:app_main/src/data/models/payloads/community/reply_give_up_boss_team_role_payload.dart';
+import 'package:app_main/src/data/models/responses/group_request_response.dart';
 import 'package:app_main/src/data/models/responses/team_response.dart';
-import 'package:app_main/src/domain/entities/community/update_community_payload.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../../models/payloads/community/update_community_payload.dart';
 import '../../models/responses/api_response.dart';
+import '../../models/responses/boss_community_status_response.dart';
+import '../../models/responses/confirm_response.dart';
 import '../../models/responses/group_response.dart';
 
 part 'community_api.g.dart';
@@ -20,7 +24,7 @@ class CommunityApiConstants {
 
   /// get Team & Group By BossId
   static const String getGroupDetail = 'api/group/boss-team/{id}';
-  static const String updateGroup = 'api/group/{id}';
+  static const String updateGroup = '/api/v1/group/{id}';
   static const String updateTeam = 'api/team/{id}';
   static const String checkBossTeamId = 'api/team/check-team?bossTeamId={id}';
   static const String getFanGroup = 'api/fan-groups';
@@ -29,6 +33,14 @@ class CommunityApiConstants {
   static const String getMembersOfFanGroup =
       'api/fan-groups/{id}/members?types[]={type}';
   static const String editFanGroup = 'api/fan-groups/{id}';
+
+  static const String getBossGroupStatus = '/api/v1/group/{id}/boss-status';
+  static const String relinquishBossGroup =
+      '/api/v1/group/{id}/give-up-boss-role';
+  static const String getGroupRequests =
+      '/api/v1/team/give-up-boss-role-request';
+  static const String replyGiveUpBossTeamRole =
+      '/api/v1/team/{id}/reply-give-up-boss-role';
 }
 
 @RestApi()
@@ -66,8 +78,8 @@ abstract class CommunityApi {
     @Path('id') required String id,
   });
 
-  @PUT(CommunityApiConstants.updateGroup)
-  Future<ApiResponse<Group>> updateGroup({
+  @PATCH(CommunityApiConstants.updateGroup)
+  Future<GroupByIdResponse> updateGroup({
     @Path('id') required String id,
     @Body() required UpdateCommunityPayload payload,
   });
@@ -111,5 +123,24 @@ abstract class CommunityApi {
   Future<ApiResponse<dynamic>> editFanGroup({
     @Path('id') required int id,
     @Body() required UpdateCommunityPayload payload,
+  });
+
+  @POST(CommunityApiConstants.getBossGroupStatus)
+  Future<BossCommunityStatusResponse> getBossGroupStatus({
+    @Path('id') required String id,
+  });
+
+  @POST(CommunityApiConstants.relinquishBossGroup)
+  Future<ConfirmResponse> relinquishBossGroup({
+    @Path('id') required String id,
+  });
+
+  @GET(CommunityApiConstants.getGroupRequests)
+  Future<GroupRequestResponse> getGroupRequests();
+
+  @POST(CommunityApiConstants.replyGiveUpBossTeamRole)
+  Future<ConfirmResponse> replyGiveUpBossTeamRole({
+    @Path('id') required String id,
+    @Body() required ReplyGiveUpBossTeamRolePayload payload,
   });
 }

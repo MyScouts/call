@@ -29,6 +29,10 @@ class IconAppConstants {
   static String camera2 = IconApp.camera2.path;
 
   static String icLogout = IconApp.icLogout.path;
+  static String icWaiting = IconApp.icWaiting.path;
+  static String icApproved = IconApp.icApproved.path;
+  static String icReject = IconApp.icReject.path;
+  static String icApprovedTick = IconApp.icApprovedTick.path;
 }
 
 enum IconApp {
@@ -64,7 +68,11 @@ enum IconApp {
   camera2('assets/icons/wallet/camera2.svg'),
   gallery('assets/icons/wallet/gallery.svg'),
 
-  icArrowLeft('assets/icons/ic_arrow_left.svg');
+  icArrowLeft('assets/icons/ic_arrow_left.svg'),
+  icApproved('assets/icons/ic_approved.svg'),
+  icWaiting('assets/icons/ic_waiting.svg'),
+  icReject('assets/icons/ic_reject.svg'),
+  icApprovedTick('assets/icons/ic_approved_tick.svg');
 
   const IconApp(this.path);
   final String path;

@@ -228,7 +228,7 @@ class _CommunityApi implements CommunityApi {
   }
 
   @override
-  Future<ApiResponse<Group>> updateGroup({
+  Future<GroupByIdResponse> updateGroup({
     required String id,
     required UpdateCommunityPayload payload,
   }) async {
@@ -237,14 +237,14 @@ class _CommunityApi implements CommunityApi {
     final _headers = <String, dynamic>{};
     final _data = payload;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<Group>>(Options(
-      method: 'PUT',
+        .fetch<Map<String, dynamic>>(_setStreamType<GroupByIdResponse>(Options(
+      method: 'PATCH',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'api/group/${id}',
+              '/api/v1/group/${id}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -253,10 +253,7 @@ class _CommunityApi implements CommunityApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<Group>.fromJson(
-      _result.data!,
-      (json) => Group.fromJson(json as Map<String, dynamic>),
-    );
+    final value = GroupByIdResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -497,6 +494,119 @@ class _CommunityApi implements CommunityApi {
       _result.data!,
       (json) => json as dynamic,
     );
+    return value;
+  }
+
+  @override
+  Future<BossCommunityStatusResponse> getBossGroupStatus(
+      {required String id}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<BossCommunityStatusResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/v1/group/${id}/boss-status',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = BossCommunityStatusResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ConfirmResponse> relinquishBossGroup({required String id}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<ConfirmResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/v1/group/${id}/give-up-boss-role',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ConfirmResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<GroupRequestResponse> getGroupRequests() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GroupRequestResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/v1/team/give-up-boss-role-request',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = GroupRequestResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ConfirmResponse> replyGiveUpBossTeamRole({
+    required String id,
+    required ReplyGiveUpBossTeamRolePayload payload,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(payload.toJson());
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<ConfirmResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/v1/team/${id}/reply-give-up-boss-role',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ConfirmResponse.fromJson(_result.data!);
     return value;
   }
 

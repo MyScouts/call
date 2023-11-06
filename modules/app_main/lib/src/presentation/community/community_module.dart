@@ -17,4 +17,22 @@ abstract class CommunityModule {
   @factory
   GetFanGroupBloc createGetFanGroupBloc(CommunityUsecase usecase) =>
       GetFanGroupBloc(usecase.getFanGroup);
+
+  @factory
+  GetBossStatusBloc createGetBossStatusBloc(CommunityUsecase usecase) =>
+      GetBossStatusBloc(usecase.getBossGroupStatus);
+
+  @factory
+  RelinquishBossGroupBloc createRelinquishBossGroupBloc(
+          CommunityUsecase usecase) =>
+      RelinquishBossGroupBloc(usecase.relinquishBossGroup);
+
+  @factory
+  GetGroupRequestsBloc createGetGroupRequestsBloc(CommunityUsecase usecase) =>
+      GetGroupRequestsBloc(usecase.getGroupRequests);
+
+  @factory
+  ReplyGiveUpBossTeamBloc createReplyGiveUpBossTeamBloc(
+          CommunityUsecase usecase) =>
+      ReplyGiveUpBossTeamBloc(usecase.replyGiveUpBossTeamRole);
 }

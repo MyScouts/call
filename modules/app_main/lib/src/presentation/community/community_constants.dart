@@ -1,6 +1,17 @@
+import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:imagewidget/imagewidget.dart';
 import 'package:localization/localization.dart';
+import 'package:mobilehub_bloc/mobilehub_bloc.dart';
+
+import 'groups/group_listing_bloc.dart';
+
+class CommunityConstant {
+  static const int dayRequest = 40;
+}
 
 enum CommunityEventType {
   group,
@@ -73,6 +84,105 @@ extension CommunityTypeExt on CommunityType {
         return 'Nhập vào Giới thiệu group';
       case CommunityType.team:
         return 'Nhập vào Giới thiệu team';
+    }
+  }
+}
+
+enum UpdateGroupOption { edit, pendingRequest, relinquish }
+
+extension UpdateGroupOptionExt on UpdateGroupOption {
+  String get title {
+    switch (this) {
+      case UpdateGroupOption.edit:
+        return 'Chỉnh sửa thông tin Group';
+      case UpdateGroupOption.pendingRequest:
+        return 'Yêu cầu cần phê duyệt';
+      case UpdateGroupOption.relinquish:
+        return 'Từ chức Boss Group';
+    }
+  }
+
+  Color get textColor {
+    switch (this) {
+      case UpdateGroupOption.edit:
+        return const Color(0xFF212121);
+      case UpdateGroupOption.pendingRequest:
+        return const Color(0xFF212121);
+      case UpdateGroupOption.relinquish:
+        return AppColors.red3;
+    }
+  }
+
+  Future<void> onTap(BuildContext context,
+      {required Community community}) async {
+    switch (this) {
+      case UpdateGroupOption.edit:
+        return context.showToastMessage(
+          'Tính năng này đang được phát triển',
+          ToastMessageType.warning,
+        );
+      // return await context.startEditInformation(
+      //   community: community,
+      //   type: CommunityType.group,
+      // );
+      case UpdateGroupOption.pendingRequest:
+        return await context.startGroupRequestList();
+      case UpdateGroupOption.relinquish:
+        final getBossStatusBloc = context.read<GetBossStatusBloc>();
+        return getBossStatusBloc
+            .add(GetDetailDataParam1Event('${community.id}'));
+    }
+  }
+}
+
+enum ApproveGroupRequest { reject, approved }
+
+extension ApproveGroupRequestExt on ApproveGroupRequest {
+  bool get status {
+    switch (this) {
+      case ApproveGroupRequest.approved:
+        return true;
+      case ApproveGroupRequest.reject:
+        return false;
+    }
+  }
+
+  String get text {
+    switch (this) {
+      case ApproveGroupRequest.approved:
+        return 'Phê duyệt';
+      case ApproveGroupRequest.reject:
+        return 'Từ chối';
+    }
+  }
+
+  Color get textColor {
+    switch (this) {
+      case ApproveGroupRequest.approved:
+        return AppColors.white;
+      case ApproveGroupRequest.reject:
+        return const Color(0xFF4B84F7);
+    }
+  }
+
+  Color get buttonColor {
+    switch (this) {
+      case ApproveGroupRequest.approved:
+        return const Color(0xFF4B84F7);
+
+      case ApproveGroupRequest.reject:
+        return const Color(0xFFE8F0FE);
+    }
+  }
+
+  Widget get buttonIcon {
+    switch (this) {
+      case ApproveGroupRequest.approved:
+        return ImageWidget(IconAppConstants.icApprovedTick,
+            height: 25, width: 25);
+
+      case ApproveGroupRequest.reject:
+        return ImageWidget(IconAppConstants.icReject, height: 25, width: 25);
     }
   }
 }

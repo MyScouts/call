@@ -1,10 +1,14 @@
 import 'dart:io';
 
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/domain/entities/community/update_community_payload.dart';
 import 'package:app_main/src/domain/usecases/resource_usecase.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../data/models/payloads/community/reply_give_up_boss_team_role_payload.dart';
+import '../../data/models/payloads/community/update_community_payload.dart';
+import '../../data/models/responses/boss_community_status_response.dart';
+import '../../data/models/responses/confirm_response.dart';
+import '../../data/models/responses/group_request_response.dart';
 import '../repository/community_repository.dart';
 
 @injectable
@@ -85,5 +89,26 @@ class CommunityUsecase {
       groupId: groupId,
       bossId: bossId,
     );
+  }
+
+  Future<BossCommunityStatusResponse> getBossGroupStatus(String id) async {
+    final result = await _communityRepository.getBossGroupStatus(id);
+
+    return result;
+  }
+
+  Future<ConfirmResponse> relinquishBossGroup(String id) async {
+    final result = await _communityRepository.relinquishBossGroup(id);
+
+    return result;
+  }
+
+  Future<List<GroupRequest>> getGroupRequests() async {
+    return await _communityRepository.getGroupRequests();
+  }
+
+  Future<ConfirmResponse> replyGiveUpBossTeamRole(
+      String id, ReplyGiveUpBossTeamRolePayload payload) async {
+    return await _communityRepository.replyGiveUpBossTeamRole(id, payload);
   }
 }
