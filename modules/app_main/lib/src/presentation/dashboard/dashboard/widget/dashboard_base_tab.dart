@@ -19,6 +19,7 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
     extends State<S> with AutomaticKeepAliveClientMixin {
   late final T bloc;
   late final DashBoardController dashBoardController;
+  bool _isDragging = false;
 
   @override
   void initState() {
@@ -112,6 +113,10 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
     return BlocProvider(
       create: (_) => bloc,
       child: BlocBuilder<T, DashboardBaseState>(
+        buildWhen: (_, __) {
+          if(_isDragging) return false;
+          return true;
+        },
         builder: (ctx, state) {
           if (state is DashboardBaseInitial) {
             return const SizedBox.shrink();
@@ -123,14 +128,21 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
             padding: const EdgeInsets.all(16.0),
             child: GestureDetector(
               onTap: () {
-                dashBoardController.enableRemoveIcon = false;
+                setState(() {
+                  dashBoardController.enableEditMode = false;
+                });
+              },
+              onLongPress: () {
+                setState(() {
+                  dashBoardController.enableEditMode = true;
+                });
               },
               behavior: HitTestBehavior.opaque,
               child: Stack(
                 children: [
                   ReorderableStaggeredScrollView.grid(
                     key: UniqueKey(),
-                    enable: true,
+                    enable: dashBoardController.enableEditMode,
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.vertical,
                     physics: const BouncingScrollPhysics(),
@@ -141,6 +153,9 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
                           .toList();
                       ctx.read<T>().add(ChangeItem(items));
                     },
+                    onDragStarted: (_) {
+                      _isDragging = true;
+                    },
                     onAccept: (p0, p1, p2) {
                       final item1 =
                           p0 as ReorderableStaggeredScrollViewGridItem;
@@ -150,10 +165,10 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
                       debugPrint("onAccept ${item2.key}");
                       return true;
                     },
-                    onDragStarted: (_) =>
-                        dashBoardController.enableRemoveIcon = true,
-                    isLongPressDraggable: true,
-                    onDragEnd: (p0, p1) {},
+                    isLongPressDraggable: false,
+                    onDragEnd: (p0, p1) {
+                      _isDragging = false;
+                    },
                     onGroup: (moveData, data) {
                       final item1 =
                           moveData as ReorderableStaggeredScrollViewGridItem;
@@ -197,29 +212,34 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
                         ),
                       );
                     },
-                    children: items.map((item) {
-                      if (item is DashBoardGroupItem) {
+                    children: [
+                      ...items.map((item) {
                         return ReorderableStaggeredScrollViewGridItem(
                           key: ValueKey(item.id),
                           mainAxisCellCount: item.height,
                           crossAxisCellCount: item.width,
-                          widget: AppGroupWidget(app: item),
+                          widget: AppWidgetBuilder(
+                            app: item,
+                            controller: dashBoardController,
+                            onRemoved: () {
+                              bloc.add(RemoveItem(item));
+                            },
+                          ),
                         );
-                      }
-
-                      return ReorderableStaggeredScrollViewGridItem(
-                        key: ValueKey(item.id),
-                        mainAxisCellCount: item.height,
-                        crossAxisCellCount: item.width,
-                        widget: AppWidgetBuilder(
-                          app: item,
-                          controller: dashBoardController,
-                          onRemoved: () {
-                            bloc.add(RemoveItem(item));
-                          },
-                        ),
-                      );
-                    }).toList(),
+                      }),
+                      // if (dashBoardController.enableEditMode)
+                      //   ...List.generate(
+                      //     10,
+                      //     (index) => ReorderableStaggeredScrollViewGridItem(
+                      //       mainAxisCellCount: 1,
+                      //       crossAxisCellCount: 1,
+                      //       widget: const AppEmptyWidget(
+                      //         app: DashBoardEmptyItem(),
+                      //       ),
+                      //       key: ValueKey('empty $index'),
+                      //     ),
+                      //   ),
+                    ],
                   ),
                 ],
               ),
@@ -235,12 +255,12 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
 }
 
 class DashBoardController extends ChangeNotifier {
-  bool _enableRemoveIcon = false;
+  bool _enableEditMode = false;
 
-  set enableRemoveIcon(bool value) {
-    _enableRemoveIcon = value;
+  set enableEditMode(bool value) {
+    _enableEditMode = value;
     notifyListeners();
   }
 
-  bool get enableRemoveIcon => _enableRemoveIcon;
+  bool get enableEditMode => _enableEditMode;
 }

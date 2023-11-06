@@ -147,6 +147,23 @@ class DashBoardGroupItem extends DashBoardItem {
   }
 }
 
+class DashBoardEmptyItem extends DashBoardItem {
+  const DashBoardEmptyItem()
+      : super(
+          width: 1,
+          height: 1,
+          backgroundImage: '',
+          title: '',
+          id: '',
+        );
+
+  @override
+  Map<String, dynamic> childToJson() => {};
+
+  @override
+  List<Object?> get props => [];
+}
+
 final Map<String, DashBoardItem> mapItems = {
   'wg_weather': DashBoardWidgetItem(
     id: 'wg_weather',

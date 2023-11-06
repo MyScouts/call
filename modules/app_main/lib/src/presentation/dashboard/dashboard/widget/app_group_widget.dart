@@ -13,6 +13,7 @@ class AppGroupWidget extends AppWidget {
   @override
   Widget build(BuildContext context) {
     final group = app as DashBoardGroupItem;
+
     return Column(
       children: [
         Expanded(
@@ -33,6 +34,7 @@ class AppGroupWidget extends AppWidget {
                 ),
               );
             },
+            onLongPress: () {},
             child: AspectRatio(
               aspectRatio: 1,
               child: Container(
@@ -66,6 +68,31 @@ class AppGroupWidget extends AppWidget {
               fontWeight: FontWeight.w400,
             ),
           ),
+      ],
+    );
+  }
+}
+
+class AppEmptyWidget extends AppWidget {
+  const AppEmptyWidget({super.key, required super.app});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: const Icon(Icons.filter_center_focus, color: Colors.white),
+          ),
+        ),
+        const SizedBox(height: 20)
       ],
     );
   }
