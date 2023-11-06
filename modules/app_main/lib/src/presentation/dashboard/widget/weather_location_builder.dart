@@ -4,18 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
+Position? _gCurrentPosition;
+Placemark? _gAddress;
+
 class WeatherLocationBuilder extends StatefulWidget {
   const WeatherLocationBuilder({super.key, required this.builder});
+
   final Widget Function(Position? currentPosition, String? country) builder;
+
   @override
   State<WeatherLocationBuilder> createState() => _WeatherLocationBuilderState();
 }
 
-class _WeatherLocationBuilderState extends State<WeatherLocationBuilder> {
-  StreamSubscription? _positionSub;
+class _WeatherLocationBuilderState extends State<WeatherLocationBuilder>
+    with AutomaticKeepAliveClientMixin {
+  // StreamSubscription? _positionSub;
   Placemark? _address;
   Position? _currentPosition;
-
 
   Future<void> checkPermission() async {
     try {
@@ -29,10 +34,6 @@ class _WeatherLocationBuilderState extends State<WeatherLocationBuilder> {
     } catch (e) {
       debugPrint("checkPermission exception $e");
     }
-    if (_positionSub != null) {
-      await _positionSub?.cancel();
-    }
-    _positionSub = Geolocator.getPositionStream().listen(handlePosition);
 
     try {
       final position = await Geolocator.getCurrentPosition();
@@ -47,6 +48,7 @@ class _WeatherLocationBuilderState extends State<WeatherLocationBuilder> {
     final longitude = position.longitude;
     setState(() {
       _currentPosition = position;
+      _gCurrentPosition = position;
     });
     final output = await placemarkFromCoordinates(latitude, longitude);
     _address = Placemark();
@@ -54,6 +56,7 @@ class _WeatherLocationBuilderState extends State<WeatherLocationBuilder> {
       if (mounted) {
         setState(() {
           _address = output[0];
+          _gAddress = output[0];
         });
       }
     }
@@ -61,19 +64,26 @@ class _WeatherLocationBuilderState extends State<WeatherLocationBuilder> {
 
   @override
   void dispose() {
-    _positionSub?.cancel();
+    // _positionSub?.cancel();
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    checkPermission();
+    _currentPosition ??= _gCurrentPosition;
+    _address ??= _gAddress;
+    if(_currentPosition == null || _address == null) {
+      checkPermission();
+    }
   }
-
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return widget.builder(_currentPosition, _address?.subAdministrativeArea);
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
