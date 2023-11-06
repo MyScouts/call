@@ -21,6 +21,16 @@ class IconAppConstants {
   static String icBToB = IconApp.icBToB.path;
   static String icChanel = IconApp.icChanel.path;
   static String icWheelOfFortune = IconApp.icWheelOfFortune.path;
+  static String communityGroup = IconApp.communityGroup.path;
+  static String communitySurvey = IconApp.communitySurvey.path;
+  static String communityCharity = IconApp.communityCharity.path;
+  static String communityTraining = IconApp.communityTraining.path;
+  static String gallery = IconApp.gallery.path;
+  static String camera2 = IconApp.camera2.path;
+  static String bell = IconApp.icBell.path;
+  static String menu = IconApp.icMenu.path;
+  static String group = IconApp.icUserGroup.path;
+  static String newspaper = IconApp.icNewspaper.path;
   static String icLogout = IconApp.icLogout.path;
   static String icDashboardContact = IconApp.icDashboardContact.path;
   static String icTv = IconApp.icTv.path;
@@ -38,6 +48,10 @@ class IconAppConstants {
   static String icFriendBan = IconApp.icFriendBan.path;
   static String icNewsBan = IconApp.icNewsBan.path;
   static String icUserRemove = IconApp.icUserRemove.path;
+  static String icWaiting = IconApp.icWaiting.path;
+  static String icApproved = IconApp.icApproved.path;
+  static String icReject = IconApp.icReject.path;
+  static String icApprovedTick = IconApp.icApprovedTick.path;
 }
 
 enum IconApp {
@@ -79,7 +93,23 @@ enum IconApp {
   icBird('assets/icons/ic_bird.png'),
   icClock('assets/icons/ic_clock.png'),
   icDoc('assets/icons/ic_doc.png'),
-  icDashboardContact('assets/icons/ic_dashboard_contact.png');
+  icDashboardContact('assets/icons/ic_dashboard_contact.png'),
+  communityGroup('assets/icons/community_group.svg'),
+  //modules/design_system/assets/icons/community_survey.svg
+  communitySurvey('assets/icons/community_survey.svg'),
+  //modules/design_system/assets/icons/community_charity.svg
+  communityCharity('assets/icons/community_charity.svg'),
+  //modules/design_system/assets/icons/community_training.svg
+  communityTraining('assets/icons/community_training.svg'),
+  camera2('assets/icons/wallet/camera2.svg'),
+  gallery('assets/icons/wallet/gallery.svg'),
+  icBell('assets/icons/ic_bell.svg'),
+  icMenu('assets/icons/ic_menu.svg'),
+  icNewspaper('assets/icons/newspaper.svg'),
+  icApproved('assets/icons/ic_approved.svg'),
+  icWaiting('assets/icons/ic_waiting.svg'),
+  icReject('assets/icons/ic_reject.svg'),
+  icApprovedTick('assets/icons/ic_approved_tick.svg');
 
   const IconApp(this.path);
   final String path;

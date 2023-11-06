@@ -20,13 +20,14 @@ Group _$GroupFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Group {
-  int? get id => throw _privateConstructorUsedError;
-  String? get codeId => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   bool? get isProvincialGroup => throw _privateConstructorUsedError;
   String? get avatar => throw _privateConstructorUsedError;
   String? get banner => throw _privateConstructorUsedError;
   String? get introduction => throw _privateConstructorUsedError;
+  int? get teamCount => throw _privateConstructorUsedError;
+  int? get openTeamCount => throw _privateConstructorUsedError;
   User? get boss => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,13 +41,14 @@ abstract class $GroupCopyWith<$Res> {
       _$GroupCopyWithImpl<$Res, Group>;
   @useResult
   $Res call(
-      {int? id,
-      String? codeId,
+      {String? id,
       String? name,
       bool? isProvincialGroup,
       String? avatar,
       String? banner,
       String? introduction,
+      int? teamCount,
+      int? openTeamCount,
       User? boss});
 
   $UserCopyWith<$Res>? get boss;
@@ -66,22 +68,19 @@ class _$GroupCopyWithImpl<$Res, $Val extends Group>
   @override
   $Res call({
     Object? id = freezed,
-    Object? codeId = freezed,
     Object? name = freezed,
     Object? isProvincialGroup = freezed,
     Object? avatar = freezed,
     Object? banner = freezed,
     Object? introduction = freezed,
+    Object? teamCount = freezed,
+    Object? openTeamCount = freezed,
     Object? boss = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      codeId: freezed == codeId
-          ? _value.codeId
-          : codeId // ignore: cast_nullable_to_non_nullable
               as String?,
       name: freezed == name
           ? _value.name
@@ -103,6 +102,14 @@ class _$GroupCopyWithImpl<$Res, $Val extends Group>
           ? _value.introduction
           : introduction // ignore: cast_nullable_to_non_nullable
               as String?,
+      teamCount: freezed == teamCount
+          ? _value.teamCount
+          : teamCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      openTeamCount: freezed == openTeamCount
+          ? _value.openTeamCount
+          : openTeamCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       boss: freezed == boss
           ? _value.boss
           : boss // ignore: cast_nullable_to_non_nullable
@@ -131,13 +138,14 @@ abstract class _$$GroupImplCopyWith<$Res> implements $GroupCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int? id,
-      String? codeId,
+      {String? id,
       String? name,
       bool? isProvincialGroup,
       String? avatar,
       String? banner,
       String? introduction,
+      int? teamCount,
+      int? openTeamCount,
       User? boss});
 
   @override
@@ -156,22 +164,19 @@ class __$$GroupImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? codeId = freezed,
     Object? name = freezed,
     Object? isProvincialGroup = freezed,
     Object? avatar = freezed,
     Object? banner = freezed,
     Object? introduction = freezed,
+    Object? teamCount = freezed,
+    Object? openTeamCount = freezed,
     Object? boss = freezed,
   }) {
     return _then(_$GroupImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      codeId: freezed == codeId
-          ? _value.codeId
-          : codeId // ignore: cast_nullable_to_non_nullable
               as String?,
       name: freezed == name
           ? _value.name
@@ -193,6 +198,14 @@ class __$$GroupImplCopyWithImpl<$Res>
           ? _value.introduction
           : introduction // ignore: cast_nullable_to_non_nullable
               as String?,
+      teamCount: freezed == teamCount
+          ? _value.teamCount
+          : teamCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      openTeamCount: freezed == openTeamCount
+          ? _value.openTeamCount
+          : openTeamCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       boss: freezed == boss
           ? _value.boss
           : boss // ignore: cast_nullable_to_non_nullable
@@ -206,21 +219,20 @@ class __$$GroupImplCopyWithImpl<$Res>
 class _$GroupImpl implements _Group {
   const _$GroupImpl(
       {this.id,
-      this.codeId,
       this.name,
       this.isProvincialGroup,
       this.avatar,
       this.banner,
       this.introduction,
+      this.teamCount,
+      this.openTeamCount,
       this.boss});
 
   factory _$GroupImpl.fromJson(Map<String, dynamic> json) =>
       _$$GroupImplFromJson(json);
 
   @override
-  final int? id;
-  @override
-  final String? codeId;
+  final String? id;
   @override
   final String? name;
   @override
@@ -232,11 +244,15 @@ class _$GroupImpl implements _Group {
   @override
   final String? introduction;
   @override
+  final int? teamCount;
+  @override
+  final int? openTeamCount;
+  @override
   final User? boss;
 
   @override
   String toString() {
-    return 'Group(id: $id, codeId: $codeId, name: $name, isProvincialGroup: $isProvincialGroup, avatar: $avatar, banner: $banner, introduction: $introduction, boss: $boss)';
+    return 'Group(id: $id, name: $name, isProvincialGroup: $isProvincialGroup, avatar: $avatar, banner: $banner, introduction: $introduction, teamCount: $teamCount, openTeamCount: $openTeamCount, boss: $boss)';
   }
 
   @override
@@ -245,7 +261,6 @@ class _$GroupImpl implements _Group {
         (other.runtimeType == runtimeType &&
             other is _$GroupImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.codeId, codeId) || other.codeId == codeId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.isProvincialGroup, isProvincialGroup) ||
                 other.isProvincialGroup == isProvincialGroup) &&
@@ -253,13 +268,17 @@ class _$GroupImpl implements _Group {
             (identical(other.banner, banner) || other.banner == banner) &&
             (identical(other.introduction, introduction) ||
                 other.introduction == introduction) &&
+            (identical(other.teamCount, teamCount) ||
+                other.teamCount == teamCount) &&
+            (identical(other.openTeamCount, openTeamCount) ||
+                other.openTeamCount == openTeamCount) &&
             (identical(other.boss, boss) || other.boss == boss));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, codeId, name,
-      isProvincialGroup, avatar, banner, introduction, boss);
+  int get hashCode => Object.hash(runtimeType, id, name, isProvincialGroup,
+      avatar, banner, introduction, teamCount, openTeamCount, boss);
 
   @JsonKey(ignore: true)
   @override
@@ -277,21 +296,20 @@ class _$GroupImpl implements _Group {
 
 abstract class _Group implements Group {
   const factory _Group(
-      {final int? id,
-      final String? codeId,
+      {final String? id,
       final String? name,
       final bool? isProvincialGroup,
       final String? avatar,
       final String? banner,
       final String? introduction,
+      final int? teamCount,
+      final int? openTeamCount,
       final User? boss}) = _$GroupImpl;
 
   factory _Group.fromJson(Map<String, dynamic> json) = _$GroupImpl.fromJson;
 
   @override
-  int? get id;
-  @override
-  String? get codeId;
+  String? get id;
   @override
   String? get name;
   @override
@@ -302,6 +320,10 @@ abstract class _Group implements Group {
   String? get banner;
   @override
   String? get introduction;
+  @override
+  int? get teamCount;
+  @override
+  int? get openTeamCount;
   @override
   User? get boss;
   @override

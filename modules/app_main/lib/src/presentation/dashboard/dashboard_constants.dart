@@ -2,7 +2,6 @@ import 'package:app_main/src/presentation/marshop/register_marshop/register_mars
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 enum DashboardType { community, personal, ecommerce }
 

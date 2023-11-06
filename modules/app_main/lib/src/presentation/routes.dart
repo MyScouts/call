@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/community/community_routes.dart';
 import 'package:app_main/src/presentation/marshop/marshop_routes.dart';
 import 'package:app_main/src/presentation/social/social_routes.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_route.dart';
@@ -21,6 +22,7 @@ class Routes extends RouteModuleBuilder {
         get<MarkShopRoutes>(),
         get<QrCodeRoutes>(),
         get<SocialRoutes>(),
+        get<CommunityRoutes>(),
       ];
 
   @override

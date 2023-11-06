@@ -10,6 +10,7 @@ import 'widgets/dialog_container_widget.dart';
 class ActionDialog extends StatelessWidget {
   final String title;
   final String actionTitle;
+  final String? content;
   final VoidCallback onAction;
   final VoidCallback? onCancel;
 
@@ -18,6 +19,7 @@ class ActionDialog extends StatelessWidget {
     required this.title,
     required this.actionTitle,
     required this.onAction,
+    this.content,
     this.onCancel,
   });
 
@@ -40,7 +42,11 @@ class ActionDialog extends StatelessWidget {
               ),
             Padding(
               padding: const EdgeInsets.only(
-                  top: 20, bottom: 35, left: 32, right: 32),
+                top: 20,
+                left: 20,
+                right: 20,
+                bottom: 10,
+              ),
               child: Text(
                 title,
                 style: Theme.of(context)
@@ -50,30 +56,40 @@ class ActionDialog extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: PrimaryButton(
-                    title: actionTitle,
-                    onTap: () {
-                      Navigator.pop(context);
-                      onAction.call();
-                    },
-                    disabled: false,
-                    width: MediaQuery.of(context).size.width,
+            if (content != null)
+              Text(
+                content!,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    fontWeight: FontWeight.w400, color: AppColors.red3),
+              ),
+            Padding(
+              padding: const EdgeInsets.only(top: 25),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: PrimaryButton(
+                      title: actionTitle,
+                      onTap: () {
+                        Navigator.pop(context);
+                        onAction.call();
+                      },
+                      disabled: false,
+                      width: MediaQuery.of(context).size.width,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 20),
-                Expanded(
-                  child: CommonOutlineButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      onCancel?.call();
-                    },
-                    label: 'Huỷ',
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: CommonOutlineButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        onCancel?.call();
+                      },
+                      label: 'Huỷ',
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             )
           ],
         ),
