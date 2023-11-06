@@ -44,4 +44,37 @@ extension SettingCoordinator on BuildContext {
       },
     );
   }
+
+  Future<T?> confirmDeleteAccount<T>() {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: true,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return BlocListener<UserCubit, UserState>(
+          listener: (context, state) {
+            if (state is OnLogout) {
+              showLoading();
+            }
+
+            if (state is LogoutSuccess) {
+              hideLoading();
+              showToastMessage("Xoá tài khoản thành công.");
+              context.startLoginUtil();
+            }
+
+            if (state is LogoutFail) {
+              hideLoading();
+              showToastMessage("Xoá tài khoản thất bại.");
+            }
+          },
+          child: ActionDialog(
+            title: "Bạn có muốn xoá tài khoản?",
+            actionTitle: S.current.confirm.capitalize(),
+            onAction: () => context.read<UserCubit>().onLogout(),
+          ),
+        );
+      },
+    );
+  }
 }

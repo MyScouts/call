@@ -26,27 +26,42 @@ class Setting {
       [
         [
           Setting(
-            text: "Quét mã QR",
-            icon: IconAppConstants.icPayment,
-            onPressed: () => context.startScanQrCode(showMyQr: true),
+            text: "Cài đặt tài khoản",
+            icon: IconAppConstants.icSettingAccount,
           ),
           Setting(
-            text: "Đăng ký khách hàng thường xuyên",
+            text: "Tin nhắn office",
+            icon: IconAppConstants.icChat,
+          ),
+        ],
+        [
+          Setting(
+            text: "Team",
             icon: IconAppConstants.icECommerce,
             onPressed: () => context.startRegisterCustomer(),
           ),
           Setting(
-            text: "Nâng cấp P-DONE",
-            icon: IconAppConstants.icVDone,
+            text: "PDone",
+            icon: IconAppConstants.icUpgrade,
             onPressed: () => context.startUpgradePDone(),
           ),
           Setting(
-            text: "JA contract",
-            icon: IconAppConstants.icChanel,
+            text: "JA",
+            icon: IconAppConstants.icJA,
             onPressed: () {
               final bloc = context.read<GetJAStatusBloc>();
               bloc.add(GetDetailDataEvent());
             },
+          ),
+          Setting(
+            text: "Khách hàng thường xuyên - Market Home",
+            icon: IconAppConstants.icMarshopHome,
+            onPressed: () => context.startRegisterMarshop(),
+          ),
+          Setting(
+            text: "Tài khoản Marshop",
+            icon: IconAppConstants.icMarshop,
+            onPressed: () => context.startRegisterMarshop(),
           ),
         ],
         [
@@ -54,6 +69,11 @@ class Setting {
             text: "Đăng xuất",
             icon: IconAppConstants.icLogout,
             onPressed: () => context.confirmLogoutDialog(),
+          ),
+          Setting(
+            text: "Xoá tài khoản",
+            icon: IconAppConstants.icDelete,
+            onPressed: () => context.confirmDeleteAccount(),
           ),
         ]
       ];

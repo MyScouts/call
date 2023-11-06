@@ -5,12 +5,12 @@ import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:app_main/src/presentation/settings/widget/item_setting_widget.dart';
+import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
-import 'package:localization/localization.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
 
@@ -38,7 +38,8 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldHideKeyboard(
-      backgroundColor: const Color(0xFFF2F2F6),
+      appBar: const BaseAppBar(title: "Tài khoản"),
+      backgroundColor: const Color(0XFFF3F8FF),
       body: BlocListener<GetJAStatusBloc, GetDetailState>(
         listener: _onListenerGetJAStatusBloc,
         child: BlocListener<ConfirmRegisterJABloc, GetDetailState>(
@@ -48,32 +49,17 @@ class _SettingScreenState extends State<SettingScreen> {
               padding: const EdgeInsets.symmetric(
                 horizontal: paddingHorizontal,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const CustomBackButton(),
-                  Expanded(
-                      child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          S.current.setting.capitalize(),
-                          style: context.text.titleLarge!.copyWith(
-                            fontSize: 24,
-                            height: 1,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        _buildSearch(),
-                        const SizedBox(height: 10),
-                        _buildSession1(),
-                        const SizedBox(height: 10),
-                        _buildSessionMenus(),
-                      ],
-                    ),
-                  ))
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildSession1(),
+                    const SizedBox(height: 10),
+                    _buildSearch(),
+                    const SizedBox(height: 10),
+                    _buildSessionMenus(),
+                  ],
+                ),
               ),
             ),
           ),
@@ -134,6 +120,11 @@ class _SettingScreenState extends State<SettingScreen> {
   _buildSearch() {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: TextField(
         style: context.text.bodySmall!.copyWith(color: AppColors.grey20),
         decoration: InputDecoration(
@@ -142,7 +133,7 @@ class _SettingScreenState extends State<SettingScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ImageWidget(
               IconAppConstants.icSearch,
-              color: AppColors.black,
+              color: Colors.grey,
               fit: BoxFit.cover,
             ),
           ),
@@ -161,7 +152,7 @@ class _SettingScreenState extends State<SettingScreen> {
             borderRadius: BorderRadius.circular(50),
             borderSide: BorderSide.none,
           ),
-          fillColor: AppColors.grey5,
+          fillColor: Colors.transparent,
         ),
       ),
     );
@@ -176,11 +167,105 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   _buildSession1() {
-    return ItemSettingWidget(
-      title: "Hồ sơ tài khoản",
-      name: _authInfo.getdisplayName,
-      summary: "ID: ${_authInfo.pDoneId}",
-      avatar: "avatar",
+    return GestureDetector(
+      onTap: () => context.startDiary(userId: _authInfo.id.toString()),
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: 15,
+          horizontal: 10,
+        ),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          children: [
+            Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: context.theme.primaryColor,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(90),
+              ),
+              child: ClipRRect(
+                child: ImageWidget(
+                  ImageConstants.defaultUserAvatar,
+                  borderRadius: 100,
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      _authInfo.getdisplayName,
+                      style: context.textTheme.titleMedium!.copyWith(
+                        fontSize: 15,
+                        color: AppColors.black,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    if (_authInfo.isPDone!)
+                      Container(
+                        width: 18,
+                        height: 18,
+                        alignment: Alignment.center,
+                        margin: const EdgeInsets.only(left: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(90),
+                          color: context.theme.primaryColor,
+                        ),
+                        child: Text(
+                          "P",
+                          textAlign: TextAlign.center,
+                          style: context.textTheme.titleSmall!.copyWith(
+                            color: AppColors.white,
+                            height: 0,
+                            fontSize: 11,
+                          ),
+                        ),
+                      ),
+                    if (_authInfo.isJA!)
+                      Container(
+                        height: 18,
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        alignment: Alignment.center,
+                        margin: const EdgeInsets.only(left: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(90),
+                          color: context.theme.colorScheme.secondary,
+                        ),
+                        child: Text(
+                          "JA",
+                          textAlign: TextAlign.center,
+                          style: context.textTheme.titleSmall!.copyWith(
+                            color: AppColors.white,
+                            height: 0,
+                            fontSize: 11,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  "ID: ${_authInfo.pDoneId}",
+                  style: context.textTheme.titleMedium!.copyWith(
+                    fontSize: 13,
+                    color: AppColors.grey14,
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -194,6 +279,7 @@ class _SettingScreenState extends State<SettingScreen> {
             name: menu.text,
             icon: menu.icon,
             onPressed: menu.onPressed,
+            hasBorder: index < settings.length - 1,
             border: BorderRadius.only(
               topLeft: Radius.circular(index == 0 ? 10 : 0),
               topRight: Radius.circular(index == 0 ? 10 : 0),

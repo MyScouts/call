@@ -16,8 +16,12 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       bottomOpacity: 0.0,
       elevation: 0.0,
-      leading: const CustomBackButton(alignment: Alignment.center),
+      centerTitle: true,
+      leading: const CustomBackButton(alignment: Alignment.centerRight),
       shape: Border.all(width: 0, color: Colors.transparent),
+      actions: const [
+        CustomCloseButton(alignment: Alignment.centerLeft),
+      ],
     );
   }
 
