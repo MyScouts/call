@@ -135,3 +135,13 @@ final class GetUserInfoFail extends UserState {
   final String message;
   GetUserInfoFail({required this.message});
 }
+
+// Delete user
+final class OnDeleteUser extends UserState {}
+
+final class DeleteUserSuccess extends UserState {}
+
+final class DeleteUserFail extends UserState {
+  final String message;
+  DeleteUserFail({required this.message});
+}

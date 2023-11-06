@@ -35,3 +35,13 @@ Map<String, dynamic> _$UnFollowPayloadToJson(UnFollowPayload instance) =>
     <String, dynamic>{
       'id': instance.id,
     };
+
+DeleteUserPayload _$DeleteUserPayloadFromJson(Map<String, dynamic> json) =>
+    DeleteUserPayload(
+      password: json['password'] as String,
+    );
+
+Map<String, dynamic> _$DeleteUserPayloadToJson(DeleteUserPayload instance) =>
+    <String, dynamic>{
+      'password': instance.password,
+    };

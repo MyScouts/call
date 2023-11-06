@@ -73,7 +73,7 @@ class Setting {
           Setting(
             text: "Xoá tài khoản",
             icon: IconAppConstants.icDelete,
-            onPressed: () => context.confirmDeleteAccount(),
+            onPressed: () => context.confirmDeleteAccount(userId: user!.id!),
           ),
         ]
       ];

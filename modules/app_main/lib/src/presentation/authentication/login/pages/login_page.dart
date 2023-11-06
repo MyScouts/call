@@ -89,9 +89,7 @@ class _LoginWidgetState extends State<LoginWidget> with ValidationMixin {
                     height: 20 / 14,
                     leadingDistribution: TextLeadingDistribution.even),
               ),
-              const SizedBox(
-                height: 4,
-              ),
+              const SizedBox(height: 4),
               CustomTextField(
                 controller: _passwordCtrl,
                 validator: ValidationHelper.password,

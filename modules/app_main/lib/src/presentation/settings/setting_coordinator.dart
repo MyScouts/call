@@ -3,6 +3,7 @@ import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:app_main/src/presentation/settings/setting_screen.dart';
+import 'package:app_main/src/presentation/settings/widget/confirm_delete_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:ui/ui.dart';
@@ -45,36 +46,34 @@ extension SettingCoordinator on BuildContext {
     );
   }
 
-  Future<T?> confirmDeleteAccount<T>() {
-    return showGeneralDialog<T>(
+  Future<T?> confirmDeleteAccount<T>({required int userId}) {
+    return showModalBottomSheet(
       context: this,
-      barrierDismissible: true,
-      barrierLabel: '',
-      pageBuilder: (context, animation1, animation2) {
-        return BlocListener<UserCubit, UserState>(
+      useRootNavigator: true,
+      backgroundColor: Colors.transparent,
+      isDismissible: false,
+      isScrollControlled: true,
+      builder: (context) => BlocProvider(
+        create: (context) => injector.get<UserCubit>(),
+        child: BlocListener<UserCubit, UserState>(
           listener: (context, state) {
-            if (state is OnLogout) {
+            if (state is OnDeleteUser) {
               showLoading();
             }
-
-            if (state is LogoutSuccess) {
+            if (state is DeleteUserSuccess) {
               hideLoading();
-              showToastMessage("Xoá tài khoản thành công.");
+              showToastMessage("Xoá tài khoản thành công");
               context.startLoginUtil();
             }
 
-            if (state is LogoutFail) {
+            if (state is DeleteUserFail) {
               hideLoading();
-              showToastMessage("Xoá tài khoản thất bại.");
+              showToastMessage(state.message, ToastMessageType.error);
             }
           },
-          child: ActionDialog(
-            title: "Bạn có muốn xoá tài khoản?",
-            actionTitle: S.current.confirm.capitalize(),
-            onAction: () => context.read<UserCubit>().onLogout(),
-          ),
-        );
-      },
+          child: ConfirmDeleteModal(userId: userId),
+        ),
+      ),
     );
   }
 }

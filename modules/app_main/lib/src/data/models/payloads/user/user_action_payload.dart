@@ -41,3 +41,16 @@ class UnFollowPayload {
 
   Map<String, dynamic> toJson() => _$UnFollowPayloadToJson(this);
 }
+
+@JsonSerializable()
+class DeleteUserPayload {
+  final String password;
+  const DeleteUserPayload({
+    required this.password,
+  });
+
+  factory DeleteUserPayload.fromJson(Map<String, dynamic> json) =>
+      _$DeleteUserPayloadFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DeleteUserPayloadToJson(this);
+}

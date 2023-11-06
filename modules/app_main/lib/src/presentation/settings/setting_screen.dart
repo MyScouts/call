@@ -231,7 +231,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           ),
                         ),
                       ),
-                    if (_authInfo.isJA!)
+                    if (_authInfo.isJA ?? false)
                       Container(
                         height: 18,
                         padding: const EdgeInsets.symmetric(horizontal: 5),
