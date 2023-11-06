@@ -1,5 +1,4 @@
 import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
-import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
 import 'package:app_main/src/presentation/dashboard/search/search_screen.dart';
 import 'package:flutter/material.dart';
 

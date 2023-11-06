@@ -1,5 +1,4 @@
-import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_screen.dart';
-import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
+import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:design_system/design_system.dart';
 import 'package:equatable/equatable.dart';
 
@@ -227,7 +226,7 @@ final personalDefault = {
     id: 'ic_group_team',
     title: 'Group/Team',
     backgroundImage: IconAppConstants.icGroupTeam,
-    path: UpgradePDoneScreen.routeName,
+    path: CommunityWidget.routeName,
   ),
   "ic_payment": DashBoardIconItem(
     id: 'ic_payment',
@@ -238,7 +237,6 @@ final personalDefault = {
     id: 'ic_v_store',
     title: 'V-Store',
     backgroundImage: IconAppConstants.icVStore,
-    path: RegisterMarshopScreen.routeName,
   ),
   "ic_b_to_b": DashBoardIconItem(
     id: 'ic_b_to_b',
@@ -293,7 +291,6 @@ final eCommerceDefault = {
     id: 'ic_v_store',
     title: 'V-Store',
     backgroundImage: IconAppConstants.icVStore,
-    path: RegisterMarshopScreen.routeName,
   ),
   "ic_b_to_b": DashBoardIconItem(
     id: 'ic_b_to_b',
