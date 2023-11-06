@@ -27,6 +27,10 @@ class IconAppConstants {
   static String communityTraining = IconApp.communityTraining.path;
   static String gallery = IconApp.gallery.path;
   static String camera2 = IconApp.camera2.path;
+  static String bell = IconApp.icBell.path;
+  static String menu = IconApp.icMenu.path;
+  static String group = IconApp.icUserGroup.path;
+  static String newspaper = IconApp.icNewspaper.path;
 
   static String icLogout = IconApp.icLogout.path;
   static String icWaiting = IconApp.icWaiting.path;
@@ -67,6 +71,10 @@ enum IconApp {
   communityTraining('assets/icons/community_training.svg'),
   camera2('assets/icons/wallet/camera2.svg'),
   gallery('assets/icons/wallet/gallery.svg'),
+  icBell('assets/icons/ic_bell.svg'),
+  icMenu('assets/icons/ic_menu.svg'),
+  icUserGroup('assets/icons/ic_user-group.svg'),
+  icNewspaper('assets/icons/newspaper.svg'),
 
   icArrowLeft('assets/icons/ic_arrow_left.svg'),
   icApproved('assets/icons/ic_approved.svg'),

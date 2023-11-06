@@ -40,105 +40,103 @@ class _CommunityGroupWidgetState extends State<CommunityGroupWidget> {
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.4),
-            offset: const Offset(0, 4),
-            blurRadius: 20,
-            spreadRadius: 0,
-          ),
-        ],
+        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
       ),
-      height: 285,
-      child: Column(
-        children: [
-          Expanded(
-            child: PageView(
-              controller: _pageController,
-              children: List.generate(
-                page.length,
-                (index) {
-                  final pageData = page[index];
-                  return GridView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      mainAxisSpacing: 6,
-                    ),
-                    children: pageData
-                        .asMap()
-                        .entries
-                        .map(
-                          (e) => GestureDetector(
-                            key: ValueKey('btnGroupItem_${e.key}'),
-                            onTap: () {
-                              widget.onTap?.call(e.value);
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 12)
-                                      .copyWith(top: 10),
-                              child: Column(
-                                children: [
-                                  Expanded(
-                                    flex: 3,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: AspectRatio(
-                                        aspectRatio: 1,
-                                        child: ImageWidget(
-                                          e.value.banner?.optimizeSize400 ??
-                                              ImageConstants.imgdefault,
-                                          borderRadius: 100,
+      height: 320,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 15, right: 10, left: 10),
+        decoration: BoxDecoration(
+          border: Border.all(color: const Color(0xffE8E8E8)),
+          borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: PageView(
+                controller: _pageController,
+                children: List.generate(
+                  page.length,
+                  (index) {
+                    final pageData = page[index];
+                    return GridView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        mainAxisSpacing: 6,
+                      ),
+                      children: pageData
+                          .asMap()
+                          .entries
+                          .map(
+                            (e) => GestureDetector(
+                              key: ValueKey('btnGroupItem_${e.key}'),
+                              onTap: () {
+                                widget.onTap?.call(e.value);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 12).copyWith(top: 10),
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                      flex: 3,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: AspectRatio(
+                                          aspectRatio: 1,
+                                          child: ImageWidget(
+                                            e.value.banner?.optimizeSize400 ?? ImageConstants.imgdefault,
+                                            borderRadius: 100,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(top: 2),
-                                      child: Text(
-                                        e.value.name!,
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall
-                                            ?.copyWith(
-                                              height: 1.4,
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w500,
-                                              color: const Color(0xFF333333),
-                                            ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 2),
+                                        child: Text(
+                                          e.value.name!,
+                                          maxLines: 2,
+                                          textAlign: TextAlign.center,
+                                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                                height: 1.4,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w500,
+                                                color: const Color(0xFF333333),
+                                              ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                        .toList(),
-                  );
-                },
+                          )
+                          .toList(),
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 20,
-            child: PageIndicatorWidget(
-              countItem: page.length,
-              controller: _pageController,
-              color: AppColors.grey5,
-              size: const Size(7, 7),
-              activeSize: const Size(13, 7),
-              colorActive: AppColors.blue15,
+            Container(
+              margin: const EdgeInsets.only(bottom: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              decoration: BoxDecoration(
+                color: const Color.fromRGBO(0, 0, 0, 0.2),
+                borderRadius: BorderRadius.circular(50),
+              ),
+              height: 20,
+              child: PageIndicatorWidget(
+                countItem: page.length,
+                controller: _pageController,
+                color: const Color.fromRGBO(0, 0, 0, 0.2),
+                size: const Size(7, 7),
+                activeSize: const Size(7, 7),
+                colorActive: AppColors.white,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

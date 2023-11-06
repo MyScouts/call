@@ -1,3 +1,4 @@
+import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/community/group_detail/group_request_list_screen.dart';
 import 'package:app_main/src/presentation/community/groups/group_listing_bloc.dart';
 import 'package:app_main/src/presentation/community/groups/groups_listing_widget.dart';
@@ -23,6 +24,9 @@ import 'team_detail/team_detail_screen.dart';
 class CommunityRoutes extends RouteModule {
   @override
   Map<String, WidgetBuilder> getAll(RouteSettings settings) => {
+        CommunityWidget.routeName: (context) {
+          return const CommunityWidget();
+        },
         GroupsListingWidget.routeName: (context) {
           return MultiBlocProvider(
             providers: [
