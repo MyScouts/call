@@ -67,7 +67,8 @@ class AuthenticationUsecase {
   }
 
   Future<ResetPasswordTokenResponse> resetPasswordToken(
-      ResetPasswordTokenPayload payload) {
+    ResetPasswordTokenPayload payload,
+  ) {
     return _authRepository.resetPasswordToken(payload);
   }
 
