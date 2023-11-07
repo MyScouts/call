@@ -15,11 +15,15 @@ class VerifyOTPScreen extends StatefulWidget {
   final String phoneNumber;
   final String phoneCode;
   final String password;
+  final String birthDay;
+  final int sex;
   const VerifyOTPScreen({
     super.key,
     required this.phoneCode,
     required this.phoneNumber,
     required this.password,
+    required this.birthDay,
+    required this.sex,
   });
 
   @override
@@ -170,10 +174,12 @@ class _VerifyOTPScreenState extends State<VerifyOTPScreen> with TimerMixin {
   void _handleResendOTP() {
     showLoading();
     context.read<UserCubit>().resendOTP(
-          AuthenticationPhonePayload(
+          RegisterPhonePayload(
             password: widget.password,
             phoneCode: widget.phoneCode.replaceAll("+", ""),
             phoneNumber: widget.phoneNumber,
+            birthday: widget.birthDay,
+            sex: widget.sex,
           ),
         );
   }

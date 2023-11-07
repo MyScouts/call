@@ -14,6 +14,8 @@ abstract class AuthRepository {
     required String phone,
     required String password,
     required String phoneCode,
+    required String birthDate,
+    required int sex,
   });
 
   Future<PhoneCompleteRegister> completeRegister(

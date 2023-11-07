@@ -24,11 +24,15 @@ class AuthRepositoryImpl extends AuthRepository {
     required String phone,
     required String password,
     required String phoneCode,
+    required String birthDate,
+    required int sex,
   }) {
-    return _authApi.registerWithPhone(AuthenticationPhonePayload(
+    return _authApi.registerWithPhone(RegisterPhonePayload(
       phoneNumber: phone,
       password: password,
       phoneCode: phoneCode,
+      birthday: birthDate,
+      sex: sex,
     ));
   }
 

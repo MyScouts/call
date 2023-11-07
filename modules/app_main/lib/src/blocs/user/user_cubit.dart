@@ -31,15 +31,19 @@ class UserCubit extends Cubit<UserState> {
     required String phone,
     required String password,
     required String phoneCode,
+    required String birthday,
+    required int sex,
   }) async {
     if (state is OnPhoneRegister) return;
     try {
       emit(OnPhoneRegister());
       await _authenticationUsecase.registerWithPhone(
-        AuthenticationPhonePayload(
+        RegisterPhonePayload(
           phoneNumber: phone.toPhone,
           password: password,
           phoneCode: phoneCode,
+          birthday: birthday,
+          sex: sex,
         ),
       );
       emit(PhoneRegisterSuccess());
@@ -170,14 +174,16 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-  Future resendOTP(AuthenticationPhonePayload payload) async {
+  Future resendOTP(RegisterPhonePayload payload) async {
     if (state is OnResendOTP) return;
     try {
       emit(OnResendOTP());
-      await _authenticationUsecase.registerWithPhone(AuthenticationPhonePayload(
+      await _authenticationUsecase.registerWithPhone(RegisterPhonePayload(
         phoneNumber: payload.phoneNumber.toPhone,
         password: payload.password,
         phoneCode: payload.phoneCode,
+        birthday: payload.birthday,
+        sex: payload.sex,
       ));
       emit(ResendOTPSuccess());
     } on DioException catch (error) {
@@ -343,6 +349,11 @@ class UserCubit extends Cubit<UserState> {
     } on DioException catch (error) {
       debugPrint("authQrCode: $error");
       String err = S.current.messages_server_internal_error.capitalize();
+      final data = error.response!.data;
+      switch (data['code']) {
+        case "MARSHOP_NOT_FOUND":
+          err = "Không tìm thấy Marshop.";
+      }
       emit(LoginQRCodeFail(message: err));
     } catch (error) {
       debugPrint("authQrCode: $error");
@@ -366,8 +377,8 @@ class UserCubit extends Cubit<UserState> {
       emit(DeleteUserSuccess());
     } on DioException catch (error) {
       debugPrint("phoneRegister: $error");
-      final data = error.response!.data;
       String err = S.current.messages_server_internal_error.capitalize();
+      final data = error.response!.data;
       switch (data['code']) {
         case "PASSWORD_NOT_MATCH":
           err = "Mật khẩu không khớp";

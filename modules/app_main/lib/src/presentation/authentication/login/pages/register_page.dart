@@ -27,16 +27,15 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
   final _passwordCtrl = TextEditingController();
   final _rePasswordCtrl = TextEditingController();
   final genderCtrl = TextEditingController();
+  final ValueNotifier<String?> _birthDateError =
+      ValueNotifier("Nhập ngày sinh");
   DateTime? birthDay;
+  int _gender = 1;
   String _phoneCode = "+84";
 
-  void onUpdatePayload() {
-    EasyDebounce.debounce(
-        'onUpdateInfomationPayload', const Duration(milliseconds: 200), () {
-      onValidation();
-      // payload = val;
-    });
-  }
+  @override
+  bool get conditionValidator =>
+      _birthDateError.value == null && _passwordValid;
 
   @override
   void initState() {
@@ -65,6 +64,10 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
       _passwordValid = _rules.length == PasswordRules.values.length;
       setState(() {});
     });
+
+    _birthDateError.addListener(() {
+      onValidation();
+    });
   }
 
   @override
@@ -77,6 +80,8 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
             phoneCode: _phoneCode,
             phoneNumber: _phoneCtrl.text.trim(),
             password: _passwordCtrl.text,
+            birthDay: birthDay!.toYYYYmmdd,
+            sex: _gender,
           );
         }
 
@@ -161,29 +166,71 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                 ),
                 isPassword: true,
               ),
-              const SizedBox(height: 24),
-              InformationLayoutFieldWidget(
-                required: false,
-                label: UpdateInformationType.birthDay.title(context),
-                child: InputDateTimeWidget(
-                  hintText: 'Ngày sinh',
-                  useHorizontalLayout: true,
-                  radius: 17,
-                  date: birthDay,
-                  formatText: (date) => S
-                      .of(context)
-                      .formatDateDDmmYYYYhhMM(date, date)
-                      .split('|')
-                      .first,
-                  max: DateTime.now(),
-                  onChange: (dateTime) {
-                    birthDay = dateTime;
-                  },
-                ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                      child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      InformationLayoutFieldWidget(
+                        required: false,
+                        label: "Ngày sinh",
+                        child: InputDateTimeWidget(
+                          hintText: 'Ngày sinh',
+                          useHorizontalLayout: true,
+                          radius: 17,
+                          date: birthDay,
+                          formatText: (date) => S
+                              .of(context)
+                              .formatDateDDmmYYYYhhMM(date, date)
+                              .split('|')
+                              .first,
+                          max: DateTime.now(),
+                          onChange: (dateTime) {
+                            birthDay = dateTime;
+                            if (birthDay != null) {
+                              if (birthDay!.isUnder18yearsAgo()) {
+                                _birthDateError.value = "Yêu cầu trên 18 tuổi.";
+                              } else {
+                                _birthDateError.value = null;
+                              }
+                            } else {
+                              _birthDateError.value = "Nhập ngày sinh.";
+                            }
+                          },
+                        ),
+                      ),
+                      Positioned(
+                          bottom: -18,
+                          child: ValueListenableBuilder(
+                            valueListenable: _birthDateError,
+                            builder: (context, value, child) {
+                              return value != null
+                                  ? Text(
+                                      value,
+                                      style:
+                                          context.textTheme.bodySmall!.copyWith(
+                                        color: AppColors.red10,
+                                      ),
+                                    )
+                                  : const SizedBox();
+                            },
+                          ))
+                    ],
+                  )),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: GenderInput(
+                      onChange: (sex) {
+                        _gender = sex;
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                ],
               ),
-              GenderInput(
-                onChange: (sex) {},
-              ),
+              const SizedBox(height: 30),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -278,11 +325,17 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
   }
 
   _onRegister() {
+    if (birthDay == null) {
+      _birthDateError.value = "Vui lòng nhập ngày sinh";
+      return;
+    }
     showLoading();
     context.read<UserCubit>().phoneRegister(
           phone: _phoneCtrl.text.trim(),
           password: _passwordCtrl.text,
           phoneCode: _phoneCode.replaceAll("+", ""),
+          birthday: birthDay!.toYYYYmmdd,
+          sex: _gender,
         );
   }
 }

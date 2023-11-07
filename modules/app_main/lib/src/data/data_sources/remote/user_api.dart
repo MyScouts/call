@@ -56,6 +56,7 @@ abstract class UserApi {
 
   @POST(UserApiConstants.blockUser)
   Future blockUser(@Path() int userId);
+
   @POST(UserApiConstants.authOTP)
-  Future<bool> genOTP();
+  Future genOTP();
 }

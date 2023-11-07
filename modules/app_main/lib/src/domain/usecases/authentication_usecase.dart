@@ -38,11 +38,13 @@ class AuthenticationUsecase {
     return response;
   }
 
-  Future registerWithPhone(AuthenticationPhonePayload payload) {
+  Future registerWithPhone(RegisterPhonePayload payload) {
     return _authRepository.registerWithPhone(
       password: payload.password,
       phone: payload.phoneNumber,
       phoneCode: payload.phoneCode,
+      birthDate: payload.birthday,
+      sex: payload.sex,
     );
   }
 

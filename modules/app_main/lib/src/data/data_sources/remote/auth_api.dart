@@ -38,7 +38,7 @@ abstract class AuthApi {
   );
 
   @POST(AuthApiConstant.registerWithPhone)
-  Future registerWithPhone(@Body() AuthenticationPhonePayload body);
+  Future registerWithPhone(@Body() RegisterPhonePayload body);
 
   @POST(AuthApiConstant.phoneCompletedRegister)
   Future<PhoneCompleteRegister> phoneCompleteRegister(

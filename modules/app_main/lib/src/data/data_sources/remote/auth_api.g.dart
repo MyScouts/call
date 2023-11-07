@@ -47,7 +47,7 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<dynamic> registerWithPhone(AuthenticationPhonePayload body) async {
+  Future<dynamic> registerWithPhone(RegisterPhonePayload body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
