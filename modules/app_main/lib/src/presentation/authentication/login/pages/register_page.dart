@@ -26,7 +26,17 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
   final _phoneCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
   final _rePasswordCtrl = TextEditingController();
+  final genderCtrl = TextEditingController();
+  DateTime? birthDay;
   String _phoneCode = "+84";
+
+  void onUpdatePayload() {
+    EasyDebounce.debounce(
+        'onUpdateInfomationPayload', const Duration(milliseconds: 200), () {
+      onValidation();
+      // payload = val;
+    });
+  }
 
   @override
   void initState() {
@@ -152,6 +162,28 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                 isPassword: true,
               ),
               const SizedBox(height: 24),
+              InfomationLayoutFieldWidget(
+                required: false,
+                label: UpdateInformationType.birthDay.title(context),
+                child: InputDateTimeWidget(
+                  hintText: 'Ngày sinh',
+                  useHorizontalLayout: true,
+                  radius: 17,
+                  date: birthDay,
+                  formatText: (date) => S
+                      .of(context)
+                      .formatDateDDmmYYYYhhMM(date, date)
+                      .split('|')
+                      .first,
+                  max: DateTime.now(),
+                  onChange: (dateTime) {
+                    birthDay = dateTime;
+                  },
+                ),
+              ),
+              GenderInput(
+                onChange: (sex) {},
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
