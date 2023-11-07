@@ -1,3 +1,4 @@
+import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_background_builder.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_community_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_ecommerce_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_personal_tab.dart';
@@ -58,7 +59,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         body: Stack(
           fit: StackFit.expand,
           children: [
-            ImageWidget(_imgBg, fit: BoxFit.fill),
+            DashBoardBackgroundBuilder(
+              key: const Key('bg_image'),
+              page: _page,
+              builder: (image) => ImageWidget(image, fit: BoxFit.fill),
+            ),
             SafeArea(
               bottom: false,
               child: Column(
@@ -67,9 +72,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: StatusBarWidget(
-                      openAppStore: () async {
-                        context.showAppStore();
-                      },
+                      openAppStore: () => context.startSystemSetting(_page),
                     ),
                   ),
                   Expanded(

@@ -1,5 +1,6 @@
 import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/responses/authenticate_response.dart';
+import 'package:app_main/src/domain/entities/change_password_payload.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
@@ -24,6 +25,8 @@ class AuthApiConstant {
   static const getOtp = '/api/sms/send-otp';
   static const authClaimV1 = '/api/v1/auth/code/claim';
   static const authClaimV2 = '/api/v1/tablet/code/claim';
+
+  static const String changePassword = "api/users/change-password";
 }
 
 @RestApi()
@@ -69,4 +72,7 @@ abstract class AuthApi {
 
   @POST(AuthApiConstant.authClaimV2)
   Future authClaimV2(@Body() AuthClaimPayload payload);
+
+  @PUT(AuthApiConstant.changePassword)
+  Future changePassword(@Body() ChangePasswordPayload payload);
 }

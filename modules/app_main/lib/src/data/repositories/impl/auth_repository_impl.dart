@@ -3,6 +3,7 @@ import 'package:app_main/src/data/models/payloads/auth/authentication_payload.da
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
 import 'package:app_main/src/data/models/responses/authenticate_response.dart';
 import 'package:app_main/src/data/repositories/auth_repository.dart';
+import 'package:app_main/src/domain/entities/change_password_payload.dart';
 import 'package:app_main/src/domain/entities/update_account/otp/otp.dart';
 import 'package:injectable/injectable.dart';
 
@@ -80,5 +81,10 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future authClaimV2(AuthClaimPayload payload) {
     return _authApi.authClaimV2(payload);
+  }
+
+  @override
+  Future changePassword(ChangePasswordPayload payload) {
+    return _authApi.changePassword(payload);
   }
 }

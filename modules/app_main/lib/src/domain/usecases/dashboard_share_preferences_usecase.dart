@@ -13,8 +13,8 @@ class DashboardSharePreferenceUseCase {
   DashboardSharePreferenceUseCase(this._shared);
 
   Future<bool> saveDashboardItems(String key, List<DashBoardItem> items) async {
-    return _shared.setString(
-        '$key $_dashboardItems', jsonEncode(items.map((e) => e.toJson()).toList()));
+    return _shared.setString('$key $_dashboardItems',
+        jsonEncode(items.map((e) => e.toJson()).toList()));
   }
 
   List<DashBoardItem> getDashBoardItems(String key) {
@@ -31,5 +31,13 @@ class DashboardSharePreferenceUseCase {
       }
       return DashBoardGroupItem.fromJson(e);
     }).toList();
+  }
+
+  String getDashBoardBg(String key) {
+    return _shared.getString('$key $_dashboardItems') ?? '';
+  }
+
+  Future<bool> saveDashBoardBg(String key, String path) {
+    return _shared.setString('$key $_dashboardItems', path);
   }
 }

@@ -4,19 +4,13 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 
-class WeatherWidget extends StatefulWidget {
+class WeatherWidget extends StatelessWidget {
   const WeatherWidget({super.key, this.textColor});
 
   final Color? textColor;
 
   @override
-  State<WeatherWidget> createState() => _WeatherWidgetState();
-}
-
-class _WeatherWidgetState extends State<WeatherWidget> {
-  @override
   Widget build(BuildContext context) {
-
     return WeatherLocationBuilder(
       builder: (position, city) {
         Widget child = Column(
@@ -121,7 +115,7 @@ class _WeatherWidgetState extends State<WeatherWidget> {
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               style: context.text.titleSmall!.copyWith(
-                color: widget.textColor ?? AppColors.white,
+                color: textColor ?? AppColors.white,
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
               ),

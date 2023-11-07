@@ -1,5 +1,6 @@
 import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
+import 'package:app_main/src/domain/entities/change_password_payload.dart';
 
 import '../../domain/entities/update_account/otp/otp.dart';
 import '../models/responses/authenticate_response.dart';
@@ -35,4 +36,6 @@ abstract class AuthRepository {
 
   Future authClaimV1(AuthClaimPayload payload);
   Future authClaimV2(AuthClaimPayload payload);
+
+  Future changePassword(ChangePasswordPayload payload);
 }
