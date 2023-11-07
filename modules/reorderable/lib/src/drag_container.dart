@@ -402,6 +402,7 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
               widget.onDragStarted?.call(data);
             },
             onDragUpdate: (DragUpdateDetails details) {
+              _dragPosition = details.globalPosition;
               _autoScrollIfNecessary(details.globalPosition, father);
               widget.onDragUpdate?.call(details, data);
             },
