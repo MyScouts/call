@@ -16,7 +16,7 @@ class InformationImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InfomationLayoutFieldWidget(
+    return InformationLayoutFieldWidget(
       label: label,
       required: false,
       child: Container(

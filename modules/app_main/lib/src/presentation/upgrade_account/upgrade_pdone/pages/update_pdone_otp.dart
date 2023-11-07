@@ -89,11 +89,12 @@ class _UpdatePDoneOtpState extends State<UpdatePDoneOtp> with TimerMixin {
                   const SizedBox(height: 30),
                   PrimaryButton(
                     title: S.current.confirm,
-                    onTap: (){
+                    onTap: () {
                       _onVerify(context);
                     },
                     color: Colors.white,
                     disabled: _disabled,
+                    width: MediaQuery.of(context).size.width,
                   ),
                   const SizedBox(height: 20),
                   ValueListenableBuilder(

@@ -162,7 +162,7 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                 isPassword: true,
               ),
               const SizedBox(height: 24),
-              InfomationLayoutFieldWidget(
+              InformationLayoutFieldWidget(
                 required: false,
                 label: UpdateInformationType.birthDay.title(context),
                 child: InputDateTimeWidget(
