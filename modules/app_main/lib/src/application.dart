@@ -9,6 +9,7 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:localization/localization.dart';
+import 'app_dimens.dart';
 import 'core/coordinator/app_coordinator.dart';
 import 'core/utils/toast_message/toast_message.dart';
 import 'presentation/notification/notification_coordinator.dart';
@@ -62,13 +63,15 @@ class _ApplicationState extends State<Application>
   }
 
   Overlay _materialBuilder(BuildContext context, Widget? child) {
+    final data = MediaQuery.of(context).copyWith(textScaleFactor: 1);
+    setMediaQueryData(data);
     return Overlay(
       initialEntries: [
         OverlayEntry(
           builder: (context) {
             return Material(
               child: MediaQuery(
-                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                data: data,
                 child: toastBuilder(context, child!),
               ),
             );

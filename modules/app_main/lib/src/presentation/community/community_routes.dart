@@ -15,6 +15,7 @@ import 'edit_fan_group/edit_fan_group_screen.dart';
 import 'fan_group_detail/bloc/fan_group_detail_bloc.dart';
 import 'fan_group_detail/fan_group_detail_screen.dart';
 import 'group_detail/bloc/group_detail_bloc.dart';
+import 'group_detail/edit_group_detail.dart';
 import 'group_detail/group_detail_screen.dart';
 import 'group_detail/update_community_options_screen.dart';
 import 'team_detail/bloc/team_detail_bloc.dart';
@@ -45,11 +46,7 @@ class CommunityRoutes extends RouteModule {
 
           return BlocProvider<GroupDetailBloc>(
             create: (context) => get(),
-            child: GroupDetailScreen(
-              id: args['id'],
-              cover: args['cover'],
-              groupName: args['groupName'],
-            ),
+            child: GroupDetailScreen(id: args['id']),
           );
         },
         TeamDetailScreen.routeName: (context) {
@@ -93,7 +90,7 @@ class CommunityRoutes extends RouteModule {
             ),
           );
         },
-        UpdateCommunityOptionScreen.routeName: (context) {
+    EditGroupDetail.routeName: (context) {
           final args = settings.arguments as Map<String, dynamic>;
           return MultiBlocProvider(
             providers: [
@@ -104,7 +101,7 @@ class CommunityRoutes extends RouteModule {
                 create: (context) => injector.get(),
               ),
             ],
-            child: UpdateCommunityOptionScreen(community: args['community']),
+            child: const EditGroupDetail(),
           );
         },
         GroupRequestListScreen.routeName: (context) {
