@@ -80,7 +80,7 @@ abstract class UpgradeAccountApi {
 
   @POST(UpgradeAccountApiConstants.updatePDoneProfile)
   Future<ApiResponse<dynamic>> updatePDoneProfile({
-    @Body() required UpdateProfilePayload payload,
+    @Body() required dynamic payload,
   });
 
   @POST(UpgradeAccountApiConstants.registerPDone)

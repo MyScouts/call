@@ -143,7 +143,7 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
 
   @override
   Future<ApiResponse<dynamic>> updatePDoneProfile(
-      {required UpdateProfilePayload payload}) async {
+      {required dynamic payload}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};

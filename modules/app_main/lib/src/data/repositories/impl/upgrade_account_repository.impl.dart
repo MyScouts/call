@@ -34,7 +34,8 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
 
   @override
   Future<bool> updatePDoneProfile(UpdateProfilePayload payload) async {
-    final res = await _upgradeAccountApi.updatePDoneProfile(payload: payload);
+    final res =
+        await _upgradeAccountApi.updatePDoneProfile(payload: payload.toJson());
 
     return res.success;
   }
