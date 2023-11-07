@@ -15,7 +15,10 @@ _$UpdateProfilePayloadImpl _$$UpdateProfilePayloadImplFromJson(
       nickname: json['nickname'] as String?,
       sex: json['sex'] as int?,
       birthday: json['birthday'] as String?,
-      birthPlace: json['birthPlace'] as String?,
+      birthPlace: json['birthPlace'] == null
+          ? null
+          : UpdatePDoneBirthPlacePayload.fromJson(
+              json['birthPlace'] as Map<String, dynamic>),
       currentPlace: json['currentPlace'] == null
           ? null
           : UpdatePlaceInformationPayload.fromJson(
@@ -35,6 +38,7 @@ _$UpdateProfilePayloadImpl _$$UpdateProfilePayloadImplFromJson(
       protectorPDoneId: json['protectorPDoneId'] as String?,
       protectorIdentityNumber: json['protectorIdentityNumber'] as String?,
       protectorEmailPhone: json['protectorEmailPhone'] as String?,
+      otp: json['otp'] as String?,
     );
 
 Map<String, dynamic> _$$UpdateProfilePayloadImplToJson(
@@ -53,7 +57,7 @@ Map<String, dynamic> _$$UpdateProfilePayloadImplToJson(
   writeNotNull('nickname', instance.nickname);
   writeNotNull('sex', instance.sex);
   writeNotNull('birthday', instance.birthday);
-  writeNotNull('birthPlace', instance.birthPlace);
+  writeNotNull('birthPlace', instance.birthPlace?.toJson());
   writeNotNull('currentPlace', instance.currentPlace?.toJson());
   writeNotNull('identityNumber', instance.identityNumber);
   writeNotNull('supplyDate', instance.supplyDate);
@@ -70,5 +74,6 @@ Map<String, dynamic> _$$UpdateProfilePayloadImplToJson(
   writeNotNull('protectorPDoneId', instance.protectorPDoneId);
   writeNotNull('protectorIdentityNumber', instance.protectorIdentityNumber);
   writeNotNull('protectorEmailPhone', instance.protectorEmailPhone);
+  writeNotNull('otp', instance.otp);
   return val;
 }

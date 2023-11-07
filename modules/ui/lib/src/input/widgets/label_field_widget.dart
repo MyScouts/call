@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class LabelFieldWidget extends StatelessWidget {
   final String text;
   final bool required;
+
   final bool isBold;
 
   const LabelFieldWidget({

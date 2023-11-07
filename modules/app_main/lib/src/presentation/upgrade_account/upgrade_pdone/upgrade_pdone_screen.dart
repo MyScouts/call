@@ -1,11 +1,11 @@
+import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/pages/update_pdone_face_liveness_confirm.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/pages/update_pdone_identity_card_confirm.dart';
 import 'package:flutter/material.dart';
 import 'package:mobilehub_core/mobilehub_core.dart';
-
 import '../upgrade_account_constants.dart';
 import '../upgrade_ja/widgets/steper_update_pdone.dart';
-import 'pages/register_pdone_account_page.dart';
-import 'pages/update_kyc_page.dart';
 import 'pages/update_pdone_information_page.dart';
+import 'pages/update_pdone_select_type_user.dart';
 
 class UpgradePDoneScreen extends StatefulWidget {
   static const String routeName = '/update-pdone';
@@ -81,13 +81,10 @@ class _UpgradePDoneScreenState extends State<UpgradePDoneScreen>
               controller: _pageController,
               physics: const NeverScrollableScrollPhysics(),
               children: [
-                UpdateKycPage(onNextPage: () => nextPage(1)),
-
-                UpdatePDoneInformationPage(onNextPage: () => nextPage(2)),
-                // RegisterPDoneAccountPage(
-                //   onNextPage: () {},
-                // )
-                // const RegisterStatePage(),
+                UpdatePdoneSelectTypeUser(onNextPage: () => nextPage(1)),
+                UpdatePdoneIdentityCardConfirm(onNextPage: () => nextPage(2)),
+                UpdatePdoneFaceLiveNessConfirm(onNextPage: () => nextPage(3)),
+                const UpdatePDoneInformationPage(),
               ],
             ),
           )

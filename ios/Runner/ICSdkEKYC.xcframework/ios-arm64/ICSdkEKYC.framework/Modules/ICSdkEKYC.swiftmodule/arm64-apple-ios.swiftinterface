@@ -1,0 +1,926 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)
+// swift-module-flags: -target arm64-apple-ios9.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name ICSdkEKYC
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import AVFoundation
+import AVKit
+import CoreGraphics
+import CoreText
+import Foundation
+@_exported import ICSdkEKYC
+import QuartzCore
+import Swift
+import UIKit
+import _Concurrency
+import _StringProcessing
+@_hasMissingDesignatedInitializers public class Asset : Swift.Codable {
+  required public init(from decoder: Swift.Decoder) throws
+  final public let id: Swift.String
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+}
+final public class GradientValueProvider {
+  public init(block: @escaping ICSdkEKYC.GradientValueProvider.ColorsValueBlock, locations: ICSdkEKYC.GradientValueProvider.ColorLocationsBlock? = nil)
+  public init(_ colors: [ICSdkEKYC.Color], locations: [Swift.Double] = [])
+  public typealias ColorsValueBlock = (CoreFoundation.CGFloat) -> [ICSdkEKYC.Color]
+  public typealias ColorLocationsBlock = (CoreFoundation.CGFloat) -> [Swift.Double]
+  final public var colors: [ICSdkEKYC.Color] {
+    get
+    set
+  }
+  final public var locations: [Swift.Double] {
+    get
+    set
+  }
+  final public var valueType: Any.Type {
+    get
+  }
+  final public var storage: ICSdkEKYC.ValueProviderStorage<[Swift.Double]> {
+    get
+  }
+  final public func hasUpdate(frame _: CoreFoundation.CGFloat) -> Swift.Bool
+  @objc deinit
+}
+@objc @_Concurrency.MainActor(unsafe) open class AnimatedControl : UIKit.UIControl {
+  @_Concurrency.MainActor(unsafe) public init(animation: ICSdkEKYC.Animation, configuration: ICSdkEKYC.LottieConfiguration = .shared)
+  @_Concurrency.MainActor(unsafe) @objc dynamic public init()
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open var isEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open var isSelected: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open var isHighlighted: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open var intrinsicContentSize: CoreFoundation.CGSize {
+    @objc get
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func beginTracking(_ touch: UIKit.UITouch, with event: UIKit.UIEvent?) -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func continueTracking(_ touch: UIKit.UITouch, with event: UIKit.UIEvent?) -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func endTracking(_ touch: UIKit.UITouch?, with event: UIKit.UIEvent?)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func cancelTracking(with event: UIKit.UIEvent?)
+  @_Concurrency.MainActor(unsafe) open func animationDidSet()
+  @_Concurrency.MainActor(unsafe) final public let animationView: ICSdkEKYC.AnimationView
+  @_Concurrency.MainActor(unsafe) public var animation: ICSdkEKYC.Animation? {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public var animationSpeed: CoreFoundation.CGFloat {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public func setLayer(named: Swift.String, forState: UIKit.UIControl.State)
+  @_Concurrency.MainActor(unsafe) public func setValueProvider(_ valueProvider: ICSdkEKYC.AnyValueProvider, keypath: ICSdkEKYC.AnimationKeypath)
+  @objc deinit
+}
+final public class SizeValueProvider {
+  public init(block: @escaping ICSdkEKYC.SizeValueProvider.SizeValueBlock)
+  public init(_ size: CoreFoundation.CGSize)
+  public typealias SizeValueBlock = (CoreFoundation.CGFloat) -> CoreFoundation.CGSize
+  final public var size: CoreFoundation.CGSize {
+    get
+    set
+  }
+  final public var valueType: Any.Type {
+    get
+  }
+  final public var storage: ICSdkEKYC.ValueProviderStorage<ICSdkEKYC.Vector3D> {
+    get
+  }
+  final public func hasUpdate(frame _: CoreFoundation.CGFloat) -> Swift.Bool
+  @objc deinit
+}
+@objc public protocol QRScannerViewDelegate {
+  @objc func qrScanningDidFail()
+  @objc func qrScanningSucceededWithImage(_ image: UIKit.UIImage, value: Swift.String)
+  @objc func qrScanningDidStop()
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc @_Concurrency.MainActor(unsafe) public class QRScannerView : UIKit.UIView {
+  @objc @_Concurrency.MainActor(unsafe) weak public var delegate: ICSdkEKYC.QRScannerViewDelegate?
+  @objc @_Concurrency.MainActor(unsafe) public var captureSession: AVFoundation.AVCaptureSession!
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public class var layerClass: Swift.AnyClass {
+    @objc get
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var layer: AVFoundation.AVCaptureVideoPreviewLayer {
+    @objc get
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func layoutSubviews()
+  @objc deinit
+}
+extension ICSdkEKYC.QRScannerView {
+  @objc @_Concurrency.MainActor(unsafe) dynamic public var isSessionRunning: Swift.Bool {
+    @objc get
+  }
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func startScanning()
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func stopScanning()
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func removeInputOutput()
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func deallocSession()
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func doInitialSetup(scanRect: CoreFoundation.CGRect)
+}
+extension ICSdkEKYC.QRScannerView : AVFoundation.AVCaptureMetadataOutputObjectsDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func metadataOutput(_ output: AVFoundation.AVCaptureMetadataOutput, didOutput metadataObjects: [AVFoundation.AVMetadataObject], from connection: AVFoundation.AVCaptureConnection)
+}
+extension ICSdkEKYC.QRScannerView : AVFoundation.AVCaptureVideoDataOutputSampleBufferDelegate {
+  @_Concurrency.MainActor(unsafe) @objc dynamic public func captureOutput(_ output: AVFoundation.AVCaptureOutput, didOutput sampleBuffer: CoreMedia.CMSampleBuffer, from connection: AVFoundation.AVCaptureConnection)
+}
+extension ICSdkEKYC.AnimationView {
+  @_Concurrency.MainActor(unsafe) convenience public init(name: Swift.String, bundle: Foundation.Bundle = Bundle.main, imageProvider: ICSdkEKYC.AnimationImageProvider? = nil, animationCache: ICSdkEKYC.AnimationCacheProvider? = LRUAnimationCache.sharedCache, configuration: ICSdkEKYC.LottieConfiguration = .shared)
+  @_Concurrency.MainActor(unsafe) convenience public init(filePath: Swift.String, imageProvider: ICSdkEKYC.AnimationImageProvider? = nil, animationCache: ICSdkEKYC.AnimationCacheProvider? = LRUAnimationCache.sharedCache, configuration: ICSdkEKYC.LottieConfiguration = .shared)
+  @_Concurrency.MainActor(unsafe) convenience public init(url: Foundation.URL, imageProvider: ICSdkEKYC.AnimationImageProvider? = nil, closure: @escaping ICSdkEKYC.AnimationView.DownloadClosure, animationCache: ICSdkEKYC.AnimationCacheProvider? = LRUAnimationCache.sharedCache, configuration: ICSdkEKYC.LottieConfiguration = .shared)
+  @_Concurrency.MainActor(unsafe) convenience public init(asset name: Swift.String, bundle: Foundation.Bundle = Bundle.main, imageProvider: ICSdkEKYC.AnimationImageProvider? = nil, animationCache: ICSdkEKYC.AnimationCacheProvider? = LRUAnimationCache.sharedCache, configuration: ICSdkEKYC.LottieConfiguration = .shared)
+  public typealias DownloadClosure = (Swift.Error?) -> Swift.Void
+}
+extension ICSdkEKYC.Vector1D : Swift.Codable {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct Vector2D : Swift.Codable, Swift.Hashable {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+  public func hash(into hasher: inout Swift.Hasher)
+  public static func == (a: ICSdkEKYC.Vector2D, b: ICSdkEKYC.Vector2D) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension ICSdkEKYC.Vector3D : Swift.Codable {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension ICSdkEKYC.Vector3D {
+  public var pointValue: CoreFoundation.CGPoint {
+    get
+  }
+  public var sizeValue: CoreFoundation.CGSize {
+    get
+  }
+}
+public protocol AnimationFontProvider {
+  func fontFor(family: Swift.String, size: CoreFoundation.CGFloat) -> CoreText.CTFont?
+}
+final public class DefaultFontProvider : ICSdkEKYC.AnimationFontProvider {
+  public init()
+  final public func fontFor(family: Swift.String, size: CoreFoundation.CGFloat) -> CoreText.CTFont?
+  @objc deinit
+}
+public enum ColorFormatDenominator : Swift.Hashable {
+  case One
+  case OneHundred
+  case TwoFiftyFive
+  public static func == (a: ICSdkEKYC.ColorFormatDenominator, b: ICSdkEKYC.ColorFormatDenominator) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct Color : Swift.Hashable {
+  public var r: Swift.Double
+  public var g: Swift.Double
+  public var b: Swift.Double
+  public var a: Swift.Double
+  public init(r: Swift.Double, g: Swift.Double, b: Swift.Double, a: Swift.Double, denominator: ICSdkEKYC.ColorFormatDenominator = .One)
+  public func hash(into hasher: inout Swift.Hasher)
+  public static func == (a: ICSdkEKYC.Color, b: ICSdkEKYC.Color) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) open class AnimatedButton : ICSdkEKYC.AnimatedControl {
+  @_Concurrency.MainActor(unsafe) override public init(animation: ICSdkEKYC.Animation, configuration: ICSdkEKYC.LottieConfiguration = .shared)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init()
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var accessibilityTraits: UIKit.UIAccessibilityTraits {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor(unsafe) public func setPlayRange(fromProgress: ICSdkEKYC.AnimationProgressTime, toProgress: ICSdkEKYC.AnimationProgressTime, event: UIKit.UIControl.Event)
+  @_Concurrency.MainActor(unsafe) public func setPlayRange(fromMarker fromName: Swift.String, toMarker toName: Swift.String, event: UIKit.UIControl.Event)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func beginTracking(_ touch: UIKit.UITouch, with event: UIKit.UIEvent?) -> Swift.Bool
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func endTracking(_ touch: UIKit.UITouch?, with event: UIKit.UIEvent?)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers final public class ImageAsset : ICSdkEKYC.Asset {
+  final public let name: Swift.String
+  final public let directory: Swift.String
+  final public let width: Swift.Double
+  final public let height: Swift.Double
+  override final public func encode(to encoder: Swift.Encoder) throws
+  @objc deinit
+}
+extension UIKit.UIColor {
+  public var lottieColorValue: ICSdkEKYC.Color {
+    get
+  }
+}
+public protocol Interpolatable : ICSdkEKYC.AnyInterpolatable {
+  func interpolate(to: Self, amount: CoreFoundation.CGFloat) -> Self
+}
+public protocol SpatialInterpolatable : ICSdkEKYC.AnyInterpolatable {
+  func interpolate(to: Self, amount: CoreFoundation.CGFloat, spatialOutTangent: CoreFoundation.CGPoint?, spatialInTangent: CoreFoundation.CGPoint?) -> Self
+}
+public protocol AnyInterpolatable {
+  func _interpolate(to: Self, amount: CoreFoundation.CGFloat, spatialOutTangent: CoreFoundation.CGPoint?, spatialInTangent: CoreFoundation.CGPoint?) -> Self
+}
+extension ICSdkEKYC.Interpolatable {
+  public func _interpolate(to: Self, amount: CoreFoundation.CGFloat, spatialOutTangent _: CoreFoundation.CGPoint?, spatialInTangent _: CoreFoundation.CGPoint?) -> Self
+}
+extension ICSdkEKYC.SpatialInterpolatable {
+  public func interpolate(to: Self, amount: CoreFoundation.CGFloat) -> Self
+  public func _interpolate(to: Self, amount: CoreFoundation.CGFloat, spatialOutTangent: CoreFoundation.CGPoint?, spatialInTangent: CoreFoundation.CGPoint?) -> Self
+}
+extension Swift.Double : ICSdkEKYC.Interpolatable {
+}
+extension CoreFoundation.CGFloat : ICSdkEKYC.Interpolatable {
+}
+extension Swift.Float : ICSdkEKYC.Interpolatable {
+}
+extension ICSdkEKYC.Interpolatable where Self : Swift.BinaryFloatingPoint {
+  public func interpolate(to: Self, amount: CoreFoundation.CGFloat) -> Self
+}
+extension CoreFoundation.CGRect : ICSdkEKYC.Interpolatable {
+  public func interpolate(to: CoreFoundation.CGRect, amount: CoreFoundation.CGFloat) -> CoreFoundation.CGRect
+}
+extension CoreFoundation.CGSize : ICSdkEKYC.Interpolatable {
+  public func interpolate(to: CoreFoundation.CGSize, amount: CoreFoundation.CGFloat) -> CoreFoundation.CGSize
+}
+extension CoreFoundation.CGPoint : ICSdkEKYC.SpatialInterpolatable {
+  public func interpolate(to: CoreFoundation.CGPoint, amount: CoreFoundation.CGFloat, spatialOutTangent: CoreFoundation.CGPoint?, spatialInTangent: CoreFoundation.CGPoint?) -> CoreFoundation.CGPoint
+}
+extension ICSdkEKYC.Color : ICSdkEKYC.Interpolatable {
+  public func interpolate(to: ICSdkEKYC.Color, amount: CoreFoundation.CGFloat) -> ICSdkEKYC.Color
+}
+extension ICSdkEKYC.Vector1D : ICSdkEKYC.Interpolatable {
+  public func interpolate(to: ICSdkEKYC.Vector1D, amount: CoreFoundation.CGFloat) -> ICSdkEKYC.Vector1D
+}
+extension ICSdkEKYC.Vector2D : ICSdkEKYC.SpatialInterpolatable {
+  public func interpolate(to: ICSdkEKYC.Vector2D, amount: CoreFoundation.CGFloat, spatialOutTangent: CoreFoundation.CGPoint?, spatialInTangent: CoreFoundation.CGPoint?) -> ICSdkEKYC.Vector2D
+}
+extension ICSdkEKYC.Vector3D : ICSdkEKYC.SpatialInterpolatable {
+  public func interpolate(to: ICSdkEKYC.Vector3D, amount: CoreFoundation.CGFloat, spatialOutTangent: CoreFoundation.CGPoint?, spatialInTangent: CoreFoundation.CGPoint?) -> ICSdkEKYC.Vector3D
+}
+extension Swift.Array : ICSdkEKYC.Interpolatable, ICSdkEKYC.AnyInterpolatable where Element : ICSdkEKYC.Interpolatable {
+  public func interpolate(to: [Element], amount: CoreFoundation.CGFloat) -> [Element]
+}
+@objc final public class CompatibleAnimationKeypath : ObjectiveC.NSObject {
+  @objc public init(keypath: Swift.String)
+  @objc public init(keys: [Swift.String])
+  final public let animationKeypath: ICSdkEKYC.AnimationKeypath
+  @objc deinit
+}
+extension ICSdkEKYC.Animation {
+  public typealias DownloadClosure = (ICSdkEKYC.Animation?) -> Swift.Void
+  final public var duration: Foundation.TimeInterval {
+    get
+  }
+  final public var bounds: CoreFoundation.CGRect {
+    get
+  }
+  final public var size: CoreFoundation.CGSize {
+    get
+  }
+  public static func named(_ name: Swift.String, bundle: Foundation.Bundle = Bundle.main, subdirectory: Swift.String? = nil, animationCache: ICSdkEKYC.AnimationCacheProvider? = nil) -> ICSdkEKYC.Animation?
+  public static func filepath(_ filepath: Swift.String, animationCache: ICSdkEKYC.AnimationCacheProvider? = nil) -> ICSdkEKYC.Animation?
+  public static func asset(_ name: Swift.String, bundle: Foundation.Bundle = Bundle.main, animationCache: ICSdkEKYC.AnimationCacheProvider? = nil) -> ICSdkEKYC.Animation?
+  public static func from(data: Foundation.Data, strategy: ICSdkEKYC.DecodingStrategy = LottieConfiguration.shared.decodingStrategy) throws -> ICSdkEKYC.Animation
+  public static func loadedFrom(url: Foundation.URL, closure: @escaping ICSdkEKYC.Animation.DownloadClosure, animationCache: ICSdkEKYC.AnimationCacheProvider?)
+  final public func progressTime(forMarker named: Swift.String) -> ICSdkEKYC.AnimationProgressTime?
+  final public func frameTime(forMarker named: Swift.String) -> ICSdkEKYC.AnimationFrameTime?
+  final public func progressTime(forFrame frameTime: ICSdkEKYC.AnimationFrameTime, clamped: Swift.Bool = true) -> ICSdkEKYC.AnimationProgressTime
+  final public func frameTime(forProgress progressTime: ICSdkEKYC.AnimationProgressTime) -> ICSdkEKYC.AnimationFrameTime
+  final public func time(forFrame frameTime: ICSdkEKYC.AnimationFrameTime) -> Foundation.TimeInterval
+  final public func frameTime(forTime time: Foundation.TimeInterval) -> ICSdkEKYC.AnimationFrameTime
+}
+final public class PointValueProvider {
+  public init(block: @escaping ICSdkEKYC.PointValueProvider.PointValueBlock)
+  public init(_ point: CoreFoundation.CGPoint)
+  public typealias PointValueBlock = (CoreFoundation.CGFloat) -> CoreFoundation.CGPoint
+  final public var point: CoreFoundation.CGPoint {
+    get
+    set
+  }
+  final public var valueType: Any.Type {
+    get
+  }
+  final public var storage: ICSdkEKYC.ValueProviderStorage<ICSdkEKYC.Vector3D> {
+    get
+  }
+  final public func hasUpdate(frame _: CoreFoundation.CGFloat) -> Swift.Bool
+  @objc deinit
+}
+final public class ColorValueProvider {
+  public init(block: @escaping ICSdkEKYC.ColorValueProvider.ColorValueBlock)
+  public init(_ color: ICSdkEKYC.Color)
+  public init(_ keyframes: [ICSdkEKYC.Keyframe<ICSdkEKYC.Color>])
+  public typealias ColorValueBlock = (CoreFoundation.CGFloat) -> ICSdkEKYC.Color
+  final public var color: ICSdkEKYC.Color {
+    get
+    set
+  }
+  final public var valueType: Any.Type {
+    get
+  }
+  final public var storage: ICSdkEKYC.ValueProviderStorage<ICSdkEKYC.Color> {
+    get
+  }
+  final public func hasUpdate(frame _: CoreFoundation.CGFloat) -> Swift.Bool
+  @objc deinit
+}
+infix operator +| : DefaultPrecedence
+infix operator +- : DefaultPrecedence
+@_inheritsConvenienceInitializers @objc @_Concurrency.MainActor(unsafe) open class ProgressingDashedLineCircleView : UIKit.UIView {
+  @objc @_Concurrency.MainActor(unsafe) public var heightView: CoreFoundation.CGFloat
+  @objc @_Concurrency.MainActor(unsafe) public var isVersionPro2D: Swift.Bool
+  @objc @_Concurrency.MainActor(unsafe) public var colorCircle: UIKit.UIColor
+  @objc @_Concurrency.MainActor(unsafe) public var maxValue: Swift.Double
+  @objc @_Concurrency.MainActor(unsafe) public var startAngle: Swift.Double
+  @objc @_Concurrency.MainActor(unsafe) public var endAngle: Swift.Double
+  @objc @_Concurrency.MainActor(unsafe) public var percent: Swift.Double
+  @objc @_Concurrency.MainActor(unsafe) public var endAngleValue: Swift.Double
+  @objc @_Concurrency.MainActor(unsafe) public var isRollBack: Swift.Bool
+  @objc @_Concurrency.MainActor(unsafe) public var value: Swift.Double {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor(unsafe) public func convertToRadian(degree: Swift.Double) -> Swift.Double
+  @objc @_Concurrency.MainActor(unsafe) public func reset()
+  @objc @_Concurrency.MainActor(unsafe) public func rollBack()
+  @objc @_Concurrency.MainActor(unsafe) public func drawDhashedLineCircle()
+  @objc @_Concurrency.MainActor(unsafe) public func addMartToMiddleView(margin: CoreFoundation.CGFloat)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+public enum CoordinateSpace : Swift.Int, Swift.Codable {
+  case type2d
+  case type3d
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+final public class Animation : Swift.Codable {
+  required public init(from decoder: Swift.Decoder) throws
+  public init(dictionary: [Swift.String : Any]) throws
+  final public let startFrame: ICSdkEKYC.AnimationFrameTime
+  final public let endFrame: ICSdkEKYC.AnimationFrameTime
+  final public let framerate: Swift.Double
+  final public var markerNames: [Swift.String] {
+    get
+  }
+  @objc deinit
+  final public func encode(to encoder: Swift.Encoder) throws
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) final public class AnimationSubview : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+final public class Keyframe<T> {
+  public init(_ value: T, spatialInTangent: ICSdkEKYC.Vector3D? = nil, spatialOutTangent: ICSdkEKYC.Vector3D? = nil)
+  public init(value: T, time: ICSdkEKYC.AnimationFrameTime, isHold: Swift.Bool = false, inTangent: ICSdkEKYC.Vector2D? = nil, outTangent: ICSdkEKYC.Vector2D? = nil, spatialInTangent: ICSdkEKYC.Vector3D? = nil, spatialOutTangent: ICSdkEKYC.Vector3D? = nil)
+  final public let value: T
+  final public let time: ICSdkEKYC.AnimationFrameTime
+  final public let isHold: Swift.Bool
+  final public let inTangent: ICSdkEKYC.Vector2D?
+  final public let outTangent: ICSdkEKYC.Vector2D?
+  final public let spatialInTangent: ICSdkEKYC.Vector3D?
+  final public let spatialOutTangent: ICSdkEKYC.Vector3D?
+  @objc deinit
+}
+extension ICSdkEKYC.Keyframe : Swift.Equatable where T : Swift.Equatable {
+  public static func == (lhs: ICSdkEKYC.Keyframe<T>, rhs: ICSdkEKYC.Keyframe<T>) -> Swift.Bool
+}
+extension ICSdkEKYC.Keyframe : Swift.Hashable where T : Swift.Hashable {
+  final public func hash(into hasher: inout Swift.Hasher)
+  final public var hashValue: Swift.Int {
+    get
+  }
+}
+@objc public enum ParallelMergeAlignment : Swift.Int {
+  case vertical
+  case horizontal
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc open class DPVideoMatrix : ObjectiveC.NSObject {
+  public init(rows: Swift.UInt, columns: Swift.UInt)
+  @objc public func initWith(rows: Swift.UInt, columns: Swift.UInt)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc open class DPVideoMerger : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension ICSdkEKYC.DPVideoMerger {
+  @objc dynamic open func mergeVideos(withFileURLs videoFileURLs: [Foundation.URL], videoResolution: CoreFoundation.CGSize = CGSize(width: -1, height: -1), videoQuality: Swift.String = AVAssetExportPresetMediumQuality, completion: @escaping (_ mergedVideoURL: Foundation.URL?, _ error: Swift.Error?) -> Swift.Void)
+  @objc dynamic open func gridMergeVideos(withFileURLs videoFileURLs: [Foundation.URL], matrix: ICSdkEKYC.DPVideoMatrix = DPVideoMatrix(rows: 2, columns: 2), audioFileURL: Foundation.URL? = nil, videoResolution: CoreFoundation.CGSize, isRepeatVideo: Swift.Bool = false, isRepeatAudio: Swift.Bool = false, isAudio: Swift.Bool = true, videoDuration: Swift.Int = -1, videoQuality: Swift.String = AVAssetExportPresetMediumQuality, completion: @escaping (_ mergedVideoURL: Foundation.URL?, _ error: Swift.Error?) -> Swift.Void)
+  @available(*, deprecated, message: "Use grid merge using matrix")
+  @objc dynamic open func parallelMergeVideos(withFileURLs videoFileURLs: [Foundation.URL], audioFileURL: Foundation.URL? = nil, videoResolution: CoreFoundation.CGSize, isRepeatVideo: Swift.Bool = false, isRepeatAudio: Swift.Bool = false, videoDuration: Swift.Int = -1, videoQuality: Swift.String = AVAssetExportPresetMediumQuality, alignment: ICSdkEKYC.ParallelMergeAlignment = .vertical, completion: @escaping (_ mergedVideoURL: Foundation.URL?, _ error: Swift.Error?) -> Swift.Void)
+}
+public struct AnimationKeypath : Swift.Hashable, Swift.ExpressibleByStringLiteral {
+  public init(keypath: Swift.String)
+  public init(stringLiteral: Swift.String)
+  public init(keys: [Swift.String])
+  public func hash(into hasher: inout Swift.Hasher)
+  public static func == (a: ICSdkEKYC.AnimationKeypath, b: ICSdkEKYC.AnimationKeypath) -> Swift.Bool
+  public typealias ExtendedGraphemeClusterLiteralType = Swift.String
+  public typealias StringLiteralType = Swift.String
+  public typealias UnicodeScalarLiteralType = Swift.String
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct Vector1D : Swift.Hashable {
+  public init(_ value: Swift.Double)
+  public let value: Swift.Double
+  public func hash(into hasher: inout Swift.Hasher)
+  public static func == (a: ICSdkEKYC.Vector1D, b: ICSdkEKYC.Vector1D) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct Vector3D : Swift.Hashable {
+  public let x: Swift.Double
+  public let y: Swift.Double
+  public let z: Swift.Double
+  public init(x: Swift.Double, y: Swift.Double, z: Swift.Double)
+  public func hash(into hasher: inout Swift.Hasher)
+  public static func == (a: ICSdkEKYC.Vector3D, b: ICSdkEKYC.Vector3D) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@objc final public class CompatibleAnimation : ObjectiveC.NSObject {
+  @objc public init(name: Swift.String, bundle: Foundation.Bundle = Bundle.main)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc @_Concurrency.MainActor(unsafe) final public class CompatibleAnimationView : UIKit.UIView {
+  @objc @_Concurrency.MainActor(unsafe) public init(compatibleAnimation: ICSdkEKYC.CompatibleAnimation)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @objc @_Concurrency.MainActor(unsafe) final public var compatibleAnimation: ICSdkEKYC.CompatibleAnimation? {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor(unsafe) final public var loopAnimationCount: CoreFoundation.CGFloat {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override final public var contentMode: UIKit.UIView.ContentMode {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor(unsafe) final public var shouldRasterizeWhenIdle: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor(unsafe) final public var currentProgress: CoreFoundation.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor(unsafe) final public var currentTime: Foundation.TimeInterval {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor(unsafe) final public var currentFrame: CoreFoundation.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor(unsafe) final public var realtimeAnimationFrame: CoreFoundation.CGFloat {
+    @objc get
+  }
+  @objc @_Concurrency.MainActor(unsafe) final public var realtimeAnimationProgress: CoreFoundation.CGFloat {
+    @objc get
+  }
+  @objc @_Concurrency.MainActor(unsafe) final public var animationSpeed: CoreFoundation.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor(unsafe) final public var respectAnimationFrameRate: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @_Concurrency.MainActor(unsafe) final public var isAnimationPlaying: Swift.Bool {
+    @objc get
+  }
+  @objc @_Concurrency.MainActor(unsafe) final public func play()
+  @objc @_Concurrency.MainActor(unsafe) final public func play(completion: ((Swift.Bool) -> Swift.Void)?)
+  @objc @_Concurrency.MainActor(unsafe) final public func play(fromProgress: CoreFoundation.CGFloat, toProgress: CoreFoundation.CGFloat, completion: ((Swift.Bool) -> Swift.Void)? = nil)
+  @objc @_Concurrency.MainActor(unsafe) final public func play(fromFrame: CoreFoundation.CGFloat, toFrame: CoreFoundation.CGFloat, completion: ((Swift.Bool) -> Swift.Void)? = nil)
+  @objc @_Concurrency.MainActor(unsafe) final public func play(fromMarker: Swift.String, toMarker: Swift.String, completion: ((Swift.Bool) -> Swift.Void)? = nil)
+  @objc @_Concurrency.MainActor(unsafe) final public func stop()
+  @objc @_Concurrency.MainActor(unsafe) final public func pause()
+  @objc @_Concurrency.MainActor(unsafe) final public func reloadImages()
+  @objc @_Concurrency.MainActor(unsafe) final public func forceDisplayUpdate()
+  @objc @_Concurrency.MainActor(unsafe) final public func getValue(for keypath: ICSdkEKYC.CompatibleAnimationKeypath, atFrame: CoreFoundation.CGFloat) -> Any?
+  @objc @_Concurrency.MainActor(unsafe) final public func logHierarchyKeypaths()
+  @objc @_Concurrency.MainActor(unsafe) final public func setColorValue(_ color: UIKit.UIColor, forKeypath keypath: ICSdkEKYC.CompatibleAnimationKeypath)
+  @objc @_Concurrency.MainActor(unsafe) final public func getColorValue(for keypath: ICSdkEKYC.CompatibleAnimationKeypath, atFrame: CoreFoundation.CGFloat) -> UIKit.UIColor?
+  @objc @_Concurrency.MainActor(unsafe) final public func addSubview(_ subview: ICSdkEKYC.AnimationSubview, forLayerAt keypath: ICSdkEKYC.CompatibleAnimationKeypath)
+  @objc @_Concurrency.MainActor(unsafe) final public func convert(rect: CoreFoundation.CGRect, toLayerAt keypath: ICSdkEKYC.CompatibleAnimationKeypath?) -> CoreFoundation.CGRect
+  @objc @_Concurrency.MainActor(unsafe) final public func convert(point: CoreFoundation.CGPoint, toLayerAt keypath: ICSdkEKYC.CompatibleAnimationKeypath?) -> CoreFoundation.CGPoint
+  @objc @_Concurrency.MainActor(unsafe) final public func progressTime(forMarker named: Swift.String) -> CoreFoundation.CGFloat
+  @objc @_Concurrency.MainActor(unsafe) final public func frameTime(forMarker named: Swift.String) -> CoreFoundation.CGFloat
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) open class AnimatedSwitch : ICSdkEKYC.AnimatedControl {
+  @_Concurrency.MainActor(unsafe) override public init(animation: ICSdkEKYC.Animation, configuration: ICSdkEKYC.LottieConfiguration = .shared)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init()
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  public enum CancelBehavior {
+    case reverse
+    case none
+    public static func == (a: ICSdkEKYC.AnimatedSwitch.CancelBehavior, b: ICSdkEKYC.AnimatedSwitch.CancelBehavior) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  @_Concurrency.MainActor(unsafe) public var cancelBehavior: ICSdkEKYC.AnimatedSwitch.CancelBehavior
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var accessibilityTraits: UIKit.UIAccessibilityTraits {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor(unsafe) public var isOn: Swift.Bool {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public func setIsOn(_ isOn: Swift.Bool, animated: Swift.Bool, shouldFireHaptics: Swift.Bool = true)
+  @_Concurrency.MainActor(unsafe) public func setProgressForState(fromProgress: ICSdkEKYC.AnimationProgressTime, toProgress: ICSdkEKYC.AnimationProgressTime, forOnState: Swift.Bool)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func endTracking(_ touch: UIKit.UITouch?, with event: UIKit.UIEvent?)
+  @_Concurrency.MainActor(unsafe) override public func animationDidSet()
+  @objc deinit
+}
+public protocol AnimationTextProvider : AnyObject {
+  func textFor(keypathName: Swift.String, sourceText: Swift.String) -> Swift.String
+}
+final public class DictionaryTextProvider : ICSdkEKYC.AnimationTextProvider {
+  public init(_ values: [Swift.String : Swift.String])
+  final public func textFor(keypathName: Swift.String, sourceText: Swift.String) -> Swift.String
+  @objc deinit
+}
+final public class DefaultTextProvider : ICSdkEKYC.AnimationTextProvider {
+  public init()
+  final public func textFor(keypathName _: Swift.String, sourceText: Swift.String) -> Swift.String
+  @objc deinit
+}
+public protocol AnyValueProvider {
+  var valueType: Any.Type { get }
+  var typeErasedStorage: ICSdkEKYC.AnyValueProviderStorage { get }
+  func hasUpdate(frame: ICSdkEKYC.AnimationFrameTime) -> Swift.Bool
+}
+extension ICSdkEKYC.AnyValueProvider {
+  public func value(frame: ICSdkEKYC.AnimationFrameTime) -> Any
+}
+public enum ValueProviderStorage<T> where T : ICSdkEKYC.AnyInterpolatable {
+  case singleValue(T)
+  case keyframes([ICSdkEKYC.Keyframe<T>])
+  case closure((ICSdkEKYC.AnimationFrameTime) -> T)
+}
+public enum AnyValueProviderStorage {
+  case singleValue(Any)
+  case keyframes([ICSdkEKYC.Keyframe<Any>], interpolate: (ICSdkEKYC.AnimationFrameTime) -> Any)
+  case closure((ICSdkEKYC.AnimationFrameTime) -> Any)
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class AnimationViewBase : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var contentMode: UIKit.UIView.ContentMode {
+    @objc get
+    @objc set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func didMoveToWindow()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func layoutSubviews()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+public typealias LottieCompletionBlock = (Swift.Bool) -> Swift.Void
+extension ICSdkEKYC.Color : Swift.Codable {
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+final public class LottieLogger {
+  public init(assert: @escaping ICSdkEKYC.LottieLogger.Assert = Swift.assert, assertionFailure: @escaping ICSdkEKYC.LottieLogger.AssertionFailure = Swift.assertionFailure, warn: @escaping ICSdkEKYC.LottieLogger.Warn = { message, _, _ in
+    }, info: @escaping ICSdkEKYC.LottieLogger.Info = { message in
+    })
+  public typealias Assert = (_ condition: @autoclosure () -> Swift.Bool, _ message: @autoclosure () -> Swift.String, _ fileID: Swift.StaticString, _ line: Swift.UInt) -> Swift.Void
+  public typealias AssertionFailure = (_ message: @autoclosure () -> Swift.String, _ fileID: Swift.StaticString, _ line: Swift.UInt) -> Swift.Void
+  public typealias Warn = (_ message: @autoclosure () -> Swift.String, _ fileID: Swift.StaticString, _ line: Swift.UInt) -> Swift.Void
+  public typealias Info = (_ message: @autoclosure () -> Swift.String) -> Swift.Void
+  public static var shared: ICSdkEKYC.LottieLogger
+  final public func assert(_ condition: @autoclosure () -> Swift.Bool, _ message: @autoclosure () -> Swift.String = String(), fileID: Swift.StaticString = #fileID, line: Swift.UInt = #line)
+  final public func assertionFailure(_ message: @autoclosure () -> Swift.String = String(), fileID: Swift.StaticString = #fileID, line: Swift.UInt = #line)
+  final public func warn(_ message: @autoclosure () -> Swift.String = String(), fileID: Swift.StaticString = #fileID, line: Swift.UInt = #line)
+  final public func info(_ message: @autoclosure () -> Swift.String = String())
+  @objc deinit
+}
+extension ICSdkEKYC.LottieLogger {
+  public static var printToConsole: ICSdkEKYC.LottieLogger {
+    get
+  }
+}
+final public class FloatValueProvider {
+  public init(block: @escaping ICSdkEKYC.FloatValueProvider.CGFloatValueBlock)
+  public init(_ float: CoreFoundation.CGFloat)
+  public typealias CGFloatValueBlock = (CoreFoundation.CGFloat) -> CoreFoundation.CGFloat
+  final public var float: CoreFoundation.CGFloat {
+    get
+    set
+  }
+  final public var valueType: Any.Type {
+    get
+  }
+  final public var storage: ICSdkEKYC.ValueProviderStorage<ICSdkEKYC.Vector1D> {
+    get
+  }
+  final public func hasUpdate(frame _: CoreFoundation.CGFloat) -> Swift.Bool
+  @objc deinit
+}
+extension QuartzCore.CALayer {
+  @nonobjc public func logLayerTree(withIndent: Swift.Int = 0)
+}
+public class FilepathImageProvider : ICSdkEKYC.AnimationImageProvider {
+  public init(filepath: Swift.String)
+  public init(filepath: Foundation.URL)
+  public func imageForAsset(asset: ICSdkEKYC.ImageAsset) -> CoreGraphics.CGImage?
+  @objc deinit
+}
+public enum LayerType : Swift.Int, Swift.Codable {
+  case precomp
+  case solid
+  case image
+  case null
+  case shape
+  case text
+  public init(from decoder: Swift.Decoder) throws
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum MatteType : Swift.Int, Swift.Codable {
+  case none
+  case add
+  case invert
+  case unknown
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum BlendMode : Swift.Int, Swift.Codable {
+  case normal
+  case multiply
+  case screen
+  case overlay
+  case darken
+  case lighten
+  case colorDodge
+  case colorBurn
+  case hardLight
+  case softLight
+  case difference
+  case exclusion
+  case hue
+  case saturation
+  case color
+  case luminosity
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public struct LottieConfiguration : Swift.Hashable {
+  public init(renderingEngine: ICSdkEKYC.RenderingEngineOption = .mainThread, decodingStrategy: ICSdkEKYC.DecodingStrategy = .codable)
+  public static var shared: ICSdkEKYC.LottieConfiguration
+  public var renderingEngine: ICSdkEKYC.RenderingEngineOption
+  public var decodingStrategy: ICSdkEKYC.DecodingStrategy
+  public func hash(into hasher: inout Swift.Hasher)
+  public static func == (a: ICSdkEKYC.LottieConfiguration, b: ICSdkEKYC.LottieConfiguration) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum RenderingEngineOption : Swift.Hashable {
+  case automatic
+  case specific(ICSdkEKYC.RenderingEngine)
+  public static var mainThread: ICSdkEKYC.RenderingEngineOption {
+    get
+  }
+  public static var coreAnimation: ICSdkEKYC.RenderingEngineOption {
+    get
+  }
+}
+public enum RenderingEngine : Swift.Hashable {
+  case mainThread
+  case coreAnimation
+}
+extension ICSdkEKYC.RenderingEngineOption : Swift.RawRepresentable, Swift.CustomStringConvertible {
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+  public var description: Swift.String {
+    get
+  }
+  public typealias RawValue = Swift.String
+}
+extension ICSdkEKYC.RenderingEngine : Swift.RawRepresentable, Swift.CustomStringConvertible {
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+  public var description: Swift.String {
+    get
+  }
+  public typealias RawValue = Swift.String
+}
+public enum DecodingStrategy : Swift.Hashable {
+  case codable
+  case dictionaryBased
+  public static func == (a: ICSdkEKYC.DecodingStrategy, b: ICSdkEKYC.DecodingStrategy) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum LottieBackgroundBehavior {
+  case stop
+  case pause
+  case pauseAndRestore
+  case forceFinish
+  case continuePlaying
+  public static func `default`(for renderingEngine: ICSdkEKYC.RenderingEngine) -> ICSdkEKYC.LottieBackgroundBehavior
+  public static func == (a: ICSdkEKYC.LottieBackgroundBehavior, b: ICSdkEKYC.LottieBackgroundBehavior) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum LottieLoopMode {
+  case playOnce
+  case loop
+  case autoReverse
+  case `repeat`(Swift.Float)
+  case repeatBackwards(Swift.Float)
+}
+extension ICSdkEKYC.LottieLoopMode : Swift.Equatable {
+  public static func == (lhs: ICSdkEKYC.LottieLoopMode, rhs: ICSdkEKYC.LottieLoopMode) -> Swift.Bool
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable @_Concurrency.MainActor(unsafe) final public class AnimationView : ICSdkEKYC.AnimationViewBase {
+  @_Concurrency.MainActor(unsafe) public init(animation: ICSdkEKYC.Animation?, imageProvider: ICSdkEKYC.AnimationImageProvider? = nil, textProvider: ICSdkEKYC.AnimationTextProvider = DefaultTextProvider(), fontProvider: ICSdkEKYC.AnimationFontProvider = DefaultFontProvider(), configuration: ICSdkEKYC.LottieConfiguration = .shared, logger: ICSdkEKYC.LottieLogger = .shared)
+  @_Concurrency.MainActor(unsafe) public init(configuration: ICSdkEKYC.LottieConfiguration = .shared, logger: ICSdkEKYC.LottieLogger = .shared)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @_Concurrency.MainActor(unsafe) final public let configuration: ICSdkEKYC.LottieConfiguration
+  @_Concurrency.MainActor(unsafe) final public var valueProviders: [ICSdkEKYC.AnimationKeypath : ICSdkEKYC.AnyValueProvider] {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) final public var backgroundBehavior: ICSdkEKYC.LottieBackgroundBehavior {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) final public var animation: ICSdkEKYC.Animation? {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) final public var imageProvider: ICSdkEKYC.AnimationImageProvider {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) final public var textProvider: ICSdkEKYC.AnimationTextProvider {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) final public var fontProvider: ICSdkEKYC.AnimationFontProvider {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) final public var isAnimationPlaying: Swift.Bool {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) final public var isAnimationQueued: Swift.Bool {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) final public var loopMode: ICSdkEKYC.LottieLoopMode {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) final public var shouldRasterizeWhenIdle: Swift.Bool {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) final public var currentProgress: ICSdkEKYC.AnimationProgressTime {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) final public var currentTime: Foundation.TimeInterval {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) final public var currentFrame: ICSdkEKYC.AnimationFrameTime {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) final public var realtimeAnimationFrame: ICSdkEKYC.AnimationFrameTime {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) final public var realtimeAnimationProgress: ICSdkEKYC.AnimationProgressTime {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) final public var animationSpeed: CoreFoundation.CGFloat {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) final public var respectAnimationFrameRate: Swift.Bool {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) final public var viewportFrame: CoreFoundation.CGRect? {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) @objc override final public var intrinsicContentSize: CoreFoundation.CGSize {
+    @objc get
+  }
+  @_Concurrency.MainActor(unsafe) final public var currentRenderingEngine: ICSdkEKYC.RenderingEngine? {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) final public func play(completion: ICSdkEKYC.LottieCompletionBlock? = nil)
+  @_Concurrency.MainActor(unsafe) final public func play(fromProgress: ICSdkEKYC.AnimationProgressTime? = nil, toProgress: ICSdkEKYC.AnimationProgressTime, loopMode: ICSdkEKYC.LottieLoopMode? = nil, completion: ICSdkEKYC.LottieCompletionBlock? = nil)
+  @_Concurrency.MainActor(unsafe) final public func play(fromFrame: ICSdkEKYC.AnimationFrameTime? = nil, toFrame: ICSdkEKYC.AnimationFrameTime, loopMode: ICSdkEKYC.LottieLoopMode? = nil, completion: ICSdkEKYC.LottieCompletionBlock? = nil)
+  @_Concurrency.MainActor(unsafe) final public func play(fromMarker: Swift.String? = nil, toMarker: Swift.String, loopMode: ICSdkEKYC.LottieLoopMode? = nil, completion: ICSdkEKYC.LottieCompletionBlock? = nil)
+  @_Concurrency.MainActor(unsafe) final public func stop()
+  @_Concurrency.MainActor(unsafe) final public func pause()
+  @_Concurrency.MainActor(unsafe) final public func reloadImages()
+  @_Concurrency.MainActor(unsafe) final public func forceDisplayUpdate()
+  @_Concurrency.MainActor(unsafe) final public func setValueProvider(_ valueProvider: ICSdkEKYC.AnyValueProvider, keypath: ICSdkEKYC.AnimationKeypath)
+  @_Concurrency.MainActor(unsafe) final public func getValue(for keypath: ICSdkEKYC.AnimationKeypath, atFrame: ICSdkEKYC.AnimationFrameTime?) -> Any?
+  @_Concurrency.MainActor(unsafe) final public func getOriginalValue(for keypath: ICSdkEKYC.AnimationKeypath, atFrame: ICSdkEKYC.AnimationFrameTime?) -> Any?
+  @_Concurrency.MainActor(unsafe) final public func logHierarchyKeypaths()
+  @_Concurrency.MainActor(unsafe) final public func addSubview(_ subview: ICSdkEKYC.AnimationSubview, forLayerAt keypath: ICSdkEKYC.AnimationKeypath)
+  @_Concurrency.MainActor(unsafe) final public func convert(_ rect: CoreFoundation.CGRect, toLayerAt keypath: ICSdkEKYC.AnimationKeypath?) -> CoreFoundation.CGRect?
+  @_Concurrency.MainActor(unsafe) final public func convert(_ point: CoreFoundation.CGPoint, toLayerAt keypath: ICSdkEKYC.AnimationKeypath?) -> CoreFoundation.CGPoint?
+  @_Concurrency.MainActor(unsafe) final public func setNodeIsEnabled(isEnabled: Swift.Bool, keypath: ICSdkEKYC.AnimationKeypath)
+  @_Concurrency.MainActor(unsafe) final public func progressTime(forMarker named: Swift.String) -> ICSdkEKYC.AnimationProgressTime?
+  @_Concurrency.MainActor(unsafe) final public func frameTime(forMarker named: Swift.String) -> ICSdkEKYC.AnimationFrameTime?
+  @objc deinit
+}
+public class LRUAnimationCache : ICSdkEKYC.AnimationCacheProvider {
+  public init()
+  public static let sharedCache: ICSdkEKYC.LRUAnimationCache
+  public var cacheSize: Swift.Int
+  public func clearCache()
+  public func animation(forKey: Swift.String) -> ICSdkEKYC.Animation?
+  public func setAnimation(_ animation: ICSdkEKYC.Animation, forKey: Swift.String)
+  @objc deinit
+}
+public typealias AnimationFrameTime = CoreFoundation.CGFloat
+public typealias AnimationProgressTime = CoreFoundation.CGFloat
+public protocol AnimationImageProvider {
+  func imageForAsset(asset: ICSdkEKYC.ImageAsset) -> CoreGraphics.CGImage?
+}
+public class BundleImageProvider : ICSdkEKYC.AnimationImageProvider {
+  public init(bundle: Foundation.Bundle, searchPath: Swift.String?)
+  public func imageForAsset(asset: ICSdkEKYC.ImageAsset) -> CoreGraphics.CGImage?
+  @objc deinit
+}
+public protocol AnimationCacheProvider {
+  func animation(forKey: Swift.String) -> ICSdkEKYC.Animation?
+  func setAnimation(_ animation: ICSdkEKYC.Animation, forKey: Swift.String)
+  func clearCache()
+}
+extension ICSdkEKYC.GradientValueProvider : ICSdkEKYC.AnyValueProvider {}
+extension ICSdkEKYC.SizeValueProvider : ICSdkEKYC.AnyValueProvider {}
+extension ICSdkEKYC.PointValueProvider : ICSdkEKYC.AnyValueProvider {}
+extension ICSdkEKYC.ColorValueProvider : ICSdkEKYC.AnyValueProvider {}
+extension ICSdkEKYC.CoordinateSpace : Swift.Equatable {}
+extension ICSdkEKYC.CoordinateSpace : Swift.Hashable {}
+extension ICSdkEKYC.CoordinateSpace : Swift.RawRepresentable {}
+extension ICSdkEKYC.ParallelMergeAlignment : Swift.Equatable {}
+extension ICSdkEKYC.ParallelMergeAlignment : Swift.Hashable {}
+extension ICSdkEKYC.ParallelMergeAlignment : Swift.RawRepresentable {}
+extension ICSdkEKYC.AnimatedSwitch.CancelBehavior : Swift.Equatable {}
+extension ICSdkEKYC.AnimatedSwitch.CancelBehavior : Swift.Hashable {}
+extension ICSdkEKYC.FloatValueProvider : ICSdkEKYC.AnyValueProvider {}
+extension ICSdkEKYC.LayerType : Swift.Equatable {}
+extension ICSdkEKYC.LayerType : Swift.Hashable {}
+extension ICSdkEKYC.LayerType : Swift.RawRepresentable {}
+extension ICSdkEKYC.MatteType : Swift.Equatable {}
+extension ICSdkEKYC.MatteType : Swift.Hashable {}
+extension ICSdkEKYC.MatteType : Swift.RawRepresentable {}
+extension ICSdkEKYC.BlendMode : Swift.Equatable {}
+extension ICSdkEKYC.BlendMode : Swift.Hashable {}
+extension ICSdkEKYC.BlendMode : Swift.RawRepresentable {}
+extension ICSdkEKYC.LottieBackgroundBehavior : Swift.Equatable {}
+extension ICSdkEKYC.LottieBackgroundBehavior : Swift.Hashable {}

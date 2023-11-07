@@ -22,4 +22,5 @@ abstract class UserRepository {
     required int userId,
     required DeleteUserPayload payload,
   });
+  Future<bool> genOtp();
 }

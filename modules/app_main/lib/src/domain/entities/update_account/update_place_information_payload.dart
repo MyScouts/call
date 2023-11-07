@@ -9,11 +9,13 @@ part 'update_place_information_payload.g.dart';
 @freezed
 class UpdatePlaceInformationPayload with _$UpdatePlaceInformationPayload {
   const factory UpdatePlaceInformationPayload({
-    String? address,
+    String? countryName,
     String? provinceName,
     String? districtName,
     String? wardName,
     String? street,
+    String? address,
+    String? countryCode,
     String? provinceCode,
     String? districtCode,
     String? wardCode,

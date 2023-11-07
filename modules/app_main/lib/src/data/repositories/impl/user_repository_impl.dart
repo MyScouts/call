@@ -53,4 +53,9 @@ class AuthRepositoryImpl extends UserRepository {
   Future deleteUser({required int userId, required DeleteUserPayload payload}) {
     return _userAPI.deleteById(id: userId, payload: payload);
   }
+
+  Future<bool> genOtp() async {
+    final res = await _userAPI.genOTP();
+    return res;
+  }
 }

@@ -3,6 +3,7 @@ import '../../../../core/extensions/datetime_ext.dart';
 import 'package:app_core/app_core.dart';
 import '../../../../domain/entities/update_account/pdone_profile.dart';
 import '../../../../domain/entities/update_account/place/place_information.dart';
+import '../../../../domain/entities/update_account/update_pdone_birth_place_payload.dart';
 import '../../../../domain/entities/update_account/update_place_information_payload.dart';
 import '../../../../domain/entities/update_account/update_profile_payload.dart';
 import '../../../../domain/entities/update_account/upgrade_account.dart';
@@ -42,13 +43,6 @@ mixin UpdatePDoneInformationMixin<T extends StatefulWidget> on State<T> {
   final bpStreetCtrl = TextEditingController();
   final bpAddressCtrl = TextEditingController();
 
-  /// current place
-  final cProvinceCtrl = TextEditingController();
-  final cDistrictCtrl = TextEditingController();
-  final cWardCtrl = TextEditingController();
-  final cStreetCtrl = TextEditingController();
-  final cAddressCtrl = TextEditingController();
-
   /// Protector
   final identifyNumberProtectorCtrl = TextEditingController();
   final pDoneIdProtectorCtrl = TextEditingController();
@@ -68,8 +62,8 @@ mixin UpdatePDoneInformationMixin<T extends StatefulWidget> on State<T> {
   // Job? job;
   // Talent? talent;
   // Interest? interest;
-  // PlaceInformation? birthPlace;
-  // PlaceInformation? currentPlace;
+  PlaceInformation? birthPlace;
+  PlaceInformation? currentPlace;
 
   void updateInformation(PDoneProfile? pDoneProfile) {
     if (pDoneProfile == null) {
@@ -115,7 +109,7 @@ mixin UpdatePDoneInformationMixin<T extends StatefulWidget> on State<T> {
       middleName: profile.middleName,
       sex: profile.sex?.key,
       birthday: profile.birthday?.text(),
-      birthPlace: 'copyWithPlaceInformation(profile.birthPlace)',
+      birthPlace: const UpdatePDoneBirthPlacePayload(),
       currentPlace: copyWithPlaceInformation(profile.currentPlace),
       identityNumber: profile.identityNumber,
       supplyDate: profile.supplyDate?.text(),
@@ -136,11 +130,16 @@ mixin UpdatePDoneInformationMixin<T extends StatefulWidget> on State<T> {
   UpdatePlaceInformationPayload copyWithPlaceInformation(
       PlaceInformation? placeInformation) {
     return UpdatePlaceInformationPayload(
-      // country: placeInformation?.country?.iso2,
-      // province: placeInformation?.province?.stateCode,
-      // district: placeInformation?.district?.code,
-      // ward: placeInformation?.ward?.id,
-      // address: placeInformation?.address,
+      countryName: placeInformation!.country!.name,
+      provinceName: placeInformation.province!.name,
+      districtName: placeInformation.district!.name,
+      wardName: placeInformation.ward!.name,
+      street: '',
+      address: placeInformation.address,
+      countryCode: placeInformation.country!.iso2,
+      provinceCode: placeInformation.province!.stateCode.toString(),
+      districtCode: placeInformation.district!.code.toString(),
+      wardCode: placeInformation.ward!.id.toString(),
     );
   }
 

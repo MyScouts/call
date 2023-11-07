@@ -156,7 +156,7 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
     )
             .compose(
               _dio.options,
-              'v1/p-done/adult-register',
+              'api/v1/p-done/adult-register',
               queryParameters: queryParameters,
               data: _data,
             )
