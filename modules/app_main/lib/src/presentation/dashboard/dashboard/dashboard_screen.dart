@@ -211,6 +211,7 @@
 //   bool get wantKeepAlive => true;
 // }
 
+import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_background_builder.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_community_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_ecommerce_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_personal_tab.dart';
@@ -271,7 +272,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         body: Stack(
           fit: StackFit.expand,
           children: [
-            ImageWidget(_imgBg, fit: BoxFit.fill),
+            DashBoardBackgroundBuilder(
+              key: const Key('bg_image'),
+              page: _page,
+              builder: (image) => ImageWidget(image, fit: BoxFit.fill),
+            ),
             SafeArea(
               bottom: false,
               child: Column(
@@ -280,9 +285,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: StatusBarWidget(
-                      openAppStore: () async {
-                        context.showAppStore();
-                      },
+                      openAppStore: () => context.startSystemSetting(_page),
                     ),
                   ),
                   Expanded(
@@ -294,9 +297,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         DashBoardEcommerceTab(),
                       ],
                       onPageChanged: (page) {
-                        if(page == 0) _imgBg = ImageConstants.cmBg;
-                        if(page == 1) _imgBg = ImageConstants.perBg;
-                        if(page == 2) _imgBg = ImageConstants.ecomBg;
+                        if (page == 0) _imgBg = ImageConstants.cmBg;
+                        if (page == 1) _imgBg = ImageConstants.perBg;
+                        if (page == 2) _imgBg = ImageConstants.ecomBg;
                         setState(() {
                           _page = page;
                         });

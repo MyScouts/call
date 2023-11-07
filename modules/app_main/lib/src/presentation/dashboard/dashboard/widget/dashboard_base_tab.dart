@@ -11,7 +11,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reorderable/reorderable.dart';
 
-import 'app_group_widget.dart';
 import 'app_widget.dart';
 import 'dashboard_group_screen.dart';
 

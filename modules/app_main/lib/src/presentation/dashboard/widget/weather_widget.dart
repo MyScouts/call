@@ -61,7 +61,7 @@ class WeatherWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${state.openWeatherCurrent?.tempC}°',
+                    '${state.openWeatherCurrent?.tempC ?? '0'}°',
                     style: context.text.titleSmall!.copyWith(
                       color: AppColors.white,
                       fontSize: 52,
