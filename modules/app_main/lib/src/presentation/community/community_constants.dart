@@ -186,3 +186,24 @@ extension ApproveGroupRequestExt on ApproveGroupRequest {
     }
   }
 }
+
+enum BossTeamActionToMember { assignBossTeam, remove }
+
+extension BossTeamActionToMemberExt on BossTeamActionToMember {
+  Color get textMenuColor {
+    switch (this) {
+      case BossTeamActionToMember.assignBossTeam:
+        return const Color(0xFF101B28);
+      case BossTeamActionToMember.remove:
+        return AppColors.red3;
+    }
+  }
+  String get textMenu {
+    switch (this) {
+      case BossTeamActionToMember.assignBossTeam:
+        return 'Chỉ định Boss Team';
+      case BossTeamActionToMember.remove:
+        return 'Loại bỏ khỏi team';
+    }
+  }
+}

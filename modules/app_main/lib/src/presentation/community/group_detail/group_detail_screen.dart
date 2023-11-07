@@ -36,11 +36,11 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
 
   GroupDetailBloc get groupDetailBloc => context.read();
 
-  void _onTapTeam(Team team) {
+  void _onTapTeam(Team team, Group? group) {
     context.startTeamDetail(
       id: team.id,
       name: team.name,
-      cover: team.avatar,
+      bossGroupId: group?.boss?.id,
     );
   }
 
@@ -229,7 +229,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
                               (context, index) {
                                 return TeamCardWidget(
                                   team: teams[index],
-                                  onTap: _onTapTeam,
+                                  onTap: () => _onTapTeam(teams[index], group),
                                 );
                               },
                               childCount: teams.length,

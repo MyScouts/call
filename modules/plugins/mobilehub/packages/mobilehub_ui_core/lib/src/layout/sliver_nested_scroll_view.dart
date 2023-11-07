@@ -5,6 +5,7 @@ class SliverLayoutNestedScrollView extends StatefulWidget {
   final Widget? cover;
   final Widget? header;
   final Widget? actionAppBar;
+  final Color? backBtnColor;
 
   const SliverLayoutNestedScrollView({
     super.key,
@@ -12,6 +13,7 @@ class SliverLayoutNestedScrollView extends StatefulWidget {
     this.header,
     this.cover,
     this.actionAppBar,
+    this.backBtnColor,
   });
 
   @override
@@ -57,7 +59,7 @@ class _SliverLayoutNestedScrollViewState
               top: -pos,
               child: (widget.cover != null)
                   ? SizedBox(
-                      height: MediaQuery.of(context).padding.top + 88.0,
+                      height: MediaQuery.of(context).padding.top + 100.0,
                       child: Center(
                         child: widget.cover!,
                       ),
@@ -90,9 +92,9 @@ class _SliverLayoutNestedScrollViewState
                               GestureDetector(
                                 key: const ValueKey('btnSliverlayoutBack'),
                                 onTap: Navigator.of(context).pop,
-                                child: const Icon(
+                                child: Icon(
                                   Icons.arrow_back_sharp,
-                                  color: Color(0xff333333),
+                                  color: widget.backBtnColor ?? const Color(0xff333333),
                                 ),
                               ),
                               if (widget.actionAppBar != null)
