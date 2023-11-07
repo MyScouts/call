@@ -35,13 +35,23 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      _buildBgAvatar(),
-      const SizedBox(height: 60),
-      _buildUserName(),
-      const SizedBox(height: 10),
-      _buildUserInfo(),
-    ]);
+    return Container(
+      padding: const EdgeInsets.only(bottom: 20),
+      decoration: const BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(30),
+          bottomRight: Radius.circular(30),
+        ),
+      ),
+      child: Column(children: [
+        _buildBgAvatar(),
+        const SizedBox(height: 60),
+        _buildUserName(),
+        const SizedBox(height: 10),
+        _buildUserInfo(),
+      ]),
+    );
   }
 
   _buildBgAvatar() {

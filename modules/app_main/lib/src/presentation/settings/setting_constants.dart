@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
@@ -37,7 +38,8 @@ class Setting {
           Setting(
             text: "Team",
             icon: IconAppConstants.icECommerce,
-            onPressed: () => context.startRegisterCustomer(),
+            onPressed: () =>
+                Navigator.pushNamed(context, CommunityWidget.routeName),
           ),
           Setting(
             text: "PDone",
