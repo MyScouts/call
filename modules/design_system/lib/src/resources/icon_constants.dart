@@ -131,10 +131,8 @@ enum IconApp {
   icApproved('assets/icons/ic_approved.svg'),
   icWaiting('assets/icons/ic_waiting.svg'),
   icReject('assets/icons/ic_reject.svg'),
-  icApprovedTick('assets/icons/ic_approved_tick.svg'),
   icShareLinkTeam('assets/icons/ic_share_link_team.svg'),
   icInviteTeamMember('assets/icons/ic_invite_team_member.svg'),
-  icDotsHorizontal('assets/icons/ic_dots-horizontal.svg');
   icDotsHorizontal('assets/icons/ic_dots-horizontal.svg'),
   icApprovedTick('assets/icons/ic_approved_tick.svg'),
   icPicture('assets/icons/ic_picture.svg'),

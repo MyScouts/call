@@ -96,8 +96,7 @@ enum ImageApp {
   bg8('assets/images/bg8.png'),
   bg9('assets/images/bg9.png'),
   bg10('assets/images/bg10.png'),
-  bg11('assets/images/bg11.png'),
-  celebrate('assets/images/celebrate.png');
+  bg11('assets/images/bg11.png');
 
   const ImageApp(this.path);
 
