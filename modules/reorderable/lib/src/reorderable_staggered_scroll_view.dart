@@ -9,6 +9,7 @@ import 'drag_notification.dart';
 class ReorderableStaggeredScrollViewListItem {
   final Key key;
   final Widget widget;
+  final bool isDrag;
 
   /// Creates a [ReorderableStaggeredScrollViewListItem].
   ///
@@ -17,6 +18,7 @@ class ReorderableStaggeredScrollViewListItem {
   const ReorderableStaggeredScrollViewListItem({
     required this.key,
     required this.widget,
+    this.isDrag = true,
   });
 
   @override
@@ -48,6 +50,7 @@ class ReorderableStaggeredScrollViewGridItem
     required this.mainAxisCellCount,
     required this.crossAxisCellCount,
     required super.widget,
+    super.isDrag,
   });
 
   @override

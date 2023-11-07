@@ -246,16 +246,6 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
     }
   }
 
-  bool isContains(T data) {
-    if (widget.isNotDragList?.toList() != null) {
-      return widget.isNotDragList!
-          .map((e) => e.widget.key)
-          .toList()
-          .contains(data.widget.key);
-    }
-    return false;
-  }
-
   Size getRenderBoxSize(T? date) {
     return mapSize[date] ?? Size.zero;
   }
@@ -286,7 +276,7 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
                 visible: dragData != data,
                 child: keyWidget,
               ),
-            if (isDragStart && !isContains(data))
+            if (isDragStart && data.isDrag)
               Flex(
                 direction: widget.scrollDirection,
                 children: <Widget>[
@@ -361,7 +351,7 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
   Widget setDraggable(T data) {
     final Widget draggable = widget.items(data, (Widget father) {
       Widget child = setDragScope(data, father);
-      if (widget.isDrag && !isContains(data)) {
+      if (widget.isDrag && data.isDrag) {
         if (widget.isLongPressDraggable) {
           child = LongPressDraggable<T>(
             feedback: setFeedback(data, father),

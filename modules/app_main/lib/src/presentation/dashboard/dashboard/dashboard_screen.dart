@@ -5,6 +5,7 @@ import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_p
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dock_widget.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/statusbar_widget.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
+import 'package:app_main/src/presentation/dashboard/notification/notification_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -34,9 +35,9 @@ class DashBoardScreen extends StatefulWidget {
 class _DashBoardScreenState extends State<DashBoardScreen> {
   final PageController _pageController = PageController();
 
-  String _imgBg = ImageConstants.cmBg;
-
   int _page = 0;
+
+  bool _showNotification = false;
 
   Widget _buildDot(BuildContext context, int index) {
     final page = _page;
@@ -73,6 +74,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     padding: const EdgeInsets.only(top: 16),
                     child: StatusBarWidget(
                       openAppStore: () => context.startSystemSetting(_page),
+                      openNotification: () {
+                        setState(() {
+                          _showNotification = true;
+                        });
+                      },
                     ),
                   ),
                   Expanded(
@@ -84,9 +90,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         DashBoardEcommerceTab(),
                       ],
                       onPageChanged: (page) {
-                        if (page == 0) _imgBg = ImageConstants.cmBg;
-                        if (page == 1) _imgBg = ImageConstants.perBg;
-                        if (page == 2) _imgBg = ImageConstants.ecomBg;
                         setState(() {
                           _page = page;
                         });
@@ -109,6 +112,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ],
               ),
             ),
+            if (_showNotification)
+              NotificationScreen(
+                onClose: () {
+                  setState(() {
+                    _showNotification = false;
+                  });
+                },
+              ),
           ],
         ),
       ),
