@@ -15,4 +15,9 @@ class MarshopRepositoryImpl extends MarshopRepository {
   Future registerCustomer(RegisterCustomerPayload payload) {
     return _marshopAPI.register(payload);
   }
+
+  @override
+  Future registerMarshop(int userId, RegisterMarshopPayload payload) {
+    return _marshopAPI.registerMarshop(userId, payload);
+  }
 }

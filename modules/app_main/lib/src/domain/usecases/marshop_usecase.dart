@@ -13,4 +13,8 @@ class MarshopUsecase {
   Future registerCustomer(RegisterCustomerPayload payload) {
     return _marshopRepository.registerCustomer(payload);
   }
+
+  Future registerMarshop(int userId, RegisterMarshopPayload payload) {
+    return _marshopRepository.registerMarshop(userId, payload);
+  }
 }

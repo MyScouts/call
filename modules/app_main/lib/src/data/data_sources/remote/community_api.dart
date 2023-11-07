@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/networking/data_rows_response.dart';
 import 'package:app_main/src/data/models/payloads/community/reply_give_up_boss_team_role_payload.dart';
 import 'package:app_main/src/data/models/responses/group_request_response.dart';
+import 'package:app_main/src/data/models/responses/team_member_response.dart';
 import 'package:app_main/src/data/models/responses/team_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
@@ -19,7 +20,7 @@ class CommunityApiConstants {
   static const String getGroupById = 'api/v1/group/{id}';
   static const String getTeams = 'api/group/{id}/team';
   static const String getTeamById = 'api/v1/team/{id}';
-  static const String getMembers = 'api/team/{id}/get-member';
+  static const String getMembers = '/api/v1/team/{id}/members';
   static const String getTeamList = 'api/v1/team/list';
 
   /// get Team & Group By BossId
@@ -41,6 +42,7 @@ class CommunityApiConstants {
       '/api/v1/team/give-up-boss-role-request';
   static const String replyGiveUpBossTeamRole =
       '/api/v1/team/{id}/reply-give-up-boss-role';
+  static const String askToJoinTeam = '/api/v1/team/{id}/join';
 }
 
 @RestApi()
@@ -64,7 +66,7 @@ abstract class CommunityApi {
   Future<TeamByIdResponse> getTeamById(@Path('id') String id);
 
   @GET(CommunityApiConstants.getMembers)
-  Future<ApiResponse<List<Member>>> getMembers({
+  Future<TeamMemberResponse> getMembers({
     @Path('id') required String id,
   });
 
@@ -107,7 +109,7 @@ abstract class CommunityApi {
   });
 
   @GET(CommunityApiConstants.getMembersOfFanGroup)
-  Future<ApiResponse<DataRowsResponse<List<Member>>>> getMembersOfFanGroup({
+  Future<ApiResponse<DataRowsResponse<List<User>>>> getMembersOfFanGroup({
     @Path('id') required int id,
     @Path('type') required int type,
     @Query('page') int? page,
@@ -142,5 +144,10 @@ abstract class CommunityApi {
   Future<ConfirmResponse> replyGiveUpBossTeamRole({
     @Path('id') required String id,
     @Body() required ReplyGiveUpBossTeamRolePayload payload,
+  });
+
+  @POST(CommunityApiConstants.askToJoinTeam)
+  Future<ConfirmResponse> askToJoinTeam({
+    @Path('id') required String id,
   });
 }

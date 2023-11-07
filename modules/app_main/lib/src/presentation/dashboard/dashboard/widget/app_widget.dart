@@ -1,16 +1,25 @@
+import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_base_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 class AppWidget extends StatelessWidget {
-  final AppItem app;
-  final ValueNotifier<bool>? isLongPress;
+  final DashBoardItem app;
+
   const AppWidget({
     super.key,
     required this.app,
-    this.isLongPress,
+    this.textColor,
+    this.disablePress = false,
+    this.enableRemoveIcon = false,
+    this.onRemoved,
   });
+
+  final Color? textColor;
+  final bool disablePress;
+  final bool enableRemoveIcon;
+  final Function()? onRemoved;
 
   @override
   Widget build(BuildContext context) {
@@ -21,50 +30,49 @@ class AppWidget extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            child: GestureDetector(
-              onTap: () {
-                print(app.routeName);
-                if (app.routeName != null) {
-                  Navigator.of(context).pushNamed(app.routeName!);
-                  return;
-                }
-              },
-              // onLongPress: () {
-              //   print("object");
-              //   isLongPress.value = true;
-              // },
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  if (isLongPress != null)
-                    ValueListenableBuilder(
-                      valueListenable: isLongPress!,
-                      builder: (context, value, child) {
-                        if (value) {
-                          return Positioned(
-                            left: 0,
-                            top: 0,
-                            child: Container(
-                              child: Icon(Icons.remove),
-                            ),
-                          );
-                        } else {
-                          return const SizedBox.shrink();
-                        }
-                      },
-                    ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: AspectRatio(
-                      aspectRatio: (app.width) / app.height,
-                      child: ImageWidget(
-                        app.avatar,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
+            child: IgnorePointer(
+              ignoring: disablePress,
+              child: GestureDetector(
+                onTap: () {
+                  if (app.path != null) {
+                    Navigator.of(context).pushNamed(app.path!);
+                    return;
+                  }
+                },
+                child: AspectRatio(
+                  aspectRatio: (app.width) / app.height,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(14),
+                        child: ImageWidget(
+                          app.backgroundImage,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
+                      if (enableRemoveIcon)
+                        Positioned(
+                          left: -10,
+                          top: -10,
+                          child: GestureDetector(
+                            onTap: onRemoved,
+                            behavior: HitTestBehavior.opaque,
+                            child: const CircleAvatar(
+                              backgroundColor: Colors.grey,
+                              radius: 10,
+                              child: Icon(
+                                Icons.remove,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
@@ -76,12 +84,38 @@ class AppWidget extends StatelessWidget {
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               style: context.text.titleSmall!.copyWith(
-                color: AppColors.white,
-                fontSize: 10,
+                color: textColor ?? AppColors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
               ),
             ),
         ],
       ),
+    );
+  }
+}
+
+class AppWidgetBuilder extends AppWidget {
+  const AppWidgetBuilder({
+    super.key,
+    required super.app,
+    required this.controller,
+    required super.onRemoved,
+  });
+
+  final DashBoardController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: controller,
+      builder: (_, __) {
+        return AppWidget(
+          app: app,
+          enableRemoveIcon: controller.enableRemoveIcon,
+          onRemoved: onRemoved,
+        );
+      },
     );
   }
 }

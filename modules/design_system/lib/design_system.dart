@@ -10,6 +10,7 @@ export 'src/styles/theme.dart';
 
 extension Ctx on BuildContext {
   Size get size => MediaQuery.of(this).size;
+  double get paddingTop => MediaQuery.of(this).padding.top;
 
   TextTheme get text => Theme.of(this).textTheme;
   ThemeDecoration get themeDecoration => Theme.of(this).themeDecoration;

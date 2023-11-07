@@ -41,5 +41,6 @@
     "validate_PleaseEnterInfo": "Please enter info",
     "pdoneAction_registerPDone": "Register P-Done",
     "pdoneAction_registerCollaboratorsAndLink": "Register JA",
-    "setting": "setting"
+    "setting": "setting",
+    "account_profile": "Account profile"
 }

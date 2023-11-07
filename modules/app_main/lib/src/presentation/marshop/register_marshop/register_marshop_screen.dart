@@ -1,5 +1,7 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_coordinator.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +24,11 @@ class RegisterMarshopScreen extends StatefulWidget {
 
 class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
     with ValidationMixin {
+  late final userCubit = context.read<UserCubit>();
   final TextEditingController _marshopIdCtrl = TextEditingController();
   final TextEditingController _marshopName = TextEditingController();
   final _acceptTerm = ValueNotifier(false);
+  late User _authInfo;
 
   @override
   bool get conditionValidator => _acceptTerm.value;
@@ -32,6 +36,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
   @override
   void initState() {
     super.initState();
+    _authInfo = userCubit.currentUser!;
     _acceptTerm.addListener(() {
       onValidation();
     });
@@ -43,12 +48,12 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
       listeners: [
         BlocListener<MarshopCubit, MarshopState>(
           listener: (context, state) {
-            if (state is RegisterCustomerSuccess) {
+            if (state is RegisterMarshopSuccess) {
               hideLoading();
-              // context.congratulationRegisterCustomer();
+              context.congratulationRegisterMarshop();
             }
 
-            if (state is RegisterCustomerFailed) {
+            if (state is RegisterMarshopFail) {
               hideLoading();
               showToastMessage(state.message, ToastMessageType.error);
             }
@@ -58,9 +63,11 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
           listener: (context, state) {
             if (state is SendOTPSuccess) {
               hideLoading();
-              // context.startDialogVerifyPhoneOTP(
-              //   marshopId: int.parse(_marshopIdCtrl.text.trim()),
-              // );
+              context.startDialogVerifyRegisterMarshop(
+                userId: _authInfo.id!,
+                marshopId: int.parse(_marshopIdCtrl.text.trim()),
+                name: _marshopName.text.trim(),
+              );
             }
 
             if (state is SendOTPFail) {

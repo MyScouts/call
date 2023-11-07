@@ -15,7 +15,7 @@ abstract class CommunityRepository {
 
   Future<Team> getTeamById(String id);
 
-  Future<List<Member>> getMembers(String id);
+  Future<List<User>> getMembers(String id);
 
   Future<GroupDetail> getGroupDetail(String id);
 
@@ -29,7 +29,7 @@ abstract class CommunityRepository {
 
   Future<FanGroup> getFanGroupById(int id);
 
-  Future<List<Member>> getMembersOfFanGroup(
+  Future<List<User>> getMembersOfFanGroup(
     int id,
     int type,
     int? page,
@@ -55,4 +55,6 @@ abstract class CommunityRepository {
 
   Future<ConfirmResponse> replyGiveUpBossTeamRole(
       String id, ReplyGiveUpBossTeamRolePayload payload);
+
+  Future<ConfirmResponse> askToJoinTeam(String id);
 }

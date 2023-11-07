@@ -22,5 +22,8 @@ class Team with _$Team {
     int? memberCount,
   }) = _Team;
 
-  factory Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson(json);
+  factory Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson({
+        ...json,
+        'id': json['id'] is int ? "${json['id']}" : json['id'],
+      });
 }

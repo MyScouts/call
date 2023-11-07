@@ -14,7 +14,7 @@ class BossGroupOfGroupFanPage extends StatelessWidget {
       builder: (context, state) {
         User? boss;
         if (state is FetchBossGroupSuccess) {
-          boss = state.boss.first.user;
+          boss = state.boss.first;
         }
 
         return Column(

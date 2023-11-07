@@ -48,7 +48,7 @@ class GroupCardWidget extends StatelessWidget {
                     child: AspectRatio(
                       aspectRatio: 1,
                       child: ImageWidget(
-                        group.avatar!.optimizeSize400,
+                        group.avatar?.optimizeSize400 ?? '',
                         borderRadius: 100,
                       ),
                     ),

@@ -76,7 +76,7 @@ class S {
     final String dateString = dateDateFormat.format(date);
 
     final DateFormat timeDateFormat =
-    DateFormat('hh:mm a', Intl.getCurrentLocale());
+        DateFormat('hh:mm a', Intl.getCurrentLocale());
     final String timeString = timeDateFormat.format(time);
 
     return Intl.message(
@@ -86,7 +86,6 @@ class S {
       args: [dateString, timeString],
     );
   }
-
 
   /// `Resend OTP success.`
   String get messages_resend_otp_success {

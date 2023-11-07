@@ -14,7 +14,17 @@ class FetchTeamDetailSuccess extends TeamDetailInitial {
 }
 
 class FetchTeamsMemberSuccess extends FetchTeamDetailSuccess {
-  final List<Member> members;
+  final List<User> members;
 
   FetchTeamsMemberSuccess(this.members, super.team);
+}
+
+class AskToJoinLoading extends TeamDetailInitial {}
+
+class AskToJoinSuccess extends TeamDetailInitial {}
+
+class AskToJoinError<T> extends TeamDetailInitial {
+  final dynamic error;
+
+  AskToJoinError(this.error);
 }

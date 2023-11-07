@@ -26,6 +26,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "account_profile":
+            MessageLookupByLibrary.simpleMessage("Hồ sơ tài khoản"),
         "by_vdone": MessageLookupByLibrary.simpleMessage("của VDONE"),
         "confirm": MessageLookupByLibrary.simpleMessage("Xác nhận"),
         "confirmation_code_has_been_sent":

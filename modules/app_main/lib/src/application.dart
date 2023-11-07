@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:app_main/src/core/services/notifications/mixins/notification_mixnin.dart';
+import 'package:app_main/src/core/services/notifications/mixins/notification_mixin.dart';
 import 'package:app_main/src/core/services/notifications/notification_service.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/routes.dart';
@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:localization/localization.dart';
 import 'core/coordinator/app_coordinator.dart';
 import 'core/utils/toast_message/toast_message.dart';
+import 'presentation/notification/notification_coordinator.dart';
 
 class Application extends StatefulWidget {
   final AdaptiveThemeMode? savedThemeMode;
@@ -128,7 +129,9 @@ class _ApplicationState extends State<Application>
   }
 
   @override
-  void onListenerOpenNotification(Map<String, dynamic> notification) {}
+  void onListenerOpenNotification(Map<String, dynamic> notification) {
+    AppCoordinator.root.currentContext?.startOpenNotification(notification);
+  }
 
   @override
   GlobalKey<NavigatorState> get rootKey => AppCoordinator.root;
