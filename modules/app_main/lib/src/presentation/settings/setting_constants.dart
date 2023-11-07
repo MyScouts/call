@@ -1,6 +1,5 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/presentation/marshop/marshop_coordintor.dart';
-import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
+import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart';
@@ -56,7 +55,7 @@ class Setting {
           Setting(
             text: "Khách hàng thường xuyên - Market Home",
             icon: IconAppConstants.icMarshopHome,
-            onPressed: () => context.startRegisterMarshop(),
+            onPressed: () => context.startRegisterCustomer(),
           ),
           Setting(
             text: "Tài khoản Marshop",

@@ -5,11 +5,14 @@ import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
+OpenWeatherState? _state;
+
 @injectable
 class OpenWeatherBloc extends Bloc<FetchWeather, OpenWeatherState> {
   final OpenWeatherUseCase openWeatherUseCase;
 
-  OpenWeatherBloc(this.openWeatherUseCase) : super(const OpenWeatherState()) {
+  OpenWeatherBloc(this.openWeatherUseCase)
+      : super(_state ?? const OpenWeatherState()) {
     on<FetchWeather>(
       onFetchWeather,
       transformer: (event, mapper) => event.switchMap(mapper),
@@ -21,7 +24,8 @@ class OpenWeatherBloc extends Bloc<FetchWeather, OpenWeatherState> {
     Emitter<OpenWeatherState> emit,
   ) async {
     final res = await openWeatherUseCase.get(lat: event.lat, lon: event.lon);
-    emit(OpenWeatherState(openWeatherCurrent: res));
+    _state = OpenWeatherState(openWeatherCurrent: res);
+    emit(_state!);
   }
 }
 
