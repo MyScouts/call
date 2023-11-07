@@ -1,6 +1,7 @@
 import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
 import 'package:app_main/src/data/repositories/user_repository.dart';
+import 'package:app_main/src/domain/entities/change_password_payload.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:injectable/injectable.dart';
 
@@ -103,6 +104,10 @@ class AuthenticationUsecase {
 
   Future authClaimV2(AuthClaimPayload payload) async {
     return _authRepository.authClaimV2(payload);
+  }
+
+  Future changePassword(ChangePasswordPayload payload) {
+    return _authRepository.changePassword(payload);
   }
 }
 

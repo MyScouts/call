@@ -1,10 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/domain/usecases/dashboard_share_preferences_usecase.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
-import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
-import 'package:design_system/design_system.dart';
 import 'package:equatable/equatable.dart';
-import 'package:imagewidget/imagewidget.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class DashboardBaseBloc
@@ -25,6 +22,7 @@ abstract class DashboardBaseBloc
     on<ChangeItem>(onChangeItem);
     on<AddItemToGroup>(onAddItemToGroup);
     on<ChangeGroup>(onChangeGroup);
+
     add(_FetchDashBoardItems());
   }
 
