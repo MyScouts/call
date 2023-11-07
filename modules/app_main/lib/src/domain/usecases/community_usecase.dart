@@ -9,6 +9,7 @@ import '../../data/models/payloads/community/update_community_payload.dart';
 import '../../data/models/responses/boss_community_status_response.dart';
 import '../../data/models/responses/confirm_response.dart';
 import '../../data/models/responses/group_request_response.dart';
+import '../../data/models/responses/leave_team_status_response.dart';
 import '../repository/community_repository.dart';
 
 @injectable
@@ -114,5 +115,13 @@ class CommunityUsecase {
 
   Future<ConfirmResponse> askToJoinTeam(String id) async {
     return await _communityRepository.askToJoinTeam(id);
+  }
+
+  Future<ConfirmResponse> askToLeaveTeam(String id) async {
+    return await _communityRepository.askToLeaveTeam(id);
+  }
+
+  Future<LeaveTeamStatusResponse> getLeaveTeamStatus() async {
+    return await _communityRepository.getLeaveTeamStatus();
   }
 }

@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:app_core/app_core.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../data/models/responses/leave_team_status_response.dart';
 import '../../../../domain/usecases/community_usecase.dart';
 
 part 'team_detail_event.dart';
@@ -19,6 +19,8 @@ class TeamDetailBloc extends Bloc<TeamDetailEvent, TeamDetailState> {
     on<FetchTeamDetailEvent>(_onFetchTeamDetailEvent);
     on<UpdateTeamDetailEvent>(_onUpdateTeamDetailEvent);
     on<AskToJoinEvent>(_onAskToJoinEvent);
+    on<AskToLeaveTeamEvent>(_onAskToLeaveTeamEvent);
+    on<GetLeaveTeamStatusEvent>(_onGetLeaveTeamStatusEvent);
   }
 
   FutureOr<void> _onFetchTeamDetailEvent(
@@ -44,7 +46,7 @@ class TeamDetailBloc extends Bloc<TeamDetailEvent, TeamDetailState> {
     emit(AskToJoinLoading());
 
     try {
-      final result = await _communityUsecase.askToJoinTeam(event.teamId);
+      await _communityUsecase.askToJoinTeam(event.teamId);
 
       emit(AskToJoinSuccess());
     } on DioException catch (e) {
@@ -55,6 +57,50 @@ class TeamDetailBloc extends Bloc<TeamDetailEvent, TeamDetailState> {
       }
     } catch (e) {
       emit(AskToJoinError(e));
+      if (kDebugMode) {
+        rethrow;
+      }
+    }
+  }
+
+  Future<FutureOr<void>> _onAskToLeaveTeamEvent(
+      AskToLeaveTeamEvent event, Emitter<TeamDetailState> emit) async {
+    emit(AskToLeaveTeamLoading());
+
+    try {
+      await _communityUsecase.askToLeaveTeam(event.teamId);
+
+      emit(AskToLeaveTeamSuccess());
+    } on DioException catch (e) {
+      emit(TeamDetailError(e));
+
+      if (kDebugMode) {
+        rethrow;
+      }
+    } catch (e) {
+      emit(TeamDetailError(e));
+      if (kDebugMode) {
+        rethrow;
+      }
+    }
+  }
+
+  Future<FutureOr<void>> _onGetLeaveTeamStatusEvent(
+      GetLeaveTeamStatusEvent event, Emitter<TeamDetailState> emit) async {
+    emit(GetLeaveTeamStatusLoading());
+
+    try {
+      final result = await _communityUsecase.getLeaveTeamStatus();
+
+      emit(GetLeaveTeamStatusSuccess(result));
+    } on DioException catch (e) {
+      emit(TeamDetailError(e));
+
+      if (kDebugMode) {
+        rethrow;
+      }
+    } catch (e) {
+      emit(TeamDetailError(e));
       if (kDebugMode) {
         rethrow;
       }

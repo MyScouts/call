@@ -1,6 +1,9 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/community/group_detail/update_community_options_screen.dart';
+import 'package:app_main/src/presentation/community/team_detail/bloc/team_detail_bloc.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/ask_tojoin_team_success_screen.dart';
+import 'package:app_main/src/presentation/community/team_detail/pages/team_request_list_screen.dart';
+import 'package:app_main/src/presentation/community/team_detail/pages/update_team_options_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
@@ -116,7 +119,7 @@ extension CommunityCoordinator on BuildContext {
         return ApproveDialog(
           type: DialogApproveStatus.waiting,
           content:
-              'Yêu cầu của bạn đã được gửi lên hệ thống của chúng tôi. Thời hạn của yêu cầu là $dayLeft ngày.',
+              'Yêu cầu của bạn đã được gửi lên hệ thống của chúng tôi. Thời hạn của yêu cầu còn lại $dayLeft ngày.',
         );
       },
     );
@@ -150,5 +153,33 @@ extension CommunityCoordinator on BuildContext {
   void backToTeamDetailScreen<T>() {
     return Navigator.of(this)
         .popUntil(ModalRoute.withName(TeamDetailScreen.routeName));
+  }
+
+  Future<T?> startTeamRequestsScreen<T>() {
+    return Navigator.of(this).pushNamed(TeamRequestListScreen.routeName);
+  }
+
+  Future<T?> startUpdateTeamOptionsScreen<T>({required Team team}) {
+    return Navigator.of(this).pushNamed(
+      UpdateTeamOptionsScreen.routeName,
+      arguments: team,
+    );
+  }
+
+  Future<T?> startDialogConfirmLeaveTeam<T>({required VoidCallback onAction}) {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: false,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return ConfirmDialog(
+          title: 'Bạn có muốn rời Team ?',
+          actionTitle: 'Rời Team',
+          content:
+              'Chúng tôi sẽ tiếp nhận yêu cầu rời Team của bạn và sẽ gửi bạn thông báo mới nhất.',
+          onAction: onAction.call,
+        );
+      },
+    );
   }
 }

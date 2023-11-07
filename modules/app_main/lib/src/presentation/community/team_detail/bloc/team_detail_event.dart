@@ -20,3 +20,11 @@ class AskToJoinEvent extends TeamDetailEvent {
 
   AskToJoinEvent(this.teamId);
 }
+
+class AskToLeaveTeamEvent extends TeamDetailEvent {
+  final String teamId;
+
+  AskToLeaveTeamEvent(this.teamId);
+}
+
+class GetLeaveTeamStatusEvent extends TeamDetailEvent {}
