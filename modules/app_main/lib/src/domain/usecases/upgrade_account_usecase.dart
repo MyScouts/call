@@ -3,7 +3,6 @@ import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/upd
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../data/data_sources/ekyc/ekyc_viettel.dart';
 import '../../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
 import '../../data/models/responses/confirm_register_ja_response.dart';
 import '../../data/models/responses/register_pdone_response.dart';
@@ -23,9 +22,8 @@ import '../repository/upgrade_account_repository.dart';
 @injectable
 class UpgradeAccountUsecase {
   final UpgradeAccountRepository _upgradeAccountRepository;
-  final EKycViettel _eKycViettel;
 
-  UpgradeAccountUsecase(this._upgradeAccountRepository, this._eKycViettel);
+  UpgradeAccountUsecase(this._upgradeAccountRepository);
 
   Future<KycStatus> currentStep() => _upgradeAccountRepository.currentStep();
 
@@ -92,11 +90,6 @@ class UpgradeAccountUsecase {
   Future<BankAccount> updateBankAccount(
       UpdateBankAccountPayload payload) async {
     return _upgradeAccountRepository.updateBankAccount(payload);
-  }
-
-  Future<Map<String, dynamic>> extractIdCardInformation(
-      EKycIdCardRequest request) async {
-    return _eKycViettel.extractIdCard(request);
   }
 
   Future<BankAccount> getDefaultBank() async {

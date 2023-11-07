@@ -34,6 +34,7 @@ export 'src/domain/entities/community/group.dart';
 export 'src/domain/entities/community/group_detail.dart';
 export 'src/domain/entities/community/team.dart';
 export 'src/domain/entities/update_information/update_information_type.dart';
+export 'src/domain/entities/update_information/update_pdone_options.dart';
 export 'src/domain/entities/user/user.dart';
 export 'src/domain/usecase/design_resource_usecase.dart';
 export 'src/domain/usecase/user_share_preferences_usecase.dart';

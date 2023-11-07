@@ -1,3 +1,4 @@
+import 'package:app_main/src/domain/entities/update_account/place/country.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/entities/update_account/place/district.dart';
@@ -33,6 +34,14 @@ class PlaceInformationRepositoryImpl extends PlaceInformationRepository {
       String iso2, int stateCode, String districtId) async {
     final res = await _placeInformationApi.ward(
         iso2: iso2, stateCode: stateCode, districtId: districtId);
+
+    return res.data;
+  }
+
+  @override
+  Future<List<Country>> countries() async{
+    // TODO: implement countries
+    final res = await _placeInformationApi.countries();
 
     return res.data;
   }

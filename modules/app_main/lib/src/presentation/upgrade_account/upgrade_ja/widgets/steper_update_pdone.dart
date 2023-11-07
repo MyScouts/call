@@ -10,8 +10,8 @@ class StepperVerifyWidget extends StatelessWidget {
     this.titles = const [
       'Định danh điện tử',
       'Cập nhật thông tin',
-      // 'Xác minh',
-      // 'Trạng thái'
+      'Xác minh',
+      'Trạng thái'
     ],
     required this.currentIndex,
   });
@@ -19,11 +19,11 @@ class StepperVerifyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(8, 20, 8, 0),
+      margin: const EdgeInsets.fromLTRB(8, 20, 8, 16),
       child: Column(
         children: [
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 18.0),
+            margin: const EdgeInsets.symmetric(horizontal:65.5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List<Widget>.generate(
@@ -32,17 +32,17 @@ class StepperVerifyWidget extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            margin: const EdgeInsets.only(bottom: 15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: List<Widget>.generate(
-                titles.length,
-                    (index) => _renderTitle(context, index),
-              ),
-            ),
-          ),
+          // Container(
+          //   margin: const EdgeInsets.only(bottom: 15.0),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: List<Widget>.generate(
+          //       titles.length,
+          //           (index) => _renderTitle(context, index),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -87,8 +87,8 @@ class StepperVerifyWidget extends StatelessWidget {
 
   Widget _renderCircle(BuildContext context, int index) {
     return Container(
-      height: 40,
-      width: 40,
+      height: 16,
+      width: 16,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
@@ -97,10 +97,10 @@ class StepperVerifyWidget extends StatelessWidget {
             : null,
         color: index != currentIndex ? AppColors.grey8 : null,
       ),
-      child: Text(
-        '${index + 1}',
-        style: const TextStyle(color: Colors.white),
-      ),
+      // child: Text(
+      //   '${index + 1}',
+      //   style: const TextStyle(color: Colors.white),
+      // ),
     );
   }
 }

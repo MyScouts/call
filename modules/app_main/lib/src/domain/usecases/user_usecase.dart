@@ -55,4 +55,9 @@ class UserUsecase {
   }) {
     return _userRepository.deleteUser(userId: userId, payload: payload);
   }
+
+  Future<bool> genOtp() async {
+    final isSuccess = await _userRepository.genOtp();
+    return isSuccess;
+  }
 }

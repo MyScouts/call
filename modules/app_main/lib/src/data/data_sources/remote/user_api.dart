@@ -15,6 +15,7 @@ class UserApiConstants {
   static const followUser = 'api/users/follow';
   static const unFollow = 'api/users/unfollow';
   static const blockUser = 'api/users/block-user/{userId}';
+  static const authOTP = 'api/v1/auth/otp';
 }
 
 @RestApi()
@@ -55,4 +56,6 @@ abstract class UserApi {
 
   @POST(UserApiConstants.blockUser)
   Future blockUser(@Path() int userId);
+  @POST(UserApiConstants.authOTP)
+  Future<bool> genOTP();
 }

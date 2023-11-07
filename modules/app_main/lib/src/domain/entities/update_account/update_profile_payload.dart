@@ -1,5 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 
+import 'package:app_main/src/domain/entities/update_account/update_pdone_birth_place_payload.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'update_place_information_payload.dart';
@@ -17,7 +18,7 @@ class UpdateProfilePayload with _$UpdateProfilePayload {
     @JsonKey(includeIfNull: false) String? nickname,
     @JsonKey(includeIfNull: false) int? sex,
     @JsonKey(includeIfNull: false) String? birthday,
-    @JsonKey(includeIfNull: false) String? birthPlace,
+    @JsonKey(includeIfNull: false) UpdatePDoneBirthPlacePayload? birthPlace,
     @JsonKey(includeIfNull: false) UpdatePlaceInformationPayload? currentPlace,
     @JsonKey(includeIfNull: false) String? identityNumber,
     @JsonKey(includeIfNull: false) String? supplyDate,
@@ -34,6 +35,7 @@ class UpdateProfilePayload with _$UpdateProfilePayload {
     @JsonKey(includeIfNull: false) String? protectorPDoneId,
     @JsonKey(includeIfNull: false) String? protectorIdentityNumber,
     @JsonKey(includeIfNull: false) String? protectorEmailPhone,
+    @JsonKey(includeIfNull: false) String? otp,
   }) = _UpdateProfilePayload;
 
   factory UpdateProfilePayload.fromJson(Map<String, dynamic> json) =>

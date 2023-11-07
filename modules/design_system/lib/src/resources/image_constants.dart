@@ -34,6 +34,7 @@ class ImageConstants {
   static String communityViecLam = ImageApp.communityViecLam.path;
   static String celebrate = ImageApp.celebrate.path;
   static String imgDefaultTeamBanner = ImageApp.imgDefaultTeamBanner.path;
+  static String guidePdone = ImageApp.guidePdone.path;
 }
 
 enum ImageApp {
@@ -72,7 +73,8 @@ enum ImageApp {
   communityDuLich('assets/images/dulich.jpg'),
   //modules/design_system/assets/images/celebrate.png
   imgDefaultTeamBanner('assets/images/img_default_team_banner.png'),
-  celebrate('assets/images/celebrate.png');
+  celebrate('assets/images/celebrate.png'),
+  guidePdone('assets/images/guidePdone.png');
 
   const ImageApp(this.path);
   final String path;

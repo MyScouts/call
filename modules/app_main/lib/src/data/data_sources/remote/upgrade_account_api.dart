@@ -25,7 +25,7 @@ part 'upgrade_account_api.g.dart';
 class UpgradeAccountApiConstants {
   static const currentStep = 'api/account-p-done/current-step';
 
-  static const updatePDoneProfile = 'v1/p-done/adult-register';
+  static const updatePDoneProfile = 'api/v1/p-done/adult-register';
 
   static const registerPDone = 'api/account-p-done/profile/register-p-done';
   static const registerPDoneVerifyPhone =
