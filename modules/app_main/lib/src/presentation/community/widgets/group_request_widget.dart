@@ -110,7 +110,9 @@ class _GroupRequestWidgetState extends State<GroupRequestWidget> {
                   ),
                   child: DayCountdownWidget(
                     durationInSeconds: widget.request.createdAt!
-                        .add(const Duration(days: CommunityConstant.dayRequest))
+                        .add(const Duration(
+                            days: CommunityConstant
+                                .dayForRelinquishBossGroupRequest))
                         .difference(DateTime.now())
                         .inSeconds,
                   ),

@@ -28,3 +28,21 @@ class AskToJoinError<T> extends TeamDetailInitial {
 
   AskToJoinError(this.error);
 }
+
+class AskToLeaveTeamLoading extends TeamDetailInitial {}
+
+class AskToLeaveTeamSuccess extends TeamDetailInitial {}
+
+class GetLeaveTeamStatusLoading extends TeamDetailInitial {}
+
+class GetLeaveTeamStatusSuccess extends TeamDetailInitial {
+  final LeaveTeamStatusResponse requests;
+
+  GetLeaveTeamStatusSuccess(this.requests);
+}
+
+class TeamDetailError<T> extends TeamDetailInitial {
+  final dynamic error;
+
+  TeamDetailError(this.error);
+}

@@ -3,16 +3,15 @@ import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:design_system/design_system.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
 
-import '../../shared/user/bloc/user_bloc.dart';
 import '../community_constants.dart';
 import '../widgets/team_member_widget.dart';
 import 'bloc/team_detail_bloc.dart';
-import 'team_detail_constants.dart';
 
 class TeamDetailScreen extends StatefulWidget {
   static const String routeName = '/team';
@@ -34,49 +33,25 @@ class TeamDetailScreen extends StatefulWidget {
 
 class _TeamDetailScreenState extends State<TeamDetailScreen>
     with TickerProviderStateMixin {
-  late final TabController _tabCtrl;
-
-  User? get currentUser => context.read<UserBloc>().state.currentUser;
-
-  String? get currUserId => currentUser?.pDoneId;
-
-  bool get isJA => currentUser?.isPDone == true && currentUser?.isJA == true;
-
   TeamDetailBloc get teamDetailBloc => context.read();
 
-  // void _onTapEdit(Team team) {
-  //   final boss = team.boss;
-  //
-  //   context
-  //       .startEditInformation(
-  //           community: Community.copyWithTeam(team), type: CommunityType.team)
-  //       .then((value) {
-  //     if (value != null && value is Team) {
-  //       teamDetailBloc.add(UpdateTeamDetailEvent(value.copyWith(boss: boss)));
-  //     }
-  //   });
-  // }
+  final myId = injector.get<UserCubit>().currentUser?.id;
 
   @override
   void initState() {
     super.initState();
-    _tabCtrl = TabController(length: TeamDetailTab.values.length, vsync: this);
     teamDetailBloc.add(FetchTeamDetailEvent(widget.id));
-  }
-
-  @override
-  void dispose() {
-    _tabCtrl.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<TeamDetailBloc, TeamDetailState>(
+      body: BlocConsumer<TeamDetailBloc, TeamDetailState>(
+        listener: _onTeamDetailBlocListen,
         buildWhen: (prev, current) =>
             current is FetchTeamDetailSuccess ||
-            current is FetchTeamsMemberSuccess,
+            current is FetchTeamsMemberSuccess ||
+            current is LoadingTeamDetail,
         builder: (context, state) {
           Team? team;
           List<User> members = [];
@@ -97,7 +72,6 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
             banner = team!.banner!.optimizeSize600;
           }
 
-          final myId = injector.get<UserCubit>().currentUser?.id;
           final canUpdateMembers =
               myId == widget.bossGroupId || myId == team?.boss?.id;
 
@@ -106,9 +80,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
           final isBossGroupAndBossTeam =
               myId == widget.bossGroupId && myId == team?.boss?.id;
 
-          print('myId: $myId');
-          print('widget.bossGroupId: ${widget.bossGroupId}');
-          print('team?.boss?.id: ${team?.boss?.id}');
+          final isMember = members.map((mem) => mem.id).toList().contains(myId);
 
           return SliverLayoutNestedScrollView(
             cover: ImageWidget(
@@ -118,8 +90,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
             actionAppBar: canUpdateMembers
                 ? IconButton(
                     onPressed: () {
-                      showToastMessage('Tính năng này đang được phát triển',
-                          ToastMessageType.warning);
+                      context.startUpdateTeamOptionsScreen(team: team!);
                     },
                     icon: const Icon(Icons.more_vert),
                   )
@@ -135,13 +106,17 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _teamHeaderWidget(team),
-                          if(canUpdateMembers)_actionButtons(showInvite: !isBossGroupButNotBossTeam),
+                          if (canUpdateMembers)
+                            _actionButtons(
+                                showInvite: !isBossGroupButNotBossTeam),
                           _introductionWidget(team),
-                          if (!canUpdateMembers)
+                          if (!canUpdateMembers && !isMember)
                             _askToJoinBtn(
                               canAskToJoin: members.length < 500,
                               teamId: '${team?.id}',
                             ),
+                          if (!canUpdateMembers && isMember)
+                            _askToLeaveBtn(teamId: '${team?.id}'),
                           const SizedBox(height: 20),
                           _membersWidget(
                               members: members,
@@ -174,9 +149,10 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
         ],
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ImageWidget(
-            team?.avatar ?? ImageConstants.defaultAvatar,
+            team?.avatar ?? IconAppConstants.icDefaultTeamAvt,
             width: 60,
             height: 60,
           ),
@@ -188,8 +164,6 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                 width: MediaQuery.of(context).size.width - 150,
                 child: Text(
                   '${team?.name}',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
@@ -339,7 +313,6 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
   Widget _askToJoinBtn({required bool canAskToJoin, required String teamId}) {
     return PrimaryButton(
       title: 'Tham gia team',
-      height: 55,
       onTap: () {
         context.startAskToJoinTeam(teamId);
       },
@@ -348,13 +321,47 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
     );
   }
 
-  Widget _askToLeaveBtn(bool canAskToJoin) {
-    return PrimaryButton(
-      title: 'Yêu cầu rời Team',
-      height: 55,
-      onTap: () {},
-      disabled: !canAskToJoin,
-      width: MediaQuery.of(context).size.width,
+  Widget _askToLeaveBtn({required String teamId}) {
+    return GestureDetector(
+      onTap: () {
+        teamDetailBloc.add(GetLeaveTeamStatusEvent());
+      },
+      child: Container(
+        alignment: Alignment.center,
+        height: 48,
+        decoration: BoxDecoration(
+            color: const Color(0xFFFFEEEC),
+            borderRadius: BorderRadius.circular(10)),
+        child: RichText(
+          text: TextSpan(
+            text: '',
+            children: <InlineSpan>[
+              WidgetSpan(
+                child: ImageWidget(
+                  IconAppConstants.icLeaveTeam,
+                  width: 20,
+                  height: 20,
+                ),
+                alignment: PlaceholderAlignment.middle,
+              ),
+              WidgetSpan(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text(
+                    'Yêu cầu rời Team',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          height: 1.5,
+                          color: AppColors.red3,
+                        ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -373,7 +380,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
         ...members.map(
           (member) => TeamMemberWidget(
             user: member,
-            trailing: canUpdateMembers
+            trailing: canUpdateMembers && member.id != myId
                 ? PopupMenuButton(
                     onSelected: (value) {
                       if (value == BossTeamActionToMember.assignBossTeam.name) {
@@ -407,5 +414,39 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
         )
       ],
     );
+  }
+
+  void _onTeamDetailBlocListen(BuildContext context, TeamDetailState state) {
+    if (state is GetLeaveTeamStatusLoading) {
+      context.showLoading();
+    } else if (state is GetLeaveTeamStatusSuccess) {
+      context.hideLoading();
+      if (state.requests.requests != null &&
+          state.requests.requests!.isNotEmpty) {
+        final dayLeft = state.requests.requests!.first.createdAt!
+            .add(const Duration(
+                days: CommunityConstant.dayForLeaveTeamRequest + 1))
+            .dayLeft();
+
+        context.startDialogBossStatus(dayLeft);
+      } else {
+        context.startDialogConfirmLeaveTeam(
+          onAction: () => teamDetailBloc.add(AskToLeaveTeamEvent(widget.id)),
+        );
+      }
+    } else if (state is AskToLeaveTeamSuccess) {
+      context.startDialogBossStatus(CommunityConstant.dayForLeaveTeamRequest);
+    } else if (state is TeamDetailError) {
+      context.hideLoading();
+      final e = state.error;
+      if (e is DioException) {
+        final message = e.toMessage(context);
+        context.showToastMessage(message, ToastMessageType.warning);
+      } else {
+        final message = 'Đã có lỗi xảy ra, vui lòng thử lại.'
+            ' ${kDebugMode ? state.error.toString() : ''}';
+        context.showToastMessage(message, ToastMessageType.error);
+      }
+    }
   }
 }
