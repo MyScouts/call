@@ -44,15 +44,22 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
         if (code.isJSON()) {
           final data = jsonDecode(code);
           if (data['type'] == 'diary' && data["id"] != null) {
-            controller!.dispose();
             context.startReplaceDiary(userId: data["id"].toString());
-
             return;
           }
         } else {
           if ((code.toString().contains("_auth1") ||
               code.toString().contains("_auth2"))) {
-            context.confirmLoginQrCode();
+            AuthClaimType type = code.toString().contains("_auth2")
+                ? AuthClaimType.v2
+                : AuthClaimType.v1;
+            context.confirmLoginQrCode(
+              type: type,
+              code: code
+                  .toString()
+                  .replaceAll("_auth1", "")
+                  .replaceAll("_auth2", ""),
+            );
             return;
           }
           Navigator.pop(context, code);

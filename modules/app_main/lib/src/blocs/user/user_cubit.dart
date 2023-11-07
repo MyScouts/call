@@ -320,12 +320,13 @@ class UserCubit extends Cubit<UserState> {
         await _authenticationUsecase.authClaimV1(AuthClaimPayload(
           code: qrCode,
         ));
+        emit(LoginQRCodeSuccess());
       } else {
         await _authenticationUsecase.authClaimV2(AuthClaimPayload(
           code: qrCode,
         ));
+        emit(LoginQRCodeSuccess());
       }
-      emit(LoginQRCodeSuccess());
     } on DioException catch (error) {
       debugPrint("authQrCode: $error");
       String err = S.current.messages_server_internal_error.capitalize();

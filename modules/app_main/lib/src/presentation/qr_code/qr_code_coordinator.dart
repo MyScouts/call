@@ -24,10 +24,13 @@ extension DeeplinkCoordinator on BuildContext {
     });
   }
 
-  Future<T?> confirmLoginQrCode<T>() {
+  Future<T?> confirmLoginQrCode<T>({
+    required String code,
+    required AuthClaimType type,
+  }) {
     return showGeneralDialog<T>(
       context: this,
-      barrierDismissible: true,
+      barrierDismissible: false,
       barrierLabel: '',
       pageBuilder: (context, animation1, animation2) {
         return BlocListener<UserCubit, UserState>(
@@ -36,21 +39,23 @@ extension DeeplinkCoordinator on BuildContext {
               showLoading();
             }
 
-            if (state is LogoutSuccess) {
+            if (state is LoginQRCodeSuccess) {
               hideLoading();
               showToastMessage("Xác nhận đăng nhập thành công!");
               context.startDashboardUtil();
             }
 
-            if (state is LogoutFail) {
+            if (state is LoginQRCodeFail) {
               hideLoading();
               showToastMessage("Đăng nhập thất bại.");
             }
           },
           child: ActionDialog(
+            isBack: false,
             title: "Bạn có muốn đăng nhập trên thiết bị?",
             actionTitle: S.current.confirm.capitalize(),
-            onAction: () => context.read<UserCubit>().onLogout(),
+            onAction: () =>
+                context.read<UserCubit>().authQrCode(qrCode: code, type: type),
           ),
         );
       },
