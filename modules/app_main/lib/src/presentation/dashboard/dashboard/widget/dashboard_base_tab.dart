@@ -7,7 +7,6 @@ import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_c
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_ecommerce_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_personal_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reorderable/reorderable.dart';
 
@@ -107,17 +106,17 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
     }).toList();
   }
 
-  // List<ReorderableStaggeredScrollViewGridItem> notDragList = List.generate(
-  //   10,
-  //   (index) => ReorderableStaggeredScrollViewGridItem(
-  //     mainAxisCellCount: 1,
-  //     crossAxisCellCount: 1,
-  //     widget: const AppEmptyWidget(
-  //       app: DashBoardEmptyItem(),
-  //     ),
-  //     key: ValueKey('empty $index'),
-  //   ),
-  // );
+  List<ReorderableStaggeredScrollViewGridItem> notDragList = List.generate(
+    10,
+    (index) => ReorderableStaggeredScrollViewGridItem(
+      mainAxisCellCount: 1,
+      crossAxisCellCount: 1,
+      widget: const AppEmptyWidget(
+        app: DashBoardEmptyItem(),
+      ),
+      key: ValueKey('empty $index'),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +162,9 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
                       final items = (list ?? [])
                           .map((e) => (e.widget as AppWidget).app)
                           .toList();
-                      ctx.read<T>().add(ChangeItem(items));
+
+                      ctx.read<T>().add(ChangeItem(
+                          items.where((e) => e.id != 'empty').toList()));
                     },
                     onDragStarted: (_) {
                       _isDragging = true;
@@ -240,18 +241,19 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
                           ),
                         );
                       }),
-                      // if (dashBoardController.enableEditMode)
-                      //   ...List.generate(
-                      //     10,
-                      //     (index) => ReorderableStaggeredScrollViewGridItem(
-                      //       mainAxisCellCount: 1,
-                      //       crossAxisCellCount: 1,
-                      //       widget: const AppEmptyWidget(
-                      //         app: DashBoardEmptyItem(),
-                      //       ),
-                      //       key: ValueKey('empty $index'),
-                      //     ),
-                      //   ),
+                      if (dashBoardController.enableEditMode)
+                        ...List.generate(
+                          10,
+                          (index) => ReorderableStaggeredScrollViewGridItem(
+                            isDrag: false,
+                            mainAxisCellCount: 1,
+                            crossAxisCellCount: 1,
+                            widget: const AppEmptyWidget(
+                              app: DashBoardEmptyItem(),
+                            ),
+                            key: ValueKey('empty $index'),
+                          ),
+                        ),
                     ],
                   ),
                 ],
