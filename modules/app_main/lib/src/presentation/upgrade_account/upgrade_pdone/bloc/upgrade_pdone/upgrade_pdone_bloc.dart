@@ -1,11 +1,8 @@
 import 'dart:async';
-import 'dart:io';
-
+import 'dart:convert';
 import 'package:app_core/app_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
-
-import '../../../../../data/data_sources/ekyc/ekyc_viettel.dart';
 import '../../../../../data/models/responses/register_pdone_response.dart';
 import '../../../../../domain/entities/update_account/check_protector_payload.dart';
 import '../../../../../domain/entities/update_account/pdone_account.dart';
@@ -14,9 +11,8 @@ import '../../../../../domain/entities/update_account/update_pdone_kyc_payload.d
 import '../../../../../domain/entities/update_account/update_profile_payload.dart';
 import '../../../../../domain/entities/update_account/upgrade_account.dart';
 import '../../../../../domain/entities/update_account/verify_phone_register_pdone_payload.dart';
-import '../../../../../domain/usecases/resource_usecase.dart';
 import '../../../../../domain/usecases/upgrade_account_usecase.dart';
-import '../../../../../domain/usecases/user_share_preferences_usecase.dart';
+import '../../../../../domain/usecases/user_usecase.dart';
 import '../../../upgrade_account_constants.dart';
 
 part 'upgrade_pdone_event.dart';
@@ -26,11 +22,13 @@ part 'upgrade_pdone_state.dart';
 @injectable
 class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
   final UpgradeAccountUsecase _upgradeAccountUsecase;
-  final ResourceUsecase _resourceUsecase;
-  final UserSharePreferencesUsecase _userSharePreferencesUsecase;
 
-  UpgradePDoneBloc(this._upgradeAccountUsecase, this._resourceUsecase,
-      this._userSharePreferencesUsecase)
+  // final ResourceUsecase _resourceUsecase;
+  final UserUsecase _userUsecase;
+
+  // final UserSharePreferencesUsecase _userSharePreferencesUsecase;
+
+  UpgradePDoneBloc(this._upgradeAccountUsecase, this._userUsecase)
       : super(UpgradePDoneInitial()) {
     on<GetListMasterEvent>(_mapGetListMasterEvent);
     on<RegisterPDoneAccountEvent>(_mapRegisterPDoneAccountEvent);
@@ -40,18 +38,23 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     on<UploadKYCImageEvent>(_mapUploadKYCImageEvent);
     on<ResendOtpEvent>(_mapResendOtpEvent);
     on<ExtractingIdCardEvent>(_mapExtractingIdCardEvent);
+    on<UpdatePDoneSendOTP>(_mapSendOTPVerifyUpdatePdoneEvent);
   }
 
   FutureOr<void> _mapExtractingIdCardEvent(
       ExtractingIdCardEvent event, Emitter<UpgradePDoneState> emit) async {
     emit(ExtractingEKycIdCard());
+    final infoResult = jsonDecode(event.eKycData['INFO_RESULT']);
+    final imageEKyc = event.eKycData["IMAGE_EKYC"];
+
     try {
-      final res = await _upgradeAccountUsecase
-          .extractIdCardInformation(event.eKycIdCardRequest);
-      if (res['code'] == 1) {
-        emit(ExtractedEKycIdCardSuccess(res['information']));
+      if (infoResult['statusCode'] == 200) {
+        emit(
+          ExtractedEKycIdCardSuccess(infoResult, imageEKyc),
+        );
       } else {
-        emit(ExtractedEKycIdCardFailure(res['vi_message']));
+        emit(ExtractedEKycIdCardFailure(
+            'Có lỗi xảy ra trong quá trình EKyc, vui lòng liên hệ admin để được hỗ trợ!'));
       }
     } catch (e) {
       if (kDebugMode) {
@@ -70,6 +73,22 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
       if (kDebugMode) {
         emit(GetListMasterFailure(e.toString()));
       }
+    }
+  }
+
+  FutureOr<void> _mapSendOTPVerifyUpdatePdoneEvent(
+      UpdatePDoneSendOTP event, Emitter<UpgradePDoneState> emit) async {
+    try {
+      final res = await _userUsecase.genOtp();
+
+      if (res) {
+        emit(UpdatePDoneSendOTPSuccessState());
+      } else {
+        emit(UpdatePDoneSendOTPFailureState(
+            errorMessage: 'Có lỗi xảy ra, vui lòng thử lại!'));
+      }
+    } catch (e) {
+      emit(UpdatePDoneSendOTPFailureState(errorMessage: e.toString()));
     }
   }
 
@@ -139,7 +158,15 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
         emit(UpdateProfileSuccess());
       }
     } catch (e) {
-      emit(UpdateProfileFailure(e.toString()));
+      if (e is DioException) {
+        if (e.response?.statusCode == 409) {
+          emit(UpdateProfileFailure('Tài khoản của bạn đã là PDone'));
+        }
+        if (e.response?.data['code'] == 'OTP_NOT_MATCH') {
+          emit(UpdateProfileFailure('Bạn nhập mã OTP không chính xác!'));
+        }
+      }
+      emit(UpdateProfileFailure('Có lỗi xảy ra, vui lòng thử lại!'));
     }
   }
 

@@ -46,7 +46,7 @@ class MarshopCubit extends Cubit<MarshopState> {
     try {
       emit(OnRegisterMarshop());
       await _marshopUsecase.registerMarshop(userId, payload);
-      emit(RegisterCustomerSuccess());
+      emit(RegisterMarshopSuccess());
       return;
     } on DioException catch (error) {
       final data = error.response!.data;

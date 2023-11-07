@@ -74,6 +74,16 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
+  Future authClaimV1(AuthClaimPayload payload) {
+    return _authApi.authClaimV1(payload);
+  }
+
+  @override
+  Future authClaimV2(AuthClaimPayload payload) {
+    return _authApi.authClaimV2(payload);
+  }
+
+  @override
   Future changePassword(ChangePasswordPayload payload) {
     return _authApi.changePassword(payload);
   }

@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/domain/entities/update_account/place/country.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../core/networking/api_response.dart';
@@ -10,6 +11,7 @@ import 'place_information_provider.dart';
 part 'place_information_api.g.dart';
 
 class PlaceInformationAPIConstants {
+  static const country = 'api/master/countries';
   static const provincesOfCountry = 'api/master/countries/{iso2}/provinces';
   static const districtsByProvinces =
       'api/master/countries/{iso2}/{stateCode}/districts';
@@ -21,8 +23,7 @@ class PlaceInformationAPIConstants {
 @injectable
 abstract class PlaceInformationAPI {
   @factoryMethod
-  factory PlaceInformationAPI(Dio dio) =>
-      _PlaceInformationAPI(dio);
+  factory PlaceInformationAPI(Dio dio) => _PlaceInformationAPI(dio);
 
   @GET(PlaceInformationAPIConstants.provincesOfCountry)
   Future<ApiResponse<List<Province>>> provincesOfCountry({
@@ -41,4 +42,7 @@ abstract class PlaceInformationAPI {
     @Path('stateCode') required int stateCode,
     @Path('districts') required String districtId,
   });
+
+  @GET(PlaceInformationAPIConstants.country)
+  Future<ApiResponse<List<Country>>> countries();
 }

@@ -17,7 +17,7 @@ class _ListMembersPageState extends State<ListMembersPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<TeamDetailBloc, TeamDetailState>(
       builder: (context, state) {
-        List<Member> lists = [];
+        List<User> lists = [];
 
         if (state is FetchTeamsMemberSuccess) {
           lists = state.members;
@@ -28,7 +28,7 @@ class _ListMembersPageState extends State<ListMembersPage> {
 
         return ListView.builder(
           itemBuilder: (_, int index) {
-            final user = lists[index].user!;
+            final user = lists[index];
             return UserHorizontalWidget(user: user);
           },
           itemCount: lists.length,

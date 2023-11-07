@@ -39,7 +39,7 @@ class InformationFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InfomationLayoutFieldWidget(
+    return InformationLayoutFieldWidget(
       label: type.title(context),
       required: required,
       isBold: isBold,

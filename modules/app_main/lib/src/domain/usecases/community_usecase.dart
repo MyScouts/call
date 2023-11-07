@@ -30,7 +30,7 @@ class CommunityUsecase {
 
   Future<Team> getTeamById(String id) => _communityRepository.getTeamById(id);
 
-  Future<List<Member>> getMembers(String id) {
+  Future<List<User>> getMembers(String id) {
     return _communityRepository.getMembers(id);
   }
 
@@ -64,7 +64,7 @@ class CommunityUsecase {
   Future<FanGroup> getFanGroupById(int id) =>
       _communityRepository.getFanGroupById(id);
 
-  Future<List<Member>> getMembersOfFanGroup(int id, int type,
+  Future<List<User>> getMembersOfFanGroup(int id, int type,
       {int? page, int? pageSize}) {
     return _communityRepository.getMembersOfFanGroup(id, type, page, pageSize);
   }
@@ -110,5 +110,9 @@ class CommunityUsecase {
   Future<ConfirmResponse> replyGiveUpBossTeamRole(
       String id, ReplyGiveUpBossTeamRolePayload payload) async {
     return await _communityRepository.replyGiveUpBossTeamRole(id, payload);
+  }
+
+  Future<ConfirmResponse> askToJoinTeam(String id) async {
+    return await _communityRepository.askToJoinTeam(id);
   }
 }

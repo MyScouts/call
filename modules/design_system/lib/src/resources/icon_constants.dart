@@ -31,7 +31,6 @@ class IconAppConstants {
   static String menu = IconApp.icMenu.path;
   static String group = IconApp.icUserGroup.path;
   static String newspaper = IconApp.icNewspaper.path;
-  static String icLogout = IconApp.icLogout.path;
   static String icDashboardContact = IconApp.icDashboardContact.path;
   static String icTv = IconApp.icTv.path;
   static String icBird = IconApp.icBird.path;
@@ -52,6 +51,17 @@ class IconAppConstants {
   static String icApproved = IconApp.icApproved.path;
   static String icReject = IconApp.icReject.path;
   static String icApprovedTick = IconApp.icApprovedTick.path;
+  static String icDelete = IconApp.icDelete.path;
+  static String icSettingAccount = IconApp.icSettingAccount.path;
+  static String icChat = IconApp.icMessage.path;
+  static String icTeam = IconApp.icTeam.path;
+  static String icUpgrade = IconApp.icUpdate.path;
+  static String icJA = IconApp.icJA.path;
+  static String icMarshopHome = IconApp.icMarketShopHome.path;
+  static String icMarshop = IconApp.icMarshop.path;
+  static String icLogout = IconApp.icLogout.path;
+  static String icShareLinkTeam = IconApp.icShareLinkTeam.path;
+  static String icInviteTeamMember = IconApp.icInviteTeamMember.path;
   static String icDotsHorizontal = IconApp.icDotsHorizontal.path;
   static String icTranslate = IconApp.icTranslate.path;
   static String icPicture = IconApp.icPicture.path;
@@ -59,6 +69,15 @@ class IconAppConstants {
 }
 
 enum IconApp {
+  icSettingAccount('assets/icons/ic_setting.png'),
+  icMessage('assets/icons/ic_messages.png'),
+  icTeam('assets/icons/ic_team.png'),
+  icUpdate('assets/icons/ic_update.png'),
+  icJA('assets/icons/ic_ja.png'),
+  icMarketShopHome('assets/icons/ic_market_home.png'),
+  icMarshop('assets/icons/ic_marshop.png'),
+  icLogout('assets/icons/ic_logout.png'),
+  icDelete('assets/icons/ic_delete.png'),
   icFriendBan('assets/icons/ic_friend_ban.svg'),
   icQrCode('assets/icons/ic_qrcode.svg'),
   icUserRemove('assets/icons/ic_user_remove.svg'),
@@ -70,7 +89,6 @@ enum IconApp {
   icUserGroup('assets/icons/ic_user_group.svg'),
   icFemale('assets/icons/ic_female.png'),
   icMale('assets/icons/ic_male.png'),
-  icLogout('assets/icons/ic_logout.png'),
   icWheelOfFortune('assets/icons/wheel_of_fortune.png'),
   icChanel('assets/icons/ic_chanel.png'),
   icBToB('assets/icons/ic_b_to_b.png'),
@@ -113,6 +131,10 @@ enum IconApp {
   icApproved('assets/icons/ic_approved.svg'),
   icWaiting('assets/icons/ic_waiting.svg'),
   icReject('assets/icons/ic_reject.svg'),
+  icApprovedTick('assets/icons/ic_approved_tick.svg'),
+  icShareLinkTeam('assets/icons/ic_share_link_team.svg'),
+  icInviteTeamMember('assets/icons/ic_invite_team_member.svg'),
+  icDotsHorizontal('assets/icons/ic_dots-horizontal.svg');
   icDotsHorizontal('assets/icons/ic_dots-horizontal.svg'),
   icApprovedTick('assets/icons/ic_approved_tick.svg'),
   icPicture('assets/icons/ic_picture.svg'),

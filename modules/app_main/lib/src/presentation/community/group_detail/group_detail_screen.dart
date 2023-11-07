@@ -398,35 +398,44 @@ class _TeamCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           IntrinsicHeight(
-            child: Row(
-              children: [
-                CircleNetworkImage(url: team.boss?.avatar ?? '', size: 37),
-                const SizedBox(width: 8),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Team',
-                      style: TextStyle(
-                        color: Color(0xffACACAC),
-                        fontSize: 11,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Flexible(
-                      child: Text(
-                        team.boss?.displayName ?? '',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
+            child: GestureDetector(
+              onTap: () => context.startTeamDetail(
+                id: team.id,
+                name: team.name,
+              ),
+              child: Row(
+                children: [
+                  CircleNetworkImage(url: team.boss?.avatar ?? '', size: 37),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Team',
+                          style: TextStyle(
+                            color: Color(0xffACACAC),
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
+                        Expanded(
+                          child: Text(
+                            team.boss?.displayName ?? '',
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 12),

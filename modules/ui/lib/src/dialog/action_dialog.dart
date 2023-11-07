@@ -13,6 +13,7 @@ class ActionDialog extends StatelessWidget {
   final String? content;
   final VoidCallback onAction;
   final VoidCallback? onCancel;
+  final bool isBack;
 
   const ActionDialog({
     super.key,
@@ -21,6 +22,7 @@ class ActionDialog extends StatelessWidget {
     required this.onAction,
     this.content,
     this.onCancel,
+    this.isBack = true,
   });
 
   @override
@@ -71,7 +73,7 @@ class ActionDialog extends StatelessWidget {
                     child: PrimaryButton(
                       title: actionTitle,
                       onTap: () {
-                        Navigator.pop(context);
+                        if (isBack!) Navigator.pop(context);
                         onAction.call();
                       },
                       disabled: false,

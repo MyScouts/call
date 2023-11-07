@@ -24,14 +24,23 @@ RegisterMarshopPayload _$RegisterMarshopPayloadFromJson(
         Map<String, dynamic> json) =>
     RegisterMarshopPayload(
       name: json['name'] as String,
-      referralId: json['referralId'] as int,
+      referralId: json['referralId'] as int?,
       otp: json['otp'] as String,
     );
 
 Map<String, dynamic> _$RegisterMarshopPayloadToJson(
-        RegisterMarshopPayload instance) =>
-    <String, dynamic>{
-      'otp': instance.otp,
-      'name': instance.name,
-      'referralId': instance.referralId,
-    };
+    RegisterMarshopPayload instance) {
+  final val = <String, dynamic>{
+    'otp': instance.otp,
+    'name': instance.name,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('referralId', instance.referralId);
+  return val;
+}

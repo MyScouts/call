@@ -48,6 +48,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
       listeners: [
         BlocListener<MarshopCubit, MarshopState>(
           listener: (context, state) {
+            print(state);
             if (state is RegisterMarshopSuccess) {
               hideLoading();
               context.congratulationRegisterMarshop();
@@ -65,9 +66,12 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
               hideLoading();
               context.startDialogVerifyRegisterMarshop(
                 userId: _authInfo.id!,
-                marshopId: int.parse(_marshopIdCtrl.text.trim()),
+                marshopId: _marshopIdCtrl.text.trim().isNotEmpty
+                    ? int.parse(_marshopIdCtrl.text.trim())
+                    : null,
                 name: _marshopName.text.trim(),
               );
+              return;
             }
 
             if (state is SendOTPFail) {
@@ -114,8 +118,6 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
                   onChange: (value) => onValidation(),
                   hintText: "",
                   textInputType: TextInputType.number,
-                  validator: (value) =>
-                      ValidationHelper.requiredValid(value, "MarshopId"),
                   prefixIcon: GestureDetector(
                     onTap: _startQrCodeScan,
                     child: const Icon(Icons.qr_code),

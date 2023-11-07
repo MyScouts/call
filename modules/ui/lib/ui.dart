@@ -23,6 +23,7 @@ export 'src/dropdown/dropdown_button.dart';
 export 'src/dropdown/dropdown_menu_button.dart';
 export 'src/dropdown/dropdown_selector_widget.dart';
 export 'src/dropdown/dropdown_widget.dart';
+export 'src/dropdown/gender_input.dart';
 export 'src/dropdown/items/dropdown_item_widget.dart';
 
 /// extensions

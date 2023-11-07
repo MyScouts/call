@@ -48,4 +48,16 @@ class UserUsecase {
   Future blockUser({required int userId}) async {
     return _userRepository.blockUser(userId: userId);
   }
+
+  Future deleteUser({
+    required int userId,
+    required DeleteUserPayload payload,
+  }) {
+    return _userRepository.deleteUser(userId: userId, payload: payload);
+  }
+
+  Future<bool> genOtp() async {
+    final isSuccess = await _userRepository.genOtp();
+    return isSuccess;
+  }
 }

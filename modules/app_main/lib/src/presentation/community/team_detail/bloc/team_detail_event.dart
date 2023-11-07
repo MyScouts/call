@@ -14,3 +14,9 @@ class UpdateTeamDetailEvent extends TeamDetailEvent {
 
   UpdateTeamDetailEvent(this.team);
 }
+
+class AskToJoinEvent extends TeamDetailEvent {
+  final String teamId;
+
+  AskToJoinEvent(this.teamId);
+}

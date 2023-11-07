@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../ui.dart';
 
-
-class InfomationLayoutFieldWidget extends StatelessWidget {
-  const InfomationLayoutFieldWidget({
+class InformationLayoutFieldWidget extends StatelessWidget {
+  const InformationLayoutFieldWidget({
     super.key,
     required this.child,
     required this.label,

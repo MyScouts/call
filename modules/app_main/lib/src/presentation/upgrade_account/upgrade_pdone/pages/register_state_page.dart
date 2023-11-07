@@ -52,38 +52,49 @@ class RegisterEKycStatePage extends StatelessWidget {
   final Function() onClickBtn;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(bottom: 42, right: 38, left: 38),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ImageWidget(ImageConstants.pdoneSuccess),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 36),
-            child: Text(
-              'Chúc mừng bạn đã nâng cấp\nP-Done thành công',
-              style: Theme.of(context).textTheme.headlineMedium,
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: GradiantButton(
-              onPressed: (){
-                Navigator.of(context).pop();
-                onClickBtn.call();
-              },
-              child: Text(
-                'Trở lại trang V-News',
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge
-                    ?.copyWith(color: AppColors.white),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ImageWidget(ImageConstants.pdoneSuccess),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 42, right: 38, left: 38),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 36),
+                child: Text(
+                  'Chúc mừng bạn đã xác thực\nthành công!',
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w700),
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
-          ),
-        ],
-      ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16, top: 8),
+                child: Text(
+                  'Chúc bạn có những trải nghiệm tuyệt\nvời trên sản phẩm của chúng tôi!',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: GradiantButton(
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                    onClickBtn.call();
+                  },
+                  child: Text(
+                    'Tiếp tục',
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelLarge
+                        ?.copyWith(color: AppColors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),)
+      ],
     );
   }
 }

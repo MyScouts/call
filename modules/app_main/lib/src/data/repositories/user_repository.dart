@@ -17,4 +17,10 @@ abstract class UserRepository {
     required UnFollowPayload payload,
   });
   Future blockUser({required int userId});
+
+  Future deleteUser({
+    required int userId,
+    required DeleteUserPayload payload,
+  });
+  Future<bool> genOtp();
 }

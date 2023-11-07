@@ -44,6 +44,8 @@ class ImageConstants {
   static String bg9 = ImageApp.bg9.path;
   static String bg10 = ImageApp.bg10.path;
   static String bg11 = ImageApp.bg11.path;
+  static String imgDefaultTeamBanner = ImageApp.imgDefaultTeamBanner.path;
+  static String guidePdone = ImageApp.guidePdone.path;
 }
 
 enum ImageApp {
@@ -81,6 +83,9 @@ enum ImageApp {
   communityLuatSu('assets/images/luatsu.png'),
   communityDuLich('assets/images/dulich.jpg'),
   //modules/design_system/assets/images/celebrate.png
+  imgDefaultTeamBanner('assets/images/img_default_team_banner.png'),
+  celebrate('assets/images/celebrate.png'),
+  guidePdone('assets/images/guidePdone.png'),
   bg1('assets/images/bg1.png'),
   bg2('assets/images/bg2.png'),
   bg3('assets/images/bg3.png'),
