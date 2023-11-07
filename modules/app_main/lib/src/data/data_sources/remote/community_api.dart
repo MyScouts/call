@@ -12,6 +12,7 @@ import '../../models/responses/api_response.dart';
 import '../../models/responses/boss_community_status_response.dart';
 import '../../models/responses/confirm_response.dart';
 import '../../models/responses/group_response.dart';
+import '../../models/responses/leave_team_status_response.dart';
 
 part 'community_api.g.dart';
 
@@ -43,6 +44,8 @@ class CommunityApiConstants {
   static const String replyGiveUpBossTeamRole =
       '/api/v1/team/{id}/reply-give-up-boss-role';
   static const String askToJoinTeam = '/api/v1/team/{id}/join';
+  static const String askToLeaveTeam = '/api/v1/team/{id}/leave';
+  static const String getLeaveTeamStatus = '/api/v1/team/leave-requests';
 }
 
 @RestApi()
@@ -150,4 +153,12 @@ abstract class CommunityApi {
   Future<ConfirmResponse> askToJoinTeam({
     @Path('id') required String id,
   });
+
+  @DELETE(CommunityApiConstants.askToLeaveTeam)
+  Future<ConfirmResponse> askToLeaveTeam({
+    @Path('id') required String id,
+  });
+
+  @GET(CommunityApiConstants.getLeaveTeamStatus)
+  Future<LeaveTeamStatusResponse> getLeaveTeamStatus();
 }

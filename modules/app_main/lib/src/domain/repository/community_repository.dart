@@ -5,6 +5,7 @@ import '../../data/models/payloads/community/reply_give_up_boss_team_role_payloa
 import '../../data/models/payloads/community/update_community_payload.dart';
 import '../../data/models/responses/boss_community_status_response.dart';
 import '../../data/models/responses/confirm_response.dart';
+import '../../data/models/responses/leave_team_status_response.dart';
 
 abstract class CommunityRepository {
   Future<List<Group>> getGroups();
@@ -57,4 +58,8 @@ abstract class CommunityRepository {
       String id, ReplyGiveUpBossTeamRolePayload payload);
 
   Future<ConfirmResponse> askToJoinTeam(String id);
+
+  Future<ConfirmResponse> askToLeaveTeam(String id);
+
+  Future<LeaveTeamStatusResponse> getLeaveTeamStatus();
 }

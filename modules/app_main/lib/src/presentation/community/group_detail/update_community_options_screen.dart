@@ -13,7 +13,7 @@ import '../groups/group_listing_bloc.dart';
 
 class UpdateCommunityOptionScreen extends StatelessWidget {
   final Community community;
-  static const String routeName = '/date-group-options';
+  static const String routeName = '/update-group-options';
 
   const UpdateCommunityOptionScreen({super.key, required this.community});
 
@@ -75,7 +75,8 @@ class UpdateCommunityOptionScreen extends StatelessWidget {
         context.startDialogRelinquishBoss('${community.id}');
       } else {
         final dayLeft = state.data.giveUpBossRoleRequest!.createdAt!
-            .add(const Duration(days: CommunityConstant.dayRequest + 1))
+            .add(const Duration(
+                days: CommunityConstant.dayForRelinquishBossGroupRequest + 1))
             .dayLeft();
 
         context.startDialogBossStatus(dayLeft);
@@ -96,7 +97,8 @@ class UpdateCommunityOptionScreen extends StatelessWidget {
 
   void _onRelinquishBossGroup(BuildContext context, GetDetailState state) {
     if (state is GetDetailDataSuccess<ConfirmResponse>) {
-      context.startDialogBossStatus(CommunityConstant.dayRequest);
+      context.startDialogBossStatus(
+          CommunityConstant.dayForRelinquishBossGroupRequest);
     } else if (state is GetDetailError) {
       final e = state.error;
       if (e is DioError) {

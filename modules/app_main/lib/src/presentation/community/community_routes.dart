@@ -1,13 +1,13 @@
+import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/community/group_detail/group_request_list_screen.dart';
 import 'package:app_main/src/presentation/community/groups/group_listing_bloc.dart';
 import 'package:app_main/src/presentation/community/groups/groups_listing_widget.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/ask_to_join_team_screen.dart';
+import 'package:app_main/src/presentation/community/team_detail/pages/update_team_options_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
-import 'package:mobilehub_core/mobilehub_core.dart';
 
 import 'edit_community_detail/bloc/edit_community_detail_bloc.dart';
 import 'edit_community_detail/edit_community_detail_screen.dart';
@@ -21,6 +21,7 @@ import 'group_detail/group_detail_screen.dart';
 import 'group_detail/update_community_options_screen.dart';
 import 'team_detail/bloc/team_detail_bloc.dart';
 import 'team_detail/pages/ask_tojoin_team_success_screen.dart';
+import 'team_detail/pages/team_request_list_screen.dart';
 import 'team_detail/team_detail_screen.dart';
 
 @injectable
@@ -128,6 +129,14 @@ class CommunityRoutes extends RouteModule {
         },
         AskToJoinTeamSuccessScreen.routeName: (context) {
           return const AskToJoinTeamSuccessScreen();
+        },
+        TeamRequestListScreen.routeName: (context) {
+          return const TeamRequestListScreen();
+        },
+        UpdateTeamOptionsScreen.routeName: (context) {
+          final args = settings.arguments as Team;
+
+          return UpdateTeamOptionsScreen(team: args);
         },
       };
 }

@@ -63,34 +63,36 @@ class _AskToJoinTeamScreenState extends State<AskToJoinTeamScreen>
               icon: const Icon(Icons.arrow_back),
               onPressed: () => Navigator.of(context).pop()),
         ),
-        body: Column(
-          children: [
-            const ReadMorePolicy(maxLine: 25),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: AcceptTermWithCheckboxWidget(acceptTerm: _acceptTerm),
-            ),
-            ValueListenableBuilder(
-              valueListenable: _acceptTerm,
-              builder: (_, __, ___) {
-                return Padding(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).padding.bottom,
-                      right: 20,
-                      left: 20,
-                      top: 10),
-                  child: PrimaryButton(
-                    width: MediaQuery.of(context).size.width,
-                    title: S.current.register,
-                    onTap: () {
-                      bloc.add(AskToJoinEvent(widget.teamId));
-                    },
-                    disabled: !_acceptTerm.value,
-                  ),
-                );
-              },
-            ),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const ReadMorePolicy(maxLine: 18),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: AcceptTermWithCheckboxWidget(acceptTerm: _acceptTerm),
+              ),
+              ValueListenableBuilder(
+                valueListenable: _acceptTerm,
+                builder: (_, __, ___) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).padding.bottom,
+                        right: 20,
+                        left: 20,
+                        top: 10),
+                    child: PrimaryButton(
+                      width: MediaQuery.of(context).size.width,
+                      title: S.current.register,
+                      onTap: () {
+                        bloc.add(AskToJoinEvent(widget.teamId));
+                      },
+                      disabled: !_acceptTerm.value,
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

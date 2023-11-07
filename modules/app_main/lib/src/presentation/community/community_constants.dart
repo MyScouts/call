@@ -10,7 +10,8 @@ import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'groups/group_listing_bloc.dart';
 
 class CommunityConstant {
-  static const int dayRequest = 40;
+  static const int dayForRelinquishBossGroupRequest = 40;
+  static const int dayForLeaveTeamRequest = 90;
 }
 
 enum CommunityEventType {
@@ -198,12 +199,60 @@ extension BossTeamActionToMemberExt on BossTeamActionToMember {
         return AppColors.red3;
     }
   }
+
   String get textMenu {
     switch (this) {
       case BossTeamActionToMember.assignBossTeam:
         return 'Chỉ định Boss Team';
       case BossTeamActionToMember.remove:
         return 'Loại bỏ khỏi team';
+    }
+  }
+}
+
+enum UpdateTeamOption { edit, requests, invite, kick, relinquish }
+
+extension UpdateTeamOptionExt on UpdateTeamOption {
+  String get title {
+    switch (this) {
+      case UpdateTeamOption.edit:
+        return 'Chỉnh sửa thông tin Team';
+      case UpdateTeamOption.requests:
+        return 'Yêu cầu cần phê duyệt';
+      case UpdateTeamOption.relinquish:
+        return 'Từ chức Boss Team';
+      case UpdateTeamOption.invite:
+        return 'Mời thêm thành viên';
+      case UpdateTeamOption.kick:
+        return 'Loại bỏ thành viên';
+    }
+  }
+
+  Color get textColor {
+    switch (this) {
+      case UpdateTeamOption.edit:
+      case UpdateTeamOption.requests:
+      case UpdateTeamOption.invite:
+      case UpdateTeamOption.kick:
+        return const Color(0xFF212121);
+      case UpdateTeamOption.relinquish:
+        return AppColors.red3;
+    }
+  }
+
+  Future<void> onTap(BuildContext context,
+      {required Team team}) async {
+    switch (this) {
+      case UpdateTeamOption.relinquish:
+      case UpdateTeamOption.invite:
+      case UpdateTeamOption.kick:
+      case UpdateTeamOption.edit:
+        return context.showToastMessage(
+          'Tính năng này đang được phát triển',
+          ToastMessageType.warning,
+        );
+      case UpdateTeamOption.requests:
+        return await context.startTeamRequestsScreen();
     }
   }
 }
