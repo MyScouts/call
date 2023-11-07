@@ -71,4 +71,14 @@ class AuthRepositoryImpl extends AuthRepository {
     final response = await _authApi.getOtp();
     return response.data.otp;
   }
+
+  @override
+  Future authClaimV1(AuthClaimPayload payload) {
+    return _authApi.authClaimV1(payload);
+  }
+
+  @override
+  Future authClaimV2(AuthClaimPayload payload) {
+    return _authApi.authClaimV2(payload);
+  }
 }

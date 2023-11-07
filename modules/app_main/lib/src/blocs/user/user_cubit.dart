@@ -308,4 +308,37 @@ class UserCubit extends Cubit<UserState> {
       );
     }
   }
+
+  Future<void> authQrCode({
+    required String qrCode,
+    required AuthClaimType type,
+  }) async {
+    if (state is OnLoginQRCode) return;
+    try {
+      emit(OnLoginQRCode());
+      if (type == AuthClaimType.v1) {
+        await _authenticationUsecase.authClaimV1(AuthClaimPayload(
+          code: qrCode,
+        ));
+      } else {
+        await _authenticationUsecase.authClaimV2(AuthClaimPayload(
+          code: qrCode,
+        ));
+      }
+      emit(LoginQRCodeSuccess());
+    } on DioException catch (error) {
+      debugPrint("authQrCode: $error");
+      String err = S.current.messages_server_internal_error.capitalize();
+      emit(LoginQRCodeFail(message: err));
+    } catch (error) {
+      debugPrint("authQrCode: $error");
+      emit(
+        LoginQRCodeFail(
+          message: S.current.messages_server_internal_error.capitalize(),
+        ),
+      );
+    }
+  }
 }
+
+enum AuthClaimType { v1, v2 }

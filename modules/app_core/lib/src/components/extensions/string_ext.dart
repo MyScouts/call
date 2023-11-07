@@ -64,6 +64,15 @@ extension StringFormatPhoneExt on String? {
     }
     return this?[0] == '0' ? this! : '0${this!}';
   }
+
+  bool isJSON() {
+    try {
+      jsonDecode(this!);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
 }
 
 extension ImagePathToBase64 on String {

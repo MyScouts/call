@@ -41,12 +41,22 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
     _result.addListener(() {
       if (_result.value != null) {
         final code = _result.value!;
-        final data = jsonDecode(code) as Map<String, dynamic>;
-        if (data['type'] == 'diary' && data["id"] != null) {
-          context.startReplaceDiary(userId: data["id"].toString());
-          return;
+        if (code.isJSON()) {
+          final data = jsonDecode(code);
+          if (data['type'] == 'diary' && data["id"] != null) {
+            controller!.dispose();
+            context.startReplaceDiary(userId: data["id"].toString());
+
+            return;
+          }
+        } else {
+          if ((code.toString().contains("_auth1") ||
+              code.toString().contains("_auth2"))) {
+            context.confirmLoginQrCode();
+            return;
+          }
+          Navigator.pop(context, code);
         }
-        Navigator.pop(context, code);
       }
     });
   }
@@ -145,7 +155,6 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) async {
       _result.value = scanData.code;
-      controller.dispose();
       return;
     });
   }
