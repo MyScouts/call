@@ -156,7 +156,7 @@ class DashBoardEmptyItem extends DashBoardItem {
           height: 1,
           backgroundImage: '',
           title: '',
-          id: '',
+          id: 'empty',
         );
 
   @override

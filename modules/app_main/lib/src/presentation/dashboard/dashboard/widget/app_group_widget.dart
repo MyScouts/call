@@ -1,5 +1,6 @@
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -81,15 +82,20 @@ class AppEmptyWidget extends AppWidget {
     return Column(
       children: [
         Expanded(
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10),
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.circular(14),
+          child: GestureDetector(
+            onTap: () {
+              context.showAppStore();
+            },
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: const Icon(Icons.filter_center_focus, color: Colors.white),
             ),
-            child: const Icon(Icons.filter_center_focus, color: Colors.white),
           ),
         ),
         const SizedBox(height: 20)

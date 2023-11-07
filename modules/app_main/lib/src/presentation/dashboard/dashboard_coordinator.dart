@@ -4,6 +4,7 @@ import 'package:app_main/src/presentation/dashboard/system_setting/system_settin
 import 'package:flutter/material.dart';
 
 import 'dashboard/widget/dashboard_option_sheet.dart';
+import 'notification/notification_screen.dart';
 
 extension DashBoardCoordinator on BuildContext {
   Future<T?> startDashboardUtil<T>() {
@@ -26,6 +27,10 @@ extension DashBoardCoordinator on BuildContext {
       SystemSetting.routerName,
       arguments: page,
     );
+  }
+
+  Future<T?> startNotification<T>() {
+    return Navigator.of(this).pushNamed(NotificationScreen.routerName);
   }
 
   Future<T?> startSearch<T>() {
