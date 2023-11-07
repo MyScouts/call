@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/community/group_detail/update_community_options_screen.dart';
+import 'package:app_main/src/presentation/community/team_detail/pages/ask_tojoin_team_success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
@@ -8,9 +9,11 @@ import 'community_constants.dart';
 import 'edit_community_detail/edit_community_detail_screen.dart';
 import 'edit_fan_group/edit_fan_group_screen.dart';
 import 'fan_group_detail/fan_group_detail_screen.dart';
+import 'group_detail/edit_group_detail.dart';
 import 'group_detail/group_detail_screen.dart';
 import 'group_detail/group_request_list_screen.dart';
 import 'groups/group_listing_bloc.dart';
+import 'team_detail/pages/ask_to_join_team_screen.dart';
 import 'team_detail/team_detail_screen.dart';
 
 extension CommunityCoordinator on BuildContext {
@@ -29,7 +32,7 @@ extension CommunityCoordinator on BuildContext {
   }
 
   Future<T?> startTeamDetail<T>(
-      {required String? id, String? name, String? cover}) {
+      {required String? id, String? name, int? bossGroupId}) {
     // if (!isAuthenticated) {
     //   return startLogin<T>(hasDashboard: true);
     // }
@@ -37,7 +40,7 @@ extension CommunityCoordinator on BuildContext {
     return Navigator.of(this).pushNamed(TeamDetailScreen.routeName, arguments: {
       'id': id,
       'name': name,
-      'cover': cover,
+      'bossGroupId': bossGroupId,
     });
   }
 
@@ -76,7 +79,7 @@ extension CommunityCoordinator on BuildContext {
 
   Future<T?> startUpdateGroupOptions<T>({required Community community}) {
     return Navigator.of(this).pushNamed(
-      UpdateCommunityOptionScreen.routeName,
+      EditGroupDetail.routeName,
       arguments: {'community': community},
     );
   }
@@ -128,10 +131,25 @@ extension CommunityCoordinator on BuildContext {
       pageBuilder: (context, animation1, animation2) {
         return const ApproveDialog(
           type: DialogApproveStatus.approved,
-          content:
-              'Bạn đã phê duyệt yêu cầu từ chức của Boss Team',
+          content: 'Bạn đã phê duyệt yêu cầu từ chức của Boss Team',
         );
       },
     );
+  }
+
+  Future<T?> startAskToJoinTeam<T>(String teamId) {
+    return Navigator.of(this).pushNamed(
+      AskToJoinTeamScreen.routeName,
+      arguments: teamId,
+    );
+  }
+
+  Future<T?> startAskToJoinTeamSuccess<T>() {
+    return Navigator.of(this).pushNamed(AskToJoinTeamSuccessScreen.routeName);
+  }
+
+  void backToTeamDetailScreen<T>() {
+    return Navigator.of(this)
+        .popUntil(ModalRoute.withName(TeamDetailScreen.routeName));
   }
 }

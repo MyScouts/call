@@ -22,7 +22,7 @@ class _CommunityWidgetState extends State<CommunityWidget> with SingleTickerProv
 
   @override
   void initState() {
-    _communityTabController = TabController(length: 2, vsync: this);
+    _communityTabController = TabController(length: 2, vsync: this, initialIndex: 1);
     super.initState();
   }
 

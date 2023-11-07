@@ -2,6 +2,8 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/state/dashboard_base_bloc.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
+import 'package:app_main/src/presentation/dashboard/widget/clock_widget.dart';
+import 'package:app_main/src/presentation/dashboard/widget/weather_widget.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -112,10 +114,26 @@ class _DashBoardOptionSheetState extends State<DashBoardOptionSheet> {
                           Navigator.of(context).pop();
                         },
                         behavior: HitTestBehavior.opaque,
-                        child: AppWidget(
-                          app: e,
-                          textColor: Colors.black,
-                          disablePress: true,
+                        child: Builder(
+                          builder: (ctx) {
+                            if (e.id == "wg_clock") {
+                              return const ClockWidget(
+                                textColor: Colors.black,
+                              );
+                            }
+
+                            if (e.id == "wg_weather") {
+                              return const WeatherWidget(
+                                textColor: Colors.black,
+                              );
+                            }
+
+                            return AppWidget(
+                              app: e,
+                              textColor: Colors.black,
+                              disablePress: true,
+                            );
+                          },
                         ),
                       ),
                     ),

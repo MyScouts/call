@@ -149,6 +149,23 @@ class DashBoardGroupItem extends DashBoardItem {
   }
 }
 
+class DashBoardEmptyItem extends DashBoardItem {
+  const DashBoardEmptyItem()
+      : super(
+          width: 1,
+          height: 1,
+          backgroundImage: '',
+          title: '',
+          id: '',
+        );
+
+  @override
+  Map<String, dynamic> childToJson() => {};
+
+  @override
+  List<Object?> get props => [];
+}
+
 final Map<String, DashBoardItem> mapItems = {
   'wg_weather': DashBoardWidgetItem(
     id: 'wg_weather',
@@ -197,17 +214,17 @@ final Map<String, DashBoardItem> mapItems = {
 };
 
 final communityDefault = {
-  'wg_shop_live': DashBoardWidgetItem(
-    id: 'wg_shop_live',
-    title: 'shop live',
-    backgroundImage: ImageApp.live.path,
+  'wg_weather': DashBoardWidgetItem(
+    id: 'wg_weather',
+    title: 'Thời tiết',
+    backgroundImage: IconAppConstants.icClock,
     width: 2,
-    height: 3,
+    height: 2,
   ),
-  "wg_wheel_of_fortune": DashBoardWidgetItem(
-    id: 'wg_wheel_of_fortune',
-    title: 'Vòng quay trúng thưởng',
-    backgroundImage: IconApp.icWheelOfFortune.path,
+  'wg_clock': DashBoardWidgetItem(
+    id: 'wg_clock',
+    title: 'Đồng hồ',
+    backgroundImage: IconAppConstants.icClock,
     width: 2,
     height: 2,
   ),
@@ -256,17 +273,17 @@ final eCommerceDefault = {
     width: 4,
     height: 2,
   ),
-  'wg_shop_live': DashBoardWidgetItem(
-    id: 'wg_shop_live',
-    title: 'shop live',
-    backgroundImage: ImageApp.live.path,
+  'wg_weather': DashBoardWidgetItem(
+    id: 'wg_weather',
+    title: 'Thời tiết',
+    backgroundImage: IconAppConstants.icClock,
     width: 2,
-    height: 3,
+    height: 2,
   ),
-  "wg_wheel_of_fortune": DashBoardWidgetItem(
-    id: 'wg_wheel_of_fortune',
-    title: 'Vòng quay trúng thưởng',
-    backgroundImage: IconApp.icWheelOfFortune.path,
+  'wg_clock': DashBoardWidgetItem(
+    id: 'wg_clock',
+    title: 'Đồng hồ',
+    backgroundImage: IconAppConstants.icClock,
     width: 2,
     height: 2,
   ),

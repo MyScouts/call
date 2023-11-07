@@ -48,4 +48,9 @@ class AuthRepositoryImpl extends UserRepository {
   Future blockUser({required int userId}) {
     return _userAPI.blockUser(userId);
   }
+
+  @override
+  Future deleteUser({required int userId, required DeleteUserPayload payload}) {
+    return _userAPI.deleteById(id: userId, payload: payload);
+  }
 }

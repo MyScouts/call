@@ -134,20 +134,20 @@ class _CommunityApi implements CommunityApi {
   }
 
   @override
-  Future<ApiResponse<List<Member>>> getMembers({required String id}) async {
+  Future<TeamMemberResponse> getMembers({required String id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<List<Member>>>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<TeamMemberResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'api/team/${id}/get-member',
+              '/api/v1/team/${id}/members',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -156,14 +156,7 @@ class _CommunityApi implements CommunityApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<List<Member>>.fromJson(
-      _result.data!,
-      (json) => json is List<dynamic>
-          ? json
-              .map<Member>((i) => Member.fromJson(i as Map<String, dynamic>))
-              .toList()
-          : List.empty(),
-    );
+    final value = TeamMemberResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -389,7 +382,7 @@ class _CommunityApi implements CommunityApi {
   }
 
   @override
-  Future<ApiResponse<DataRowsResponse<List<Member>>>> getMembersOfFanGroup({
+  Future<ApiResponse<DataRowsResponse<List<User>>>> getMembersOfFanGroup({
     required int id,
     required int type,
     int? page,
@@ -404,7 +397,7 @@ class _CommunityApi implements CommunityApi {
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<DataRowsResponse<List<Member>>>>(Options(
+        _setStreamType<ApiResponse<DataRowsResponse<List<User>>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -420,13 +413,13 @@ class _CommunityApi implements CommunityApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<DataRowsResponse<List<Member>>>.fromJson(
+    final value = ApiResponse<DataRowsResponse<List<User>>>.fromJson(
       _result.data!,
-      (json) => DataRowsResponse<List<Member>>.fromJson(
+      (json) => DataRowsResponse<List<User>>.fromJson(
         json as Map<String, dynamic>,
         (json) => json is List<dynamic>
             ? json
-                .map<Member>((i) => Member.fromJson(i as Map<String, dynamic>))
+                .map<User>((i) => User.fromJson(i as Map<String, dynamic>))
                 .toList()
             : List.empty(),
       ),
@@ -598,6 +591,33 @@ class _CommunityApi implements CommunityApi {
             .compose(
               _dio.options,
               '/api/v1/team/${id}/reply-give-up-boss-role',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ConfirmResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ConfirmResponse> askToJoinTeam({required String id}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<ConfirmResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/v1/team/${id}/join',
               queryParameters: queryParameters,
               data: _data,
             )

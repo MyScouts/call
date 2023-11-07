@@ -1,6 +1,7 @@
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_widget.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
+import 'package:app_main/src/presentation/dashboard/widget/clock_widget.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
@@ -40,7 +41,7 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
 
   @override
   void dispose() {
-    if(isChanged) {
+    if (isChanged) {
       NotificationCenter.post(channel: changeGroupEvent, options: _group);
     }
     controller.dispose();

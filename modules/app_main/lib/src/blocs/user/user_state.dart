@@ -145,3 +145,13 @@ final class LoginQRCodeFail extends UserState {
   final String message;
   LoginQRCodeFail({required this.message});
 }
+
+// Delete user
+final class OnDeleteUser extends UserState {}
+
+final class DeleteUserSuccess extends UserState {}
+
+final class DeleteUserFail extends UserState {
+  final String message;
+  DeleteUserFail({required this.message});
+}

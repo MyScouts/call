@@ -262,7 +262,7 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
         onDragUpdate,
     void Function(Velocity, Offset, ReorderableStaggeredScrollViewGridItem)?
         onDraggableCanceled,
-    void Function(DraggableDetails, ReorderableStaggeredScrollViewGridItem)?
+    void Function(DraggableDetails, ReorderableStaggeredScrollViewListItem)?
         onDragEnd,
     void Function(ReorderableStaggeredScrollViewGridItem)? onDragCompleted,
     void Function(ReorderableStaggeredScrollViewListItem,
@@ -270,7 +270,7 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
         onGroup,
     this.scrollController,
     this.isDragNotification = false,
-    this.draggingWidgetOpacity = 0.5,
+    this.draggingWidgetOpacity = 0.0,
     this.edgeScroll = 0.1,
     this.edgeScrollSpeedMilliseconds = 100,
     List<ReorderableStaggeredScrollViewGridItem>? this.isNotDragList,
@@ -298,12 +298,8 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
             DragUpdateDetails, ReorderableStaggeredScrollViewListItem)?,
         onDraggableCanceled = onDraggableCanceled as void Function(
             Velocity, Offset, ReorderableStaggeredScrollViewListItem)?,
-        onDragEnd = (onDragEnd == null
-            ? null
-            : (DraggableDetails details,
-                    ReorderableStaggeredScrollViewListItem item) =>
-                onDragEnd(
-                    details, item as ReorderableStaggeredScrollViewGridItem)),
+        onDragEnd = onDragEnd as void Function(DraggableDetails details,
+            ReorderableStaggeredScrollViewListItem data)?,
         onDragCompleted = onDragCompleted as void Function(
             ReorderableStaggeredScrollViewListItem)?,
         onGroup = onGroup as void Function(
