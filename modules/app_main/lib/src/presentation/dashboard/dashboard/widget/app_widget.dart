@@ -117,10 +117,10 @@ class AppWidgetBuilder extends AppWidget {
       listenable: controller,
       builder: (_, __) {
         if (app.id == 'wg_clock') {
-          return const ClockWidget(key: ValueKey('wg_clock'));
+          return const ClockWidget();
         }
         if (app.id == 'wg_weather') {
-          return const WeatherWidget();
+          return WeatherWidget(key: key);
         }
 
         if (app is DashBoardGroupItem) {
