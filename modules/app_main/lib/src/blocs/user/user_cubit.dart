@@ -3,6 +3,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
+import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/domain/entities/update_account/otp/otp.dart';
 import 'package:app_main/src/domain/usecases/authentication_usecase.dart';
 import 'package:flutter/material.dart';
@@ -320,4 +321,67 @@ class UserCubit extends Cubit<UserState> {
       );
     }
   }
+
+  Future<void> authQrCode({
+    required String qrCode,
+    required AuthClaimType type,
+  }) async {
+    if (state is OnLoginQRCode) return;
+    try {
+      emit(OnLoginQRCode());
+      if (type == AuthClaimType.v1) {
+        await _authenticationUsecase.authClaimV1(AuthClaimPayload(
+          code: qrCode,
+        ));
+        emit(LoginQRCodeSuccess());
+      } else {
+        await _authenticationUsecase.authClaimV2(AuthClaimPayload(
+          code: qrCode,
+        ));
+        emit(LoginQRCodeSuccess());
+      }
+    } on DioException catch (error) {
+      debugPrint("authQrCode: $error");
+      String err = S.current.messages_server_internal_error.capitalize();
+      emit(LoginQRCodeFail(message: err));
+    } catch (error) {
+      debugPrint("authQrCode: $error");
+      String err = S.current.messages_server_internal_error.capitalize();
+      emit(LoginQRCodeFail(message: err));
+    }
+  }
+
+  Future<void> deleteUSer({
+    required int userId,
+    required DeleteUserPayload payload,
+  }) async {
+    if (state is OnDeleteUser) return;
+    try {
+      emit(OnDeleteUser());
+      await _userUsecase.deleteUser(
+        payload: payload,
+        userId: userId,
+      );
+      await _authenticationUsecase.logout();
+      emit(DeleteUserSuccess());
+    } on DioException catch (error) {
+      debugPrint("phoneRegister: $error");
+      final data = error.response!.data;
+      String err = S.current.messages_server_internal_error.capitalize();
+      switch (data['code']) {
+        case "PASSWORD_NOT_MATCH":
+          err = "Mật khẩu không khớp";
+      }
+      emit(DeleteUserFail(message: err));
+    } catch (error) {
+      debugPrint("phoneRegister: $error");
+      emit(
+        DeleteUserFail(
+          message: S.current.messages_server_internal_error.capitalize(),
+        ),
+      );
+    }
+  }
 }
+
+enum AuthClaimType { v1, v2 }

@@ -1,4 +1,6 @@
 import 'package:app_main/src/presentation/community/community.component.dart';
+import 'package:app_main/src/presentation/qr_code/qr_code_screen.dart';
+import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:equatable/equatable.dart';
 
@@ -247,8 +249,9 @@ final personalDefault = {
   ),
   "ic_payment": DashBoardIconItem(
     id: 'ic_payment',
-    title: 'Thanh toán',
+    title: 'QRCode',
     backgroundImage: IconAppConstants.icPayment,
+    path: ScanQrCodeScanScreen.routeName,
   ),
   "ic_v_store": DashBoardIconItem(
     id: 'ic_v_store',
@@ -301,8 +304,9 @@ final eCommerceDefault = {
   ),
   "ic_payment": DashBoardIconItem(
     id: 'ic_payment',
-    title: 'Thanh toán',
+    title: 'QR Code',
     backgroundImage: IconAppConstants.icPayment,
+    path: ScanQrCodeScanScreen.routeName,
   ),
   "ic_v_store": DashBoardIconItem(
     id: 'ic_v_store',

@@ -65,3 +65,13 @@ Map<String, dynamic> _$ResetPasswordPayloadToJson(
       'password': instance.password,
       'ott': instance.ott,
     };
+
+AuthClaimPayload _$AuthClaimPayloadFromJson(Map<String, dynamic> json) =>
+    AuthClaimPayload(
+      code: json['code'] as String,
+    );
+
+Map<String, dynamic> _$AuthClaimPayloadToJson(AuthClaimPayload instance) =>
+    <String, dynamic>{
+      'code': instance.code,
+    };

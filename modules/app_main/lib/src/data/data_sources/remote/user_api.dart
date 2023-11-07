@@ -31,6 +31,12 @@ abstract class UserApi {
     @Path('id') required int id,
   });
 
+  @DELETE(UserApiConstants.userById)
+  Future deleteById({
+    @Path('id') required int id,
+    @Body() required DeleteUserPayload payload,
+  });
+
   @POST(UserApiConstants.reportUser)
   Future reportUser({
     @Path('id') required int id,

@@ -68,6 +68,7 @@ dependencies:
   flutter_analog_clock: ^1.0.3
   geolocator: ^10.1.0
   geocoding: ^2.1.1
+  extended_nested_scroll_view: ^6.0.0
 
 dev_dependencies:
   flutter_test:

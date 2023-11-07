@@ -56,3 +56,14 @@ class ResetPasswordPayload {
 
   Map<String, dynamic> toJson() => _$ResetPasswordPayloadToJson(this);
 }
+
+@JsonSerializable()
+class AuthClaimPayload {
+  final String code;
+
+  const AuthClaimPayload({
+    required this.code,
+  });
+
+  Map<String, dynamic> toJson() => _$AuthClaimPayloadToJson(this);
+}

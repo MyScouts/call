@@ -10,7 +10,9 @@ class QrCodeRoutes extends RouteModule {
   @override
   Map<String, WidgetBuilder> getAll(RouteSettings settings) => {
         ScanQrCodeScanScreen.routeName: (context) {
-          final args = settings.arguments as Map<String, dynamic>;
+          final args = settings.arguments != null
+              ? settings.arguments as Map<String, dynamic>
+              : {};
           return BlocProvider.value(
             value: injector.get<UserCubit>(),
             child: ScanQrCodeScanScreen(

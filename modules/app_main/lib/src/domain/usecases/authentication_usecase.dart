@@ -94,6 +94,14 @@ class AuthenticationUsecase {
     final user = await _userRepository.getProfile();
     _userSharePreferencesUsecase.saveUserInfo(user!);
   }
+
+  Future authClaimV1(AuthClaimPayload payload) async {
+    return _authRepository.authClaimV1(payload);
+  }
+
+  Future authClaimV2(AuthClaimPayload payload) async {
+    return _authRepository.authClaimV2(payload);
+  }
 }
 
 enum CredentialType { phone, email }
