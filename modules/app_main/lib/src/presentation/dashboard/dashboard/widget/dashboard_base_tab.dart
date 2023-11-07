@@ -11,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reorderable/reorderable.dart';
 
+import 'app_group_widget.dart';
 import 'app_widget.dart';
 import 'dashboard_group_screen.dart';
 
@@ -106,6 +107,18 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
     }).toList();
   }
 
+  // List<ReorderableStaggeredScrollViewGridItem> notDragList = List.generate(
+  //   10,
+  //   (index) => ReorderableStaggeredScrollViewGridItem(
+  //     mainAxisCellCount: 1,
+  //     crossAxisCellCount: 1,
+  //     widget: const AppEmptyWidget(
+  //       app: DashBoardEmptyItem(),
+  //     ),
+  //     key: ValueKey('empty $index'),
+  //   ),
+  // );
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -113,7 +126,7 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
       create: (_) => bloc,
       child: BlocBuilder<T, DashboardBaseState>(
         buildWhen: (_, __) {
-          if(_isDragging) return false;
+          if (_isDragging) return false;
           return true;
         },
         builder: (ctx, state) {
@@ -211,6 +224,7 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
                         ),
                       );
                     },
+                    // isNotDragList: notDragList,
                     children: [
                       ...items.map((item) {
                         return ReorderableStaggeredScrollViewGridItem(

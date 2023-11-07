@@ -1,3 +1,4 @@
+import 'package:app_main/src/presentation/dashboard/system_setting/change_password_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -55,6 +56,9 @@ class SystemSetting extends StatelessWidget {
             _ItemView(
               path: IconAppConstants.icSecurity,
               title: 'Cài đặt bảo mật',
+              onClick: () => Navigator.of(context).pushNamed(
+                ChangePassword.routerName,
+              ),
             ),
           ],
         ),

@@ -248,7 +248,10 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
 
   bool isContains(T data) {
     if (widget.isNotDragList?.toList() != null) {
-      return widget.isNotDragList!.toList().contains(data);
+      return widget.isNotDragList!
+          .map((e) => e.widget.key)
+          .toList()
+          .contains(data.widget.key);
     }
     return false;
   }
@@ -297,20 +300,20 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
                         onAccept: widget.onAccept == null
                             ? null
                             : (T moveData) {
-                          if (_onGroupActive != null) {
-                            _onGroupActive?.cancel();
-                          }
-                          return widget.onAccept
-                              ?.call(moveData, data, true);
-                        },
+                                if (_onGroupActive != null) {
+                                  _onGroupActive?.cancel();
+                                }
+                                return widget.onAccept
+                                    ?.call(moveData, data, true);
+                              },
                         onLeave: widget.onLeave == null
                             ? null
                             : (T? moveData) =>
-                            widget.onLeave?.call(moveData, data, true),
+                                widget.onLeave?.call(moveData, data, true),
                         onMove: widget.onMove == null
                             ? null
                             : (DragTargetDetails<T> details) =>
-                            widget.onMove?.call(data, details, true),
+                                widget.onMove?.call(data, details, true),
                         hitTestBehavior: widget.hitTestBehavior,
                         builder: (BuildContext context, List<T?> candidateData,
                             List<dynamic> rejectedData) {
@@ -327,19 +330,19 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
                         onAccept: widget.onAccept == null
                             ? null
                             : (T moveData) {
-                          if (_onGroupActive != null) {
-                            _onGroupActive?.cancel();
-                          }
-                          widget.onAccept?.call(moveData, data, false);
-                        },
+                                if (_onGroupActive != null) {
+                                  _onGroupActive?.cancel();
+                                }
+                                widget.onAccept?.call(moveData, data, false);
+                              },
                         onLeave: widget.onLeave == null
                             ? null
                             : (T? moveData) =>
-                            widget.onLeave?.call(moveData, data, false),
+                                widget.onLeave?.call(moveData, data, false),
                         onMove: widget.onMove == null
                             ? null
                             : (DragTargetDetails<T> details) =>
-                            widget.onMove?.call(data, details, false),
+                                widget.onMove?.call(data, details, false),
                         hitTestBehavior: widget.hitTestBehavior,
                         builder: (BuildContext context, List<T?> candidateData,
                             List<dynamic> rejectedData) {
@@ -430,13 +433,13 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
 
     return RenderBoxSize(
       draggable,
-          (Size size) {
+      (Size size) {
         mapSize[data] = size;
         if (mapSize.length == widget.dataList.length) {
           setState(() {});
         }
       },
-          (Offset offset) {
+      (Offset offset) {
         _mapPosition[data] = offset;
       },
       key: ValueKey<T>(data),
