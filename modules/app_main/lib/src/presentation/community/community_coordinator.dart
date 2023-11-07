@@ -9,6 +9,7 @@ import 'community_constants.dart';
 import 'edit_community_detail/edit_community_detail_screen.dart';
 import 'edit_fan_group/edit_fan_group_screen.dart';
 import 'fan_group_detail/fan_group_detail_screen.dart';
+import 'group_detail/edit_group_detail.dart';
 import 'group_detail/group_detail_screen.dart';
 import 'group_detail/group_request_list_screen.dart';
 import 'groups/group_listing_bloc.dart';
@@ -78,7 +79,7 @@ extension CommunityCoordinator on BuildContext {
 
   Future<T?> startUpdateGroupOptions<T>({required Community community}) {
     return Navigator.of(this).pushNamed(
-      UpdateCommunityOptionScreen.routeName,
+      EditGroupDetail.routeName,
       arguments: {'community': community},
     );
   }

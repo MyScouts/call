@@ -62,6 +62,7 @@ class IconAppConstants {
   static String icLogout = IconApp.icLogout.path;
   static String icShareLinkTeam = IconApp.icShareLinkTeam.path;
   static String icInviteTeamMember = IconApp.icInviteTeamMember.path;
+  static String icDotsHorizontal = IconApp.icDotsHorizontal.path;
 }
 
 enum IconApp {
@@ -129,7 +130,8 @@ enum IconApp {
   icReject('assets/icons/ic_reject.svg'),
   icApprovedTick('assets/icons/ic_approved_tick.svg'),
   icShareLinkTeam('assets/icons/ic_share_link_team.svg'),
-  icInviteTeamMember('assets/icons/ic_invite_team_member.svg');
+  icInviteTeamMember('assets/icons/ic_invite_team_member.svg'),
+  icDotsHorizontal('assets/icons/ic_dots-horizontal.svg');
 
   const IconApp(this.path);
   final String path;
