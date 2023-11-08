@@ -56,21 +56,23 @@ class _SearchScreenState extends State<SearchScreen> {
                         style: context.text.titleMedium!
                             .copyWith(color: Colors.grey),
                         decoration: InputDecoration(
-                          isDense: true,
+                          contentPadding: EdgeInsets.zero,
+                          isDense: false,
                           hintText: "Tìm kiếm...",
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(90),
+                            borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide.none,
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(90),
+                            borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide.none,
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(90),
+                            borderRadius: BorderRadius.circular(10),
                             borderSide: BorderSide.none,
                           ),
-                          prefixIcon: const Icon(Icons.search),
+                          prefixIcon:
+                              const Icon(Icons.search, color: AppColors.grey14),
                           fillColor: const Color(0XFFF2F2F2),
                           filled: true,
                           suffixIcon: IconButton(
