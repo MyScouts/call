@@ -25,5 +25,6 @@
         "vdone",
         "vstore",
         "webp"
-    ]
+    ],
+    "cmake.sourceDirectory": "/Users/huy.tran/projects/vdone/vdone-mobile-v1/linux"
 }

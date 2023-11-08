@@ -54,3 +54,20 @@ class DeleteUserPayload {
 
   Map<String, dynamic> toJson() => _$DeleteUserPayloadToJson(this);
 }
+
+@JsonSerializable()
+class SearchUserPayload {
+  final String query;
+  final int page;
+  final int pageSize;
+  const SearchUserPayload({
+    required this.query,
+    required this.page,
+    required this.pageSize,
+  });
+
+  factory SearchUserPayload.fromJson(Map<String, dynamic> json) =>
+      _$SearchUserPayloadFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SearchUserPayloadToJson(this);
+}

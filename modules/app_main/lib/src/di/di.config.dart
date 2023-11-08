@@ -16,10 +16,10 @@ import 'package:mobilehub_bloc/mobilehub_bloc.dart' as _i66;
 import 'package:shared_preferences/shared_preferences.dart' as _i17;
 
 import '../app_delegate.dart' as _i4;
-import '../blocs/auth/auth_cubit.dart' as _i90;
+import '../blocs/auth/auth_cubit.dart' as _i91;
 import '../blocs/marshop/marshop_cubit.dart' as _i81;
-import '../blocs/user/user_cubit.dart' as _i88;
-import '../blocs/user_action/user_action_cubit.dart' as _i86;
+import '../blocs/user/user_cubit.dart' as _i89;
+import '../blocs/user_action/user_action_cubit.dart' as _i87;
 import '../core/services/notifications/notification_service.dart' as _i13;
 import '../data/data_sources/remote/auth_api.dart' as _i52;
 import '../data/data_sources/remote/community_api.dart' as _i57;
@@ -34,17 +34,17 @@ import '../data/data_sources/remote/user_api.dart' as _i48;
 import '../data/models/payloads/community/reply_give_up_boss_team_role_payload.dart'
     as _i77;
 import '../data/models/payloads/upgrade_account/upgrade_ja/confirm_register_ja_payload.dart'
-    as _i75;
+    as _i71;
 import '../data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart'
-    as _i70;
+    as _i72;
 import '../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart'
-    as _i73;
-import '../data/models/responses/boss_community_status_response.dart' as _i71;
-import '../data/models/responses/confirm_register_ja_response.dart' as _i74;
+    as _i74;
+import '../data/models/responses/boss_community_status_response.dart' as _i75;
+import '../data/models/responses/confirm_register_ja_response.dart' as _i70;
 import '../data/models/responses/confirm_response.dart' as _i76;
-import '../data/models/responses/group_request_response.dart' as _i78;
-import '../data/models/responses/ja_status_response.dart' as _i69;
-import '../data/models/responses/upgrade_account_response.dart' as _i67;
+import '../data/models/responses/group_request_response.dart' as _i79;
+import '../data/models/responses/ja_status_response.dart' as _i67;
+import '../data/models/responses/upgrade_account_response.dart' as _i69;
 import '../data/repositories/auth_repository.dart' as _i53;
 import '../data/repositories/impl/auth_repository_impl.dart' as _i54;
 import '../data/repositories/impl/community_repository.impl.dart' as _i59;
@@ -59,8 +59,8 @@ import '../data/repositories/impl/user_repository_impl.dart' as _i50;
 import '../data/repositories/marshop_repository.dart' as _i24;
 import '../data/repositories/notification_repository.dart' as _i28;
 import '../data/repositories/user_repository.dart' as _i49;
-import '../domain/entities/bank.dart' as _i79;
-import '../domain/entities/commity_action_type.dart' as _i72;
+import '../domain/entities/bank.dart' as _i78;
+import '../domain/entities/commity_action_type.dart' as _i73;
 import '../domain/entities/update_account/bank_acount/bank_account.dart'
     as _i68;
 import '../domain/repository/community_repository.dart' as _i58;
@@ -80,7 +80,7 @@ import '../domain/usecases/upgrade_account_usecase.dart' as _i47;
 import '../domain/usecases/user_share_preferences_usecase.dart' as _i20;
 import '../domain/usecases/user_usecase.dart' as _i51;
 import '../presentation/authentication/authentication_routes.dart' as _i5;
-import '../presentation/community/community_module.dart' as _i93;
+import '../presentation/community/community_module.dart' as _i94;
 import '../presentation/community/community_routes.dart' as _i6;
 import '../presentation/community/edit_community_detail/bloc/edit_community_detail_bloc.dart'
     as _i63;
@@ -91,7 +91,7 @@ import '../presentation/community/fan_group_detail/bloc/fan_group_detail_bloc.da
 import '../presentation/community/group_detail/bloc/group_detail_bloc.dart'
     as _i80;
 import '../presentation/community/team_detail/bloc/team_detail_bloc.dart'
-    as _i84;
+    as _i85;
 import '../presentation/dashboard/dashboard/state/dashboard_base_bloc.dart'
     as _i62;
 import '../presentation/dashboard/dashboard/state/open_weather_bloc.dart'
@@ -99,29 +99,31 @@ import '../presentation/dashboard/dashboard/state/open_weather_bloc.dart'
 import '../presentation/dashboard/dashboard/widget/dashboard_background_builder.dart'
     as _i61;
 import '../presentation/dashboard/dashboard_routes.dart' as _i7;
+import '../presentation/dashboard/search/blocs/search/search_cubit.dart'
+    as _i84;
 import '../presentation/dashboard/system_setting/change_password_screen.dart'
     as _i56;
-import '../presentation/general_setting/general_routes.dart' as _i9;
+import '../presentation/general_setting/general_routes.dart' as _i10;
 import '../presentation/marshop/marshop_routes.dart' as _i11;
 import '../presentation/marshop/widgets/general_setting/general_routes.dart'
-    as _i10;
+    as _i9;
 import '../presentation/notification/deeplink/bloc/deeplink_bloc.dart' as _i8;
 import '../presentation/notification/notification_routes.dart' as _i12;
 import '../presentation/qr_code/qr_code_route.dart' as _i14;
 import '../presentation/routes.dart' as _i15;
 import '../presentation/settings/setting_routes.dart' as _i16;
-import '../presentation/shared/app_setting/bloc/app_setting_bloc.dart' as _i89;
-import '../presentation/shared/user/bloc/user_bloc.dart' as _i87;
-import '../presentation/social/profile/profile_bloc.dart' as _i94;
+import '../presentation/shared/app_setting/bloc/app_setting_bloc.dart' as _i90;
+import '../presentation/shared/user/bloc/user_bloc.dart' as _i88;
+import '../presentation/social/profile/profile_bloc.dart' as _i95;
 import '../presentation/social/social_routes.dart' as _i18;
 import '../presentation/upgrade_account/upgrade_account_routes.dart' as _i19;
 import '../presentation/upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart'
-    as _i92;
+    as _i93;
 import '../presentation/upgrade_account/upgrade_pdone/bloc/place_information/place_information_bloc.dart'
     as _i83;
 import '../presentation/upgrade_account/upgrade_pdone/bloc/upgrade_pdone/upgrade_pdone_bloc.dart'
-    as _i85;
-import 'modules/data_source_module.dart' as _i91;
+    as _i86;
+import 'modules/data_source_module.dart' as _i92;
 
 const String _prod = 'prod';
 
@@ -255,51 +257,51 @@ Future<_i1.GetIt> init(
       ));
   gh.factory<_i65.FanGroupDetailBloc>(
       () => _i65.FanGroupDetailBloc(gh<_i60.CommunityUsecase>()));
-  gh.factory<_i66.GetDetailBloc<_i67.UpgradeAccountResponse>>(() =>
+  gh.factory<_i66.GetDetailBloc<_i67.JAStatusResponse>>(() =>
       upgradeAgreePolicyBlocFactory
-          .createUpgradeAccountBloc(gh<_i47.UpgradeAccountUsecase>()));
+          .createGetJAStatusBloc(gh<_i47.UpgradeAccountUsecase>()));
   gh.factory<_i66.GetDetailBloc<_i68.BankAccount>>(() =>
       upgradeAgreePolicyBlocFactory
           .createGetDefaultBankBloc(gh<_i47.UpgradeAccountUsecase>()));
   gh.factory<_i66.GetDetailBloc<_i3.FanGroup>>(
       () => communityModule.createGetFanGroupBloc(gh<_i60.CommunityUsecase>()));
-  gh.factory<_i66.GetDetailBloc<_i69.JAStatusResponse>>(() =>
+  gh.factory<_i66.GetDetailBloc<_i69.UpgradeAccountResponse>>(() =>
       upgradeAgreePolicyBlocFactory
-          .createGetJAStatusBloc(gh<_i47.UpgradeAccountUsecase>()));
+          .createUpgradeAccountBloc(gh<_i47.UpgradeAccountUsecase>()));
+  gh.factory<
+      _i66.GetDetailBlocParam1<_i70.ConfirmRegisterJAResponse,
+          _i71.ConfirmRegisterJAPayload>>(() => upgradeAgreePolicyBlocFactory
+      .createConfirmRegisterJABloc(gh<_i47.UpgradeAccountUsecase>()));
   gh.factory<
       _i66.GetDetailBlocParam1<_i68.BankAccount,
-          _i70.UpdateBankAccountPayload>>(() => upgradeAgreePolicyBlocFactory
+          _i72.UpdateBankAccountPayload>>(() => upgradeAgreePolicyBlocFactory
       .createUpdateBankAccountBloc(gh<_i47.UpgradeAccountUsecase>()));
   gh.factory<
-          _i66.GetDetailBlocParam1<_i71.BossCommunityStatusResponse, String>>(
-      () =>
-          communityModule.createGetBossStatusBloc(gh<_i60.CommunityUsecase>()));
-  gh.factory<
-      _i66.GetDetailBlocParam1<_i67.UpgradeAccountResponse,
-          _i72.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
+      _i66.GetDetailBlocParam1<_i69.UpgradeAccountResponse,
+          _i73.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
       .createResendOTPPhoneBloc(gh<_i47.UpgradeAccountUsecase>()));
-  gh.factory<_i66.GetDetailBlocParam1<bool, _i73.VerifyPhoneOtpPayload>>(() =>
+  gh.factory<_i66.GetDetailBlocParam1<bool, _i74.VerifyPhoneOtpPayload>>(() =>
       upgradeAgreePolicyBlocFactory.createUpgradeAccountVerifyPhoneBloc(
           gh<_i47.UpgradeAccountUsecase>()));
+  gh.factory<_i66.GetDetailBlocParam1<_i3.User?, int>>(
+      () => diaryBlocFactory.getUserDetailBloc(gh<_i51.UserUsecase>()));
   gh.factory<
-      _i66.GetDetailBlocParam1<_i74.ConfirmRegisterJAResponse,
-          _i75.ConfirmRegisterJAPayload>>(() => upgradeAgreePolicyBlocFactory
-      .createConfirmRegisterJABloc(gh<_i47.UpgradeAccountUsecase>()));
+          _i66.GetDetailBlocParam1<_i75.BossCommunityStatusResponse, String>>(
+      () =>
+          communityModule.createGetBossStatusBloc(gh<_i60.CommunityUsecase>()));
   gh.factory<_i66.GetDetailBlocParam1<_i76.ConfirmResponse, String>>(() =>
       communityModule
           .createRelinquishBossGroupBloc(gh<_i60.CommunityUsecase>()));
-  gh.factory<_i66.GetDetailBlocParam1<_i3.User?, int>>(
-      () => diaryBlocFactory.getUserDetailBloc(gh<_i51.UserUsecase>()));
   gh.factory<
       _i66.GetDetailBlocParam2<_i76.ConfirmResponse, String,
           _i77.ReplyGiveUpBossTeamRolePayload>>(() => communityModule
       .createReplyGiveUpBossTeamBloc(gh<_i60.CommunityUsecase>()));
+  gh.factory<_i66.GetListBloc<_i78.Bank>>(() => upgradeAgreePolicyBlocFactory
+      .createGetListBanksBloc(gh<_i47.UpgradeAccountUsecase>()));
   gh.factory<_i66.GetListBloc<_i3.Group>>(() =>
       communityModule.createGetListGroupsBloc(gh<_i60.CommunityUsecase>()));
-  gh.factory<_i66.GetListBloc<_i78.GroupRequest>>(() =>
+  gh.factory<_i66.GetListBloc<_i79.GroupRequest>>(() =>
       communityModule.createGetGroupRequestsBloc(gh<_i60.CommunityUsecase>()));
-  gh.factory<_i66.GetListBloc<_i79.Bank>>(() => upgradeAgreePolicyBlocFactory
-      .createGetListBanksBloc(gh<_i47.UpgradeAccountUsecase>()));
   gh.factory<_i66.GetListBlocParam1<_i3.Team, String>>(() =>
       communityModule.createGetListTeamsBloc(gh<_i60.CommunityUsecase>()));
   gh.factory<_i80.GroupDetailBloc>(
@@ -310,39 +312,40 @@ Future<_i1.GetIt> init(
       () => _i82.OpenWeatherBloc(gh<_i34.OpenWeatherUseCase>()));
   gh.factory<_i83.PlaceInformationBloc>(
       () => _i83.PlaceInformationBloc(gh<_i39.PlaceInformationUsecase>()));
-  gh.factory<_i84.TeamDetailBloc>(
-      () => _i84.TeamDetailBloc(gh<_i60.CommunityUsecase>()));
-  gh.factory<_i85.UpgradePDoneBloc>(() => _i85.UpgradePDoneBloc(
+  gh.factory<_i84.SearchCubit>(() => _i84.SearchCubit(gh<_i51.UserUsecase>()));
+  gh.factory<_i85.TeamDetailBloc>(
+      () => _i85.TeamDetailBloc(gh<_i60.CommunityUsecase>()));
+  gh.factory<_i86.UpgradePDoneBloc>(() => _i86.UpgradePDoneBloc(
         gh<_i47.UpgradeAccountUsecase>(),
         gh<_i51.UserUsecase>(),
       ));
-  gh.factory<_i86.UserActionCubit>(
-      () => _i86.UserActionCubit(gh<_i51.UserUsecase>()));
-  gh.factory<_i87.UserBloc>(() => _i87.UserBloc(
+  gh.factory<_i87.UserActionCubit>(
+      () => _i87.UserActionCubit(gh<_i51.UserUsecase>()));
+  gh.factory<_i88.UserBloc>(() => _i88.UserBloc(
         gh<_i55.AuthenticationUsecase>(),
         gh<_i20.UserSharePreferencesUsecase>(),
         gh<_i51.UserUsecase>(),
         gh<_i3.UserInformationCubit>(),
       ));
-  gh.factory<_i88.UserCubit>(() => _i88.UserCubit(
+  gh.factory<_i89.UserCubit>(() => _i89.UserCubit(
         gh<_i55.AuthenticationUsecase>(),
         gh<_i20.UserSharePreferencesUsecase>(),
         gh<_i51.UserUsecase>(),
       ));
-  gh.singleton<_i89.AppSettingBloc>(
-      _i89.AppSettingBloc(gh<_i55.AuthenticationUsecase>()));
-  gh.factory<_i90.AuthCubit>(
-      () => _i90.AuthCubit(gh<_i55.AuthenticationUsecase>()));
+  gh.singleton<_i90.AppSettingBloc>(
+      _i90.AppSettingBloc(gh<_i55.AuthenticationUsecase>()));
+  gh.factory<_i91.AuthCubit>(
+      () => _i91.AuthCubit(gh<_i55.AuthenticationUsecase>()));
   return getIt;
 }
 
-class _$DataSourceModule extends _i91.DataSourceModule {}
+class _$DataSourceModule extends _i92.DataSourceModule {}
 
 class _$PlaceModule extends _i36.PlaceModule {}
 
 class _$UpgradeAgreePolicyBlocFactory
-    extends _i92.UpgradeAgreePolicyBlocFactory {}
+    extends _i93.UpgradeAgreePolicyBlocFactory {}
 
-class _$CommunityModule extends _i93.CommunityModule {}
+class _$CommunityModule extends _i94.CommunityModule {}
 
-class _$DiaryBlocFactory extends _i94.DiaryBlocFactory {}
+class _$DiaryBlocFactory extends _i95.DiaryBlocFactory {}

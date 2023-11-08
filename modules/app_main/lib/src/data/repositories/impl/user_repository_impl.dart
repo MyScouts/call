@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/data_sources/remote/user_api.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
+import 'package:app_main/src/data/models/responses/search_user_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
 import 'package:app_main/src/data/repositories/user_repository.dart';
 import 'package:injectable/injectable.dart';
@@ -58,5 +59,10 @@ class AuthRepositoryImpl extends UserRepository {
   Future<bool> genOtp() async {
     await _userAPI.genOTP();
     return true;
+  }
+
+  @override
+  Future<SearchUserResponse> searchUser(SearchUserPayload query) {
+    return _userAPI.searchUser(query);
   }
 }
