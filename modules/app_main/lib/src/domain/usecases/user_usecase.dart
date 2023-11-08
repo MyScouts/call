@@ -62,7 +62,7 @@ class UserUsecase {
     return isSuccess;
   }
 
-  Future<List<SearchUser>> searchUser(SearchUserPayload query) async {
+  Future<List<SearchDetail>> searchUser(SearchUserPayload query) async {
     final response = await _userRepository.searchUser(query);
     return response.searchUsers;
   }

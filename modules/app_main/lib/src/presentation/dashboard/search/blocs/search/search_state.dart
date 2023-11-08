@@ -2,7 +2,7 @@ part of 'search_cubit.dart';
 
 @immutable
 sealed class SearchState {
-  final List<SearchUser> users;
+  final List<SearchDetail> users;
   const SearchState({required this.users});
 }
 

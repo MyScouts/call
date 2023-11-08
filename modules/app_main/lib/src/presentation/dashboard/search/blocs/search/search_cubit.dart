@@ -11,7 +11,7 @@ part 'search_state.dart';
 class SearchCubit extends Cubit<SearchState> {
   final UserUsecase _userUsecase;
   final int pageSize = 20;
-  final List<SearchUser> _users = [];
+  final List<SearchDetail> _users = [];
   int _page = 1;
 
   SearchCubit(this._userUsecase) : super(const SearchInitial(users: []));
@@ -36,7 +36,6 @@ class SearchCubit extends Cubit<SearchState> {
       _page++;
       emit(SearchUserSuccess(users: _users));
     } catch (e) {
-      print(e);
       emit(SearchUserFail(users: _users));
     }
   }

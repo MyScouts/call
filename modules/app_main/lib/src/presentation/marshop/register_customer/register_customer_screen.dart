@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/auth/auth_cubit.dart';
 import 'package:app_main/src/blocs/marshop/marshop_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/authentication/widget/custom_text_field.dart';
 import 'package:app_main/src/presentation/marshop/register_customer/register_customer_coordinator.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
@@ -130,7 +131,7 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
   }
 
   void _startQrCodeScan() async {
-    String? results = await context.startScanQrCode();
+    String? results = await context.startDashboard();
     if (results != null) {
       if (!results.isNumber()) {
         showToastMessage("Mã Marshop không hợp lệ!");

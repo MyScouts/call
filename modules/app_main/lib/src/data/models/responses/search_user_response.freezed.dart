@@ -20,7 +20,7 @@ SearchUserResponse _$SearchUserResponseFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SearchUserResponse {
-  List<SearchUser> get searchUsers => throw _privateConstructorUsedError;
+  List<SearchDetail> get searchUsers => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +34,7 @@ abstract class $SearchUserResponseCopyWith<$Res> {
           SearchUserResponse value, $Res Function(SearchUserResponse) then) =
       _$SearchUserResponseCopyWithImpl<$Res, SearchUserResponse>;
   @useResult
-  $Res call({List<SearchUser> searchUsers});
+  $Res call({List<SearchDetail> searchUsers});
 }
 
 /// @nodoc
@@ -56,7 +56,7 @@ class _$SearchUserResponseCopyWithImpl<$Res, $Val extends SearchUserResponse>
       searchUsers: null == searchUsers
           ? _value.searchUsers
           : searchUsers // ignore: cast_nullable_to_non_nullable
-              as List<SearchUser>,
+              as List<SearchDetail>,
     ) as $Val);
   }
 }
@@ -69,7 +69,7 @@ abstract class _$$SearchUserResponseImplCopyWith<$Res>
       __$$SearchUserResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<SearchUser> searchUsers});
+  $Res call({List<SearchDetail> searchUsers});
 }
 
 /// @nodoc
@@ -89,7 +89,7 @@ class __$$SearchUserResponseImplCopyWithImpl<$Res>
       searchUsers: null == searchUsers
           ? _value._searchUsers
           : searchUsers // ignore: cast_nullable_to_non_nullable
-              as List<SearchUser>,
+              as List<SearchDetail>,
     ));
   }
 }
@@ -97,15 +97,16 @@ class __$$SearchUserResponseImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$SearchUserResponseImpl implements _SearchUserResponse {
-  const _$SearchUserResponseImpl({required final List<SearchUser> searchUsers})
+  const _$SearchUserResponseImpl(
+      {required final List<SearchDetail> searchUsers})
       : _searchUsers = searchUsers;
 
   factory _$SearchUserResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$SearchUserResponseImplFromJson(json);
 
-  final List<SearchUser> _searchUsers;
+  final List<SearchDetail> _searchUsers;
   @override
-  List<SearchUser> get searchUsers {
+  List<SearchDetail> get searchUsers {
     if (_searchUsers is EqualUnmodifiableListView) return _searchUsers;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_searchUsers);
@@ -147,16 +148,167 @@ class _$SearchUserResponseImpl implements _SearchUserResponse {
 
 abstract class _SearchUserResponse implements SearchUserResponse {
   const factory _SearchUserResponse(
-      {required final List<SearchUser> searchUsers}) = _$SearchUserResponseImpl;
+          {required final List<SearchDetail> searchUsers}) =
+      _$SearchUserResponseImpl;
 
   factory _SearchUserResponse.fromJson(Map<String, dynamic> json) =
       _$SearchUserResponseImpl.fromJson;
 
   @override
-  List<SearchUser> get searchUsers;
+  List<SearchDetail> get searchUsers;
   @override
   @JsonKey(ignore: true)
   _$$SearchUserResponseImplCopyWith<_$SearchUserResponseImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+SearchDetail _$SearchDetailFromJson(Map<String, dynamic> json) {
+  return _SearchDetail.fromJson(json);
+}
+
+/// @nodoc
+mixin _$SearchDetail {
+  SearchUser get user => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $SearchDetailCopyWith<SearchDetail> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SearchDetailCopyWith<$Res> {
+  factory $SearchDetailCopyWith(
+          SearchDetail value, $Res Function(SearchDetail) then) =
+      _$SearchDetailCopyWithImpl<$Res, SearchDetail>;
+  @useResult
+  $Res call({SearchUser user});
+
+  $SearchUserCopyWith<$Res> get user;
+}
+
+/// @nodoc
+class _$SearchDetailCopyWithImpl<$Res, $Val extends SearchDetail>
+    implements $SearchDetailCopyWith<$Res> {
+  _$SearchDetailCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = null,
+  }) {
+    return _then(_value.copyWith(
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as SearchUser,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $SearchUserCopyWith<$Res> get user {
+    return $SearchUserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$SearchDetailImplCopyWith<$Res>
+    implements $SearchDetailCopyWith<$Res> {
+  factory _$$SearchDetailImplCopyWith(
+          _$SearchDetailImpl value, $Res Function(_$SearchDetailImpl) then) =
+      __$$SearchDetailImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({SearchUser user});
+
+  @override
+  $SearchUserCopyWith<$Res> get user;
+}
+
+/// @nodoc
+class __$$SearchDetailImplCopyWithImpl<$Res>
+    extends _$SearchDetailCopyWithImpl<$Res, _$SearchDetailImpl>
+    implements _$$SearchDetailImplCopyWith<$Res> {
+  __$$SearchDetailImplCopyWithImpl(
+      _$SearchDetailImpl _value, $Res Function(_$SearchDetailImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = null,
+  }) {
+    return _then(_$SearchDetailImpl(
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as SearchUser,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$SearchDetailImpl implements _SearchDetail {
+  const _$SearchDetailImpl({required this.user});
+
+  factory _$SearchDetailImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SearchDetailImplFromJson(json);
+
+  @override
+  final SearchUser user;
+
+  @override
+  String toString() {
+    return 'SearchDetail(user: $user)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SearchDetailImpl &&
+            (identical(other.user, user) || other.user == user));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SearchDetailImplCopyWith<_$SearchDetailImpl> get copyWith =>
+      __$$SearchDetailImplCopyWithImpl<_$SearchDetailImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$SearchDetailImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _SearchDetail implements SearchDetail {
+  const factory _SearchDetail({required final SearchUser user}) =
+      _$SearchDetailImpl;
+
+  factory _SearchDetail.fromJson(Map<String, dynamic> json) =
+      _$SearchDetailImpl.fromJson;
+
+  @override
+  SearchUser get user;
+  @override
+  @JsonKey(ignore: true)
+  _$$SearchDetailImplCopyWith<_$SearchDetailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -169,7 +321,7 @@ mixin _$SearchUser {
   int get id => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   String? get fullName => throw _privateConstructorUsedError;
-  String get pDoneId => throw _privateConstructorUsedError;
+  String? get pDoneId => throw _privateConstructorUsedError;
   String? get birthday => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -188,7 +340,7 @@ abstract class $SearchUserCopyWith<$Res> {
       {int id,
       String displayName,
       String? fullName,
-      String pDoneId,
+      String? pDoneId,
       String? birthday});
 }
 
@@ -208,7 +360,7 @@ class _$SearchUserCopyWithImpl<$Res, $Val extends SearchUser>
     Object? id = null,
     Object? displayName = null,
     Object? fullName = freezed,
-    Object? pDoneId = null,
+    Object? pDoneId = freezed,
     Object? birthday = freezed,
   }) {
     return _then(_value.copyWith(
@@ -224,10 +376,10 @@ class _$SearchUserCopyWithImpl<$Res, $Val extends SearchUser>
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String?,
-      pDoneId: null == pDoneId
+      pDoneId: freezed == pDoneId
           ? _value.pDoneId
           : pDoneId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       birthday: freezed == birthday
           ? _value.birthday
           : birthday // ignore: cast_nullable_to_non_nullable
@@ -248,7 +400,7 @@ abstract class _$$SearchUserImplCopyWith<$Res>
       {int id,
       String displayName,
       String? fullName,
-      String pDoneId,
+      String? pDoneId,
       String? birthday});
 }
 
@@ -266,7 +418,7 @@ class __$$SearchUserImplCopyWithImpl<$Res>
     Object? id = null,
     Object? displayName = null,
     Object? fullName = freezed,
-    Object? pDoneId = null,
+    Object? pDoneId = freezed,
     Object? birthday = freezed,
   }) {
     return _then(_$SearchUserImpl(
@@ -282,10 +434,10 @@ class __$$SearchUserImplCopyWithImpl<$Res>
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String?,
-      pDoneId: null == pDoneId
+      pDoneId: freezed == pDoneId
           ? _value.pDoneId
           : pDoneId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       birthday: freezed == birthday
           ? _value.birthday
           : birthday // ignore: cast_nullable_to_non_nullable
@@ -301,7 +453,7 @@ class _$SearchUserImpl implements _SearchUser {
       {required this.id,
       required this.displayName,
       this.fullName,
-      required this.pDoneId,
+      this.pDoneId,
       this.birthday});
 
   factory _$SearchUserImpl.fromJson(Map<String, dynamic> json) =>
@@ -314,7 +466,7 @@ class _$SearchUserImpl implements _SearchUser {
   @override
   final String? fullName;
   @override
-  final String pDoneId;
+  final String? pDoneId;
   @override
   final String? birthday;
 
@@ -362,7 +514,7 @@ abstract class _SearchUser implements SearchUser {
       {required final int id,
       required final String displayName,
       final String? fullName,
-      required final String pDoneId,
+      final String? pDoneId,
       final String? birthday}) = _$SearchUserImpl;
 
   factory _SearchUser.fromJson(Map<String, dynamic> json) =
@@ -375,7 +527,7 @@ abstract class _SearchUser implements SearchUser {
   @override
   String? get fullName;
   @override
-  String get pDoneId;
+  String? get pDoneId;
   @override
   String? get birthday;
   @override

@@ -17,94 +17,84 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchCtrl = TextEditingController();
-  SearchCubit get _bloc => injector.get<SearchCubit>();
+  final SearchCubit _bloc = injector.get<SearchCubit>();
 
   @override
   void initState() {
     super.initState();
-    _searchCtrl.addListener(() {
-      EasyDebounce.debounce('testDeb', const Duration(milliseconds: 300),
-          () async {
-        if (_searchCtrl.text.trim().isEmpty) return;
-        _bloc.searchUser(query: _searchCtrl.text.trim(), isReset: true);
-      });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => _bloc,
-      child: ScaffoldHideKeyboard(
-        body: SafeArea(child: BlocBuilder<SearchCubit, SearchState>(
-          builder: (context, state) {
-            final users = state.users;
-            return Column(
-              children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: paddingHorizontal),
-                  child: Row(
-                    children: [
-                      const CustomBackButton(),
-                      Expanded(
-                        child: TextField(
-                          controller: _searchCtrl,
-                          style: context.text.titleMedium!
-                              .copyWith(color: Colors.grey),
-                          decoration: InputDecoration(
-                            hintText: "Tìm kiếm...",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(90),
-                              borderSide: BorderSide.none,
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(90),
-                              borderSide: BorderSide.none,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(90),
-                              borderSide: BorderSide.none,
-                            ),
-                            prefixIcon: const Icon(Icons.search),
-                            fillColor: const Color(0XFFF2F2F2),
-                            filled: true,
-                            suffixIcon: IconButton(
-                              onPressed: () => _searchCtrl.clear(),
-                              icon: const Icon(Icons.clear, size: 15),
-                            ),
+      child: BlocListener<SearchCubit, SearchState>(
+        listener: (context, state) {
+          print(state);
+        },
+        child: ScaffoldHideKeyboard(
+          body: SafeArea(
+              child: Column(
+            children: [
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: paddingHorizontal),
+                child: Row(
+                  children: [
+                    const CustomBackButton(),
+                    Expanded(
+                      child: TextField(
+                        controller: _searchCtrl,
+                        onChanged: (value) async {
+                          EasyDebounce.debounce(
+                              'testDeb', const Duration(milliseconds: 300),
+                              () async {
+                            _bloc.searchUser(
+                                query: _searchCtrl.text.trim(), isReset: true);
+                          });
+                        },
+                        style: context.text.titleMedium!
+                            .copyWith(color: Colors.grey),
+                        decoration: InputDecoration(
+                          hintText: "Tìm kiếm...",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(90),
+                            borderSide: BorderSide.none,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(90),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(90),
+                            borderSide: BorderSide.none,
+                          ),
+                          prefixIcon: const Icon(Icons.search),
+                          fillColor: const Color(0XFFF2F2F2),
+                          filled: true,
+                          suffixIcon: IconButton(
+                            onPressed: () => _searchCtrl.clear(),
+                            icon: const Icon(Icons.clear, size: 15),
                           ),
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    )
+                  ],
                 ),
-                if (state is OnSearchUser && state.isFirstPage)
-                  const Center(child: CircularProgressIndicator()),
-                Expanded(
-                    child: ListView.builder(
-                  itemCount: users.length,
-                  itemBuilder: (context, index) {
-                    final user = users[index];
-                    return _buildUser(user);
-                  },
-                ))
-              ],
-            );
-          },
-        )),
+              ),
+              Expanded(child: _buildSearch()),
+            ],
+          )),
+        ),
       ),
     );
   }
 
-  _buildUser(SearchUser user) {
+  _buildUser(SearchDetail user) {
     return GestureDetector(
-      onTap: () => () => context.startDiary(userId: user.id.toString()),
+      onTap: () => context.startDiary(userId: user.user.id.toString()),
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 15,
-          horizontal: 10,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.circular(10),
@@ -135,7 +125,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 Row(
                   children: [
                     Text(
-                      user.displayName,
+                      user.user.displayName,
                       style: context.textTheme.titleMedium!.copyWith(
                         fontSize: 15,
                         color: AppColors.black,
@@ -146,7 +136,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  "ID: ${user.pDoneId}",
+                  "ID: ${user.user.pDoneId}",
                   style: context.textTheme.titleMedium!.copyWith(
                     fontSize: 13,
                     color: AppColors.grey14,
@@ -157,6 +147,31 @@ class _SearchScreenState extends State<SearchScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  _buildSearch() {
+    return BlocBuilder<SearchCubit, SearchState>(
+      builder: (context, state) {
+        final users = state.users;
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
+          child: Column(
+            children: [
+              if (state is OnSearchUser && state.isFirstPage)
+                const Center(child: CircularProgressIndicator()),
+              Expanded(
+                  child: ListView.builder(
+                itemCount: users.length,
+                itemBuilder: (context, index) {
+                  final user = users[index];
+                  return _buildUser(user);
+                },
+              ))
+            ],
+          ),
+        );
+      },
     );
   }
 }
