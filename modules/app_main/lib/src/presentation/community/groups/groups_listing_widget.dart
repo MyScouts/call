@@ -48,10 +48,22 @@ class _GroupsListingWidgetState extends State<GroupsListingWidget>
   }
 
   List<Group> groupsCommunity = [
-    Group(banner: ImageConstants.communityLuatSu, name: 'Cộng đồng luật sư', id: '1'),
-    Group(banner: ImageConstants.communityXayDung, name: 'Cộng đồng kiến trúc', id: '2'),
-    Group(banner: ImageConstants.communityDuLich, name: 'Cộng đồng du lịch',  id: '3'),
-    Group(banner: ImageConstants.communityViecLam, name: 'Cộng đồng việc làm',  id: '4'),
+    Group(
+        banner: ImageConstants.communityLuatSu,
+        name: 'Cộng đồng luật sư',
+        id: '1'),
+    Group(
+        banner: ImageConstants.communityXayDung,
+        name: 'Cộng đồng kiến trúc',
+        id: '2'),
+    Group(
+        banner: ImageConstants.communityDuLich,
+        name: 'Cộng đồng du lịch',
+        id: '3'),
+    Group(
+        banner: ImageConstants.communityViecLam,
+        name: 'Cộng đồng việc làm',
+        id: '4'),
     Group(
         banner: ImageConstants.communityTruyenThong,
         name: 'Cộng đồng truyền thông'),
@@ -127,8 +139,8 @@ class _GroupsListingWidgetState extends State<GroupsListingWidget>
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child:
-                      ImageWidget(ImageConstants.communityBanner, width: width),
+                      child: ImageWidget(ImageConstants.communityBanner,
+                          width: width),
                     ),
                     const SizedBox(height: 20),
                     CommunityTabBar(controller: _tabController),
@@ -176,7 +188,7 @@ class _GroupsListingWidgetState extends State<GroupsListingWidget>
                       borderRadius:
                           BorderRadius.vertical(top: Radius.circular(20))),
                   child: Text(
-                    'Group 63 Tỉnh thành',
+                    'Groups',
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.greyTextColor,

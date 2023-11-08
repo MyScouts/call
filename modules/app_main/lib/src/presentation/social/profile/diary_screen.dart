@@ -6,7 +6,6 @@ import 'package:app_main/src/presentation/social/profile/profile_bloc.dart';
 import 'package:app_main/src/presentation/social/profile/widgets/user_info_header.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:localization/localization.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 
 enum DiaryCategory { personal, marshop, saved }

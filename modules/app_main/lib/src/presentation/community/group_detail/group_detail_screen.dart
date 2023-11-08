@@ -341,7 +341,9 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
         delegate: _CmOverviewHeaderDelegate(),
         pinned: true,
       ),
-      const SliverToBoxAdapter(child: _CmGroupBasics()),
+      const SliverToBoxAdapter(
+        child: _CmGroupBasics(),
+      ),
     ];
   }
 }

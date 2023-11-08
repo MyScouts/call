@@ -231,7 +231,7 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
           ),
           if (widget.userInfo.joinedTeam != null) const SizedBox(width: 5),
           if (widget.userInfo.joinedTeam != null)
-            Expanded(
+            Flexible(
               child: Container(
                 height: 25,
                 padding:
@@ -247,7 +247,7 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
                       width: 25,
                       child: CircleAvatar(),
                     ),
-                    Expanded(
+                    Flexible(
                       child: Text(
                         widget.userInfo.joinedTeam!.name!,
                         maxLines: 1,

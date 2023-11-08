@@ -17,12 +17,14 @@ class CommunityWidget extends StatefulWidget {
   State<CommunityWidget> createState() => _CommunityWidgetState();
 }
 
-class _CommunityWidgetState extends State<CommunityWidget> with SingleTickerProviderStateMixin {
+class _CommunityWidgetState extends State<CommunityWidget>
+    with SingleTickerProviderStateMixin {
   late TabController _communityTabController;
 
   @override
   void initState() {
-    _communityTabController = TabController(length: 2, vsync: this, initialIndex: 1);
+    _communityTabController =
+        TabController(length: 2, vsync: this, initialIndex: 1);
     super.initState();
   }
 
@@ -51,37 +53,68 @@ class _CommunityWidgetState extends State<CommunityWidget> with SingleTickerProv
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Row(
                     children: [
-                      const AvatarWidget(),
-                      const SizedBox(width: 20),
+                      const AvatarWidget(size: 38),
+                      const SizedBox(width: 15),
                       Expanded(
-                        child: SearchBar(
-                          hintText: 'Tìm kiếm',
-                          hintStyle: MaterialStatePropertyAll(Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: const Color(0xff858589),
-                              )),
-                          textStyle: MaterialStatePropertyAll(Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: const Color(0xff858589),
-                              )),
-                          leading: const Icon(
-                            Icons.search,
-                            color: Color(0xff858589),
+                        child: SizedBox(
+                          height: 40,
+                          child: TextField(
+                            style: context.text.titleMedium!
+                                .copyWith(color: Colors.grey),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.zero,
+                              isDense: false,
+                              hintText: "Tìm kiếm...",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none,
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide.none,
+                              ),
+                              prefixIcon: const Icon(Icons.search,
+                                  color: AppColors.grey14),
+                              fillColor: const Color(0XFFF2F2F2),
+                              filled: true,
+                            ),
                           ),
-                          shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
-                          shadowColor: const MaterialStatePropertyAll(Colors.transparent),
-                          backgroundColor: const MaterialStatePropertyAll(Color(0xfff5f5f5)),
                         ),
                       ),
-                      IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon: ImageWidget(IconAppConstants.bell),
+                      const SizedBox(width: 15),
+                      SizedBox(
+                        width: 35,
+                        height: 35,
+                        child: IconButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () => Navigator.pop(context),
+                          icon: ImageWidget(IconAppConstants.bell),
+                          highlightColor: Colors.transparent,
+                        ),
                       ),
-                      IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon: ImageWidget(IconAppConstants.menu),
+                      SizedBox(
+                        width: 35,
+                        height: 35,
+                        child: IconButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () => Navigator.pop(context),
+                          icon: ImageWidget(IconAppConstants.menu),
+                          highlightColor: Colors.transparent,
+                        ),
                       ),
-                      IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon: const Icon(Icons.close),
+                      SizedBox(
+                        width: 35,
+                        height: 35,
+                        child: IconButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () => Navigator.pop(context),
+                          icon: const Icon(Icons.close),
+                          highlightColor: Colors.transparent,
+                        ),
                       ),
                     ],
                   ),
@@ -95,7 +128,8 @@ class _CommunityWidgetState extends State<CommunityWidget> with SingleTickerProv
                       MultiBlocProvider(
                         providers: [
                           BlocProvider<GetListGroupsBloc>(
-                            create: (context) => injector.get()..add(GetListDataEvent()),
+                            create: (context) =>
+                                injector.get()..add(GetListDataEvent()),
                           ),
                           BlocProvider<GetFanGroupBloc>(
                             create: (context) => injector.get(),
