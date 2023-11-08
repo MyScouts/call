@@ -1,5 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
+import 'package:app_main/src/data/models/responses/user_response.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/settings/setting_constants.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
@@ -28,11 +30,13 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   late final userCubit = context.read<UserCubit>();
   late User _authInfo;
+  OnboardingResponse? _onboarding;
 
   @override
   void initState() {
     super.initState();
     _authInfo = userCubit.currentUser!;
+    userCubit.onboarding();
   }
 
   @override
@@ -40,8 +44,25 @@ class _SettingScreenState extends State<SettingScreen> {
     return ScaffoldHideKeyboard(
       appBar: const BaseAppBar(title: "Tài khoản"),
       backgroundColor: const Color(0XFFF3F8FF),
-      body: BlocListener<GetJAStatusBloc, GetDetailState>(
-        listener: _onListenerGetJAStatusBloc,
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<GetJAStatusBloc, GetDetailState>(
+            listener: _onListenerGetJAStatusBloc,
+          ),
+          BlocListener<UserCubit, UserState>(
+            listener: (context, state) {
+              if (state is OnboardingFail) {
+                showToastMessage("Lỗi hệ thống, vui lòng thử lại sau.",
+                    ToastMessageType.warning);
+                context.startDashboardUtil();
+                return;
+              }
+              if (state is OnboardingSuccess) {
+                _onboarding = state.onboarding;
+              }
+            },
+          ),
+        ],
         child: BlocListener<ConfirmRegisterJABloc, GetDetailState>(
           listener: _onListenerConfirmJABloc,
           child: SafeArea(
@@ -75,7 +96,10 @@ class _SettingScreenState extends State<SettingScreen> {
       hideLoading();
       context.startUpgradeJAFlow(
         jaStatus: state.data.jaInfo,
-        user: userCubit.currentUser,
+        user: userCubit.currentUser?.copyWith(
+          isJA: _onboarding?.isJA,
+          isPDone: _onboarding?.isPdone,
+        ),
       );
     } else if (state is GetDetailError) {
       hideLoading();
@@ -159,10 +183,16 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   _buildSessionMenus() {
-    return Column(
-      children: Setting.session1Menus(context, user: userCubit.currentUser)
-          .map((settings) => _buildMenus(settings))
-          .toList(),
+    return BlocBuilder<UserCubit, UserState>(
+      builder: (context, state) {
+        return Column(
+          children: Setting.session1Menus(
+            context,
+            user: userCubit.currentUser,
+            onboarding: state is OnboardingSuccess ? state.onboarding : null,
+          ).map((settings) => _buildMenus(settings)).toList(),
+        );
+      },
     );
   }
 

@@ -83,7 +83,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
         ),
       ],
       child: ScaffoldHideKeyboard(
-        appBar: const BaseAppBar(title: "Đăng ký V-SHOP"),
+        appBar: const BaseAppBar(title: "Đăng ký Marshop"),
         body: Form(
           key: formKey,
           child: SingleChildScrollView(

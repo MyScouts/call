@@ -4,6 +4,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
+import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/domain/entities/update_account/otp/otp.dart';
 import 'package:app_main/src/domain/usecases/authentication_usecase.dart';
 import 'package:flutter/material.dart';
@@ -390,6 +391,25 @@ class UserCubit extends Cubit<UserState> {
           message: S.current.messages_server_internal_error.capitalize(),
         ),
       );
+    }
+  }
+
+  Future<void> onboarding() async {
+    if (state is OnGetOnboarding) return;
+    try {
+      emit(OnGetOnboarding());
+      final response = await _userUsecase.onboarding();
+      emit(OnboardingSuccess(onboarding: response));
+    } catch (error) {
+      debugPrint("onboarding: $error");
+      emit(OnboardingFail(
+          onboarding: const OnboardingResponse(
+        hasDefaultBankAccount: false,
+        isJA: false,
+        isMarshopCustomer: false,
+        isMarshopOwner: false,
+        isPdone: false,
+      )));
     }
   }
 }

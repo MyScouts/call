@@ -1,4 +1,6 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
@@ -21,8 +23,11 @@ class Setting {
     this.onPressed,
   });
 
-  static List<List<Setting>> session1Menus(BuildContext context,
-          {User? user}) =>
+  static List<List<Setting>> session1Menus(
+    BuildContext context, {
+    User? user,
+    OnboardingResponse? onboarding,
+  }) =>
       [
         [
           Setting(
@@ -57,12 +62,24 @@ class Setting {
           Setting(
             text: "Khách hàng thường xuyên - Market Home",
             icon: IconAppConstants.icMarshopHome,
-            onPressed: () => context.startRegisterCustomer(),
+            onPressed: () {
+              if (onboarding != null && onboarding.isMarshopCustomer) {
+                context.showToastMessage("Bạn đã là khách hàng thường xuyên.");
+                return;
+              }
+              context.startRegisterCustomer();
+            },
           ),
           Setting(
             text: "Tài khoản Marshop",
             icon: IconAppConstants.icMarshop,
-            onPressed: () => context.startRegisterMarshop(),
+            onPressed: () {
+              if (onboarding != null && !onboarding.isJA) {
+                context.showToastMessage("Bạn phải là JA.");
+                return;
+              }
+              context.startRegisterMarshop();
+            },
           ),
         ],
         [

@@ -155,3 +155,16 @@ final class DeleteUserFail extends UserState {
   final String message;
   DeleteUserFail({required this.message});
 }
+
+// Get Onboarding
+final class OnGetOnboarding extends UserState {}
+
+final class OnboardingSuccess extends UserState {
+  final OnboardingResponse onboarding;
+  OnboardingSuccess({required this.onboarding});
+}
+
+final class OnboardingFail extends UserState {
+  final OnboardingResponse onboarding;
+  OnboardingFail({required this.onboarding});
+}

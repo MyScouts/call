@@ -13,11 +13,8 @@ class SettingRoutes extends RouteModule {
           return MultiBlocProvider(
             providers: [
               BlocProvider<GetJAStatusBloc>(
-                create: (context) => injector.get(),
-              ),
-              BlocProvider<UserCubit>.value(
-                value: injector.get<UserCubit>(),
-              ),
+                  create: (context) => injector.get()),
+              BlocProvider<UserCubit>.value(value: injector.get<UserCubit>()),
               BlocProvider<ConfirmRegisterJABloc>(
                 create: (context) => injector.get(),
               ),
