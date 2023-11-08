@@ -152,15 +152,16 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
   }
 
   void _startQrCodeScan() async {
-    String? results = await context.startScanQrCode();
-    if (results != null) {
-      if (!results.isNumber()) {
-        showToastMessage("Mã Marshop không hợp lệ!");
-        return;
+    context.startScanQrCode().then((results) {
+      if (results != null && results is String) {
+        if (!results.isNumber()) {
+          showToastMessage("Mã Marshop không hợp lệ!", ToastMessageType.error);
+          return;
+        }
+        _marshopIdCtrl.text = results;
+        setState(() {});
+        onValidation();
       }
-      _marshopIdCtrl.text = results;
-      setState(() {});
-      onValidation();
-    }
+    });
   }
 }

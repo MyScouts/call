@@ -131,15 +131,16 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
   }
 
   void _startQrCodeScan() async {
-    String? results = await context.startDashboard();
-    if (results != null) {
-      if (!results.isNumber()) {
-        showToastMessage("Mã Marshop không hợp lệ!");
-        return;
+    context.startScanQrCode().then((results) {
+      if (results != null && results is String) {
+        if (!results.isNumber()) {
+          showToastMessage("Mã Marshop không hợp lệ!", ToastMessageType.error);
+          return;
+        }
+        _marshopIdCtrl.text = results;
+        setState(() {});
+        onValidation();
       }
-      _marshopIdCtrl.text = results;
-      setState(() {});
-      onValidation();
-    }
+    });
   }
 }
