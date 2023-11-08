@@ -56,6 +56,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         style: context.text.titleMedium!
                             .copyWith(color: Colors.grey),
                         decoration: InputDecoration(
+                          isDense: true,
                           hintText: "Tìm kiếm...",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(90),
@@ -73,8 +74,23 @@ class _SearchScreenState extends State<SearchScreen> {
                           fillColor: const Color(0XFFF2F2F2),
                           filled: true,
                           suffixIcon: IconButton(
-                            onPressed: () => _searchCtrl.clear(),
-                            icon: const Icon(Icons.clear, size: 15),
+                            splashColor: Colors.transparent,
+                            onPressed: () {
+                              _searchCtrl.clear();
+                              _bloc.searchUser(query: "", isReset: true);
+                            },
+                            icon: Container(
+                              padding: const EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                color: const Color(0XFFACACAC),
+                                borderRadius: BorderRadius.circular(90),
+                              ),
+                              child: const Icon(
+                                Icons.clear,
+                                size: 11,
+                                color: AppColors.white,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -94,7 +110,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return GestureDetector(
       onTap: () => context.startDiary(userId: user.user.id.toString()),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.circular(10),
@@ -157,9 +173,16 @@ class _SearchScreenState extends State<SearchScreen> {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: 15),
+              Text("Người dùng (${users.length})",
+                  style: context.text.titleSmall),
+              const SizedBox(height: 10),
               if (state is OnSearchUser && state.isFirstPage)
                 const Center(child: CircularProgressIndicator()),
+              if (state is SearchUserSuccess && state.users.isEmpty)
+                const Center(child: Text("Không tìm thấy người dùng.")),
               Expanded(
                   child: ListView.builder(
                 itemCount: users.length,
