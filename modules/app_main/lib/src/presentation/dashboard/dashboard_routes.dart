@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobilehub_core/mobilehub_core.dart';
 
-import 'notification/notification_screen.dart';
+import '../notification/notification_screen.dart';
 
 @injectable
 class DashboardRoutes extends RouteModule {

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'dashboard/widget/dashboard_option_sheet.dart';
 import 'dashboard/widget/remove_confirm_dialog.dart';
-import 'notification/notification_screen.dart';
+import '../notification/notification_screen.dart';
 
 extension DashBoardCoordinator on BuildContext {
   Future<T?> startDashboardUtil<T>() {

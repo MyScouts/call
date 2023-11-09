@@ -9,7 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-import '../../../domain/entities/notification_type.dart';
+import '../../../domain/entities/notification/notification_type.dart';
 import 'notification_service.dart';
 
 class PushNotificationService {}
