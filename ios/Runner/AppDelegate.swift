@@ -1,7 +1,8 @@
 import UIKit
 import Flutter
 import ICSdkEKYC
-
+import Firebase
+import FirebaseCore
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -13,6 +14,7 @@ import ICSdkEKYC
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        FirebaseApp.configure();
         UIDevice.current.isProximityMonitoringEnabled = false
         
     
