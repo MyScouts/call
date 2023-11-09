@@ -4,6 +4,7 @@ import 'package:app_main/src/presentation/dashboard/system_setting/system_settin
 import 'package:flutter/material.dart';
 
 import 'dashboard/widget/dashboard_option_sheet.dart';
+import 'dashboard/widget/remove_confirm_dialog.dart';
 import 'notification/notification_screen.dart';
 
 extension DashBoardCoordinator on BuildContext {
@@ -35,5 +36,14 @@ extension DashBoardCoordinator on BuildContext {
 
   Future<T?> startSearch<T>() {
     return Navigator.of(this).pushNamed(SearchScreen.routeName);
+  }
+
+  void removeConfirm({required Function() onRemoved}) {
+    showDialog(
+      context: this,
+      builder: (_) {
+        return RemoveConfirmDialog(onRemoved: onRemoved);
+      },
+    );
   }
 }

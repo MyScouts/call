@@ -5,6 +5,7 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 
+import 'app_icon_animation.dart';
 import 'app_widget.dart';
 import 'dashboard_group_screen.dart';
 
@@ -14,6 +15,8 @@ class AppGroupWidget extends AppWidget {
   @override
   Widget build(BuildContext context) {
     final group = app as DashBoardGroupItem;
+
+    final widget = context.findAncestorWidgetOfExactType<AppIconAnimation>();
 
     return Column(
       children: [
@@ -25,6 +28,7 @@ class AppGroupWidget extends AppWidget {
                 barrierColor: Colors.transparent,
                 context: context,
                 builder: (_) => DashBoardGroupScreen(
+                  enableRemoveIcon: widget != null,
                   group: group,
                   onGroupCreated: (DashBoardGroupItem group) {
                     NotificationCenter.post(

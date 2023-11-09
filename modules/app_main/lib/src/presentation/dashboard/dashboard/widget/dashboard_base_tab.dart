@@ -6,7 +6,9 @@ import 'package:app_main/src/presentation/dashboard/dashboard/state/dashboard_ba
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_community_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_ecommerce_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_personal_tab.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard/widget/remove_confirm_dialog.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:flutter/material.dart';
 import 'package:reorderable/reorderable.dart';
 
@@ -236,7 +238,9 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
                             app: item,
                             controller: dashBoardController,
                             onRemoved: () {
-                              bloc.add(RemoveItem(item));
+                              context.removeConfirm(onRemoved: () {
+                                bloc.add(RemoveItem(item));
+                              });
                             },
                           ),
                         );
