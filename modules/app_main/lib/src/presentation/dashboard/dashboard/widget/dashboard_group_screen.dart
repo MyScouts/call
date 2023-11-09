@@ -1,9 +1,12 @@
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_widget.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard/widget/clock_widget.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
+
+import 'app_icon_animation.dart';
 
 class DashBoardGroupScreen extends StatefulWidget {
   const DashBoardGroupScreen({
@@ -11,11 +14,13 @@ class DashBoardGroupScreen extends StatefulWidget {
     required this.group,
     this.moveItem,
     required this.onGroupCreated,
+    this.enableRemoveIcon = false,
   });
 
   final DashBoardGroupItem group;
   final DashBoardItem? moveItem;
   final Function(DashBoardGroupItem group) onGroupCreated;
+  final bool enableRemoveIcon;
 
   @override
   State<DashBoardGroupScreen> createState() => _DashBoardGroupScreenState();
@@ -36,6 +41,7 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
   @override
   void initState() {
     _group = widget.group;
+    enableRemoveButton = widget.enableRemoveIcon;
     super.initState();
   }
 
@@ -77,6 +83,11 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
             Navigator.of(context).pop();
           },
           behavior: HitTestBehavior.opaque,
+          onLongPress: () {
+            setState(() {
+              enableRemoveButton = true;
+            });
+          },
           child: Container(
             height: double.infinity,
             width: double.infinity,
@@ -149,7 +160,7 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
                         ),
                         child: Container(
                           width: double.infinity,
-                          height: MediaQuery.of(context).size.height / 3,
+                          height: MediaQuery.of(context).size.height * 0.4,
                           decoration: BoxDecoration(
                             color: const Color.fromRGBO(17, 17, 17, 0.40),
                             borderRadius: BorderRadius.circular(32),
@@ -159,17 +170,37 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
                               Expanded(
                                 child: GridView.count(
                                   padding: const EdgeInsets.all(16.0),
-                                  crossAxisCount: 4,
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 20,
+                                  mainAxisSpacing: 20,
                                   children: [
-                                    ..._group.items.map(
-                                      (e) => GestureDetector(
-                                        onLongPress: () {
-                                          setState(() {
-                                            enableRemoveButton = true;
-                                          });
-                                        },
-                                        behavior: HitTestBehavior.opaque,
-                                        child: AppWidget(
+                                    if (enableRemoveButton)
+                                      ..._group.items.map(
+                                        (e) => AppIconAnimation(
+                                          child: AppWidget(
+                                            app: e,
+                                            enableRemoveIcon:
+                                                enableRemoveButton,
+                                            onRemoved: () {
+                                              context.removeConfirm(
+                                                  onRemoved: () {
+                                                isChanged = true;
+                                                setState(() {
+                                                  _group = _group.copyWith(
+                                                    items: _group.items
+                                                        .where(
+                                                            (i) => i.id != e.id)
+                                                        .toList(),
+                                                  );
+                                                });
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    if (!enableRemoveButton)
+                                      ..._group.items.map(
+                                        (e) => AppWidget(
                                           app: e,
                                           enableRemoveIcon: enableRemoveButton,
                                           onRemoved: () {
@@ -184,9 +215,11 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
                                           },
                                         ),
                                       ),
-                                    ),
                                     if (widget.moveItem != null)
-                                      AppWidget(app: widget.moveItem!),
+                                      AppWidget(
+                                        app: widget.moveItem!,
+                                        enableRemoveIcon: enableRemoveButton,
+                                      ),
                                   ],
                                 ),
                               ),
