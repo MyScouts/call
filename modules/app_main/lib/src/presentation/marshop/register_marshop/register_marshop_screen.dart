@@ -48,7 +48,6 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
       listeners: [
         BlocListener<MarshopCubit, MarshopState>(
           listener: (context, state) {
-            print(state);
             if (state is RegisterMarshopSuccess) {
               hideLoading();
               context.congratulationRegisterMarshop();

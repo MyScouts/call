@@ -41,7 +41,7 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
     _result.addListener(() {
       if (_result.value != null) {
         final code = _result.value!;
-        if (code.isJSON()) {
+        if (code.isJSON() && jsonDecode(code) is! int) {
           final data = jsonDecode(code);
           if (data['type'] == 'diary' && data["id"] != null) {
             context.startReplaceDiary(userId: data["id"].toString());
@@ -63,6 +63,7 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
             return;
           }
           Navigator.pop(context, code);
+          controller?.dispose();
         }
       }
     });
@@ -161,6 +162,8 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
   void _onQRViewCreated(Scanner.QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) async {
+      _result.value = null;
+      Future.delayed(const Duration(seconds: 2));
       _result.value = scanData.code;
       return;
     });
