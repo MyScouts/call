@@ -19,7 +19,7 @@ class ScanQrCodeScanScreen extends StatefulWidget {
   final bool showMyQr;
   const ScanQrCodeScanScreen({
     super.key,
-    this.showMyQr = false,
+    this.showMyQr = true,
   });
 
   @override

@@ -16,7 +16,7 @@ class QrCodeRoutes extends RouteModule {
           return BlocProvider.value(
             value: injector.get<UserCubit>(),
             child: ScanQrCodeScanScreen(
-              showMyQr: args['showMyQr'] ?? false,
+              showMyQr: args['showMyQr'] ?? true,
             ),
           );
         },

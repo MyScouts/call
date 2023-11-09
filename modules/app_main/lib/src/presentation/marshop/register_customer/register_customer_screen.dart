@@ -131,7 +131,7 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
   }
 
   void _startQrCodeScan() async {
-    context.startScanQrCode().then((results) {
+    context.startScanQrCode(showMyQr: false).then((results) {
       if (results != null && results is String) {
         if (!results.isNumber()) {
           showToastMessage("Mã Marshop không hợp lệ!", ToastMessageType.error);
