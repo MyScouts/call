@@ -4,6 +4,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:localization/generated/intl/messages_en.dart';
 import 'package:localization/localization.dart';
 
@@ -26,6 +27,24 @@ class TeamDetailBloc extends Bloc<TeamDetailEvent, TeamDetailState> {
     on<GetLeaveTeamStatusEvent>(_onGetLeaveTeamStatusEvent);
     on<AssignBossEvent>(_assignBossEvent);
     on<RevokeBossEvent>(_revokeBossEvent);
+    on<KickMember>(
+      onKickMember,
+      transformer: (event, mapper) => event.asyncExpand(mapper),
+    );
+  }
+
+  void onKickMember(KickMember event, Emitter<TeamDetailState> emit) {
+    _communityUsecase.kickMember(event.userId, event.teamId);
+    if (state is FetchTeamsMemberSuccess) {
+      final members = (state as FetchTeamsMemberSuccess)
+          .members
+          .where((e) => e.id != event.userId)
+          .toList();
+      emit(FetchTeamsMemberSuccess(
+        members,
+        (state as FetchTeamsMemberSuccess).team,
+      ));
+    }
   }
 
   FutureOr<void> _onFetchTeamDetailEvent(

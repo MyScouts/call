@@ -159,4 +159,8 @@ class CommunityUsecase {
   Future revokeBoss(String teamId) {
     return _communityRepository.revokeBoss(teamId);
   }
+
+  Future kickMember(int userId, String teamId) {
+    return _communityRepository.kickMember(userId, teamId);
+  }
 }

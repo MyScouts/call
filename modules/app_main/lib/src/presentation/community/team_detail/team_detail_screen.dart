@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/community/community_coordinator.dart';
+import 'package:app_main/src/presentation/community/team_detail/pages/update_team_options_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +88,12 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                 ? IconButton(
                     onPressed: () {
                       if (isBossGroup && isBossTeam || isBossTeam) {
-                        context.startUpdateTeamOptionsScreen(team: team!);
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => BlocProvider<TeamDetailBloc>.value(
+                            value: teamDetailBloc,
+                            child: UpdateTeamOptionsScreen(team: team!),
+                          ),
+                        ));
                       } else if (isBossGroup) {
                         context
                             .startBossGroupMenu(

@@ -1,6 +1,8 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/community/community_coordinator.dart';
+import 'package:app_main/src/presentation/community/team_detail/bloc/team_detail_bloc.dart';
+import 'package:app_main/src/presentation/community/team_detail/pages/remove_member_sheet.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -283,6 +285,10 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
 
       case UpdateTeamOption.invite:
       case UpdateTeamOption.kick:
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) => BlocProvider<TeamDetailBloc>.value(
+          value: context.read<TeamDetailBloc>(),
+          child: RemoveMemberSheet(),
+        )));
       case UpdateTeamOption.edit:
         return context.showToastMessage(
           'Tính năng này đang được phát triển',

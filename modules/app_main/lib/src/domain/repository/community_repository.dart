@@ -70,6 +70,8 @@ abstract class CommunityRepository {
 
   Future<MemberJoinRequestResponse> memberLeaveRequest();
 
+  Future kickMember(int userId, String teamId);
+
   Future replyJoinRequest(String teamId, ReplyJoinRequestPayload payload);
 
   Future replyLeaveRequest(String teamId, ReplyJoinRequestPayload payload);
