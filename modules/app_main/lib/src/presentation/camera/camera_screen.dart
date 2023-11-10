@@ -6,8 +6,8 @@ import 'package:camera/camera.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+// import 'package:google_ml_kit/google_ml_kit.dart';
+// import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 class CameraScreen extends StatefulWidget {
   static const String routeName = 'camera';
@@ -18,10 +18,10 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
-  CameraController? controller;
-  late List<CameraDescription> _cameras;
-  final _textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
-  final textRecognizer = GoogleMlKit.vision.textRecognizer();
+  // CameraController? controller;
+  // late List<CameraDescription> _cameras;
+  // final _textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
+  // final textRecognizer = GoogleMlKit.vision.textRecognizer();
 
   @override
   void initState() {
@@ -30,34 +30,34 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   initCamera() async {
-    _cameras = await availableCameras();
-    controller = CameraController(
-      _cameras[0],
-      ResolutionPreset.max,
-      enableAudio: false,
-      imageFormatGroup: ImageFormatGroup.yuv420,
-    );
-    controller!.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      controller!.setFlashMode(FlashMode.off);
-      controller!.startImageStream((CameraImage availableImage) {
-        processCameraImage(availableImage);
-      });
-      setState(() {});
-    }).catchError((Object e) {
-      if (e is CameraException) {
-        switch (e.code) {
-          case 'CameraAccessDenied':
-            // Handle access errors here.
-            break;
-          default:
-            // Handle other errors here.
-            break;
-        }
-      }
-    });
+    // _cameras = await availableCameras();
+    // controller = CameraController(
+    //   _cameras[0],
+    //   ResolutionPreset.max,
+    //   enableAudio: false,
+    //   imageFormatGroup: ImageFormatGroup.yuv420,
+    // );
+    // controller!.initialize().then((_) {
+    //   if (!mounted) {
+    //     return;
+    //   }
+    //   controller!.setFlashMode(FlashMode.off);
+    //   controller!.startImageStream((CameraImage availableImage) {
+    //     processCameraImage(availableImage);
+    //   });
+    //   setState(() {});
+    // }).catchError((Object e) {
+    //   if (e is CameraException) {
+    //     switch (e.code) {
+    //       case 'CameraAccessDenied':
+    //         // Handle access errors here.
+    //         break;
+    //       default:
+    //         // Handle other errors here.
+    //         break;
+    //     }
+    //   }
+    // });
   }
 
   Future<void> processCameraImage(CameraImage image) async {
@@ -84,83 +84,84 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Spacer(),
-            if (controller != null)
-              Container(
-                alignment: Alignment.center,
-                height: MediaQuery.of(context).size.height * 0.5,
-                child: CustomPaint(
-                  // foregroundPainter: BorderPainter(),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: AspectRatio(
-                      aspectRatio: 2 / 3,
-                      child: CameraPreview(controller!),
-                    ),
-                  ),
-                ),
-              ),
-            const SizedBox(height: 50),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Tự động chụp",
-                  style: context.textTheme.titleSmall!.copyWith(
-                    color: context.theme.primaryColor,
-                  ),
-                ),
-                SizedBox(
-                  child: CupertinoSwitch(
-                    activeColor: context.theme.primaryColor,
-                    value: false,
-                    onChanged: (value) {},
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(height: 20),
-            GestureDetector(
-              onTap: () async {
-                XFile file = await controller!.takePicture();
-                Future.delayed(const Duration(milliseconds: 200), () {
-                  context.startCameraResult(file: file);
-                  // Navigator.pop(context, file);
-                });
-              },
-              child: Container(
-                width: 70,
-                height: 70,
-                padding: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(90),
-                  border: Border.all(
-                    color: context.theme.primaryColor,
-                    width: 1,
-                  ),
-                ),
-                child: Container(
-                    decoration: BoxDecoration(
-                      color: context.theme.primaryColor,
-                      borderRadius: BorderRadius.circular(90),
-                    ),
-                    child: const Icon(
-                      Icons.camera_alt,
-                      color: AppColors.white,
-                      size: 30,
-                    )),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+    return Container();
+    // return Scaffold(
+    //   body: SafeArea(
+    //     child: Column(
+    //       crossAxisAlignment: CrossAxisAlignment.center,
+    //       children: [
+    //         const Spacer(),
+    //         if (controller != null)
+    //           Container(
+    //             alignment: Alignment.center,
+    //             height: MediaQuery.of(context).size.height * 0.5,
+    //             child: CustomPaint(
+    //               // foregroundPainter: BorderPainter(),
+    //               child: ClipRRect(
+    //                 borderRadius: BorderRadius.circular(10),
+    //                 child: AspectRatio(
+    //                   aspectRatio: 2 / 3,
+    //                   child: CameraPreview(controller!),
+    //                 ),
+    //               ),
+    //             ),
+    //           ),
+    //         const SizedBox(height: 50),
+    //         Row(
+    //           mainAxisAlignment: MainAxisAlignment.center,
+    //           children: [
+    //             Text(
+    //               "Tự động chụp",
+    //               style: context.textTheme.titleSmall!.copyWith(
+    //                 color: context.theme.primaryColor,
+    //               ),
+    //             ),
+    //             SizedBox(
+    //               child: CupertinoSwitch(
+    //                 activeColor: context.theme.primaryColor,
+    //                 value: false,
+    //                 onChanged: (value) {},
+    //               ),
+    //             )
+    //           ],
+    //         ),
+    //         const SizedBox(height: 20),
+    //         GestureDetector(
+    //           onTap: () async {
+    //             XFile file = await controller!.takePicture();
+    //             Future.delayed(const Duration(milliseconds: 200), () {
+    //               context.startCameraResult(file: file);
+    //               // Navigator.pop(context, file);
+    //             });
+    //           },
+    //           child: Container(
+    //             width: 70,
+    //             height: 70,
+    //             padding: const EdgeInsets.all(5),
+    //             decoration: BoxDecoration(
+    //               color: AppColors.white,
+    //               borderRadius: BorderRadius.circular(90),
+    //               border: Border.all(
+    //                 color: context.theme.primaryColor,
+    //                 width: 1,
+    //               ),
+    //             ),
+    //             child: Container(
+    //                 decoration: BoxDecoration(
+    //                   color: context.theme.primaryColor,
+    //                   borderRadius: BorderRadius.circular(90),
+    //                 ),
+    //                 child: const Icon(
+    //                   Icons.camera_alt,
+    //                   color: AppColors.white,
+    //                   size: 30,
+    //                 )),
+    //           ),
+    //         )
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 }
 
