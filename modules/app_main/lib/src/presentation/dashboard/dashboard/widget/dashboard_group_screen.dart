@@ -32,6 +32,8 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
     text: widget.group.title,
   );
 
+  int _page = 0;
+
   bool enableRemoveButton = false;
 
   bool isChanged = false;
@@ -159,16 +161,16 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
                           sigmaY: 16.0,
                         ),
                         child: Container(
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.height * 0.4,
+                          width: MediaQuery.of(context).size.width - 32,
+                          height: (MediaQuery.of(context).size.width - 32) + 20,
                           decoration: BoxDecoration(
                             color: const Color.fromRGBO(17, 17, 17, 0.40),
                             borderRadius: BorderRadius.circular(32),
                           ),
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: GridView.count(
+                          child: Builder(
+                            builder: (_) {
+                              if (widget.group.items.length <= 9) {
+                                return GridView.count(
                                   padding: const EdgeInsets.all(16.0),
                                   crossAxisCount: 3,
                                   crossAxisSpacing: 20,
@@ -221,9 +223,160 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
                                         enableRemoveIcon: enableRemoveButton,
                                       ),
                                   ],
-                                ),
-                              ),
-                            ],
+                                );
+                              }
+                              return Column(
+                                children: [
+                                  Expanded(
+                                    child: PageView(
+                                      onPageChanged: (page) {
+                                        setState(() {
+                                          _page = page;
+                                        });
+                                      },
+                                      children: [
+                                        GridView.count(
+                                          padding: const EdgeInsets.all(16.0),
+                                          crossAxisCount: 3,
+                                          crossAxisSpacing: 20,
+                                          mainAxisSpacing: 20,
+                                          shrinkWrap: true,
+                                          children: [
+                                            if (enableRemoveButton)
+                                              ..._group.items.take(9).map(
+                                                    (e) => AppIconAnimation(
+                                                      child: AppWidget(
+                                                        app: e,
+                                                        enableRemoveIcon:
+                                                            enableRemoveButton,
+                                                        onRemoved: () {
+                                                          context.removeConfirm(
+                                                              onRemoved: () {
+                                                            isChanged = true;
+                                                            setState(() {
+                                                              _group = _group
+                                                                  .copyWith(
+                                                                items: _group
+                                                                    .items
+                                                                    .where((i) =>
+                                                                        i.id !=
+                                                                        e.id)
+                                                                    .toList(),
+                                                              );
+                                                            });
+                                                          });
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                            if (!enableRemoveButton)
+                                              ..._group.items.take(9).map(
+                                                    (e) => AppWidget(
+                                                      app: e,
+                                                      enableRemoveIcon:
+                                                          enableRemoveButton,
+                                                      onRemoved: () {
+                                                        isChanged = true;
+                                                        setState(() {
+                                                          _group =
+                                                              _group.copyWith(
+                                                            items: _group.items
+                                                                .where((i) =>
+                                                                    i.id !=
+                                                                    e.id)
+                                                                .toList(),
+                                                          );
+                                                        });
+                                                      },
+                                                    ),
+                                                  ),
+                                            if (widget.moveItem != null)
+                                              AppWidget(
+                                                app: widget.moveItem!,
+                                                enableRemoveIcon:
+                                                    enableRemoveButton,
+                                              ),
+                                          ],
+                                        ),
+                                        GridView.count(
+                                          padding: const EdgeInsets.all(16.0),
+                                          crossAxisCount: 3,
+                                          crossAxisSpacing: 20,
+                                          mainAxisSpacing: 20,
+                                          shrinkWrap: true,
+                                          children: [
+                                            if (enableRemoveButton)
+                                              ..._group.items.sublist(9).map(
+                                                    (e) => AppIconAnimation(
+                                                      child: AppWidget(
+                                                        app: e,
+                                                        enableRemoveIcon:
+                                                            enableRemoveButton,
+                                                        onRemoved: () {
+                                                          context.removeConfirm(
+                                                              onRemoved: () {
+                                                            isChanged = true;
+                                                            setState(() {
+                                                              _group = _group
+                                                                  .copyWith(
+                                                                items: _group
+                                                                    .items
+                                                                    .where((i) =>
+                                                                        i.id !=
+                                                                        e.id)
+                                                                    .toList(),
+                                                              );
+                                                            });
+                                                          });
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                            if (!enableRemoveButton)
+                                              ..._group.items.sublist(9).map(
+                                                    (e) => AppWidget(
+                                                      app: e,
+                                                      enableRemoveIcon:
+                                                          enableRemoveButton,
+                                                      onRemoved: () {
+                                                        isChanged = true;
+                                                        setState(() {
+                                                          _group =
+                                                              _group.copyWith(
+                                                            items: _group.items
+                                                                .where((i) =>
+                                                                    i.id !=
+                                                                    e.id)
+                                                                .toList(),
+                                                          );
+                                                        });
+                                                      },
+                                                    ),
+                                                  ),
+                                            if (widget.moveItem != null)
+                                              AppWidget(
+                                                app: widget.moveItem!,
+                                                enableRemoveIcon:
+                                                    enableRemoveButton,
+                                              ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Builder(
+                                    builder: (ctx) => Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: List.generate(
+                                        3,
+                                            (index) => _buildDot(ctx, index),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
                           ),
                         ),
                       ),
@@ -235,6 +388,19 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildDot(BuildContext context, int index) {
+    final page = _page;
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 4.0),
+      width: 8,
+      height: 8,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: page == index ? Colors.white : Colors.white.withOpacity(.2),
       ),
     );
   }
