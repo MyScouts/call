@@ -1,47 +1,43 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-enum GenderType { male, female, other }
+enum MaritalStatus { single, married }
 
-extension GenderTypeExt on GenderType {
+extension MaritalStatusExt on MaritalStatus {
   String getText() {
     switch (this) {
-      case GenderType.male:
-        return 'Nam';
-      case GenderType.female:
-        return 'Nữ';
-      case GenderType.other:
-        return 'Khác';
+      case MaritalStatus.single:
+        return 'Single';
+      case MaritalStatus.married:
+        return 'Married';
     }
   }
 
-  int toValue() {
+  String toValue() {
     switch (this) {
-      case GenderType.male:
-        return 1;
-      case GenderType.female:
-        return 0;
-      case GenderType.other:
-        return 2;
+      case MaritalStatus.single:
+        return 'Single';
+      case MaritalStatus.married:
+        return 'Married';
     }
   }
 }
 
-class GenderInput extends StatefulWidget {
-  final Function(int) onChange;
+class MaritalStatusDropDown extends StatefulWidget {
+  final Function(String) onChange;
   final bool required;
-  const GenderInput({
+  const MaritalStatusDropDown({
     super.key,
     required this.onChange,
     this.required = false,
   });
 
   @override
-  State<GenderInput> createState() => _GenderInputState();
+  State<MaritalStatusDropDown> createState() => _MaritalStatusDropDownState();
 }
 
-class _GenderInputState extends State<GenderInput> {
-  GenderType value = GenderType.male;
+class _MaritalStatusDropDownState extends State<MaritalStatusDropDown> {
+  MaritalStatus value = MaritalStatus.single;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +47,7 @@ class _GenderInputState extends State<GenderInput> {
         Row(
           children: [
             const Text(
-              "Giới tính",
+              "Tình trạng hôn nhân",
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Color(0xFF212121),
@@ -70,7 +66,7 @@ class _GenderInputState extends State<GenderInput> {
           ],
         ),
         const SizedBox(height: 7),
-        DropdownButtonFormField2<GenderType>(
+        DropdownButtonFormField2<MaritalStatus>(
           isExpanded: true,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 12),
@@ -79,12 +75,12 @@ class _GenderInputState extends State<GenderInput> {
             ),
           ),
           hint: const Text(
-            'Chọn giới tính.',
+            'Chọn tình trạng hôn nhân.',
             style: TextStyle(fontSize: 14),
           ),
           value: value,
-          items: GenderType.values
-              .map((item) => DropdownMenuItem<GenderType>(
+          items: MaritalStatus.values
+              .map((item) => DropdownMenuItem<MaritalStatus>(
                     value: item,
                     child: Text(
                       item.getText(),
@@ -97,7 +93,7 @@ class _GenderInputState extends State<GenderInput> {
           validator: (value) {
             print(value);
             if (value == null) {
-              return 'Chọn giới tính.';
+              return 'Chọn tình trạng hôn nhân.';
             }
             return null;
           },

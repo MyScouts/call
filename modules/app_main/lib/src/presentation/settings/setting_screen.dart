@@ -2,6 +2,8 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
+import 'package:app_main/src/presentation/information_profile/information_profile_coordinator.dart';
+import 'package:app_main/src/presentation/information_profile/screens/information_profile_screen.dart';
 import 'package:app_main/src/presentation/settings/setting_constants.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
@@ -52,8 +54,7 @@ class _SettingScreenState extends State<SettingScreen> {
           BlocListener<UserCubit, UserState>(
             listener: (context, state) {
               if (state is OnboardingFail) {
-                showToastMessage("Lỗi hệ thống, vui lòng thử lại sau.",
-                    ToastMessageType.warning);
+                showToastMessage("Lỗi hệ thống, vui lòng thử lại sau.", ToastMessageType.warning);
                 context.startDashboardUtil();
                 return;
               }
@@ -198,7 +199,8 @@ class _SettingScreenState extends State<SettingScreen> {
 
   _buildSession1() {
     return GestureDetector(
-      onTap: () => context.startDiary(userId: _authInfo.id.toString()),
+      // onTap: () => context.startDiary(userId: _authInfo.id.toString()),
+      onTap: () => Navigator.of(context).push(_createRoute()),
       child: Container(
         padding: const EdgeInsets.symmetric(
           vertical: 15,
@@ -299,6 +301,15 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => const InformationProfileScreen(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return child;
+      },
+    );
+  }
+
   Widget _buildMenus(List<Setting> settings) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
@@ -313,10 +324,8 @@ class _SettingScreenState extends State<SettingScreen> {
             border: BorderRadius.only(
               topLeft: Radius.circular(index == 0 ? 10 : 0),
               topRight: Radius.circular(index == 0 ? 10 : 0),
-              bottomLeft:
-                  Radius.circular(index == settings.length - 1 ? 10 : 0),
-              bottomRight:
-                  Radius.circular(index == settings.length - 1 ? 10 : 0),
+              bottomLeft: Radius.circular(index == settings.length - 1 ? 10 : 0),
+              bottomRight: Radius.circular(index == settings.length - 1 ? 10 : 0),
             ),
           );
         }).toList(),

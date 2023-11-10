@@ -1,47 +1,55 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-enum GenderType { male, female, other }
+enum Bank { vpbank, sacombank, mbbank, vietcombank, tpbank }
 
-extension GenderTypeExt on GenderType {
+extension BankExt on Bank {
   String getText() {
     switch (this) {
-      case GenderType.male:
-        return 'Nam';
-      case GenderType.female:
-        return 'Nữ';
-      case GenderType.other:
-        return 'Khác';
+      case Bank.vpbank:
+        return 'VP Bank';
+      case Bank.sacombank:
+        return 'Sacombank';
+      case Bank.mbbank:
+        return 'MB Bank';
+      case Bank.vietcombank:
+        return 'Vietcombank';
+      case Bank.tpbank:
+        return 'TPBank';
     }
   }
 
-  int toValue() {
+  String toValue() {
     switch (this) {
-      case GenderType.male:
-        return 1;
-      case GenderType.female:
-        return 0;
-      case GenderType.other:
-        return 2;
+      case Bank.vpbank:
+        return 'VP Bank';
+      case Bank.sacombank:
+        return 'Sacombank';
+      case Bank.mbbank:
+        return 'MB Bank';
+      case Bank.vietcombank:
+        return 'Vietcombank';
+      case Bank.tpbank:
+        return 'TPBank';
     }
   }
 }
 
-class GenderInput extends StatefulWidget {
-  final Function(int) onChange;
+class BankDropdown extends StatefulWidget {
+  final Function(String) onChange;
   final bool required;
-  const GenderInput({
+  const BankDropdown({
     super.key,
     required this.onChange,
     this.required = false,
   });
 
   @override
-  State<GenderInput> createState() => _GenderInputState();
+  State<BankDropdown> createState() => _BankDropdownState();
 }
 
-class _GenderInputState extends State<GenderInput> {
-  GenderType value = GenderType.male;
+class _BankDropdownState extends State<BankDropdown> {
+  Bank value = Bank.vpbank;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +59,7 @@ class _GenderInputState extends State<GenderInput> {
         Row(
           children: [
             const Text(
-              "Giới tính",
+              "Tên ngân hàng",
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Color(0xFF212121),
@@ -70,7 +78,7 @@ class _GenderInputState extends State<GenderInput> {
           ],
         ),
         const SizedBox(height: 7),
-        DropdownButtonFormField2<GenderType>(
+        DropdownButtonFormField2<Bank>(
           isExpanded: true,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 12),
@@ -79,12 +87,12 @@ class _GenderInputState extends State<GenderInput> {
             ),
           ),
           hint: const Text(
-            'Chọn giới tính.',
+            'Chọn ngân hàng.',
             style: TextStyle(fontSize: 14),
           ),
           value: value,
-          items: GenderType.values
-              .map((item) => DropdownMenuItem<GenderType>(
+          items: Bank.values
+              .map((item) => DropdownMenuItem<Bank>(
                     value: item,
                     child: Text(
                       item.getText(),
@@ -97,7 +105,7 @@ class _GenderInputState extends State<GenderInput> {
           validator: (value) {
             print(value);
             if (value == null) {
-              return 'Chọn giới tính.';
+              return 'Chọn ngân hàng.';
             }
             return null;
           },

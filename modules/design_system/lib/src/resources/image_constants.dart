@@ -46,6 +46,8 @@ class ImageConstants {
   static String bg11 = ImageApp.bg11.path;
   static String imgDefaultTeamBanner = ImageApp.imgDefaultTeamBanner.path;
   static String guidePdone = ImageApp.guidePdone.path;
+  static String imageCamera = ImageApp.imageCamera.path;
+  static String imageEmpty = ImageApp.imageEmpty.path;
 }
 
 enum ImageApp {
@@ -96,7 +98,9 @@ enum ImageApp {
   bg8('assets/images/bg8.png'),
   bg9('assets/images/bg9.png'),
   bg10('assets/images/bg10.png'),
-  bg11('assets/images/bg11.png');
+  bg11('assets/images/bg11.png'),
+  imageCamera('assets/images/img_camera.png'),
+  imageEmpty('assets/images/img_empty.png');
 
   const ImageApp(this.path);
 

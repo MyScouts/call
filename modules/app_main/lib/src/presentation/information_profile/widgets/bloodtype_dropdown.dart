@@ -1,47 +1,59 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-enum GenderType { male, female, other }
+enum BloodType { a, b, ab, aplus, bplus, abplus }
 
-extension GenderTypeExt on GenderType {
+extension BloodTypeExt on BloodType {
   String getText() {
     switch (this) {
-      case GenderType.male:
-        return 'Nam';
-      case GenderType.female:
-        return 'Nữ';
-      case GenderType.other:
-        return 'Khác';
+      case BloodType.a:
+        return 'A';
+      case BloodType.b:
+        return 'B';
+      case BloodType.ab:
+        return 'AB';
+      case BloodType.aplus:
+        return 'A+';
+      case BloodType.bplus:
+        return 'B+';
+      case BloodType.abplus:
+        return 'AB+';
     }
   }
 
-  int toValue() {
+  String toValue() {
     switch (this) {
-      case GenderType.male:
-        return 1;
-      case GenderType.female:
-        return 0;
-      case GenderType.other:
-        return 2;
+      case BloodType.a:
+        return 'A';
+      case BloodType.b:
+        return 'B';
+      case BloodType.ab:
+        return 'AB';
+      case BloodType.aplus:
+        return 'A+';
+      case BloodType.bplus:
+        return 'B+';
+      case BloodType.abplus:
+        return 'AB+';
     }
   }
 }
 
-class GenderInput extends StatefulWidget {
-  final Function(int) onChange;
+class BloodTypeDropDown extends StatefulWidget {
+  final Function(String) onChange;
   final bool required;
-  const GenderInput({
+  const BloodTypeDropDown({
     super.key,
     required this.onChange,
     this.required = false,
   });
 
   @override
-  State<GenderInput> createState() => _GenderInputState();
+  State<BloodTypeDropDown> createState() => _BloodTypeDropDownState();
 }
 
-class _GenderInputState extends State<GenderInput> {
-  GenderType value = GenderType.male;
+class _BloodTypeDropDownState extends State<BloodTypeDropDown> {
+  BloodType value = BloodType.a;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +63,7 @@ class _GenderInputState extends State<GenderInput> {
         Row(
           children: [
             const Text(
-              "Giới tính",
+              "Nhóm máu",
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Color(0xFF212121),
@@ -70,7 +82,7 @@ class _GenderInputState extends State<GenderInput> {
           ],
         ),
         const SizedBox(height: 7),
-        DropdownButtonFormField2<GenderType>(
+        DropdownButtonFormField2<BloodType>(
           isExpanded: true,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 12),
@@ -79,12 +91,12 @@ class _GenderInputState extends State<GenderInput> {
             ),
           ),
           hint: const Text(
-            'Chọn giới tính.',
+            'Chọn tỉnh thành.',
             style: TextStyle(fontSize: 14),
           ),
           value: value,
-          items: GenderType.values
-              .map((item) => DropdownMenuItem<GenderType>(
+          items: BloodType.values
+              .map((item) => DropdownMenuItem<BloodType>(
                     value: item,
                     child: Text(
                       item.getText(),
@@ -97,7 +109,7 @@ class _GenderInputState extends State<GenderInput> {
           validator: (value) {
             print(value);
             if (value == null) {
-              return 'Chọn giới tính.';
+              return 'Chọn tình thành.';
             }
             return null;
           },

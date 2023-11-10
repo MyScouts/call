@@ -4,9 +4,11 @@ import '../../ui.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final bool? hideActionButtons;
   const BaseAppBar({
     super.key,
     required this.title,
+    this.hideActionButtons = false,
   });
 
   @override
@@ -19,8 +21,8 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       leading: const CustomBackButton(alignment: Alignment.centerRight),
       shape: Border.all(width: 0, color: Colors.transparent),
-      actions: const [
-        CustomCloseButton(alignment: Alignment.centerLeft),
+      actions: [
+        hideActionButtons! ? Container() : const CustomCloseButton(alignment: Alignment.centerLeft),
       ],
     );
   }
