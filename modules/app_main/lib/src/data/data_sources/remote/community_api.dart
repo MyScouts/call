@@ -11,6 +11,7 @@ import 'package:retrofit/retrofit.dart';
 import '../../models/payloads/community/update_community_payload.dart';
 import '../../models/responses/api_response.dart';
 import '../../models/responses/boss_community_status_response.dart';
+import '../../models/responses/boss_team_relinquish_status_response.dart';
 import '../../models/responses/confirm_response.dart';
 import '../../models/responses/group_response.dart';
 import '../../models/responses/leave_team_status_response.dart';
@@ -55,6 +56,10 @@ class CommunityApiConstants {
       'api/v1/team/{teamId}/reply-leave-request';
   static const String assignBoss = 'api/v1/team/{teamId}/assign-boss';
   static const String revokeBoss = 'api/v1/team/{teamId}/revoke-boss';
+  static const String relinquishBossTeam =
+      '/api/v1/team/{id}/give-up-boss-role';
+  static const String getBossTeamRelinquishStatus =
+      '/api/v1/team/{id}/boss-status';
 }
 
 @RestApi()
@@ -197,4 +202,13 @@ abstract class CommunityApi {
 
   @POST(CommunityApiConstants.revokeBoss)
   Future revokeBoss(@Path() String teamId);
+  @POST(CommunityApiConstants.relinquishBossTeam)
+  Future<ConfirmResponse> relinquishBossTeam({
+    @Path('id') required String id,
+  });
+
+  @GET(CommunityApiConstants.getBossTeamRelinquishStatus)
+  Future<BossTeamRelinquishStatusResponse> getBossTeamRelinquishStatus(
+    @Path() String id,
+  );
 }

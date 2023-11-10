@@ -11,6 +11,7 @@ import 'groups/group_listing_bloc.dart';
 
 class CommunityConstant {
   static const int dayForRelinquishBossGroupRequest = 40;
+  static const int dayForRelinquishBossTeamRequest = 45;
   static const int dayForLeaveTeamRequest = 90;
 }
 
@@ -58,6 +59,24 @@ extension CommunityTypeExt on CommunityType {
         return 'Tên Group';
       case CommunityType.team:
         return 'Tên Team';
+    }
+  }
+
+  String get text {
+    switch (this) {
+      case CommunityType.group:
+        return 'Group';
+      case CommunityType.team:
+        return 'Team';
+    }
+  }
+
+  String get relinquishContent {
+    switch (this) {
+      case CommunityType.group:
+        return 'Khi từ chức Boss Group bạn vẫn sẽ là Boss Team của Team hiện tại nhưng bạn sẽ mất các đặc quyền của Boss Group.';
+      case CommunityType.team:
+        return 'Khi thôi thức Boss Team bạn vẫn sẽ là thành viên của Team hiện tại nhưng bạn sẽ mất các đặc quyền của Boss Team.';
     }
   }
 
@@ -257,6 +276,11 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
   Future<void> onTap(BuildContext context, {required Team team}) async {
     switch (this) {
       case UpdateTeamOption.relinquish:
+        final getBossTeamRelinquishStatus =
+            context.read<GetBossTeamRelinquishStatusBloc>();
+        return getBossTeamRelinquishStatus
+            .add(GetDetailDataParam1Event(team.id));
+
       case UpdateTeamOption.invite:
       case UpdateTeamOption.kick:
       case UpdateTeamOption.edit:

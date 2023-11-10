@@ -40,21 +40,7 @@ class _AskToJoinTeamScreenState extends State<AskToJoinTeamScreen>
       listener: _onAskToJoinListen,
       child: Scaffold(
         appBar: AppBar(
-          title: Column(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(bottom: 8),
-                child: Text('Đăng ký tham gia team'),
-              ),
-              Text(
-                'Số: ${pDoneId}JA',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: const Color(0xff828282)),
-              ),
-            ],
-          ),
+          title: const Text('Đăng ký tham gia team'),
           centerTitle: true,
           titleSpacing: 0,
           elevation: 0,

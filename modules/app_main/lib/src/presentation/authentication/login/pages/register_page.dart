@@ -27,8 +27,7 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
   final _passwordCtrl = TextEditingController();
   final _rePasswordCtrl = TextEditingController();
   final genderCtrl = TextEditingController();
-  final ValueNotifier<String?> _birthDateError =
-      ValueNotifier("Nhập ngày sinh");
+  final ValueNotifier<String?> _birthDateError = ValueNotifier("");
   DateTime? birthDay;
   int _gender = 1;
   String _phoneCode = "+84";
@@ -92,6 +91,7 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
       },
       child: Form(
         key: formKey,
+        autovalidateMode: AutovalidateMode.disabled,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
@@ -195,8 +195,6 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                               } else {
                                 _birthDateError.value = null;
                               }
-                            } else {
-                              _birthDateError.value = "Nhập ngày sinh.";
                             }
                           },
                         ),
