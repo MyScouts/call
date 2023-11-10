@@ -88,12 +88,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                 ? IconButton(
                     onPressed: () {
                       if (isBossGroup && isBossTeam || isBossTeam) {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => BlocProvider<TeamDetailBloc>.value(
-                            value: teamDetailBloc,
-                            child: UpdateTeamOptionsScreen(team: team!),
-                          ),
-                        ));
+                        context.startUpdateTeamOptionsScreen(team: team!);
                       } else if (isBossGroup) {
                         context
                             .startBossGroupMenu(

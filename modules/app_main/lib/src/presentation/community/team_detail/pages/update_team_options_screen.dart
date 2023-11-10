@@ -18,6 +18,13 @@ class UpdateTeamOptionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<UpdateTeamOption> menus = List.from(UpdateTeamOption.values);
+    menus.removeWhere(
+      (element) =>
+          team.boss?.id != team.group?.boss?.id &&
+          [UpdateTeamOption.revokeBoss, UpdateTeamOption.assignBoss]
+              .contains(element),
+    );
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -29,7 +36,7 @@ class UpdateTeamOptionsScreen extends StatelessWidget {
         body: BlocListener<GetBossTeamRelinquishStatusBloc, GetDetailState>(
           listener: _onGetBossTeamRelinquishStatusBlocListen,
           child: Column(
-            children: UpdateTeamOption.values
+            children: menus
                 .map(
                   (option) => Container(
                     decoration: const BoxDecoration(
