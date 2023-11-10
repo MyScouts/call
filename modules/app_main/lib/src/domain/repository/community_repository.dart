@@ -6,6 +6,7 @@ import 'package:app_main/src/data/models/responses/member_join_request.dart';
 import '../../data/models/payloads/community/reply_give_up_boss_team_role_payload.dart';
 import '../../data/models/payloads/community/update_community_payload.dart';
 import '../../data/models/responses/boss_community_status_response.dart';
+import '../../data/models/responses/boss_team_relinquish_status_response.dart';
 import '../../data/models/responses/confirm_response.dart';
 import '../../data/models/responses/leave_team_status_response.dart';
 
@@ -71,4 +72,8 @@ abstract class CommunityRepository {
 
   Future replyJoinRequest(String teamId, ReplyJoinRequestPayload payload);
   Future replyLeaveRequest(String teamId, ReplyJoinRequestPayload payload);
+
+  Future<ConfirmResponse> relinquishBossTeam(String id);
+
+  Future<BossTeamRelinquishStatusResponse> getBossTeamRelinquishStatus(String id);
 }

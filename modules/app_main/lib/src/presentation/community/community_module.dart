@@ -23,9 +23,9 @@ abstract class CommunityModule {
       GetBossStatusBloc(usecase.getBossGroupStatus);
 
   @factory
-  RelinquishBossGroupBloc createRelinquishBossGroupBloc(
+  RelinquishBossRoleBloc createRelinquishBossRoleBloc(
           CommunityUsecase usecase) =>
-      RelinquishBossGroupBloc(usecase.relinquishBossGroup);
+      RelinquishBossRoleBloc(usecase.relinquishBossRole);
 
   @factory
   GetGroupRequestsBloc createGetGroupRequestsBloc(CommunityUsecase usecase) =>
@@ -35,4 +35,9 @@ abstract class CommunityModule {
   ReplyGiveUpBossTeamBloc createReplyGiveUpBossTeamBloc(
           CommunityUsecase usecase) =>
       ReplyGiveUpBossTeamBloc(usecase.replyGiveUpBossTeamRole);
+
+  @factory
+  GetBossTeamRelinquishStatusBloc createGetBossTeamRelinquishStatusBloc(
+          CommunityUsecase usecase) =>
+      GetBossTeamRelinquishStatusBloc(usecase.getBossTeamRelinquishStatus);
 }

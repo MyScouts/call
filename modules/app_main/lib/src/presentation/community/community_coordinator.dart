@@ -1,6 +1,6 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/presentation/community/group_detail/update_community_options_screen.dart';
-import 'package:app_main/src/presentation/community/team_detail/bloc/team_detail_bloc.dart';
+import 'package:app_main/src/presentation/community/group_detail/update_group_options_screen.dart';
+import 'package:app_main/src/presentation/community/groups/group_listing_bloc.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/ask_tojoin_team_success_screen.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/team_request_list_screen.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/update_team_options_screen.dart';
@@ -12,10 +12,8 @@ import 'community_constants.dart';
 import 'edit_community_detail/edit_community_detail_screen.dart';
 import 'edit_fan_group/edit_fan_group_screen.dart';
 import 'fan_group_detail/fan_group_detail_screen.dart';
-import 'group_detail/edit_group_detail.dart';
 import 'group_detail/group_detail_screen.dart';
 import 'group_detail/group_request_list_screen.dart';
-import 'groups/group_listing_bloc.dart';
 import 'team_detail/pages/ask_to_join_team_screen.dart';
 import 'team_detail/team_detail_screen.dart';
 
@@ -82,7 +80,7 @@ extension CommunityCoordinator on BuildContext {
 
   Future<T?> startUpdateGroupOptions<T>({required Community community}) {
     return Navigator.of(this).pushNamed(
-      EditGroupDetail.routeName,
+      UpdateGroupOptionScreen.routeName,
       arguments: {'community': community},
     );
   }
@@ -91,20 +89,19 @@ extension CommunityCoordinator on BuildContext {
     return Navigator.of(this).pushNamed(GroupRequestListScreen.routeName);
   }
 
-  Future<T?> startDialogRelinquishBoss<T>(String id) {
+  Future<T?> startDialogRelinquishBoss<T>(String id, CommunityType communityType) {
     return showGeneralDialog<T>(
       context: this,
       barrierDismissible: false,
       barrierLabel: '',
       pageBuilder: (context, animation1, animation2) {
         return ConfirmDialog(
-          title: 'Từ chức Boss group?',
+          title: 'Từ chức Boss ${communityType.text}?',
           actionTitle: 'Từ chức',
-          content:
-              'Khi từ chức Boss Group bạn vẫn sẽ là Boss Team của Team hiện tại nhưng bạn sẽ mất các đặc quyền của Boss Group.',
+          content: communityType.relinquishContent,
           onAction: () {
-            final bloc = injector.get<RelinquishBossGroupBloc>();
-            bloc.add(GetDetailDataParam1Event(id));
+            final bloc = injector.get<RelinquishBossRoleBloc>();
+            bloc.add(GetDetailDataParam2Event(id, communityType));
           },
         );
       },

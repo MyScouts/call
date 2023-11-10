@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
 import 'package:app_main/src/data/models/payloads/community/reply_give_up_boss_team_role_payload.dart';
 import 'package:app_main/src/data/models/responses/boss_community_status_response.dart';
+import 'package:app_main/src/data/models/responses/boss_team_relinquish_status_response.dart';
 import 'package:app_main/src/data/models/responses/confirm_response.dart';
 import 'package:app_main/src/data/models/responses/group_request_response.dart';
 import 'package:app_main/src/data/models/responses/leave_team_status_response.dart';
@@ -198,5 +199,15 @@ class CommunityRepositoryImpl extends CommunityRepository {
   @override
   Future replyLeaveRequest(String teamId, ReplyJoinRequestPayload payload) {
     return _communityApi.replyLeaveRequest(teamId, payload.toJson());
+  }
+
+  @override
+  Future<ConfirmResponse> relinquishBossTeam(String id) async {
+    return await _communityApi.relinquishBossTeam(id: id);
+  }
+
+  @override
+  Future<BossTeamRelinquishStatusResponse> getBossTeamRelinquishStatus(String id) async {
+    return await _communityApi.getBossTeamRelinquishStatus(id);
   }
 }

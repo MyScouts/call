@@ -11,11 +11,11 @@ import '../../../data/models/responses/confirm_response.dart';
 import '../community_constants.dart';
 import '../groups/group_listing_bloc.dart';
 
-class UpdateCommunityOptionScreen extends StatelessWidget {
+class UpdateGroupOptionScreen extends StatelessWidget {
   final Community community;
   static const String routeName = '/update-group-options';
 
-  const UpdateCommunityOptionScreen({super.key, required this.community});
+  const UpdateGroupOptionScreen({super.key, required this.community});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class UpdateCommunityOptionScreen extends StatelessWidget {
       ),
       body: BlocListener<GetBossStatusBloc, GetDetailState>(
         listener: _onGetBossStatusBloc,
-        child: BlocConsumer<RelinquishBossGroupBloc, GetDetailState>(
+        child: BlocConsumer<RelinquishBossRoleBloc, GetDetailState>(
           listener: _onRelinquishBossGroup,
           builder: (context, state) => Column(
             children: UpdateGroupOption.values
@@ -72,7 +72,10 @@ class UpdateCommunityOptionScreen extends StatelessWidget {
     } else if (state is GetDetailDataSuccess<BossCommunityStatusResponse>) {
       context.hideLoading();
       if (state.data.giveUpBossRoleRequest == null) {
-        context.startDialogRelinquishBoss('${community.id}');
+        context.startDialogRelinquishBoss(
+          '${community.id}',
+          CommunityType.group,
+        );
       } else {
         final dayLeft = state.data.giveUpBossRoleRequest!.createdAt!
             .add(const Duration(
