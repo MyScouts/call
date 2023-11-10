@@ -9,6 +9,7 @@ import 'drag_notification.dart';
 class ReorderableStaggeredScrollViewListItem {
   final Key key;
   final Widget widget;
+  final bool isDrag;
 
   /// Creates a [ReorderableStaggeredScrollViewListItem].
   ///
@@ -17,6 +18,7 @@ class ReorderableStaggeredScrollViewListItem {
   const ReorderableStaggeredScrollViewListItem({
     required this.key,
     required this.widget,
+    this.isDrag = true,
   });
 
   @override
@@ -48,6 +50,7 @@ class ReorderableStaggeredScrollViewGridItem
     required this.mainAxisCellCount,
     required this.crossAxisCellCount,
     required super.widget,
+    super.isDrag,
   });
 
   @override
@@ -262,7 +265,7 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
         onDragUpdate,
     void Function(Velocity, Offset, ReorderableStaggeredScrollViewGridItem)?
         onDraggableCanceled,
-    void Function(DraggableDetails, ReorderableStaggeredScrollViewGridItem)?
+    void Function(DraggableDetails, ReorderableStaggeredScrollViewListItem)?
         onDragEnd,
     void Function(ReorderableStaggeredScrollViewGridItem)? onDragCompleted,
     void Function(ReorderableStaggeredScrollViewListItem,
@@ -270,7 +273,7 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
         onGroup,
     this.scrollController,
     this.isDragNotification = false,
-    this.draggingWidgetOpacity = 0.5,
+    this.draggingWidgetOpacity = 0.0,
     this.edgeScroll = 0.1,
     this.edgeScrollSpeedMilliseconds = 100,
     List<ReorderableStaggeredScrollViewGridItem>? this.isNotDragList,
@@ -298,12 +301,8 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
             DragUpdateDetails, ReorderableStaggeredScrollViewListItem)?,
         onDraggableCanceled = onDraggableCanceled as void Function(
             Velocity, Offset, ReorderableStaggeredScrollViewListItem)?,
-        onDragEnd = (onDragEnd == null
-            ? null
-            : (DraggableDetails details,
-                    ReorderableStaggeredScrollViewListItem item) =>
-                onDragEnd(
-                    details, item as ReorderableStaggeredScrollViewGridItem)),
+        onDragEnd = onDragEnd as void Function(DraggableDetails details,
+            ReorderableStaggeredScrollViewListItem data)?,
         onDragCompleted = onDragCompleted as void Function(
             ReorderableStaggeredScrollViewListItem)?,
         onGroup = onGroup as void Function(
@@ -427,8 +426,8 @@ class _ReorderableStaggeredScrollViewState
                     return StaggeredGrid.count(
                       crossAxisCount: widget.crossAxisCount,
                       axisDirection: widget.axisDirection,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 15,
+                      crossAxisSpacing: 15,
                       children: children,
                     );
                   },

@@ -1,8 +1,12 @@
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_widget.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
+import 'package:app_main/src/presentation/dashboard/widget/clock_widget.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
+
+import 'app_icon_animation.dart';
 
 class DashBoardGroupScreen extends StatefulWidget {
   const DashBoardGroupScreen({
@@ -10,11 +14,13 @@ class DashBoardGroupScreen extends StatefulWidget {
     required this.group,
     this.moveItem,
     required this.onGroupCreated,
+    this.enableRemoveIcon = false,
   });
 
   final DashBoardGroupItem group;
   final DashBoardItem? moveItem;
   final Function(DashBoardGroupItem group) onGroupCreated;
+  final bool enableRemoveIcon;
 
   @override
   State<DashBoardGroupScreen> createState() => _DashBoardGroupScreenState();
@@ -26,6 +32,8 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
     text: widget.group.title,
   );
 
+  int _page = 0;
+
   bool enableRemoveButton = false;
 
   bool isChanged = false;
@@ -35,12 +43,13 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
   @override
   void initState() {
     _group = widget.group;
+    enableRemoveButton = widget.enableRemoveIcon;
     super.initState();
   }
 
   @override
   void dispose() {
-    if(isChanged) {
+    if (isChanged) {
       NotificationCenter.post(channel: changeGroupEvent, options: _group);
     }
     controller.dispose();
@@ -76,6 +85,11 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
             Navigator.of(context).pop();
           },
           behavior: HitTestBehavior.opaque,
+          onLongPress: () {
+            setState(() {
+              enableRemoveButton = true;
+            });
+          },
           child: Container(
             height: double.infinity,
             width: double.infinity,
@@ -147,28 +161,48 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
                           sigmaY: 16.0,
                         ),
                         child: Container(
-                          width: double.infinity,
-                          height: MediaQuery.of(context).size.height / 3,
+                          width: MediaQuery.of(context).size.width - 32,
+                          height: (MediaQuery.of(context).size.width - 32) + 20,
                           decoration: BoxDecoration(
                             color: const Color.fromRGBO(17, 17, 17, 0.40),
                             borderRadius: BorderRadius.circular(32),
                           ),
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: GridView.count(
+                          child: Builder(
+                            builder: (_) {
+                              if (widget.group.items.length <= 9) {
+                                return GridView.count(
                                   padding: const EdgeInsets.all(16.0),
-                                  crossAxisCount: 4,
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 20,
+                                  mainAxisSpacing: 20,
                                   children: [
-                                    ..._group.items.map(
-                                      (e) => GestureDetector(
-                                        onLongPress: () {
-                                          setState(() {
-                                            enableRemoveButton = true;
-                                          });
-                                        },
-                                        behavior: HitTestBehavior.opaque,
-                                        child: AppWidget(
+                                    if (enableRemoveButton)
+                                      ..._group.items.map(
+                                        (e) => AppIconAnimation(
+                                          child: AppWidget(
+                                            app: e,
+                                            enableRemoveIcon:
+                                                enableRemoveButton,
+                                            onRemoved: () {
+                                              context.removeConfirm(
+                                                  onRemoved: () {
+                                                isChanged = true;
+                                                setState(() {
+                                                  _group = _group.copyWith(
+                                                    items: _group.items
+                                                        .where(
+                                                            (i) => i.id != e.id)
+                                                        .toList(),
+                                                  );
+                                                });
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    if (!enableRemoveButton)
+                                      ..._group.items.map(
+                                        (e) => AppWidget(
                                           app: e,
                                           enableRemoveIcon: enableRemoveButton,
                                           onRemoved: () {
@@ -183,13 +217,166 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
                                           },
                                         ),
                                       ),
-                                    ),
                                     if (widget.moveItem != null)
-                                      AppWidget(app: widget.moveItem!),
+                                      AppWidget(
+                                        app: widget.moveItem!,
+                                        enableRemoveIcon: enableRemoveButton,
+                                      ),
                                   ],
-                                ),
-                              ),
-                            ],
+                                );
+                              }
+                              return Column(
+                                children: [
+                                  Expanded(
+                                    child: PageView(
+                                      onPageChanged: (page) {
+                                        setState(() {
+                                          _page = page;
+                                        });
+                                      },
+                                      children: [
+                                        GridView.count(
+                                          padding: const EdgeInsets.all(16.0),
+                                          crossAxisCount: 3,
+                                          crossAxisSpacing: 20,
+                                          mainAxisSpacing: 20,
+                                          shrinkWrap: true,
+                                          children: [
+                                            if (enableRemoveButton)
+                                              ..._group.items.take(9).map(
+                                                    (e) => AppIconAnimation(
+                                                      child: AppWidget(
+                                                        app: e,
+                                                        enableRemoveIcon:
+                                                            enableRemoveButton,
+                                                        onRemoved: () {
+                                                          context.removeConfirm(
+                                                              onRemoved: () {
+                                                            isChanged = true;
+                                                            setState(() {
+                                                              _group = _group
+                                                                  .copyWith(
+                                                                items: _group
+                                                                    .items
+                                                                    .where((i) =>
+                                                                        i.id !=
+                                                                        e.id)
+                                                                    .toList(),
+                                                              );
+                                                            });
+                                                          });
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                            if (!enableRemoveButton)
+                                              ..._group.items.take(9).map(
+                                                    (e) => AppWidget(
+                                                      app: e,
+                                                      enableRemoveIcon:
+                                                          enableRemoveButton,
+                                                      onRemoved: () {
+                                                        isChanged = true;
+                                                        setState(() {
+                                                          _group =
+                                                              _group.copyWith(
+                                                            items: _group.items
+                                                                .where((i) =>
+                                                                    i.id !=
+                                                                    e.id)
+                                                                .toList(),
+                                                          );
+                                                        });
+                                                      },
+                                                    ),
+                                                  ),
+                                            if (widget.moveItem != null)
+                                              AppWidget(
+                                                app: widget.moveItem!,
+                                                enableRemoveIcon:
+                                                    enableRemoveButton,
+                                              ),
+                                          ],
+                                        ),
+                                        GridView.count(
+                                          padding: const EdgeInsets.all(16.0),
+                                          crossAxisCount: 3,
+                                          crossAxisSpacing: 20,
+                                          mainAxisSpacing: 20,
+                                          shrinkWrap: true,
+                                          children: [
+                                            if (enableRemoveButton)
+                                              ..._group.items.sublist(9).map(
+                                                    (e) => AppIconAnimation(
+                                                      child: AppWidget(
+                                                        app: e,
+                                                        enableRemoveIcon:
+                                                            enableRemoveButton,
+                                                        onRemoved: () {
+                                                          context.removeConfirm(
+                                                              onRemoved: () {
+                                                            isChanged = true;
+                                                            setState(() {
+                                                              _group = _group
+                                                                  .copyWith(
+                                                                items: _group
+                                                                    .items
+                                                                    .where((i) =>
+                                                                        i.id !=
+                                                                        e.id)
+                                                                    .toList(),
+                                                              );
+                                                            });
+                                                          });
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                            if (!enableRemoveButton)
+                                              ..._group.items.sublist(9).map(
+                                                    (e) => AppWidget(
+                                                      app: e,
+                                                      enableRemoveIcon:
+                                                          enableRemoveButton,
+                                                      onRemoved: () {
+                                                        isChanged = true;
+                                                        setState(() {
+                                                          _group =
+                                                              _group.copyWith(
+                                                            items: _group.items
+                                                                .where((i) =>
+                                                                    i.id !=
+                                                                    e.id)
+                                                                .toList(),
+                                                          );
+                                                        });
+                                                      },
+                                                    ),
+                                                  ),
+                                            if (widget.moveItem != null)
+                                              AppWidget(
+                                                app: widget.moveItem!,
+                                                enableRemoveIcon:
+                                                    enableRemoveButton,
+                                              ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Builder(
+                                    builder: (ctx) => Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: List.generate(
+                                        3,
+                                            (index) => _buildDot(ctx, index),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
                           ),
                         ),
                       ),
@@ -201,6 +388,19 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildDot(BuildContext context, int index) {
+    final page = _page;
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 4.0),
+      width: 8,
+      height: 8,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: page == index ? Colors.white : Colors.white.withOpacity(.2),
       ),
     );
   }

@@ -16,8 +16,9 @@ import 'edit_fan_group/edit_fan_group_screen.dart';
 import 'fan_group_detail/bloc/fan_group_detail_bloc.dart';
 import 'fan_group_detail/fan_group_detail_screen.dart';
 import 'group_detail/bloc/group_detail_bloc.dart';
+import 'group_detail/edit_group_detail.dart';
 import 'group_detail/group_detail_screen.dart';
-import 'group_detail/update_community_options_screen.dart';
+import 'group_detail/update_group_options_screen.dart';
 import 'team_detail/bloc/team_detail_bloc.dart';
 import 'team_detail/pages/ask_tojoin_team_success_screen.dart';
 import 'team_detail/pages/team_request_list_screen.dart';
@@ -48,11 +49,7 @@ class CommunityRoutes extends RouteModule {
 
           return BlocProvider<GroupDetailBloc>(
             create: (context) => get(),
-            child: GroupDetailScreen(
-              id: args['id'],
-              cover: args['cover'],
-              groupName: args['groupName'],
-            ),
+            child: GroupDetailScreen(id: args['id']),
           );
         },
         TeamDetailScreen.routeName: (context) {
@@ -96,18 +93,18 @@ class CommunityRoutes extends RouteModule {
             ),
           );
         },
-        UpdateCommunityOptionScreen.routeName: (context) {
+        EditGroupDetail.routeName: (context) {
           final args = settings.arguments as Map<String, dynamic>;
           return MultiBlocProvider(
             providers: [
               BlocProvider<GetBossStatusBloc>(
                 create: (context) => injector.get(),
               ),
-              BlocProvider<RelinquishBossGroupBloc>(
+              BlocProvider<RelinquishBossRoleBloc>(
                 create: (context) => injector.get(),
               ),
             ],
-            child: UpdateCommunityOptionScreen(community: args['community']),
+            child: const EditGroupDetail(),
           );
         },
         GroupRequestListScreen.routeName: (context) {
@@ -138,8 +135,31 @@ class CommunityRoutes extends RouteModule {
         },
         UpdateTeamOptionsScreen.routeName: (context) {
           final args = settings.arguments as Team;
-
-          return UpdateTeamOptionsScreen(team: args);
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<RelinquishBossRoleBloc>(
+                create: (context) => injector.get(),
+              ),
+              BlocProvider<GetBossTeamRelinquishStatusBloc>(
+                create: (context) => injector.get(),
+              ),
+            ],
+            child: UpdateTeamOptionsScreen(team: args),
+          );
+        },
+        UpdateGroupOptionScreen.routeName: (context) {
+          final args = settings.arguments as Map<String, dynamic>;
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<GetBossStatusBloc>(
+                create: (context) => injector.get(),
+              ),
+              BlocProvider<RelinquishBossRoleBloc>(
+                create: (context) => injector.get(),
+              ),
+            ],
+            child: UpdateGroupOptionScreen(community: args['community']),
+          );
         },
       };
 }

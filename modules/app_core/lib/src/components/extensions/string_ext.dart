@@ -64,6 +64,22 @@ extension StringFormatPhoneExt on String? {
     }
     return this?[0] == '0' ? this! : '0${this!}';
   }
+
+  bool isJSON() {
+    try {
+      jsonDecode(this!);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+
+  String get toPhone {
+    if (this == null) {
+      return '';
+    }
+    return int.parse(this ?? '0').toString();
+  }
 }
 
 extension ImagePathToBase64 on String {

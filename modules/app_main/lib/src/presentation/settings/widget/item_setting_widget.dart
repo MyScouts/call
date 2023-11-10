@@ -10,6 +10,7 @@ class ItemSettingWidget extends StatelessWidget {
   final String? avatar;
   final String? icon;
   final BorderRadiusGeometry? border;
+  final bool hasBorder;
   final Function()? onPressed;
 
   const ItemSettingWidget({
@@ -21,6 +22,7 @@ class ItemSettingWidget extends StatelessWidget {
     this.icon,
     this.onPressed,
     this.border,
+    this.hasBorder = false,
   });
 
   @override
@@ -28,7 +30,10 @@ class ItemSettingWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        padding: const EdgeInsets.only(left: 10),
+        padding: const EdgeInsets.only(
+          left: 20,
+          right: 20,
+        ),
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: border ?? BorderRadius.circular(10),
@@ -36,7 +41,10 @@ class ItemSettingWidget extends StatelessWidget {
         ),
         child: Row(
           children: [
-            if (avatar != null) const IntrinsicHeight(child: CircleAvatar()),
+            if (avatar != null)
+              const IntrinsicHeight(
+                child: CircleAvatar(),
+              ),
             if (icon != null)
               IntrinsicHeight(
                 child: ImageWidget(
@@ -46,52 +54,51 @@ class ItemSettingWidget extends StatelessWidget {
               ),
             Expanded(
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      width: .5,
-                      color: Color(0xFFF2F2F6),
-                    ),
-                  ),
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                decoration: BoxDecoration(
+                  border: hasBorder
+                      ? const Border(
+                          bottom: BorderSide(
+                            width: .5,
+                            color: Color(0xFFF2F2F6),
+                          ),
+                        )
+                      : null,
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10, right: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (title != null)
-                            Text(
-                              title!,
-                              style: context.text.bodyLarge!.copyWith(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (title != null)
+                              Text(
+                                title!,
+                                style: context.text.bodyLarge!.copyWith(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                          if (name != null) const SizedBox(height: 2),
-                          if (name != null)
-                            Text(
-                              name!,
-                              style: context.text.titleSmall,
-                            ),
-                          if (summary != null)
-                            Text(
-                              summary!,
-                              style: context.text.titleSmall,
-                            )
-                        ],
-                      ),
-                      const RotatedBox(
-                        quarterTurns: 90,
-                        child: Icon(
-                          Icons.keyboard_arrow_left_outlined,
-                          size: 25,
-                          color: AppColors.grey14,
+                            if (name != null) const SizedBox(height: 2),
+                            if (name != null)
+                              Text(
+                                name!,
+                                softWrap: true,
+                                style: context.text.titleMedium!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            if (summary != null)
+                              Text(
+                                summary!,
+                                style: context.text.titleSmall,
+                              )
+                          ],
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

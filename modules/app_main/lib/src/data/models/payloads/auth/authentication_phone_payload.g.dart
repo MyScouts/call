@@ -6,20 +6,24 @@ part of 'authentication_phone_payload.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AuthenticationPhonePayload _$AuthenticationPhonePayloadFromJson(
+RegisterPhonePayload _$RegisterPhonePayloadFromJson(
         Map<String, dynamic> json) =>
-    AuthenticationPhonePayload(
+    RegisterPhonePayload(
       phoneNumber: json['phoneNumber'] as String,
       password: json['password'] as String,
       phoneCode: json['phoneCode'] as String,
+      birthday: json['birthday'] as String,
+      sex: json['sex'] as int,
     );
 
-Map<String, dynamic> _$AuthenticationPhonePayloadToJson(
-        AuthenticationPhonePayload instance) =>
+Map<String, dynamic> _$RegisterPhonePayloadToJson(
+        RegisterPhonePayload instance) =>
     <String, dynamic>{
       'phoneCode': instance.phoneCode,
       'phoneNumber': instance.phoneNumber,
       'password': instance.password,
+      'birthday': instance.birthday,
+      'sex': instance.sex,
     };
 
 CompletedPhoneRegisterPayload _$CompletedPhoneRegisterPayloadFromJson(
@@ -36,4 +40,20 @@ Map<String, dynamic> _$CompletedPhoneRegisterPayloadToJson(
       'phoneCode': instance.phoneCode,
       'phoneNumber': instance.phoneNumber,
       'otp': instance.otp,
+    };
+
+AuthenticationPhonePayload _$AuthenticationPhonePayloadFromJson(
+        Map<String, dynamic> json) =>
+    AuthenticationPhonePayload(
+      phoneNumber: json['phoneNumber'] as String,
+      password: json['password'] as String,
+      phoneCode: json['phoneCode'] as String,
+    );
+
+Map<String, dynamic> _$AuthenticationPhonePayloadToJson(
+        AuthenticationPhonePayload instance) =>
+    <String, dynamic>{
+      'phoneCode': instance.phoneCode,
+      'phoneNumber': instance.phoneNumber,
+      'password': instance.password,
     };

@@ -20,6 +20,8 @@ class AuthenticationRoutes extends RouteModule {
             phoneCode: args['phoneCode'],
             phoneNumber: args['phoneNumber'],
             password: args["password"],
+            birthDay: args['birthDay'],
+            sex: args['sex'],
           );
         },
         ForgotPasswordScreen.routeName: (context) {

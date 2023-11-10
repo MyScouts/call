@@ -32,11 +32,15 @@ extension AuthenticationCoordinator on BuildContext {
     required String phoneNumber,
     required String phoneCode,
     required String password,
+    required String birthDay,
+    required int sex,
   }) {
     return Navigator.of(this).pushNamed(VerifyOTPScreen.routeName, arguments: {
       "phoneNumber": phoneNumber,
       "phoneCode": phoneCode,
       "password": password,
+      "birthDay": birthDay,
+      "sex": sex,
     });
   }
 

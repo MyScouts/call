@@ -33,7 +33,19 @@ class ImageConstants {
   static String communityXayDung = ImageApp.communityXayDung.path;
   static String communityViecLam = ImageApp.communityViecLam.path;
   static String celebrate = ImageApp.celebrate.path;
+  static String bg1 = ImageApp.bg1.path;
+  static String bg2 = ImageApp.bg2.path;
+  static String bg3 = ImageApp.bg3.path;
+  static String bg4 = ImageApp.bg4.path;
+  static String bg5 = ImageApp.bg5.path;
+  static String bg6 = ImageApp.bg6.path;
+  static String bg7 = ImageApp.bg7.path;
+  static String bg8 = ImageApp.bg8.path;
+  static String bg9 = ImageApp.bg9.path;
+  static String bg10 = ImageApp.bg10.path;
+  static String bg11 = ImageApp.bg11.path;
   static String imgDefaultTeamBanner = ImageApp.imgDefaultTeamBanner.path;
+  static String guidePdone = ImageApp.guidePdone.path;
 }
 
 enum ImageApp {
@@ -72,8 +84,21 @@ enum ImageApp {
   communityDuLich('assets/images/dulich.jpg'),
   //modules/design_system/assets/images/celebrate.png
   imgDefaultTeamBanner('assets/images/img_default_team_banner.png'),
-  celebrate('assets/images/celebrate.png');
+  celebrate('assets/images/celebrate.png'),
+  guidePdone('assets/images/guidePdone.png'),
+  bg1('assets/images/bg1.png'),
+  bg2('assets/images/bg2.png'),
+  bg3('assets/images/bg3.png'),
+  bg4('assets/images/bg4.png'),
+  bg5('assets/images/bg5.png'),
+  bg6('assets/images/bg6.png'),
+  bg7('assets/images/bg7.png'),
+  bg8('assets/images/bg8.png'),
+  bg9('assets/images/bg9.png'),
+  bg10('assets/images/bg10.png'),
+  bg11('assets/images/bg11.png');
 
   const ImageApp(this.path);
+
   final String path;
 }

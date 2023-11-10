@@ -214,6 +214,7 @@ extension _InputDateTimeWidgetStateExt on _InputDateTimeWidgetState {
                       child: CupertinoDatePicker(
                         onDateTimeChanged: (value) {
                           valueInit = value;
+                          onChange(value);
                         },
                         initialDateTime: selectedCurrent ?? _initialDate,
                         minimumDate: minimumDate,

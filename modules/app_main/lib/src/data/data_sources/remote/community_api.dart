@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/networking/data_rows_response.dart';
 import 'package:app_main/src/data/models/payloads/community/reply_give_up_boss_team_role_payload.dart';
 import 'package:app_main/src/data/models/responses/group_request_response.dart';
+import 'package:app_main/src/data/models/responses/member_join_request.dart';
 import 'package:app_main/src/data/models/responses/team_member_response.dart';
 import 'package:app_main/src/data/models/responses/team_response.dart';
 import 'package:injectable/injectable.dart';
@@ -10,6 +11,7 @@ import 'package:retrofit/retrofit.dart';
 import '../../models/payloads/community/update_community_payload.dart';
 import '../../models/responses/api_response.dart';
 import '../../models/responses/boss_community_status_response.dart';
+import '../../models/responses/boss_team_relinquish_status_response.dart';
 import '../../models/responses/confirm_response.dart';
 import '../../models/responses/group_response.dart';
 import '../../models/responses/leave_team_status_response.dart';
@@ -46,6 +48,17 @@ class CommunityApiConstants {
   static const String askToJoinTeam = '/api/v1/team/{id}/join';
   static const String askToLeaveTeam = '/api/v1/team/{id}/leave';
   static const String getLeaveTeamStatus = '/api/v1/team/leave-requests';
+  static const String memberJoinRequest = 'api/v1/team/member-join-requests';
+  static const String memberLeaveRequest = 'api/v1/team/member-leave-requests';
+  static const String replyJoinRequest =
+      'api/v1/team/{teamId}/reply-join-request';
+  static const String replyLeaveRequest =
+      'api/v1/team/{teamId}/reply-leave-request';
+
+  static const String relinquishBossTeam =
+      '/api/v1/team/{id}/give-up-boss-role';
+  static const String getBossTeamRelinquishStatus =
+      '/api/v1/team/{id}/boss-status';
 }
 
 @RestApi()
@@ -161,4 +174,32 @@ abstract class CommunityApi {
 
   @GET(CommunityApiConstants.getLeaveTeamStatus)
   Future<LeaveTeamStatusResponse> getLeaveTeamStatus();
+
+  @GET(CommunityApiConstants.memberJoinRequest)
+  Future<MemberJoinRequestResponse> memberJoinRequest();
+
+  @GET(CommunityApiConstants.memberLeaveRequest)
+  Future<MemberJoinRequestResponse> memberLeaverRequest();
+
+  @POST(CommunityApiConstants.replyJoinRequest)
+  Future replyJoinRequest(
+    @Path() String teamId,
+    @Body() dynamic body,
+  );
+
+  @POST(CommunityApiConstants.replyLeaveRequest)
+  Future replyLeaveRequest(
+    @Path() String teamId,
+    @Body() dynamic body,
+  );
+
+  @POST(CommunityApiConstants.relinquishBossTeam)
+  Future<ConfirmResponse> relinquishBossTeam({
+    @Path('id') required String id,
+  });
+
+  @GET(CommunityApiConstants.getBossTeamRelinquishStatus)
+  Future<BossTeamRelinquishStatusResponse> getBossTeamRelinquishStatus(
+    @Path() String id,
+  );
 }

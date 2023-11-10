@@ -4,6 +4,7 @@ import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart'
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
 import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:app_main/src/presentation/social/social_constants.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -35,24 +36,42 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      _buildBgAvatar(),
-      const SizedBox(height: 60),
-      _buildUserName(),
-      const SizedBox(height: 10),
-      _buildUserInfo(),
-    ]);
+    return Container(
+      padding: const EdgeInsets.only(bottom: 20),
+      decoration: const BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(30),
+          bottomRight: Radius.circular(30),
+        ),
+      ),
+      child: Column(children: [
+        _buildBgAvatar(),
+        const SizedBox(height: 60),
+        _buildUserName(),
+        const SizedBox(height: 10),
+        _buildUserInfo(),
+      ]),
+    );
   }
 
   _buildBgAvatar() {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        ImageWidget(
-          ImageConstants.defaultUserBackground,
+        CachedNetworkImage(
           height: 180,
-          width: double.infinity,
+          width: MediaQuery.of(context).size.width,
           fit: BoxFit.cover,
+          imageUrl: _userInfo.defaultBackground ?? "",
+          errorWidget: (context, url, error) {
+            return ImageWidget(
+              ImageConstants.defaultUserBackground,
+              height: 180,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            );
+          },
         ),
         Positioned(
           top: 130,
@@ -68,11 +87,16 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(100),
-                child: ImageWidget(
-                  ImageConstants.defaultUserAvatar,
-                  width: double.infinity,
-                  height: double.infinity,
-                  fit: BoxFit.cover,
+                child: CachedNetworkImage(
+                  imageUrl: _userInfo.avatar ?? "",
+                  errorWidget: (context, url, error) {
+                    return ImageWidget(
+                      ImageConstants.defaultUserAvatar,
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                    );
+                  },
                 ),
               ),
             ),
@@ -207,7 +231,7 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
           ),
           if (widget.userInfo.joinedTeam != null) const SizedBox(width: 5),
           if (widget.userInfo.joinedTeam != null)
-            Expanded(
+            Flexible(
               child: Container(
                 height: 25,
                 padding:
@@ -217,12 +241,13 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     const SizedBox(
                       width: 25,
                       child: CircleAvatar(),
                     ),
-                    Expanded(
+                    Flexible(
                       child: Text(
                         widget.userInfo.joinedTeam!.name!,
                         maxLines: 1,

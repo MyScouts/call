@@ -1,6 +1,7 @@
 import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
 import 'package:app_main/src/data/repositories/user_repository.dart';
+import 'package:app_main/src/domain/entities/change_password_payload.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:injectable/injectable.dart';
 
@@ -38,11 +39,13 @@ class AuthenticationUsecase {
     return response;
   }
 
-  Future registerWithPhone(AuthenticationPhonePayload payload) {
+  Future registerWithPhone(RegisterPhonePayload payload) {
     return _authRepository.registerWithPhone(
       password: payload.password,
       phone: payload.phoneNumber,
       phoneCode: payload.phoneCode,
+      birthDate: payload.birthday,
+      sex: payload.sex,
     );
   }
 
@@ -67,7 +70,8 @@ class AuthenticationUsecase {
   }
 
   Future<ResetPasswordTokenResponse> resetPasswordToken(
-      ResetPasswordTokenPayload payload) {
+    ResetPasswordTokenPayload payload,
+  ) {
     return _authRepository.resetPasswordToken(payload);
   }
 
@@ -92,6 +96,18 @@ class AuthenticationUsecase {
   Future _syncUser() async {
     final user = await _userRepository.getProfile();
     _userSharePreferencesUsecase.saveUserInfo(user!);
+  }
+
+  Future authClaimV1(AuthClaimPayload payload) async {
+    return _authRepository.authClaimV1(payload);
+  }
+
+  Future authClaimV2(AuthClaimPayload payload) async {
+    return _authRepository.authClaimV2(payload);
+  }
+
+  Future changePassword(ChangePasswordPayload payload) {
+    return _authRepository.changePassword(payload);
   }
 }
 

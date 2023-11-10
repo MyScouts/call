@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
+import 'package:app_main/src/data/models/responses/boss_team_relinquish_status_response.dart';
+import 'package:app_main/src/data/models/responses/member_join_request.dart';
 import 'package:app_main/src/domain/usecases/resource_usecase.dart';
 import 'package:injectable/injectable.dart';
 
@@ -10,6 +13,7 @@ import '../../data/models/responses/boss_community_status_response.dart';
 import '../../data/models/responses/confirm_response.dart';
 import '../../data/models/responses/group_request_response.dart';
 import '../../data/models/responses/leave_team_status_response.dart';
+import '../../presentation/community/community_constants.dart';
 import '../repository/community_repository.dart';
 
 @injectable
@@ -98,10 +102,17 @@ class CommunityUsecase {
     return result;
   }
 
-  Future<ConfirmResponse> relinquishBossGroup(String id) async {
-    final result = await _communityRepository.relinquishBossGroup(id);
+  Future<ConfirmResponse> relinquishBossRole(
+      String id, CommunityType type) async {
+    if (type == CommunityType.group) {
+      return await _communityRepository.relinquishBossGroup(id);
+    } else {
+      return await _communityRepository.relinquishBossTeam(id);
+    }
+  }
 
-    return result;
+  Future<BossTeamRelinquishStatusResponse> getBossTeamRelinquishStatus(String id) async {
+    return await _communityRepository.getBossTeamRelinquishStatus(id);
   }
 
   Future<List<GroupRequest>> getGroupRequests() async {
@@ -123,5 +134,21 @@ class CommunityUsecase {
 
   Future<LeaveTeamStatusResponse> getLeaveTeamStatus() async {
     return await _communityRepository.getLeaveTeamStatus();
+  }
+
+  Future<MemberJoinRequestResponse> memberJoinRequest() {
+    return _communityRepository.memberJoinRequest();
+  }
+
+  Future<MemberJoinRequestResponse> memberLeaveRequest() {
+    return _communityRepository.memberLeaveRequest();
+  }
+
+  Future replyJoinRequest(String teamId, ReplyJoinRequestPayload payload) {
+    return _communityRepository.replyJoinRequest(teamId, payload);
+  }
+
+  Future replyLeaveRequest(String teamId, ReplyJoinRequestPayload payload) {
+    return _communityRepository.replyLeaveRequest(teamId, payload);
   }
 }

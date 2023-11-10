@@ -1,5 +1,6 @@
 import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/responses/authenticate_response.dart';
+import 'package:app_main/src/domain/entities/change_password_payload.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
@@ -22,6 +23,10 @@ class AuthApiConstant {
   static const String otp = "api/v1/auth/otp";
 
   static const getOtp = '/api/sms/send-otp';
+  static const authClaimV1 = '/api/v1/auth/code/claim';
+  static const authClaimV2 = '/api/v1/tablet/code/claim';
+
+  static const String changePassword = "api/users/change-password";
 }
 
 @RestApi()
@@ -36,7 +41,7 @@ abstract class AuthApi {
   );
 
   @POST(AuthApiConstant.registerWithPhone)
-  Future registerWithPhone(@Body() AuthenticationPhonePayload body);
+  Future registerWithPhone(@Body() RegisterPhonePayload body);
 
   @POST(AuthApiConstant.phoneCompletedRegister)
   Future<PhoneCompleteRegister> phoneCompleteRegister(
@@ -58,6 +63,16 @@ abstract class AuthApi {
 
   @POST(AuthApiConstant.otp)
   Future otp();
+
   @GET(AuthApiConstant.getOtp)
   Future<ApiResponse<OtpResponse>> getOtp();
+
+  @POST(AuthApiConstant.authClaimV1)
+  Future authClaimV1(@Body() AuthClaimPayload payload);
+
+  @POST(AuthApiConstant.authClaimV2)
+  Future authClaimV2(@Body() AuthClaimPayload payload);
+
+  @PUT(AuthApiConstant.changePassword)
+  Future changePassword(@Body() ChangePasswordPayload payload);
 }

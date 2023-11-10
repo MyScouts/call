@@ -19,7 +19,7 @@ class ScanQrCodeScanScreen extends StatefulWidget {
   final bool showMyQr;
   const ScanQrCodeScanScreen({
     super.key,
-    this.showMyQr = false,
+    this.showMyQr = true,
   });
 
   @override
@@ -41,12 +41,30 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
     _result.addListener(() {
       if (_result.value != null) {
         final code = _result.value!;
-        final data = jsonDecode(code) as Map<String, dynamic>;
-        if (data['type'] == 'diary' && data["id"] != null) {
-          context.startReplaceDiary(userId: data["id"].toString());
-          return;
+        if (code.isJSON() && jsonDecode(code) is! int) {
+          final data = jsonDecode(code);
+          if (data['type'] == 'diary' && data["id"] != null) {
+            context.startReplaceDiary(userId: data["id"].toString());
+            return;
+          }
+        } else {
+          if ((code.toString().contains("_auth1") ||
+              code.toString().contains("_auth2"))) {
+            AuthClaimType type = code.toString().contains("_auth2")
+                ? AuthClaimType.v2
+                : AuthClaimType.v1;
+            context.confirmLoginQrCode(
+              type: type,
+              code: code
+                  .toString()
+                  .replaceAll("_auth1", "")
+                  .replaceAll("_auth2", ""),
+            );
+            return;
+          }
+          Navigator.pop(context, code);
+          controller?.dispose();
         }
-        Navigator.pop(context, code);
       }
     });
   }
@@ -144,8 +162,9 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
   void _onQRViewCreated(Scanner.QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) async {
+      _result.value = null;
+      Future.delayed(const Duration(seconds: 2));
       _result.value = scanData.code;
-      controller.dispose();
       return;
     });
   }

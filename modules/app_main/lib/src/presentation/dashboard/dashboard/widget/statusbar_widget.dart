@@ -8,9 +8,12 @@ import 'package:localization/localization.dart';
 
 class StatusBarWidget extends StatefulWidget {
   final Function() openAppStore;
+  final Function() openNotification;
+
   const StatusBarWidget({
     super.key,
     required this.openAppStore,
+    required this.openNotification,
   });
 
   @override
@@ -30,18 +33,15 @@ class _StatusBarWidgetState extends State<StatusBarWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(
-                flex: 1,
-                child: GestureDetector(
-                  onTap: () => context.startSetting(),
-                  child: const Align(
-                    alignment: Alignment.centerLeft,
-                    child: CircleAvatar(),
-                  ),
+              GestureDetector(
+                onTap: () => context.startSetting(),
+                child: const Align(
+                  alignment: Alignment.centerLeft,
+                  child: CircleAvatar(),
                 ),
               ),
+              const SizedBox(width: 8),
               Expanded(
-                flex: 4,
                 child: Container(
                   height: double.infinity,
                   alignment: Alignment.center,
@@ -56,25 +56,43 @@ class _StatusBarWidgetState extends State<StatusBarWidget> {
                         IconAppConstants.icSearch,
                         color: Colors.white,
                       ),
+                      const SizedBox(width: 6),
                       Text(
-                        "${S.current.search.capitalize()}...",
+                        S.current.search.capitalize(),
                         style: context.text.bodyMedium!.copyWith(
                           color: Colors.white.withOpacity(.8),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: IconButton(
-                  alignment: Alignment.centerRight,
-                  padding: EdgeInsets.zero,
-                  icon: ImageWidget(
-                    IconAppConstants.icHamburger,
+              const SizedBox(width: 8),
+              GestureDetector(
+                onTap: widget.openNotification,
+                behavior: HitTestBehavior.opaque,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: SizedBox.square(
+                    dimension: 24,
+                    child: ImageWidget(
+                      IconAppConstants.bell,
+                      color: Colors.white,
+                    ),
                   ),
-                  onPressed: widget.openAppStore,
+                ),
+              ),
+              GestureDetector(
+                onTap: widget.openAppStore,
+                behavior: HitTestBehavior.opaque,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: SizedBox.square(
+                    dimension: 24,
+                    child: ImageWidget(
+                      IconAppConstants.icHamburger,
+                    ),
+                  ),
                 ),
               ),
             ],

@@ -1,11 +1,15 @@
+import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 
+import 'app_icon_animation.dart';
 import 'app_widget.dart';
 import 'dashboard_group_screen.dart';
+
 
 class AppGroupWidget extends AppWidget {
   const AppGroupWidget({super.key, required super.app});
@@ -13,6 +17,9 @@ class AppGroupWidget extends AppWidget {
   @override
   Widget build(BuildContext context) {
     final group = app as DashBoardGroupItem;
+
+    final widget = context.findAncestorWidgetOfExactType<AppIconAnimation>();
+
     return Column(
       children: [
         Expanded(
@@ -23,6 +30,7 @@ class AppGroupWidget extends AppWidget {
                 barrierColor: Colors.transparent,
                 context: context,
                 builder: (_) => DashBoardGroupScreen(
+                  enableRemoveIcon: widget != null,
                   group: group,
                   onGroupCreated: (DashBoardGroupItem group) {
                     NotificationCenter.post(
@@ -33,6 +41,7 @@ class AppGroupWidget extends AppWidget {
                 ),
               );
             },
+            onLongPress: () {},
             child: AspectRatio(
               aspectRatio: 1,
               child: Container(
@@ -45,7 +54,7 @@ class AppGroupWidget extends AppWidget {
                   crossAxisCount: 3,
                   mainAxisSpacing: 5,
                   crossAxisSpacing: 5,
-                  children: group.items
+                  children: group.items.take(9)
                       .map((e) => ImageWidget(e.backgroundImage))
                       .toList(),
                 ),
@@ -66,6 +75,36 @@ class AppGroupWidget extends AppWidget {
               fontWeight: FontWeight.w400,
             ),
           ),
+      ],
+    );
+  }
+}
+
+class AppEmptyWidget extends AppWidget {
+  const AppEmptyWidget({super.key, required super.app});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          child: GestureDetector(
+            onTap: () {
+              context.showAppStore();
+            },
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: const Icon(Icons.filter_center_focus, color: Colors.white),
+            ),
+          ),
+        ),
+        const SizedBox(height: 20)
       ],
     );
   }

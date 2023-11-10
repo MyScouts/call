@@ -6,7 +6,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/ui.dart';
 import '../../../../data/models/responses/register_pdone_response.dart';
-import '../../../app_constants.dart';
 import '../../../general_setting/general_coordinator.dart';
 import '../../../shared/user/bloc/user_bloc.dart';
 import '../../upgrade_account_constants.dart';

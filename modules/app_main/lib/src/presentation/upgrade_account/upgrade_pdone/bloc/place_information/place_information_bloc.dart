@@ -11,8 +11,8 @@ import '../../../../../domain/entities/update_account/place/ward.dart';
 import '../../../../../domain/usecases/place_information_usecase.dart';
 import '../../../place_information_constant.dart';
 
-
 part 'place_information_event.dart';
+
 part 'place_information_state.dart';
 
 @injectable
@@ -68,7 +68,8 @@ class PlaceInformationBloc
   }
 
   FutureOr<void> _mapUserClearCountryEvent(
-      UserClearCountryEvent event, Emitter<PlaceInformationState> emit) {
+      UserClearCountryEvent event, Emitter<PlaceInformationState> emit) async {
+    // final res = await _placeInformationUsecase.countries();
     emit(PlaceInformationInitial(countries));
   }
 }

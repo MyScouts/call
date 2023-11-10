@@ -3,6 +3,7 @@ import 'package:app_main/src/data/models/payloads/auth/authentication_payload.da
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
 import 'package:app_main/src/data/models/responses/authenticate_response.dart';
 import 'package:app_main/src/data/repositories/auth_repository.dart';
+import 'package:app_main/src/domain/entities/change_password_payload.dart';
 import 'package:app_main/src/domain/entities/update_account/otp/otp.dart';
 import 'package:injectable/injectable.dart';
 
@@ -24,11 +25,15 @@ class AuthRepositoryImpl extends AuthRepository {
     required String phone,
     required String password,
     required String phoneCode,
+    required String birthDate,
+    required int sex,
   }) {
-    return _authApi.registerWithPhone(AuthenticationPhonePayload(
+    return _authApi.registerWithPhone(RegisterPhonePayload(
       phoneNumber: phone,
       password: password,
       phoneCode: phoneCode,
+      birthday: birthDate,
+      sex: sex,
     ));
   }
 
@@ -70,5 +75,20 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<Otp> getOtp() async {
     final response = await _authApi.getOtp();
     return response.data.otp;
+  }
+
+  @override
+  Future authClaimV1(AuthClaimPayload payload) {
+    return _authApi.authClaimV1(payload);
+  }
+
+  @override
+  Future authClaimV2(AuthClaimPayload payload) {
+    return _authApi.authClaimV2(payload);
+  }
+
+  @override
+  Future changePassword(ChangePasswordPayload payload) {
+    return _authApi.changePassword(payload);
   }
 }

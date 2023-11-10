@@ -131,6 +131,9 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
           const SizedBox(height: 24),
           Expanded(
             child: SingleChildScrollView(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
               child: isLogin ? const LoginWidget() : const RegisterWidget(),
             ),
           )

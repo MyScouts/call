@@ -26,7 +26,7 @@ class InformationLayoutTextInputWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InfomationLayoutFieldWidget(
+    return InformationLayoutFieldWidget(
       label: label,
       required: true,
       child: TextInputLayout(

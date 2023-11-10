@@ -73,7 +73,7 @@ extension UpgradeAccountCoordinator on BuildContext {
       barrierLabel: '',
       pageBuilder: (context, animation1, animation2) {
         return AlertDialog(
-          contentPadding: const EdgeInsets.only(top: 10, bottom: 10),
+          contentPadding: const EdgeInsets.only(top: 0, bottom: 10),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),

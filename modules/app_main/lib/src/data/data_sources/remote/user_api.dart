@@ -1,6 +1,8 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
+import 'package:app_main/src/data/models/responses/search_user_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
+import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -15,6 +17,9 @@ class UserApiConstants {
   static const followUser = 'api/users/follow';
   static const unFollow = 'api/users/unfollow';
   static const blockUser = 'api/users/block-user/{userId}';
+  static const authOTP = 'api/v1/auth/otp';
+  static const search = "api/v1/user/search";
+  static const onboarding = "api/v1/onboarding/ecom";
 }
 
 @RestApi()
@@ -29,6 +34,12 @@ abstract class UserApi {
   @GET(UserApiConstants.userById)
   Future<ApiResponse<User?>> getUserById({
     @Path('id') required int id,
+  });
+
+  @DELETE(UserApiConstants.userById)
+  Future deleteById({
+    @Path('id') required int id,
+    @Body() required DeleteUserPayload payload,
   });
 
   @POST(UserApiConstants.reportUser)
@@ -49,4 +60,13 @@ abstract class UserApi {
 
   @POST(UserApiConstants.blockUser)
   Future blockUser(@Path() int userId);
+
+  @POST(UserApiConstants.authOTP)
+  Future genOTP();
+
+  @GET(UserApiConstants.search)
+  Future<SearchUserResponse> searchUser(@Queries() SearchUserPayload query);
+
+  @GET(UserApiConstants.onboarding)
+  Future<OnboardingResponse> onboarding();
 }

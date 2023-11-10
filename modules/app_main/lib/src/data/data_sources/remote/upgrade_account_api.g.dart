@@ -143,20 +143,20 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
 
   @override
   Future<ApiResponse<dynamic>> updatePDoneProfile(
-      {required UpdateProfilePayload payload}) async {
+      {required dynamic payload}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = payload;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApiResponse<dynamic>>(Options(
-      method: 'PUT',
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'v1/p-done/adult-register',
+              'api/v1/p-done/adult-register',
               queryParameters: queryParameters,
               data: _data,
             )

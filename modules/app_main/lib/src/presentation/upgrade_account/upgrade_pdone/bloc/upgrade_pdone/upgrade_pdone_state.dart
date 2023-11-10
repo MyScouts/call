@@ -111,17 +111,29 @@ class GetMyProfileSuccessFailure extends UpgradePDoneState {
   GetMyProfileSuccessFailure(this.errorMessage);
 }
 
-class ExtractingEKycIdCard extends UpgradePDoneState {
-}
+class ExtractingEKycIdCard extends UpgradePDoneState {}
 
 class ExtractedEKycIdCardSuccess extends UpgradePDoneState {
   final dynamic data;
+  final dynamic imageEKyc;
 
-  ExtractedEKycIdCardSuccess(this.data);
+  ExtractedEKycIdCardSuccess(this.data, this.imageEKyc);
 }
 
 class ExtractedEKycIdCardFailure extends UpgradePDoneState {
   final String errorMessage;
 
   ExtractedEKycIdCardFailure(this.errorMessage);
+}
+
+
+
+class UpdatePDoneSendOTPSuccessState extends UpgradePDoneState {
+  UpdatePDoneSendOTPSuccessState();
+}
+
+
+class UpdatePDoneSendOTPFailureState extends UpgradePDoneState {
+  final String errorMessage;
+  UpdatePDoneSendOTPFailureState({required this.errorMessage});
 }

@@ -65,9 +65,12 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
               hideLoading();
               context.startDialogVerifyRegisterMarshop(
                 userId: _authInfo.id!,
-                marshopId: int.parse(_marshopIdCtrl.text.trim()),
+                marshopId: _marshopIdCtrl.text.trim().isNotEmpty
+                    ? int.parse(_marshopIdCtrl.text.trim())
+                    : null,
                 name: _marshopName.text.trim(),
               );
+              return;
             }
 
             if (state is SendOTPFail) {
@@ -79,7 +82,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
         ),
       ],
       child: ScaffoldHideKeyboard(
-        appBar: const BaseAppBar(title: "Đăng ký V-SHOP"),
+        appBar: const BaseAppBar(title: "Đăng ký Marshop"),
         body: Form(
           key: formKey,
           child: SingleChildScrollView(
@@ -114,8 +117,6 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
                   onChange: (value) => onValidation(),
                   hintText: "",
                   textInputType: TextInputType.number,
-                  validator: (value) =>
-                      ValidationHelper.requiredValid(value, "MarshopId"),
                   prefixIcon: GestureDetector(
                     onTap: _startQrCodeScan,
                     child: const Icon(Icons.qr_code),
@@ -150,15 +151,16 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
   }
 
   void _startQrCodeScan() async {
-    String? results = await context.startScanQrCode();
-    if (results != null) {
-      if (!results.isNumber()) {
-        showToastMessage("Mã Marshop không hợp lệ!");
-        return;
+    context.startScanQrCode(showMyQr: false).then((results) {
+      if (results != null && results is String) {
+        if (!results.isNumber()) {
+          showToastMessage("Mã Marshop không hợp lệ!", ToastMessageType.error);
+          return;
+        }
+        _marshopIdCtrl.text = results;
+        setState(() {});
+        onValidation();
       }
-      _marshopIdCtrl.text = results;
-      setState(() {});
-      onValidation();
-    }
+    });
   }
 }

@@ -1,8 +1,14 @@
+import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_group_widget.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_base_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
+import 'package:app_main/src/presentation/dashboard/widget/clock_widget.dart';
+import 'package:app_main/src/presentation/dashboard/widget/weather_banner_widget.dart';
+import 'package:app_main/src/presentation/dashboard/widget/weather_widget.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
+
+import 'app_icon_animation.dart';
 
 class AppWidget extends StatelessWidget {
   final DashBoardItem app;
@@ -39,6 +45,7 @@ class AppWidget extends StatelessWidget {
                     return;
                   }
                 },
+                onLongPress: () {},
                 child: AspectRatio(
                   aspectRatio: (app.width) / app.height,
                   child: Stack(
@@ -110,9 +117,38 @@ class AppWidgetBuilder extends AppWidget {
     return ListenableBuilder(
       listenable: controller,
       builder: (_, __) {
+        if (app.id == 'wg_clock') {
+          return const ClockWidget();
+        }
+        if (app.id == 'wg_weather') {
+          return WeatherWidget(key: key);
+        }
+
+        if(app.id == 'wg_weather_banner') {
+          return const WeatherBannerWidget();
+        }
+
+        if (app is DashBoardGroupItem) {
+          if(controller.enableEditMode) {
+            return AppIconAnimation(
+              child: AppGroupWidget(app: app),
+            );
+          }
+          return AppGroupWidget(app: app);
+        }
+
+        if (controller.enableEditMode) {
+          return AppIconAnimation(
+            child: AppWidget(
+              app: app,
+              enableRemoveIcon: controller.enableEditMode,
+              onRemoved: onRemoved,
+            ),
+          );
+        }
         return AppWidget(
           app: app,
-          enableRemoveIcon: controller.enableRemoveIcon,
+          enableRemoveIcon: controller.enableEditMode,
           onRemoved: onRemoved,
         );
       },

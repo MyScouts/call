@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
+import 'package:app_main/src/data/models/responses/search_user_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
+import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/repositories/user_repository.dart';
@@ -47,5 +49,26 @@ class UserUsecase {
 
   Future blockUser({required int userId}) async {
     return _userRepository.blockUser(userId: userId);
+  }
+
+  Future deleteUser({
+    required int userId,
+    required DeleteUserPayload payload,
+  }) {
+    return _userRepository.deleteUser(userId: userId, payload: payload);
+  }
+
+  Future<bool> genOtp() async {
+    final isSuccess = await _userRepository.genOtp();
+    return isSuccess;
+  }
+
+  Future<List<SearchDetail>> searchUser(SearchUserPayload query) async {
+    final response = await _userRepository.searchUser(query);
+    return response.searchUsers;
+  }
+
+  Future<OnboardingResponse> onboarding() {
+    return _userRepository.onboarding();
   }
 }

@@ -12,7 +12,6 @@ import '../../../../../domain/entities/update_account/place/ward.dart';
 import '../../../../../domain/entities/update_account/update_place_information_payload.dart';
 import '../../bloc/place_information/place_information_bloc.dart';
 
-
 class PlaceInformationWidget extends StatefulWidget {
   final ValueChanged<UpdatePlaceInformationPayload> onUpdatePlaceInformation;
   final PlaceInformation? initPlaceInformation;
@@ -271,6 +270,7 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
                           child: SearchInputInformationWidget<District>(
                             type: UpdateInformationType.district,
                             enabled: widget.enabled,
+                            required: true,
                             suggestions: districts
                                 .map((e) =>
                                     SuggestionsField(name: e.name!, data: e))
@@ -325,6 +325,7 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
                         Expanded(
                           child: SearchInputInformationWidget<Ward>(
                             type: UpdateInformationType.ward,
+                            required: true,
                             enabled: widget.enabled,
                             suggestions: wards
                                 .map((e) =>
@@ -376,6 +377,7 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
                       type: UpdateInformationType.address,
                       controller: widget.addressCtrl,
                       shouldEnabled: widget.enabled,
+                      required: true,
                     )
                   : const SizedBox(),
             ],

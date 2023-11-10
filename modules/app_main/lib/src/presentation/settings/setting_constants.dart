@@ -1,6 +1,8 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/presentation/marshop/marshop_coordintor.dart';
-import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/data/models/responses/user_response.dart';
+import 'package:app_main/src/presentation/community/community.component.dart';
+import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart';
@@ -21,31 +23,67 @@ class Setting {
     this.onPressed,
   });
 
-  static List<List<Setting>> session1Menus(BuildContext context,
-          {User? user}) =>
+  static List<List<Setting>> session1Menus(
+    BuildContext context, {
+    User? user,
+    OnboardingResponse? onboarding,
+  }) =>
       [
         [
           Setting(
-            text: "Quét mã QR",
-            icon: IconAppConstants.icPayment,
-            onPressed: () => context.startScanQrCode(showMyQr: true),
+            text: "Cài đặt tài khoản",
+            icon: IconAppConstants.icSettingAccount,
           ),
           Setting(
-            text: "Đăng ký khách hàng thường xuyên",
+            text: "Tin nhắn office",
+            icon: IconAppConstants.icChat,
+          ),
+        ],
+        [
+          Setting(
+            text: "Team",
             icon: IconAppConstants.icECommerce,
-            onPressed: () => context.startRegisterCustomer(),
+            onPressed: () =>
+                Navigator.pushNamed(context, CommunityWidget.routeName),
           ),
           Setting(
-            text: "Nâng cấp P-DONE",
-            icon: IconAppConstants.icVDone,
+            text: "PDone",
+            icon: IconAppConstants.icUpgrade,
             onPressed: () => context.startUpgradePDone(),
           ),
           Setting(
-            text: "JA contract",
-            icon: IconAppConstants.icChanel,
+            text: "JA",
+            icon: IconAppConstants.icJA,
             onPressed: () {
               final bloc = context.read<GetJAStatusBloc>();
               bloc.add(GetDetailDataEvent());
+            },
+          ),
+          Setting(
+            text: "Khách hàng thường xuyên - Market Home",
+            icon: IconAppConstants.icMarshopHome,
+            onPressed: () {
+              if (onboarding != null && onboarding.isMarshopCustomer) {
+                context.showToastMessage("Bạn đã là khách hàng thường xuyên.");
+                return;
+              }
+              context.startRegisterCustomer();
+            },
+          ),
+          Setting(
+            text: "Tài khoản Marshop",
+            icon: IconAppConstants.icMarshop,
+            onPressed: () {
+              if (onboarding != null && !onboarding.isJA) {
+                context.confirmUpgradeJA(
+                  onConfirm: () {
+                    final bloc = context.read<GetJAStatusBloc>();
+                    bloc.add(GetDetailDataEvent());
+                  },
+                );
+                return;
+              }
+              context.startRegisterMarshop();
             },
           ),
         ],
@@ -54,6 +92,11 @@ class Setting {
             text: "Đăng xuất",
             icon: IconAppConstants.icLogout,
             onPressed: () => context.confirmLogoutDialog(),
+          ),
+          Setting(
+            text: "Xoá tài khoản",
+            icon: IconAppConstants.icDelete,
+            onPressed: () => context.confirmDeleteAccount(userId: user!.id!),
           ),
         ]
       ];

@@ -55,7 +55,8 @@ class AskToJoinTeamSuccessScreen extends StatelessWidget {
               onTap: context.backToTeamDetailScreen,
               disabled: false,
               width: MediaQuery.of(context).size.width,
-            )
+            ),
+            SizedBox(height: MediaQuery.of(context).padding.bottom + 20)
           ],
         ),
       ),

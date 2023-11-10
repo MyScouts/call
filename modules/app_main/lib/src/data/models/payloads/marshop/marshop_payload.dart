@@ -22,11 +22,12 @@ class RegisterCustomerPayload {
 class RegisterMarshopPayload {
   final String otp;
   final String name;
-  final int referralId;
+  @JsonKey(includeIfNull: false)
+  int? referralId;
 
-  const RegisterMarshopPayload({
+  RegisterMarshopPayload({
     required this.name,
-    required this.referralId,
+    this.referralId,
     required this.otp,
   });
 

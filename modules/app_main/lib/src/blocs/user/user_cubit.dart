@@ -3,6 +3,8 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
+import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
+import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/domain/entities/update_account/otp/otp.dart';
 import 'package:app_main/src/domain/usecases/authentication_usecase.dart';
 import 'package:flutter/material.dart';
@@ -30,15 +32,19 @@ class UserCubit extends Cubit<UserState> {
     required String phone,
     required String password,
     required String phoneCode,
+    required String birthday,
+    required int sex,
   }) async {
     if (state is OnPhoneRegister) return;
     try {
       emit(OnPhoneRegister());
       await _authenticationUsecase.registerWithPhone(
-        AuthenticationPhonePayload(
-          phoneNumber: phone,
+        RegisterPhonePayload(
+          phoneNumber: phone.toPhone,
           password: password,
           phoneCode: phoneCode,
+          birthday: birthday,
+          sex: sex,
         ),
       );
       emit(PhoneRegisterSuccess());
@@ -67,7 +73,12 @@ class UserCubit extends Cubit<UserState> {
     if (state is OnPhoneCompletedRegister) return;
     try {
       emit(OnPhoneCompletedRegister());
-      await _authenticationUsecase.phoneCompletedRegister(payload);
+      await _authenticationUsecase
+          .phoneCompletedRegister(CompletedPhoneRegisterPayload(
+        phoneNumber: payload.phoneNumber.toPhone,
+        otp: payload.otp,
+        phoneCode: payload.phoneCode,
+      ));
       emit(PhoneCompletedRegisterSuccess());
     } on DioException catch (error) {
       final data = error.response!.data;
@@ -90,19 +101,6 @@ class UserCubit extends Cubit<UserState> {
       ));
     }
   }
-
-  // User? user;
-
-  // void getUserInfo() {
-  //   try {
-  //     user = _userSharePreferencesUsecase.getUserInfo();
-  //     emit(GetProfileSuccess(user));
-  //   } catch (error) {
-  //     debugPrint("get profile: $error");
-  //     emit(GetProfileError(
-  //         S.current.messages_server_internal_error.capitalize()));
-  //   }
-  // }
 
   User? _currentUser;
 
@@ -142,7 +140,12 @@ class UserCubit extends Cubit<UserState> {
     if (state is OnPhoneLogin) return;
     try {
       emit(OnPhoneLogin());
-      await _authenticationUsecase.login(payload: payload);
+      await _authenticationUsecase.login(
+          payload: AuthenticationPhonePayload(
+        phoneNumber: payload.phoneNumber.toPhone,
+        password: payload.password,
+        phoneCode: payload.phoneCode,
+      ));
 
       await fetchUser();
 
@@ -172,11 +175,17 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-  Future resendOTP(AuthenticationPhonePayload payload) async {
+  Future resendOTP(RegisterPhonePayload payload) async {
     if (state is OnResendOTP) return;
     try {
       emit(OnResendOTP());
-      await _authenticationUsecase.registerWithPhone(payload);
+      await _authenticationUsecase.registerWithPhone(RegisterPhonePayload(
+        phoneNumber: payload.phoneNumber.toPhone,
+        password: payload.password,
+        phoneCode: payload.phoneCode,
+        birthday: payload.birthday,
+        sex: payload.sex,
+      ));
       emit(ResendOTPSuccess());
     } on DioException catch (error) {
       debugPrint("phoneRegister: $error");
@@ -192,7 +201,10 @@ class UserCubit extends Cubit<UserState> {
     if (state is OnForgotPassword) return;
     try {
       emit(OnForgotPassword());
-      await _authenticationUsecase.forgotPassword(payload);
+      await _authenticationUsecase.forgotPassword(ForgotPasswordPayload(
+        phoneNumber: payload.phoneNumber.toPhone,
+        phoneCode: payload.phoneCode,
+      ));
       emit(ForgotPasswordSuccess());
     } on DioException catch (error) {
       final data = error.response!.data;
@@ -212,7 +224,10 @@ class UserCubit extends Cubit<UserState> {
     if (state is OnResendOTP) return;
     try {
       emit(OnResendOTP());
-      await _authenticationUsecase.forgotPassword(payload);
+      await _authenticationUsecase.forgotPassword(ForgotPasswordPayload(
+        phoneNumber: payload.phoneNumber.toPhone,
+        phoneCode: payload.phoneCode,
+      ));
       emit(ResendOTPSuccess());
     } on DioException {
       String err = S.current.messages_resend_otp_fail.capitalize();
@@ -226,7 +241,12 @@ class UserCubit extends Cubit<UserState> {
     if (state is OnResetPasswordToken) return;
     try {
       emit(OnResetPasswordToken());
-      final response = await _authenticationUsecase.resetPasswordToken(payload);
+      final response = await _authenticationUsecase
+          .resetPasswordToken(ResetPasswordTokenPayload(
+        phoneNumber: payload.phoneNumber.toPhone,
+        phoneCode: payload.phoneCode,
+        otp: payload.otp,
+      ));
       emit(ResetPasswordTokenSuccess(ott: response.ott));
     } on DioException catch (error) {
       final data = error.response!.data;
@@ -308,4 +328,90 @@ class UserCubit extends Cubit<UserState> {
       );
     }
   }
+
+  Future<void> authQrCode({
+    required String qrCode,
+    required AuthClaimType type,
+  }) async {
+    if (state is OnLoginQRCode) return;
+    try {
+      emit(OnLoginQRCode());
+      if (type == AuthClaimType.v1) {
+        await _authenticationUsecase.authClaimV1(AuthClaimPayload(
+          code: qrCode,
+        ));
+        emit(LoginQRCodeSuccess());
+      } else {
+        await _authenticationUsecase.authClaimV2(AuthClaimPayload(
+          code: qrCode,
+        ));
+        emit(LoginQRCodeSuccess());
+      }
+    } on DioException catch (error) {
+      String err = S.current.messages_server_internal_error.capitalize();
+      final data = error.response!.data;
+      switch (data['code']) {
+        case "MARSHOP_NOT_FOUND":
+          err = "Không tìm thấy Marshop.";
+      }
+      emit(LoginQRCodeFail(message: err));
+    } catch (error) {
+      debugPrint("authQrCode: $error");
+      String err = S.current.messages_server_internal_error.capitalize();
+      emit(LoginQRCodeFail(message: err));
+    }
+  }
+
+  Future<void> deleteUSer({
+    required int userId,
+    required DeleteUserPayload payload,
+  }) async {
+    if (state is OnDeleteUser) return;
+    try {
+      emit(OnDeleteUser());
+      await _userUsecase.deleteUser(
+        payload: payload,
+        userId: userId,
+      );
+      await _authenticationUsecase.logout();
+      emit(DeleteUserSuccess());
+    } on DioException catch (error) {
+      debugPrint("phoneRegister: $error");
+      String err = S.current.messages_server_internal_error.capitalize();
+      final data = error.response!.data;
+      switch (data['code']) {
+        case "PASSWORD_NOT_MATCH":
+          err = "Mật khẩu không khớp";
+      }
+      emit(DeleteUserFail(message: err));
+    } catch (error) {
+      debugPrint("phoneRegister: $error");
+      emit(
+        DeleteUserFail(
+          message: S.current.messages_server_internal_error.capitalize(),
+        ),
+      );
+    }
+  }
+
+  Future<void> onboarding() async {
+    if (state is OnGetOnboarding) return;
+    try {
+      emit(OnGetOnboarding());
+      final response = await _userUsecase.onboarding();
+      emit(OnboardingSuccess(onboarding: response));
+    } catch (error) {
+      debugPrint("onboarding: $error");
+      emit(OnboardingFail(
+          onboarding: const OnboardingResponse(
+        hasDefaultBankAccount: false,
+        isJA: false,
+        isMarshopCustomer: false,
+        isMarshopOwner: false,
+        isPdone: false,
+      )));
+    }
+  }
 }
+
+enum AuthClaimType { v1, v2 }
