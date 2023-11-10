@@ -11,4 +11,11 @@ class OpenWeatherUseCase {
   Future<OpenWeatherCurrent> get({required double lat, required double lon}) {
     return openWeatherRepository.get(lat: lat, lon: lon);
   }
+
+  Future<List<OpenWeatherFeature>> getFeature({
+    required double lat,
+    required double lon,
+  }) {
+    return openWeatherRepository.getFeature(lat: lat, lon: lon);
+  }
 }

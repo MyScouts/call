@@ -68,6 +68,21 @@ class IconAppConstants {
   static String icSecurity = IconApp.icSecurity.path;
   static String icLeaveTeam = IconApp.icLeaveTeam.path;
   static String icDefaultTeamAvt = IconApp.icDefaultTeamAvt.path;
+  static String icQr = IconApp.icQr.path;
+  static String icProfile = IconApp.icProfile.path;
+  static String icAppCalenda = IconApp.icAppCalenda.path;
+  static String icWallet = IconApp.icWallet.path;
+  static String icMess = IconApp.icMess.path;
+  static String icShopLive = IconApp.icShopLive.path;
+  static String icLive = IconApp.icLive.path;
+  static String icCall = IconApp.icCall.path;
+  static String icCloud = IconApp.icCloud.path;
+  static String icRain = IconApp.icRain.path;
+  static String icSun = IconApp.icSun.path;
+  static String icHumidity = IconApp.icHumidity.path;
+  static String icArrowTop = IconApp.icArrowTop.path;
+  static String icCircleArrow = IconApp.icCircleArrow.path;
+  static String icWindy = IconApp.icWindy.path;
 }
 
 enum IconApp {
@@ -141,8 +156,24 @@ enum IconApp {
   icSecurity('assets/icons/ic_security.svg'),
   icTranslate('assets/icons/ic_translate.svg'),
   icDefaultTeamAvt('assets/icons/ic_default_team_avt.svg'),
+  icQr('assets/icons/ic_qr.png'),
+  icProfile('assets/icons/ic_profile.png'),
+  icAppCalenda('assets/icons/ic_app_calenda.png'),
+  icWallet('assets/icons/ic_wallet.png'),
+  icMess('assets/icons/ic_mess.png'),
+  icShopLive('assets/icons/ic_shop_live.png'),
+  icLive('assets/icons/ic_live.png'),
+  icCall('assets/icons/ic_call.png'),
+  icCloud('assets/icons/ic_cloud.svg'),
+  icRain('assets/icons/ic_rain.svg'),
+  icSun('assets/icons/ic_sun.svg'),
+  icHumidity('assets/icons/ic_humidity.svg'),
+  icArrowTop('assets/icons/ic_arrow_top.svg'),
+  icCircleArrow('assets/icons/ic_circle_arrow.svg'),
+  icWindy('assets/icons/ic_windy.svg'),
   icLeaveTeam('assets/icons/ic_leave_team.svg');
 
   const IconApp(this.path);
+
   final String path;
 }

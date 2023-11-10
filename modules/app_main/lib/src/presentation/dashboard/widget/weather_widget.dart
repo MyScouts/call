@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/dashboard/widget/weather_bloc_builder.dart';
 import 'package:app_main/src/presentation/dashboard/widget/weather_location_builder.dart';
 import 'package:design_system/design_system.dart';
@@ -14,6 +15,7 @@ class WeatherWidget extends StatelessWidget {
     return WeatherLocationBuilder(
       builder: (position, city) {
         Widget child = Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Flexible(
@@ -53,7 +55,7 @@ class WeatherWidget extends StatelessWidget {
                       city ?? '',
                       style: context.text.titleSmall!.copyWith(
                         color: AppColors.white,
-                        fontSize: 14,
+                        fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
                       maxLines: 1,
@@ -61,7 +63,7 @@ class WeatherWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${state.openWeatherCurrent?.tempC ?? 0}°',
+                    '${state.openWeatherCurrent?.temp ?? 0}°',
                     style: context.text.titleSmall!.copyWith(
                       color: AppColors.white,
                       fontSize: 52,
@@ -75,16 +77,28 @@ class WeatherWidget extends StatelessWidget {
                     child: SizedBox.square(
                       dimension: 20,
                       child: ImageWidget(
-                        'http:${state.openWeatherCurrent?.condition.icon}',
+                        state.openWeatherCurrent?.iconUrl ?? '',
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
                   Text(
-                    state.openWeatherCurrent?.condition.text ?? '',
+                    state.openWeatherCurrent?.condition.name.capitalize() ?? '',
                     style: context.text.titleSmall!.copyWith(
                       color: AppColors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'H:${state.openWeatherCurrent?.tempMax ?? 0}° L:${state.openWeatherCurrent?.tempMin ?? 0}°',
+                    style: context.text.titleSmall!.copyWith(
+                      color: AppColors.white,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -101,8 +115,15 @@ class WeatherWidget extends StatelessWidget {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xff3C9BC4),
-                  borderRadius: BorderRadius.circular(20.0),
+                  borderRadius: BorderRadius.circular(22.0),
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color(0xff007AF6),
+                      Color(0xff77B1EB),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
                 ),
                 padding: const EdgeInsets.all(12.0),
                 child: child,

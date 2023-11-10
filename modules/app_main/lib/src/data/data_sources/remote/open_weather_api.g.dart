@@ -13,7 +13,7 @@ class _OpenWeatherApi implements OpenWeatherApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://api.weatherapi.com/v1/';
+    baseUrl ??= 'https://api.openweathermap.org/data/2.5/';
   }
 
   final Dio _dio;
@@ -21,26 +21,28 @@ class _OpenWeatherApi implements OpenWeatherApi {
   String? baseUrl;
 
   @override
-  Future<WeatherResponse> get(
+  Future<OpenWeatherCurrent> get(
     String apiKey,
-    String q,
+    double lat,
+    double lon,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'key': apiKey,
-      r'q': q,
+      r'appid': apiKey,
+      r'lat': lat,
+      r'lon': lon,
     };
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<WeatherResponse>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<OpenWeatherCurrent>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'current.json',
+              'weather',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -49,7 +51,42 @@ class _OpenWeatherApi implements OpenWeatherApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = WeatherResponse.fromJson(_result.data!);
+    final value = OpenWeatherCurrent.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<OpenWeatherFeatureResponse> getFeature(
+    String apiKey,
+    double lat,
+    double lon,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'appid': apiKey,
+      r'lat': lat,
+      r'lon': lon,
+    };
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<OpenWeatherFeatureResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'forecast',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = OpenWeatherFeatureResponse.fromJson(_result.data!);
     return value;
   }
 

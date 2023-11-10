@@ -137,131 +137,128 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
 
           final items = (state as DashboardBaseFetchDataSuccess).items;
 
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  dashBoardController.enableEditMode = false;
-                });
-              },
-              onLongPress: () {
-                setState(() {
-                  dashBoardController.enableEditMode = true;
-                });
-              },
-              behavior: HitTestBehavior.opaque,
-              child: Stack(
-                children: [
-                  ReorderableStaggeredScrollView.grid(
-                    key: UniqueKey(),
-                    enable: dashBoardController.enableEditMode,
-                    padding: EdgeInsets.zero,
-                    scrollDirection: Axis.vertical,
-                    physics: const BouncingScrollPhysics(),
-                    crossAxisCount: 4,
-                    onChildrenChanged: (list) {
-                      final items = (list ?? [])
-                          .map((e) => (e.widget as AppWidget).app)
-                          .toList();
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                dashBoardController.enableEditMode = false;
+              });
+            },
+            onLongPress: () {
+              setState(() {
+                dashBoardController.enableEditMode = true;
+              });
+            },
+            behavior: HitTestBehavior.opaque,
+            child: Stack(
+              children: [
+                ReorderableStaggeredScrollView.grid(
+                  key: UniqueKey(),
+                  enable: dashBoardController.enableEditMode,
+                  padding: const EdgeInsets.all(16.0),
+                  scrollDirection: Axis.vertical,
+                  physics: const BouncingScrollPhysics(),
+                  crossAxisCount: 4,
+                  onChildrenChanged: (list) {
+                    final items = (list ?? [])
+                        .map((e) => (e.widget as AppWidget).app)
+                        .toList();
 
-                      ctx.read<T>().add(ChangeItem(
-                          items.where((e) => e.id != 'empty').toList()));
-                    },
-                    onDragStarted: (_) {
-                      _isDragging = true;
-                    },
-                    onAccept: (p0, p1, p2) {
-                      final item1 =
-                          p0 as ReorderableStaggeredScrollViewGridItem;
-                      final item2 =
-                          p1 as ReorderableStaggeredScrollViewGridItem;
-                      debugPrint("onAccept ${item1.key}");
-                      debugPrint("onAccept ${item2.key}");
-                      return true;
-                    },
-                    isLongPressDraggable: false,
-                    onDragEnd: (p0, p1) {
-                      _isDragging = false;
-                    },
-                    onGroup: (moveData, data) {
-                      final item1 =
-                          moveData as ReorderableStaggeredScrollViewGridItem;
-                      final item2 =
-                          data as ReorderableStaggeredScrollViewGridItem;
-                      debugPrint("onGroup ${item1.key}");
-                      debugPrint("onGroup ${item2.key}");
+                    ctx.read<T>().add(ChangeItem(
+                        items.where((e) => e.id != 'empty').toList()));
+                  },
+                  onDragStarted: (_) {
+                    _isDragging = true;
+                  },
+                  onAccept: (p0, p1, p2) {
+                    final item1 =
+                        p0 as ReorderableStaggeredScrollViewGridItem;
+                    final item2 =
+                        p1 as ReorderableStaggeredScrollViewGridItem;
+                    debugPrint("onAccept ${item1.key}");
+                    debugPrint("onAccept ${item2.key}");
+                    return true;
+                  },
+                  isLongPressDraggable: false,
+                  onDragEnd: (p0, p1) {
+                    _isDragging = false;
+                  },
+                  onGroup: (moveData, data) {
+                    final item1 =
+                        moveData as ReorderableStaggeredScrollViewGridItem;
+                    final item2 =
+                        data as ReorderableStaggeredScrollViewGridItem;
+                    debugPrint("onGroup ${item1.key}");
+                    debugPrint("onGroup ${item2.key}");
 
-                      final icon1 = (item1.widget as AppWidget).app;
-                      final icon2 = (item2.widget as AppWidget).app;
+                    final icon1 = (item1.widget as AppWidget).app;
+                    final icon2 = (item2.widget as AppWidget).app;
 
-                      if (!validateGroupItem(icon1, icon2)) return;
+                    if (!validateGroupItem(icon1, icon2)) return;
 
-                      final isGroup = icon2 is DashBoardGroupItem;
-                      DashBoardGroupItem groupItem;
-                      if (isGroup) {
-                        groupItem = icon2;
-                      } else {
-                        groupItem = DashBoardGroupItem(
-                          id: UniqueKey().toString(),
-                          items: [icon2 as DashBoardIconItem],
-                          title: 'Thư mục',
-                          backgroundImage: '',
-                        );
-                      }
+                    final isGroup = icon2 is DashBoardGroupItem;
+                    DashBoardGroupItem groupItem;
+                    if (isGroup) {
+                      groupItem = icon2;
+                    } else {
+                      groupItem = DashBoardGroupItem(
+                        id: UniqueKey().toString(),
+                        items: [icon2 as DashBoardIconItem],
+                        title: 'Thư mục',
+                        backgroundImage: '',
+                      );
+                    }
 
-                      showDialog(
-                        useSafeArea: false,
-                        barrierColor: Colors.transparent,
-                        context: context,
-                        builder: (_) => DashBoardGroupScreen(
-                          group: groupItem,
-                          moveItem: icon1,
-                          onGroupCreated: (DashBoardGroupItem group) {
-                            if (isGroup) {
-                              ctx.read<T>().add(AddItemToGroup(group, [icon1]));
-                            } else {
-                              ctx.read<T>().add(AddItem(group));
-                            }
+                    showDialog(
+                      useSafeArea: false,
+                      barrierColor: Colors.transparent,
+                      context: context,
+                      builder: (_) => DashBoardGroupScreen(
+                        group: groupItem,
+                        moveItem: icon1,
+                        onGroupCreated: (DashBoardGroupItem group) {
+                          if (isGroup) {
+                            ctx.read<T>().add(AddItemToGroup(group, [icon1]));
+                          } else {
+                            ctx.read<T>().add(AddItem(group));
+                          }
+                        },
+                      ),
+                    );
+                  },
+                  // isNotDragList: notDragList,
+                  children: [
+                    ...items.map((item) {
+                      return ReorderableStaggeredScrollViewGridItem(
+                        key: ValueKey(item.id),
+                        mainAxisCellCount: item.height,
+                        crossAxisCellCount: item.width,
+                        widget: AppWidgetBuilder(
+                          app: item,
+                          controller: dashBoardController,
+                          onRemoved: () {
+                            context.removeConfirm(onRemoved: () {
+                              bloc.add(RemoveItem(item));
+                            });
                           },
                         ),
                       );
-                    },
-                    // isNotDragList: notDragList,
-                    children: [
-                      ...items.map((item) {
-                        return ReorderableStaggeredScrollViewGridItem(
-                          key: ValueKey(item.id),
-                          mainAxisCellCount: item.height,
-                          crossAxisCellCount: item.width,
-                          widget: AppWidgetBuilder(
-                            app: item,
-                            controller: dashBoardController,
-                            onRemoved: () {
-                              context.removeConfirm(onRemoved: () {
-                                bloc.add(RemoveItem(item));
-                              });
-                            },
+                    }),
+                    if (dashBoardController.enableEditMode)
+                      ...List.generate(
+                        10,
+                        (index) => ReorderableStaggeredScrollViewGridItem(
+                          isDrag: false,
+                          mainAxisCellCount: 1,
+                          crossAxisCellCount: 1,
+                          widget: const AppEmptyWidget(
+                            app: DashBoardEmptyItem(),
                           ),
-                        );
-                      }),
-                      if (dashBoardController.enableEditMode)
-                        ...List.generate(
-                          10,
-                          (index) => ReorderableStaggeredScrollViewGridItem(
-                            isDrag: false,
-                            mainAxisCellCount: 1,
-                            crossAxisCellCount: 1,
-                            widget: const AppEmptyWidget(
-                              app: DashBoardEmptyItem(),
-                            ),
-                            key: ValueKey('empty $index'),
-                          ),
+                          key: ValueKey('empty $index'),
                         ),
-                    ],
-                  ),
-                ],
-              ),
+                      ),
+                  ],
+                ),
+              ],
             ),
           );
         },
