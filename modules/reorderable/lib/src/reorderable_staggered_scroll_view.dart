@@ -426,8 +426,8 @@ class _ReorderableStaggeredScrollViewState
                     return StaggeredGrid.count(
                       crossAxisCount: widget.crossAxisCount,
                       axisDirection: widget.axisDirection,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 15,
+                      crossAxisSpacing: 15,
                       children: children,
                     );
                   },

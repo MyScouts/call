@@ -167,38 +167,38 @@ class DashBoardEmptyItem extends DashBoardItem {
 }
 
 final Map<String, DashBoardItem> mapItems = {
-  'wg_weather': DashBoardWidgetItem(
+  'wg_weather': const DashBoardWidgetItem(
     id: 'wg_weather',
     title: 'Thời tiết',
-    backgroundImage: IconAppConstants.icClock,
+    backgroundImage: '',
     width: 2,
     height: 2,
   ),
-  'wg_clock': DashBoardWidgetItem(
+  'wg_clock': const DashBoardWidgetItem(
     id: 'wg_clock',
     title: 'Đồng hồ',
-    backgroundImage: IconAppConstants.icClock,
+    backgroundImage: '',
     width: 2,
     height: 2,
   ),
-  'ic_contact': DashBoardIconItem(
-    id: 'ic_contact',
-    title: 'Danh bạ',
-    backgroundImage: IconAppConstants.icDashboardContact,
+  'ic_tv': DashBoardIconItem(
+    id: 'ic_tv',
+    title: 'Kênh',
+    backgroundImage: IconAppConstants.icTv,
   ),
-  'ic_group_team': DashBoardIconItem(
-    id: 'ic_group_team',
-    title: 'Group',
-    backgroundImage: IconAppConstants.icGroupTeam,
+  'ic_live': DashBoardIconItem(
+    id: 'ic_live',
+    title: 'Live',
+    backgroundImage: IconAppConstants.icLive,
   ),
-  'ic_team': DashBoardIconItem(
-    id: 'ic_team',
-    title: 'Team',
-    backgroundImage: IconAppConstants.icDashboardContact,
+  'ic_bird': DashBoardIconItem(
+    id: 'ic_bird',
+    title: 'Nữ thần hoà bình',
+    backgroundImage: IconAppConstants.icBird,
   ),
   'ic_my_driver': DashBoardIconItem(
     id: 'ic_my_driver',
-    title: 'My Driver',
+    title: 'QR Code',
     backgroundImage: IconAppConstants.icDoc,
   ),
   'ic_my_doctor': DashBoardIconItem(
@@ -228,40 +228,99 @@ final communityDefault = {
     width: 2,
     height: 2,
   ),
-  "ic_tv": DashBoardIconItem(
+  'ic_tv': DashBoardIconItem(
     id: 'ic_tv',
     title: 'Kênh',
     backgroundImage: IconAppConstants.icTv,
   ),
-  "ic_bird": DashBoardIconItem(
+  'ic_live': DashBoardIconItem(
+    id: 'ic_live',
+    title: 'Live',
+    backgroundImage: IconAppConstants.icLive,
+  ),
+  'ic_bird': DashBoardIconItem(
     id: 'ic_bird',
     title: 'Nữ thần hoà bình',
     backgroundImage: IconAppConstants.icBird,
   ),
+  'ic_qr': DashBoardIconItem(
+    id: 'ic_qr',
+    title: 'QR Code',
+    backgroundImage: IconAppConstants.icQr,
+  ),
+  'ic_profile': DashBoardIconItem(
+    id: 'ic_profile',
+    title: 'Profile',
+    backgroundImage: IconAppConstants.icProfile,
+  ),
+  'ic_group': DashBoardIconItem(
+    id: 'ic_group',
+    title: 'Group Team',
+    backgroundImage: IconAppConstants.icProfile,
+    path: CommunityWidget.routeName,
+  ),
+  'ic_calenda': DashBoardIconItem(
+    id: 'ic_calenda',
+    title: 'Lịch',
+    backgroundImage: IconAppConstants.icAppCalenda,
+  ),
+  'ic_wallet': DashBoardIconItem(
+    id: 'ic_wallet',
+    title: 'Ví',
+    backgroundImage: IconAppConstants.icWallet,
+  ),
+  'ic_mess': DashBoardIconItem(
+    id: 'ic_mess',
+    title: 'Tin nhắn',
+    backgroundImage: IconAppConstants.icMess,
+  ),
 };
 
 final personalDefault = {
-  'ic_group_team': DashBoardIconItem(
-    id: 'ic_group_team',
-    title: 'Group/Team',
+  'wg_weather': DashBoardWidgetItem(
+    id: 'wg_weather',
+    title: 'Thời tiết',
+    backgroundImage: IconAppConstants.icClock,
+    width: 2,
+    height: 2,
+  ),
+  'ic_tv': DashBoardIconItem(
+    id: 'ic_tv',
+    title: 'Kênh',
+    backgroundImage: IconAppConstants.icTv,
+  ),
+  'ic_qr': DashBoardIconItem(
+    id: 'ic_qr',
+    title: 'QR Code',
+    backgroundImage: IconAppConstants.icQr,
+  ),
+  'ic_call': DashBoardIconItem(
+    id: 'ic_call',
+    title: 'Điện thoại',
+    backgroundImage: IconAppConstants.icCall,
+  ),
+  'ic_group': DashBoardIconItem(
+    id: 'ic_group',
+    title: 'Group Team',
     backgroundImage: IconAppConstants.icGroupTeam,
     path: CommunityWidget.routeName,
   ),
-  "ic_payment": DashBoardIconItem(
-    id: 'ic_payment',
-    title: 'QRCode',
-    backgroundImage: IconAppConstants.icPayment,
-    path: ScanQrCodeScanScreen.routeName,
+  'wg_weather_banner': DashBoardWidgetItem(
+    id: 'wg_weather_banner',
+    title: 'Thời gian và thời tiết',
+    backgroundImage: IconAppConstants.icClock,
+    width: 4,
+    height: 2,
   ),
-  "ic_v_store": DashBoardIconItem(
-    id: 'ic_v_store',
-    title: 'V-Store',
-    backgroundImage: IconAppConstants.icVStore,
+  'ic_mess': DashBoardIconItem(
+    id: 'ic_mess',
+    title: 'Tin nhắn',
+    backgroundImage: IconAppConstants.icMess,
   ),
-  "ic_b_to_b": DashBoardIconItem(
-    id: 'ic_b_to_b',
-    title: 'B to B',
-    backgroundImage: IconAppConstants.icBToB,
+  'ic_bird': DashBoardIconItem(
+    id: 'ic_bird',
+    title: 'Nữ thần hoà bình',
+    backgroundImage: IconAppConstants.icBird,
   ),
 };
 
@@ -273,50 +332,20 @@ final eCommerceDefault = {
     width: 4,
     height: 2,
   ),
-  'wg_weather': DashBoardWidgetItem(
-    id: 'wg_weather',
-    title: 'Thời tiết',
-    backgroundImage: IconAppConstants.icClock,
-    width: 2,
-    height: 2,
-  ),
-  'wg_clock': DashBoardWidgetItem(
-    id: 'wg_clock',
-    title: 'Đồng hồ',
-    backgroundImage: IconAppConstants.icClock,
-    width: 2,
-    height: 2,
-  ),
-  "ic_tv": DashBoardIconItem(
-    id: 'ic_tv',
-    title: 'Kênh',
-    backgroundImage: IconAppConstants.icTv,
+  'ic_profile': DashBoardIconItem(
+    id: 'ic_profile',
+    title: 'Profile',
+    backgroundImage: IconAppConstants.icProfile,
   ),
   "ic_bird": DashBoardIconItem(
     id: 'ic_bird',
     title: 'Nữ thần hoà bình',
     backgroundImage: IconAppConstants.icBird,
   ),
-  "ic_v_shop": DashBoardIconItem(
-    id: 'ic_v_shop',
-    title: 'V-Shop',
-    backgroundImage: IconAppConstants.icDashboardContact,
-  ),
-  "ic_payment": DashBoardIconItem(
-    id: 'ic_payment',
-    title: 'QR Code',
-    backgroundImage: IconAppConstants.icPayment,
-    path: ScanQrCodeScanScreen.routeName,
-  ),
-  "ic_v_store": DashBoardIconItem(
-    id: 'ic_v_store',
-    title: 'V-Store',
-    backgroundImage: IconAppConstants.icVStore,
-  ),
-  "ic_b_to_b": DashBoardIconItem(
-    id: 'ic_b_to_b',
-    title: 'B to B',
-    backgroundImage: IconAppConstants.icBToB,
+  'ic_live': DashBoardIconItem(
+    id: 'ic_live',
+    title: 'Live',
+    backgroundImage: IconAppConstants.icLive,
   ),
 };
 

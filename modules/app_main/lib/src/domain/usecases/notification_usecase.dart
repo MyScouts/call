@@ -1,4 +1,5 @@
 import 'package:app_main/src/data/repositories/notification_repository.dart';
+import 'package:app_main/src/domain/entities/notification/notification_data.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -13,5 +14,9 @@ class NotificationUsecase {
 
   Future unregister(String fcmToken) async {
     await _notificationRepository.unregister(fcmToken);
+  }
+
+  Future<List<NotificationData>> list(int page) async {
+    return _notificationRepository.list(page);
   }
 }

@@ -3,7 +3,7 @@ import 'package:app_main/src/domain/entities/open_weather/open_weather_current.d
 import 'package:app_main/src/domain/repository/open_weather_repository.dart';
 import 'package:injectable/injectable.dart';
 
-const apiKey = 'ebb9b40198f148af9e093043230611';
+const apiKey = '2ada79972da82547b4ccd4dc6c6fe43e';
 
 @LazySingleton(as: OpenWeatherRepository)
 class OpenWeatherRepositoryImpl extends OpenWeatherRepository {
@@ -16,7 +16,16 @@ class OpenWeatherRepositoryImpl extends OpenWeatherRepository {
     required double lat,
     required double lon,
   }) async {
-    final res = await weatherApi.get(apiKey, '$lat,$lon');
-    return res.current;
+    final res = await weatherApi.get(apiKey, lat, lon);
+    return res;
+  }
+
+  @override
+  Future<List<OpenWeatherFeature>> getFeature({
+    required double lat,
+    required double lon,
+  }) async {
+    final res = await weatherApi.getFeature(apiKey, lat, lon);
+    return res.list;
   }
 }

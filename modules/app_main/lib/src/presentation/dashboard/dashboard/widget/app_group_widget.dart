@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
@@ -8,6 +9,7 @@ import 'package:imagewidget/imagewidget.dart';
 import 'app_icon_animation.dart';
 import 'app_widget.dart';
 import 'dashboard_group_screen.dart';
+
 
 class AppGroupWidget extends AppWidget {
   const AppGroupWidget({super.key, required super.app});
@@ -52,7 +54,7 @@ class AppGroupWidget extends AppWidget {
                   crossAxisCount: 3,
                   mainAxisSpacing: 5,
                   crossAxisSpacing: 5,
-                  children: group.items
+                  children: group.items.take(9)
                       .map((e) => ImageWidget(e.backgroundImage))
                       .toList(),
                 ),

@@ -1,34 +1,40 @@
+import 'package:app_main/src/domain/entities/notification/notification_data.dart';
+import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui' as ui;
+import 'package:intl/intl.dart';
 
-class NotificationMock extends StatelessWidget {
-  const NotificationMock({super.key});
+class NotificationCard extends StatelessWidget {
+  const NotificationCard({super.key, required this.data});
+
+  final NotificationData data;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(16.0),
       width: double.infinity,
       decoration: BoxDecoration(
         color: const Color.fromRGBO(247, 247, 247, 0.70),
         borderRadius: BorderRadius.circular(16),
       ),
       padding: const EdgeInsets.all(11),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           IntrinsicHeight(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(radius: 38 / 2),
-                SizedBox(width: 8),
+                CircleNetworkImage(
+                  url: data.fromUser?.avatar ?? '',
+                  size: 19 * 2,
+                ),
+                const SizedBox(width: 8),
                 Expanded(
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'TungMinh123',
-                      style: TextStyle(
+                      data.fromUser?.displayName ?? '',
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                         color: Colors.black,
@@ -37,8 +43,8 @@ class NotificationMock extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '9:41 AM',
-                  style: TextStyle(
+                  _formatTime(data.createdAt),
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: Color(0xff3F3F3F),
@@ -47,19 +53,22 @@ class NotificationMock extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Text(
-            'TungMinh123, người mà bạn có thể biết'
-            ' đang ở trên mạng xã hội P-Done.'
-            ' Bạn có muốn theo dõi họ không?',
-            style: TextStyle(
+            data.message,
+            style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w400,
               color: Colors.black,
             ),
-          )
+          ),
         ],
       ),
     );
   }
+}
+
+String _formatTime(DateTime time) {
+  final h = time.hour;
+  return '${DateFormat('HH:mm').format(time)} ${h >= 12 ? 'PM' : 'AM'}';
 }
