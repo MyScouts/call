@@ -49,8 +49,11 @@ class CommunityApiConstants {
   static const String askToLeaveTeam = '/api/v1/team/{id}/leave';
   static const String getLeaveTeamStatus = '/api/v1/team/leave-requests';
   static const String memberJoinRequest = 'api/v1/team/member-join-requests';
+  static const String memberLeaveRequest = 'api/v1/team/member-leave-requests';
   static const String replyJoinRequest =
       'api/v1/team/{teamId}/reply-join-request';
+  static const String replyLeaveRequest =
+      'api/v1/team/{teamId}/reply-leave-request';
 }
 
 @RestApi()
@@ -170,8 +173,17 @@ abstract class CommunityApi {
   @GET(CommunityApiConstants.memberJoinRequest)
   Future<MemberJoinRequestResponse> memberJoinRequest();
 
+  @GET(CommunityApiConstants.memberLeaveRequest)
+  Future<MemberJoinRequestResponse> memberLeaverRequest();
+
   @POST(CommunityApiConstants.replyJoinRequest)
   Future replyJoinRequest(
+    @Path() String teamId,
+    @Body() dynamic body,
+  );
+
+  @POST(CommunityApiConstants.replyLeaveRequest)
+  Future replyLeaveRequest(
     @Path() String teamId,
     @Body() dynamic body,
   );

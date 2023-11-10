@@ -712,6 +712,33 @@ class _CommunityApi implements CommunityApi {
   }
 
   @override
+  Future<MemberJoinRequestResponse> memberLeaverRequest() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<MemberJoinRequestResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/v1/team/member-leave-requests',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = MemberJoinRequestResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<dynamic> replyJoinRequest(
     String teamId,
     dynamic body,
@@ -728,6 +755,35 @@ class _CommunityApi implements CommunityApi {
         .compose(
           _dio.options,
           'api/v1/team/${teamId}/reply-join-request',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<dynamic> replyLeaveRequest(
+    String teamId,
+    dynamic body,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = body;
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'api/v1/team/${teamId}/reply-leave-request',
           queryParameters: queryParameters,
           data: _data,
         )

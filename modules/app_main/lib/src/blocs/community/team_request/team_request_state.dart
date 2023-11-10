@@ -39,3 +39,20 @@ final class ReplyJoinRequestFail extends TeamRequestState {
   final String message;
   const ReplyJoinRequestFail({required super.requests, required this.message});
 }
+
+final class OnReplyLeaveRequest extends TeamRequestState {
+  const OnReplyLeaveRequest({required super.requests});
+}
+
+final class ReplyLeaveRequestSuccess extends TeamRequestState {
+  final bool isApproved;
+  const ReplyLeaveRequestSuccess({
+    required super.requests,
+    required this.isApproved,
+  });
+}
+
+final class ReplyLeaveRequestFail extends TeamRequestState {
+  final String message;
+  const ReplyLeaveRequestFail({required super.requests, required this.message});
+}
