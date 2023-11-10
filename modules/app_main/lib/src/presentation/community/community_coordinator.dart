@@ -89,7 +89,8 @@ extension CommunityCoordinator on BuildContext {
     return Navigator.of(this).pushNamed(GroupRequestListScreen.routeName);
   }
 
-  Future<T?> startDialogRelinquishBoss<T>(String id, CommunityType communityType) {
+  Future<T?> startDialogRelinquishBoss<T>(
+      String id, CommunityType communityType) {
     return showGeneralDialog<T>(
       context: this,
       barrierDismissible: false,
@@ -116,8 +117,10 @@ extension CommunityCoordinator on BuildContext {
       pageBuilder: (context, animation1, animation2) {
         return ApproveDialog(
           type: DialogApproveStatus.waiting,
+          isWaitingDialog: true,
+          dayLeft: dayLeft,
           content:
-              'Yêu cầu của bạn đã được gửi lên hệ thống của chúng tôi. Thời hạn của yêu cầu còn lại $dayLeft ngày.',
+              'Yêu cầu của bạn đã được gửi lên hệ thống của chúng tôi. Thời hạn của yêu cầu còn lại',
         );
       },
     );
@@ -131,7 +134,7 @@ extension CommunityCoordinator on BuildContext {
       pageBuilder: (context, animation1, animation2) {
         return const ApproveDialog(
           type: DialogApproveStatus.approved,
-          content: 'Bạn đã phê duyệt yêu cầu từ chức của Boss Team',
+          content: 'Bạn đã phê duyệt yêu cầu từ chức của Boss Team',
         );
       },
     );

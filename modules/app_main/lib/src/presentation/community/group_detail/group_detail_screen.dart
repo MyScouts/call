@@ -456,8 +456,9 @@ class _TeamCard extends StatelessWidget {
               ),
               child: Row(
                 children: [
+                  // 20 member/1 nhom. 500 member -> 25 nhom
                   Flexible(
-                    flex: 2,
+                    flex: team.memberCount! ~/ 25 + 1,
                     child: Container(
                       decoration: BoxDecoration(
                         color: const Color(0xff4B84F7),
@@ -465,7 +466,9 @@ class _TeamCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Expanded(flex: 1, child: SizedBox.shrink()),
+                  Expanded(
+                      flex: 25 - (team.memberCount! ~/ 25 + 1),
+                      child: const SizedBox.shrink()),
                 ],
               ),
             ),
@@ -481,16 +484,12 @@ class _TeamCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {},
-                  behavior: HitTestBehavior.opaque,
-                  child: const Text(
-                    'Khám phá',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color(0xff4B84F7),
-                      fontWeight: FontWeight.w500,
-                    ),
+                const Text(
+                  'Khám phá',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Color(0xff4B84F7),
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
