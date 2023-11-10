@@ -171,70 +171,71 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
             height: 60,
           ),
           const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width - 150,
-                child: Text(
-                  '${team?.name}',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: RichText(
-                  text: TextSpan(
-                    text: 'Boss Team:',
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width - 150,
+                  child: Text(
+                    '${team?.name}',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          height: 1.5,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
                         ),
-                    children: <InlineSpan>[
-                      WidgetSpan(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 5),
-                          child: AvatarWidget(
-                            avatar: team?.boss?.avatar,
-                            size: 20,
-                          ),
-                        ),
-                        alignment: PlaceholderAlignment.middle,
-                      ),
-                      WidgetSpan(
-                        child: SizedBox(
-                          width: 150,
-                          child: Text(
-                            '${team?.boss.getdisplayName}',
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(
+                  ),
+                ),
+                Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Boss Team:",
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
                                     height: 1.5,
-                                    color: const Color(0xFF353DFF)),
-                          ),
+                                  ),
                         ),
-                      ),
-                    ],
-                  ),
+                        const SizedBox(width: 10),
+                        Flexible(
+                          child: Row(
+                            children: [
+                              AvatarWidget(
+                                avatar: team?.boss?.avatar,
+                                size: 20,
+                              ),
+                              const SizedBox(width: 5),
+                              Flexible(
+                                child: Text(
+                                  '${team?.boss.getdisplayName}',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.5,
+                                          color: const Color(0xFF353DFF)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    )),
+                Text(
+                  'ID: ${team?.id}',
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      height: 1.5,
+                      color: const Color(0xFFACACAC)),
                 ),
-              ),
-              Text(
-                'ID: ${team?.id}',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    height: 1.5,
-                    color: const Color(0xFFACACAC)),
-              ),
-            ],
+              ],
+            ),
           )
         ],
       ),

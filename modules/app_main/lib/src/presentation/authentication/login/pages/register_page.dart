@@ -91,7 +91,6 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
       },
       child: Form(
         key: formKey,
-        autovalidateMode: AutovalidateMode.disabled,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: Column(
@@ -195,6 +194,8 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                               } else {
                                 _birthDateError.value = null;
                               }
+                            } else {
+                              _birthDateError.value = "Nhập ngày sinh.";
                             }
                           },
                         ),

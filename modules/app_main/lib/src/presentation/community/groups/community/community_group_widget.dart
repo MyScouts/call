@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -47,7 +48,8 @@ class _CommunityGroupWidgetState extends State<CommunityGroupWidget> {
         margin: const EdgeInsets.only(bottom: 15, right: 10, left: 10),
         decoration: BoxDecoration(
           border: Border.all(color: const Color(0xffE8E8E8)),
-          borderRadius: const BorderRadius.vertical(bottom: Radius.circular(20)),
+          borderRadius:
+              const BorderRadius.vertical(bottom: Radius.circular(20)),
         ),
         child: Column(
           children: [
@@ -60,7 +62,8 @@ class _CommunityGroupWidgetState extends State<CommunityGroupWidget> {
                     final pageData = page[index];
                     return GridView(
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                         mainAxisSpacing: 6,
                       ),
@@ -74,7 +77,9 @@ class _CommunityGroupWidgetState extends State<CommunityGroupWidget> {
                                 widget.onTap?.call(e.value);
                               },
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 12).copyWith(top: 10),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 12)
+                                        .copyWith(top: 10),
                                 child: Column(
                                   children: [
                                     Expanded(
@@ -83,9 +88,21 @@ class _CommunityGroupWidgetState extends State<CommunityGroupWidget> {
                                         padding: const EdgeInsets.all(4.0),
                                         child: AspectRatio(
                                           aspectRatio: 1,
-                                          child: ImageWidget(
-                                            e.value.banner?.optimizeSize400 ?? ImageConstants.imgdefault,
-                                            borderRadius: 100,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                            child: CachedNetworkImage(
+                                              imageUrl: e.value.banner ?? "",
+                                              fit: BoxFit.cover,
+                                              errorWidget:
+                                                  (context, url, error) {
+                                                return ImageWidget(
+                                                  ImageConstants.imgdefault,
+                                                  borderRadius: 100,
+                                                  fit: BoxFit.cover,
+                                                );
+                                              },
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -98,7 +115,10 @@ class _CommunityGroupWidgetState extends State<CommunityGroupWidget> {
                                           e.value.name!,
                                           maxLines: 2,
                                           textAlign: TextAlign.center,
-                                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall
+                                              ?.copyWith(
                                                 height: 1.4,
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.w500,

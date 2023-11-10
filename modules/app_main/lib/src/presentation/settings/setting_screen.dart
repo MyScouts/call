@@ -54,7 +54,7 @@ class _SettingScreenState extends State<SettingScreen> {
               if (state is OnboardingFail) {
                 showToastMessage("Lỗi hệ thống, vui lòng thử lại sau.",
                     ToastMessageType.warning);
-                // context.startDashboardUtil();
+                context.startDashboardUtil();
                 return;
               }
               if (state is OnboardingSuccess) {
