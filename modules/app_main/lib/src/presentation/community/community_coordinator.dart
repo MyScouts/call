@@ -9,6 +9,7 @@ import 'package:app_main/src/presentation/community/team_detail/pages/assign_bos
 import 'package:app_main/src/presentation/community/team_detail/pages/boss_group_menu.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/team_request_list_screen.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/update_team_options_screen.dart';
+import 'package:app_main/src/presentation/community/widgets/ask_asign_boss_modal.dart';
 import 'package:app_main/src/presentation/community/widgets/assign_boss_modal.dart';
 import 'package:app_main/src/presentation/community/widgets/request_waitting_modal.dart';
 import 'package:app_main/src/presentation/community/widgets/revoke_boss_modal.dart';
@@ -318,6 +319,19 @@ extension CommunityCoordinator on BuildContext {
             ),
           ),
         );
+      },
+    );
+  }
+
+  Future<T?> askAssignBoss<T>({
+    required Team team,
+  }) {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierLabel: '',
+      barrierDismissible: true,
+      pageBuilder: (context, animation1, animation2) {
+        return AskAssignBossModal(team: team);
       },
     );
   }

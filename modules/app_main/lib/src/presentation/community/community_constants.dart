@@ -210,7 +210,15 @@ extension BossTeamActionToMemberExt on BossTeamActionToMember {
   }
 }
 
-enum UpdateTeamOption { edit, requests, invite, kick, relinquish }
+enum UpdateTeamOption {
+  edit,
+  requests,
+  invite,
+  kick,
+  relinquish,
+  assignBoss,
+  revokeBoss
+}
 
 extension UpdateTeamOptionExt on UpdateTeamOption {
   String get title {
@@ -225,6 +233,10 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
         return 'Mời thêm thành viên';
       case UpdateTeamOption.kick:
         return 'Loại bỏ thành viên';
+      case UpdateTeamOption.assignBoss:
+        return 'Chỉ định Boss Team';
+      case UpdateTeamOption.revokeBoss:
+        return 'Huỷ quyền Boss Team';
     }
   }
 
@@ -234,14 +246,15 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
       case UpdateTeamOption.requests:
       case UpdateTeamOption.invite:
       case UpdateTeamOption.kick:
+      case UpdateTeamOption.revokeBoss:
+      case UpdateTeamOption.assignBoss:
         return const Color(0xFF212121);
       case UpdateTeamOption.relinquish:
         return AppColors.red3;
     }
   }
 
-  Future<void> onTap(BuildContext context,
-      {required Team team}) async {
+  Future<void> onTap(BuildContext context, {required Team team}) async {
     switch (this) {
       case UpdateTeamOption.relinquish:
       case UpdateTeamOption.invite:
@@ -253,6 +266,16 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
         );
       case UpdateTeamOption.requests:
         return await context.startTeamRequestsScreen();
+      case UpdateTeamOption.assignBoss:
+        return await context.startAssignTeam(team);
+      case UpdateTeamOption.revokeBoss:
+        if (team.boss == null) {
+          return context.askAssignBoss(team: team);
+        }
+        return await context.startRemoveBossModal(
+          member: team.boss!,
+          team: team,
+        );
     }
   }
 }
