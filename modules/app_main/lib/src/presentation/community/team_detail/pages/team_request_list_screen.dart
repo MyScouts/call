@@ -182,150 +182,155 @@ class _JoinRequestPageState extends State<JoinRequestPage> {
             children: [
               if (state is OnGetListRequest)
                 const Center(child: CircularProgressIndicator()),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: request.length,
-                  itemBuilder: (context, index) {
-                    final member = request[index];
-                    return Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 15),
-                      margin: const EdgeInsets.symmetric(vertical: 5),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey, width: .2),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                SizedBox(
-                                  height: 40,
-                                  width: 40,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(90),
-                                    child: CachedNetworkImage(
-                                      imageUrl: member.user?.avatar ?? "",
-                                      errorWidget: (context, url, error) =>
-                                          ImageWidget(
-                                        ImageConstants.defaultUserAvatar,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 5),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      member.user.getdisplayName,
-                                      style: context.textTheme.titleMedium!
-                                          .copyWith(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      member.user?.pDoneId ?? "",
-                                      style: context.textTheme.titleMedium!
-                                          .copyWith(color: Colors.grey[500]),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              "Yêu cầu vào Team của ${member.user.getdisplayName}",
-                              style: context.textTheme.titleMedium!.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              children: [
-                                Expanded(
-                                    child: GestureDetector(
-                                  onTap: () => _bloc.replyJoinRequest(
-                                    teamId: member.team.id!,
-                                    payload: ReplyJoinRequestPayload(
-                                      userId: member.user!.id!,
-                                      isApproved: false,
-                                    ),
-                                  ),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 10,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Color(0XFFE8F0FE),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.close,
-                                          size: 20,
-                                          color: context.theme.primaryColor,
+              if (state is! OnGetListRequest && request.isEmpty)
+                Center(child: Text("Không có yêu cầu nào!")),
+              if (request.isNotEmpty)
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: request.length,
+                    itemBuilder: (context, index) {
+                      final member = request[index];
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 15),
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: .2),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    height: 40,
+                                    width: 40,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(90),
+                                      child: CachedNetworkImage(
+                                        imageUrl: member.user?.avatar ?? "",
+                                        errorWidget: (context, url, error) =>
+                                            ImageWidget(
+                                          ImageConstants.defaultUserAvatar,
                                         ),
-                                        Text(
-                                          "Từ chối",
-                                          style: context.textTheme.titleSmall!
-                                              .copyWith(
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        member.user.getdisplayName,
+                                        style: context.textTheme.titleMedium!
+                                            .copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        member.user?.pDoneId ?? "",
+                                        style: context.textTheme.titleMedium!
+                                            .copyWith(color: Colors.grey[500]),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                "Yêu cầu vào Team của ${member.user.getdisplayName}",
+                                style: context.textTheme.titleMedium!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Row(
+                                children: [
+                                  Expanded(
+                                      child: GestureDetector(
+                                    onTap: () => _bloc.replyJoinRequest(
+                                      teamId: member.team.id!,
+                                      payload: ReplyJoinRequestPayload(
+                                        userId: member.user!.id!,
+                                        isApproved: false,
+                                      ),
+                                    ),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 10,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Color(0XFFE8F0FE),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.close,
+                                            size: 20,
                                             color: context.theme.primaryColor,
                                           ),
-                                        ),
-                                      ],
+                                          Text(
+                                            "Từ chối",
+                                            style: context.textTheme.titleSmall!
+                                                .copyWith(
+                                              color: context.theme.primaryColor,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                )),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                    child: GestureDetector(
-                                  onTap: () => _bloc.replyJoinRequest(
-                                    teamId: member.team.id!,
-                                    payload: ReplyJoinRequestPayload(
-                                      userId: member.user!.id!,
-                                      isApproved: true,
+                                  )),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                      child: GestureDetector(
+                                    onTap: () => _bloc.replyJoinRequest(
+                                      teamId: member.team.id!,
+                                      payload: ReplyJoinRequestPayload(
+                                        userId: member.user!.id!,
+                                        isApproved: true,
+                                      ),
                                     ),
-                                  ),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 10,
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 10,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: context.theme.primaryColor,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Icon(
+                                            Icons.check,
+                                            size: 20,
+                                            color: AppColors.white,
+                                          ),
+                                          Text(
+                                            "Phê duyệt",
+                                            style: context.textTheme.titleSmall!
+                                                .copyWith(
+                                                    color: AppColors.white),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    decoration: BoxDecoration(
-                                      color: context.theme.primaryColor,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Icon(
-                                          Icons.check,
-                                          size: 20,
-                                          color: AppColors.white,
-                                        ),
-                                        Text(
-                                          "Phê duyệt",
-                                          style: context.textTheme.titleSmall!
-                                              .copyWith(color: AppColors.white),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )),
-                              ],
-                            )
-                          ]),
-                    );
-                  },
-                ),
-              )
+                                  )),
+                                ],
+                              )
+                            ]),
+                      );
+                    },
+                  ),
+                )
             ],
           ),
         );
@@ -347,7 +352,7 @@ class _LeaveRequestPage extends State<LeaveRequestPage> {
   @override
   void initState() {
     super.initState();
-    _bloc.getRequests();
+    _bloc.getRequests(isJoinRequest: false);
   }
 
   @override
@@ -356,17 +361,15 @@ class _LeaveRequestPage extends State<LeaveRequestPage> {
       create: (context) => _bloc,
       child: BlocListener<TeamRequestCubit, TeamRequestState>(
         listener: (context, state) {
-          if (state is OnReplyJoinRequest) {
+          if (state is OnReplyLeaveRequest) {
             showLoading();
           }
-
-          if (state is ReplyJoinRequestSuccess) {
+          if (state is ReplyLeaveRequestSuccess) {
             hideLoading();
             if (state.isApproved) {
-              showToastMessage("Phê duyệt yêu cầu tham gia team thành công");
+              showToastMessage("Phê duyệt yêu cầu rời team thành công");
             } else {
-              showToastMessage(
-                  "Từ chối duyệt yêu cầu tham gia team thành công");
+              showToastMessage("Từ chối duyệt yêu cầu rời team thành công");
             }
           }
         },
@@ -387,150 +390,220 @@ class _LeaveRequestPage extends State<LeaveRequestPage> {
             children: [
               if (state is OnGetListRequest)
                 const Center(child: CircularProgressIndicator()),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: request.length,
-                  itemBuilder: (context, index) {
-                    final member = request[index];
-                    return Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 15),
-                      margin: const EdgeInsets.symmetric(vertical: 5),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey, width: .2),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
+              if (state is! OnGetListRequest && request.isEmpty)
+                Center(child: Text("Không có yêu cầu nào!")),
+              if (request.isNotEmpty)
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: request.length,
+                    itemBuilder: (context, index) {
+                      final member = request[index];
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 15),
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: .2),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Expanded(
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
-                                  height: 40,
-                                  width: 40,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(90),
-                                    child: CachedNetworkImage(
-                                      imageUrl: member.user?.avatar ?? "",
-                                      errorWidget: (context, url, error) =>
-                                          ImageWidget(
-                                        ImageConstants.defaultUserAvatar,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 5),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Row(
                                   children: [
-                                    Text(
-                                      member.user.getdisplayName,
-                                      style: context.textTheme.titleMedium!
-                                          .copyWith(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      member.user?.pDoneId ?? "",
-                                      style: context.textTheme.titleMedium!
-                                          .copyWith(color: Colors.grey[500]),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              "Yêu cầu vào Team của ${member.user.getdisplayName}",
-                              style: context.textTheme.titleMedium!.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              children: [
-                                Expanded(
-                                    child: GestureDetector(
-                                  onTap: () => _bloc.replyJoinRequest(
-                                    teamId: member.team.id!,
-                                    payload: ReplyJoinRequestPayload(
-                                      userId: member.user!.id!,
-                                      isApproved: false,
-                                    ),
-                                  ),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 10,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Color(0XFFE8F0FE),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.close,
-                                          size: 20,
-                                          color: context.theme.primaryColor,
-                                        ),
-                                        Text(
-                                          "Từ chối",
-                                          style: context.textTheme.titleSmall!
-                                              .copyWith(
-                                            color: context.theme.primaryColor,
+                                    SizedBox(
+                                      height: 40,
+                                      width: 40,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(90),
+                                        child: CachedNetworkImage(
+                                          imageUrl: member.user?.avatar ?? "",
+                                          errorWidget: (context, url, error) =>
+                                              ImageWidget(
+                                            ImageConstants.defaultUserAvatar,
                                           ),
                                         ),
-                                      ],
+                                      ),
                                     ),
+                                    const SizedBox(width: 5),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            member.user.getdisplayName,
+                                            style: context
+                                                .textTheme.titleMedium!
+                                                .copyWith(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            "Boss Team của Team ${member.team.name}",
+                                            softWrap: true,
+                                            style: context
+                                                .textTheme.titleMedium!
+                                                .copyWith(
+                                                    color: Colors.grey[500]),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  "Yêu cầu rời Team của ${member.user.getdisplayName}",
+                                  style:
+                                      context.textTheme.titleMedium!.copyWith(
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                )),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                    child: GestureDetector(
-                                  onTap: () => _bloc.replyJoinRequest(
-                                    teamId: member.team.id!,
-                                    payload: ReplyJoinRequestPayload(
-                                      userId: member.user!.id!,
-                                      isApproved: true,
-                                    ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.symmetric(vertical: 10),
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 10,
+                                    horizontal: 10,
                                   ),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 10,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: context.theme.primaryColor,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Icon(
-                                          Icons.check,
-                                          size: 20,
-                                          color: AppColors.white,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0XFFFFF5C7),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          "Thời gian phê duyệt còn lại",
+                                          softWrap: true,
+                                          style: context.textTheme.titleMedium!
+                                              .copyWith(color: AppColors.black),
                                         ),
-                                        Text(
-                                          "Phê duyệt",
-                                          style: context.textTheme.titleSmall!
-                                              .copyWith(color: AppColors.white),
+                                      ),
+                                      Flexible(
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 20,
+                                            vertical: 10,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: Color(0XFFFF7626),
+                                            borderRadius:
+                                                BorderRadius.circular(90),
+                                          ),
+                                          child: Text(
+                                            "45:29:59",
+                                            style: context
+                                                .textTheme.titleMedium!
+                                                .copyWith(
+                                                    color: AppColors.white),
+                                          ),
                                         ),
-                                      ],
-                                    ),
+                                      )
+                                    ],
                                   ),
-                                )),
-                              ],
-                            )
-                          ]),
-                    );
-                  },
-                ),
-              )
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  "Nếu bạn không phê duyệt trong thời gian đếm ngược, yêu cầu này sẽ tự động đồng ý với yêu cầu của người tạo.",
+                                  style: context.textTheme.bodySmall!
+                                      .copyWith(color: Colors.grey[500]),
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                        child: GestureDetector(
+                                      onTap: () => _bloc.replyLeaveRequest(
+                                        teamId: member.team.id!,
+                                        payload: ReplyJoinRequestPayload(
+                                          userId: member.user!.id!,
+                                          isApproved: false,
+                                        ),
+                                      ),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                          vertical: 10,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Color(0XFFE8F0FE),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.close,
+                                              size: 20,
+                                              color: context.theme.primaryColor,
+                                            ),
+                                            Text(
+                                              "Từ chối",
+                                              style: context
+                                                  .textTheme.titleSmall!
+                                                  .copyWith(
+                                                color:
+                                                    context.theme.primaryColor,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    )),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                        child: GestureDetector(
+                                      onTap: () => _bloc.replyLeaveRequest(
+                                        teamId: member.team.id!,
+                                        payload: ReplyJoinRequestPayload(
+                                          userId: member.user!.id!,
+                                          isApproved: true,
+                                        ),
+                                      ),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                          vertical: 10,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: context.theme.primaryColor,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const Icon(
+                                              Icons.check,
+                                              size: 20,
+                                              color: AppColors.white,
+                                            ),
+                                            Text(
+                                              "Phê duyệt",
+                                              style: context
+                                                  .textTheme.titleSmall!
+                                                  .copyWith(
+                                                      color: AppColors.white),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    )),
+                                  ],
+                                )
+                              ]),
+                        ),
+                      );
+                    },
+                  ),
+                )
             ],
           ),
         );

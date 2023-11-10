@@ -131,7 +131,15 @@ class CommunityUsecase {
     return _communityRepository.memberJoinRequest();
   }
 
+  Future<MemberJoinRequestResponse> memberLeaveRequest() {
+    return _communityRepository.memberLeaveRequest();
+  }
+
   Future replyJoinRequest(String teamId, ReplyJoinRequestPayload payload) {
     return _communityRepository.replyJoinRequest(teamId, payload);
+  }
+
+  Future replyLeaveRequest(String teamId, ReplyJoinRequestPayload payload) {
+    return _communityRepository.replyLeaveRequest(teamId, payload);
   }
 }

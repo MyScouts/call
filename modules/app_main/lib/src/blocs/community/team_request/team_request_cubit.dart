@@ -14,12 +14,17 @@ class TeamRequestCubit extends Cubit<TeamRequestState> {
   TeamRequestCubit(this._usecase)
       : super(const TeamRequestInitial(requests: []));
 
-  Future getRequests({bool? isReset}) async {
+  Future getRequests({bool? isReset, bool isJoinRequest = true}) async {
     if (state is OnGetListRequest) return;
     try {
       emit(const OnGetListRequest(requests: [], isFirst: true));
-      final response = await _usecase.memberJoinRequest();
-      _request.addAll(response.requests);
+      if (isJoinRequest) {
+        final response = await _usecase.memberJoinRequest();
+        _request.addAll(response.requests);
+      } else {
+        final response = await _usecase.memberLeaveRequest();
+        _request.addAll(response.requests);
+      }
       emit(GetListRequestSuccess(requests: _request));
     } catch (e) {
       emit(GetListRequestFail(requests: _request));
@@ -41,6 +46,27 @@ class TeamRequestCubit extends Cubit<TeamRequestState> {
       ));
     } catch (e) {
       emit(ReplyJoinRequestFail(
+        requests: _request,
+        message: "Thao tác không thành công",
+      ));
+    }
+  }
+
+  Future replyLeaveRequest({
+    required String teamId,
+    required ReplyJoinRequestPayload payload,
+  }) async {
+    if (state is OnReplyLeaveRequest) return;
+    try {
+      emit(const OnReplyLeaveRequest(requests: []));
+      await _usecase.replyLeaveRequest(teamId, payload);
+      _request.removeWhere((element) => element.user?.id == payload.userId);
+      emit(ReplyLeaveRequestSuccess(
+        requests: _request,
+        isApproved: payload.isApproved,
+      ));
+    } catch (e) {
+      emit(ReplyLeaveRequestFail(
         requests: _request,
         message: "Thao tác không thành công",
       ));

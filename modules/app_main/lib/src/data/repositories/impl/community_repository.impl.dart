@@ -189,4 +189,14 @@ class CommunityRepositoryImpl extends CommunityRepository {
   Future replyJoinRequest(String teamId, ReplyJoinRequestPayload payload) {
     return _communityApi.replyJoinRequest(teamId, payload.toJson());
   }
+
+  @override
+  Future<MemberJoinRequestResponse> memberLeaveRequest() {
+    return _communityApi.memberLeaverRequest();
+  }
+
+  @override
+  Future replyLeaveRequest(String teamId, ReplyJoinRequestPayload payload) {
+    return _communityApi.replyLeaveRequest(teamId, payload.toJson());
+  }
 }
