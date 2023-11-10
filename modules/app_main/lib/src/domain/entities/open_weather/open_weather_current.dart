@@ -29,6 +29,10 @@ enum WeatherCondition {
       return IconAppConstants.icCloud;
     }
 
+    if (this == WeatherCondition.clear || this == WeatherCondition.lightCloud) {
+      return IconAppConstants.icClear;
+    }
+
     return IconAppConstants.icSun;
   }
 }
@@ -65,7 +69,7 @@ class OpenWeatherCurrent extends Equatable {
       humidity: json['main']?['humidity'] ?? 0,
       iconUrl:
           'http://openweathermap.org/img/w/${json['weather']?[0]?['icon']}.png',
-      speed: json['wind']?['speed'] ?? 0.0,
+      speed: (json['wind']?['speed'] ?? 0.0).toDouble(),
       name: json['name'] ?? '',
       condition: mapStringToWeatherCondition(
         json['weather']?[0]['main'] ?? '',

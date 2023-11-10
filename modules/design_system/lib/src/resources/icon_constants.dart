@@ -83,6 +83,7 @@ class IconAppConstants {
   static String icArrowTop = IconApp.icArrowTop.path;
   static String icCircleArrow = IconApp.icCircleArrow.path;
   static String icWindy = IconApp.icWindy.path;
+  static String icClear = IconApp.icClear.path;
 }
 
 enum IconApp {
@@ -171,6 +172,7 @@ enum IconApp {
   icArrowTop('assets/icons/ic_arrow_top.svg'),
   icCircleArrow('assets/icons/ic_circle_arrow.svg'),
   icWindy('assets/icons/ic_windy.svg'),
+  icClear('assets/icons/ic_clear.svg'),
   icLeaveTeam('assets/icons/ic_leave_team.svg');
 
   const IconApp(this.path);

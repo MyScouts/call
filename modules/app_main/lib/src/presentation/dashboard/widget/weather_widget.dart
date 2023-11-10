@@ -75,9 +75,9 @@ class WeatherWidget extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: SizedBox.square(
-                      dimension: 20,
+                      dimension: 30,
                       child: ImageWidget(
-                        state.openWeatherCurrent?.iconUrl ?? '',
+                        state.openWeatherCurrent?.condition.image ?? '',
                         fit: BoxFit.fill,
                       ),
                     ),
