@@ -5,9 +5,7 @@ import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_p
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dock_widget.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/statusbar_widget.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
-import 'package:app_main/src/presentation/dashboard/notification/notification_screen.dart';
 import 'package:app_main/src/presentation/notification/notification_screen.dart';
-import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 
