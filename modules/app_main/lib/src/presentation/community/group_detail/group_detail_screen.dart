@@ -355,7 +355,6 @@ class _GroupTeam extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.watch<GroupDetailBloc>();
     final teams = (bloc.state as FetchTeamsSuccess).teams;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -389,22 +388,22 @@ class _TeamCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
-          color: Colors.white,
-          border: Border.all(color: const Color(0xffF2F2F2))),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          IntrinsicHeight(
-            child: GestureDetector(
-              onTap: () => context.startTeamDetail(
-                id: team.id,
-                name: team.name,
-              ),
+    return GestureDetector(
+      onTap: () => context.startTeamDetail(
+        id: team.id,
+        name: team.name,
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(12.0),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.0),
+            color: Colors.white,
+            border: Border.all(color: const Color(0xffF2F2F2))),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IntrinsicHeight(
               child: Row(
                 children: [
                   CircleNetworkImage(url: team.boss?.avatar ?? '', size: 37),
@@ -439,65 +438,65 @@ class _TeamCard extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            '${team.memberCount} thành viên',
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              color: Color(0xff4B84F7),
-              fontSize: 11,
+            const SizedBox(height: 12),
+            Text(
+              '${team.memberCount} thành viên',
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Color(0xff4B84F7),
+                fontSize: 11,
+              ),
             ),
-          ),
-          const SizedBox(height: 4),
-          Container(
-            height: 4,
-            decoration: BoxDecoration(
-              color: const Color(0xffF4F4F4),
-              borderRadius: BorderRadius.circular(2.5),
+            const SizedBox(height: 4),
+            Container(
+              height: 4,
+              decoration: BoxDecoration(
+                color: const Color(0xffF4F4F4),
+                borderRadius: BorderRadius.circular(2.5),
+              ),
+              child: Row(
+                children: [
+                  Flexible(
+                    flex: 2,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xff4B84F7),
+                        borderRadius: BorderRadius.circular(2.5),
+                      ),
+                    ),
+                  ),
+                  const Expanded(flex: 1, child: SizedBox.shrink()),
+                ],
+              ),
             ),
-            child: Row(
+            const Spacer(),
+            Row(
               children: [
                 Expanded(
-                  flex: 2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xff4B84F7),
-                      borderRadius: BorderRadius.circular(2.5),
+                  child: Text(
+                    'ID: ${team.id?.toUpperCase()}',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Color(0xffACACAC),
                     ),
                   ),
                 ),
-                const Expanded(flex: 1, child: SizedBox.shrink()),
+                GestureDetector(
+                  onTap: () {},
+                  behavior: HitTestBehavior.opaque,
+                  child: const Text(
+                    'Khám phá',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Color(0xff4B84F7),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
               ],
             ),
-          ),
-          const Spacer(),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'ID: ${team.id?.toUpperCase()}',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Color(0xffACACAC),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {},
-                behavior: HitTestBehavior.opaque,
-                child: const Text(
-                  'Khám phá',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Color(0xff4B84F7),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -521,7 +520,7 @@ class _BossGroup extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.watch<GroupDetailBloc>();
     final group = (bloc.state as FetchGroupDetailSuccess).group;
-
+    print(group);
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(19.0),
@@ -531,6 +530,7 @@ class _BossGroup extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: IntrinsicHeight(
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(14.0),
@@ -541,13 +541,16 @@ class _BossGroup extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    group.boss?.name ?? '',
-                    style: const TextStyle(
+                    group.boss?.getdisplayName ?? '',
+                    style: TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.bold,
+                      height: 1,
+                      color: context.theme.primaryColor,
                     ),
                   ),
                   const Text(
@@ -556,6 +559,7 @@ class _BossGroup extends StatelessWidget {
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                       color: Color(0xff6E6E6E),
+                      height: 1,
                     ),
                   ),
                 ],

@@ -1,4 +1,3 @@
-import 'package:app_main/src/presentation/camera/camera_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
 import 'package:app_main/src/presentation/dashboard/search/search_screen.dart';
 import 'package:app_main/src/presentation/dashboard/system_setting/background_picker.dart';
@@ -29,9 +28,6 @@ class DashboardRoutes extends RouteModule {
         },
         ChangePassword.routerName: (context) {
           return const ChangePassword();
-        },
-        CameraScreen.routeName: (context) {
-          return const CameraScreen();
         },
       };
 }
