@@ -1,6 +1,5 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/networking/data_rows_response.dart';
-import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
 import 'package:app_main/src/data/models/payloads/community/reply_give_up_boss_team_role_payload.dart';
 import 'package:app_main/src/data/models/responses/group_request_response.dart';
 import 'package:app_main/src/data/models/responses/member_join_request.dart';
@@ -54,6 +53,8 @@ class CommunityApiConstants {
       'api/v1/team/{teamId}/reply-join-request';
   static const String replyLeaveRequest =
       'api/v1/team/{teamId}/reply-leave-request';
+  static const String assignBoss = 'api/v1/team/{teamId}/assign-boss';
+  static const String revokeBoss = 'api/v1/team/{teamId}/revoke-boss';
 }
 
 @RestApi()
@@ -187,4 +188,13 @@ abstract class CommunityApi {
     @Path() String teamId,
     @Body() dynamic body,
   );
+
+  @POST(CommunityApiConstants.assignBoss)
+  Future assignBoss(
+    @Path() String teamId,
+    @Body() dynamic body,
+  );
+
+  @POST(CommunityApiConstants.revokeBoss)
+  Future revokeBoss(@Path() String teamId);
 }

@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:localization/generated/intl/messages_en.dart';
+import 'package:localization/localization.dart';
 
 import '../../../../data/models/responses/leave_team_status_response.dart';
 import '../../../../domain/usecases/community_usecase.dart';
@@ -21,6 +24,8 @@ class TeamDetailBloc extends Bloc<TeamDetailEvent, TeamDetailState> {
     on<AskToJoinEvent>(_onAskToJoinEvent);
     on<AskToLeaveTeamEvent>(_onAskToLeaveTeamEvent);
     on<GetLeaveTeamStatusEvent>(_onGetLeaveTeamStatusEvent);
+    on<AssignBossEvent>(_assignBossEvent);
+    on<RevokeBossEvent>(_revokeBossEvent);
   }
 
   FutureOr<void> _onFetchTeamDetailEvent(
@@ -104,6 +109,42 @@ class TeamDetailBloc extends Bloc<TeamDetailEvent, TeamDetailState> {
       if (kDebugMode) {
         rethrow;
       }
+    }
+  }
+
+  FutureOr<void> _assignBossEvent(
+      AssignBossEvent event, Emitter<TeamDetailState> emit) async {
+    if (state is OnAssignBoss) return;
+    try {
+      emit(OnAssignBoss());
+      await _communityUsecase.assignBoss(event.teamId, event.payload);
+      emit(AssignBossSuccess(bossId: event.payload.userId));
+    } on DioException catch (error) {
+      final data = error.response!.data;
+      String err = S.current.messages_server_internal_error.capitalize();
+      print(data);
+      emit(AssignBossFail(message: err));
+    } catch (error) {
+      String err = S.current.messages_server_internal_error.capitalize();
+      emit(AssignBossFail(message: err));
+    }
+  }
+
+  FutureOr<void> _revokeBossEvent(
+      RevokeBossEvent event, Emitter<TeamDetailState> emit) async {
+    if (state is OnRevokeBoss) return;
+    try {
+      emit(OnRevokeBoss());
+      await _communityUsecase.revokeBoss(event.teamId);
+      emit(RevokeBossSuccess());
+    } on DioException catch (error) {
+      final data = error.response!.data;
+      String err = S.current.messages_server_internal_error.capitalize();
+      print(data);
+      emit(RevokeBossFail(message: err));
+    } catch (error) {
+      String err = S.current.messages_server_internal_error.capitalize();
+      emit(RevokeBossFail(message: err));
     }
   }
 }

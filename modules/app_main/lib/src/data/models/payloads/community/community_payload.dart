@@ -13,3 +13,13 @@ class ReplyJoinRequestPayload with _$ReplyJoinRequestPayload {
   factory ReplyJoinRequestPayload.fromJson(Map<String, dynamic> json) =>
       _$ReplyJoinRequestPayloadFromJson(json);
 }
+
+@freezed
+class AssignBossPayload with _$AssignBossPayload {
+  const factory AssignBossPayload({
+    required int userId,
+  }) = _AssignBossPayload;
+
+  factory AssignBossPayload.fromJson(Map<String, dynamic> json) =>
+      _$AssignBossPayloadFromJson(json);
+}

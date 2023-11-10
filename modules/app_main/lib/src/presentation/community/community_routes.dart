@@ -4,6 +4,7 @@ import 'package:app_main/src/presentation/community/group_detail/group_request_l
 import 'package:app_main/src/presentation/community/groups/group_listing_bloc.dart';
 import 'package:app_main/src/presentation/community/groups/groups_listing_widget.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/ask_to_join_team_screen.dart';
+import 'package:app_main/src/presentation/community/team_detail/pages/assign_boss_team_screen.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/update_team_options_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -18,7 +19,6 @@ import 'fan_group_detail/fan_group_detail_screen.dart';
 import 'group_detail/bloc/group_detail_bloc.dart';
 import 'group_detail/edit_group_detail.dart';
 import 'group_detail/group_detail_screen.dart';
-import 'group_detail/update_community_options_screen.dart';
 import 'team_detail/bloc/team_detail_bloc.dart';
 import 'team_detail/pages/ask_tojoin_team_success_screen.dart';
 import 'team_detail/pages/team_request_list_screen.dart';
@@ -93,7 +93,7 @@ class CommunityRoutes extends RouteModule {
             ),
           );
         },
-    EditGroupDetail.routeName: (context) {
+        EditGroupDetail.routeName: (context) {
           final args = settings.arguments as Map<String, dynamic>;
           return MultiBlocProvider(
             providers: [
@@ -135,8 +135,14 @@ class CommunityRoutes extends RouteModule {
         },
         UpdateTeamOptionsScreen.routeName: (context) {
           final args = settings.arguments as Team;
-
           return UpdateTeamOptionsScreen(team: args);
+        },
+        AssignBossTeamScreen.routeName: (context) {
+          final args = settings.arguments as Map<String, dynamic>;
+          return BlocProvider<TeamDetailBloc>(
+            create: (context) => injector.get(),
+            child: AssignBossTeamScreen(team: args['team']),
+          );
         },
       };
 }

@@ -142,4 +142,12 @@ class CommunityUsecase {
   Future replyLeaveRequest(String teamId, ReplyJoinRequestPayload payload) {
     return _communityRepository.replyLeaveRequest(teamId, payload);
   }
+
+  Future assignBoss(String teamId, AssignBossPayload payload) {
+    return _communityRepository.assignBoss(teamId, payload);
+  }
+
+  Future revokeBoss(String teamId) {
+    return _communityRepository.revokeBoss(teamId);
+  }
 }

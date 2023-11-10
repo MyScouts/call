@@ -82,7 +82,6 @@ class UserCubit extends Cubit<UserState> {
       emit(PhoneCompletedRegisterSuccess());
     } on DioException catch (error) {
       final data = error.response!.data;
-      debugPrint("phoneRegister: $error");
       String err = S.current.messages_server_internal_error.capitalize();
       switch (data['code']) {
         case "OTP_NOT_MATCH":

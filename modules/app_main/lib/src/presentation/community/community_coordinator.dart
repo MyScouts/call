@@ -1,10 +1,21 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
+import 'package:app_main/src/presentation/community/group_detail/bloc/group_detail_bloc.dart';
 import 'package:app_main/src/presentation/community/group_detail/update_community_options_screen.dart';
 import 'package:app_main/src/presentation/community/team_detail/bloc/team_detail_bloc.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/ask_tojoin_team_success_screen.dart';
+import 'package:app_main/src/presentation/community/team_detail/pages/assign_boss_team_screen.dart';
+import 'package:app_main/src/presentation/community/team_detail/pages/boss_group_menu.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/team_request_list_screen.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/update_team_options_screen.dart';
+import 'package:app_main/src/presentation/community/widgets/assign_boss_modal.dart';
+import 'package:app_main/src/presentation/community/widgets/request_waitting_modal.dart';
+import 'package:app_main/src/presentation/community/widgets/revoke_boss_modal.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
 
@@ -179,6 +190,133 @@ extension CommunityCoordinator on BuildContext {
           content:
               'Chúng tôi sẽ tiếp nhận yêu cầu rời Team của bạn và sẽ gửi bạn thông báo mới nhất.',
           onAction: onAction.call,
+        );
+      },
+    );
+  }
+
+  Future<T?> startBossGroupMenu<T>({
+    required Team team,
+    required Function onRevokeBoss,
+  }) {
+    return showModalBottomSheet(
+      context: this,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => BossGroupMenu(team: team),
+    );
+  }
+
+  Future<T?> startAssignTeam<T>(Team team) {
+    return Navigator.of(this).pushNamed(
+      AssignBossTeamScreen.routeName,
+      arguments: {'team': team},
+    );
+  }
+
+  Future<T?> startDialogConfirmAssignBoss<T>({
+    required VoidCallback onAction,
+    required User member,
+    required Team team,
+  }) {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierLabel: '',
+      barrierDismissible: true,
+      pageBuilder: (context, animation1, animation2) {
+        return AssignBossModal(member: member, onAction: onAction, team: team);
+      },
+    );
+  }
+
+  Future<T?> startRemoveBossModal<T>({
+    required User member,
+    required Team team,
+  }) {
+    TeamDetailBloc _bloc = injector.get<TeamDetailBloc>();
+    return showGeneralDialog<T>(
+      context: this,
+      barrierLabel: '',
+      barrierDismissible: true,
+      pageBuilder: (context, animation1, animation2) {
+        return BlocProvider<TeamDetailBloc>(
+          create: (context) => _bloc,
+          child: BlocListener<TeamDetailBloc, TeamDetailState>(
+            listener: (context, state) {
+              if (state is OnRevokeBoss) {
+                showLoading();
+              }
+
+              if (state is RevokeBossSuccess) {
+                hideLoading();
+                Navigator.pop(context);
+                Future.delayed(Duration(milliseconds: 200));
+                context.startWaitingModal();
+              }
+            },
+            child: RevokeBossModal(
+                member: member,
+                onAction: () {
+                  _bloc.add(RevokeBossEvent(teamId: team.id!));
+                },
+                team: team),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<T?> startWaitingModal<T>() {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierLabel: '',
+      barrierDismissible: true,
+      pageBuilder: (context, animation1, animation2) {
+        return RequestWaitingModal();
+      },
+    );
+  }
+
+  Future<T?> confirmAssignBossTeam<T>({
+    required VoidCallback onAction,
+    required User member,
+    required Team team,
+  }) {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierLabel: '',
+      barrierDismissible: true,
+      pageBuilder: (context, animation1, animation2) {
+        final _bloc = injector.get<TeamDetailBloc>();
+        return BlocProvider(
+          create: (context) => _bloc,
+          child: BlocListener<TeamDetailBloc, TeamDetailState>(
+            listener: (context, state) {
+              if (state is OnAssignBoss) {
+                showLoading();
+              }
+              if (state is AssignBossSuccess) {
+                hideLoading();
+                showToastMessage("Chỉ định boss team thành công");
+                Navigator.pop(context, true);
+              }
+
+              if (state is AssignBossFail) {
+                hideLoading();
+                showToastMessage(state.message);
+              }
+            },
+            child: AssignBossModal(
+              member: member,
+              onAction: () {
+                _bloc.add(AssignBossEvent(
+                  payload: AssignBossPayload(userId: member.id!),
+                  teamId: team.id!,
+                ));
+              },
+              team: team,
+            ),
+          ),
         );
       },
     );

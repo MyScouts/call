@@ -247,6 +247,7 @@ final communityDefault = {
     id: 'ic_qr',
     title: 'QR Code',
     backgroundImage: IconAppConstants.icQr,
+    path: ScanQrCodeScanScreen.routeName,
   ),
   'ic_profile': DashBoardIconItem(
     id: 'ic_profile',

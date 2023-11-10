@@ -175,3 +175,141 @@ abstract class _ReplyJoinRequestPayload implements ReplyJoinRequestPayload {
   _$$ReplyJoinRequestPayloadImplCopyWith<_$ReplyJoinRequestPayloadImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+AssignBossPayload _$AssignBossPayloadFromJson(Map<String, dynamic> json) {
+  return _AssignBossPayload.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AssignBossPayload {
+  int get userId => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AssignBossPayloadCopyWith<AssignBossPayload> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AssignBossPayloadCopyWith<$Res> {
+  factory $AssignBossPayloadCopyWith(
+          AssignBossPayload value, $Res Function(AssignBossPayload) then) =
+      _$AssignBossPayloadCopyWithImpl<$Res, AssignBossPayload>;
+  @useResult
+  $Res call({int userId});
+}
+
+/// @nodoc
+class _$AssignBossPayloadCopyWithImpl<$Res, $Val extends AssignBossPayload>
+    implements $AssignBossPayloadCopyWith<$Res> {
+  _$AssignBossPayloadCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userId = null,
+  }) {
+    return _then(_value.copyWith(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$AssignBossPayloadImplCopyWith<$Res>
+    implements $AssignBossPayloadCopyWith<$Res> {
+  factory _$$AssignBossPayloadImplCopyWith(_$AssignBossPayloadImpl value,
+          $Res Function(_$AssignBossPayloadImpl) then) =
+      __$$AssignBossPayloadImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int userId});
+}
+
+/// @nodoc
+class __$$AssignBossPayloadImplCopyWithImpl<$Res>
+    extends _$AssignBossPayloadCopyWithImpl<$Res, _$AssignBossPayloadImpl>
+    implements _$$AssignBossPayloadImplCopyWith<$Res> {
+  __$$AssignBossPayloadImplCopyWithImpl(_$AssignBossPayloadImpl _value,
+      $Res Function(_$AssignBossPayloadImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userId = null,
+  }) {
+    return _then(_$AssignBossPayloadImpl(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$AssignBossPayloadImpl implements _AssignBossPayload {
+  const _$AssignBossPayloadImpl({required this.userId});
+
+  factory _$AssignBossPayloadImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AssignBossPayloadImplFromJson(json);
+
+  @override
+  final int userId;
+
+  @override
+  String toString() {
+    return 'AssignBossPayload(userId: $userId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AssignBossPayloadImpl &&
+            (identical(other.userId, userId) || other.userId == userId));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, userId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AssignBossPayloadImplCopyWith<_$AssignBossPayloadImpl> get copyWith =>
+      __$$AssignBossPayloadImplCopyWithImpl<_$AssignBossPayloadImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$AssignBossPayloadImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _AssignBossPayload implements AssignBossPayload {
+  const factory _AssignBossPayload({required final int userId}) =
+      _$AssignBossPayloadImpl;
+
+  factory _AssignBossPayload.fromJson(Map<String, dynamic> json) =
+      _$AssignBossPayloadImpl.fromJson;
+
+  @override
+  int get userId;
+  @override
+  @JsonKey(ignore: true)
+  _$$AssignBossPayloadImplCopyWith<_$AssignBossPayloadImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
