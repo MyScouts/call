@@ -48,7 +48,6 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
       listeners: [
         BlocListener<MarshopCubit, MarshopState>(
           listener: (context, state) {
-            print(state);
             if (state is RegisterMarshopSuccess) {
               hideLoading();
               context.congratulationRegisterMarshop();
@@ -152,7 +151,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
   }
 
   void _startQrCodeScan() async {
-    context.startScanQrCode().then((results) {
+    context.startScanQrCode(showMyQr: false).then((results) {
       if (results != null && results is String) {
         if (!results.isNumber()) {
           showToastMessage("Mã Marshop không hợp lệ!", ToastMessageType.error);

@@ -75,7 +75,12 @@ class Setting {
             icon: IconAppConstants.icMarshop,
             onPressed: () {
               if (onboarding != null && !onboarding.isJA) {
-                context.showToastMessage("Bạn phải là JA.");
+                context.confirmUpgradeJA(
+                  onConfirm: () {
+                    final bloc = context.read<GetJAStatusBloc>();
+                    bloc.add(GetDetailDataEvent());
+                  },
+                );
                 return;
               }
               context.startRegisterMarshop();
