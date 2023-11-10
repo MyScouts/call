@@ -1,7 +1,9 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/networking/data_rows_response.dart';
+import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
 import 'package:app_main/src/data/models/payloads/community/reply_give_up_boss_team_role_payload.dart';
 import 'package:app_main/src/data/models/responses/group_request_response.dart';
+import 'package:app_main/src/data/models/responses/member_join_request.dart';
 import 'package:app_main/src/data/models/responses/team_member_response.dart';
 import 'package:app_main/src/data/models/responses/team_response.dart';
 import 'package:injectable/injectable.dart';
@@ -46,6 +48,9 @@ class CommunityApiConstants {
   static const String askToJoinTeam = '/api/v1/team/{id}/join';
   static const String askToLeaveTeam = '/api/v1/team/{id}/leave';
   static const String getLeaveTeamStatus = '/api/v1/team/leave-requests';
+  static const String memberJoinRequest = 'api/v1/team/member-join-requests';
+  static const String replyJoinRequest =
+      'api/v1/team/{teamId}/reply-join-request';
 }
 
 @RestApi()
@@ -161,4 +166,13 @@ abstract class CommunityApi {
 
   @GET(CommunityApiConstants.getLeaveTeamStatus)
   Future<LeaveTeamStatusResponse> getLeaveTeamStatus();
+
+  @GET(CommunityApiConstants.memberJoinRequest)
+  Future<MemberJoinRequestResponse> memberJoinRequest();
+
+  @POST(CommunityApiConstants.replyJoinRequest)
+  Future replyJoinRequest(
+    @Path() String teamId,
+    @Body() dynamic body,
+  );
 }

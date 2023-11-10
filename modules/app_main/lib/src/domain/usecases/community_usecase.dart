@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
+import 'package:app_main/src/data/models/responses/member_join_request.dart';
 import 'package:app_main/src/domain/usecases/resource_usecase.dart';
 import 'package:injectable/injectable.dart';
 
@@ -123,5 +125,13 @@ class CommunityUsecase {
 
   Future<LeaveTeamStatusResponse> getLeaveTeamStatus() async {
     return await _communityRepository.getLeaveTeamStatus();
+  }
+
+  Future<MemberJoinRequestResponse> memberJoinRequest() {
+    return _communityRepository.memberJoinRequest();
+  }
+
+  Future replyJoinRequest(String teamId, ReplyJoinRequestPayload payload) {
+    return _communityRepository.replyJoinRequest(teamId, payload);
   }
 }
