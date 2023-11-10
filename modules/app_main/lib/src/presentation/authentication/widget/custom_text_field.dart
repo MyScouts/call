@@ -62,7 +62,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           onChanged: widget.onChange,
           keyboardType: widget.textInputType,
           enableSuggestions: !widget.isPassword,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
+          autovalidateMode: AutovalidateMode.disabled,
           validator: widget.validator,
           decoration: InputDecoration(
             prefixIcon: widget.prefixIcon,

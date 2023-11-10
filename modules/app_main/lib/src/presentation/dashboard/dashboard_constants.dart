@@ -200,6 +200,7 @@ final Map<String, DashBoardItem> mapItems = {
     id: 'ic_my_driver',
     title: 'QR Code',
     backgroundImage: IconAppConstants.icDoc,
+    path: ScanQrCodeScanScreen.routeName,
   ),
   'ic_my_doctor': DashBoardIconItem(
     id: 'ic_my_doctor',
@@ -294,6 +295,7 @@ final personalDefault = {
     id: 'ic_qr',
     title: 'QR Code',
     backgroundImage: IconAppConstants.icQr,
+    path: ScanQrCodeScanScreen.routeName,
   ),
   'ic_call': DashBoardIconItem(
     id: 'ic_call',

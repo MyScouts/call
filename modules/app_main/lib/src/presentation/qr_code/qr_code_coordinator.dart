@@ -48,14 +48,17 @@ extension DeeplinkCoordinator on BuildContext {
             if (state is LoginQRCodeFail) {
               hideLoading();
               showToastMessage("Đăng nhập thất bại.");
+              context.startDashboardUtil();
             }
           },
           child: ActionDialog(
             isBack: false,
             title: "Bạn có muốn đăng nhập trên thiết bị?",
             actionTitle: S.current.confirm.capitalize(),
-            onAction: () =>
-                context.read<UserCubit>().authQrCode(qrCode: code, type: type),
+            onAction: () {
+              Navigator.pop(context);
+              context.read<UserCubit>().authQrCode(qrCode: code, type: type);
+            },
           ),
         );
       },
