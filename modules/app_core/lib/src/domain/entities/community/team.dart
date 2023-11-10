@@ -3,6 +3,7 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../app_core.dart';
 import '../user/user.dart';
 
 part 'team.freezed.dart';
@@ -19,6 +20,7 @@ class Team with _$Team {
     int? status,
     String? introduction,
     User? boss,
+    Group? group,
     int? memberCount,
   }) = _Team;
 

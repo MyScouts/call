@@ -17,6 +17,9 @@ _$TeamImpl _$$TeamImplFromJson(Map<String, dynamic> json) => _$TeamImpl(
       boss: json['boss'] == null
           ? null
           : User.fromJson(json['boss'] as Map<String, dynamic>),
+      group: json['group'] == null
+          ? null
+          : Group.fromJson(json['group'] as Map<String, dynamic>),
       memberCount: json['memberCount'] as int?,
     );
 
@@ -30,5 +33,6 @@ Map<String, dynamic> _$$TeamImplToJson(_$TeamImpl instance) =>
       'status': instance.status,
       'introduction': instance.introduction,
       'boss': instance.boss,
+      'group': instance.group,
       'memberCount': instance.memberCount,
     };

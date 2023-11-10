@@ -46,9 +46,11 @@ class ImageConstants {
   static String bg11 = ImageApp.bg11.path;
   static String imgDefaultTeamBanner = ImageApp.imgDefaultTeamBanner.path;
   static String guidePdone = ImageApp.guidePdone.path;
+  static String bgEmpty = ImageApp.bgEmpty.path;
 }
 
 enum ImageApp {
+  bgEmpty('assets/images/empty.png'),
   bgQrCode('assets/images/bg_qrcode.png'),
   defaultUserAvatar('assets/images/avatar.png'),
   defaultUserBackground('assets/images/bg_diary.jpeg'),
