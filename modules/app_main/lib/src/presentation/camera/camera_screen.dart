@@ -1,8 +1,12 @@
+import 'dart:typed_data';
+
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:camera/camera.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 class CameraScreen extends StatefulWidget {
@@ -17,6 +21,7 @@ class _CameraScreenState extends State<CameraScreen> {
   CameraController? controller;
   late List<CameraDescription> _cameras;
   final _textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
+  final textRecognizer = GoogleMlKit.vision.textRecognizer();
 
   @override
   void initState() {
@@ -37,11 +42,9 @@ class _CameraScreenState extends State<CameraScreen> {
         return;
       }
       controller!.setFlashMode(FlashMode.off);
-      // controller!.startImageStream((CameraImage availableImage) {
-      //   print(availableImage);
-      //   controller!.stopImageStream();
-      //   _scanText(availableImage);
-      // });
+      controller!.startImageStream((CameraImage availableImage) {
+        processCameraImage(availableImage);
+      });
       setState(() {});
     }).catchError((Object e) {
       if (e is CameraException) {
@@ -57,20 +60,26 @@ class _CameraScreenState extends State<CameraScreen> {
     });
   }
 
-  void _scanText(CameraImage availableImage) async {
+  Future<void> processCameraImage(CameraImage image) async {
     try {
-      final inputImage = InputImage.fromBytes(
-          bytes: availableImage.planes[0].bytes,
-          metadata: InputImageMetadata(
-              size: Size.zero,
-              bytesPerRow: 0,
-              format: InputImageFormat.bgra8888,
-              rotation: InputImageRotation.rotation0deg));
-      final recongText = await _textRecognizer.processImage(inputImage);
-      print(recongText);
+      print(image);
     } catch (e) {
-      print(e);
+      print("Error processing image: $e");
     }
+  }
+
+  Uint8List _concatenatePlanes(List<Plane> planes) {
+    final bytes = planes.map((plane) => plane.bytes).toList();
+    final allBytes =
+        Uint8List(planes.fold(0, (count, plane) => count + plane.bytes.length));
+    int offset = 0;
+
+    for (final planeBytes in bytes) {
+      allBytes.setRange(offset, offset + planeBytes.length, planeBytes);
+      offset += planeBytes.length;
+    }
+
+    return allBytes;
   }
 
   @override
@@ -119,8 +128,9 @@ class _CameraScreenState extends State<CameraScreen> {
             GestureDetector(
               onTap: () async {
                 XFile file = await controller!.takePicture();
-                Future.delayed(const Duration(seconds: 1), () {
-                  Navigator.pop(context, file);
+                Future.delayed(const Duration(milliseconds: 200), () {
+                  context.startCameraResult(file: file);
+                  // Navigator.pop(context, file);
                 });
               },
               child: Container(

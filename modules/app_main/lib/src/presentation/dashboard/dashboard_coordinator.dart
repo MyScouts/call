@@ -1,7 +1,9 @@
+import 'package:app_main/src/presentation/camera/camera_result_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
 import 'package:app_main/src/presentation/dashboard/search/search_screen.dart';
 import 'package:app_main/src/presentation/dashboard/system_setting/system_setting.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'dashboard/widget/dashboard_option_sheet.dart';
 import 'dashboard/widget/remove_confirm_dialog.dart';
@@ -45,5 +47,12 @@ extension DashBoardCoordinator on BuildContext {
         return RemoveConfirmDialog(onRemoved: onRemoved);
       },
     );
+  }
+
+  Future<T?> startCameraResult<T>({required XFile file}) {
+    return Navigator.of(this)
+        .pushNamed(CameraResultScreen.routeName, arguments: {
+      "file": file,
+    });
   }
 }
