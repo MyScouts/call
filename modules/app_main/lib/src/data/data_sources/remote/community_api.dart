@@ -55,6 +55,7 @@ class CommunityApiConstants {
       'api/v1/team/{teamId}/reply-leave-request';
   static const String assignBoss = 'api/v1/team/{teamId}/assign-boss';
   static const String revokeBoss = 'api/v1/team/{teamId}/revoke-boss';
+  static const String kickMember = 'api/v1/team/{teamId}/kick-member/{userId}';
 }
 
 @RestApi()
@@ -197,4 +198,10 @@ abstract class CommunityApi {
 
   @POST(CommunityApiConstants.revokeBoss)
   Future revokeBoss(@Path() String teamId);
+
+  @DELETE(CommunityApiConstants.kickMember)
+  Future kickMember(
+    @Path('userId') int userId,
+    @Path('teamId') String teamId,
+  );
 }

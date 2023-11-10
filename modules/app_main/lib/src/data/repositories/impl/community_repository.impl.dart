@@ -201,6 +201,11 @@ class CommunityRepositoryImpl extends CommunityRepository {
   }
 
   @override
+  Future kickMember(int userId, String teamId) {
+    return _communityApi.kickMember(userId, teamId);
+  }
+
+  @override
   Future assignBoss(String teamId, AssignBossPayload payload) {
     return _communityApi.assignBoss(teamId, payload.toJson());
   }

@@ -39,3 +39,9 @@ class RevokeBossEvent extends TeamDetailEvent {
   final String teamId;
   RevokeBossEvent({required this.teamId});
 }
+
+class KickMember extends TeamDetailEvent {
+  final int userId;
+  final String teamId;
+  KickMember(this.userId, this.teamId);
+}
