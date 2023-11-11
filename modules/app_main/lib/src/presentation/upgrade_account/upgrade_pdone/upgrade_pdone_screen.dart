@@ -1,9 +1,10 @@
+import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/pages/update_pdone_face_liveness_confirm.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/pages/update_pdone_identity_card_confirm.dart';
 import 'package:flutter/material.dart';
-import 'package:mobilehub_core/mobilehub_core.dart';
 import '../upgrade_account_constants.dart';
 import '../upgrade_ja/widgets/steper_update_pdone.dart';
+import 'pages/under14/register_pdone_birth_cer_capture.dart';
 import 'pages/update_pdone_information_page.dart';
 import 'pages/update_pdone_select_type_user.dart';
 
@@ -50,6 +51,8 @@ class _UpgradePDoneScreenState extends State<UpgradePDoneScreen>
     }
   }
 
+  PDoneOptionMethod verifyPdoneMethod = PDoneOptionMethod.userIdentityCard;
+
   @override
   void dispose() {
     _pageController.dispose();
@@ -81,13 +84,26 @@ class _UpgradePDoneScreenState extends State<UpgradePDoneScreen>
               controller: _pageController,
               physics: const NeverScrollableScrollPhysics(),
               children: [
-                UpdatePdoneSelectTypeUser(onNextPage: () => nextPage(1)),
-                UpdatePdoneIdentityCardConfirm(onNextPage: () => nextPage(2)),
+                UpdatePdoneSelectTypeUser(
+                  onNextPage: (PDoneOptionMethod? pdoneMethod) {
+                    if (pdoneMethod != null) {
+                      verifyPdoneMethod = pdoneMethod;
+                    }
+                    nextPage(1);
+                  },
+                ),
+
+                // RegisterPdoneBirthCerCapture(),
+                verifyPdoneMethod == PDoneOptionMethod.userIdentityCard
+                    ? UpdatePdoneIdentityCardConfirm(
+                        onNextPage: () => nextPage(2))
+                    : RegisterPdoneBirthCerCapture(
+                        onNextPage: () => nextPage(2)),
                 UpdatePdoneFaceLiveNessConfirm(onNextPage: () => nextPage(3)),
                 const UpdatePDoneInformationPage(),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

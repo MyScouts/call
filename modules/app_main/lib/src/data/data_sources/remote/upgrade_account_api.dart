@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/confirm_register_ja_payload.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
@@ -16,6 +17,7 @@ import '../../../domain/entities/update_account/update_profile_payload.dart';
 import '../../../domain/entities/update_account/upgrade_account.dart';
 import '../../../domain/entities/update_account/verify_phone_register_pdone_payload.dart';
 import '../../models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
+import '../../models/payloads/upgrade_account/upgrade_pdone/pdone_verify_otp_protector.dart';
 import '../../models/responses/api_response.dart';
 import '../../models/responses/register_pdone_response.dart';
 import '../../models/responses/upgrade_account_response.dart';
@@ -26,6 +28,7 @@ class UpgradeAccountApiConstants {
   static const currentStep = 'api/account-p-done/current-step';
 
   static const updatePDoneProfile = 'api/v1/p-done/adult-register';
+  static const updatePDoneProfileTeenager = 'api/v1/p-done/teenager-register';
 
   static const registerPDone = 'api/account-p-done/profile/register-p-done';
   static const registerPDoneVerifyPhone =
@@ -50,6 +53,8 @@ class UpgradeAccountApiConstants {
   static const checkProtectorVerifyOTP =
       'api/account-p-done/profile/check-protector/verify';
   static const listBanks = 'api/master/banks';
+  static const verifyProtector = 'api/v1/p-done/check-protector-info';
+  static const verifyOTPProtector = 'api/v1/p-done/verify-protector-otp';
   static const updateBankAccount = '/api/bank-account';
   static const getDefaultBank = '/api/bank-account/default';
 }
@@ -79,7 +84,12 @@ abstract class UpgradeAccountApi {
   });
 
   @POST(UpgradeAccountApiConstants.updatePDoneProfile)
-  Future<ApiResponse<dynamic>> updatePDoneProfile({
+  Future<ApiResponse<dynamic>> updatePDoneProfileOver18({
+    @Body() required dynamic payload,
+  });
+
+  @POST(UpgradeAccountApiConstants.updatePDoneProfileTeenager)
+  Future<ApiResponse<dynamic>> updatePDoneProfileRange15To18({
     @Body() required dynamic payload,
   });
 
@@ -151,4 +161,13 @@ abstract class UpgradeAccountApi {
 
   @GET(UpgradeAccountApiConstants.getDefaultBank)
   Future<ApiResponse<BankAccount>> getDefaultBank();
+  @POST(UpgradeAccountApiConstants.verifyProtector)
+  Future<ApiResponse<dynamic>> verifyProtector({
+    @Body() required PDoneVerifyProtectorRequest payload,
+  });
+
+  @POST(UpgradeAccountApiConstants.verifyOTPProtector)
+  Future<ApiResponse<dynamic>> verifyOTPProtector({
+    @Body() required PDoneVerifyOTPProtectorRequest payload,
+  });
 }

@@ -56,6 +56,9 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    aaptOptions {
+        noCompress "bic"
+    }
 }
 
 flutter {
@@ -65,5 +68,12 @@ flutter {
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:32.5.0')
     implementation 'com.google.firebase:firebase-analytics'
-
+    // setup configuration for sdk eKYC
+    implementation project(':ekyc')
+    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation 'androidx.exifinterface:exifinterface:1.0.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    implementation "androidx.constraintlayout:constraintlayout:2.0.4"
+    implementation 'androidx.appcompat:appcompat:1.6.1'
 }
