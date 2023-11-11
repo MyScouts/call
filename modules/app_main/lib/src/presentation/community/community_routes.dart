@@ -33,7 +33,7 @@ class CommunityRoutes extends RouteModule {
   Map<String, WidgetBuilder> getAll(RouteSettings settings) => {
         CommunityWidget.routeName: (context) {
           return BlocProvider.value(
-            value: context.read<UserCubit>(),
+            value: injector.get<UserCubit>(),
             child: const CommunityWidget(),
           );
         },
