@@ -56,9 +56,18 @@ class GroupCardWidget extends StatelessWidget {
                     flex: 3,
                     child: AspectRatio(
                       aspectRatio: 1,
-                      child: ImageWidget(
-                        group.avatar?.optimizeSize400 ?? '',
-                        borderRadius: 100,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: CachedNetworkImage(
+                          imageUrl: group.avatar ?? "",
+                          fit: BoxFit.cover,
+                          errorWidget: (context, url, error) {
+                            return ImageWidget(
+                              ImageConstants.imgDefaultTeamBanner,
+                              borderRadius: 100,
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
