@@ -7,6 +7,9 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 
+import '../../community_constants.dart';
+import '../../widgets/day_countdown_widget.dart';
+
 class TeamRequestListScreen extends StatefulWidget {
   static const String routeName = '/team-requests';
 
@@ -490,19 +493,20 @@ class _LeaveRequestPage extends State<LeaveRequestPage> {
                                             vertical: 10,
                                           ),
                                           decoration: BoxDecoration(
-                                            color: Color(0XFFFF7626),
+                                            color: const Color(0XFFFF7626),
                                             borderRadius:
                                                 BorderRadius.circular(90),
                                           ),
-                                          child: Text(
-                                            "45:29:59",
-                                            style: context
-                                                .textTheme.titleMedium!
-                                                .copyWith(
-                                                    color: AppColors.white),
+                                          child: DayCountdownWidget(
+                                            durationInSeconds: member.createdAt!
+                                                .add(const Duration(
+                                                    days: CommunityConstant
+                                                        .dayForRelinquishBossGroupRequest))
+                                                .difference(DateTime.now())
+                                                .inSeconds,
                                           ),
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),
