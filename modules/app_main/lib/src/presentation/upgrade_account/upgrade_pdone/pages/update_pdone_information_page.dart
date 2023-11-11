@@ -103,6 +103,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                 child: UpdatePDoneOtp(
                   blocUpdate: upgradePDoneBloc,
                   payload: payload,
+                  rangeAge: rangeAge,
                 ),
               );
             });
@@ -536,7 +537,8 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                                       countryName: 'VN',
                                       countryCode: '',
                                       address: birthPlaceAddressCtrl.text,
-                                      provinceName: birthPlace?.province?.name ?? '',
+                                      provinceName:
+                                          birthPlace?.province?.name ?? '',
                                       districtName: birthPlace?.district?.name,
                                       wardName: birthPlace?.ward?.name),
                                 ),

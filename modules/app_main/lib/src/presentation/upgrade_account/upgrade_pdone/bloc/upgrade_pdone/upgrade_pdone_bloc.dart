@@ -185,8 +185,15 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     emit(UpdateProfileLoading());
 
     try {
-      final res =
-          await _upgradeAccountUsecase.updatePDoneProfile(event.payload);
+      bool res;
+      switch (event.rangeAge) {
+        case PDoneOptionRangeAge.over18:
+          res = await _upgradeAccountUsecase
+              .updatePDoneProfileOver18(event.payload);
+        case PDoneOptionRangeAge.under18AndOver15:
+          res = await _upgradeAccountUsecase
+              .updatePDoneProfileRange15To18(event.payload);
+      }
 
       if (res) {
         emit(UpdateProfileSuccess());
@@ -199,7 +206,7 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
         if (e.response?.data['code'] == 'OTP_NOT_MATCH') {
           emit(UpdateProfileFailure('Bạn nhập mã OTP không chính xác!'));
         }
-      }else{
+      } else {
         emit(UpdateProfileFailure('Có lỗi xảy ra, vui lòng thử lại!'));
       }
     }

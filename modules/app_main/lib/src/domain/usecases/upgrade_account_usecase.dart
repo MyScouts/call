@@ -47,8 +47,12 @@ class UpgradeAccountUsecase {
     return _upgradeAccountRepository.resendOtpEmail(payload);
   }
 
-  Future<bool> updatePDoneProfile(UpdateProfilePayload payload) {
-    return _upgradeAccountRepository.updatePDoneProfile(payload);
+  Future<bool> updatePDoneProfileOver18(UpdateProfilePayload payload) {
+    return _upgradeAccountRepository.updatePDoneProfileOver18(payload);
+  }
+
+  Future<bool> updatePDoneProfileRange15To18(UpdateProfilePayload payload) {
+    return _upgradeAccountRepository.updatePDoneProfileRange15To18(payload);
   }
 
   Future<bool> updateKYC(UpdatePDoneKYCPayload payload) {

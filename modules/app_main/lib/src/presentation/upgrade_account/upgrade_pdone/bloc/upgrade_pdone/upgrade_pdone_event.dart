@@ -48,8 +48,9 @@ class RegisterPDoneVerifyOtpEvent extends UpgradePDoneEvent {
 @immutable
 class UpdatePDoneProfileEvent extends UpgradePDoneEvent {
   final UpdateProfilePayload payload;
+  final PDoneOptionRangeAge rangeAge;
 
-  UpdatePDoneProfileEvent(this.payload);
+  UpdatePDoneProfileEvent(this.payload, this.rangeAge);
 }
 
 @immutable

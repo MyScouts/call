@@ -46,7 +46,7 @@ class _UpdatePdoneSelectTypeUserState extends State<UpdatePdoneSelectTypeUser> {
 
   bool get enableBtn => true;
 
-  PDoneOptionAge _pDoneOptionAge = PDoneOptionAge.over14;
+  PDoneOptionAge _pDoneOptionAge = PDoneOptionAge.over15;
   PDoneOptionMethod _pDoneOptionMethod = PDoneOptionMethod.userIdentityCard;
 
   get ageOptions => PDoneOptionAge.values;
@@ -145,12 +145,11 @@ class _UpdatePdoneSelectTypeUserState extends State<UpdatePdoneSelectTypeUser> {
 
   Future<void> _startEKycByNameMethod({required String methodName}) async {
     final json = await _channel.invokeMethod(methodName, {
-      "access_token":
-          "bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0YTIyNmUyZC04MDMwLTExZWUtYWU4Zi01YjgwYmEwYTYzMzEiLCJhdWQiOlsicmVzdHNlcnZpY2UiXSwidXNlcl9uYW1lIjoibWF6YWRhdDIwMjJAZ21haWwuY29tIiwic2NvcGUiOlsicmVhZCJdLCJpc3MiOiJodHRwczovL2xvY2FsaG9zdCIsIm5hbWUiOiJtYXphZGF0MjAyMkBnbWFpbC5jb20iLCJleHAiOjE3MDIyNTc1MzgsInV1aWRfYWNjb3VudCI6IjRhMjI2ZTJkLTgwMzAtMTFlZS1hZThmLTViODBiYTBhNjMzMSIsImF1dGhvcml0aWVzIjpbIlVTRVIiXSwianRpIjoiNjdjZDczNGQtMjM0NC00ZWNhLWE0MzktOGUxNjA5NDhlMDk3IiwiY2xpZW50X2lkIjoiY2xpZW50YXBwIn0.5NYSRtdwJOLGybxWtO0E1oLFo7-_om2GDU19j6G4IEumfut2hBXxzLCTSOlCHQcPHQKN6tysKkJPsj9pdNANZiPcIDCiGV6dkeiQeznGc4IjKMhT6jTNPZ02DczLjclo4_5bPrvvBo_sTNnDTTnZcyxp2HA3CGsnLhI-PzX9-1jiOzuS6tlgSWDXDWVClWQdyKhADO31yoJUlDG6Tzjitk5OyH0zCZsAG5UxNnMpuuubXuU6Rtikhcd3kDF27MGMWxZwqS2DUXn9H56a6yci9OipgbwiIXk5IHmIGcW3FuoBbCSl-7Rzbmr37NAd6686k3Q0_oxCfUq1Ddhz53FhCw",
+      "access_token":"bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0YTIyNmUyZC04MDMwLTExZWUtYWU4Zi01YjgwYmEwYTYzMzEiLCJhdWQiOlsicmVzdHNlcnZpY2UiXSwidXNlcl9uYW1lIjoibWF6YWRhdDIwMjJAZ21haWwuY29tIiwic2NvcGUiOlsicmVhZCJdLCJpc3MiOiJodHRwczovL2xvY2FsaG9zdCIsIm5hbWUiOiJtYXphZGF0MjAyMkBnbWFpbC5jb20iLCJleHAiOjE3MDIyNTc1MzgsInV1aWRfYWNjb3VudCI6IjRhMjI2ZTJkLTgwMzAtMTFlZS1hZThmLTViODBiYTBhNjMzMSIsImF1dGhvcml0aWVzIjpbIlVTRVIiXSwianRpIjoiNjdjZDczNGQtMjM0NC00ZWNhLWE0MzktOGUxNjA5NDhlMDk3IiwiY2xpZW50X2lkIjoiY2xpZW50YXBwIn0.5NYSRtdwJOLGybxWtO0E1oLFo7-_om2GDU19j6G4IEumfut2hBXxzLCTSOlCHQcPHQKN6tysKkJPsj9pdNANZiPcIDCiGV6dkeiQeznGc4IjKMhT6jTNPZ02DczLjclo4_5bPrvvBo_sTNnDTTnZcyxp2HA3CGsnLhI-PzX9-1jiOzuS6tlgSWDXDWVClWQdyKhADO31yoJUlDG6Tzjitk5OyH0zCZsAG5UxNnMpuuubXuU6Rtikhcd3kDF27MGMWxZwqS2DUXn9H56a6yci9OipgbwiIXk5IHmIGcW3FuoBbCSl-7Rzbmr37NAd6686k3Q0_oxCfUq1Ddhz53FhCw",
       "token_id": "09d738ae-7ff0-592d-e063-62199f0a4bf3",
       "token_key":
           "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMls304BphTl2gdcP8jsQbLEqyi235ncVCzGFm349ggV8P3M+LUGr1Bh45XzEdhlHj5ugfWOxLdJBVfILtlWXbECAwEAAQ==",
-      // "is_enable_compare": true,
+      "is_enable_compare": true,
     });
     log(jsonDecode(json));
     upgradePDoneBloc.add(

@@ -68,6 +68,8 @@ class IconAppConstants {
   static String icSecurity = IconApp.icSecurity.path;
   static String icLeaveTeam = IconApp.icLeaveTeam.path;
   static String icDefaultTeamAvt = IconApp.icDefaultTeamAvt.path;
+  static String icUploadImage = IconApp.icUploadImage.path;
+  static String icCameraRound = IconApp.icCameraRound.path;
 }
 
 enum IconApp {
@@ -141,6 +143,8 @@ enum IconApp {
   icSecurity('assets/icons/ic_security.svg'),
   icTranslate('assets/icons/ic_translate.svg'),
   icDefaultTeamAvt('assets/icons/ic_default_team_avt.svg'),
+  icUploadImage('assets/icons/ic_upload_image.png'),
+  icCameraRound('assets/icons/ic_camera_round.png'),
   icLeaveTeam('assets/icons/ic_leave_team.svg');
 
   const IconApp(this.path);

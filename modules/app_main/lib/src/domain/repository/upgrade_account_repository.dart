@@ -22,7 +22,8 @@ abstract class UpgradeAccountRepository {
 
   Future<UpgradeAccount> getListData();
 
-  Future<bool> updatePDoneProfile(UpdateProfilePayload payload);
+  Future<bool> updatePDoneProfileOver18(UpdateProfilePayload payload);
+  Future<bool> updatePDoneProfileRange15To18(UpdateProfilePayload payload);
 
   Future<bool> updateKyc(UpdatePDoneKYCPayload payload);
 

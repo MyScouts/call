@@ -12,11 +12,13 @@ import '../bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 class UpdatePDoneOtp extends StatefulWidget {
   UpgradePDoneBloc blocUpdate;
   UpdateProfilePayload payload;
+  PDoneOptionRangeAge rangeAge;
 
   UpdatePDoneOtp({
     super.key,
     required this.blocUpdate,
     required this.payload,
+    required this.rangeAge,
   });
 
   @override
@@ -142,7 +144,8 @@ class _UpdatePDoneOtpState extends State<UpdatePDoneOtp> with TimerMixin {
 
   _onVerify(BuildContext context) {
     widget.payload = widget.payload.copyWith(otp: _otp);
-    widget.blocUpdate.add(UpdatePDoneProfileEvent(widget.payload));
+    widget.blocUpdate
+        .add(UpdatePDoneProfileEvent(widget.payload, widget.rangeAge));
     Navigator.of(context).pop();
     showLoading();
     // context.read<UserCubit>().phoneCompletedRegister(

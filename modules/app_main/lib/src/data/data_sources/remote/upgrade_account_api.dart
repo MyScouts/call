@@ -27,6 +27,7 @@ class UpgradeAccountApiConstants {
   static const currentStep = 'api/account-p-done/current-step';
 
   static const updatePDoneProfile = 'api/v1/p-done/adult-register';
+  static const updatePDoneProfileTeenager = 'api/v1/p-done/teenager-register';
 
   static const registerPDone = 'api/account-p-done/profile/register-p-done';
   static const registerPDoneVerifyPhone =
@@ -81,7 +82,12 @@ abstract class UpgradeAccountApi {
   });
 
   @POST(UpgradeAccountApiConstants.updatePDoneProfile)
-  Future<ApiResponse<dynamic>> updatePDoneProfile({
+  Future<ApiResponse<dynamic>> updatePDoneProfileOver18({
+    @Body() required dynamic payload,
+  });
+
+  @POST(UpgradeAccountApiConstants.updatePDoneProfileTeenager)
+  Future<ApiResponse<dynamic>> updatePDoneProfileRange15To18({
     @Body() required dynamic payload,
   });
 

@@ -34,9 +34,9 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   }
 
   @override
-  Future<bool> updatePDoneProfile(UpdateProfilePayload payload) async {
+  Future<bool> updatePDoneProfileOver18(UpdateProfilePayload payload) async {
     final res =
-        await _upgradeAccountApi.updatePDoneProfile(payload: payload.toJson());
+        await _upgradeAccountApi.updatePDoneProfileOver18(payload: payload.toJson());
 
     return res.success;
   }
@@ -172,10 +172,19 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   }
 
   @override
-  Future<bool> verifyProtector({required PDoneVerifyProtectorRequest payload}) async{
+  Future<bool> verifyProtector(
+      {required PDoneVerifyProtectorRequest payload}) async {
     // TODO: implement verifyProtector
-    final response =
-        await _upgradeAccountApi.verifyProtector(payload: payload);
+    final response = await _upgradeAccountApi.verifyProtector(payload: payload);
     return response.data;
+  }
+
+  @override
+  Future<bool> updatePDoneProfileRange15To18(
+      UpdateProfilePayload payload) async {
+    final res =
+        await _upgradeAccountApi.updatePDoneProfileOver18(payload: payload.toJson());
+
+    return res.success;
   }
 }

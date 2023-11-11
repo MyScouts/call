@@ -46,6 +46,9 @@ class ImageConstants {
   static String bg11 = ImageApp.bg11.path;
   static String imgDefaultTeamBanner = ImageApp.imgDefaultTeamBanner.path;
   static String guidePdone = ImageApp.guidePdone.path;
+  static String birthCerCapture = ImageApp.birthCerCapture.path;
+  static String birthCerBackgroundConfirm =
+      ImageApp.birthCerBackgroundConfirm.path;
 }
 
 enum ImageApp {
@@ -86,6 +89,8 @@ enum ImageApp {
   imgDefaultTeamBanner('assets/images/img_default_team_banner.png'),
   celebrate('assets/images/celebrate.png'),
   guidePdone('assets/images/guidePdone.png'),
+  birthCerCapture('assets/images/birth_cer_capture.jpg'),
+  birthCerBackgroundConfirm('assets/images/birth_cer_background_confirm.jpg'),
   bg1('assets/images/bg1.png'),
   bg2('assets/images/bg2.png'),
   bg3('assets/images/bg3.png'),
