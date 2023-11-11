@@ -4,10 +4,12 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/networking/api_response.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
+import 'package:app_main/src/data/models/responses/update_pdone_profile_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../data/models/responses/update_none_pdone_profile_response.dart';
 import '../../data/repositories/user_repository.dart';
 
 @injectable
@@ -73,11 +75,11 @@ class UserUsecase {
     return _userRepository.onboarding();
   }
 
-  Future<ApiResponse<User?>> updatePDoneProfile() {
-    return _userRepository.updatePDoneProfile();
+  Future<UpdatePDoneProfileReponse> updatePDoneProfile(UpdatePDoneProfilePayload updatePDoneProfilePayload) {
+    return _userRepository.updatePDoneProfile(updatePDoneProfilePayload);
   }
 
-  Future<ApiResponse<User?>> updatePNoneDoneProfile() {
-    return _userRepository.updateNonePDoneProfile();
+  Future<UpdateNonePDoneProfileReponse> updatePNoneDoneProfile(UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload) {
+    return _userRepository.updateNonePDoneProfile(updateNonePDoneProfilePayload);
   }
 }
