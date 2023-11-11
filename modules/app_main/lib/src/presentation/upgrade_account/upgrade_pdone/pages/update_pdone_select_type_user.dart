@@ -146,7 +146,7 @@ class _UpdatePdoneSelectTypeUserState extends State<UpdatePdoneSelectTypeUser> {
 
   Future<void> _startEKycByNameMethod({required String methodName}) async {
     final json = await _channel.invokeMethod(methodName, ekycInfo);
-    log(jsonDecode(json));
+    log(json);
     upgradePDoneBloc.add(
       ExtractingIdCardEvent(jsonDecode(json)),
     );

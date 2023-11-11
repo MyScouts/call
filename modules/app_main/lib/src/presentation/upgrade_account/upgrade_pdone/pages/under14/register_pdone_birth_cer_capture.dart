@@ -89,10 +89,7 @@ class _RegisterPdoneBirthCerCaptureState
       alignment: Alignment.center,
       child: Text(
         'Chọn 1 trong 2 phương thức\nchụp ảnh hoặc tải ảnh lên từ thư viện',
-        style: Theme
-            .of(context)
-            .textTheme
-            .headlineSmall,
+        style: Theme.of(context).textTheme.headlineSmall,
         textAlign: TextAlign.center,
       ),
     );
@@ -106,8 +103,7 @@ class _RegisterPdoneBirthCerCaptureState
         children: [
           Text(
             'Chụp / tải ảnh giấy khai sinh',
-            style: Theme
-                .of(context)
+            style: Theme.of(context)
                 .textTheme
                 .headlineSmall!
                 .copyWith(fontSize: 18),
@@ -115,95 +111,93 @@ class _RegisterPdoneBirthCerCaptureState
           const SizedBox(
             height: 12,
           ),
-          captureFile == null ? Stack(
-            children: [
-              ImageWidget(ImageConstants.birthCerCapture),
-              Positioned.fill(
-                top: 272,
-                left: 80,
-                child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: GestureDetector(
-                    child: Column(
-                      children: [
-                        ImageWidget(
-                          IconAppConstants.icCameraRound,
-                          width: 48,
-                          height: 48,
+          captureFile == null
+              ? Stack(
+                  children: [
+                    ImageWidget(ImageConstants.birthCerCapture),
+                    Positioned.fill(
+                      top: 272,
+                      left: 80,
+                      child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: GestureDetector(
+                          child: Column(
+                            children: [
+                              ImageWidget(
+                                IconAppConstants.icCameraRound,
+                                width: 48,
+                                height: 48,
+                              ),
+                              Text(
+                                'Chụp ảnh',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                        color: const Color(0xFF4B84F7),
+                                        fontWeight: FontWeight.w700),
+                              ),
+                            ],
+                          ),
+                          onTap: () async {
+                            captureFile = await showModalBottomSheet<XFile?>(
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (context) {
+                                  return StatefulBuilder(builder: (ctx, state) {
+                                    return const FractionallySizedBox(
+                                      heightFactor: 0.9,
+                                      child: BirthCerCameraScreen(),
+                                    );
+                                  });
+                                });
+                            if (captureFile != null) {
+                              setState(() {});
+                            }
+                          },
                         ),
-                        Text(
-                          'Chụp ảnh',
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .copyWith(
-                              color: const Color(0xFF4B84F7),
-                              fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                    Positioned.fill(
+                      top: 272,
+                      right: 80,
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: Column(
+                          children: [
+                            ImageWidget(
+                              IconAppConstants.icUploadImage,
+                              width: 48,
+                              height: 48,
+                            ),
+                            Text(
+                              'Tải lên',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                      color: const Color(0xFF4B84F7),
+                                      fontWeight: FontWeight.w700),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    onTap: () async {
-                      captureFile = await showModalBottomSheet<XFile?>(
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (context) {
-                            return StatefulBuilder(builder: (ctx, state) {
-                              return const FractionallySizedBox(
-                                heightFactor: 0.9,
-                                child: BirthCerCameraScreen(),
-                              );
-                            });
-                          });
-                      if (captureFile != null) {
-                        setState(() {
-
-                        });
-                      }
-                    },
-                  ),
-                ),
-              ),
-              Positioned.fill(
-                top: 272,
-                right: 80,
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: Column(
-                    children: [
-                      ImageWidget(
-                        IconAppConstants.icUploadImage,
-                        width: 48,
-                        height: 48,
                       ),
-                      Text(
-                        'Tải lên',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(
-                            color: const Color(0xFF4B84F7),
-                            fontWeight: FontWeight.w700),
+                    )
+                  ],
+                )
+              : Stack(
+                  children: [
+                    ImageWidget(ImageConstants.birthCerBackgroundConfirm),
+                    Positioned.fill(
+                      child: Align(
+                        child: Image.file(
+                          File(captureFile!.path),
+                          height: 520,
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ) : Stack(
-            children: [
-              ImageWidget(ImageConstants.birthCerBackgroundConfirm),
-              Positioned.fill(
-                child: Align(
-                    child: Image.file(
-                      File(captureFile!.path),
-                      height: 520,
                     ),
+                  ],
                 ),
-              ),
-            ],
-          ),
         ],
       ),
     );
@@ -232,11 +226,10 @@ class _RegisterPdoneBirthCerCaptureState
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 26),
       child: GradiantButton(
         onPressed: () {
-          if(captureFile == null){
-            showToastMessage('Vui lòng chụp ảnh trước khi xác thực', ToastMessageType.error);
-
-
-          }else{
+          if (captureFile == null) {
+            showToastMessage(
+                'Vui lòng chụp ảnh trước khi xác thực', ToastMessageType.error);
+          } else {
             _startEKycByNameMethod(methodName: 'startEkycFace');
           }
           // widget.onNextPage.call();
@@ -244,8 +237,7 @@ class _RegisterPdoneBirthCerCaptureState
         height: 45,
         child: Text(
           'Xác thực',
-          style: Theme
-              .of(context)
+          style: Theme.of(context)
               .textTheme
               .labelLarge
               ?.copyWith(color: AppColors.white),

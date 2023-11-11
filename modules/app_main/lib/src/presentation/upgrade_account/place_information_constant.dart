@@ -17,5 +17,4 @@ final ekycInfo = {
   "token_id": "09db74a3-6dee-660e-e063-62199f0a105b",
   "token_key":
   "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAOXwCIv6I123QcLFtkHneykT+pj2Xe+2Ji2HaLCHMoekh4t1qHWL7qOyS75EKASeUphvu1Nn752dQI6laGMleA8CAwEAAQ==",
-  "is_enable_compare": true,
 };
