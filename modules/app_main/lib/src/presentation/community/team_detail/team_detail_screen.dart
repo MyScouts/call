@@ -446,7 +446,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
 
   void _onTeamDetailBlocListen(BuildContext context, TeamDetailState state) {
     if (state is FetchTeamDetailSuccess) {
-      if (state.team.boss == null) {
+      if (state.team.boss == null && myId == state.team.boss?.id) {
         context.askAssignBoss(team: state.team);
       }
     }
