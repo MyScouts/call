@@ -55,6 +55,7 @@ class NotificationService {
 
     final fcmToken = await FirebaseMessaging.instance.getToken();
     _loggerService.d('[FCM]: ${fcmToken ?? ''}');
+    debugPrint("fcmToken: $fcmToken");
     return fcmToken;
   }
 

@@ -31,5 +31,8 @@ class DashboardRoutes extends RouteModule {
         ChangePassword.routerName: (context) {
           return const ChangePassword();
         },
+        NotificationScreen.routerName: (context) {
+          return NotificationScreen(onClose: () => Navigator.pop(context));
+        },
       };
 }
