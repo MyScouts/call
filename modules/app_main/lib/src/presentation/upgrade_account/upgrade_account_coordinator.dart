@@ -5,6 +5,7 @@ import 'package:app_main/src/presentation/settings/setting_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_constants.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/update_bank_account_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/widgets/verify_otp_bank_account_dialog_widget.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
@@ -298,5 +299,90 @@ extension UpgradeAccountCoordinator on BuildContext {
         startDialogUpgradeJA();
       }
     }
+  }
+
+
+
+  List<Widget> buildGuide() {
+    return [
+      Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: Text(
+          'Hướng dẫn',
+          style: Theme.of(this).textTheme.headlineMedium!,
+        ),
+      ),
+      Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: RichText(
+            text: TextSpan(
+              text: '1. Hình ảnh rõ ràng, ',
+              style: Theme.of(this).textTheme.labelMedium!.copyWith(
+                color: AppColors.black12,
+                fontWeight: FontWeight.w500,
+              ),
+              children: const [
+                TextSpan(
+                  text: 'không bị mờ & cắt góc',
+                  style: TextStyle(
+                    color: AppColors.black12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          )),
+      Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: RichText(
+          text: TextSpan(
+            text: '2. Hình ảnh bắt buộc phải ',
+            style: Theme.of(this).textTheme.labelMedium!.copyWith(
+                color: AppColors.black12,
+                fontWeight: FontWeight.w500,
+                fontSize: 14),
+            children: const [
+              TextSpan(
+                text: 'xoay ngang',
+                style: TextStyle(
+                    color: AppColors.black12,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14),
+              ),
+            ],
+          ),
+        ),
+      ),
+      Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: RichText(
+            text: TextSpan(
+              text: '3. Giấy tờ gốc, ',
+              style: Theme.of(this).textTheme.labelMedium!.copyWith(
+                color: AppColors.black12,
+                fontWeight: FontWeight.w500,
+              ),
+              children: const [
+                TextSpan(
+                  text: 'còn hạn sử dụng',
+                  style: TextStyle(
+                    color: AppColors.black12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          )),
+      Padding(
+        padding: const EdgeInsets.only(left: 6, top: 8),
+        child: Text(
+          securityInformation,
+          style: Theme.of(this).textTheme.labelMedium!.copyWith(
+            color: AppColors.blue33,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ),
+    ];
   }
 }

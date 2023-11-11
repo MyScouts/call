@@ -1,5 +1,6 @@
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/confirm_register_ja_payload.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:injectable/injectable.dart';
 
@@ -105,5 +106,10 @@ class UpgradeAccountUsecase {
   Future<ConfirmRegisterJAResponse> confirmJARegister(
       ConfirmRegisterJAPayload payload) async {
     return await _upgradeAccountRepository.confirmJARegister(payload);
+  }
+
+
+  Future<bool> verifyProtector(PDoneVerifyProtectorRequest payload) {
+    return _upgradeAccountRepository.verifyProtector(payload: payload);
   }
 }

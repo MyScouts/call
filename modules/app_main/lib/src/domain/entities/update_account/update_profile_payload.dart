@@ -35,6 +35,7 @@ class UpdateProfilePayload with _$UpdateProfilePayload {
     @JsonKey(includeIfNull: false) String? protectorPDoneId,
     @JsonKey(includeIfNull: false) String? protectorIdentityNumber,
     @JsonKey(includeIfNull: false) String? protectorEmailPhone,
+    @JsonKey(includeIfNull: false) String? protectorPhoneCode,
     @JsonKey(includeIfNull: false) String? otp,
   }) = _UpdateProfilePayload;
 

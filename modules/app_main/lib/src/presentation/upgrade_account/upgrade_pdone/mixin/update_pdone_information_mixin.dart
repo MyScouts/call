@@ -43,6 +43,13 @@ mixin UpdatePDoneInformationMixin<T extends StatefulWidget> on State<T> {
   final bpStreetCtrl = TextEditingController();
   final bpAddressCtrl = TextEditingController();
 
+  /// current place
+  final cProvinceCtrl = TextEditingController();
+  final cDistrictCtrl = TextEditingController();
+  final cWardCtrl = TextEditingController();
+  final cStreetCtrl = TextEditingController();
+  final cAddressCtrl = TextEditingController();
+
   /// Protector
   final identifyNumberProtectorCtrl = TextEditingController();
   final pDoneIdProtectorCtrl = TextEditingController();

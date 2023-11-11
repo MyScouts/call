@@ -127,7 +127,6 @@ class ExtractedEKycIdCardFailure extends UpgradePDoneState {
 }
 
 
-
 class UpdatePDoneSendOTPSuccessState extends UpgradePDoneState {
   UpdatePDoneSendOTPSuccessState();
 }
@@ -136,4 +135,20 @@ class UpdatePDoneSendOTPSuccessState extends UpgradePDoneState {
 class UpdatePDoneSendOTPFailureState extends UpgradePDoneState {
   final String errorMessage;
   UpdatePDoneSendOTPFailureState({required this.errorMessage});
+}
+
+
+
+// verify protector
+class VerifyingProtectorState extends UpgradePDoneState{
+
+}
+
+class VerifyProtectorSuccessState extends UpgradePDoneState{
+
+}
+
+class VerifyProtectorFailureState extends UpgradePDoneState{
+  final String errorMessage;
+  VerifyProtectorFailureState({required this.errorMessage});
 }

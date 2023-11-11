@@ -1,5 +1,6 @@
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/confirm_register_ja_payload.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
@@ -167,6 +168,14 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   Future<BankAccount> getDefaultBank() async {
     final response = await _upgradeAccountApi.getDefaultBank();
 
+    return response.data;
+  }
+
+  @override
+  Future<bool> verifyProtector({required PDoneVerifyProtectorRequest payload}) async{
+    // TODO: implement verifyProtector
+    final response =
+        await _upgradeAccountApi.verifyProtector(payload: payload);
     return response.data;
   }
 }

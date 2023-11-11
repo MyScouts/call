@@ -61,10 +61,15 @@ class AppDelegate extends IAppDelegate {
       unawaited(deviceService.updateNavigationBarColors(false));
     }
 
-    var initialRoute = CameraScreen.routeName;
-    // if (userSharePreferencesUsecase.isAuthenticated) {
-    //   initialRoute = DashBoardScreen.routeName;
-    // }
+    var initialRoute = AuthenticateScreen.routeName;
+    if (userSharePreferencesUsecase.isAuthenticated) {
+      // initialRoute = DashboardScreen.routeName;
+    }
+
+    // var initialRoute = CameraScreen.routeName;
+    // // if (userSharePreferencesUsecase.isAuthenticated) {
+    // //   initialRoute = DashBoardScreen.routeName;
+    // // }
 
     if (Configurations.isStudio) {
       final myBlocObserver = MyBlocObserver();

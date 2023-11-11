@@ -80,3 +80,10 @@ class ExtractingIdCardEvent extends UpgradePDoneEvent {
 class UpdatePDoneSendOTP extends UpgradePDoneEvent {
   UpdatePDoneSendOTP();
 }
+
+
+@immutable
+class VerifyProtectorEvent extends UpgradePDoneEvent {
+  final PDoneVerifyProtectorRequest req;
+  VerifyProtectorEvent({required this.req});
+}

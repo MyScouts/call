@@ -38,6 +38,7 @@ _$UpdateProfilePayloadImpl _$$UpdateProfilePayloadImplFromJson(
       protectorPDoneId: json['protectorPDoneId'] as String?,
       protectorIdentityNumber: json['protectorIdentityNumber'] as String?,
       protectorEmailPhone: json['protectorEmailPhone'] as String?,
+      protectorPhoneCode: json['protectorPhoneCode'] as String?,
       otp: json['otp'] as String?,
     );
 
@@ -74,6 +75,7 @@ Map<String, dynamic> _$$UpdateProfilePayloadImplToJson(
   writeNotNull('protectorPDoneId', instance.protectorPDoneId);
   writeNotNull('protectorIdentityNumber', instance.protectorIdentityNumber);
   writeNotNull('protectorEmailPhone', instance.protectorEmailPhone);
+  writeNotNull('protectorPhoneCode', instance.protectorPhoneCode);
   writeNotNull('otp', instance.otp);
   return val;
 }

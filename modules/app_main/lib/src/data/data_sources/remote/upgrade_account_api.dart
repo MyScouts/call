@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/confirm_register_ja_payload.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
@@ -50,6 +51,7 @@ class UpgradeAccountApiConstants {
   static const checkProtectorVerifyOTP =
       'api/account-p-done/profile/check-protector/verify';
   static const listBanks = 'api/master/banks';
+  static const verifyProtector = 'api/v1/p-done/check-protector-info';
   static const updateBankAccount = '/api/bank-account';
   static const getDefaultBank = '/api/bank-account/default';
 }
@@ -151,4 +153,8 @@ abstract class UpgradeAccountApi {
 
   @GET(UpgradeAccountApiConstants.getDefaultBank)
   Future<ApiResponse<BankAccount>> getDefaultBank();
+  @POST(UpgradeAccountApiConstants.verifyProtector)
+  Future<ApiResponse<dynamic>> verifyProtector({
+    @Body() required PDoneVerifyProtectorRequest payload,
+  });
 }
