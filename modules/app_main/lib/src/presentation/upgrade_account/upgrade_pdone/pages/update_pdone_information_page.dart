@@ -90,6 +90,10 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
 
       showToastMessage(state.errorMessage, ToastMessageType.warning);
     } else if (state is GetMyProfileSuccess) {}
+    if (state is VerifyOTPProtectorSuccessState) {
+      hideLoading();
+      context.upgradePdoneWithProtectorSuccess();
+    }
 
     if (state is UpdatePDoneSendOTPSuccessState) {
       hideLoading();
@@ -111,6 +115,10 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
     }
 
     if (state is UpdatePDoneSendOTPFailureState) {
+      hideLoading();
+      showToastMessage(state.errorMessage, ToastMessageType.error);
+    }
+    if (state is VerifyOTPProtectorFailureState) {
       hideLoading();
       showToastMessage(state.errorMessage, ToastMessageType.error);
     }

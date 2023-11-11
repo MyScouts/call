@@ -42,14 +42,14 @@ class RegisterStatePage extends StatelessWidget {
   }
 }
 
-
-class RegisterEKycStatePage extends StatelessWidget {
-
-  const RegisterEKycStatePage({
+class UpgradePdoneSuccessDialog extends StatelessWidget {
+  const UpgradePdoneSuccessDialog({
     required this.onClickBtn,
     super.key,
   });
+
   final Function() onClickBtn;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -64,7 +64,10 @@ class RegisterEKycStatePage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 36),
                 child: Text(
                   'Chúc mừng bạn đã xác thực\nthành công!',
-                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(fontWeight: FontWeight.w700),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium!
+                      .copyWith(fontWeight: FontWeight.w700),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -79,7 +82,7 @@ class RegisterEKycStatePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: GradiantButton(
-                  onPressed: (){
+                  onPressed: () {
                     Navigator.of(context).pop();
                     onClickBtn.call();
                   },
@@ -93,7 +96,69 @@ class RegisterEKycStatePage extends StatelessWidget {
                 ),
               ),
             ],
-          ),)
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class UpgradePdoneSuccessWidthProtectorDialog extends StatelessWidget {
+  const UpgradePdoneSuccessWidthProtectorDialog({
+    required this.onClickBtn,
+    super.key,
+  });
+
+  final Function() onClickBtn;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ImageWidget(ImageConstants.pdoneSuccessWithProtector),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 42, right: 38, left: 38),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 36),
+                child: Text(
+                  'Chờ xét duyệt',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium!
+                      .copyWith(fontWeight: FontWeight.w700),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16, top: 8),
+                child: Text(
+                  'Hồ sơ đang chờ duyệt\nbạn sẽ nhận được thông báo khi quá trình xét duyệt\nhoàn thành',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: GradiantButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    onClickBtn.call();
+                  },
+                  child: Text(
+                    'Tiếp tục',
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelLarge
+                        ?.copyWith(color: AppColors.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

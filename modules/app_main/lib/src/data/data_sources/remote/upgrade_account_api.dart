@@ -17,6 +17,7 @@ import '../../../domain/entities/update_account/update_profile_payload.dart';
 import '../../../domain/entities/update_account/upgrade_account.dart';
 import '../../../domain/entities/update_account/verify_phone_register_pdone_payload.dart';
 import '../../models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
+import '../../models/payloads/upgrade_account/upgrade_pdone/pdone_verify_otp_protector.dart';
 import '../../models/responses/api_response.dart';
 import '../../models/responses/register_pdone_response.dart';
 import '../../models/responses/upgrade_account_response.dart';
@@ -53,6 +54,7 @@ class UpgradeAccountApiConstants {
       'api/account-p-done/profile/check-protector/verify';
   static const listBanks = 'api/master/banks';
   static const verifyProtector = 'api/v1/p-done/check-protector-info';
+  static const verifyOTPProtector = 'api/v1/p-done/verify-protector-otp';
   static const updateBankAccount = '/api/bank-account';
   static const getDefaultBank = '/api/bank-account/default';
 }
@@ -162,5 +164,10 @@ abstract class UpgradeAccountApi {
   @POST(UpgradeAccountApiConstants.verifyProtector)
   Future<ApiResponse<dynamic>> verifyProtector({
     @Body() required PDoneVerifyProtectorRequest payload,
+  });
+
+  @POST(UpgradeAccountApiConstants.verifyOTPProtector)
+  Future<ApiResponse<dynamic>> verifyOTPProtector({
+    @Body() required PDoneVerifyOTPProtectorRequest payload,
   });
 }

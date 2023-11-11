@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:app_core/app_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
+import '../../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_otp_protector.dart';
 import '../../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
 import '../../../../../data/models/responses/register_pdone_response.dart';
 import '../../../../../domain/entities/update_account/check_protector_payload.dart';
@@ -41,6 +42,7 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     on<ExtractingIdCardEvent>(_mapExtractingIdCardEvent);
     on<UpdatePDoneSendOTP>(_mapSendOTPVerifyUpdatePdoneEvent);
     on<VerifyProtectorEvent>(_mapVerifyProtectorEvent);
+    on<VerifyOTPProtectorEvent>(_mapVerifyOTPProtectorEvent);
   }
 
   FutureOr<void> _mapExtractingIdCardEvent(
@@ -126,6 +128,23 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     }
   }
 
+  FutureOr<void> _mapVerifyOTPProtectorEvent(
+      VerifyOTPProtectorEvent event, Emitter<UpgradePDoneState> emit) async {
+    emit(VerifyingProtectorState());
+    try {
+      final res = await _upgradeAccountUsecase.verifyOTPProtector(event.req);
+
+      if (res) {
+        emit(VerifyOTPProtectorSuccessState());
+      } else {
+        emit(VerifyOTPProtectorFailureState(
+            errorMessage: 'Xác nhận thất bại'));
+      }
+    } catch (e) {
+      emit(VerifyProtectorFailureState(errorMessage: e.toString()));
+    }
+  }
+
   FutureOr<void> _mapRegisterPDoneAccountEvent(
       RegisterPDoneAccountEvent event, Emitter<UpgradePDoneState> emit) async {
     try {
@@ -190,13 +209,13 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
         case PDoneOptionRangeAge.over18:
           res = await _upgradeAccountUsecase
               .updatePDoneProfileOver18(event.payload);
+          if (res) {
+            emit(UpdateProfileSuccess(requestId: res));
+          }
         case PDoneOptionRangeAge.under18AndOver15:
           res = await _upgradeAccountUsecase
               .updatePDoneProfileRange15To18(event.payload);
-      }
-
-      if (res) {
-        emit(UpdateProfileSuccess());
+          emit(UpdateProfileSuccess(requestId: res));
       }
     } catch (e) {
       if (e is DioException) {

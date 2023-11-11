@@ -48,7 +48,11 @@ class VerifyOtpFailure extends UpgradePDoneState {
 
 class UpdateProfileLoading extends UpgradePDoneState {}
 
-class UpdateProfileSuccess extends UpgradePDoneState {}
+class UpdateProfileSuccess extends UpgradePDoneState {
+  final dynamic requestId;
+
+  UpdateProfileSuccess({required this.requestId});
+}
 
 class UpdateProfileFailure extends UpgradePDoneState {
   final String errorMessage;
@@ -126,29 +130,33 @@ class ExtractedEKycIdCardFailure extends UpgradePDoneState {
   ExtractedEKycIdCardFailure(this.errorMessage);
 }
 
-
 class UpdatePDoneSendOTPSuccessState extends UpgradePDoneState {
   UpdatePDoneSendOTPSuccessState();
 }
 
-
 class UpdatePDoneSendOTPFailureState extends UpgradePDoneState {
   final String errorMessage;
+
   UpdatePDoneSendOTPFailureState({required this.errorMessage});
 }
 
-
-
 // verify protector
-class VerifyingProtectorState extends UpgradePDoneState{
+class VerifyingProtectorState extends UpgradePDoneState {}
 
-}
+class VerifyProtectorSuccessState extends UpgradePDoneState {}
 
-class VerifyProtectorSuccessState extends UpgradePDoneState{
-
-}
-
-class VerifyProtectorFailureState extends UpgradePDoneState{
+class VerifyProtectorFailureState extends UpgradePDoneState {
   final String errorMessage;
+
   VerifyProtectorFailureState({required this.errorMessage});
+}
+
+class VerifyingOTPProtectorState extends UpgradePDoneState {}
+
+class VerifyOTPProtectorSuccessState extends UpgradePDoneState {}
+
+class VerifyOTPProtectorFailureState extends UpgradePDoneState {
+  final String errorMessage;
+
+  VerifyOTPProtectorFailureState({required this.errorMessage});
 }

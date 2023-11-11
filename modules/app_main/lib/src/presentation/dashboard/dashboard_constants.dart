@@ -247,8 +247,7 @@ final personalDefault = {
     id: 'ic_group_team',
     title: 'Group/Team',
     backgroundImage: IconAppConstants.icGroupTeam,
-    // path: CommunityWidget.routeName,
-    path: UpgradePDoneScreen.routeName,
+    path: CommunityWidget.routeName,
   ),
   "ic_payment": DashBoardIconItem(
     id: 'ic_payment',

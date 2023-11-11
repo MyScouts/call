@@ -17,6 +17,7 @@ import '../../../domain/entities/update_account/verify_phone_register_pdone_payl
 import '../../../domain/repository/upgrade_account_repository.dart';
 import '../../data_sources/remote/upgrade_account_api.dart';
 import '../../models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
+import '../../models/payloads/upgrade_account/upgrade_pdone/pdone_verify_otp_protector.dart';
 import '../../models/responses/register_pdone_response.dart';
 import '../../models/responses/upgrade_account_response.dart';
 
@@ -183,8 +184,17 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   Future<bool> updatePDoneProfileRange15To18(
       UpdateProfilePayload payload) async {
     final res =
-        await _upgradeAccountApi.updatePDoneProfileOver18(payload: payload.toJson());
+        await _upgradeAccountApi.updatePDoneProfileRange15To18(payload: payload.toJson());
 
-    return res.success;
+    return res.data;
+  }
+
+  @override
+  Future<bool> verifyOTPProtector({required PDoneVerifyOTPProtectorRequest payload}) async{
+    // TODO: implement verifyOTPProtector
+    final res =
+        await _upgradeAccountApi.verifyOTPProtector(payload: payload);
+
+    return res.data;
   }
 }

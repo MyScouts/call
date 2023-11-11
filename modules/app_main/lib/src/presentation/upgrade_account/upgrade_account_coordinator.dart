@@ -78,7 +78,28 @@ extension UpgradeAccountCoordinator on BuildContext {
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
-          content: RegisterEKycStatePage(
+          content: UpgradePdoneSuccessDialog(
+            onClickBtn: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  Future<T?> upgradePdoneWithProtectorSuccess<T>() {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: false,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return AlertDialog(
+          contentPadding: const EdgeInsets.only(top: 0, bottom: 10),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          content: UpgradePdoneSuccessDialog(
             onClickBtn: () {
               Navigator.of(context).pop();
             },

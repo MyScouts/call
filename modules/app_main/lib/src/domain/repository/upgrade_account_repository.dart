@@ -6,6 +6,7 @@ import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
 
 import '../../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
+import '../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_otp_protector.dart';
 import '../../data/models/responses/register_pdone_response.dart';
 import '../../data/models/responses/upgrade_account_response.dart';
 import '../entities/bank.dart';
@@ -62,4 +63,6 @@ abstract class UpgradeAccountRepository {
   Future<BankAccount> getDefaultBank();
 
   Future<bool> verifyProtector({required PDoneVerifyProtectorRequest payload});
+
+  Future<bool> verifyOTPProtector({required PDoneVerifyOTPProtectorRequest payload});
 }

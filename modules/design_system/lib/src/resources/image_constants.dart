@@ -12,6 +12,7 @@ class ImageConstants {
   static String defaultAvatar = ImageApp.defaultAvatar.path;
   static String rafiki = ImageApp.rafiki.path;
   static String pdoneSuccess = ImageApp.pdoneSuccess.path;
+  static String pdoneSuccessWithProtector = ImageApp.pdoneSuccessWithProtector.path;
   static String previewPerson = ImageApp.previewPerson.path;
   static String frontCMND = ImageApp.frontCMND.path;
   static String passport = ImageApp.passport.path;
@@ -66,6 +67,7 @@ enum ImageApp {
   defaultAvatar('assets/images/person.png'),
   rafiki('assets/images/rafiki.png'),
   pdoneSuccess('assets/images/pdone_success.png'),
+  pdoneSuccessWithProtector('assets/images/pdone_success_with_protector.png'),
   previewPerson('assets/images/preview_person.png'),
   frontCMND('assets/images/front_cmnd.png'),
   passport('assets/images/passport.png'),
