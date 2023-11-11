@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/community/group_detail/group_request_list_screen.dart';
 import 'package:app_main/src/presentation/community/groups/group_listing_bloc.dart';
@@ -31,7 +32,10 @@ class CommunityRoutes extends RouteModule {
   @override
   Map<String, WidgetBuilder> getAll(RouteSettings settings) => {
         CommunityWidget.routeName: (context) {
-          return const CommunityWidget();
+          return BlocProvider.value(
+            value: context.read<UserCubit>(),
+            child: const CommunityWidget(),
+          );
         },
         GroupsListingWidget.routeName: (context) {
           return MultiBlocProvider(
