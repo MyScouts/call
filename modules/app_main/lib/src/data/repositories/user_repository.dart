@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/networking/api_response.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
@@ -29,4 +30,6 @@ abstract class UserRepository {
   Future<SearchUserResponse> searchUser(SearchUserPayload query);
 
   Future<OnboardingResponse> onboarding();
+  Future<ApiResponse<User?>> updatePDoneProfile();
+  Future<ApiResponse<User?>> updateNonePDoneProfile();
 }

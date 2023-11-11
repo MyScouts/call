@@ -1,6 +1,8 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
+import 'package:app_main/src/data/models/responses/update_none_pdone_profile_response.dart';
+import 'package:app_main/src/data/models/responses/update_pdone_profile_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:injectable/injectable.dart';
@@ -20,6 +22,8 @@ class UserApiConstants {
   static const authOTP = 'api/v1/auth/otp';
   static const search = "api/v1/user/search";
   static const onboarding = "api/v1/onboarding/ecom";
+  static const updatePDoneProfile = "api/v1/p-done/profile";
+  static const updateNonePDoneProfile = "api/v1/p-done/non-p-done-profile";
 }
 
 @RestApi()
@@ -69,4 +73,11 @@ abstract class UserApi {
 
   @GET(UserApiConstants.onboarding)
   Future<OnboardingResponse> onboarding();
+
+  @GET(UserApiConstants.updatePDoneProfile)
+  Future<UpdatePDoneProfileReponse> updatePDoneProfile(UpdatePDoneProfilePayload updatePDoneProfilePayload);
+
+  @GET(UserApiConstants.updateNonePDoneProfile)
+  Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(
+      UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload);
 }

@@ -9,6 +9,7 @@ import 'package:app_main/src/presentation/information_profile/widgets/marital_st
 import 'package:app_main/src/presentation/information_profile/widgets/national_dropdown.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/update_information_profile_mixin.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/ward_dropdown.dart';
+import 'package:app_main/src/presentation/marshop/widgets/gradiant_button.dart';
 import 'package:app_main/src/presentation/shared/extensions/validation_extension.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,12 @@ import 'package:localization/generated/l10n.dart';
 import 'package:ui/ui.dart';
 
 class UpdateInformationProfileScreen extends StatefulWidget {
-  const UpdateInformationProfileScreen({super.key});
+  final User authInfo;
+
+  const UpdateInformationProfileScreen({
+    super.key,
+    required this.authInfo,
+  });
 
   @override
   State<UpdateInformationProfileScreen> createState() => _UpdateInformationProfileScreenState();
@@ -62,6 +68,18 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
                 _buildBankInformation(),
                 Container(height: 20, color: AppColors.bgColor),
                 _buildMoreInformation(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
+                  child: GradiantButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Cập nhật",
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                            color: AppColors.white,
+                          ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -89,11 +107,11 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
           InformationFieldWidget(
             required: true,
             shouldEnabled: true,
-            controller: firstNameCtrl,
+            controller: fullNameTxtController,
             onChanged: (value) => onUpdatePayload(payload.copyWith(firstName: value)),
             type: UpdateInformationType.fullName,
             validator: (value) => context.validateEmptyInfo(
-              firstNameCtrl.text,
+              fullNameTxtController.text,
               'Vui lòng nhập họ và tên',
             ),
           ),
@@ -103,12 +121,12 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
             required: true,
             shouldEnabled: true,
             maxLength: 24,
-            controller: firstNameCtrl,
+            controller: nickNameTxtController,
             onChanged: (value) => onUpdatePayload(payload.copyWith(firstName: value)),
             type: UpdateInformationType.nickName,
             validator: (value) => context.validateNicknameInfo(
-              firstNameCtrl.text,
-              'Nickname không được vượt quá 24 chữ',
+              nickNameTxtController.text,
+              'Nickname không được vượt quá 24 ký tự',
             ),
           ),
           const SizedBox(height: 12),
@@ -149,11 +167,11 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
           InformationFieldWidget(
             required: true,
             shouldEnabled: true,
-            controller: firstNameCtrl,
+            controller: emailAddressTxtController,
             onChanged: (value) => onUpdatePayload(payload.copyWith(firstName: value)),
             type: UpdateInformationType.email,
             validator: (value) => context.validateEmailInfo(
-              firstNameCtrl.text,
+              emailAddressTxtController.text,
               'Địa chỉ email không hợp lệ',
             ),
           ),
@@ -181,11 +199,11 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
           InformationFieldWidget(
             required: true,
             shouldEnabled: true,
-            controller: firstNameCtrl,
+            controller: idPDoneProtectorTxtController,
             onChanged: (value) => onUpdatePayload(payload.copyWith(firstName: value)),
             type: UpdateInformationType.pDoneID,
             validator: (value) => context.validateEmptyInfo(
-              firstNameCtrl.text,
+              idPDoneProtectorTxtController.text,
               'Vui lòng nhập ID Pdone',
             ),
           ),
@@ -215,11 +233,11 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
           InformationFieldWidget(
             required: true,
             shouldEnabled: true,
-            controller: firstNameCtrl,
+            controller: idNumberProtectorTxtController,
             onChanged: (value) => onUpdatePayload(payload.copyWith(firstName: value)),
             type: UpdateInformationType.idNumber,
             validator: (value) => checkIsUnder15ShouldEnableField()
-                ? context.validateCCCD(identifyNumberCtrl.text, 'Thông tin không hợp lệ')
+                ? context.validateCCCD(idNumberProtectorTxtController.text, 'Thông tin không hợp lệ')
                 : null,
           ),
         ],
@@ -252,22 +270,22 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
           InformationFieldWidget(
             required: true,
             shouldEnabled: true,
-            controller: firstNameCtrl,
+            controller: bankNumberTxtController,
             onChanged: (value) => onUpdatePayload(payload.copyWith(firstName: value)),
             type: UpdateInformationType.bankNumber,
             validator: (value) => context.validateEmptyInfo(
-              firstNameCtrl.text,
+              bankNumberTxtController.text,
               'Vui lòng nhập số tài khoản',
             ),
           ),
           InformationFieldWidget(
             required: true,
             shouldEnabled: true,
-            controller: firstNameCtrl,
+            controller: bankAccountHolderTxtController,
             onChanged: (value) => onUpdatePayload(payload.copyWith(firstName: value)),
             type: UpdateInformationType.bankAccountHolder,
             validator: (value) => context.validateEmptyInfo(
-              firstNameCtrl.text,
+              bankAccountHolderTxtController.text,
               'Vui lòng nhập tên chủ tài khoản',
             ),
           ),
@@ -292,46 +310,57 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
           ),
           const SizedBox(height: 20),
           EducationDropdown(
-            required: true,
+            required: false,
             onChange: (edu) {
               _edu = edu;
               setState(() {});
             },
           ),
           InformationFieldWidget(
-            required: true,
+            required: false,
             shouldEnabled: true,
-            controller: firstNameCtrl,
+            controller: careerTxtController,
             onChanged: (value) => onUpdatePayload(payload.copyWith(firstName: value)),
             type: UpdateInformationType.career,
-            validator: (value) => context.validateEmptyInfo(
-              firstNameCtrl.text,
-              'Vui lòng nhập nghề nghiệp',
-            ),
+            validator: (_) {},
           ),
           const SizedBox(height: 12),
           Row(
             children: [
               Expanded(
                 child: BloodTypeDropDown(
-                  required: true,
+                  required: false,
                   onChange: (bloodType) {
                     _bloodType = bloodType;
-                    setState(() {});
                   },
                 ),
               ),
               const SizedBox(width: 20),
               Expanded(
                 child: MaritalStatusDropDown(
-                  required: true,
+                  required: false,
                   onChange: (martialStatus) {
                     _martialStatus = martialStatus;
-                    setState(() {});
                   },
                 ),
               ),
             ],
+          ),
+          InformationFieldWidget(
+            required: false,
+            shouldEnabled: true,
+            controller: giftedTxtController,
+            onChanged: (value) => onUpdatePayload(payload.copyWith(firstName: value)),
+            type: UpdateInformationType.gifted,
+            validator: (_) {},
+          ),
+          InformationFieldWidget(
+            required: false,
+            shouldEnabled: true,
+            controller: giftedTxtController,
+            onChanged: (value) => onUpdatePayload(payload.copyWith(firstName: value)),
+            type: UpdateInformationType.hobby,
+            validator: (_) {},
           ),
         ],
       ),
@@ -371,7 +400,6 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
                     required: true,
                     onChange: (national) {
                       _national = national;
-                      setState(() {});
                     },
                   ),
                 ),
@@ -381,8 +409,7 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
                   child: CityDropDown(
                     required: true,
                     onChange: (city) {
-                      _national = city;
-                      setState(() {});
+                      _city = city;
                     },
                   ),
                 ),
@@ -399,7 +426,6 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
                     required: true,
                     onChange: (district) {
                       _district = district;
-                      setState(() {});
                     },
                   ),
                 ),
@@ -410,7 +436,6 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
                     required: true,
                     onChange: (ward) {
                       _district = ward;
-                      setState(() {});
                     },
                   ),
                 ),
@@ -487,11 +512,11 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
           InformationFieldWidget(
             required: true,
             shouldEnabled: true,
-            controller: firstNameCtrl,
+            controller: addressTxtController,
             onChanged: (value) => onUpdatePayload(payload.copyWith(firstName: value)),
             type: UpdateInformationType.address,
             validator: (value) => context.validateEmptyInfo(
-              firstNameCtrl.text,
+              addressTxtController.text,
               'Vui lòng nhập địa chỉ cụ thể',
             ),
           ),
@@ -501,12 +526,12 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
                 child: InformationFieldWidget(
                   required: true,
                   shouldEnabled: true,
-                  controller: firstNameCtrl,
+                  controller: idNumberTxtController,
                   onChanged: (value) => onUpdatePayload(payload.copyWith(firstName: value)),
                   type: UpdateInformationType.idNumber,
                   validator: (value) => context.validateEmptyInfo(
-                    firstNameCtrl.text,
-                    'Vui lòng nhập địa chỉ cụ thể',
+                    idNumberTxtController.text,
+                    'Vui lòng nhập số ID/CCCD/HC',
                   ),
                 ),
               ),
@@ -536,11 +561,11 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
           InformationFieldWidget(
             required: true,
             shouldEnabled: true,
-            controller: firstNameCtrl,
+            controller: placeOfNumberTxtController,
             onChanged: (value) => onUpdatePayload(payload.copyWith(firstName: value)),
             type: UpdateInformationType.placeofIdNumber,
             validator: (value) => context.validateEmptyInfo(
-              firstNameCtrl.text,
+              placeOfNumberTxtController.text,
               'Vui lòng nhập nơi cấp',
             ),
           ),
@@ -630,37 +655,39 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      "Thanh Vân",
-                      style: TextStyle(
+                    Text(
+                      widget.authInfo.getdisplayName,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: AppColors.black,
                       ),
                     ),
                     const SizedBox(width: 5),
-                    Container(
-                      width: 28,
-                      height: 15,
-                      decoration: BoxDecoration(
-                        color: AppColors.blue32,
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        "JA",
-                        style: TextStyle(
-                          color: AppColors.white,
-                        ),
-                      ),
-                    )
+                    widget.authInfo.isJA!
+                        ? Container(
+                            width: 30,
+                            height: 16,
+                            decoration: BoxDecoration(
+                              color: AppColors.blue32,
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            alignment: Alignment.center,
+                            child: const Text(
+                              "JA",
+                              style: TextStyle(
+                                color: AppColors.white,
+                              ),
+                            ),
+                          )
+                        : Container(),
                   ],
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
-                "ID: VN44446501321",
-                style: TextStyle(
+              Text(
+                "ID: ${widget.authInfo.pDoneId}",
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                   color: AppColors.grey15,

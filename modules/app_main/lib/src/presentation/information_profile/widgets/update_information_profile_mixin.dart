@@ -12,27 +12,29 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
   final forcusCCCDPlace = ValueNotifier(false);
 
   /// ------------------------------------------
-  final firstNameCtrl = TextEditingController();
-  final middleNameCtrl = TextEditingController();
-  final lastNameCtrl = TextEditingController();
-  final nickNameCtrl = TextEditingController();
+  final fullNameTxtController = TextEditingController();
+  final nickNameTxtController = TextEditingController();
+  final emailAddressTxtController = TextEditingController();
+  final addressTxtController = TextEditingController();
+  final idNumberTxtController = TextEditingController();
+  final placeOfNumberTxtController = TextEditingController();
 
-  final identifyNumberCtrl = TextEditingController();
-  final supplyAddressCtrl = TextEditingController();
+  final idPDoneProtectorTxtController = TextEditingController();
+  final idNumberProtectorTxtController = TextEditingController();
 
-  final birthPlaceAddressCtrl = TextEditingController();
-  final currentPlaceAddressCtrl = TextEditingController();
+  final bankNumberTxtController = TextEditingController();
+  final bankAccountHolderTxtController = TextEditingController();
 
-  final weightCtrl = TextEditingController();
-  final heightCtrl = TextEditingController();
-  final genderCtrl = TextEditingController();
+  final careerTxtController = TextEditingController();
+  final giftedTxtController = TextEditingController();
+  final hobbyTxtController = TextEditingController();
+  
   final bloodGroupCtrl = TextEditingController();
   final maritalStatusCtrl = TextEditingController();
   final talentCtrl = TextEditingController();
   final interestCtrl = TextEditingController();
   final jobCtrl = TextEditingController();
   final academyCtrl = TextEditingController();
-
 
   /// birth place
   final bpProvinceCtrl = TextEditingController();
@@ -68,24 +70,20 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
       return;
     }
 
-    firstNameCtrl.text = pDoneProfile.firstName ?? '';
-    middleNameCtrl.text = pDoneProfile.middleName ?? '';
-    lastNameCtrl.text = pDoneProfile.lastName ?? '';
-    nickNameCtrl.text = pDoneProfile.nickname ?? '';
+    fullNameTxtController.text = pDoneProfile.firstName ?? '';
+    emailAddressTxtController.text = pDoneProfile.middleName ?? '';
+    addressTxtController.text = pDoneProfile.lastName ?? '';
+    nickNameTxtController.text = pDoneProfile.nickname ?? '';
 
-    identifyNumberCtrl.text = pDoneProfile.identityNumber ?? '';
-    supplyAddressCtrl.text = pDoneProfile.supplyAddress ?? '';
+    bankNumberTxtController.text = pDoneProfile.identityNumber ?? '';
+    bankAccountHolderTxtController.text = pDoneProfile.supplyAddress ?? '';
 
-    birthPlaceAddressCtrl.text = pDoneProfile.birthPlace?.address ?? '';
-    currentPlaceAddressCtrl.text = pDoneProfile.currentPlace?.address ?? '';
-
-    weightCtrl.text = (pDoneProfile.weight ?? '').toString();
-    heightCtrl.text = (pDoneProfile.height ?? '').toString();
+    careerTxtController.text = (pDoneProfile.weight ?? '').toString();
+    giftedTxtController.text = (pDoneProfile.height ?? '').toString();
 
     // currentGender = pDoneProfile.sex;
     birthDay = pDoneProfile.birthday;
     supplyDate = pDoneProfile.supplyDate;
-  
 
     payload = copyWithPDoneProfile(pDoneProfile);
   }
@@ -116,8 +114,7 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
     );
   }
 
-  UpdatePlaceInformationPayload copyWithPlaceInformation(
-      PlaceInformation? placeInformation) {
+  UpdatePlaceInformationPayload copyWithPlaceInformation(PlaceInformation? placeInformation) {
     return UpdatePlaceInformationPayload(
       countryName: placeInformation!.country!.name,
       provinceName: placeInformation.province!.name,
@@ -133,22 +130,23 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
   }
 
   bool checkIsUnder15ShouldEnableField() {
-    return birthDay == null ||
-        birthDay != null && !birthDay!.isUnder15yearsAgo();
+    return birthDay == null || birthDay != null && !birthDay!.isUnder15yearsAgo();
   }
 
   @override
   void dispose() {
-    firstNameCtrl.dispose();
-    middleNameCtrl.dispose();
-    lastNameCtrl.dispose();
-    nickNameCtrl.dispose();
-    birthPlaceAddressCtrl.dispose();
-    currentPlaceAddressCtrl.dispose();
-    weightCtrl.dispose();
-    heightCtrl.dispose();
-    identifyNumberCtrl.dispose();
-    supplyAddressCtrl.dispose();
+    fullNameTxtController.dispose();
+    nickNameTxtController.dispose();
+    emailAddressTxtController.dispose();
+    addressTxtController.dispose();
+    idNumberTxtController.dispose();
+    placeOfNumberTxtController.dispose();
+    idPDoneProtectorTxtController.dispose();
+    idNumberProtectorTxtController.dispose();
+    bankNumberTxtController.dispose();
+    bankAccountHolderTxtController.dispose();
+    careerTxtController.dispose();
+    giftedTxtController.dispose();
     super.dispose();
   }
 }

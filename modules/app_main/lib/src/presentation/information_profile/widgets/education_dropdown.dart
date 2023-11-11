@@ -51,7 +51,7 @@ class _EducationDropdownState extends State<EducationDropdown> {
         Row(
           children: [
             const Text(
-              "Tên ngân hàng",
+              "Học vấn",
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Color(0xFF212121),

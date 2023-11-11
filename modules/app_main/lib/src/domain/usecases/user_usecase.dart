@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/networking/api_response.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
@@ -70,5 +71,13 @@ class UserUsecase {
 
   Future<OnboardingResponse> onboarding() {
     return _userRepository.onboarding();
+  }
+
+  Future<ApiResponse<User?>> updatePDoneProfile() {
+    return _userRepository.updatePDoneProfile();
+  }
+
+  Future<ApiResponse<User?>> updatePNoneDoneProfile() {
+    return _userRepository.updateNonePDoneProfile();
   }
 }

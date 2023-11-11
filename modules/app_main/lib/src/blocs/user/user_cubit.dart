@@ -412,6 +412,24 @@ class UserCubit extends Cubit<UserState> {
       )));
     }
   }
+  // Future<User?> updatePDoneProfile() async {
+  //   if (state is UpdatePDoneProfileLoading) return;
+  //   try {
+  //     emit(UpdatePDoneProfileLoading());
+  //     final response = await _userUsecase.updatePDoneProfile();
+  //     emit(UpdatePDoneProfileSuccess(user: response));
+  //   } catch (error) {
+  //     debugPrint("onboarding: $error");
+  //     emit(OnboardingFail(
+  //         onboarding: const OnboardingResponse(
+  //       hasDefaultBankAccount: false,
+  //       isJA: false,
+  //       isMarshopCustomer: false,
+  //       isMarshopOwner: false,
+  //       isPdone: false,
+  //     )));
+  //   }
+  // }
 }
 
 enum AuthClaimType { v1, v2 }

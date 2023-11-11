@@ -7,18 +7,18 @@ extension MaritalStatusExt on MaritalStatus {
   String getText() {
     switch (this) {
       case MaritalStatus.single:
-        return 'Single';
+        return 'Độc thân';
       case MaritalStatus.married:
-        return 'Married';
+        return 'Kết hôn';
     }
   }
 
   String toValue() {
     switch (this) {
       case MaritalStatus.single:
-        return 'Single';
+        return 'Độc thân';
       case MaritalStatus.married:
-        return 'Married';
+        return 'Kết hôn';
     }
   }
 }
