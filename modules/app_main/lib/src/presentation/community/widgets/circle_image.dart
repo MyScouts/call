@@ -9,12 +9,14 @@ class CircleNetworkImage extends StatelessWidget {
     required this.size,
     this.border,
     this.isIgnoreCache = false,
+    this.defaultImage
   });
 
   final String url;
   final Border? border;
   final bool isIgnoreCache;
   final double size;
+  final Widget? defaultImage;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class CircleNetworkImage extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(size / 2),
             child: url.isEmpty
-                ? const SizedBox.shrink()
+                ? defaultImage ?? const SizedBox.shrink()
                 : isIgnoreCache
                     ? Image.network(
                         url,

@@ -189,6 +189,8 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
   final Function(List<ReorderableStaggeredScrollViewListItem>? list)
       onChildrenChanged;
 
+  final Function(Offset? offset)? onDraggablePosition;
+
   /// Constructor for creating a ReorderableStaggeredScrollView in a list layout.
   const ReorderableStaggeredScrollView.list({
     super.key,
@@ -226,6 +228,7 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
     this.isNotDragList,
     this.onGroup,
     required this.onChildrenChanged,
+    this.onDraggablePosition,
   })  : axisDirection = null,
         isList = true,
         crossAxisCount = 1;
@@ -250,7 +253,7 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
     this.axis,
     this.hitTestBehavior = HitTestBehavior.translucent,
     required this.onChildrenChanged,
-
+    this.onDraggablePosition,
     /// A function that builds the feedback widget during dragging.
     Widget Function(ReorderableStaggeredScrollViewGridItem, Widget, Size)?
         buildFeedback,
@@ -261,7 +264,7 @@ class ReorderableStaggeredScrollView extends StatefulWidget {
         onLeave,
     dynamic onMove,
     void Function(ReorderableStaggeredScrollViewListItem)? onDragStarted,
-    void Function(DragUpdateDetails, ReorderableStaggeredScrollViewGridItem)?
+    void Function(DragUpdateDetails, ReorderableStaggeredScrollViewListItem)?
         onDragUpdate,
     void Function(Velocity, Offset, ReorderableStaggeredScrollViewGridItem)?
         onDraggableCanceled,
@@ -334,6 +337,7 @@ class _ReorderableStaggeredScrollViewState
     required Widget Function(List<Widget>) buildItems,
   }) {
     return DragContainer(
+      onPositionChanged: widget.onDraggablePosition,
       isDrag: widget.enable,
       scrollDirection: widget.scrollDirection,
       isLongPressDraggable: widget.isLongPressDraggable,

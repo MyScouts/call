@@ -83,6 +83,7 @@ class DragContainer<T extends ReorderableStaggeredScrollViewListItem>
   final List<T>? isNotDragList;
   final Function(T moveData, T data)? onGroup;
   final Function(List<T> list) onDataChanged;
+  final Function(Offset? offset)? onPositionChanged;
 
   const DragContainer({
     required this.buildItems,
@@ -111,6 +112,7 @@ class DragContainer<T extends ReorderableStaggeredScrollViewListItem>
     this.isNotDragList,
     this.onGroup,
     required this.onDataChanged,
+    this.onPositionChanged,
     Key? key,
   }) : super(key: key);
 
@@ -212,18 +214,6 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
           if (widget.onWillAccept != null) {
             widget.onWillAccept?.call(moveData, data, isFront);
           }
-
-          final dy = _mapPosition[data]?.dy ?? 0;
-
-          final height = mapSize[data]?.height ?? 0;
-
-          if (dy + height * 0.7 > (_dragPosition?.dy ?? 0)) {
-            if (moveData == null) return;
-            groupActiveStart(moveData, data);
-            return;
-          }
-
-          if (_onGroupActive != null) _onGroupActive?.cancel();
 
           if (moveData != null) {
             setState(() {
@@ -395,24 +385,35 @@ class _DragContainerState<T extends ReorderableStaggeredScrollViewListItem>
               widget.onDragStarted?.call(data);
             },
             onDragUpdate: (DragUpdateDetails details) {
-              _dragPosition = details.globalPosition;
+              _dragPosition ??= _mapPosition[data] ?? Offset.zero;
+              _dragPosition = Offset(
+                _dragPosition!.dx + details.delta.dx,
+                _dragPosition!.dy + details.delta.dy,
+              );
               _autoScrollIfNecessary(details.globalPosition, father);
+              widget.onPositionChanged?.call(_dragPosition);
               widget.onDragUpdate?.call(details, data);
             },
             onDraggableCanceled: (Velocity velocity, Offset offset) {
+              _dragPosition = null;
               setDragStart(isDragStart: false);
               endAnimation();
               widget.onDraggableCanceled?.call(velocity, offset, data);
+              widget.onPositionChanged?.call(_dragPosition);
             },
             onDragEnd: (DraggableDetails details) {
+              _dragPosition = null;
               setDragStart(isDragStart: false);
               widget.onDragEnd?.call(details, data);
               widget.onDataChanged.call(widget.dataList);
+              widget.onPositionChanged?.call(_dragPosition);
             },
             onDragCompleted: () {
+              _dragPosition = null;
               setDragStart(isDragStart: false);
               endAnimation();
               widget.onDragCompleted?.call(data);
+              widget.onPositionChanged?.call(_dragPosition);
             },
             child: child,
           );

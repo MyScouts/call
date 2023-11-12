@@ -1,28 +1,74 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
+import 'package:app_main/src/presentation/shared/user/bloc/user_bloc.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:localization/localization.dart';
 
-class StatusBarWidget extends StatefulWidget {
+class StatusBarWidget extends StatelessWidget {
   final Function() openAppStore;
   final Function() openNotification;
+  final Function()? onCanceled;
+  final bool enableEditMode;
 
   const StatusBarWidget({
     super.key,
     required this.openAppStore,
     required this.openNotification,
+    this.enableEditMode = false,
+    this.onCanceled
   });
 
   @override
-  State<StatusBarWidget> createState() => _StatusBarWidgetState();
-}
-
-class _StatusBarWidgetState extends State<StatusBarWidget> {
-  @override
   Widget build(BuildContext context) {
+    if (enableEditMode) {
+      return SizedBox(
+        height: 35,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                onPressed: () {
+                  context.showAppStore();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(22),
+                  ),
+                ),
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.black,
+                  size: 20,
+                ),
+              ),
+              TextButton(
+                onPressed: onCanceled,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(22),
+                  ),
+                ),
+                child: const Text(
+                  'Xong',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     return GestureDetector(
       onTap: () => context.startSearch(),
       child: Container(
@@ -35,9 +81,20 @@ class _StatusBarWidgetState extends State<StatusBarWidget> {
             children: [
               GestureDetector(
                 onTap: () => context.startSetting(),
-                child: const Align(
+                child: Align(
                   alignment: Alignment.centerLeft,
-                  child: CircleAvatar(),
+                  child: BlocBuilder<UserBloc, UserState>(
+                    builder: (_, state) {
+                      return CircleNetworkImage(
+                        url: state.currentUser?.avatar ?? '',
+                        size: 40,
+                        defaultImage: ImageWidget(
+                          ImageConstants.defaultUserAvatar,
+                          borderRadius: 100,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
               const SizedBox(width: 8),
@@ -69,7 +126,7 @@ class _StatusBarWidgetState extends State<StatusBarWidget> {
               ),
               const SizedBox(width: 8),
               GestureDetector(
-                onTap: widget.openNotification,
+                onTap: openNotification,
                 behavior: HitTestBehavior.opaque,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -83,7 +140,7 @@ class _StatusBarWidgetState extends State<StatusBarWidget> {
                 ),
               ),
               GestureDetector(
-                onTap: widget.openAppStore,
+                onTap: openAppStore,
                 behavior: HitTestBehavior.opaque,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),

@@ -23,6 +23,10 @@ class OpenWeatherBloc extends Bloc<FetchWeather, OpenWeatherState> {
     FetchWeather event,
     Emitter<OpenWeatherState> emit,
   ) async {
+    if(_state != null) {
+      emit(_state!);
+      return;
+    }
     final res = await Future.wait([
       openWeatherUseCase.get(lat: event.lat, lon: event.lon),
       openWeatherUseCase.getFeature(lat: event.lat, lon: event.lon),

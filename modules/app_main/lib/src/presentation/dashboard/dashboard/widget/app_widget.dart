@@ -4,6 +4,7 @@ import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
 import 'package:app_main/src/presentation/dashboard/widget/clock_widget.dart';
 import 'package:app_main/src/presentation/dashboard/widget/weather_banner_widget.dart';
 import 'package:app_main/src/presentation/dashboard/widget/weather_widget.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -85,7 +86,7 @@ class AppWidget extends StatelessWidget {
           ),
           if (app.title.isNotEmpty) const SizedBox(height: 5),
           if (app.title.isNotEmpty)
-            Text(
+            AutoSizeText(
               app.title,
               maxLines: 1,
               textAlign: TextAlign.center,
@@ -124,12 +125,12 @@ class AppWidgetBuilder extends AppWidget {
           return WeatherWidget(key: key);
         }
 
-        if(app.id == 'wg_weather_banner') {
+        if (app.id == 'wg_weather_banner') {
           return const WeatherBannerWidget();
         }
 
         if (app is DashBoardGroupItem) {
-          if(controller.enableEditMode) {
+          if (controller.enableEditMode) {
             return AppIconAnimation(
               child: AppGroupWidget(app: app),
             );
@@ -152,6 +153,54 @@ class AppWidgetBuilder extends AppWidget {
           onRemoved: onRemoved,
         );
       },
+    );
+  }
+}
+
+class AppWidgetGroupBuilder extends AppWidget {
+  const AppWidgetGroupBuilder({super.key,
+    required super.app,
+    required super.onRemoved,
+    this.enableEditMode = false,
+  });
+
+  final bool enableEditMode;
+
+  @override
+  Widget build(BuildContext context) {
+    if (app.id == 'wg_clock') {
+      return const ClockWidget();
+    }
+    if (app.id == 'wg_weather') {
+      return WeatherWidget(key: key);
+    }
+
+    if (app.id == 'wg_weather_banner') {
+      return const WeatherBannerWidget();
+    }
+
+    if (app is DashBoardGroupItem) {
+      if (enableEditMode) {
+        return AppIconAnimation(
+          child: AppGroupWidget(app: app),
+        );
+      }
+      return AppGroupWidget(app: app);
+    }
+
+    if (enableEditMode) {
+      return AppIconAnimation(
+        child: AppWidget(
+          app: app,
+          enableRemoveIcon: enableEditMode,
+          onRemoved: onRemoved,
+        ),
+      );
+    }
+    return AppWidget(
+      app: app,
+      enableRemoveIcon: enableEditMode,
+      onRemoved: onRemoved,
     );
   }
 }
