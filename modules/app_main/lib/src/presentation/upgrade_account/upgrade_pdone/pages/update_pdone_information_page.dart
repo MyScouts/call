@@ -257,8 +257,6 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       birthDay = eKycData['birth_day'].toString().parseDateTime();
       supplyDate = eKycData['issue_date'].toString().parseDateTime();
       expiryDate = eKycData['valid_date'].toString().parseDateTime();
-      print(
-          'DateTime.now().year - (birthDay?.year ?? 0) : ${DateTime.now().year - (birthDay?.year ?? 0)}');
       if (DateTime.now().year - (birthDay?.year ?? 0) > 18) {
         // pDoneAPICaller = PDoneAPICaller.adult;
         pDoneAPICaller = PDoneAPICaller.teenager;

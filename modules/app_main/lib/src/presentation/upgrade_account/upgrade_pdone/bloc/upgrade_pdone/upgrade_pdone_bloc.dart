@@ -310,6 +310,7 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
       final topic = 'user_${event.userId}';
       FirebaseMessaging.instance.subscribeToTopic('user_${event.userId}');
       FirebaseMessaging.onMessage.listen((message) {
+        print('message : ${message.toMap()}');
         if ((message.from ?? '').contains(topic)) {
           final data = message.data;
 

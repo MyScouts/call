@@ -8,7 +8,7 @@ enum PlaceInformationType {
 }
 
 List<Country> countries = [
-  const Country(name: 'Vietnam', iso2: 'vn'),
+  const Country(name: 'Việt Nam', iso2: 'vn'),
 ];
 
 
