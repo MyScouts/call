@@ -71,4 +71,12 @@ class UserUsecase {
   Future<OnboardingResponse> onboarding() {
     return _userRepository.onboarding();
   }
+
+  Future<List<User>> listFriends() {
+    return _userRepository.listFriends();
+  }
+
+  Future invite(String teamID, Map<String, dynamic> json) {
+    return _userRepository.invite(teamID, json);
+  }
 }

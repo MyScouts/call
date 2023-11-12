@@ -244,27 +244,31 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
         children: [
           if (showInvite)
             Expanded(
-              child: Container(
-                margin: const EdgeInsets.only(right: 20),
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFE8F0FE),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  children: [
-                    ImageWidget(IconAppConstants.icInviteTeamMember),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Text(
-                        'Mời thêm thành viên',
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: const Color(0xFF4B84F7),
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14),
-                      ),
-                    )
-                  ],
+              child: GestureDetector(
+                onTap: context.startAddMember,
+                behavior: HitTestBehavior.opaque,
+                child: Container(
+                  margin: const EdgeInsets.only(right: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE8F0FE),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    children: [
+                      ImageWidget(IconAppConstants.icInviteTeamMember),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text(
+                          'Mời thêm thành viên',
+                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: const Color(0xFF4B84F7),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

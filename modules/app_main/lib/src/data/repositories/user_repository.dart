@@ -29,4 +29,8 @@ abstract class UserRepository {
   Future<SearchUserResponse> searchUser(SearchUserPayload query);
 
   Future<OnboardingResponse> onboarding();
+
+  Future<List<User>> listFriends();
+
+  Future invite(String teamID, Map<String, dynamic> json);
 }
