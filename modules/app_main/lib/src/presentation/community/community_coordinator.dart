@@ -170,10 +170,22 @@ extension CommunityCoordinator on BuildContext {
   }
 
   Future<T?> startUpdateTeamOptionsScreen<T>({required Team team}) {
-    return Navigator.of(this).pushNamed(
-      UpdateTeamOptionsScreen.routeName,
-      arguments: team,
-    );
+    return Navigator.of(this).push(MaterialPageRoute(
+      builder: (_) => MultiBlocProvider(
+        providers: [
+          BlocProvider<RelinquishBossRoleBloc>(
+            create: (context) => injector.get(),
+          ),
+          BlocProvider<GetBossTeamRelinquishStatusBloc>(
+            create: (context) => injector.get(),
+          ),
+          BlocProvider<TeamDetailBloc>.value(
+            value: read<TeamDetailBloc>(),
+          ),
+        ],
+        child: UpdateTeamOptionsScreen(team: team),
+      ),
+    ));
   }
 
   Future<T?> startDialogConfirmLeaveTeam<T>({required VoidCallback onAction}) {

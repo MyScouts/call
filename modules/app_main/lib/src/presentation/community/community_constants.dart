@@ -284,11 +284,16 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
             .add(GetDetailDataParam1Event(team.id));
 
       case UpdateTeamOption.invite:
+        return context.showToastMessage(
+          'Tính năng này đang được phát triển',
+          ToastMessageType.warning,
+        );
       case UpdateTeamOption.kick:
         Navigator.of(context).push(MaterialPageRoute(builder: (_) => BlocProvider<TeamDetailBloc>.value(
           value: context.read<TeamDetailBloc>(),
-          child: RemoveMemberSheet(),
+          child: const RemoveMemberSheet(),
         )));
+        break;
       case UpdateTeamOption.edit:
         return context.showToastMessage(
           'Tính năng này đang được phát triển',
