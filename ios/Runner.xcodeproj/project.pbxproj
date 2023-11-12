@@ -626,7 +626,6 @@
 					"\"LinkPresentation\"",
 					"-weak_framework",
 					"\"UserNotifications\"",
-					"\"-ld64\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.vdone.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -971,7 +970,6 @@
 					"\"sqflite\"",
 					"-framework",
 					"\"url_launcher_ios\"",
-					"\"-ld64\"",
 					"-weak_framework",
 					"\"LinkPresentation\"",
 					"-weak_framework",
@@ -1219,7 +1217,6 @@
 					"\"LinkPresentation\"",
 					"-weak_framework",
 					"\"UserNotifications\"",
-					"\"-ld64\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.vdone.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";

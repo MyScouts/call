@@ -63,13 +63,8 @@ class AppDelegate extends IAppDelegate {
 
     var initialRoute = AuthenticateScreen.routeName;
     if (userSharePreferencesUsecase.isAuthenticated) {
-      // initialRoute = DashboardScreen.routeName;
+      initialRoute = DashBoardScreen.routeName;
     }
-
-    // var initialRoute = CameraScreen.routeName;
-    // // if (userSharePreferencesUsecase.isAuthenticated) {
-    // //   initialRoute = DashBoardScreen.routeName;
-    // // }
 
     if (Configurations.isStudio) {
       final myBlocObserver = MyBlocObserver();
