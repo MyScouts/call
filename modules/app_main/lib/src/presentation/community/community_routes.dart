@@ -134,7 +134,10 @@ class CommunityRoutes extends RouteModule {
           return const AskToJoinTeamSuccessScreen();
         },
         TeamRequestListScreen.routeName: (context) {
-          return const TeamRequestListScreen();
+          final args = settings.arguments as Map<String, dynamic>;
+          return TeamRequestListScreen(
+            team: args['team'],
+          );
         },
         UpdateTeamOptionsScreen.routeName: (context) {
           final args = settings.arguments as Team;

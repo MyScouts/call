@@ -165,8 +165,11 @@ extension CommunityCoordinator on BuildContext {
         .popUntil(ModalRoute.withName(TeamDetailScreen.routeName));
   }
 
-  Future<T?> startTeamRequestsScreen<T>() {
-    return Navigator.of(this).pushNamed(TeamRequestListScreen.routeName);
+  Future<T?> startTeamRequestsScreen<T>({required Team team}) {
+    return Navigator.of(this)
+        .pushNamed(TeamRequestListScreen.routeName, arguments: {
+      "team": team,
+    });
   }
 
   Future<T?> startUpdateTeamOptionsScreen<T>({required Team team}) {

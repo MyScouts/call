@@ -47,6 +47,22 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
             context.startReplaceDiary(userId: data["id"].toString());
             return;
           }
+
+          if (data['type'] == 'auth1') {
+            context.confirmLoginQrCode(
+              type: AuthClaimType.v1,
+              code: data['code'],
+            );
+            return;
+          }
+
+          if (data['type'] == 'auth2') {
+            context.confirmLoginQrCode(
+              type: AuthClaimType.v2,
+              code: data['code'],
+            );
+            return;
+          }
         } else {
           if ((code.toString().contains("_auth1") ||
               code.toString().contains("_auth2"))) {

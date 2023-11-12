@@ -11,9 +11,13 @@ import '../../community_constants.dart';
 import '../../widgets/day_countdown_widget.dart';
 
 class TeamRequestListScreen extends StatefulWidget {
+  final Team team;
   static const String routeName = '/team-requests';
 
-  const TeamRequestListScreen({super.key});
+  const TeamRequestListScreen({
+    super.key,
+    required this.team,
+  });
 
   @override
   State<TeamRequestListScreen> createState() => _TeamRequestListScreenState();
@@ -36,12 +40,13 @@ class _TeamRequestListScreenState extends State<TeamRequestListScreen> {
       body: Column(
         children: [
           _buildTab(),
+          const SizedBox(height: 20),
           Expanded(
             child: PageView(
               controller: _pageCtrl,
-              children: const [
-                JoinRequestPage(),
-                LeaveRequestPage(),
+              children: [
+                JoinRequestPage(team: widget.team),
+                LeaveRequestPage(team: widget.team),
               ],
             ),
           ),
@@ -108,7 +113,7 @@ class _TeamRequestListScreenState extends State<TeamRequestListScreen> {
               height: 40,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                color: _page == 1 ? Colors.transparent : Colors.white,
+                color: _page == 1 ? Colors.white : Colors.transparent,
               ),
               child: Center(
                 child: Text(
@@ -133,7 +138,11 @@ class _TeamRequestListScreenState extends State<TeamRequestListScreen> {
 }
 
 class JoinRequestPage extends StatefulWidget {
-  const JoinRequestPage({super.key});
+  final Team team;
+  const JoinRequestPage({
+    super.key,
+    required this.team,
+  });
 
   @override
   State<JoinRequestPage> createState() => _JoinRequestPageState();
@@ -145,7 +154,7 @@ class _JoinRequestPageState extends State<JoinRequestPage> {
   @override
   void initState() {
     super.initState();
-    _bloc.getRequests();
+    _bloc.getRequests(teamId: widget.team.id!);
   }
 
   @override
@@ -343,7 +352,11 @@ class _JoinRequestPageState extends State<JoinRequestPage> {
 }
 
 class LeaveRequestPage extends StatefulWidget {
-  const LeaveRequestPage({super.key});
+  final Team team;
+  const LeaveRequestPage({
+    super.key,
+    required this.team,
+  });
 
   @override
   State<LeaveRequestPage> createState() => _LeaveRequestPage();
@@ -355,7 +368,7 @@ class _LeaveRequestPage extends State<LeaveRequestPage> {
   @override
   void initState() {
     super.initState();
-    _bloc.getRequests(isJoinRequest: false, teamId: widget.);
+    _bloc.getRequests(isJoinRequest: false, teamId: widget.team.id!);
   }
 
   @override

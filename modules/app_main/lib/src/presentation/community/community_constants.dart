@@ -296,7 +296,7 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
           ToastMessageType.warning,
         );
       case UpdateTeamOption.requests:
-        return await context.startTeamRequestsScreen();
+        return await context.startTeamRequestsScreen(team: team);
       case UpdateTeamOption.assignBoss:
         return await context.startAssignTeam(team);
       case UpdateTeamOption.revokeBoss:
