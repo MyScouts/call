@@ -1,12 +1,14 @@
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/confirm_register_ja_payload.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_request_protector_req.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
+import 'package:app_main/src/data/models/responses/api_verify_response.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
+import 'package:camera/camera.dart';
 
 import '../../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
-import '../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_otp_protector.dart';
 import '../../data/models/responses/register_pdone_response.dart';
 import '../../data/models/responses/upgrade_account_response.dart';
 import '../entities/bank.dart';
@@ -25,6 +27,7 @@ abstract class UpgradeAccountRepository {
 
   Future<bool> updatePDoneProfileOver18(UpdateProfilePayload payload);
   Future<bool> updatePDoneProfileRange15To18(UpdateProfilePayload payload);
+  Future<bool> updatePDoneProfileBirthCer(UpdateProfilePayload payload);
 
   Future<bool> updateKyc(UpdatePDoneKYCPayload payload);
 
@@ -51,7 +54,6 @@ abstract class UpgradeAccountRepository {
 
   Future<RegisterPDoneResponse> checkProtector(CheckProtectorPayload payload);
 
-  Future<bool> checkProtectorVerifyOTP(VerifyOtpPDonePayload payload);
 
   Future<BankAccount> updateBankAccount(UpdateBankAccountPayload payload);
 
@@ -62,7 +64,9 @@ abstract class UpgradeAccountRepository {
 
   Future<BankAccount> getDefaultBank();
 
-  Future<bool> verifyProtector({required PDoneVerifyProtectorRequest payload});
+  Future<int> verifyProtector({required PDoneVerifyProtectorRequest payload});
 
-  Future<bool> verifyOTPProtector({required PDoneVerifyOTPProtectorRequest payload});
+  Future<String> uploadBirthCer(XFile xFile, String prefix);
+
+  Future<APIVerifyResponse> requestProtector({required PDoneRequestProtectorReq req});
 }

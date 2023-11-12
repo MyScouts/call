@@ -88,7 +88,7 @@ extension UpgradeAccountCoordinator on BuildContext {
     );
   }
 
-  Future<T?> upgradePdoneWithProtectorSuccess<T>() {
+  Future<T?> upgradePdoneChildrenSuccess<T>() {
     return showGeneralDialog<T>(
       context: this,
       barrierDismissible: false,

@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:app_core/app_core.dart';
+import 'package:camera/camera.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
-import '../../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_otp_protector.dart';
+import '../../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_request_protector_req.dart';
 import '../../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
 import '../../../../../data/models/responses/register_pdone_response.dart';
 import '../../../../../domain/entities/update_account/check_protector_payload.dart';
@@ -42,7 +44,8 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     on<ExtractingIdCardEvent>(_mapExtractingIdCardEvent);
     on<UpdatePDoneSendOTP>(_mapSendOTPVerifyUpdatePdoneEvent);
     on<VerifyProtectorEvent>(_mapVerifyProtectorEvent);
-    on<VerifyOTPProtectorEvent>(_mapVerifyOTPProtectorEvent);
+    on<UploadImageBirthCerEvent>(_mapUploadImageBirthCerEvent);
+    on<RequestProtectorEvent>(_mapRequestProtectorEvent);
   }
 
   FutureOr<void> _mapExtractingIdCardEvent(
@@ -55,14 +58,20 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
       if (infoResult == '') {
         // only verify face
         emit(
-          ExtractedEKycIdCardSuccess(const {}, imageEKyc),
+          ExtractedEKycIdCardSuccess(const {}, imageEKyc, event.meta),
         );
       } else {
         infoResult = jsonDecode(infoResult);
         if (infoResult['statusCode'] == 200) {
-          emit(
-            ExtractedEKycIdCardSuccess(infoResult, imageEKyc),
-          );
+          final compareResult = jsonDecode(event.eKycData['COMPARE_RESULT']);
+          if (compareResult['object']['prob'] > 90) {
+            emit(
+              ExtractedEKycIdCardSuccess(infoResult, imageEKyc, const {}),
+            );
+          } else {
+            emit(ExtractedEKycIdCardFailure(
+                'Khuôn mặt không trùng khớp với giấy tờ, vui lòng thử lại!'));
+          }
         } else {
           emit(ExtractedEKycIdCardFailure(
               'Có lỗi xảy ra trong quá trình EKyc, vui lòng liên hệ admin để được hỗ trợ!'));
@@ -108,40 +117,34 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     emit(VerifyingProtectorState());
     try {
       final res = await _upgradeAccountUsecase.verifyProtector(event.req);
-
-      if (res) {
-        emit(VerifyProtectorSuccessState());
-      } else {
-        emit(VerifyProtectorFailureState(
-            errorMessage: 'Người bảo hộ không hợp lệ'));
-      }
+      emit(VerifyProtectorSuccessState(userId: res));
     } catch (e) {
-      if (e is DioException) {
-        final data = e.response!.data;
-        if (data['code'] == 'USER_NOT_FOUND') {
-          emit(VerifyProtectorFailureState(
-              errorMessage: 'Không tìm thấy người bảo hộ'));
-        }
-      } else {
-        emit(VerifyProtectorFailureState(errorMessage: e.toString()));
-      }
+      // emit(VerifyProtectorFailureState(errorMessage: e.toString()));
+      emit(VerifyProtectorFailureState(
+          errorMessage: 'Không tìm thấy người bảo hộ'));
+      // if (e is DioException) {
+      //   final data = e.response!.data;
+      //   if (data['code'] == 'USER_NOT_FOUND') {
+      //     emit(VerifyProtectorFailureState(
+      //         errorMessage: 'Không tìm thấy người bảo hộ'));
+      //   }
+      // } else {
+      //   emit(VerifyProtectorFailureState(errorMessage: e.toString()));
+      // }
     }
   }
 
-  FutureOr<void> _mapVerifyOTPProtectorEvent(
-      VerifyOTPProtectorEvent event, Emitter<UpgradePDoneState> emit) async {
-    emit(VerifyingProtectorState());
-    try {
-      final res = await _upgradeAccountUsecase.verifyOTPProtector(event.req);
+  FutureOr<void> _mapUploadImageBirthCerEvent(
+      UploadImageBirthCerEvent event, Emitter<UpgradePDoneState> emit) async {
+    emit(UploadingImageBirthCer());
 
-      if (res) {
-        emit(VerifyOTPProtectorSuccessState());
-      } else {
-        emit(VerifyOTPProtectorFailureState(
-            errorMessage: 'Xác nhận thất bại'));
-      }
+    try {
+      final res =
+          await _upgradeAccountUsecase.uploadBirthCer(event.xFile, 'gks');
+
+      emit(UploadedSuccessImageBirthCer(imageBirthCerUrl: res));
     } catch (e) {
-      emit(VerifyProtectorFailureState(errorMessage: e.toString()));
+      emit(UploadedFailureImageBirthCer(errorMessage: e.toString()));
     }
   }
 
@@ -201,32 +204,36 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
 
   FutureOr<void> _mapUpdatePDoneProfileEvent(
       UpdatePDoneProfileEvent event, Emitter<UpgradePDoneState> emit) async {
-    emit(UpdateProfileLoading());
+    emit(UpdatePDoneProfileLoading());
 
     try {
       bool res;
-      switch (event.rangeAge) {
-        case PDoneOptionRangeAge.over18:
+      switch (event.pDoneAPICaller) {
+        case PDoneAPICaller.adult:
           res = await _upgradeAccountUsecase
               .updatePDoneProfileOver18(event.payload);
           if (res) {
-            emit(UpdateProfileSuccess(requestId: res));
+            emit(UpdatePdoneAdultProfileSuccess());
           }
-        case PDoneOptionRangeAge.under18AndOver15:
+        case PDoneAPICaller.teenager:
           res = await _upgradeAccountUsecase
               .updatePDoneProfileRange15To18(event.payload);
-          emit(UpdateProfileSuccess(requestId: res));
+          emit(UpdatePdoneTeenagerProfileSuccess());
+        case PDoneAPICaller.children:
+          res = await _upgradeAccountUsecase
+              .updatePDoneProfileBirthCer(event.payload);
+          emit(UpdatePdoneChildrenProfileSuccess());
       }
     } catch (e) {
       if (e is DioException) {
         if (e.response?.statusCode == 409) {
-          emit(UpdateProfileFailure('Tài khoản của bạn đã là PDone'));
+          emit(UpdatePDoneProfileFailure('Tài khoản của bạn đã là PDone'));
         }
         if (e.response?.data['code'] == 'OTP_NOT_MATCH') {
-          emit(UpdateProfileFailure('Bạn nhập mã OTP không chính xác!'));
+          emit(UpdatePDoneProfileFailure('Bạn nhập mã OTP không chính xác!'));
         }
       } else {
-        emit(UpdateProfileFailure('Có lỗi xảy ra, vui lòng thử lại!'));
+        emit(UpdatePDoneProfileFailure('Có lỗi xảy ra, vui lòng thử lại!'));
       }
     }
   }
@@ -292,6 +299,40 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
       return _upgradeAccountUsecase.checkProtector(payload);
     } catch (e) {
       rethrow;
+    }
+  }
+
+  FutureOr<void> _mapRequestProtectorEvent(
+      RequestProtectorEvent event, Emitter<UpgradePDoneState> emit) async {
+    emit(RequestingProtectorState());
+
+    try {
+      final topic = 'user_${event.userId}';
+      FirebaseMessaging.instance.subscribeToTopic('user_${event.userId}');
+      FirebaseMessaging.onMessage.listen((message) {
+        if ((message.from ?? '').contains(topic)) {
+          final data = message.data;
+
+          if (data['type'] == 'PROTECTOR_REQUEST_REPLY') {
+            final dataRes = jsonDecode(data['data']);
+            if (dataRes['isApproved']) {
+              emit(ApproveProtectorState());
+            } else {
+              emit(RejectProtectorState());
+            }
+          }
+        }
+      });
+
+      final userId = await _upgradeAccountUsecase.verifyProtector(event.req);
+      final reqProtectorRequest = PDoneRequestProtectorReq(
+          relation: event.req.protector, protectorId: userId);
+      await _upgradeAccountUsecase.requestProtector(req: reqProtectorRequest);
+
+      emit(RequestedSuccessProtectorState());
+    } catch (e) {
+      emit(RequestedFailureProtectorState(
+          errorMessage: 'Có lỗi xảy ra, vui lòng thử lại!'));
     }
   }
 }

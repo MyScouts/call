@@ -13,10 +13,9 @@ import '../../bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 import 'information_field_guardian_widget.dart';
 
 class VerifyProtectorWidget extends StatefulWidget {
-  final ValueChanged<PDoneVerifyProtectorRequest> onUpdatePDoneVerifyProtector;
+  final ValueChanged<PDoneVerifyProtectorRequest> onUpdatePlaceInformation;
 
-  const VerifyProtectorWidget(
-      {super.key, required this.onUpdatePDoneVerifyProtector});
+  const VerifyProtectorWidget({super.key, required this.onUpdatePlaceInformation});
 
   @override
   State<StatefulWidget> createState() {
@@ -30,7 +29,8 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
   final _phoneCtl = TextEditingController();
   final _idNumberOfProtector = TextEditingController();
   List<Protector> protectors = [];
-  PDoneVerifyProtectorRequest protectorRequest = PDoneVerifyProtectorRequest(phoneCode: '84');
+  PDoneVerifyProtectorRequest protectorRequest =
+      PDoneVerifyProtectorRequest(phoneCode: '84');
 
   UpgradePDoneBloc get upgradePDoneBloc => context.read();
 
@@ -39,8 +39,13 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
       showLoading();
     }
 
-    if (state is GetListMasterSuccess || state is VerifyProtectorSuccessState) {
+    if (state is GetListMasterSuccess) {
       hideLoading();
+    }
+
+    if (state is VerifyProtectorSuccessState) {
+      hideLoading();
+      showToastMessage('Người bảo hộ tồn tại!', ToastMessageType.success);
     }
 
     if (state is GetListMasterFailure) {
@@ -108,6 +113,7 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
               .toList(),
           onSelected: (protector) {
             protectorRequest.protector = protector?.id;
+            widget.onUpdatePlaceInformation(protectorRequest);
           },
         ),
         InformationFieldGuardianWidget(
@@ -115,6 +121,8 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
           required: true,
           onChanged: (String? value) {
             protectorRequest.pDoneId = value;
+            widget.onUpdatePlaceInformation(protectorRequest);
+
           },
         ),
         const SizedBox(height: 12),
@@ -132,10 +140,14 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
           onChange: (val) {
             // print(val.toPhone);
             protectorRequest.phoneNumber = val.toPhone;
+            widget.onUpdatePlaceInformation(protectorRequest);
+
           },
           onPhoneCodeChange: (val) {
             // _phoneCode.text = val.code.toString();
             protectorRequest.phoneCode = val.code;
+            widget.onUpdatePlaceInformation(protectorRequest);
+
           },
         ),
         InformationFieldGuardianWidget(
@@ -143,6 +155,8 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
           required: true,
           onChanged: (String? value) {
             protectorRequest.identityNumber = value;
+            widget.onUpdatePlaceInformation(protectorRequest);
+
           },
         ),
         Padding(

@@ -6,13 +6,14 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/upgrade_account/place_information_constant.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
-import 'package:camera/camera.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 import '../../../../marshop/widgets/gradiant_button.dart';
+import '../../../upgrade_account_constants.dart';
 import '../../bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 import 'birth_cer_camera.dart';
 
@@ -54,6 +55,20 @@ class _RegisterPdoneBirthCerCaptureState
 
     if (state is ExtractedEKycIdCardFailure) {
       // context.upgradePdoneSuccess();
+      context.showToastMessage(state.errorMessage, ToastMessageType.error);
+    }
+
+    if (state is UploadedSuccessImageBirthCer) {
+      hideLoading();
+      _startEKycByNameMethod(methodName: 'startEkycFace');
+    }
+
+    if (state is UploadingImageBirthCer) {
+      showLoading();
+    }
+
+    if (state is UploadedFailureImageBirthCer) {
+      hideLoading();
       context.showToastMessage(state.errorMessage, ToastMessageType.error);
     }
   }
@@ -163,23 +178,35 @@ class _RegisterPdoneBirthCerCaptureState
                       right: 80,
                       child: Align(
                         alignment: Alignment.bottomRight,
-                        child: Column(
-                          children: [
-                            ImageWidget(
-                              IconAppConstants.icUploadImage,
-                              width: 48,
-                              height: 48,
-                            ),
-                            Text(
-                              'Tải lên',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
-                                      color: const Color(0xFF4B84F7),
-                                      fontWeight: FontWeight.w700),
-                            ),
-                          ],
+                        child: GestureDetector(
+                          child: Column(
+                            children: [
+                              ImageWidget(
+                                IconAppConstants.icUploadImage,
+                                width: 48,
+                                height: 48,
+                              ),
+                              Text(
+                                'Tải lên',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                        color: const Color(0xFF4B84F7),
+                                        fontWeight: FontWeight.w700),
+                              ),
+                            ],
+                          ),
+                          onTap: () async {
+                            captureFile = await ImagePicker()
+                                .pickImage(source: ImageSource.gallery);
+                            if (captureFile != null) {
+                              Future.delayed(const Duration(milliseconds: 200))
+                                  .then((value) {
+                                setState(() {});
+                              });
+                            }
+                          },
                         ),
                       ),
                     )
@@ -205,9 +232,11 @@ class _RegisterPdoneBirthCerCaptureState
 
   Future<void> _startEKycByNameMethod({required String methodName}) async {
     final json = await _channel.invokeMethod(methodName, ekycInfo);
-    log(json);
+    final urlBirthCer = (upgradePDoneBloc.state as UploadedSuccessImageBirthCer)
+        .imageBirthCerUrl;
     upgradePDoneBloc.add(
-      ExtractingIdCardEvent(jsonDecode(json)),
+      ExtractingIdCardEvent(
+          jsonDecode(json), {UpgradePDoneMeta.imageBirthCer: urlBirthCer}),
     );
   }
 
@@ -230,7 +259,7 @@ class _RegisterPdoneBirthCerCaptureState
             showToastMessage(
                 'Vui lòng chụp ảnh trước khi xác thực', ToastMessageType.error);
           } else {
-            _startEKycByNameMethod(methodName: 'startEkycFace');
+            upgradePDoneBloc.add(UploadImageBirthCerEvent(xFile: captureFile!));
           }
           // widget.onNextPage.call();
         },

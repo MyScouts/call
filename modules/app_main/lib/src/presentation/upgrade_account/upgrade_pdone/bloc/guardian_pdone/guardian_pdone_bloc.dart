@@ -30,16 +30,10 @@ class GuardianPDoneBloc extends Bloc<GuardianPDoneEvent, GuardianPDoneState> {
     try {
       emit(GuardianPDoneCheckingProtectorInfoState());
       final res = await _upgradeAccountUsecase.verifyProtector(event.payload);
-
-      if (res) {
-        emit(GuardianPDoneCheckSuccessProtectorInfoState());
-      } else {
-        emit(GuardianPDoneCheckFailureProtectorInfoState(
-            errorMessage: 'Không tồn tại người bảo hộ'));
-      }
+      emit(GuardianPDoneCheckSuccessProtectorInfoState());
     } catch (e) {
       emit(GuardianPDoneCheckFailureProtectorInfoState(
-          errorMessage: e.toString()));
+          errorMessage: 'Không tồn tại người bảo hộ'));
     }
   }
 }
