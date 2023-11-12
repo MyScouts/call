@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
 import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:design_system/design_system.dart';
