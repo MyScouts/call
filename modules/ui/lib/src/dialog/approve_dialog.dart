@@ -13,6 +13,8 @@ class ApproveDialog extends StatelessWidget {
   final String? title;
   final String content;
   final DialogApproveStatus type;
+  final bool? isWaitingDialog;
+  final int? dayLeft;
 
   const ApproveDialog({
     super.key,
@@ -21,6 +23,8 @@ class ApproveDialog extends StatelessWidget {
     this.paddingContent,
     this.title,
     required this.content,
+    this.isWaitingDialog,
+    this.dayLeft,
   });
 
   @override
@@ -53,21 +57,49 @@ class ApproveDialog extends StatelessWidget {
                     fontWeight: FontWeight.w700,
                     height: 1.5,
                     fontSize: 18,
-                    color: AppColors.textBlackColor,
+                    color: const Color(0xFF212121),
                   ),
               textAlign: TextAlign.center,
             ),
           ),
-          if (content != '')
+          if (isWaitingDialog == true)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  text: content,
+                  style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                        color: const Color(0xFF6E6E6E),
+                        fontWeight: FontWeight.w400,
+                        height: 1.4,
+                        fontSize: 14,
+                      ),
+                  children: [
+                    TextSpan(
+                      text: ' $dayLeft ngày',
+                      style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                        color: const Color(0xFF4B84F7),
+                        fontWeight: FontWeight.w400,
+                        height: 1.4,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          else if (content != '')
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
               child: Text(
                 content,
                 style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                    color: const Color(0xFF6E6E6E),
-                    fontWeight: FontWeight.w400,
-                    height: 1.4,
-                    fontSize: 16),
+                      color: const Color(0xFF6E6E6E),
+                      fontWeight: FontWeight.w400,
+                      height: 1.4,
+                      fontSize: 14,
+                    ),
                 textAlign: TextAlign.center,
               ),
             ),

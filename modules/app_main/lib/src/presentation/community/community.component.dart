@@ -2,6 +2,9 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/community/groups/group_listing_bloc.dart';
 import 'package:app_main/src/presentation/community/groups/groups_listing_widget.dart';
 import 'package:app_main/src/presentation/community/groups/widget/tab-bar-groups.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
+import 'package:app_main/src/presentation/shared/user/bloc/user_bloc.dart';
+import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -20,6 +23,7 @@ class CommunityWidget extends StatefulWidget {
 class _CommunityWidgetState extends State<CommunityWidget>
     with SingleTickerProviderStateMixin {
   late TabController _communityTabController;
+  User? get currentUser => context.read<UserBloc>().state.currentUser;
 
   @override
   void initState() {
@@ -53,7 +57,12 @@ class _CommunityWidgetState extends State<CommunityWidget>
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Row(
                     children: [
-                      const AvatarWidget(size: 38),
+                      GestureDetector(
+                        onTap: () => context.startDiary(
+                          userId: currentUser!.id.toString(),
+                        ),
+                        child: const AvatarWidget(size: 38),
+                      ),
                       const SizedBox(width: 15),
                       Expanded(
                         child: SizedBox(
@@ -96,22 +105,22 @@ class _CommunityWidgetState extends State<CommunityWidget>
                           highlightColor: Colors.transparent,
                         ),
                       ),
+                      // SizedBox(
+                      //   width: 35,
+                      //   height: 35,
+                      //   child: IconButton(
+                      //     padding: EdgeInsets.zero,
+                      //     onPressed: () => Navigator.pop(context),
+                      //     icon: ImageWidget(IconAppConstants.menu),
+                      //     highlightColor: Colors.transparent,
+                      //   ),
+                      // ),
                       SizedBox(
                         width: 35,
                         height: 35,
                         child: IconButton(
                           padding: EdgeInsets.zero,
-                          onPressed: () => Navigator.pop(context),
-                          icon: ImageWidget(IconAppConstants.menu),
-                          highlightColor: Colors.transparent,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 35,
-                        height: 35,
-                        child: IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: () => context.startDashboardUtil(),
                           icon: const Icon(Icons.close),
                           highlightColor: Colors.transparent,
                         ),

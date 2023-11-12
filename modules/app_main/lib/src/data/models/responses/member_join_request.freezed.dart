@@ -172,6 +172,7 @@ RequestDetail _$RequestDetailFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RequestDetail {
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   User? get user => throw _privateConstructorUsedError;
   Team get team => throw _privateConstructorUsedError;
 
@@ -187,7 +188,7 @@ abstract class $RequestDetailCopyWith<$Res> {
           RequestDetail value, $Res Function(RequestDetail) then) =
       _$RequestDetailCopyWithImpl<$Res, RequestDetail>;
   @useResult
-  $Res call({User? user, Team team});
+  $Res call({DateTime? createdAt, User? user, Team team});
 
   $UserCopyWith<$Res>? get user;
   $TeamCopyWith<$Res> get team;
@@ -206,10 +207,15 @@ class _$RequestDetailCopyWithImpl<$Res, $Val extends RequestDetail>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? createdAt = freezed,
     Object? user = freezed,
     Object? team = null,
   }) {
     return _then(_value.copyWith(
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -250,7 +256,7 @@ abstract class _$$RequestDetailImplCopyWith<$Res>
       __$$RequestDetailImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({User? user, Team team});
+  $Res call({DateTime? createdAt, User? user, Team team});
 
   @override
   $UserCopyWith<$Res>? get user;
@@ -269,10 +275,15 @@ class __$$RequestDetailImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? createdAt = freezed,
     Object? user = freezed,
     Object? team = null,
   }) {
     return _then(_$RequestDetailImpl(
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -288,11 +299,14 @@ class __$$RequestDetailImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$RequestDetailImpl implements _RequestDetail {
-  const _$RequestDetailImpl({required this.user, required this.team});
+  const _$RequestDetailImpl(
+      {required this.createdAt, required this.user, required this.team});
 
   factory _$RequestDetailImpl.fromJson(Map<String, dynamic> json) =>
       _$$RequestDetailImplFromJson(json);
 
+  @override
+  final DateTime? createdAt;
   @override
   final User? user;
   @override
@@ -300,7 +314,7 @@ class _$RequestDetailImpl implements _RequestDetail {
 
   @override
   String toString() {
-    return 'RequestDetail(user: $user, team: $team)';
+    return 'RequestDetail(createdAt: $createdAt, user: $user, team: $team)';
   }
 
   @override
@@ -308,13 +322,15 @@ class _$RequestDetailImpl implements _RequestDetail {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RequestDetailImpl &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.team, team) || other.team == team));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, user, team);
+  int get hashCode => Object.hash(runtimeType, createdAt, user, team);
 
   @JsonKey(ignore: true)
   @override
@@ -332,12 +348,15 @@ class _$RequestDetailImpl implements _RequestDetail {
 
 abstract class _RequestDetail implements RequestDetail {
   const factory _RequestDetail(
-      {required final User? user,
+      {required final DateTime? createdAt,
+      required final User? user,
       required final Team team}) = _$RequestDetailImpl;
 
   factory _RequestDetail.fromJson(Map<String, dynamic> json) =
       _$RequestDetailImpl.fromJson;
 
+  @override
+  DateTime? get createdAt;
   @override
   User? get user;
   @override

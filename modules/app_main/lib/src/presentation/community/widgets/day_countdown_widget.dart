@@ -36,6 +36,7 @@ class _DayCountdownWidgetState extends State<DayCountdownWidget>
 
       return Text(
         '$days:$hours:$minutes:$seconds',
+        softWrap: false,
         style: Theme.of(context).textTheme.labelLarge?.copyWith(
               color: AppColors.white,
               fontWeight: FontWeight.w700,

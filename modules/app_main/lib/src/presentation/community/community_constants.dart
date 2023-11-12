@@ -1,6 +1,8 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/community/community_coordinator.dart';
+import 'package:app_main/src/presentation/community/team_detail/bloc/team_detail_bloc.dart';
+import 'package:app_main/src/presentation/community/team_detail/pages/remove_member_sheet.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -11,6 +13,7 @@ import 'groups/group_listing_bloc.dart';
 
 class CommunityConstant {
   static const int dayForRelinquishBossGroupRequest = 40;
+  static const int dayForRelinquishBossTeamRequest = 45;
   static const int dayForLeaveTeamRequest = 90;
 }
 
@@ -58,6 +61,24 @@ extension CommunityTypeExt on CommunityType {
         return 'Tên Group';
       case CommunityType.team:
         return 'Tên Team';
+    }
+  }
+
+  String get text {
+    switch (this) {
+      case CommunityType.group:
+        return 'Group';
+      case CommunityType.team:
+        return 'Team';
+    }
+  }
+
+  String get relinquishContent {
+    switch (this) {
+      case CommunityType.group:
+        return 'Khi từ chức Boss Group bạn vẫn sẽ là Boss Team của Team hiện tại nhưng bạn sẽ mất các đặc quyền của Boss Group.';
+      case CommunityType.team:
+        return 'Khi thôi thức Boss Team bạn vẫn sẽ là thành viên của Team hiện tại nhưng bạn sẽ mất các đặc quyền của Boss Team.';
     }
   }
 
@@ -210,7 +231,15 @@ extension BossTeamActionToMemberExt on BossTeamActionToMember {
   }
 }
 
-enum UpdateTeamOption { edit, requests, invite, kick, relinquish }
+enum UpdateTeamOption {
+  edit,
+  requests,
+  invite,
+  kick,
+  relinquish,
+  assignBoss,
+  revokeBoss
+}
 
 extension UpdateTeamOptionExt on UpdateTeamOption {
   String get title {
@@ -225,6 +254,10 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
         return 'Mời thêm thành viên';
       case UpdateTeamOption.kick:
         return 'Loại bỏ thành viên';
+      case UpdateTeamOption.assignBoss:
+        return 'Chỉ định Boss Team';
+      case UpdateTeamOption.revokeBoss:
+        return 'Huỷ quyền Boss Team';
     }
   }
 
@@ -234,18 +267,28 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
       case UpdateTeamOption.requests:
       case UpdateTeamOption.invite:
       case UpdateTeamOption.kick:
+      case UpdateTeamOption.revokeBoss:
+      case UpdateTeamOption.assignBoss:
         return const Color(0xFF212121);
       case UpdateTeamOption.relinquish:
         return AppColors.red3;
     }
   }
 
-  Future<void> onTap(BuildContext context,
-      {required Team team}) async {
+  Future<void> onTap(BuildContext context, {required Team team}) async {
     switch (this) {
       case UpdateTeamOption.relinquish:
+        final getBossTeamRelinquishStatus =
+            context.read<GetBossTeamRelinquishStatusBloc>();
+        return getBossTeamRelinquishStatus
+            .add(GetDetailDataParam1Event(team.id));
+
       case UpdateTeamOption.invite:
       case UpdateTeamOption.kick:
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) => BlocProvider<TeamDetailBloc>.value(
+          value: context.read<TeamDetailBloc>(),
+          child: RemoveMemberSheet(),
+        )));
       case UpdateTeamOption.edit:
         return context.showToastMessage(
           'Tính năng này đang được phát triển',
@@ -253,6 +296,16 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
         );
       case UpdateTeamOption.requests:
         return await context.startTeamRequestsScreen();
+      case UpdateTeamOption.assignBoss:
+        return await context.startAssignTeam(team);
+      case UpdateTeamOption.revokeBoss:
+        if (team.boss == null) {
+          return context.askAssignBoss(team: team);
+        }
+        return await context.startRemoveBossModal(
+          member: team.boss!,
+          team: team,
+        );
     }
   }
 }

@@ -1,7 +1,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-enum BloodType { a, b, ab, aplus, bplus, abplus }
+enum BloodType { a, b, ab }
 
 extension BloodTypeExt on BloodType {
   String getText() {
@@ -12,29 +12,17 @@ extension BloodTypeExt on BloodType {
         return 'B';
       case BloodType.ab:
         return 'AB';
-      case BloodType.aplus:
-        return 'A+';
-      case BloodType.bplus:
-        return 'B+';
-      case BloodType.abplus:
-        return 'AB+';
     }
   }
 
   String toValue() {
     switch (this) {
       case BloodType.a:
-        return 'A';
+        return 'a';
       case BloodType.b:
-        return 'B';
+        return 'b';
       case BloodType.ab:
-        return 'AB';
-      case BloodType.aplus:
-        return 'A+';
-      case BloodType.bplus:
-        return 'B+';
-      case BloodType.abplus:
-        return 'AB+';
+        return 'ab';
     }
   }
 }

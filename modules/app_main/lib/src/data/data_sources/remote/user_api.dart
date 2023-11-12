@@ -74,7 +74,7 @@ abstract class UserApi {
   @GET(UserApiConstants.onboarding)
   Future<OnboardingResponse> onboarding();
 
-  @GET(UserApiConstants.updatePDoneProfile)
+  @PATCH(UserApiConstants.updatePDoneProfile)
   Future<UpdatePDoneProfileReponse> updatePDoneProfile(UpdatePDoneProfilePayload updatePDoneProfilePayload);
 
   @GET(UserApiConstants.updateNonePDoneProfile)

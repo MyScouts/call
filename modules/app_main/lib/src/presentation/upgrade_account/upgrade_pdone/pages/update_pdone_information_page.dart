@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:localization/localization.dart';
 import 'package:ui/ui.dart';
 
+import '../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
 import '../../../../domain/entities/update_account/check_protector_payload.dart';
 import '../../../../domain/entities/update_account/update_pdone_birth_place_payload.dart';
 import '../../../../domain/entities/update_account/update_place_information_payload.dart';
@@ -22,6 +23,7 @@ import '../bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 import '../mixin/update_pdone_information_mixin.dart';
 import '../views/widgets/place_information_widget.dart';
 import '../views/widgets/select_information_widget.dart';
+import '../views/widgets/verify_protector_widget.dart';
 import 'update_pdone_otp.dart';
 
 const msgValidateProtectorOk = 'Thông tin người bảo hộ trùng khớp';
@@ -68,6 +70,15 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
 
   final _showResultValidateProtectorCtrl = ValueNotifier<String>('');
 
+  PDoneOptionMethod pDoneOptionMethod = PDoneOptionMethod.userIdentityCard;
+
+  PDoneOptionRangeAge rangeAge = PDoneOptionRangeAge.over18;
+
+  bool isShowProtector() {
+    return rangeAge == PDoneOptionRangeAge.under18AndOver15 ||
+        pDoneOptionMethod == PDoneOptionMethod.userBirthCer;
+  }
+
   void _onListenerBloc(BuildContext context, UpgradePDoneState state) {
     if (state is UpdateProfileLoading) {
       showLoading();
@@ -79,6 +90,10 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
 
       showToastMessage(state.errorMessage, ToastMessageType.warning);
     } else if (state is GetMyProfileSuccess) {}
+    if (state is VerifyOTPProtectorSuccessState) {
+      hideLoading();
+      context.upgradePdoneWithProtectorSuccess();
+    }
 
     if (state is UpdatePDoneSendOTPSuccessState) {
       hideLoading();
@@ -92,6 +107,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                 child: UpdatePDoneOtp(
                   blocUpdate: upgradePDoneBloc,
                   payload: payload,
+                  rangeAge: rangeAge,
                 ),
               );
             });
@@ -99,6 +115,10 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
     }
 
     if (state is UpdatePDoneSendOTPFailureState) {
+      hideLoading();
+      showToastMessage(state.errorMessage, ToastMessageType.error);
+    }
+    if (state is VerifyOTPProtectorFailureState) {
       hideLoading();
       showToastMessage(state.errorMessage, ToastMessageType.error);
     }
@@ -112,12 +132,6 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       nickname: nickNameCtrl.text,
       sex: genderCtrl.text == 'Nam' ? 1 : 0,
       birthday: birthDay?.toYYYYmmdd ?? '',
-      birthPlace: UpdatePDoneBirthPlacePayload(
-          countryName: 'VN',
-          countryCode: '',
-          provinceName: bpProvinceCtrl.text,
-          districtName: bpDistrictCtrl.text,
-          wardName: bpWardCtrl.text),
       identityNumber: identifyNumberCtrl.text,
       supplyDate: supplyDate?.toYYYYmmdd ?? '',
       supplyAddress: supplyAddressCtrl.text,
@@ -130,6 +144,18 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       interest: interestCtrl.text,
       talent: talentCtrl.text,
     );
+
+    if (pDoneOptionMethod == PDoneOptionMethod.userIdentityCard) {
+      payload = payload.copyWith(
+        birthPlace: UpdatePDoneBirthPlacePayload(
+            countryName: 'VN',
+            countryCode: '',
+            provinceName: bpProvinceCtrl.text,
+            districtName: bpDistrictCtrl.text,
+            wardName: bpWardCtrl.text),
+      );
+    }
+
     upgradePDoneBloc.add(UpdatePDoneSendOTP());
   }
 
@@ -257,33 +283,45 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
   }
 
   void _initTextFormField() {
-    final eKycData =
-        (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).data['object'];
-    identifyNumberCtrl.text = eKycData['id'] ?? '';
-    final nameArr = eKycData['name'].toString().split(" ");
+    if (((upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).data
+            as Map<dynamic, dynamic>)
+        .isNotEmpty) {
+      final eKycData =
+          (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).data['object'];
+      identifyNumberCtrl.text = eKycData['id'] ?? '';
+      final nameArr = eKycData['name'].toString().split(" ");
 
-    if (nameArr.length == 3) {
-      firstNameCtrl.text = nameArr[0];
-      middleNameCtrl.text = nameArr[1];
-      lastNameCtrl.text = nameArr[2];
+      if (nameArr.length == 3) {
+        firstNameCtrl.text = nameArr[0];
+        middleNameCtrl.text = nameArr[1];
+        lastNameCtrl.text = nameArr[2];
+      }
+      if (nameArr.length == 2) {
+        firstNameCtrl.text = nameArr[0];
+        middleNameCtrl.text = '';
+        lastNameCtrl.text = nameArr[1];
+      }
+      final postCode = eKycData['post_code'][0];
+      nickNameCtrl.text = eKycData['name'] ?? '';
+      genderCtrl.text = eKycData['gender'] ?? 'Nam';
+      supplyAddressCtrl.text = eKycData['issue_place'];
+      birthPlaceAddressCtrl.text = eKycData['recent_location'];
+      bpProvinceCtrl.text = postCode['city'][1];
+      bpDistrictCtrl.text = postCode['district'][1];
+      bpStreetCtrl.text = postCode['detail'];
+      bpWardCtrl.text = postCode['ward'][1];
+      birthDay = eKycData['birth_day'].toString().parseDateTime();
+      supplyDate = eKycData['issue_date'].toString().parseDateTime();
+      expiryDate = eKycData['valid_date'].toString().parseDateTime();
+
+      if (DateTime.now().year - (birthDay?.year ?? 0) > 18) {
+        rangeAge = PDoneOptionRangeAge.over18;
+      } else {
+        rangeAge = PDoneOptionRangeAge.under18AndOver15;
+      }
+    } else {
+      pDoneOptionMethod = PDoneOptionMethod.userBirthCer;
     }
-    if (nameArr.length == 2) {
-      firstNameCtrl.text = nameArr[0];
-      middleNameCtrl.text = '';
-      lastNameCtrl.text = nameArr[1];
-    }
-    final postCode = eKycData['post_code'][0];
-    nickNameCtrl.text = eKycData['name'] ?? '';
-    genderCtrl.text = eKycData['gender'] ?? 'Nam';
-    supplyAddressCtrl.text = eKycData['issue_place'];
-    birthPlaceAddressCtrl.text = eKycData['recent_location'];
-    bpProvinceCtrl.text = postCode['city'][1];
-    bpDistrictCtrl.text = postCode['district'][1];
-    bpStreetCtrl.text = postCode['detail'];
-    bpWardCtrl.text = postCode['ward'][1];
-    birthDay = eKycData['birth_day'].toString().parseDateTime();
-    supplyDate = eKycData['issue_date'].toString().parseDateTime();
-    expiryDate = eKycData['valid_date'].toString().parseDateTime();
   }
 
   @override
@@ -314,7 +352,8 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                       Expanded(
                         child: InformationFieldWidget(
                           required: true,
-                          shouldEnabled: false,
+                          shouldEnabled: pDoneOptionMethod !=
+                              PDoneOptionMethod.userIdentityCard,
                           controller: firstNameCtrl,
                           onChanged: (value) => onUpdatePayload(
                               payload.copyWith(firstName: value)),
@@ -329,7 +368,8 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                       Expanded(
                         child: InformationFieldWidget(
                           controller: middleNameCtrl,
-                          shouldEnabled: false,
+                          shouldEnabled: pDoneOptionMethod !=
+                              PDoneOptionMethod.userIdentityCard,
                           onChanged: (value) => onUpdatePayload(
                               payload.copyWith(middleName: value)),
                           type: UpdateInformationType.middleName,
@@ -341,7 +381,8 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                   /// Tên
                   InformationFieldWidget(
                     required: true,
-                    shouldEnabled: false,
+                    shouldEnabled:
+                        pDoneOptionMethod != PDoneOptionMethod.userIdentityCard,
                     controller: lastNameCtrl,
                     onChanged: (value) =>
                         onUpdatePayload(payload.copyWith(lastName: value)),
@@ -371,7 +412,8 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                     child: InputDateTimeWidget(
                       hintText: 'Ngày sinh',
                       useHorizontalLayout: true,
-                      enabled: false,
+                      enabled: pDoneOptionMethod !=
+                          PDoneOptionMethod.userIdentityCard,
                       radius: 17,
                       date: birthDay,
                       formatText: (date) => S
@@ -390,7 +432,8 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                   InformationFieldWidget(
                     required: true,
                     controller: genderCtrl,
-                    shouldEnabled: false,
+                    shouldEnabled:
+                        pDoneOptionMethod != PDoneOptionMethod.userIdentityCard,
                     onChanged: (value) => onUpdatePayload(
                       payload.copyWith(sex: value == 'Nam' ? 1 : 0),
                     ),
@@ -398,89 +441,121 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                     maxLength: 4,
                   ),
 
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: Text(
-                          'Nơi sinh',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(fontSize: 14),
+                  pDoneOptionMethod == PDoneOptionMethod.userIdentityCard
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: Text(
+                                'Nơi sinh',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineSmall
+                                    ?.copyWith(fontSize: 14),
+                              ),
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: InformationFieldWidget(
+                                    required: true,
+                                    shouldEnabled: pDoneOptionMethod !=
+                                        PDoneOptionMethod.userIdentityCard,
+                                    controller: bpProvinceCtrl,
+                                    onChanged: (value) => onUpdatePayload(
+                                        payload.copyWith(firstName: value)),
+                                    type: UpdateInformationType.province,
+                                    validator: (value) =>
+                                        context.validateEmptyInfo(
+                                      bpProvinceCtrl.text,
+                                      'Vui lòng nhập tỉnh thành',
+                                    ),
+                                  ),
+                                ),
+                                _buildSpacerBetweenFields(),
+                                Expanded(
+                                  child: InformationFieldWidget(
+                                    shouldEnabled: pDoneOptionMethod !=
+                                        PDoneOptionMethod.userIdentityCard,
+                                    controller: bpDistrictCtrl,
+                                    required: true,
+                                    onChanged: (value) => onUpdatePayload(
+                                        payload.copyWith(middleName: value)),
+                                    type: UpdateInformationType.district,
+                                    validator: (value) =>
+                                        context.validateEmptyInfo(
+                                      bpDistrictCtrl.text,
+                                      'Vui lòng nhập quận/huyện',
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: InformationFieldWidget(
+                                    shouldEnabled: pDoneOptionMethod !=
+                                        PDoneOptionMethod.userIdentityCard,
+                                    required: true,
+                                    controller: bpWardCtrl,
+                                    onChanged: (value) => onUpdatePayload(
+                                        payload.copyWith(firstName: value)),
+                                    type: UpdateInformationType.ward,
+                                    validator: (value) =>
+                                        context.validateEmptyInfo(
+                                      bpWardCtrl.text,
+                                      'Vui lòng nhập xã/phường',
+                                    ),
+                                  ),
+                                ),
+                                _buildSpacerBetweenFields(),
+                                Expanded(
+                                  child: InformationFieldWidget(
+                                    controller: bpStreetCtrl,
+                                    required: true,
+                                    shouldEnabled: pDoneOptionMethod !=
+                                        PDoneOptionMethod.userIdentityCard,
+                                    onChanged: (value) => onUpdatePayload(
+                                        payload.copyWith(middleName: value)),
+                                    type: UpdateInformationType.street,
+                                    validator: (value) =>
+                                        context.validateEmptyInfo(
+                                      bpStreetCtrl.text,
+                                      'Vui lòng nhập đường/thôn',
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      : BlocProvider<PlaceInformationBloc>(
+                          create: (context) => injector.get(),
+                          child: PlaceInformationWidget(
+                            title: 'Nơi sinh',
+                            initPlaceInformation: birthPlace,
+                            onUpdatePlaceInformation: (value) {
+                              onUpdatePayload(
+                                payload.copyWith(
+                                  birthPlace: UpdatePDoneBirthPlacePayload(
+                                      countryName: 'VN',
+                                      countryCode: '',
+                                      address: birthPlaceAddressCtrl.text,
+                                      provinceName:
+                                          birthPlace?.province?.name ?? '',
+                                      districtName: birthPlace?.district?.name,
+                                      wardName: birthPlace?.ward?.name),
+                                ),
+                              );
+                            },
+                            addressCtrl: birthPlaceAddressCtrl,
+                            required: true,
+                          ),
                         ),
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: InformationFieldWidget(
-                              required: true,
-                              shouldEnabled: false,
-                              controller: bpProvinceCtrl,
-                              onChanged: (value) => onUpdatePayload(
-                                  payload.copyWith(firstName: value)),
-                              type: UpdateInformationType.province,
-                              validator: (value) => context.validateEmptyInfo(
-                                bpProvinceCtrl.text,
-                                'Vui lòng nhập tỉnh thành',
-                              ),
-                            ),
-                          ),
-                          _buildSpacerBetweenFields(),
-                          Expanded(
-                            child: InformationFieldWidget(
-                              shouldEnabled: false,
-                              controller: bpDistrictCtrl,
-                              required: true,
-                              onChanged: (value) => onUpdatePayload(
-                                  payload.copyWith(middleName: value)),
-                              type: UpdateInformationType.district,
-                              validator: (value) => context.validateEmptyInfo(
-                                bpDistrictCtrl.text,
-                                'Vui lòng nhập quận/huyện',
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: InformationFieldWidget(
-                              shouldEnabled: false,
-                              required: true,
-                              controller: bpWardCtrl,
-                              onChanged: (value) => onUpdatePayload(
-                                  payload.copyWith(firstName: value)),
-                              type: UpdateInformationType.ward,
-                              validator: (value) => context.validateEmptyInfo(
-                                bpWardCtrl.text,
-                                'Vui lòng nhập xã/phường',
-                              ),
-                            ),
-                          ),
-                          _buildSpacerBetweenFields(),
-                          Expanded(
-                            child: InformationFieldWidget(
-                              controller: bpStreetCtrl,
-                              required: true,
-                              shouldEnabled: false,
-                              onChanged: (value) => onUpdatePayload(
-                                  payload.copyWith(middleName: value)),
-                              type: UpdateInformationType.street,
-                              validator: (value) => context.validateEmptyInfo(
-                                bpStreetCtrl.text,
-                                'Vui lòng nhập đường/thôn',
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
 
                   BlocProvider<PlaceInformationBloc>(
                     create: (context) => injector.get(),
@@ -494,74 +569,102 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                       required: true,
                     ),
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: InformationFieldWidget(
-                          required: true,
-                          isBold: true,
-                          maxLength: 12,
-                          controller: identifyNumberCtrl,
-                          onChanged: (value) => onUpdatePayload(
-                              payload.copyWith(identityNumber: value)),
-                          type: UpdateInformationType.idNumber,
-                          textInputType: TextInputType.number,
-                          validator: (value) =>
-                              checkIsUnder15ShouldEnableField()
-                                  ? context.validateCCCD(
-                                      identifyNumberCtrl.text,
-                                      'Thông tin không hợp lệ')
-                                  : null,
-                          shouldEnabled: false,
-                        ),
-                      ),
-                      _buildSpacerBetweenFields(),
-                      Expanded(
-                        child: InformationLayoutFieldWidget(
-                          required: false,
-                          label:
-                              UpdateInformationType.supplyDate.title(context),
-                          child: InputDateTimeWidget(
-                            hintText: 'Ngày cấp thẻ',
-                            useHorizontalLayout: true,
-                            enabled: false,
-                            radius: 17,
-                            date: supplyDate,
-                            formatText: (date) => S
-                                .of(context)
-                                .formatDateDDmmYYYYhhMM(date, date)
-                                .split('|')
-                                .first,
-                            max: DateTime.now(),
-                            onChange: (dateTime) {
-                              supplyDate = dateTime;
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  pDoneOptionMethod == PDoneOptionMethod.userIdentityCard
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: InformationFieldWidget(
+                                required: true,
+                                isBold: true,
+                                maxLength: 12,
+                                controller: identifyNumberCtrl,
+                                onChanged: (value) => onUpdatePayload(
+                                    payload.copyWith(identityNumber: value)),
+                                type: UpdateInformationType.idNumber,
+                                textInputType: TextInputType.number,
+                                validator: (value) =>
+                                    checkIsUnder15ShouldEnableField()
+                                        ? context.validateCCCD(
+                                            identifyNumberCtrl.text,
+                                            'Thông tin không hợp lệ')
+                                        : null,
+                                shouldEnabled: pDoneOptionMethod !=
+                                    PDoneOptionMethod.userIdentityCard,
+                              ),
+                            ),
+                            _buildSpacerBetweenFields(),
+                            Expanded(
+                              child: InformationLayoutFieldWidget(
+                                required: false,
+                                label: UpdateInformationType.supplyDate
+                                    .title(context),
+                                child: InputDateTimeWidget(
+                                  hintText: 'Ngày cấp',
+                                  useHorizontalLayout: true,
+                                  enabled: pDoneOptionMethod !=
+                                      PDoneOptionMethod.userIdentityCard,
+                                  radius: 17,
+                                  date: supplyDate,
+                                  formatText: (date) => S
+                                      .of(context)
+                                      .formatDateDDmmYYYYhhMM(date, date)
+                                      .split('|')
+                                      .first,
+                                  max: DateTime.now(),
+                                  onChange: (dateTime) {
+                                    supplyDate = dateTime;
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
 
                   /// Ngày Cấp - Nơi Cấp
-                  InformationFieldWidget(
-                    required: true,
-                    shouldEnabled: false,
-                    controller: supplyAddressCtrl,
-                    onChanged: (value) {
-                      onUpdatePayload(
-                        payload.copyWith(supplyAddress: value),
-                      );
-                    },
-                    type: UpdateInformationType.placeofIdNumber,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.deny(RegExp('[0-9]'))
-                    ],
-                    validator: (value) => checkIsUnder15ShouldEnableField()
-                        ? context.validateEmptyInfo(
-                            supplyAddressCtrl.text, 'Vui lòng nhập nơi cấp')
-                        : null,
-                  ),
+                  pDoneOptionMethod == PDoneOptionMethod.userIdentityCard
+                      ? InformationFieldWidget(
+                          required: true,
+                          shouldEnabled: pDoneOptionMethod !=
+                              PDoneOptionMethod.userIdentityCard,
+                          controller: supplyAddressCtrl,
+                          onChanged: (value) {
+                            onUpdatePayload(
+                              payload.copyWith(supplyAddress: value),
+                            );
+                          },
+                          type: UpdateInformationType.placeofIdNumber,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.deny(RegExp('[0-9]'))
+                          ],
+                          validator: (value) =>
+                              checkIsUnder15ShouldEnableField()
+                                  ? context.validateEmptyInfo(
+                                      supplyAddressCtrl.text,
+                                      'Vui lòng nhập nơi cấp')
+                                  : null,
+                        )
+                      : Container(),
+                  isShowProtector()
+                      ? BlocProvider<UpgradePDoneBloc>(
+                          create: (context) => injector.get(),
+                          child: VerifyProtectorWidget(
+                            onUpdatePDoneVerifyProtector:
+                                (PDoneVerifyProtectorRequest value) {
+                              onUpdatePayload(
+                                payload.copyWith(
+                                  protector: value.protector,
+                                  protectorPDoneId: value.identityNumber,
+                                  protectorEmailPhone: value.phoneNumber,
+                                  protectorIdentityNumber: value.identityNumber,
+                                  protectorPhoneCode: value.phoneCode,
+                                ),
+                              );
+                            },
+                          ),
+                        )
+                      : Container(),
 
                   validationListenableBuilder(
                     builder: (isValid) {

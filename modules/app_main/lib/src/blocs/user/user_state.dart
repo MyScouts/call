@@ -156,11 +156,11 @@ final class DeleteUserFail extends UserState {
   DeleteUserFail({required this.message});
 }
 
-//Update None Pdone Profile
+//Update Pdone Profile
 final class UpdatePDoneProfileLoading extends UserState {}
 
 final class UpdatePDoneProfileSuccess extends UserState {
-  final User user;
+  final UpdatePDoneProfileReponse user;
   UpdatePDoneProfileSuccess({required this.user});
 }
 

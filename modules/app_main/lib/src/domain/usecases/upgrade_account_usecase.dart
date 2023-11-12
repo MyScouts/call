@@ -1,9 +1,11 @@
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/confirm_register_ja_payload.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
+import '../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_otp_protector.dart';
 import '../../data/models/responses/confirm_register_ja_response.dart';
 import '../../data/models/responses/register_pdone_response.dart';
 import '../../data/models/responses/upgrade_account_response.dart';
@@ -46,8 +48,12 @@ class UpgradeAccountUsecase {
     return _upgradeAccountRepository.resendOtpEmail(payload);
   }
 
-  Future<bool> updatePDoneProfile(UpdateProfilePayload payload) {
-    return _upgradeAccountRepository.updatePDoneProfile(payload);
+  Future<bool> updatePDoneProfileOver18(UpdateProfilePayload payload) {
+    return _upgradeAccountRepository.updatePDoneProfileOver18(payload);
+  }
+
+  Future<bool> updatePDoneProfileRange15To18(UpdateProfilePayload payload) {
+    return _upgradeAccountRepository.updatePDoneProfileRange15To18(payload);
   }
 
   Future<bool> updateKYC(UpdatePDoneKYCPayload payload) {
@@ -105,5 +111,14 @@ class UpgradeAccountUsecase {
   Future<ConfirmRegisterJAResponse> confirmJARegister(
       ConfirmRegisterJAPayload payload) async {
     return await _upgradeAccountRepository.confirmJARegister(payload);
+  }
+
+
+  Future<bool> verifyProtector(PDoneVerifyProtectorRequest payload) {
+    return _upgradeAccountRepository.verifyProtector(payload: payload);
+  }
+
+  Future<bool> verifyOTPProtector(PDoneVerifyOTPProtectorRequest payload) {
+    return _upgradeAccountRepository.verifyOTPProtector(payload: payload);
   }
 }

@@ -5,17 +5,19 @@ import 'package:imagewidget/imagewidget.dart';
 class CustomBackButton extends StatelessWidget {
   final Color? color;
   final Alignment? alignment;
+  final Function()? onPressed;
   const CustomBackButton({
     super.key,
     this.color,
     this.alignment,
+    this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
       padding: EdgeInsets.zero,
-      onPressed: () => Navigator.pop(context),
+      onPressed: onPressed ?? () => Navigator.pop(context),
       alignment: alignment ?? Alignment.centerLeft,
       splashColor: Colors.transparent,
       focusColor: Colors.transparent,

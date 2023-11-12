@@ -28,6 +28,7 @@ mixin _$Team {
   int? get status => throw _privateConstructorUsedError;
   String? get introduction => throw _privateConstructorUsedError;
   User? get boss => throw _privateConstructorUsedError;
+  Group? get group => throw _privateConstructorUsedError;
   int? get memberCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,9 +50,11 @@ abstract class $TeamCopyWith<$Res> {
       int? status,
       String? introduction,
       User? boss,
+      Group? group,
       int? memberCount});
 
   $UserCopyWith<$Res>? get boss;
+  $GroupCopyWith<$Res>? get group;
 }
 
 /// @nodoc
@@ -75,6 +78,7 @@ class _$TeamCopyWithImpl<$Res, $Val extends Team>
     Object? status = freezed,
     Object? introduction = freezed,
     Object? boss = freezed,
+    Object? group = freezed,
     Object? memberCount = freezed,
   }) {
     return _then(_value.copyWith(
@@ -110,6 +114,10 @@ class _$TeamCopyWithImpl<$Res, $Val extends Team>
           ? _value.boss
           : boss // ignore: cast_nullable_to_non_nullable
               as User?,
+      group: freezed == group
+          ? _value.group
+          : group // ignore: cast_nullable_to_non_nullable
+              as Group?,
       memberCount: freezed == memberCount
           ? _value.memberCount
           : memberCount // ignore: cast_nullable_to_non_nullable
@@ -126,6 +134,18 @@ class _$TeamCopyWithImpl<$Res, $Val extends Team>
 
     return $UserCopyWith<$Res>(_value.boss!, (value) {
       return _then(_value.copyWith(boss: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $GroupCopyWith<$Res>? get group {
+    if (_value.group == null) {
+      return null;
+    }
+
+    return $GroupCopyWith<$Res>(_value.group!, (value) {
+      return _then(_value.copyWith(group: value) as $Val);
     });
   }
 }
@@ -146,10 +166,13 @@ abstract class _$$TeamImplCopyWith<$Res> implements $TeamCopyWith<$Res> {
       int? status,
       String? introduction,
       User? boss,
+      Group? group,
       int? memberCount});
 
   @override
   $UserCopyWith<$Res>? get boss;
+  @override
+  $GroupCopyWith<$Res>? get group;
 }
 
 /// @nodoc
@@ -170,6 +193,7 @@ class __$$TeamImplCopyWithImpl<$Res>
     Object? status = freezed,
     Object? introduction = freezed,
     Object? boss = freezed,
+    Object? group = freezed,
     Object? memberCount = freezed,
   }) {
     return _then(_$TeamImpl(
@@ -205,6 +229,10 @@ class __$$TeamImplCopyWithImpl<$Res>
           ? _value.boss
           : boss // ignore: cast_nullable_to_non_nullable
               as User?,
+      group: freezed == group
+          ? _value.group
+          : group // ignore: cast_nullable_to_non_nullable
+              as Group?,
       memberCount: freezed == memberCount
           ? _value.memberCount
           : memberCount // ignore: cast_nullable_to_non_nullable
@@ -225,6 +253,7 @@ class _$TeamImpl implements _Team {
       this.status,
       this.introduction,
       this.boss,
+      this.group,
       this.memberCount});
 
   factory _$TeamImpl.fromJson(Map<String, dynamic> json) =>
@@ -247,11 +276,13 @@ class _$TeamImpl implements _Team {
   @override
   final User? boss;
   @override
+  final Group? group;
+  @override
   final int? memberCount;
 
   @override
   String toString() {
-    return 'Team(id: $id, groupId: $groupId, name: $name, avatar: $avatar, banner: $banner, status: $status, introduction: $introduction, boss: $boss, memberCount: $memberCount)';
+    return 'Team(id: $id, groupId: $groupId, name: $name, avatar: $avatar, banner: $banner, status: $status, introduction: $introduction, boss: $boss, group: $group, memberCount: $memberCount)';
   }
 
   @override
@@ -268,6 +299,7 @@ class _$TeamImpl implements _Team {
             (identical(other.introduction, introduction) ||
                 other.introduction == introduction) &&
             (identical(other.boss, boss) || other.boss == boss) &&
+            (identical(other.group, group) || other.group == group) &&
             (identical(other.memberCount, memberCount) ||
                 other.memberCount == memberCount));
   }
@@ -275,7 +307,7 @@ class _$TeamImpl implements _Team {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, groupId, name, avatar,
-      banner, status, introduction, boss, memberCount);
+      banner, status, introduction, boss, group, memberCount);
 
   @JsonKey(ignore: true)
   @override
@@ -301,6 +333,7 @@ abstract class _Team implements Team {
       final int? status,
       final String? introduction,
       final User? boss,
+      final Group? group,
       final int? memberCount}) = _$TeamImpl;
 
   factory _Team.fromJson(Map<String, dynamic> json) = _$TeamImpl.fromJson;
@@ -321,6 +354,8 @@ abstract class _Team implements Team {
   String? get introduction;
   @override
   User? get boss;
+  @override
+  Group? get group;
   @override
   int? get memberCount;
   @override

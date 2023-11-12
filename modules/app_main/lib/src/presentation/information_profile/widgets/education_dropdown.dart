@@ -18,11 +18,11 @@ extension EducationExt on Education {
   String toValue() {
     switch (this) {
       case Education.thcs:
-        return 'THCS';
+        return 'ac_5';
       case Education.thpt:
-        return 'THPT';
+        return 'ac_5';
       case Education.dh:
-        return 'Đại học';
+        return 'ac_5';
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/responses/group_request_response.dart';
 import 'package:app_main/src/presentation/community/widgets/day_countdown_widget.dart';
 import 'package:design_system/design_system.dart';
@@ -87,37 +88,61 @@ class _GroupRequestWidgetState extends State<GroupRequestWidget> {
               color: const Color(0xFFFFF5C7),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Row(
-              children: [
-                Text(
-                  'Thời gian phê duyệt còn lại',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
+            child: Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                      child: Text(
+                    'Thời gian phê duyệt còn lại',
+                    softWrap: true,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                        ),
+                  )),
+                  Flexible(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 10,
                       ),
-                ),
-                const Spacer(),
-                Container(
-                  alignment: Alignment.center,
-                  constraints: const BoxConstraints(minWidth: 135),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 15,
-                    horizontal: 12,
+                      decoration: BoxDecoration(
+                        color: const Color(0XFFFF7626),
+                        borderRadius: BorderRadius.circular(90),
+                      ),
+                      child: DayCountdownWidget(
+                        durationInSeconds: widget.request.createdAt!
+                            .add(const Duration(
+                                days: CommunityConstant
+                                    .dayForRelinquishBossGroupRequest))
+                            .difference(DateTime.now())
+                            .inSeconds,
+                      ),
+                    ),
                   ),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFF7626),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: DayCountdownWidget(
-                    durationInSeconds: widget.request.createdAt!
-                        .add(const Duration(
-                            days: CommunityConstant
-                                .dayForRelinquishBossGroupRequest))
-                        .difference(DateTime.now())
-                        .inSeconds,
-                  ),
-                )
-              ],
+                  // Container(
+                  //   alignment: Alignment.center,
+                  //   constraints: const BoxConstraints(minWidth: 135),
+                  //   padding: const EdgeInsets.symmetric(
+                  //     vertical: 15,
+                  //     horizontal: 12,
+                  //   ),
+                  //   decoration: BoxDecoration(
+                  //     color: const Color(0xFFFF7626),
+                  //     borderRadius: BorderRadius.circular(50),
+                  //   ),
+                  //   child: DayCountdownWidget(
+                  //     durationInSeconds: widget.request.createdAt!
+                  //         .add(const Duration(
+                  //             days: CommunityConstant
+                  //                 .dayForRelinquishBossGroupRequest))
+                  //         .difference(DateTime.now())
+                  //         .inSeconds,
+                  //   ),
+                  // )
+                ],
+              ),
             ),
           ),
           Text(

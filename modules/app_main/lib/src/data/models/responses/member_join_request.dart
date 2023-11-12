@@ -17,6 +17,7 @@ class MemberJoinRequestResponse with _$MemberJoinRequestResponse {
 @freezed
 class RequestDetail with _$RequestDetail {
   const factory RequestDetail({
+    required DateTime? createdAt,
     required User? user,
     required Team team,
   }) = _RequestDetail;

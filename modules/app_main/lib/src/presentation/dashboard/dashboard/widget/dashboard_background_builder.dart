@@ -77,12 +77,12 @@ class DashBoardBgController extends ChangeNotifier {
   }
 
   String getImage(int page) {
-    final path = useCase.getDashBoardBg('bg $_page');
+    final path = useCase.getDashBoardBg('bg 0');
     if (path.isEmpty) {
       String image = '';
       if (page == 0) image = ImageConstants.bg1;
-      if (page == 1) image = ImageConstants.bg2;
-      if (page == 2) image = ImageConstants.bg3;
+      if (page == 1) image = ImageConstants.bg1;
+      if (page == 2) image = ImageConstants.bg1;
       useCase.saveDashBoardBg('bg $_page', image);
       return image;
     }

@@ -140,10 +140,8 @@ extension UpdateInformationTypeExt on UpdateInformationType {
         return 'Ngày hết hạn thẻ';
       case UpdateInformationType.supplyDate:
         return 'Ngày cấp thẻ';
-
       case UpdateInformationType.ageRange:
-        return 'Chọn độ tuổi của bạn';
-
+       return 'Chọn độ tuổi của bạn';
       case UpdateInformationType.pDoneMethod:
         return 'Chọn phương thức';
     }

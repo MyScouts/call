@@ -12,6 +12,8 @@ class ImageConstants {
   static String defaultAvatar = ImageApp.defaultAvatar.path;
   static String rafiki = ImageApp.rafiki.path;
   static String pdoneSuccess = ImageApp.pdoneSuccess.path;
+  static String pdoneSuccessWithProtector =
+      ImageApp.pdoneSuccessWithProtector.path;
   static String previewPerson = ImageApp.previewPerson.path;
   static String frontCMND = ImageApp.frontCMND.path;
   static String passport = ImageApp.passport.path;
@@ -48,9 +50,14 @@ class ImageConstants {
   static String guidePdone = ImageApp.guidePdone.path;
   static String imageCamera = ImageApp.imageCamera.path;
   static String imageEmpty = ImageApp.imageEmpty.path;
+  static String bgEmpty = ImageApp.bgEmpty.path;
+  static String birthCerCapture = ImageApp.birthCerCapture.path;
+  static String birthCerBackgroundConfirm =
+      ImageApp.birthCerBackgroundConfirm.path;
 }
 
 enum ImageApp {
+  bgEmpty('assets/images/empty.png'),
   bgQrCode('assets/images/bg_qrcode.png'),
   defaultUserAvatar('assets/images/avatar.png'),
   defaultUserBackground('assets/images/bg_diary.jpeg'),
@@ -65,6 +72,7 @@ enum ImageApp {
   defaultAvatar('assets/images/person.png'),
   rafiki('assets/images/rafiki.png'),
   pdoneSuccess('assets/images/pdone_success.png'),
+  pdoneSuccessWithProtector('assets/images/pdone_success_with_protector.png'),
   previewPerson('assets/images/preview_person.png'),
   frontCMND('assets/images/front_cmnd.png'),
   passport('assets/images/passport.png'),
@@ -88,6 +96,8 @@ enum ImageApp {
   imgDefaultTeamBanner('assets/images/img_default_team_banner.png'),
   celebrate('assets/images/celebrate.png'),
   guidePdone('assets/images/guidePdone.png'),
+  birthCerCapture('assets/images/birth_cer_capture.jpg'),
+  birthCerBackgroundConfirm('assets/images/birth_cer_background_confirm.jpg'),
   bg1('assets/images/bg1.png'),
   bg2('assets/images/bg2.png'),
   bg3('assets/images/bg3.png'),

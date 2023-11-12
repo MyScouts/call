@@ -1,4 +1,6 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
+import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/domain/entities/update_account/update_profile_payload.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/education_dropdown.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/bank_dropdown.dart';
@@ -19,10 +21,12 @@ import 'package:ui/ui.dart';
 
 class UpdateInformationProfileScreen extends StatefulWidget {
   final User authInfo;
+  final UserCubit userCubit;
 
   const UpdateInformationProfileScreen({
     super.key,
     required this.authInfo,
+    required this.userCubit,
   });
 
   @override
@@ -48,7 +52,7 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
     return ScaffoldHideKeyboard(
       appBar: const BaseAppBar(
         title: "Thông tin tài khoản",
-        hideActionButtons: true,
+        isClose: true,
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 8.0),
@@ -68,21 +72,93 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
                 _buildBankInformation(),
                 Container(height: 20, color: AppColors.bgColor),
                 _buildMoreInformation(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
-                  child: GradiantButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Cập nhật",
-                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                            color: AppColors.white,
-                          ),
-                    ),
-                  ),
-                ),
+                _buildButtonUpdate(context),
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Padding _buildButtonUpdate(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
+      child: GradiantButton(
+        onPressed: () => widget.authInfo.isPDone!
+            ? widget.userCubit.updatePDoneProfile(
+                updatePDoneProfilePayload: UpdatePDoneProfilePayload(
+                  nickName: nickNameTxtController.text,
+                  currentPlace: {
+                    "countryName": _national,
+                    "provinceName": _city,
+                    "districtName": _district,
+                    "wardName": _ward,
+                    "street": addressTxtController.text,
+                    "address": addressTxtController.text,
+                    "countryCode": "VN",
+                    "provinceCode": "70000",
+                    "districtCode": "70000",
+                    "wardCode": "70000",
+                  },
+                  height: 1,
+                  weight: 1,
+                  maritalStatus: "mar_1",
+                  bloodGroup: "a",
+                  academicLevel: "ac_5",
+                  job: "job_7",
+                  interest: "int_1",
+                  talent: "tal_1",
+                ),
+              )
+            : widget.userCubit.updateNonePDoneProfile(
+                updateNonePDoneProfilePayload: const UpdateNonePDoneProfilePayload(
+                  nickName: "Nick name",
+                  currentPlace: {
+                    "countryName": "string",
+                    "provinceName": "string",
+                    "districtName": "string",
+                    "wardName": "string",
+                    "street": "string",
+                    "address": "string",
+                    "countryCode": "VN",
+                    "provinceCode": "string",
+                    "districtCode": "string",
+                    "wardCode": "string"
+                  },
+                  height: 1,
+                  weight: 1,
+                  maritalStatus: "mar_1",
+                  bloodGroup: "a",
+                  academicLevel: "ac_5",
+                  job: "job_7",
+                  interest: "int_1",
+                  talent: "tal_1",
+                  sex: 1,
+                  birthPlace: {
+                    "countryName": "string",
+                    "provinceName": "string",
+                    "districtName": "string",
+                    "wardName": "string",
+                    "street": "string",
+                    "address": "string",
+                    "countryCode": "VN",
+                    "countryId": "240",
+                    "provinceId": "1",
+                    "districtId": "1",
+                    "wardId": "1",
+                  },
+                  birthday: "1999-01-01",
+                  identityNumber: "0312000004444",
+                  supplyDate: "2018-01-01",
+                  supplyAddress: "Cục Cảnh sát",
+                ),
+              ),
+        child: Text(
+          "Cập nhật",
+          style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                color: AppColors.white,
+              ),
         ),
       ),
     );
@@ -313,7 +389,6 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
             required: false,
             onChange: (edu) {
               _edu = edu;
-              setState(() {});
             },
           ),
           InformationFieldWidget(
@@ -357,7 +432,7 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
           InformationFieldWidget(
             required: false,
             shouldEnabled: true,
-            controller: giftedTxtController,
+            controller: hobbyTxtController,
             onChanged: (value) => onUpdatePayload(payload.copyWith(firstName: value)),
             type: UpdateInformationType.hobby,
             validator: (_) {},
@@ -472,7 +547,7 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
                   child: CityDropDown(
                     required: true,
                     onChange: (city) {
-                      _national = city;
+                      _city = city;
                       setState(() {});
                     },
                   ),
@@ -500,7 +575,7 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
                   child: WardDropDown(
                     required: true,
                     onChange: (ward) {
-                      _district = ward;
+                      _ward = ward;
                       setState(() {});
                     },
                   ),

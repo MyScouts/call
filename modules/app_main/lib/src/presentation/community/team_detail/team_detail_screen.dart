@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/community/community_coordinator.dart';
+import 'package:app_main/src/presentation/community/team_detail/pages/update_team_options_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -72,14 +73,10 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
             banner = team!.banner!.optimizeSize600;
           }
 
-          final canUpdateMembers =
-              myId == widget.bossGroupId || myId == team?.boss?.id;
+          final isBossGroup = myId == team?.group?.boss?.id;
+          final isBossTeam = myId == team?.boss?.id;
 
-          final isBossGroupButNotBossTeam =
-              myId == widget.bossGroupId && myId != team?.boss?.id;
-          final isBossGroupAndBossTeam =
-              myId == widget.bossGroupId && myId == team?.boss?.id;
-
+          final canUpdateMembers = isBossGroup || isBossTeam;
           final isMember = members.map((mem) => mem.id).toList().contains(myId);
 
           return SliverLayoutNestedScrollView(
@@ -90,7 +87,18 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
             actionAppBar: canUpdateMembers
                 ? IconButton(
                     onPressed: () {
-                      context.startUpdateTeamOptionsScreen(team: team!);
+                      if (isBossGroup && isBossTeam || isBossTeam) {
+                        context.startUpdateTeamOptionsScreen(team: team!);
+                      } else if (isBossGroup) {
+                        context
+                            .startBossGroupMenu(
+                                team: team!, onRevokeBoss: () => {})
+                            .then((value) {
+                          if (value != null && value == true) {
+                            teamDetailBloc.add(FetchTeamDetailEvent(widget.id));
+                          }
+                        });
+                      }
                     },
                     icon: const Icon(Icons.more_vert),
                   )
@@ -107,8 +115,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                         children: [
                           _teamHeaderWidget(team),
                           if (canUpdateMembers)
-                            _actionButtons(
-                                showInvite: !isBossGroupButNotBossTeam),
+                            _actionButtons(showInvite: !isBossTeam),
                           _introductionWidget(team),
                           if (!canUpdateMembers && !isMember)
                             _askToJoinBtn(
@@ -119,8 +126,10 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                             _askToLeaveBtn(teamId: '${team?.id}'),
                           const SizedBox(height: 20),
                           _membersWidget(
-                              members: members,
-                              canUpdateMembers: canUpdateMembers),
+                            members: members,
+                            canUpdateMembers: canUpdateMembers,
+                            team: team!,
+                          ),
                         ],
                       ),
                     ),
@@ -157,70 +166,71 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
             height: 60,
           ),
           const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width - 150,
-                child: Text(
-                  '${team?.name}',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: RichText(
-                  text: TextSpan(
-                    text: 'Boss Team:',
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width - 150,
+                  child: Text(
+                    '${team?.name}',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          height: 1.5,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
                         ),
-                    children: <InlineSpan>[
-                      WidgetSpan(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 5),
-                          child: AvatarWidget(
-                            avatar: team?.boss?.avatar,
-                            size: 20,
-                          ),
-                        ),
-                        alignment: PlaceholderAlignment.middle,
-                      ),
-                      WidgetSpan(
-                        child: SizedBox(
-                          width: 150,
-                          child: Text(
-                            '${team?.boss.getdisplayName}',
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(
+                  ),
+                ),
+                Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Boss Team:",
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
                                     height: 1.5,
-                                    color: const Color(0xFF353DFF)),
-                          ),
+                                  ),
                         ),
-                      ),
-                    ],
-                  ),
+                        const SizedBox(width: 10),
+                        Flexible(
+                          child: Row(
+                            children: [
+                              AvatarWidget(
+                                avatar: team?.boss?.avatar,
+                                size: 20,
+                              ),
+                              const SizedBox(width: 5),
+                              Flexible(
+                                child: Text(
+                                  '${team?.boss.getdisplayName}',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.copyWith(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.5,
+                                          color: const Color(0xFF353DFF)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    )),
+                Text(
+                  'ID: ${team?.id}',
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      height: 1.5,
+                      color: const Color(0xFFACACAC)),
                 ),
-              ),
-              Text(
-                'ID: ${team?.id}',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    height: 1.5,
-                    color: const Color(0xFFACACAC)),
-              ),
-            ],
+              ],
+            ),
           )
         ],
       ),
@@ -365,8 +375,11 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
     );
   }
 
-  Widget _membersWidget(
-      {required List<User> members, required bool canUpdateMembers}) {
+  Widget _membersWidget({
+    required List<User> members,
+    required bool canUpdateMembers,
+    required Team team,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -384,7 +397,17 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                 ? PopupMenuButton(
                     onSelected: (value) {
                       if (value == BossTeamActionToMember.assignBossTeam.name) {
-                        //TODO: assign boss team event
+                        context
+                            .confirmAssignBossTeam(
+                          onAction: () {},
+                          member: member,
+                          team: team,
+                        )
+                            .then((value) {
+                          if (value != null && value == true) {
+                            teamDetailBloc.add(FetchTeamDetailEvent(widget.id));
+                          }
+                        });
                       } else {
                         //TODO: remove member event
                       }
@@ -393,8 +416,13 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                         const Icon(Icons.more_horiz, color: Color(0xFF212121)),
                     offset: const Offset(0, 30),
                     itemBuilder: (BuildContext bc) {
+                      List<BossTeamActionToMember> menus =
+                          List.from(BossTeamActionToMember.values);
+                      menus.removeWhere((element) =>
+                          member.id == team.boss?.id &&
+                          element == BossTeamActionToMember.assignBossTeam);
                       return [
-                        ...BossTeamActionToMember.values.map(
+                        ...menus.map(
                           (action) => PopupMenuItem(
                             value: action.name,
                             child: Text(
@@ -417,6 +445,11 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
   }
 
   void _onTeamDetailBlocListen(BuildContext context, TeamDetailState state) {
+    if (state is FetchTeamDetailSuccess) {
+      if (state.team.boss == null && myId == state.team.boss?.id) {
+        context.askAssignBoss(team: state.team);
+      }
+    }
     if (state is GetLeaveTeamStatusLoading) {
       context.showLoading();
     } else if (state is GetLeaveTeamStatusSuccess) {

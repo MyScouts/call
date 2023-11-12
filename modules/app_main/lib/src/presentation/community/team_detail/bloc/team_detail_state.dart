@@ -46,3 +46,24 @@ class TeamDetailError<T> extends TeamDetailInitial {
 
   TeamDetailError(this.error);
 }
+
+class OnAssignBoss extends TeamDetailInitial {}
+
+class AssignBossSuccess extends TeamDetailInitial {
+  final int bossId;
+  AssignBossSuccess({required this.bossId});
+}
+
+class AssignBossFail extends TeamDetailInitial {
+  final String message;
+  AssignBossFail({required this.message});
+}
+
+class OnRevokeBoss extends TeamDetailInitial {}
+
+class RevokeBossSuccess extends TeamDetailInitial {}
+
+class RevokeBossFail extends TeamDetailInitial {
+  final String message;
+  RevokeBossFail({required this.message});
+}

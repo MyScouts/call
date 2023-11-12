@@ -36,7 +36,7 @@ class ConfirmDialog extends StatelessWidget {
               title,
               style: titleStyle ??
                   Theme.of(context).textTheme.headlineMedium!.copyWith(
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w700,
                         color: AppColors.red3,
                       ),
               textAlign: TextAlign.start,

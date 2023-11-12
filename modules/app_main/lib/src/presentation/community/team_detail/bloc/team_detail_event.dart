@@ -28,3 +28,20 @@ class AskToLeaveTeamEvent extends TeamDetailEvent {
 }
 
 class GetLeaveTeamStatusEvent extends TeamDetailEvent {}
+
+class AssignBossEvent extends TeamDetailEvent {
+  final String teamId;
+  final AssignBossPayload payload;
+  AssignBossEvent({required this.payload, required this.teamId});
+}
+
+class RevokeBossEvent extends TeamDetailEvent {
+  final String teamId;
+  RevokeBossEvent({required this.teamId});
+}
+
+class KickMember extends TeamDetailEvent {
+  final int userId;
+  final String teamId;
+  KickMember(this.userId, this.teamId);
+}

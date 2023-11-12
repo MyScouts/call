@@ -1,5 +1,6 @@
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/confirm_register_ja_payload.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
@@ -16,6 +17,7 @@ import '../../../domain/entities/update_account/verify_phone_register_pdone_payl
 import '../../../domain/repository/upgrade_account_repository.dart';
 import '../../data_sources/remote/upgrade_account_api.dart';
 import '../../models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
+import '../../models/payloads/upgrade_account/upgrade_pdone/pdone_verify_otp_protector.dart';
 import '../../models/responses/register_pdone_response.dart';
 import '../../models/responses/upgrade_account_response.dart';
 
@@ -33,9 +35,9 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   }
 
   @override
-  Future<bool> updatePDoneProfile(UpdateProfilePayload payload) async {
+  Future<bool> updatePDoneProfileOver18(UpdateProfilePayload payload) async {
     final res =
-        await _upgradeAccountApi.updatePDoneProfile(payload: payload.toJson());
+        await _upgradeAccountApi.updatePDoneProfileOver18(payload: payload.toJson());
 
     return res.success;
   }
@@ -168,5 +170,31 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
     final response = await _upgradeAccountApi.getDefaultBank();
 
     return response.data;
+  }
+
+  @override
+  Future<bool> verifyProtector(
+      {required PDoneVerifyProtectorRequest payload}) async {
+    // TODO: implement verifyProtector
+    final response = await _upgradeAccountApi.verifyProtector(payload: payload);
+    return response.data;
+  }
+
+  @override
+  Future<bool> updatePDoneProfileRange15To18(
+      UpdateProfilePayload payload) async {
+    final res =
+        await _upgradeAccountApi.updatePDoneProfileRange15To18(payload: payload.toJson());
+
+    return res.data;
+  }
+
+  @override
+  Future<bool> verifyOTPProtector({required PDoneVerifyOTPProtectorRequest payload}) async{
+    // TODO: implement verifyOTPProtector
+    final res =
+        await _upgradeAccountApi.verifyOTPProtector(payload: payload);
+
+    return res.data;
   }
 }

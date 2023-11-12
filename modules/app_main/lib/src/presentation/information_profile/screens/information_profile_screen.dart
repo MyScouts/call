@@ -18,7 +18,7 @@ class _InformationProfileScreenState extends State<InformationProfileScreen> wit
     return ScaffoldHideKeyboard(
       appBar: const BaseAppBar(
         title: "Thông tin tài khoản",
-        hideActionButtons: true,
+        isClose: true,
       ),
       body: BlocProvider(
         create: (_) => injector<UserCubit>(),

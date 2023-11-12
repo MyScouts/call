@@ -292,43 +292,41 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
         backgroundColor: AppColors.white,
         body: BlocBuilder<GroupDetailBloc, GroupDetailState>(
           builder: (ctx, state) {
-            if (state is LoadingGroupDetail) {
-              return const LoadingWidget();
-            }
-
-            return ExtendedNestedScrollView(
-              onlyOneScrollInBody: true,
-              headerSliverBuilder: buildSliverHeader,
-              body: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: _BossGroup(),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: _GroupDescription(),
-                      ),
-                      const SizedBox(height: 16),
-                      const Divider(
-                        height: 16,
-                        thickness: 16,
-                        color: AppColors.bgColor,
-                      ),
-                      if (state is FetchTeamsSuccess)
-                        const Padding(
+            if (state is FetchTeamsSuccess) {
+              return ExtendedNestedScrollView(
+                onlyOneScrollInBody: true,
+                headerSliverBuilder: buildSliverHeader,
+                body: const SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: _BossGroup(),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          child: _GroupDescription(),
+                        ),
+                        SizedBox(height: 16),
+                        Divider(
+                          height: 16,
+                          thickness: 16,
+                          color: AppColors.bgColor,
+                        ),
+                        Padding(
                           padding: EdgeInsets.all(16.0),
                           child: _GroupTeam(),
                         ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
+              );
+            }
+            return const LoadingWidget();
           },
         ),
       ),
@@ -456,8 +454,9 @@ class _TeamCard extends StatelessWidget {
               ),
               child: Row(
                 children: [
+                  // 20 member/1 nhom. 500 member -> 25 nhom
                   Flexible(
-                    flex: 2,
+                    flex: team.memberCount! ~/ 25 + 1,
                     child: Container(
                       decoration: BoxDecoration(
                         color: const Color(0xff4B84F7),
@@ -465,7 +464,9 @@ class _TeamCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Expanded(flex: 1, child: SizedBox.shrink()),
+                  Expanded(
+                      flex: 25 - (team.memberCount! ~/ 25 + 1),
+                      child: const SizedBox.shrink()),
                 ],
               ),
             ),
@@ -481,16 +482,12 @@ class _TeamCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {},
-                  behavior: HitTestBehavior.opaque,
-                  child: const Text(
-                    'Khám phá',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color(0xff4B84F7),
-                      fontWeight: FontWeight.w500,
-                    ),
+                const Text(
+                  'Khám phá',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Color(0xff4B84F7),
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
@@ -520,7 +517,7 @@ class _BossGroup extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.watch<GroupDetailBloc>();
     final group = (bloc.state as FetchGroupDetailSuccess).group;
-    print(group);
+
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(19.0),
@@ -578,7 +575,12 @@ class _CmGroupBasics extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.watch<GroupDetailBloc>();
-    final group = (bloc.state as FetchGroupDetailSuccess).group;
+    final Group group;
+    if (bloc.state is FetchGroupDetailSuccess) {
+      group = (bloc.state as FetchGroupDetailSuccess).group;
+    } else {
+      group = (bloc.state as FetchTeamsSuccess).group;
+    }
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 48, 16, 0),

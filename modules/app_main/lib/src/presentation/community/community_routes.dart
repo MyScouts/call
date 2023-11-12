@@ -1,9 +1,12 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/community/group_detail/group_request_list_screen.dart';
 import 'package:app_main/src/presentation/community/groups/group_listing_bloc.dart';
 import 'package:app_main/src/presentation/community/groups/groups_listing_widget.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/ask_to_join_team_screen.dart';
+import 'package:app_main/src/presentation/community/team_detail/pages/remove_member_sheet.dart';
+import 'package:app_main/src/presentation/community/team_detail/pages/assign_boss_team_screen.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/update_team_options_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -18,7 +21,7 @@ import 'fan_group_detail/fan_group_detail_screen.dart';
 import 'group_detail/bloc/group_detail_bloc.dart';
 import 'group_detail/edit_group_detail.dart';
 import 'group_detail/group_detail_screen.dart';
-import 'group_detail/update_community_options_screen.dart';
+import 'group_detail/update_group_options_screen.dart';
 import 'team_detail/bloc/team_detail_bloc.dart';
 import 'team_detail/pages/ask_tojoin_team_success_screen.dart';
 import 'team_detail/pages/team_request_list_screen.dart';
@@ -29,7 +32,10 @@ class CommunityRoutes extends RouteModule {
   @override
   Map<String, WidgetBuilder> getAll(RouteSettings settings) => {
         CommunityWidget.routeName: (context) {
-          return const CommunityWidget();
+          return BlocProvider.value(
+            value: injector.get<UserCubit>(),
+            child: const CommunityWidget(),
+          );
         },
         GroupsListingWidget.routeName: (context) {
           return MultiBlocProvider(
@@ -93,14 +99,14 @@ class CommunityRoutes extends RouteModule {
             ),
           );
         },
-    EditGroupDetail.routeName: (context) {
+        EditGroupDetail.routeName: (context) {
           final args = settings.arguments as Map<String, dynamic>;
           return MultiBlocProvider(
             providers: [
               BlocProvider<GetBossStatusBloc>(
                 create: (context) => injector.get(),
               ),
-              BlocProvider<RelinquishBossGroupBloc>(
+              BlocProvider<RelinquishBossRoleBloc>(
                 create: (context) => injector.get(),
               ),
             ],
@@ -135,8 +141,38 @@ class CommunityRoutes extends RouteModule {
         },
         UpdateTeamOptionsScreen.routeName: (context) {
           final args = settings.arguments as Team;
-
-          return UpdateTeamOptionsScreen(team: args);
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<RelinquishBossRoleBloc>(
+                create: (context) => injector.get(),
+              ),
+              BlocProvider<GetBossTeamRelinquishStatusBloc>(
+                create: (context) => injector.get(),
+              ),
+            ],
+            child: UpdateTeamOptionsScreen(team: args),
+          );
+        },
+        UpdateGroupOptionScreen.routeName: (context) {
+          final args = settings.arguments as Map<String, dynamic>;
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<GetBossStatusBloc>(
+                create: (context) => injector.get(),
+              ),
+              BlocProvider<RelinquishBossRoleBloc>(
+                create: (context) => injector.get(),
+              ),
+            ],
+            child: UpdateGroupOptionScreen(community: args['community']),
+          );
+        },
+        AssignBossTeamScreen.routeName: (context) {
+          final args = settings.arguments as Map<String, dynamic>;
+          return BlocProvider<TeamDetailBloc>(
+            create: (context) => injector.get(),
+            child: AssignBossTeamScreen(team: args['team']),
+          );
         },
       };
 }

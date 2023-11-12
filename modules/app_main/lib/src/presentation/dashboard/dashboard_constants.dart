@@ -4,6 +4,8 @@ import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:equatable/equatable.dart';
 
+import '../upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
+
 enum DashboardType { community, personal, ecommerce }
 
 abstract class DashBoardItem extends Equatable {
@@ -200,6 +202,7 @@ final Map<String, DashBoardItem> mapItems = {
     id: 'ic_my_driver',
     title: 'QR Code',
     backgroundImage: IconAppConstants.icDoc,
+    path: ScanQrCodeScanScreen.routeName,
   ),
   'ic_my_doctor': DashBoardIconItem(
     id: 'ic_my_doctor',
@@ -247,6 +250,7 @@ final communityDefault = {
     id: 'ic_qr',
     title: 'QR Code',
     backgroundImage: IconAppConstants.icQr,
+    path: ScanQrCodeScanScreen.routeName,
   ),
   'ic_profile': DashBoardIconItem(
     id: 'ic_profile',
@@ -293,6 +297,7 @@ final personalDefault = {
     id: 'ic_qr',
     title: 'QR Code',
     backgroundImage: IconAppConstants.icQr,
+    path: ScanQrCodeScanScreen.routeName,
   ),
   'ic_call': DashBoardIconItem(
     id: 'ic_call',

@@ -214,6 +214,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => UpdateInformationProfileScreen(
         authInfo: _authInfo,
+        userCubit: userCubit,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return child;

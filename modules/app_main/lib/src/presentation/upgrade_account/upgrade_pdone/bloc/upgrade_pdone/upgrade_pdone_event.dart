@@ -48,8 +48,9 @@ class RegisterPDoneVerifyOtpEvent extends UpgradePDoneEvent {
 @immutable
 class UpdatePDoneProfileEvent extends UpgradePDoneEvent {
   final UpdateProfilePayload payload;
+  final PDoneOptionRangeAge rangeAge;
 
-  UpdatePDoneProfileEvent(this.payload);
+  UpdatePDoneProfileEvent(this.payload, this.rangeAge);
 }
 
 @immutable
@@ -74,9 +75,20 @@ class ExtractingIdCardEvent extends UpgradePDoneEvent {
   ExtractingIdCardEvent(this.eKycData);
 }
 
-
-
 @immutable
 class UpdatePDoneSendOTP extends UpgradePDoneEvent {
   UpdatePDoneSendOTP();
+}
+
+@immutable
+class VerifyProtectorEvent extends UpgradePDoneEvent {
+  final PDoneVerifyProtectorRequest req;
+
+  VerifyProtectorEvent({required this.req});
+}
+@immutable
+class VerifyOTPProtectorEvent extends UpgradePDoneEvent {
+  final PDoneVerifyOTPProtectorRequest req;
+
+  VerifyOTPProtectorEvent({required this.req});
 }

@@ -69,6 +69,8 @@ mixin _$UpdateProfilePayload {
   @JsonKey(includeIfNull: false)
   String? get protectorEmailPhone => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
+  String? get protectorPhoneCode => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get otp => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -108,6 +110,7 @@ abstract class $UpdateProfilePayloadCopyWith<$Res> {
       @JsonKey(includeIfNull: false) String? protectorPDoneId,
       @JsonKey(includeIfNull: false) String? protectorIdentityNumber,
       @JsonKey(includeIfNull: false) String? protectorEmailPhone,
+      @JsonKey(includeIfNull: false) String? protectorPhoneCode,
       @JsonKey(includeIfNull: false) String? otp});
 
   $UpdatePDoneBirthPlacePayloadCopyWith<$Res>? get birthPlace;
@@ -151,6 +154,7 @@ class _$UpdateProfilePayloadCopyWithImpl<$Res,
     Object? protectorPDoneId = freezed,
     Object? protectorIdentityNumber = freezed,
     Object? protectorEmailPhone = freezed,
+    Object? protectorPhoneCode = freezed,
     Object? otp = freezed,
   }) {
     return _then(_value.copyWith(
@@ -246,6 +250,10 @@ class _$UpdateProfilePayloadCopyWithImpl<$Res,
           ? _value.protectorEmailPhone
           : protectorEmailPhone // ignore: cast_nullable_to_non_nullable
               as String?,
+      protectorPhoneCode: freezed == protectorPhoneCode
+          ? _value.protectorPhoneCode
+          : protectorPhoneCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       otp: freezed == otp
           ? _value.otp
           : otp // ignore: cast_nullable_to_non_nullable
@@ -313,6 +321,7 @@ abstract class _$$UpdateProfilePayloadImplCopyWith<$Res>
       @JsonKey(includeIfNull: false) String? protectorPDoneId,
       @JsonKey(includeIfNull: false) String? protectorIdentityNumber,
       @JsonKey(includeIfNull: false) String? protectorEmailPhone,
+      @JsonKey(includeIfNull: false) String? protectorPhoneCode,
       @JsonKey(includeIfNull: false) String? otp});
 
   @override
@@ -355,6 +364,7 @@ class __$$UpdateProfilePayloadImplCopyWithImpl<$Res>
     Object? protectorPDoneId = freezed,
     Object? protectorIdentityNumber = freezed,
     Object? protectorEmailPhone = freezed,
+    Object? protectorPhoneCode = freezed,
     Object? otp = freezed,
   }) {
     return _then(_$UpdateProfilePayloadImpl(
@@ -450,6 +460,10 @@ class __$$UpdateProfilePayloadImplCopyWithImpl<$Res>
           ? _value.protectorEmailPhone
           : protectorEmailPhone // ignore: cast_nullable_to_non_nullable
               as String?,
+      protectorPhoneCode: freezed == protectorPhoneCode
+          ? _value.protectorPhoneCode
+          : protectorPhoneCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       otp: freezed == otp
           ? _value.otp
           : otp // ignore: cast_nullable_to_non_nullable
@@ -486,6 +500,7 @@ class _$UpdateProfilePayloadImpl implements _UpdateProfilePayload {
       @JsonKey(includeIfNull: false) this.protectorPDoneId,
       @JsonKey(includeIfNull: false) this.protectorIdentityNumber,
       @JsonKey(includeIfNull: false) this.protectorEmailPhone,
+      @JsonKey(includeIfNull: false) this.protectorPhoneCode,
       @JsonKey(includeIfNull: false) this.otp});
 
   factory _$UpdateProfilePayloadImpl.fromJson(Map<String, dynamic> json) =>
@@ -562,11 +577,14 @@ class _$UpdateProfilePayloadImpl implements _UpdateProfilePayload {
   final String? protectorEmailPhone;
   @override
   @JsonKey(includeIfNull: false)
+  final String? protectorPhoneCode;
+  @override
+  @JsonKey(includeIfNull: false)
   final String? otp;
 
   @override
   String toString() {
-    return 'UpdateProfilePayload(firstName: $firstName, lastName: $lastName, middleName: $middleName, nickname: $nickname, sex: $sex, birthday: $birthday, birthPlace: $birthPlace, currentPlace: $currentPlace, identityNumber: $identityNumber, supplyDate: $supplyDate, supplyAddress: $supplyAddress, height: $height, weight: $weight, maritalStatus: $maritalStatus, bloodGroup: $bloodGroup, academicLevel: $academicLevel, job: $job, interest: $interest, talent: $talent, protector: $protector, protectorPDoneId: $protectorPDoneId, protectorIdentityNumber: $protectorIdentityNumber, protectorEmailPhone: $protectorEmailPhone, otp: $otp)';
+    return 'UpdateProfilePayload(firstName: $firstName, lastName: $lastName, middleName: $middleName, nickname: $nickname, sex: $sex, birthday: $birthday, birthPlace: $birthPlace, currentPlace: $currentPlace, identityNumber: $identityNumber, supplyDate: $supplyDate, supplyAddress: $supplyAddress, height: $height, weight: $weight, maritalStatus: $maritalStatus, bloodGroup: $bloodGroup, academicLevel: $academicLevel, job: $job, interest: $interest, talent: $talent, protector: $protector, protectorPDoneId: $protectorPDoneId, protectorIdentityNumber: $protectorIdentityNumber, protectorEmailPhone: $protectorEmailPhone, protectorPhoneCode: $protectorPhoneCode, otp: $otp)';
   }
 
   @override
@@ -616,6 +634,8 @@ class _$UpdateProfilePayloadImpl implements _UpdateProfilePayload {
                 other.protectorIdentityNumber == protectorIdentityNumber) &&
             (identical(other.protectorEmailPhone, protectorEmailPhone) ||
                 other.protectorEmailPhone == protectorEmailPhone) &&
+            (identical(other.protectorPhoneCode, protectorPhoneCode) ||
+                other.protectorPhoneCode == protectorPhoneCode) &&
             (identical(other.otp, otp) || other.otp == otp));
   }
 
@@ -646,6 +666,7 @@ class _$UpdateProfilePayloadImpl implements _UpdateProfilePayload {
         protectorPDoneId,
         protectorIdentityNumber,
         protectorEmailPhone,
+        protectorPhoneCode,
         otp
       ]);
 
@@ -692,6 +713,7 @@ abstract class _UpdateProfilePayload implements UpdateProfilePayload {
           @JsonKey(includeIfNull: false) final String? protectorPDoneId,
           @JsonKey(includeIfNull: false) final String? protectorIdentityNumber,
           @JsonKey(includeIfNull: false) final String? protectorEmailPhone,
+          @JsonKey(includeIfNull: false) final String? protectorPhoneCode,
           @JsonKey(includeIfNull: false) final String? otp}) =
       _$UpdateProfilePayloadImpl;
 
@@ -767,6 +789,9 @@ abstract class _UpdateProfilePayload implements UpdateProfilePayload {
   @override
   @JsonKey(includeIfNull: false)
   String? get protectorEmailPhone;
+  @override
+  @JsonKey(includeIfNull: false)
+  String? get protectorPhoneCode;
   @override
   @JsonKey(includeIfNull: false)
   String? get otp;

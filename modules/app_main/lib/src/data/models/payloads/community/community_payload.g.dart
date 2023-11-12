@@ -19,3 +19,15 @@ Map<String, dynamic> _$$ReplyJoinRequestPayloadImplToJson(
       'userId': instance.userId,
       'isApproved': instance.isApproved,
     };
+
+_$AssignBossPayloadImpl _$$AssignBossPayloadImplFromJson(
+        Map<String, dynamic> json) =>
+    _$AssignBossPayloadImpl(
+      userId: json['userId'] as int,
+    );
+
+Map<String, dynamic> _$$AssignBossPayloadImplToJson(
+        _$AssignBossPayloadImpl instance) =>
+    <String, dynamic>{
+      'userId': instance.userId,
+    };

@@ -4,6 +4,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
+import 'package:app_main/src/data/models/responses/update_pdone_profile_response.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/domain/entities/update_account/otp/otp.dart';
 import 'package:app_main/src/domain/usecases/authentication_usecase.dart';
@@ -73,8 +74,7 @@ class UserCubit extends Cubit<UserState> {
     if (state is OnPhoneCompletedRegister) return;
     try {
       emit(OnPhoneCompletedRegister());
-      await _authenticationUsecase
-          .phoneCompletedRegister(CompletedPhoneRegisterPayload(
+      await _authenticationUsecase.phoneCompletedRegister(CompletedPhoneRegisterPayload(
         phoneNumber: payload.phoneNumber.toPhone,
         otp: payload.otp,
         phoneCode: payload.phoneCode,
@@ -241,8 +241,7 @@ class UserCubit extends Cubit<UserState> {
     if (state is OnResetPasswordToken) return;
     try {
       emit(OnResetPasswordToken());
-      final response = await _authenticationUsecase
-          .resetPasswordToken(ResetPasswordTokenPayload(
+      final response = await _authenticationUsecase.resetPasswordToken(ResetPasswordTokenPayload(
         phoneNumber: payload.phoneNumber.toPhone,
         phoneCode: payload.phoneCode,
         otp: payload.otp,
@@ -412,24 +411,31 @@ class UserCubit extends Cubit<UserState> {
       )));
     }
   }
-  // Future<User?> updatePDoneProfile() async {
-  //   if (state is UpdatePDoneProfileLoading) return;
-  //   try {
-  //     emit(UpdatePDoneProfileLoading());
-  //     final response = await _userUsecase.updatePDoneProfile();
-  //     emit(UpdatePDoneProfileSuccess(user: response));
-  //   } catch (error) {
-  //     debugPrint("onboarding: $error");
-  //     emit(OnboardingFail(
-  //         onboarding: const OnboardingResponse(
-  //       hasDefaultBankAccount: false,
-  //       isJA: false,
-  //       isMarshopCustomer: false,
-  //       isMarshopOwner: false,
-  //       isPdone: false,
-  //     )));
-  //   }
-  // }
+
+  Future<void> updatePDoneProfile({required UpdatePDoneProfilePayload updatePDoneProfilePayload}) async {
+    if (state is UpdatePDoneProfileLoading) return;
+    try {
+      emit(UpdatePDoneProfileLoading());
+      final response = await _userUsecase.updatePDoneProfile(updatePDoneProfilePayload);
+      emit(UpdatePDoneProfileSuccess(user: response));
+    } catch (error) {
+      debugPrint("update pdone profile error: $error");
+      emit(UpdatePDoneProfileFailed(message: error.toString()));
+    }
+  }
+
+    Future<void> updateNonePDoneProfile({required UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload}) async {
+    if (state is UpdatePDoneProfileLoading) return;
+    try {
+      emit(UpdatePDoneProfileLoading());
+      final response = await _userUsecase.updateNonePNoneDoneProfile(updateNonePDoneProfilePayload);
+      emit(UpdatePDoneProfileSuccess(user: response));
+    } catch (error) {
+      debugPrint("update pdone profile error: $error");
+      emit(UpdatePDoneProfileFailed(message: error.toString()));
+    }
+  }
+
 }
 
 enum AuthClaimType { v1, v2 }

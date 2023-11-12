@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -27,10 +28,18 @@ class GroupCardWidget extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: ClipRRect(
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
-                    child: ImageWidget(
-                      group.banner ?? ImageConstants.communityBanner,
-                      fit: BoxFit.contain,
+                    borderRadius:
+                        const BorderRadius.vertical(top: Radius.circular(10)),
+                    child: CachedNetworkImage(
+                      width: double.infinity,
+                      imageUrl: group.banner ?? "",
+                      fit: BoxFit.cover,
+                      errorWidget: (context, url, error) {
+                        return ImageWidget(
+                          group.banner ?? ImageConstants.communityBanner,
+                          fit: BoxFit.cover,
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -47,9 +56,18 @@ class GroupCardWidget extends StatelessWidget {
                     flex: 3,
                     child: AspectRatio(
                       aspectRatio: 1,
-                      child: ImageWidget(
-                        group.avatar?.optimizeSize400 ?? '',
-                        borderRadius: 100,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: CachedNetworkImage(
+                          imageUrl: group.avatar ?? "",
+                          fit: BoxFit.cover,
+                          errorWidget: (context, url, error) {
+                            return ImageWidget(
+                              ImageConstants.imgDefaultTeamBanner,
+                              borderRadius: 100,
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -63,11 +81,12 @@ class GroupCardWidget extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                fontSize: 9,
-                                fontWeight: FontWeight.w700,
-                                color: const Color(0xFFE4221F),
-                              ),
+                          style:
+                              Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.w700,
+                                    color: const Color(0xFFE4221F),
+                                  ),
                         ),
                       ),
                     ),

@@ -22,6 +22,9 @@ Map<String, dynamic> _$$MemberJoinRequestResponseImplToJson(
 
 _$RequestDetailImpl _$$RequestDetailImplFromJson(Map<String, dynamic> json) =>
     _$RequestDetailImpl(
+      createdAt: json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
       user: json['user'] == null
           ? null
           : User.fromJson(json['user'] as Map<String, dynamic>),
@@ -30,6 +33,7 @@ _$RequestDetailImpl _$$RequestDetailImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$RequestDetailImplToJson(_$RequestDetailImpl instance) =>
     <String, dynamic>{
+      'createdAt': instance.createdAt?.toIso8601String(),
       'user': instance.user,
       'team': instance.team,
     };

@@ -1,9 +1,10 @@
 import 'package:app_main/src/presentation/authentication/login/pages/register_page.dart';
 import 'package:app_main/src/presentation/authentication/login/pages/login_page.dart';
+import 'package:app_main/src/presentation/authentication/login/widgets/auth_button_tab.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
-import 'package:localization/localization.dart';
+import 'package:ui/ui.dart';
 
 class AuthenticateScreen extends StatefulWidget {
   static const String routeName = 'authenticate';
@@ -14,15 +15,21 @@ class AuthenticateScreen extends StatefulWidget {
 }
 
 class _AuthenticateScreenState extends State<AuthenticateScreen> {
-  bool isLogin = true;
+  final PageController _pageCtrl = PageController(initialPage: 0);
+  final ValueNotifier<int> valueCtrl = ValueNotifier(0);
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Scaffold(
+    return ScaffoldHideKeyboard(
       resizeToAvoidBottomInset: true,
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Stack(
             children: [
@@ -34,93 +41,29 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                 bottom: 0,
                 width: size.width,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ImageWidget(
                       ImageConstants.defaultAppLogo,
                       width: 100,
                     ),
                     const SizedBox(height: 24),
-                    Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                          color: const Color(0xFFF4F4F4),
-                          borderRadius: BorderRadius.circular(12)),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              isLogin = true;
-                              setState(() {});
+                    Center(
+                      child: ValueListenableBuilder(
+                        valueListenable: valueCtrl,
+                        builder: (context, value, child) {
+                          return LoginButtonTab(
+                            page: value,
+                            onChange: (page) {
+                              valueCtrl.value = page;
+                              _pageCtrl.animateToPage(
+                                page,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeIn,
+                              );
                             },
-                            child: Container(
-                              width: 160,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color:
-                                    isLogin ? Colors.white : Colors.transparent,
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Color.fromRGBO(7, 48, 45, 0.06),
-                                    spreadRadius: 2,
-                                    blurRadius: 6,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Center(
-                                child: Text(
-                                  S.current.login,
-                                  style: TextStyle(
-                                      fontWeight: isLogin
-                                          ? FontWeight.w600
-                                          : FontWeight.w400,
-                                      fontSize: 14,
-                                      height: 20 / 14,
-                                      leadingDistribution:
-                                          TextLeadingDistribution.even,
-                                      color: isLogin
-                                          ? const Color(0xFF212121)
-                                          : const Color(0xFF6E6E6E)),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 4),
-                          InkWell(
-                            onTap: () {
-                              isLogin = false;
-                              setState(() {});
-                            },
-                            child: Container(
-                              width: 160,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color:
-                                    isLogin ? Colors.transparent : Colors.white,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  S.current.register,
-                                  style: TextStyle(
-                                    fontWeight: isLogin
-                                        ? FontWeight.w400
-                                        : FontWeight.w600,
-                                    fontSize: 14,
-                                    height: 20 / 14,
-                                    leadingDistribution:
-                                        TextLeadingDistribution.even,
-                                    color: isLogin
-                                        ? const Color(0xFF6E6E6E)
-                                        : const Color(0xFF212121),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
+                          );
+                        },
                       ),
                     )
                   ],
@@ -130,11 +73,17 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
           ),
           const SizedBox(height: 24),
           Expanded(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-              ),
-              child: isLogin ? const LoginWidget() : const RegisterWidget(),
+            child: PageView(
+              controller: _pageCtrl,
+              onPageChanged: (value) {
+                valueCtrl.value = value;
+              },
+              children: [
+                const LoginWidget(),
+                RegisterWidget(
+                  viewInsets: MediaQuery.of(context).viewInsets,
+                ),
+              ],
             ),
           )
         ],
