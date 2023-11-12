@@ -14,13 +14,18 @@ import 'package:ui/ui.dart';
 import '../../widget/custom_text_field.dart';
 
 class RegisterWidget extends StatefulWidget {
-  const RegisterWidget({super.key});
+  final EdgeInsets viewInsets;
+  const RegisterWidget({
+    super.key,
+    required this.viewInsets,
+  });
 
   @override
   State<RegisterWidget> createState() => _RegisterWidgetState();
 }
 
 class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
+  bool _showScrollbar = false;
   bool _passwordValid = false;
   final List<PasswordRules> _rules = [];
   final _phoneCtrl = TextEditingController();
@@ -89,234 +94,240 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
           showToastMessage(state.message, ToastMessageType.error);
         }
       },
-      child: Form(
-        key: formKey,
+      child: SingleChildScrollView(
+        padding: EdgeInsets.only(
+          bottom: widget.viewInsets.bottom,
+        ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                S.current.lbl_Phone.capitalize(),
-                style: const TextStyle(
+          padding: const EdgeInsets.only(left: 30, right: 30),
+          child: Form(
+            key: formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  S.current.lbl_Phone.capitalize(),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF212121),
+                      height: 20 / 14,
+                      leadingDistribution: TextLeadingDistribution.even),
+                ),
+                const SizedBox(height: 4),
+                AppPhoneInput(
+                  controller: _phoneCtrl,
+                  onChange: (value) => onValidation(),
+                  onPhoneCodeChange: (value) {
+                    if (value.dialCode != null) {
+                      _phoneCode = value.dialCode!;
+                      setState(() {});
+                      debugPrint("$value");
+                    }
+                  },
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  S.current.lbl_password,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF212121),
+                      height: 20 / 14,
+                      leadingDistribution: TextLeadingDistribution.even),
+                ),
+                const SizedBox(height: 4),
+                CustomTextField(
+                  onChange: (value) => onValidation(),
+                  controller: _passwordCtrl,
+                  hintText: "**************",
+                  hintStyle: const TextStyle(
+                    color: Color(0xFF8C8C8C),
+                    fontSize: 14,
+                    height: 20 / 14,
+                    leadingDistribution: TextLeadingDistribution.even,
+                  ),
+                  isPassword: true,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  S.current.lbl_password_confirm,
+                  style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Color(0xFF212121),
                     height: 20 / 14,
-                    leadingDistribution: TextLeadingDistribution.even),
-              ),
-              const SizedBox(height: 4),
-              AppPhoneInput(
-                controller: _phoneCtrl,
-                onChange: (value) => onValidation(),
-                onPhoneCodeChange: (value) {
-                  if (value.dialCode != null) {
-                    _phoneCode = value.dialCode!;
-                    setState(() {});
-                    debugPrint("$value");
-                  }
-                },
-              ),
-              const SizedBox(height: 16),
-              Text(
-                S.current.lbl_password,
-                style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF212121),
+                    leadingDistribution: TextLeadingDistribution.even,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                CustomTextField(
+                  onChange: (value) => onValidation(),
+                  controller: _rePasswordCtrl,
+                  validator: (value) => ValidationHelper.match(
+                    value,
+                    _passwordCtrl.text,
+                  ),
+                  hintText: "**************",
+                  hintStyle: const TextStyle(
+                    color: Color(0xFF8C8C8C),
+                    fontSize: 14,
                     height: 20 / 14,
-                    leadingDistribution: TextLeadingDistribution.even),
-              ),
-              const SizedBox(height: 4),
-              CustomTextField(
-                onChange: (value) => onValidation(),
-                controller: _passwordCtrl,
-                hintText: "**************",
-                hintStyle: const TextStyle(
-                  color: Color(0xFF8C8C8C),
-                  fontSize: 14,
-                  height: 20 / 14,
-                  leadingDistribution: TextLeadingDistribution.even,
+                    leadingDistribution: TextLeadingDistribution.even,
+                  ),
+                  isPassword: true,
                 ),
-                isPassword: true,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                S.current.lbl_password_confirm,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xFF212121),
-                  height: 20 / 14,
-                  leadingDistribution: TextLeadingDistribution.even,
-                ),
-              ),
-              const SizedBox(height: 4),
-              CustomTextField(
-                onChange: (value) => onValidation(),
-                controller: _rePasswordCtrl,
-                validator: (value) => ValidationHelper.match(
-                  value,
-                  _passwordCtrl.text,
-                ),
-                hintText: "**************",
-                hintStyle: const TextStyle(
-                  color: Color(0xFF8C8C8C),
-                  fontSize: 14,
-                  height: 20 / 14,
-                  leadingDistribution: TextLeadingDistribution.even,
-                ),
-                isPassword: true,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Expanded(
-                      child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      InformationLayoutFieldWidget(
-                        required: false,
-                        label: "Ngày sinh",
-                        child: InputDateTimeWidget(
-                          hintText: 'Ngày sinh',
-                          useHorizontalLayout: true,
-                          radius: 17,
-                          date: birthDay,
-                          formatText: (date) => S
-                              .of(context)
-                              .formatDateDDmmYYYYhhMM(date, date)
-                              .split('|')
-                              .first,
-                          max: DateTime.now(),
-                          onChange: (dateTime) {
-                            birthDay = dateTime;
-                            if (birthDay != null) {
-                              if (birthDay!.isUnder18yearsAgo()) {
-                                _birthDateError.value = "Yêu cầu trên 18 tuổi.";
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                        child: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        InformationLayoutFieldWidget(
+                          required: false,
+                          label: "Ngày sinh",
+                          child: InputDateTimeWidget(
+                            hintText: 'Ngày sinh',
+                            useHorizontalLayout: true,
+                            radius: 17,
+                            date: birthDay,
+                            formatText: (date) => S
+                                .of(context)
+                                .formatDateDDmmYYYYhhMM(date, date)
+                                .split('|')
+                                .first,
+                            max: DateTime.now(),
+                            onChange: (dateTime) {
+                              birthDay = dateTime;
+                              if (birthDay != null) {
+                                if (birthDay!.isUnder18yearsAgo()) {
+                                  _birthDateError.value =
+                                      "Yêu cầu trên 18 tuổi.";
+                                } else {
+                                  _birthDateError.value = null;
+                                }
                               } else {
-                                _birthDateError.value = null;
+                                _birthDateError.value = "Nhập ngày sinh.";
                               }
-                            } else {
-                              _birthDateError.value = "Nhập ngày sinh.";
-                            }
-                          },
-                        ),
-                      ),
-                      Positioned(
-                          bottom: -18,
-                          child: ValueListenableBuilder(
-                            valueListenable: _birthDateError,
-                            builder: (context, value, child) {
-                              return value != null
-                                  ? Text(
-                                      value,
-                                      style:
-                                          context.textTheme.bodySmall!.copyWith(
-                                        color: AppColors.red10,
-                                      ),
-                                    )
-                                  : const SizedBox();
                             },
-                          ))
-                    ],
-                  )),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: GenderInput(
-                      onChange: (sex) {
-                        _gender = sex;
-                        setState(() {});
-                      },
+                          ),
+                        ),
+                        Positioned(
+                            bottom: -18,
+                            child: ValueListenableBuilder(
+                              valueListenable: _birthDateError,
+                              builder: (context, value, child) {
+                                return value != null
+                                    ? Text(
+                                        value,
+                                        style: context.textTheme.bodySmall!
+                                            .copyWith(
+                                          color: AppColors.red10,
+                                        ),
+                                      )
+                                    : const SizedBox();
+                              },
+                            ))
+                      ],
+                    )),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: GenderInput(
+                        onChange: (sex) {
+                          _gender = sex;
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${S.current.note_about_passwords}:",
+                      style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          height: 20 / 14,
+                          leadingDistribution: TextLeadingDistribution.even,
+                          color: Color(0xFF6E6E6E)),
+                    ),
+                    const SizedBox(height: 8),
+                    Column(
+                      children: PasswordRules.values
+                          .map((e) => Container(
+                                margin: const EdgeInsets.only(bottom: 5),
+                                child: Row(
+                                  children: [
+                                    ImageWidget(
+                                      _rules.contains(e)
+                                          ? IconAppConstants.icCheckCircle
+                                          : IconAppConstants.icErrorCircle,
+                                      width: 16,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      e.getText(),
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          height: 20 / 14,
+                                          leadingDistribution:
+                                              TextLeadingDistribution.even,
+                                          color: Color(0xFF6E6E6E)),
+                                    ),
+                                  ],
+                                ),
+                              ))
+                          .toList(),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 24),
+                validationListenableBuilder(
+                  builder: (isValid) {
+                    debugPrint("$_rules $_passwordValid");
+                    return PrimaryButton(
+                      title: S.current.register.capitalize(),
+                      onTap: _onRegister,
+                      color: Colors.white,
+                      disabled: !isValid || !_passwordValid,
+                      width: MediaQuery.of(context).size.width,
+                    );
+                  },
+                ),
+                const SizedBox(height: 24),
+                Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Text.rich(
+                      TextSpan(
+                          style: context.text.bodyMedium!.copyWith(
+                            color: context.theme.hintColor,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: "${S.current.registration_is_consent_to}\n",
+                            ),
+                            TextSpan(
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = context.startTermsAndCondition,
+                              text: S.current.terms_of_service_and_policies,
+                              style: context.text.titleMedium!.copyWith(
+                                color: context.theme.primaryColor,
+                              ),
+                            ),
+                            const TextSpan(text: " "),
+                            TextSpan(text: S.current.by_vdone),
+                          ]),
+                      textAlign: TextAlign.center,
                     ),
                   ),
-                ],
-              ),
-              const SizedBox(height: 30),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${S.current.note_about_passwords}:",
-                    style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        height: 20 / 14,
-                        leadingDistribution: TextLeadingDistribution.even,
-                        color: Color(0xFF6E6E6E)),
-                  ),
-                  const SizedBox(height: 8),
-                  Column(
-                    children: PasswordRules.values
-                        .map((e) => Container(
-                              margin: const EdgeInsets.only(bottom: 5),
-                              child: Row(
-                                children: [
-                                  ImageWidget(
-                                    _rules.contains(e)
-                                        ? IconAppConstants.icCheckCircle
-                                        : IconAppConstants.icErrorCircle,
-                                    width: 16,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    e.getText(),
-                                    style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        height: 20 / 14,
-                                        leadingDistribution:
-                                            TextLeadingDistribution.even,
-                                        color: Color(0xFF6E6E6E)),
-                                  ),
-                                ],
-                              ),
-                            ))
-                        .toList(),
-                  )
-                ],
-              ),
-              const SizedBox(height: 24),
-              validationListenableBuilder(
-                builder: (isValid) {
-                  debugPrint("$_rules $_passwordValid");
-                  return PrimaryButton(
-                    title: S.current.register.capitalize(),
-                    onTap: _onRegister,
-                    color: Colors.white,
-                    disabled: !isValid || !_passwordValid,
-                    width: MediaQuery.of(context).size.width,
-                  );
-                },
-              ),
-              const SizedBox(height: 24),
-              Align(
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: Text.rich(
-                    TextSpan(
-                        style: context.text.bodyMedium!.copyWith(
-                          color: context.theme.hintColor,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: "${S.current.registration_is_consent_to}\n",
-                          ),
-                          TextSpan(
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = context.startTermsAndCondition,
-                            text: S.current.terms_of_service_and_policies,
-                            style: context.text.titleMedium!.copyWith(
-                              color: context.theme.primaryColor,
-                            ),
-                          ),
-                          const TextSpan(text: " "),
-                          TextSpan(text: S.current.by_vdone),
-                        ]),
-                    textAlign: TextAlign.center,
-                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
