@@ -7,14 +7,15 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
+import 'package:ui/ui.dart';
 
 import '../../community_constants.dart';
 
 class UpdateTeamOptionsScreen extends StatelessWidget {
   final Team team;
   static const String routeName = '/update-team-options';
-
-  const UpdateTeamOptionsScreen({super.key, required this.team});
+  UpdateTeamOptionsScreen({super.key, required this.team});
+  final ValueNotifier _updateCtrl = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +27,10 @@ class UpdateTeamOptionsScreen extends StatelessWidget {
               .contains(element),
     );
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          title: Text(
-            '${team.name}',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
+        appBar: BaseAppBar(
+          onPressed: () => Navigator.pop(context, _updateCtrl.value),
+          title: team.name ?? "",
+          isClose: false,
         ),
         body: BlocListener<GetBossTeamRelinquishStatusBloc, GetDetailState>(
           listener: _onGetBossTeamRelinquishStatusBlocListen,
@@ -59,7 +58,12 @@ class UpdateTeamOptionsScreen extends StatelessWidget {
                                 ),
                       ),
                       trailing: const Icon(Icons.keyboard_arrow_right_sharp),
-                      onTap: () => option.onTap(context, team: team),
+                      onTap: () =>
+                          option.onTap(context, team: team).then((value) {
+                        if (value != null) {
+                          _updateCtrl.value = true;
+                        }
+                      }),
                     ),
                   ),
                 )

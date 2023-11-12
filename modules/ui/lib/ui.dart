@@ -46,5 +46,6 @@ export 'src/slider/page_indicator_widget.dart';
 export 'src/social/avatar_widget.dart';
 export 'src/text/read_more_widget.dart';
 export 'src/text/requirement_check_list_widget.dart';
+export 'src/widget/app_avatar_widget.dart';
 export 'src/widget/empty_data/empty_data_widget.dart';
 export 'src/widget/empty_data/emptydata_list_widget.dart';

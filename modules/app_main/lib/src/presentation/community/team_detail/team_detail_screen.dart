@@ -2,7 +2,6 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/community/community_coordinator.dart';
-import 'package:app_main/src/presentation/community/team_detail/pages/update_team_options_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +87,13 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                 ? IconButton(
                     onPressed: () {
                       if (isBossGroup && isBossTeam || isBossTeam) {
-                        context.startUpdateTeamOptionsScreen(team: team!);
+                        context
+                            .startUpdateTeamOptionsScreen(team: team!)
+                            .then((value) {
+                          if (value != null && (value is bool && value)) {
+                            teamDetailBloc.add(FetchTeamDetailEvent(widget.id));
+                          }
+                        });
                       } else if (isBossGroup) {
                         context
                             .startBossGroupMenu(
@@ -419,7 +424,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                       List<BossTeamActionToMember> menus =
                           List.from(BossTeamActionToMember.values);
                       menus.removeWhere((element) =>
-                          member.id == team.boss?.id &&
+                          team.boss?.id != null &&
                           element == BossTeamActionToMember.assignBossTeam);
                       return [
                         ...menus.map(

@@ -32,10 +32,7 @@ class CommunityRoutes extends RouteModule {
   @override
   Map<String, WidgetBuilder> getAll(RouteSettings settings) => {
         CommunityWidget.routeName: (context) {
-          return BlocProvider.value(
-            value: injector.get<UserCubit>(),
-            child: const CommunityWidget(),
-          );
+          return const CommunityWidget();
         },
         GroupsListingWidget.routeName: (context) {
           return MultiBlocProvider(

@@ -275,7 +275,7 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
     }
   }
 
-  Future<void> onTap(BuildContext context, {required Team team}) async {
+  Future<dynamic> onTap(BuildContext context, {required Team team}) async {
     switch (this) {
       case UpdateTeamOption.relinquish:
         final getBossTeamRelinquishStatus =
@@ -285,10 +285,11 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
 
       case UpdateTeamOption.invite:
       case UpdateTeamOption.kick:
-        Navigator.of(context).push(MaterialPageRoute(builder: (_) => BlocProvider<TeamDetailBloc>.value(
-          value: context.read<TeamDetailBloc>(),
-          child: RemoveMemberSheet(),
-        )));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (_) => BlocProvider<TeamDetailBloc>.value(
+                  value: context.read<TeamDetailBloc>(),
+                  child: RemoveMemberSheet(),
+                )));
       case UpdateTeamOption.edit:
         return context.showToastMessage(
           'Tính năng này đang được phát triển',

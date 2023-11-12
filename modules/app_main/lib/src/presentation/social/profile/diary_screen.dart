@@ -51,7 +51,9 @@ class _DiaryScreenState extends State<DiaryScreen> {
   void initState() {
     super.initState();
     _authInfo = _userCubit.currentUser!;
-    _userByIdBloc.add(GetDetailDataParam1Event(int.parse(widget.userId!)));
+    _userByIdBloc.add(GetDetailDataParam1Event(int.parse(
+      widget.userId ?? _authInfo.id.toString(),
+    )));
   }
 
   @override

@@ -247,9 +247,9 @@ extension CommunityCoordinator on BuildContext {
 
               if (state is RevokeBossSuccess) {
                 hideLoading();
-                Navigator.pop(context);
-                Future.delayed(Duration(milliseconds: 200));
-                context.startWaitingModal();
+                showToastMessage("Huỷ quyền Boss Team thành công.");
+                Navigator.pop(context, true);
+                Future.delayed(const Duration(milliseconds: 200));
               }
             },
             child: RevokeBossModal(
