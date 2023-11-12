@@ -118,7 +118,7 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
         ),
         InformationFieldGuardianWidget(
           type: UpdateInformationType.pDoneIDOfProtector,
-          required: true,
+          required: false,
           onChanged: (String? value) {
             protectorRequest.pDoneId = value;
             widget.onUpdatePlaceInformation(protectorRequest);
@@ -152,7 +152,7 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
         ),
         InformationFieldGuardianWidget(
           type: UpdateInformationType.idNumberOfProtector,
-          required: true,
+          required: false,
           onChanged: (String? value) {
             protectorRequest.identityNumber = value;
             widget.onUpdatePlaceInformation(protectorRequest);

@@ -307,20 +307,14 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     emit(RequestingProtectorState());
 
     try {
-      final topic = 'user_${event.userId}';
-      FirebaseMessaging.instance.subscribeToTopic('user_${event.userId}');
       FirebaseMessaging.onMessage.listen((message) {
-        print('message : ${message.toMap()}');
-        if ((message.from ?? '').contains(topic)) {
-          final data = message.data;
-
-          if (data['type'] == 'PROTECTOR_REQUEST_REPLY') {
-            final dataRes = jsonDecode(data['data']);
-            if (dataRes['isApproved']) {
-              emit(ApproveProtectorState());
-            } else {
-              emit(RejectProtectorState());
-            }
+        final data = message.data;
+        if (data['type'] == 'PROTECTOR_REQUEST_REPLY') {
+          final dataRes = jsonDecode(data['data']);
+          if (dataRes['isApproved']) {
+            emit(ApproveProtectorState());
+          } else {
+            emit(RejectProtectorState());
           }
         }
       });

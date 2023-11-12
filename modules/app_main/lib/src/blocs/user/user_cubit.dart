@@ -7,6 +7,7 @@ import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart'
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/domain/entities/update_account/otp/otp.dart';
 import 'package:app_main/src/domain/usecases/authentication_usecase.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:localization/localization.dart';
@@ -110,6 +111,8 @@ class UserCubit extends Cubit<UserState> {
   Future<void> fetchUser() async {
     _currentUser = _userSharePreferencesUsecase.getUserInfo();
     final id = _currentUser?.id;
+    final topic = 'user_$id';
+    FirebaseMessaging.instance.subscribeToTopic(topic);
 
     if (id != null) {
       try {

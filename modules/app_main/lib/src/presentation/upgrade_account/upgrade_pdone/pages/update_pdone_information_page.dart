@@ -48,7 +48,7 @@ class UpdatePDoneInformationPage extends StatefulWidget {
 }
 
 class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
-    with ValidationMixin, UpdatePDoneInformationMixin, UserInfoMixin {
+    with ValidationMixin, UpdatePDoneInformationMixin {
   UpgradePDoneBloc get upgradePDoneBloc => context.read();
 
   // UserBloc get userBloc => context.read();
@@ -147,7 +147,6 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       hideLoading();
       showToastMessage(
           'Gửi thông tin đến người bảo hộ thất bại', ToastMessageType.error);
-      showToastMessage(state.errorMessage, ToastMessageType.error);
     }
   }
 
@@ -171,20 +170,6 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       interest: interestCtrl.text,
       talent: talentCtrl.text,
     );
-
-    if (pDoneAPICaller == PDoneAPICaller.adult) {
-      _sendOTP();
-    } else {
-      _requestProtector();
-    }
-  }
-
-  void _requestProtector() {
-    upgradePDoneBloc.add(RequestProtectorEvent(
-        req: pDoneVerifyProtectorRequest, userId: currentUserId ?? 0));
-  }
-
-  void _sendOTP() {
     if (pDoneOptionMethod == PDoneOptionMethod.userIdentityCard) {
       payload = payload.copyWith(
         birthPlace: UpdatePDoneBirthPlacePayload(
@@ -195,7 +180,19 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
             wardName: bpWardCtrl.text),
       );
     }
+    if (pDoneAPICaller == PDoneAPICaller.adult) {
+      _sendOTP();
+    } else {
+      _requestProtector();
+    }
+  }
 
+  void _requestProtector() {
+    upgradePDoneBloc.add(RequestProtectorEvent(
+        req: pDoneVerifyProtectorRequest, userId: 0));
+  }
+
+  void _sendOTP() {
     upgradePDoneBloc.add(UpdatePDoneSendOTP());
   }
 
@@ -258,11 +255,11 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       supplyDate = eKycData['issue_date'].toString().parseDateTime();
       expiryDate = eKycData['valid_date'].toString().parseDateTime();
       if (DateTime.now().year - (birthDay?.year ?? 0) > 18) {
-        // pDoneAPICaller = PDoneAPICaller.adult;
-        pDoneAPICaller = PDoneAPICaller.teenager;
-      } else {
-        // pDoneAPICaller = PDoneAPICaller.teenager;
         pDoneAPICaller = PDoneAPICaller.adult;
+        // pDoneAPICaller = PDoneAPICaller.teenager;
+      } else {
+        pDoneAPICaller = PDoneAPICaller.teenager;
+        // pDoneAPICaller = PDoneAPICaller.adult;
       }
     } else {
       pDoneOptionMethod = PDoneOptionMethod.userBirthCer;
@@ -591,7 +588,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                                   : null,
                         )
                       : Container(),
-                  isShowProtector()
+                  !isShowProtector()
                       ? BlocProvider<UpgradePDoneBloc>(
                           create: (context) => injector.get(),
                           child: VerifyProtectorWidget(
