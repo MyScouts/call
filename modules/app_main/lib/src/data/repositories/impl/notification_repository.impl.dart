@@ -12,13 +12,13 @@ class NotificationRepositoryImpl extends NotificationRepository {
   @override
   Future register(String fcmToken) async {
     final response = await _notificationApi.register({'token': fcmToken});
-    return response.data;
+    return response.dataEKyc;
   }
 
   @override
   Future unregister(String fcmToken) async {
     final response = await _notificationApi.unregister({'token': fcmToken});
-    return response.data;
+    return response.dataEKyc;
   }
 
   @override

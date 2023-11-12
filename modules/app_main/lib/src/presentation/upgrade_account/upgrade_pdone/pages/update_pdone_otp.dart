@@ -5,8 +5,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:ui/ui.dart';
-import '../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_otp_protector.dart';
-import '../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
 import '../../../../domain/entities/update_account/update_profile_payload.dart';
 import '../../../authentication/authentication_constants.dart';
 import '../bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
@@ -14,13 +12,13 @@ import '../bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 class UpdatePDoneOtp extends StatefulWidget {
   UpgradePDoneBloc blocUpdate;
   UpdateProfilePayload payload;
-  PDoneOptionRangeAge rangeAge;
+  PDoneAPICaller pDoneAPICaller;
 
   UpdatePDoneOtp({
     super.key,
     required this.blocUpdate,
     required this.payload,
-    required this.rangeAge,
+    required this.pDoneAPICaller,
   });
 
   @override
@@ -33,11 +31,6 @@ class _UpdatePDoneOtpState extends State<UpdatePDoneOtp> with TimerMixin {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       startTimer();
     });
-
-    if (widget.rangeAge == PDoneOptionRangeAge.under18AndOver15) {
-      widget.blocUpdate
-          .add(UpdatePDoneProfileEvent(widget.payload, widget.rangeAge));
-    }
 
     super.initState();
   }
@@ -152,19 +145,10 @@ class _UpdatePDoneOtpState extends State<UpdatePDoneOtp> with TimerMixin {
 
   _onVerify(BuildContext context) {
     widget.payload = widget.payload.copyWith(otp: _otp);
-    if (widget.rangeAge == PDoneOptionRangeAge.over18) {
-      widget.blocUpdate
-          .add(UpdatePDoneProfileEvent(widget.payload, widget.rangeAge));
-    } else {
-      widget.blocUpdate.add(
-        VerifyOTPProtectorEvent(
-          req: PDoneVerifyOTPProtectorRequest(
-            requestId: (widget.blocUpdate.state as UpdateProfileSuccess).requestId,
-            otp: _otp
-          ),
-        ),
-      );
-    }
+
+    widget.blocUpdate
+        .add(UpdatePDoneProfileEvent(widget.payload, widget.pDoneAPICaller));
+
 
     Navigator.of(context).pop();
     showLoading();

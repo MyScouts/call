@@ -11,6 +11,10 @@ enum KycStep {
   status,
 }
 
+abstract class UpgradePDoneMeta {
+  static const imageBirthCer = "IMAGE_BIRTH_CER";
+}
+
 enum KycType {
   over15,
   under15idNumber,
@@ -73,7 +77,6 @@ enum ImageKYCType {
 const String securityInformation = '''
 Toàn bộ thông tin cá nhân của Quý khách đều được P-Done đảm bảo an toàn bảo mật.
 ''';
-
 
 enum JAStatus {
   pending(0),

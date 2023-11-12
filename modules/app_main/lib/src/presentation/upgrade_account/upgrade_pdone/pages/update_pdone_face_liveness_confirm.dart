@@ -1,11 +1,7 @@
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:app_core/app_core.dart';
 import 'package:design_system/design_system.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../marshop/widgets/gradiant_button.dart';
 import '../bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 
@@ -36,8 +32,6 @@ class _UpdatePdoneFaceLiveNessConfirmState
     super.initState();
     final faceLiveNessData =
         (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).imageEKyc;
-    print((upgradePDoneBloc.state as ExtractedEKycIdCardSuccess)
-        .imageEKyc['face_live_ness']);
     faceLiveNessPath = faceLiveNessData['face_live_ness'];
   }
 

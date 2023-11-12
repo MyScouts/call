@@ -1,9 +1,12 @@
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/confirm_register_ja_payload.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_request_protector_req.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
+import 'package:app_main/src/data/models/responses/api_verify_response.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
+import 'package:camera/camera.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/entities/bank.dart';
@@ -15,17 +18,18 @@ import '../../../domain/entities/update_account/update_profile_payload.dart';
 import '../../../domain/entities/update_account/upgrade_account.dart';
 import '../../../domain/entities/update_account/verify_phone_register_pdone_payload.dart';
 import '../../../domain/repository/upgrade_account_repository.dart';
+import '../../data_sources/remote/resource_api.dart';
 import '../../data_sources/remote/upgrade_account_api.dart';
 import '../../models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
-import '../../models/payloads/upgrade_account/upgrade_pdone/pdone_verify_otp_protector.dart';
 import '../../models/responses/register_pdone_response.dart';
 import '../../models/responses/upgrade_account_response.dart';
 
 @Injectable(as: UpgradeAccountRepository)
 class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   final UpgradeAccountApi _upgradeAccountApi;
+  final ResourceApi _resourceApi;
 
-  UpgradeAccountRepositoryImpl(this._upgradeAccountApi);
+  UpgradeAccountRepositoryImpl(this._upgradeAccountApi, this._resourceApi);
 
   @override
   Future<UpgradeAccount> getListData() async {
@@ -36,8 +40,17 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
 
   @override
   Future<bool> updatePDoneProfileOver18(UpdateProfilePayload payload) async {
-    final res =
-        await _upgradeAccountApi.updatePDoneProfileOver18(payload: payload.toJson());
+    final res = await _upgradeAccountApi.updatePDoneProfileOver18(
+        payload: payload.toJson());
+
+    return res.success;
+  }
+
+  @override
+  Future<bool> updatePDoneProfileBirthCer(UpdateProfilePayload payload) async{
+    // TODO: implement updatePDoneProfileBirthCer
+    final res = await _upgradeAccountApi.updatePDoneProfileBirthCer(
+        payload: payload.toJson());
 
     return res.success;
   }
@@ -132,14 +145,6 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
     final response = await _upgradeAccountApi.checkProtector(payload: payload);
     return response.data;
   }
-
-  @override
-  Future<bool> checkProtectorVerifyOTP(VerifyOtpPDonePayload payload) async {
-    final response =
-        await _upgradeAccountApi.checkProtectorVerifyOTP(payload: payload);
-    return response.data;
-  }
-
   @override
   Future<BankAccount> updateBankAccount(
       UpdateBankAccountPayload payload) async {
@@ -173,28 +178,35 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   }
 
   @override
-  Future<bool> verifyProtector(
+  Future<int> verifyProtector(
       {required PDoneVerifyProtectorRequest payload}) async {
     // TODO: implement verifyProtector
     final response = await _upgradeAccountApi.verifyProtector(payload: payload);
-    return response.data;
+    return response.data.userId;
   }
 
   @override
   Future<bool> updatePDoneProfileRange15To18(
       UpdateProfilePayload payload) async {
-    final res =
-        await _upgradeAccountApi.updatePDoneProfileRange15To18(payload: payload.toJson());
+    final res = await _upgradeAccountApi.updatePDoneProfileRange15To18(
+        payload: payload.toJson());
 
-    return res.data;
+    return res.data.result;
   }
 
   @override
-  Future<bool> verifyOTPProtector({required PDoneVerifyOTPProtectorRequest payload}) async{
-    // TODO: implement verifyOTPProtector
-    final res =
-        await _upgradeAccountApi.verifyOTPProtector(payload: payload);
+  Future<String> uploadBirthCer(XFile xFile, String prefix) async {
+    // TODO: implement uploadBirthCer
+    final res = await _resourceApi.storageUploadUrl(xFile, prefix);
+    return res;
+  }
 
+  @override
+  Future<APIVerifyResponse> requestProtector({required PDoneRequestProtectorReq req}) async{
+    // TODO: implement requestProtector
+    final res = await _upgradeAccountApi.requestProtector(payload: req);
     return res.data;
   }
+
+
 }

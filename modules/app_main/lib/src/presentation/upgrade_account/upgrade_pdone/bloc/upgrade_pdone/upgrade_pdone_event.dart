@@ -48,9 +48,9 @@ class RegisterPDoneVerifyOtpEvent extends UpgradePDoneEvent {
 @immutable
 class UpdatePDoneProfileEvent extends UpgradePDoneEvent {
   final UpdateProfilePayload payload;
-  final PDoneOptionRangeAge rangeAge;
+  final PDoneAPICaller pDoneAPICaller;
 
-  UpdatePDoneProfileEvent(this.payload, this.rangeAge);
+  UpdatePDoneProfileEvent(this.payload, this.pDoneAPICaller);
 }
 
 @immutable
@@ -71,8 +71,9 @@ class UploadKYCImageEvent extends UpgradePDoneEvent {
 @immutable
 class ExtractingIdCardEvent extends UpgradePDoneEvent {
   final dynamic eKycData;
+  final dynamic meta;
 
-  ExtractingIdCardEvent(this.eKycData);
+  ExtractingIdCardEvent(this.eKycData, this.meta);
 }
 
 @immutable
@@ -86,9 +87,18 @@ class VerifyProtectorEvent extends UpgradePDoneEvent {
 
   VerifyProtectorEvent({required this.req});
 }
-@immutable
-class VerifyOTPProtectorEvent extends UpgradePDoneEvent {
-  final PDoneVerifyOTPProtectorRequest req;
 
-  VerifyOTPProtectorEvent({required this.req});
+@immutable
+class UploadImageBirthCerEvent extends UpgradePDoneEvent {
+  final XFile xFile;
+
+  UploadImageBirthCerEvent({required this.xFile});
+}
+
+@immutable
+class RequestProtectorEvent extends UpgradePDoneEvent {
+  final PDoneVerifyProtectorRequest req;
+  final int userId;
+
+  RequestProtectorEvent({required this.req, required this.userId});
 }

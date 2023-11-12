@@ -15,6 +15,7 @@ import '../../../../domain/entities/update_account/update_profile_payload.dart';
 import '../../../../domain/entities/update_account/upgrade_account.dart';
 import '../../../app_constants.dart';
 import '../../../shared/extensions/validation_extension.dart';
+import '../../../shared/mixins/user_info_mixin.dart';
 import '../../upgrade_account_constants.dart';
 import '../../upgrade_account_coordinator.dart';
 import '../../upgrade_ja/widgets/gradiant_button.dart';
@@ -68,32 +69,36 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
   // prevent change after validate protector
   bool needValidatingProtector = false;
 
-  final _showResultValidateProtectorCtrl = ValueNotifier<String>('');
-
   PDoneOptionMethod pDoneOptionMethod = PDoneOptionMethod.userIdentityCard;
 
-  PDoneOptionRangeAge rangeAge = PDoneOptionRangeAge.over18;
+  PDoneAPICaller pDoneAPICaller = PDoneAPICaller.adult;
 
   bool isShowProtector() {
-    return rangeAge == PDoneOptionRangeAge.under18AndOver15 ||
+    return pDoneAPICaller == PDoneAPICaller.teenager ||
         pDoneOptionMethod == PDoneOptionMethod.userBirthCer;
   }
 
   void _onListenerBloc(BuildContext context, UpgradePDoneState state) {
-    if (state is UpdateProfileLoading) {
+    if (state is UpdatePDoneProfileLoading) {
       showLoading();
-    } else if (state is UpdateProfileSuccess) {
+    }
+    if (state is UpdatePdoneAdultProfileSuccess ||
+        state is UpdatePdoneTeenagerProfileSuccess) {
       hideLoading();
       context.upgradePdoneSuccess();
-    } else if (state is UpdateProfileFailure) {
+    }
+
+    if (state is UpdatePdoneChildrenProfileSuccess) {
+      hideLoading();
+      context.upgradePdoneChildrenSuccess();
+    }
+
+    if (state is UpdatePDoneProfileFailure) {
       hideLoading();
 
       showToastMessage(state.errorMessage, ToastMessageType.warning);
-    } else if (state is GetMyProfileSuccess) {}
-    if (state is VerifyOTPProtectorSuccessState) {
-      hideLoading();
-      context.upgradePdoneWithProtectorSuccess();
     }
+    if (state is GetMyProfileSuccess) {}
 
     if (state is UpdatePDoneSendOTPSuccessState) {
       hideLoading();
@@ -107,7 +112,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                 child: UpdatePDoneOtp(
                   blocUpdate: upgradePDoneBloc,
                   payload: payload,
-                  rangeAge: rangeAge,
+                  pDoneAPICaller: pDoneAPICaller,
                 ),
               );
             });
@@ -118,9 +123,30 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       hideLoading();
       showToastMessage(state.errorMessage, ToastMessageType.error);
     }
-    if (state is VerifyOTPProtectorFailureState) {
+
+    if (state is RequestedSuccessProtectorState) {
       hideLoading();
-      showToastMessage(state.errorMessage, ToastMessageType.error);
+      showToastMessage(
+          'Đã gửi thông báo đến người bảo hộ!', ToastMessageType.success);
+      showLoading();
+    }
+
+    if (state is ApproveProtectorState) {
+      hideLoading();
+      showToastMessage('Người bảo hộ đã đồng ý!', ToastMessageType.success);
+      upgradePDoneBloc.add(UpdatePDoneSendOTP());
+    }
+
+    if (state is RejectProtectorState) {
+      hideLoading();
+      showToastMessage(
+          'Người bảo hộ đã từ chối yêu cầu của bạn!', ToastMessageType.error);
+    }
+
+    if (state is RequestedFailureProtectorState) {
+      hideLoading();
+      showToastMessage(
+          'Gửi thông tin đến người bảo hộ thất bại', ToastMessageType.error);
     }
   }
 
@@ -144,7 +170,6 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       interest: interestCtrl.text,
       talent: talentCtrl.text,
     );
-
     if (pDoneOptionMethod == PDoneOptionMethod.userIdentityCard) {
       payload = payload.copyWith(
         birthPlace: UpdatePDoneBirthPlacePayload(
@@ -155,7 +180,19 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
             wardName: bpWardCtrl.text),
       );
     }
+    if (pDoneAPICaller == PDoneAPICaller.adult) {
+      _sendOTP();
+    } else {
+      _requestProtector();
+    }
+  }
 
+  void _requestProtector() {
+    upgradePDoneBloc.add(RequestProtectorEvent(
+        req: pDoneVerifyProtectorRequest, userId: 0));
+  }
+
+  void _sendOTP() {
     upgradePDoneBloc.add(UpdatePDoneSendOTP());
   }
 
@@ -167,127 +204,31 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
     });
   }
 
-  Future<void> validatePDoneID(String? text) async {
-    final validate =
-        context.validateformatPDoneAccount(text, 'ID P-Done không hợp lệ!');
-
-    needValidatingProtector = true;
-    _showResultValidateProtectorCtrl.value = '';
-
-    if (validate != null) {
-      validatorPDoneId = validate;
-      checkValidation();
-      return;
-    }
-
-    EasyDebounce.debounce('testDeb', const Duration(milliseconds: 300),
-        () async {
-      // final id = text!.trim();
-      // final res = await upgradePDoneBloc.checkPDoneAccountEvent(id);
-      // validatorPDoneId = res ? null : 'ID P-Done không tồn tại';
-      // checkValidation();
-      //
-      // if (res) {
-      //   onUpdatePayload(payload.copyWith(protectorPDoneId: id));
-      // }
-    });
-  }
-
-  void _validateIdentifyNumber(String? text) {
-    needValidatingProtector = true;
-    final validate = context.validateCCCD(text, 'Thông tin không hợp lệ');
-    validatorIdentifyNumber = validate;
-    checkValidation();
-    _showResultValidateProtectorCtrl.value = '';
-  }
-
-  Future<void> _onValidateProtector() async {
-    if (isValidatingProtector) {
-      return;
-    }
-
-    isValidatingProtector = true;
-
-    final pDoneId = pDoneIdProtectorCtrl.text;
-
-    final validate =
-        context.validateformatPDoneAccount(pDoneId, 'ID P-Done không hợp lệ!');
-
-    if (validate != null) {
-      validatorPDoneId = validate;
-      showToastMessage('ID P-Done không hợp lệ!', ToastMessageType.error);
-      checkValidation();
-      isValidatingProtector = false;
-      return;
-    }
-
-    final emailOrPhone = emailOrPhoneProtectorCtrl.text;
-    final identifyNumber = identifyNumberProtectorCtrl.text;
-
-    final validiIdentifyNumber = identifyNumber.isNotEmpty &&
-        context.validateEmptyInfo(identifyNumber, 'messageError') == null;
-
-    if (!validiIdentifyNumber) {
-      isValidatingProtector = false;
-      showToastMessage('Số ID/CCCD/HC không hợp lệ', ToastMessageType.error);
-      return;
-    }
-
-    try {
-      final payload = CheckProtectorPayload(
-        protectorPDoneId: pDoneIdProtectorCtrl.text,
-        protectorEmailPhone: emailOrPhone,
-        protectorIdentityNumber: identifyNumber,
-      );
-    } catch (e) {
-      if (e is DioError) {
-        if (e.response != null && e.response?.data['errors'] != null) {
-          final errors = e.response?.data['errors'] as List;
-          for (final e in errors) {
-            if (e == 'PROTECTOR_IDENTITY_INVALID') {
-              validatorIdentifyNumber = 'Thông tin không hợp lệ';
-              checkValidation();
-              showToastMessage(
-                  'Số ID/CCCD/HC không hợp lệ', ToastMessageType.error);
-            }
-            if (e == 'PROTECTOR_EMAIL_OR_PHONE_INVALID') {
-              validatorEmailOrPhone = 'Thông tin không hợp lệ';
-              checkValidation();
-              showToastMessage(
-                  'Email hoặc phone không hợp lệ', ToastMessageType.error);
-            }
-            if (e == 'PROTECTOR_NOT_FOUND') {
-              validatorPDoneId = 'Thông tin không hợp lệ';
-              showToastMessage(
-                  'ID P-DONE không hợp lệ', ToastMessageType.error);
-              checkValidation();
-            }
-            if (e == 'PROTECTOR_GTE_18_OLD') {
-              validatorPDoneId = 'Người bảo hộ phải trên 18 tuổi';
-              showToastMessage(
-                  'Người bảo hộ phải trên 18 tuổi', ToastMessageType.error);
-              checkValidation();
-            }
-          }
-        }
-      }
-    } finally {
-      isValidatingProtector = false;
-    }
-  }
-
   @override
   void initState() {
     super.initState();
     _initTextFormField();
+    _initBirthCer();
+  }
+
+  void _initBirthCer() {
+    if (((upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).metaData
+            as Map<dynamic, dynamic>)
+        .isNotEmpty) {
+      payload = payload.copyWith(
+          birthCertificateUrl:
+              (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess)
+                  .metaData[UpgradePDoneMeta.imageBirthCer]);
+      pDoneAPICaller = PDoneAPICaller.children;
+    }
   }
 
   void _initTextFormField() {
-    if (((upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).data
+    if (((upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).dataEKyc
             as Map<dynamic, dynamic>)
         .isNotEmpty) {
-      final eKycData =
-          (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).data['object'];
+      final eKycData = (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess)
+          .dataEKyc['object'];
       identifyNumberCtrl.text = eKycData['id'] ?? '';
       final nameArr = eKycData['name'].toString().split(" ");
 
@@ -313,11 +254,12 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       birthDay = eKycData['birth_day'].toString().parseDateTime();
       supplyDate = eKycData['issue_date'].toString().parseDateTime();
       expiryDate = eKycData['valid_date'].toString().parseDateTime();
-
       if (DateTime.now().year - (birthDay?.year ?? 0) > 18) {
-        rangeAge = PDoneOptionRangeAge.over18;
+        pDoneAPICaller = PDoneAPICaller.adult;
+        // pDoneAPICaller = PDoneAPICaller.teenager;
       } else {
-        rangeAge = PDoneOptionRangeAge.under18AndOver15;
+        pDoneAPICaller = PDoneAPICaller.teenager;
+        // pDoneAPICaller = PDoneAPICaller.adult;
       }
     } else {
       pDoneOptionMethod = PDoneOptionMethod.userBirthCer;
@@ -646,21 +588,13 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                                   : null,
                         )
                       : Container(),
-                  isShowProtector()
+                  !isShowProtector()
                       ? BlocProvider<UpgradePDoneBloc>(
                           create: (context) => injector.get(),
                           child: VerifyProtectorWidget(
-                            onUpdatePDoneVerifyProtector:
+                            onUpdatePlaceInformation:
                                 (PDoneVerifyProtectorRequest value) {
-                              onUpdatePayload(
-                                payload.copyWith(
-                                  protector: value.protector,
-                                  protectorPDoneId: value.identityNumber,
-                                  protectorEmailPhone: value.phoneNumber,
-                                  protectorIdentityNumber: value.identityNumber,
-                                  protectorPhoneCode: value.phoneCode,
-                                ),
-                              );
+                              pDoneVerifyProtectorRequest = value;
                             },
                           ),
                         )
