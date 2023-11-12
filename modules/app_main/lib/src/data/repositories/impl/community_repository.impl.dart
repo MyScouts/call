@@ -182,8 +182,12 @@ class CommunityRepositoryImpl extends CommunityRepository {
   }
 
   @override
-  Future<MemberJoinRequestResponse> memberJoinRequest() async {
-    return await _communityApi.memberJoinRequest();
+  Future<MemberJoinRequestResponse> memberJoinRequest(
+    GetCommunityPayload query,
+  ) async {
+    return await _communityApi.memberJoinRequest(
+      query,
+    );
   }
 
   @override
@@ -192,8 +196,9 @@ class CommunityRepositoryImpl extends CommunityRepository {
   }
 
   @override
-  Future<MemberJoinRequestResponse> memberLeaveRequest() {
-    return _communityApi.memberLeaverRequest();
+  Future<MemberJoinRequestResponse> memberLeaveRequest(
+      GetCommunityPayload query) {
+    return _communityApi.memberLeaverRequest(query);
   }
 
   @override

@@ -118,6 +118,7 @@ class _CameraScreenState extends State<CameraScreen> {
                   child: CupertinoSwitch(
                     activeColor: context.theme.primaryColor,
                     value: false,
+                
                     onChanged: (value) {},
                   ),
                 )

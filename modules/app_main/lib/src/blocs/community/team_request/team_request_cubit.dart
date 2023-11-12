@@ -14,15 +14,22 @@ class TeamRequestCubit extends Cubit<TeamRequestState> {
   TeamRequestCubit(this._usecase)
       : super(const TeamRequestInitial(requests: []));
 
-  Future getRequests({bool? isReset, bool isJoinRequest = true}) async {
+  Future getRequests({
+    bool? isReset,
+    bool isJoinRequest = true,
+    required String teamId,
+  }) async {
     if (state is OnGetListRequest) return;
     try {
       emit(const OnGetListRequest(requests: [], isFirst: true));
       if (isJoinRequest) {
-        final response = await _usecase.memberJoinRequest();
+        final response = await _usecase
+            .memberJoinRequest(GetCommunityPayload(teamId: teamId));
         _request.addAll(response.requests);
       } else {
-        final response = await _usecase.memberLeaveRequest();
+        final response = await _usecase.memberLeaveRequest(
+          GetCommunityPayload(teamId: teamId),
+        );
         _request.addAll(response.requests);
       }
       emit(GetListRequestSuccess(requests: _request));

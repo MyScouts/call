@@ -685,9 +685,11 @@ class _CommunityApi implements CommunityApi {
   }
 
   @override
-  Future<MemberJoinRequestResponse> memberJoinRequest() async {
+  Future<MemberJoinRequestResponse> memberJoinRequest(
+      GetCommunityPayload queries) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(queries.toJson());
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -712,9 +714,11 @@ class _CommunityApi implements CommunityApi {
   }
 
   @override
-  Future<MemberJoinRequestResponse> memberLeaverRequest() async {
+  Future<MemberJoinRequestResponse> memberLeaverRequest(
+      GetCommunityPayload queries) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(queries.toJson());
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(

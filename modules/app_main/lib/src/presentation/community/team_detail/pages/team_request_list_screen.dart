@@ -355,7 +355,7 @@ class _LeaveRequestPage extends State<LeaveRequestPage> {
   @override
   void initState() {
     super.initState();
-    _bloc.getRequests(isJoinRequest: false);
+    _bloc.getRequests(isJoinRequest: false, teamId: widget.);
   }
 
   @override

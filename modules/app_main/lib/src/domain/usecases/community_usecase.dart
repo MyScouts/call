@@ -111,7 +111,8 @@ class CommunityUsecase {
     }
   }
 
-  Future<BossTeamRelinquishStatusResponse> getBossTeamRelinquishStatus(String id) async {
+  Future<BossTeamRelinquishStatusResponse> getBossTeamRelinquishStatus(
+      String id) async {
     return await _communityRepository.getBossTeamRelinquishStatus(id);
   }
 
@@ -136,12 +137,14 @@ class CommunityUsecase {
     return await _communityRepository.getLeaveTeamStatus();
   }
 
-  Future<MemberJoinRequestResponse> memberJoinRequest() {
-    return _communityRepository.memberJoinRequest();
+  Future<MemberJoinRequestResponse> memberJoinRequest(
+      GetCommunityPayload query) {
+    return _communityRepository.memberJoinRequest(query);
   }
 
-  Future<MemberJoinRequestResponse> memberLeaveRequest() {
-    return _communityRepository.memberLeaveRequest();
+  Future<MemberJoinRequestResponse> memberLeaveRequest(
+      GetCommunityPayload query) {
+    return _communityRepository.memberLeaveRequest(query);
   }
 
   Future replyJoinRequest(String teamId, ReplyJoinRequestPayload payload) {
