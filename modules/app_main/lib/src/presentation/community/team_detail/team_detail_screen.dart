@@ -1,13 +1,16 @@
+import 'dart:convert';
+
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/community/community_coordinator.dart';
-import 'package:app_main/src/presentation/community/team_detail/pages/update_team_options_screen.dart';
 import 'package:design_system/design_system.dart';
+// import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:ui/ui.dart';
 
 import '../community_constants.dart';
@@ -88,7 +91,13 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                 ? IconButton(
                     onPressed: () {
                       if (isBossGroup && isBossTeam || isBossTeam) {
-                        context.startUpdateTeamOptionsScreen(team: team!);
+                        context
+                            .startUpdateTeamOptionsScreen(team: team!)
+                            .then((value) {
+                          if (value != null && (value is bool && value)) {
+                            teamDetailBloc.add(FetchTeamDetailEvent(widget.id));
+                          }
+                        });
                       } else if (isBossGroup) {
                         context
                             .startBossGroupMenu(
@@ -246,7 +255,6 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
             Expanded(
               child: GestureDetector(
                 onTap: context.startAddMember,
-                behavior: HitTestBehavior.opaque,
                 child: Container(
                   margin: const EdgeInsets.only(right: 20),
                   padding: const EdgeInsets.symmetric(vertical: 10),
@@ -261,10 +269,13 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                         padding: const EdgeInsets.only(top: 10),
                         child: Text(
                           'Mời thêm thành viên',
-                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              color: const Color(0xFF4B84F7),
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(
+                                  color: const Color(0xFF4B84F7),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14),
                         ),
                       )
                     ],
@@ -273,26 +284,43 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
               ),
             ),
           Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              decoration: BoxDecoration(
-                color: const Color(0xFFE8F0FE),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                children: [
-                  ImageWidget(IconAppConstants.icShareLinkTeam),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Text(
-                      'Chia sẻ link team',
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: const Color(0xFF4B84F7),
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14),
-                    ),
-                  )
-                ],
+            child: GestureDetector(
+              onTap: () {
+                context.shareLinkTeam(
+                  // link: link,
+                  qr: QrImageView(
+                    data: jsonEncode({
+                      'name': widget.name,
+                      'bossGroupId': widget.bossGroupId,
+                      'id': widget.id,
+                      'type': 'team'
+                    }),
+                    version: QrVersions.auto,
+                    size: MediaQuery.of(context).size.width * .5,
+                  ),
+                );
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFE8F0FE),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  children: [
+                    ImageWidget(IconAppConstants.icShareLinkTeam),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        'Chia sẻ link team',
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: const Color(0xFF4B84F7),
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -300,6 +328,27 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
       ),
     );
   }
+
+  // static Future<String> buildDynamicLink() async {
+  //   String url = "https://vdone.page.link";
+  //   final dynamicLinkParams = DynamicLinkParameters(
+  //     link: Uri.parse("$url/teamId=13"),
+  //     uriPrefix: url,
+  //     androidParameters: const AndroidParameters(
+  //       packageName: "com.app.vdone.staging",
+  //       minimumVersion: 0,
+  //     ),
+  //     iosParameters: const IOSParameters(
+  //       bundleId: "com.example.app.ios",
+  //       appStoreId: "123456789",
+  //       minimumVersion: "1.0.1",
+  //     ),
+  //   );
+  //   final dynamicLink =
+  //   await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);
+  //   print(url);
+  //   return dynamicLink.shortUrl.toString();
+  // }
 
   Widget _introductionWidget(Team? team) {
     return Column(
@@ -423,7 +472,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                       List<BossTeamActionToMember> menus =
                           List.from(BossTeamActionToMember.values);
                       menus.removeWhere((element) =>
-                          member.id == team.boss?.id &&
+                          team.boss?.id != null &&
                           element == BossTeamActionToMember.assignBossTeam);
                       return [
                         ...menus.map(

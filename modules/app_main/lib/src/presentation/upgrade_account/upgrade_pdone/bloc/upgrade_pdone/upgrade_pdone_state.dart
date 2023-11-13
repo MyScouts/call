@@ -46,18 +46,27 @@ class VerifyOtpFailure extends UpgradePDoneState {
   VerifyOtpFailure(this.errorMessage);
 }
 
-class UpdateProfileLoading extends UpgradePDoneState {}
+class UpdatePDoneProfileLoading extends UpgradePDoneState {}
 
-class UpdateProfileSuccess extends UpgradePDoneState {
-  final dynamic requestId;
+class UpdatePdoneAdultProfileSuccess extends UpgradePDoneState {
 
-  UpdateProfileSuccess({required this.requestId});
+  UpdatePdoneAdultProfileSuccess();
 }
 
-class UpdateProfileFailure extends UpgradePDoneState {
+class UpdatePdoneTeenagerProfileSuccess extends UpgradePDoneState {
+
+  UpdatePdoneTeenagerProfileSuccess();
+}
+
+class UpdatePdoneChildrenProfileSuccess extends UpgradePDoneState {
+
+  UpdatePdoneChildrenProfileSuccess();
+}
+
+class UpdatePDoneProfileFailure extends UpgradePDoneState {
   final String errorMessage;
 
-  UpdateProfileFailure(this.errorMessage);
+  UpdatePDoneProfileFailure(this.errorMessage);
 }
 
 class UpdateKYCLoading extends UpgradePDoneState {}
@@ -118,10 +127,11 @@ class GetMyProfileSuccessFailure extends UpgradePDoneState {
 class ExtractingEKycIdCard extends UpgradePDoneState {}
 
 class ExtractedEKycIdCardSuccess extends UpgradePDoneState {
-  final dynamic data;
+  final dynamic dataEKyc;
   final dynamic imageEKyc;
+  final dynamic metaData; // cái này có thể là url ảnh giấy khai sinh từ những bước trước
 
-  ExtractedEKycIdCardSuccess(this.data, this.imageEKyc);
+  ExtractedEKycIdCardSuccess(this.dataEKyc, this.imageEKyc, this.metaData);
 }
 
 class ExtractedEKycIdCardFailure extends UpgradePDoneState {
@@ -143,7 +153,10 @@ class UpdatePDoneSendOTPFailureState extends UpgradePDoneState {
 // verify protector
 class VerifyingProtectorState extends UpgradePDoneState {}
 
-class VerifyProtectorSuccessState extends UpgradePDoneState {}
+class VerifyProtectorSuccessState extends UpgradePDoneState {
+  final int userId;
+  VerifyProtectorSuccessState({required this.userId});
+}
 
 class VerifyProtectorFailureState extends UpgradePDoneState {
   final String errorMessage;
@@ -151,12 +164,38 @@ class VerifyProtectorFailureState extends UpgradePDoneState {
   VerifyProtectorFailureState({required this.errorMessage});
 }
 
-class VerifyingOTPProtectorState extends UpgradePDoneState {}
+class UploadingImageBirthCer extends UpgradePDoneState {}
 
-class VerifyOTPProtectorSuccessState extends UpgradePDoneState {}
+class UploadedSuccessImageBirthCer extends UpgradePDoneState {
+  final String imageBirthCerUrl;
+  UploadedSuccessImageBirthCer({required this.imageBirthCerUrl});
+}
 
-class VerifyOTPProtectorFailureState extends UpgradePDoneState {
+class UploadedFailureImageBirthCer extends UpgradePDoneState {
   final String errorMessage;
 
-  VerifyOTPProtectorFailureState({required this.errorMessage});
+  UploadedFailureImageBirthCer({required this.errorMessage});
+}
+
+
+class RequestingProtectorState extends UpgradePDoneState {
+  RequestingProtectorState();
+}
+
+
+class RequestedSuccessProtectorState extends UpgradePDoneState {
+  RequestedSuccessProtectorState();
+}
+
+class ApproveProtectorState extends UpgradePDoneState {
+  ApproveProtectorState();
+}
+
+class RejectProtectorState extends UpgradePDoneState {
+  RejectProtectorState();
+}
+
+class RequestedFailureProtectorState extends UpgradePDoneState {
+  final String errorMessage;
+  RequestedFailureProtectorState({required this.errorMessage});
 }

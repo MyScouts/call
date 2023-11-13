@@ -31,3 +31,15 @@ Map<String, dynamic> _$$AssignBossPayloadImplToJson(
     <String, dynamic>{
       'userId': instance.userId,
     };
+
+_$GetCommunityPayloadImpl _$$GetCommunityPayloadImplFromJson(
+        Map<String, dynamic> json) =>
+    _$GetCommunityPayloadImpl(
+      teamId: json['teamId'] as String,
+    );
+
+Map<String, dynamic> _$$GetCommunityPayloadImplToJson(
+        _$GetCommunityPayloadImpl instance) =>
+    <String, dynamic>{
+      'teamId': instance.teamId,
+    };

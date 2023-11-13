@@ -276,7 +276,7 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
     }
   }
 
-  Future<void> onTap(BuildContext context, {required Team team}) async {
+  Future<dynamic> onTap(BuildContext context, {required Team team}) async {
     switch (this) {
       case UpdateTeamOption.relinquish:
         final getBossTeamRelinquishStatus =
@@ -314,7 +314,7 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
           ToastMessageType.warning,
         );
       case UpdateTeamOption.requests:
-        return await context.startTeamRequestsScreen();
+        return await context.startTeamRequestsScreen(team: team);
       case UpdateTeamOption.assignBoss:
         return await context.startAssignTeam(team);
       case UpdateTeamOption.revokeBoss:

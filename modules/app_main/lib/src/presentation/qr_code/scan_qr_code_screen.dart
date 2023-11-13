@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
 import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:design_system/design_system.dart';
@@ -45,6 +46,22 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
           final data = jsonDecode(code);
           if (data['type'] == 'diary' && data["id"] != null) {
             context.startReplaceDiary(userId: data["id"].toString());
+            return;
+          }
+
+          if (data['type'] == 'auth1') {
+            context.confirmLoginQrCode(
+              type: AuthClaimType.v1,
+              code: data['code'],
+            );
+            return;
+          }
+
+          if (data['type'] == 'auth2') {
+            context.confirmLoginQrCode(
+              type: AuthClaimType.v2,
+              code: data['code'],
+            );
             return;
           }
         } else {

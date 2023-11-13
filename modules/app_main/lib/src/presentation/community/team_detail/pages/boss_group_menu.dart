@@ -73,10 +73,16 @@ class _BossGroupMenuState extends State<BossGroupMenu> {
       children: [
         GestureDetector(
           onTap: () {
-            context.startRemoveBossModal(
+            context
+                .startRemoveBossModal(
               member: widget.team.boss!,
               team: widget.team,
-            );
+            )
+                .then((value) {
+              if (value != null) {
+                Navigator.pop(context, true);
+              }
+            });
           },
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 15),

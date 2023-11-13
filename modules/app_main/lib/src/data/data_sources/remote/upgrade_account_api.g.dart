@@ -142,14 +142,14 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
   }
 
   @override
-  Future<ApiResponse<dynamic>> updatePDoneProfileOver18(
+  Future<ApiResponse<APIVerifyResponse>> updatePDoneProfileOver18(
       {required dynamic payload}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = payload;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<dynamic>>(Options(
+        _setStreamType<ApiResponse<APIVerifyResponse>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -165,22 +165,22 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<dynamic>.fromJson(
+    final value = ApiResponse<APIVerifyResponse>.fromJson(
       _result.data!,
-      (json) => json as dynamic,
+      (json) => APIVerifyResponse.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
 
   @override
-  Future<ApiResponse<dynamic>> updatePDoneProfileRange15To18(
+  Future<ApiResponse<APIVerifyResponse>> updatePDoneProfileRange15To18(
       {required dynamic payload}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = payload;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<dynamic>>(Options(
+        _setStreamType<ApiResponse<APIVerifyResponse>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -196,9 +196,40 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<dynamic>.fromJson(
+    final value = ApiResponse<APIVerifyResponse>.fromJson(
       _result.data!,
-      (json) => json as dynamic,
+      (json) => APIVerifyResponse.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<APIVerifyResponse>> updatePDoneProfileBirthCer(
+      {required dynamic payload}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = payload;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<APIVerifyResponse>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/v1/p-done/children-register',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<APIVerifyResponse>.fromJson(
+      _result.data!,
+      (json) => APIVerifyResponse.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
@@ -508,37 +539,6 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
   }
 
   @override
-  Future<ApiResponse<dynamic>> checkProtectorVerifyOTP(
-      {required VerifyOtpPDonePayload payload}) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = payload;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<dynamic>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              'api/account-p-done/profile/check-protector/verify',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = ApiResponse<dynamic>.fromJson(
-      _result.data!,
-      (json) => json as dynamic,
-    );
-    return value;
-  }
-
-  @override
   Future<ApiResponse<BankAccount>> updateBankAccount(
       {required UpdateBankAccountPayload payload}) async {
     const _extra = <String, dynamic>{};
@@ -657,7 +657,7 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
   }
 
   @override
-  Future<ApiResponse<dynamic>> verifyProtector(
+  Future<ApiResponse<CheckProtectorResponse>> verifyProtector(
       {required PDoneVerifyProtectorRequest payload}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -665,7 +665,7 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
     final _data = <String, dynamic>{};
     _data.addAll(payload.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<dynamic>>(Options(
+        _setStreamType<ApiResponse<CheckProtectorResponse>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -681,30 +681,30 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<dynamic>.fromJson(
+    final value = ApiResponse<CheckProtectorResponse>.fromJson(
       _result.data!,
-      (json) => json as dynamic,
+      (json) => CheckProtectorResponse.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
 
   @override
-  Future<ApiResponse<dynamic>> verifyOTPProtector(
-      {required PDoneVerifyOTPProtectorRequest payload}) async {
+  Future<ApiResponse<APIVerifyResponse>> requestProtector(
+      {required PDoneRequestProtectorReq payload}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(payload.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<dynamic>>(Options(
+        _setStreamType<ApiResponse<APIVerifyResponse>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'api/v1/p-done/verify-protector-otp',
+              'api/v1/protector/request',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -713,9 +713,9 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<dynamic>.fromJson(
+    final value = ApiResponse<APIVerifyResponse>.fromJson(
       _result.data!,
-      (json) => json as dynamic,
+      (json) => APIVerifyResponse.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

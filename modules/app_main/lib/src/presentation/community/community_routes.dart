@@ -32,10 +32,7 @@ class CommunityRoutes extends RouteModule {
   @override
   Map<String, WidgetBuilder> getAll(RouteSettings settings) => {
         CommunityWidget.routeName: (context) {
-          return BlocProvider.value(
-            value: injector.get<UserCubit>(),
-            child: const CommunityWidget(),
-          );
+          return const CommunityWidget();
         },
         GroupsListingWidget.routeName: (context) {
           return MultiBlocProvider(
@@ -137,7 +134,10 @@ class CommunityRoutes extends RouteModule {
           return const AskToJoinTeamSuccessScreen();
         },
         TeamRequestListScreen.routeName: (context) {
-          return const TeamRequestListScreen();
+          final args = settings.arguments as Map<String, dynamic>;
+          return TeamRequestListScreen(
+            team: args['team'],
+          );
         },
         UpdateTeamOptionsScreen.routeName: (context) {
           final args = settings.arguments as Team;

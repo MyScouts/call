@@ -1,11 +1,13 @@
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/confirm_register_ja_payload.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_request_protector_req.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
+import 'package:app_main/src/data/models/responses/api_verify_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
+import 'package:camera/camera.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
-import '../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_otp_protector.dart';
 import '../../data/models/responses/confirm_register_ja_response.dart';
 import '../../data/models/responses/register_pdone_response.dart';
 import '../../data/models/responses/upgrade_account_response.dart';
@@ -52,6 +54,10 @@ class UpgradeAccountUsecase {
     return _upgradeAccountRepository.updatePDoneProfileOver18(payload);
   }
 
+  Future<bool> updatePDoneProfileBirthCer(UpdateProfilePayload payload) {
+    return _upgradeAccountRepository.updatePDoneProfileBirthCer(payload);
+  }
+
   Future<bool> updatePDoneProfileRange15To18(UpdateProfilePayload payload) {
     return _upgradeAccountRepository.updatePDoneProfileRange15To18(payload);
   }
@@ -89,10 +95,6 @@ class UpgradeAccountUsecase {
     return _upgradeAccountRepository.checkProtector(payload);
   }
 
-  Future<bool> checkProtectorVerifyOTP(VerifyOtpPDonePayload payload) async {
-    return _upgradeAccountRepository.checkProtectorVerifyOTP(payload);
-  }
-
   Future<BankAccount> updateBankAccount(
       UpdateBankAccountPayload payload) async {
     return _upgradeAccountRepository.updateBankAccount(payload);
@@ -113,12 +115,16 @@ class UpgradeAccountUsecase {
     return await _upgradeAccountRepository.confirmJARegister(payload);
   }
 
-
-  Future<bool> verifyProtector(PDoneVerifyProtectorRequest payload) {
+  Future<int> verifyProtector(PDoneVerifyProtectorRequest payload) {
     return _upgradeAccountRepository.verifyProtector(payload: payload);
   }
 
-  Future<bool> verifyOTPProtector(PDoneVerifyOTPProtectorRequest payload) {
-    return _upgradeAccountRepository.verifyOTPProtector(payload: payload);
+  Future<String> uploadBirthCer(XFile xFile, String prefix) {
+    return _upgradeAccountRepository.uploadBirthCer(xFile, prefix);
+  }
+
+  Future<APIVerifyResponse> requestProtector(
+      {required PDoneRequestProtectorReq req}) {
+    return _upgradeAccountRepository.requestProtector(req: req);
   }
 }

@@ -23,3 +23,13 @@ class AssignBossPayload with _$AssignBossPayload {
   factory AssignBossPayload.fromJson(Map<String, dynamic> json) =>
       _$AssignBossPayloadFromJson(json);
 }
+
+@freezed
+class GetCommunityPayload with _$GetCommunityPayload {
+  const factory GetCommunityPayload({
+    required String teamId,
+  }) = _GetCommunityPayload;
+
+  factory GetCommunityPayload.fromJson(Map<String, dynamic> json) =>
+      _$GetCommunityPayloadFromJson(json);
+}

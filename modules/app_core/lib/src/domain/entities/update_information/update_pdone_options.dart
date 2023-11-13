@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 
-enum PDoneOptionAge { under15, over15 }
-enum PDoneOptionRangeAge { over18, under18AndOver15 }
+enum PDoneOptionAge { under14, over15 }
+enum PDoneAPICaller { adult, teenager, children }
 
 extension PDoneOptionAgeeExt on PDoneOptionAge {
   String title(BuildContext context) {
     switch (this) {
-      case PDoneOptionAge.under15:
-        return 'Dưới 15 tuổi';
+      case PDoneOptionAge.under14:
+        return 'Dưới 14 tuổi';
       case PDoneOptionAge.over15:
         return 'Trên 15 tuổi';
     }

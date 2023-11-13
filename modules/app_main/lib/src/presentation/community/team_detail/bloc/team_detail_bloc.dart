@@ -75,7 +75,6 @@ class TeamDetailBloc extends Bloc<TeamDetailEvent, TeamDetailState> {
       emit(AskToJoinSuccess());
     } on DioException catch (e) {
       emit(AskToJoinError(e));
-
       if (kDebugMode) {
         rethrow;
       }

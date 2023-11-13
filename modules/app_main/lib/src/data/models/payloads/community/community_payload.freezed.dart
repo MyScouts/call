@@ -313,3 +313,141 @@ abstract class _AssignBossPayload implements AssignBossPayload {
   _$$AssignBossPayloadImplCopyWith<_$AssignBossPayloadImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+GetCommunityPayload _$GetCommunityPayloadFromJson(Map<String, dynamic> json) {
+  return _GetCommunityPayload.fromJson(json);
+}
+
+/// @nodoc
+mixin _$GetCommunityPayload {
+  String get teamId => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GetCommunityPayloadCopyWith<GetCommunityPayload> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GetCommunityPayloadCopyWith<$Res> {
+  factory $GetCommunityPayloadCopyWith(
+          GetCommunityPayload value, $Res Function(GetCommunityPayload) then) =
+      _$GetCommunityPayloadCopyWithImpl<$Res, GetCommunityPayload>;
+  @useResult
+  $Res call({String teamId});
+}
+
+/// @nodoc
+class _$GetCommunityPayloadCopyWithImpl<$Res, $Val extends GetCommunityPayload>
+    implements $GetCommunityPayloadCopyWith<$Res> {
+  _$GetCommunityPayloadCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? teamId = null,
+  }) {
+    return _then(_value.copyWith(
+      teamId: null == teamId
+          ? _value.teamId
+          : teamId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$GetCommunityPayloadImplCopyWith<$Res>
+    implements $GetCommunityPayloadCopyWith<$Res> {
+  factory _$$GetCommunityPayloadImplCopyWith(_$GetCommunityPayloadImpl value,
+          $Res Function(_$GetCommunityPayloadImpl) then) =
+      __$$GetCommunityPayloadImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String teamId});
+}
+
+/// @nodoc
+class __$$GetCommunityPayloadImplCopyWithImpl<$Res>
+    extends _$GetCommunityPayloadCopyWithImpl<$Res, _$GetCommunityPayloadImpl>
+    implements _$$GetCommunityPayloadImplCopyWith<$Res> {
+  __$$GetCommunityPayloadImplCopyWithImpl(_$GetCommunityPayloadImpl _value,
+      $Res Function(_$GetCommunityPayloadImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? teamId = null,
+  }) {
+    return _then(_$GetCommunityPayloadImpl(
+      teamId: null == teamId
+          ? _value.teamId
+          : teamId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$GetCommunityPayloadImpl implements _GetCommunityPayload {
+  const _$GetCommunityPayloadImpl({required this.teamId});
+
+  factory _$GetCommunityPayloadImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GetCommunityPayloadImplFromJson(json);
+
+  @override
+  final String teamId;
+
+  @override
+  String toString() {
+    return 'GetCommunityPayload(teamId: $teamId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetCommunityPayloadImpl &&
+            (identical(other.teamId, teamId) || other.teamId == teamId));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, teamId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetCommunityPayloadImplCopyWith<_$GetCommunityPayloadImpl> get copyWith =>
+      __$$GetCommunityPayloadImplCopyWithImpl<_$GetCommunityPayloadImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$GetCommunityPayloadImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _GetCommunityPayload implements GetCommunityPayload {
+  const factory _GetCommunityPayload({required final String teamId}) =
+      _$GetCommunityPayloadImpl;
+
+  factory _GetCommunityPayload.fromJson(Map<String, dynamic> json) =
+      _$GetCommunityPayloadImpl.fromJson;
+
+  @override
+  String get teamId;
+  @override
+  @JsonKey(ignore: true)
+  _$$GetCommunityPayloadImplCopyWith<_$GetCommunityPayloadImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

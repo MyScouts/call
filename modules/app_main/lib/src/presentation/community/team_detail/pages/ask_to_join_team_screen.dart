@@ -35,7 +35,6 @@ class _AskToJoinTeamScreenState extends State<AskToJoinTeamScreen>
 
   @override
   Widget build(BuildContext context) {
-    final pDoneId = injector.get<UserCubit>().currentUser?.pDoneId;
     return BlocListener<TeamDetailBloc, TeamDetailState>(
       listener: _onAskToJoinListen,
       child: Scaffold(

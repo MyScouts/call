@@ -28,27 +28,35 @@ import 'team_detail/pages/ask_to_join_team_screen.dart';
 import 'team_detail/team_detail_screen.dart';
 
 extension CommunityCoordinator on BuildContext {
-  Future<T?> startGroupDetail<T>(
-      {required String? id, String? groupName, String? cover}) {
+  Future<T?> startGroupDetail<T>({required String? id, String? groupName, String? cover}) {
     // if (!isAuthenticated) {
     //   return startLogin<T>(hasDashboard: true);
     // }
 
-    return Navigator.of(this)
-        .pushNamed(GroupDetailScreen.routeName, arguments: {
+    return Navigator.of(this).pushNamed(GroupDetailScreen.routeName, arguments: {
       'id': id,
       'groupName': groupName,
       'cover': cover,
     });
   }
 
-  Future<T?> startTeamDetail<T>(
-      {required String? id, String? name, int? bossGroupId}) {
+  Future<T?> startTeamDetail<T>({required String? id, String? name, int? bossGroupId}) {
     // if (!isAuthenticated) {
     //   return startLogin<T>(hasDashboard: true);
     // }
 
     return Navigator.of(this).pushNamed(TeamDetailScreen.routeName, arguments: {
+      'id': id,
+      'name': name,
+      'bossGroupId': bossGroupId,
+    });
+  }
+  Future<T?> startTeamDetailFromQR<T>({required String? id, String? name, int? bossGroupId}) {
+    // if (!isAuthenticated) {
+    //   return startLogin<T>(hasDashboard: true);
+    // }
+
+    return Navigator.of(this).pushReplacementNamed(TeamDetailScreen.routeName, arguments: {
       'id': id,
       'name': name,
       'bossGroupId': bossGroupId,
@@ -63,8 +71,7 @@ extension CommunityCoordinator on BuildContext {
     //   return startLogin<T>(hasDashboard: true);
     // }
 
-    return Navigator.of(this)
-        .pushNamed(EditCommunityDetailScreen.routeName, arguments: {
+    return Navigator.of(this).pushNamed(EditCommunityDetailScreen.routeName, arguments: {
       'community': community,
       'type': type,
     });
@@ -75,15 +82,13 @@ extension CommunityCoordinator on BuildContext {
     //   return startLogin<T>(hasDashboard: true);
     // }
 
-    return Navigator.of(this)
-        .pushNamed(FanGroupDetailScreen.routeName, arguments: {
+    return Navigator.of(this).pushNamed(FanGroupDetailScreen.routeName, arguments: {
       'fanGroup': fanGroup,
     });
   }
 
   Future<T?> startEditFanGroup<T>(FanGroup fanGroup) {
-    return Navigator.of(this)
-        .pushNamed(EditFanGroupScreen.routeName, arguments: {
+    return Navigator.of(this).pushNamed(EditFanGroupScreen.routeName, arguments: {
       'fanGroup': fanGroup,
     });
   }
@@ -150,6 +155,20 @@ extension CommunityCoordinator on BuildContext {
     );
   }
 
+  Future<T?> shareLinkTeam<T>({Widget? qr, String? link}) {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: false,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return ShareLinkDialog(
+          link: link,
+          qrCode: qr,
+        );
+      },
+    );
+  }
+
   Future<T?> startAskToJoinTeam<T>(String teamId) {
     return Navigator.of(this).pushNamed(
       AskToJoinTeamScreen.routeName,
@@ -162,12 +181,14 @@ extension CommunityCoordinator on BuildContext {
   }
 
   void backToTeamDetailScreen<T>() {
-    return Navigator.of(this)
-        .popUntil(ModalRoute.withName(TeamDetailScreen.routeName));
+    return Navigator.of(this).popUntil(ModalRoute.withName(TeamDetailScreen.routeName));
   }
 
-  Future<T?> startTeamRequestsScreen<T>() {
-    return Navigator.of(this).pushNamed(TeamRequestListScreen.routeName);
+  Future<T?> startTeamRequestsScreen<T>({required Team team}) {
+    return Navigator.of(this)
+        .pushNamed(TeamRequestListScreen.routeName, arguments: {
+      "team": team,
+    });
   }
 
   Future<T?> startUpdateTeamOptionsScreen<T>({required Team team}) {
@@ -198,8 +219,7 @@ extension CommunityCoordinator on BuildContext {
         return ConfirmDialog(
           title: 'Bạn có muốn rời Team ?',
           actionTitle: 'Rời Team',
-          content:
-              'Chúng tôi sẽ tiếp nhận yêu cầu rời Team của bạn và sẽ gửi bạn thông báo mới nhất.',
+          content: 'Chúng tôi sẽ tiếp nhận yêu cầu rời Team của bạn và sẽ gửi bạn thông báo mới nhất.',
           onAction: onAction.call,
         );
       },
@@ -272,9 +292,9 @@ extension CommunityCoordinator on BuildContext {
 
               if (state is RevokeBossSuccess) {
                 hideLoading();
-                Navigator.pop(context);
-                Future.delayed(Duration(milliseconds: 200));
-                context.startWaitingModal();
+                showToastMessage("Huỷ quyền Boss Team thành công.");
+                Navigator.pop(context, true);
+                Future.delayed(const Duration(milliseconds: 200));
               }
             },
             child: RevokeBossModal(
