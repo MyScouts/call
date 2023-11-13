@@ -202,8 +202,23 @@ class _ResourceApi implements ResourceApi {
   }
 
   @override
-  Future<String> storageUploadUrl(XFile file, String prefix) {
+  Future<String> storageUploadUrl(XFile file, String prefix) async {
     // TODO: implement storageUploadUrl
-    throw UnimplementedError();
+    final resource = '$prefix${file.name}';
+    final _responseGetUrlUpload = StorageUploadUrlResponse.fromJson(
+        (await _dio.get('api/v1/storage/upload-url?filepath=${resource}'))
+            .data);
+    Uint8List imageData = await File(file.path).readAsBytes();
+    await Dio().request(
+      _responseGetUrlUpload.uploadUrl,
+      options: Options(
+        method: 'PUT',
+        headers: {'Content-Type': 'image/jpeg'},
+      ),
+      data: imageData,
+    );
+    print(_responseGetUrlUpload.publicUrl);
+
+    return _responseGetUrlUpload.publicUrl;
   }
 }
