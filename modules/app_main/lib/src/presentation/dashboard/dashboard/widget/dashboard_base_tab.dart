@@ -84,6 +84,15 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
         dashBoardController.enableEditMode = false;
       },
     );
+
+    NotificationCenter.subscribe(
+      channel: showEditMode,
+      observer: this,
+      onNotification: (data) {
+        if(!isPage) return;
+        dashBoardController.enableEditMode = true;
+      },
+    );
   }
 
   bool get isPage {
@@ -109,6 +118,10 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
     );
     NotificationCenter.unsubscribe(
       channel: cancelEditMode,
+      observer: this,
+    );
+    NotificationCenter.unsubscribe(
+      channel: showEditMode,
       observer: this,
     );
     dashBoardController.dispose();

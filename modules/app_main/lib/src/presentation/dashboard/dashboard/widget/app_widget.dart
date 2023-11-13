@@ -46,40 +46,56 @@ class AppWidget extends StatelessWidget {
                     return;
                   }
                 },
-                onLongPress: () {},
-                child: AspectRatio(
-                  aspectRatio: (app.width) / app.height,
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(14),
-                        child: ImageWidget(
-                          app.backgroundImage,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
+                child: Builder(
+                  builder: (_) {
+                    Widget child = Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(14),
+                          child: ImageWidget(
+                            app.backgroundImage,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      if (enableRemoveIcon)
-                        Positioned(
-                          left: -10,
-                          top: -10,
-                          child: GestureDetector(
-                            onTap: onRemoved,
-                            behavior: HitTestBehavior.opaque,
-                            child: const CircleAvatar(
-                              backgroundColor: Colors.grey,
-                              radius: 10,
-                              child: Icon(
-                                Icons.remove,
-                                size: 20,
-                                color: Colors.white,
+                        if (enableRemoveIcon)
+                          Positioned(
+                            left: -10,
+                            top: -10,
+                            child: GestureDetector(
+                              onTap: onRemoved,
+                              behavior: HitTestBehavior.opaque,
+                              child: const SizedBox.square(
+                                dimension: 25,
+                                child: Center(
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.grey,
+                                    radius: 15,
+                                    child: Icon(
+                                      Icons.remove,
+                                      size: 20,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                    ],
-                  ),
+                      ],
+                    );
+
+                    if (app.id.contains('banner')) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: child,
+                      );
+                    }
+                    return AspectRatio(
+                      aspectRatio: (app.width) / app.height,
+                      child: child,
+                    );
+                  },
                 ),
               ),
             ),
@@ -119,14 +135,24 @@ class AppWidgetBuilder extends AppWidget {
       listenable: controller,
       builder: (_, __) {
         if (app.id == 'wg_clock') {
-          return const ClockWidget();
+          return ClockWidget(
+            enableRemoveIcon: controller.enableEditMode,
+            onRemoved: onRemoved,
+          );
         }
         if (app.id == 'wg_weather') {
-          return WeatherWidget(key: key);
+          return WeatherWidget(
+            key: key,
+            enableEditMode: controller.enableEditMode,
+            onRemoved: onRemoved,
+          );
         }
 
         if (app.id == 'wg_weather_banner') {
-          return const WeatherBannerWidget();
+          return WeatherBannerWidget(
+            enableEditMode: controller.enableEditMode,
+            onRemoved: onRemoved,
+          );
         }
 
         if (app is DashBoardGroupItem) {
@@ -158,7 +184,8 @@ class AppWidgetBuilder extends AppWidget {
 }
 
 class AppWidgetGroupBuilder extends AppWidget {
-  const AppWidgetGroupBuilder({super.key,
+  const AppWidgetGroupBuilder({
+    super.key,
     required super.app,
     required super.onRemoved,
     this.enableEditMode = false,
@@ -172,7 +199,10 @@ class AppWidgetGroupBuilder extends AppWidget {
       return const ClockWidget();
     }
     if (app.id == 'wg_weather') {
-      return WeatherWidget(key: key);
+      return WeatherWidget(
+        key: key,
+        enableEditMode: false,
+      );
     }
 
     if (app.id == 'wg_weather_banner') {

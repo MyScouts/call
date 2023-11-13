@@ -124,9 +124,9 @@ class KickMemberForce extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Trang Trần ',
-                      style: TextStyle(
+                    Text(
+                      user.getdisplayName,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                         color: Colors.black,
@@ -134,7 +134,7 @@ class KickMemberForce extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'ID: ${user.vShopId ?? ''}',
+                      'ID: ${user.pDoneId ?? ''}',
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,

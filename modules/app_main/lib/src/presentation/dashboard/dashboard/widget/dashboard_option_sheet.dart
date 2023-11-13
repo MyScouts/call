@@ -123,6 +123,7 @@ class _DashBoardOptionSheetState extends State<DashBoardOptionSheet> {
                             if (e.id == "wg_weather") {
                               return const WeatherWidget(
                                 textColor: Colors.black,
+                                enableEditMode: false,
                               );
                             }
 
