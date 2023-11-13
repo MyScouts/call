@@ -102,13 +102,11 @@ final class ResetPasswordFail extends UserState {
 final class GetOTPLoading extends UserState {}
 
 final class ResendUserOTPSuccess extends UserState {
-  final Otp otp;
-  ResendUserOTPSuccess({required this.otp});
+  ResendUserOTPSuccess();
 }
 
 final class GetOTPSuccess extends UserState {
-  final Otp otp;
-  GetOTPSuccess({required this.otp});
+  GetOTPSuccess();
 }
 
 final class GetOTPFail extends UserState {
