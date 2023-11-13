@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:app_main/src/presentation/community/team_detail/bloc/team_detail_bloc.dart';
+import 'package:app_main/src/presentation/community/team_detail/pages/add_team_member_sheet.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/remove_member_sheet.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -284,12 +285,29 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
             .add(GetDetailDataParam1Event(team.id));
 
       case UpdateTeamOption.invite:
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (_) {
+            return BlocProvider<TeamDetailBloc>.value(
+              value: context.read<TeamDetailBloc>(),
+              child: const AddTeamMemberSheet(),
+            );
+          },
+        );
+        // Navigator.of(context).push(MaterialPageRoute(
+        //     builder: (_) => BlocProvider<TeamDetailBloc>.value(
+        //           value: context.read<TeamDetailBloc>(),
+        //           child: const AddTeamMemberSheet(),
+        //         )));
+        break;
       case UpdateTeamOption.kick:
         Navigator.of(context).push(MaterialPageRoute(
             builder: (_) => BlocProvider<TeamDetailBloc>.value(
                   value: context.read<TeamDetailBloc>(),
-                  child: RemoveMemberSheet(),
+                  child: const RemoveMemberSheet(),
                 )));
+        break;
       case UpdateTeamOption.edit:
         return context.showToastMessage(
           'Tính năng này đang được phát triển',

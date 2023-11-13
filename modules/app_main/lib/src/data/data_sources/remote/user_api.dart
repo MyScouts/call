@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
+import 'package:app_main/src/data/models/responses/list_friends_user_response.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
@@ -20,6 +21,8 @@ class UserApiConstants {
   static const authOTP = 'api/v1/auth/otp';
   static const search = "api/v1/user/search";
   static const onboarding = "api/v1/onboarding/ecom";
+  static const listFriends = "api/users/list-friends";
+  static const invite = "api/v1/team/{id}/invite";
 }
 
 @RestApi()
@@ -69,4 +72,13 @@ abstract class UserApi {
 
   @GET(UserApiConstants.onboarding)
   Future<OnboardingResponse> onboarding();
+
+  @GET(UserApiConstants.listFriends)
+  Future<ListFriendUserResponse> listFriends();
+
+  @POST(UserApiConstants.invite)
+  Future invite(
+    @Body() Map<String, dynamic> json,
+    @Path('id') String teamID,
+  );
 }

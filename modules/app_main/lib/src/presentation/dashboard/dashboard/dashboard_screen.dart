@@ -1,3 +1,5 @@
+import 'package:app_main/src/core/services/notification_center.dart';
+import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_background_builder.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_community_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_ecommerce_tab.dart';
@@ -38,6 +40,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   bool _showNotification = false;
 
+  bool _showEditMode = false;
+
   Widget _buildDot(BuildContext context, int index) {
     final page = _page;
     return Container(
@@ -49,6 +53,18 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         color: page == index ? Colors.white : Colors.white.withOpacity(.2),
       ),
     );
+  }
+
+  void enableEditMode() {
+    setState(() {
+      _showEditMode = true;
+    });
+  }
+
+  void disableEditMode() {
+    setState(() {
+      _showEditMode = false;
+    });
   }
 
   @override
@@ -72,21 +88,37 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: StatusBarWidget(
+                      enableEditMode: _showEditMode,
                       openAppStore: () => context.startSystemSetting(_page),
                       openNotification: () {
                         setState(() {
                           _showNotification = true;
                         });
                       },
+                      onCanceled: () {
+                        setState(() {
+                          _showEditMode = false;
+                        });
+                        NotificationCenter.post(channel: cancelEditMode);
+                      },
                     ),
                   ),
                   Expanded(
                     child: PageView(
                       controller: _pageController,
-                      children: const [
-                        DashBoardCommunityTab(),
-                        DashBoardPersonalTab(),
-                        DashBoardEcommerceTab(),
+                      children: [
+                        DashBoardCommunityTab(
+                          enableEditMode: enableEditMode,
+                          disableEditMode: disableEditMode,
+                        ),
+                        DashBoardPersonalTab(
+                          enableEditMode: enableEditMode,
+                          disableEditMode: disableEditMode,
+                        ),
+                        DashBoardEcommerceTab(
+                          enableEditMode: enableEditMode,
+                          disableEditMode: disableEditMode,
+                        ),
                       ],
                       onPageChanged: (page) {
                         setState(() {

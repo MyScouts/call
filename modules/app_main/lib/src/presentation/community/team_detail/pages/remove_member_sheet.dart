@@ -4,6 +4,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/presentation/community/team_detail/bloc/team_detail_bloc.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
+import 'package:app_main/src/presentation/shared/user/bloc/user_bloc.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -66,7 +67,6 @@ class _RemoveMemberSheetState extends State<RemoveMemberSheet> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
@@ -311,7 +311,7 @@ class _UserCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      user.getdisplayName,
+                      user.getdisplayName ?? '',
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -319,7 +319,7 @@ class _UserCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'ID: ${user.vShopId ?? ''}',
+                      'ID: ${user.pDoneId ?? ''}',
                       style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w500,
@@ -329,7 +329,8 @@ class _UserCard extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                if (!enableChoose)
+                if (!enableChoose ||
+                    (context.read<UserBloc>().state.currentUser?.pDoneId != user.pDoneId))
                   TextButton(
                     onPressed: force,
                     style: TextButton.styleFrom(

@@ -71,4 +71,15 @@ class AuthRepositoryImpl extends UserRepository {
   Future<OnboardingResponse> onboarding() {
     return _userAPI.onboarding();
   }
+
+  @override
+  Future<List<User>> listFriends() async {
+    final res = await _userAPI.listFriends();
+    return res.users;
+  }
+
+  @override
+  Future invite(String teamID, Map<String, dynamic> json) {
+    return _userAPI.invite(json, teamID);
+  }
 }

@@ -3,6 +3,7 @@ import 'dart:developer';
 const String addDashBoardItemEvent = 'addDashBoardItemEvent';
 const String changeGroupEvent = 'changeGroupEvent';
 const String changeBg = 'changeBg';
+const String cancelEditMode = 'cancelEditMode';
 
 typedef ObserverCallback = void Function(dynamic options);
 

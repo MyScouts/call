@@ -4,6 +4,7 @@ import 'package:app_main/src/data/models/payloads/community/community_payload.da
 import 'package:app_main/src/presentation/community/team_detail/bloc/team_detail_bloc.dart';
 import 'package:app_main/src/presentation/community/group_detail/update_group_options_screen.dart';
 import 'package:app_main/src/presentation/community/groups/group_listing_bloc.dart';
+import 'package:app_main/src/presentation/community/team_detail/pages/add_team_member_sheet.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/ask_tojoin_team_success_screen.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/assign_boss_team_screen.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/boss_group_menu.dart';
@@ -191,10 +192,22 @@ extension CommunityCoordinator on BuildContext {
   }
 
   Future<T?> startUpdateTeamOptionsScreen<T>({required Team team}) {
-    return Navigator.of(this).pushNamed(
-      UpdateTeamOptionsScreen.routeName,
-      arguments: team,
-    );
+    return Navigator.of(this).push(MaterialPageRoute(
+      builder: (_) => MultiBlocProvider(
+        providers: [
+          BlocProvider<RelinquishBossRoleBloc>(
+            create: (context) => injector.get(),
+          ),
+          BlocProvider<GetBossTeamRelinquishStatusBloc>(
+            create: (context) => injector.get(),
+          ),
+          BlocProvider<TeamDetailBloc>.value(
+            value: read<TeamDetailBloc>(),
+          ),
+        ],
+        child: UpdateTeamOptionsScreen(team: team),
+      ),
+    ));
   }
 
   Future<T?> startDialogConfirmLeaveTeam<T>({required VoidCallback onAction}) {
@@ -222,6 +235,18 @@ extension CommunityCoordinator on BuildContext {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => BossGroupMenu(team: team),
+    );
+  }
+
+  Future startAddMember() {
+    return showModalBottomSheet(
+      context: this,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (_) => BlocProvider<TeamDetailBloc>.value(
+        value: read(),
+        child: const AddTeamMemberSheet(),
+      ),
     );
   }
 

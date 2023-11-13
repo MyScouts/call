@@ -11,6 +11,7 @@ class CircleNetworkImage extends StatelessWidget {
     required this.size,
     this.border,
     this.isIgnoreCache = false,
+    this.defaultImage,
     this.errorUrl,
   });
 
@@ -18,6 +19,7 @@ class CircleNetworkImage extends StatelessWidget {
   final Border? border;
   final bool isIgnoreCache;
   final double size;
+  final Widget? defaultImage;
   final String? errorUrl;
 
   @override
@@ -38,7 +40,7 @@ class CircleNetworkImage extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(size / 2),
             child: url.isEmpty
-                ? const SizedBox.shrink()
+                ? defaultImage ?? const SizedBox.shrink()
                 : isIgnoreCache
                     ? Image.network(
                         url,

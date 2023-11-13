@@ -254,10 +254,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
           if (showInvite)
             Expanded(
               child: GestureDetector(
-                onTap: () async {
-                  // context.startScanQrCode();
-                  // String link = await buildDynamicLink();
-                },
+                onTap: context.startAddMember,
                 child: Container(
                   margin: const EdgeInsets.only(right: 20),
                   padding: const EdgeInsets.symmetric(vertical: 10),

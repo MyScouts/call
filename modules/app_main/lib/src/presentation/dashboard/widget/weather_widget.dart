@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/dashboard/widget/weather_bloc_builder.dart';
 import 'package:app_main/src/presentation/dashboard/widget/weather_location_builder.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -51,7 +52,7 @@ class WeatherWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Flexible(
-                    child: Text(
+                    child: AutoSizeText(
                       city ?? '',
                       style: context.text.titleSmall!.copyWith(
                         color: AppColors.white,
