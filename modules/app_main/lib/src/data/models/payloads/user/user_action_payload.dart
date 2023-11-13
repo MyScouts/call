@@ -1,3 +1,5 @@
+import 'package:app_main/src/domain/entities/update_account/update_pdone_birth_place_payload.dart';
+import 'package:app_main/src/domain/entities/update_account/update_place_information_payload.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_action_payload.g.dart';
@@ -70,7 +72,7 @@ class SearchUserPayload {
 @JsonSerializable()
 class UpdatePDoneProfilePayload {
   final String nickName;
-  final Map<String, String> currentPlace;
+  final UpdatePlaceInformationPayload? currentPlace;
   final int height;
   final int weight;
   final String maritalStatus;
@@ -101,7 +103,7 @@ class UpdatePDoneProfilePayload {
 @JsonSerializable()
 class UpdateNonePDoneProfilePayload {
   final String nickName;
-  final Map<String, String> currentPlace;
+  final UpdatePlaceInformationPayload? currentPlace;
   final int height;
   final int weight;
   final String maritalStatus;
@@ -111,7 +113,7 @@ class UpdateNonePDoneProfilePayload {
   final String interest;
   final String talent;
   final int sex;
-  final Map<String, String> birthPlace;
+  final UpdatePDoneBirthPlacePayload? birthPlace;
   final String birthday;
   final String identityNumber;
   final String supplyDate;

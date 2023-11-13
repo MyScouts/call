@@ -1,39 +1,16 @@
+import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-
-enum Education { thcs, thpt, dh }
-
-extension EducationExt on Education {
-  String getText() {
-    switch (this) {
-      case Education.thcs:
-        return 'THCS';
-      case Education.thpt:
-        return 'THPT';
-      case Education.dh:
-        return 'Đại học';
-    }
-  }
-
-  String toValue() {
-    switch (this) {
-      case Education.thcs:
-        return 'ac_5';
-      case Education.thpt:
-        return 'ac_5';
-      case Education.dh:
-        return 'ac_5';
-    }
-  }
-}
 
 class EducationDropdown extends StatefulWidget {
   final Function(String) onChange;
   final bool required;
+  final List<AcademicLevel> educations;
   const EducationDropdown({
     super.key,
     required this.onChange,
     this.required = false,
+    this.educations = const [],
   });
 
   @override
@@ -41,8 +18,6 @@ class EducationDropdown extends StatefulWidget {
 }
 
 class _EducationDropdownState extends State<EducationDropdown> {
-  Education value = Education.thcs;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -70,7 +45,7 @@ class _EducationDropdownState extends State<EducationDropdown> {
           ],
         ),
         const SizedBox(height: 7),
-        DropdownButtonFormField2<Education>(
+        DropdownButtonFormField2<AcademicLevel>(
           isExpanded: true,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 12),
@@ -82,12 +57,12 @@ class _EducationDropdownState extends State<EducationDropdown> {
             'Chọn học vấn.',
             style: TextStyle(fontSize: 14),
           ),
-          value: value,
-          items: Education.values
-              .map((item) => DropdownMenuItem<Education>(
+          value: widget.educations.first,
+          items: widget.educations
+              .map((item) => DropdownMenuItem<AcademicLevel>(
                     value: item,
                     child: Text(
-                      item.getText(),
+                      item.name!,
                       style: const TextStyle(
                         fontSize: 14,
                       ),
@@ -97,13 +72,13 @@ class _EducationDropdownState extends State<EducationDropdown> {
           validator: (value) {
             print(value);
             if (value == null) {
-              return 'Chọn học vấn .';
+              return 'Chọn học vấn.';
             }
             return null;
           },
           onChanged: (value) {
             if (value != null) {
-              widget.onChange(value.toValue());
+              widget.onChange(value.key!);
               value = value;
               setState(() {});
             }

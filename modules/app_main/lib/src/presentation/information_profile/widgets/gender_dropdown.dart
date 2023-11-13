@@ -1,23 +1,25 @@
-import 'package:app_main/src/domain/entities/update_account/place/district.dart';
+import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class DistrictDropDown extends StatefulWidget {
-  final Function(District) onChange;
+class GenderDropdown extends StatefulWidget {
+  final Function(int) onChange;
   final bool required;
-  final List<District> districts;
-  const DistrictDropDown({
+  final List<Gender> genders;
+
+  const GenderDropdown({
     super.key,
     required this.onChange,
     this.required = false,
-    required this.districts,
+    this.genders = const [],
   });
 
   @override
-  State<DistrictDropDown> createState() => _DistrictDropDownState();
+  State<GenderDropdown> createState() => _GenderDropdownState();
 }
 
-class _DistrictDropDownState extends State<DistrictDropDown> {
+class _GenderDropdownState extends State<GenderDropdown> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,7 +28,7 @@ class _DistrictDropDownState extends State<DistrictDropDown> {
         Row(
           children: [
             const Text(
-              "Quận/huyện",
+              "Giới tính",
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Color(0xFF212121),
@@ -45,7 +47,7 @@ class _DistrictDropDownState extends State<DistrictDropDown> {
           ],
         ),
         const SizedBox(height: 7),
-        DropdownButtonFormField2<District>(
+        DropdownButtonFormField2<Gender>(
           isExpanded: true,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 12),
@@ -54,31 +56,35 @@ class _DistrictDropDownState extends State<DistrictDropDown> {
             ),
           ),
           hint: const Text(
-            'Chọn quận huyện.',
+            'Chọn giới tính.',
             style: TextStyle(fontSize: 14),
           ),
-          value: widget.districts.first,
-          items: widget.districts
-              .map((item) => DropdownMenuItem<District>(
-                    value: item,
-                    child: Text(
-                      item.name!,
-                      style: const TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                  ))
-              .toList(),
+          value: widget.genders.first,
+          items: widget.genders.isNotEmpty
+              ? widget.genders
+                  .map((item) => DropdownMenuItem<Gender>(
+                        value: item,
+                        child: Text(
+                          item.value!,
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                      ))
+                  .toList()
+              : [],
           validator: (value) {
-            print(value);
+            if (kDebugMode) {
+              print(value);
+            }
             if (value == null) {
-              return 'Chọn quận huyện.';
+              return 'Chọn giới tính.';
             }
             return null;
           },
           onChanged: (value) {
             if (value != null) {
-              widget.onChange(value);
+              widget.onChange(value.key!);
               value = value;
               setState(() {});
             }

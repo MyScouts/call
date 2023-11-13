@@ -1,35 +1,16 @@
+import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-
-enum MaritalStatus { single, married }
-
-extension MaritalStatusExt on MaritalStatus {
-  String getText() {
-    switch (this) {
-      case MaritalStatus.single:
-        return 'Độc thân';
-      case MaritalStatus.married:
-        return 'Kết hôn';
-    }
-  }
-
-  String toValue() {
-    switch (this) {
-      case MaritalStatus.single:
-        return 'mar_1';
-      case MaritalStatus.married:
-        return 'mar_2';
-    }
-  }
-}
 
 class MaritalStatusDropDown extends StatefulWidget {
   final Function(String) onChange;
   final bool required;
+  final List<MaritalStatus> maritals;
   const MaritalStatusDropDown({
     super.key,
     required this.onChange,
     this.required = false,
+    this.maritals = const [],
   });
 
   @override
@@ -37,8 +18,6 @@ class MaritalStatusDropDown extends StatefulWidget {
 }
 
 class _MaritalStatusDropDownState extends State<MaritalStatusDropDown> {
-  MaritalStatus value = MaritalStatus.single;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -78,12 +57,12 @@ class _MaritalStatusDropDownState extends State<MaritalStatusDropDown> {
             'Chọn tình trạng hôn nhân.',
             style: TextStyle(fontSize: 14),
           ),
-          value: value,
-          items: MaritalStatus.values
+          value: widget.maritals.first,
+          items: widget.maritals
               .map((item) => DropdownMenuItem<MaritalStatus>(
                     value: item,
                     child: Text(
-                      item.getText(),
+                      item.name!,
                       style: const TextStyle(
                         fontSize: 14,
                       ),
@@ -99,7 +78,7 @@ class _MaritalStatusDropDownState extends State<MaritalStatusDropDown> {
           },
           onChanged: (value) {
             if (value != null) {
-              widget.onChange(value.toValue());
+              widget.onChange(value.key!);
               value = value;
               setState(() {});
             }

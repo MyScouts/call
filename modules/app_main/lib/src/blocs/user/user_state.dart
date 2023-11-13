@@ -173,7 +173,7 @@ final class UpdatePDoneProfileFailed extends UserState {
 final class UpdateNonePDoneProfileLoading extends UserState {}
 
 final class UpdateNonePDoneProfileSuccess extends UserState {
-  final User user;
+  final UpdateNonePDoneProfileReponse user;
   UpdateNonePDoneProfileSuccess({required this.user});
 }
 

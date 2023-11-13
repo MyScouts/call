@@ -1,6 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
-import 'package:app_main/src/presentation/information_profile/widgets/information_profile_body.dart';
+import 'package:app_main/src/presentation/information_profile/screens/body_information_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/ui.dart';
 
@@ -18,7 +18,7 @@ class _InformationProfileScreenState extends State<InformationProfileScreen> wit
     return ScaffoldHideKeyboard(
       appBar: const BaseAppBar(
         title: "Thông tin tài khoản",
-        isClose: true,
+        isClose: false,
       ),
       body: BlocProvider(
         create: (_) => injector<UserCubit>(),

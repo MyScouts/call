@@ -1,39 +1,16 @@
+import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-
-enum BloodType { a, b, ab }
-
-extension BloodTypeExt on BloodType {
-  String getText() {
-    switch (this) {
-      case BloodType.a:
-        return 'A';
-      case BloodType.b:
-        return 'B';
-      case BloodType.ab:
-        return 'AB';
-    }
-  }
-
-  String toValue() {
-    switch (this) {
-      case BloodType.a:
-        return 'a';
-      case BloodType.b:
-        return 'b';
-      case BloodType.ab:
-        return 'ab';
-    }
-  }
-}
 
 class BloodTypeDropDown extends StatefulWidget {
   final Function(String) onChange;
   final bool required;
+  final List<BloodGroup> bloodTypes;
   const BloodTypeDropDown({
     super.key,
     required this.onChange,
     this.required = false,
+    this.bloodTypes = const [],
   });
 
   @override
@@ -41,8 +18,6 @@ class BloodTypeDropDown extends StatefulWidget {
 }
 
 class _BloodTypeDropDownState extends State<BloodTypeDropDown> {
-  BloodType value = BloodType.a;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -70,7 +45,7 @@ class _BloodTypeDropDownState extends State<BloodTypeDropDown> {
           ],
         ),
         const SizedBox(height: 7),
-        DropdownButtonFormField2<BloodType>(
+        DropdownButtonFormField2<BloodGroup>(
           isExpanded: true,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 12),
@@ -79,15 +54,15 @@ class _BloodTypeDropDownState extends State<BloodTypeDropDown> {
             ),
           ),
           hint: const Text(
-            'Chọn tỉnh thành.',
+            'Chọn nhóm máu.',
             style: TextStyle(fontSize: 14),
           ),
-          value: value,
-          items: BloodType.values
-              .map((item) => DropdownMenuItem<BloodType>(
+          value: widget.bloodTypes.first,
+          items: widget.bloodTypes
+              .map((item) => DropdownMenuItem<BloodGroup>(
                     value: item,
                     child: Text(
-                      item.getText(),
+                      item.name!,
                       style: const TextStyle(
                         fontSize: 14,
                       ),
@@ -97,13 +72,13 @@ class _BloodTypeDropDownState extends State<BloodTypeDropDown> {
           validator: (value) {
             print(value);
             if (value == null) {
-              return 'Chọn tình thành.';
+              return 'Chọn  nhóm máu.';
             }
             return null;
           },
           onChanged: (value) {
             if (value != null) {
-              widget.onChange(value.toValue());
+              widget.onChange(value.id!);
               value = value;
               setState(() {});
             }

@@ -1,35 +1,17 @@
+import 'package:app_main/src/domain/entities/update_account/place/ward.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-enum Ward { phucla, phuthohoa }
-
-extension WardExt on Ward {
-  String getText() {
-    switch (this) {
-      case Ward.phucla:
-        return 'Phúc La';
-      case Ward.phuthohoa:
-        return 'Phú Thọ Hoà';
-    }
-  }
-
-  String toValue() {
-    switch (this) {
-      case Ward.phucla:
-        return 'Phúc La';
-      case Ward.phuthohoa:
-        return 'Phú Thọ Hoà';
-    }
-  }
-}
-
 class WardDropDown extends StatefulWidget {
-  final Function(String) onChange;
+  final Function(Ward) onChange;
   final bool required;
+  final List<Ward> wards;
+
   const WardDropDown({
     super.key,
     required this.onChange,
     this.required = false,
+    required this.wards,
   });
 
   @override
@@ -37,8 +19,6 @@ class WardDropDown extends StatefulWidget {
 }
 
 class _WardDropDownState extends State<WardDropDown> {
-  Ward value = Ward.phucla;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -78,12 +58,12 @@ class _WardDropDownState extends State<WardDropDown> {
             'Chọn phường xã.',
             style: TextStyle(fontSize: 14),
           ),
-          value: value,
-          items: Ward.values
+          value: widget.wards.first,
+          items: widget.wards
               .map((item) => DropdownMenuItem<Ward>(
                     value: item,
                     child: Text(
-                      item.getText(),
+                      item.name!,
                       style: const TextStyle(
                         fontSize: 14,
                       ),
@@ -99,7 +79,7 @@ class _WardDropDownState extends State<WardDropDown> {
           },
           onChanged: (value) {
             if (value != null) {
-              widget.onChange(value.toValue());
+              widget.onChange(value);
               value = value;
               setState(() {});
             }

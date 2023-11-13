@@ -1,47 +1,17 @@
+import 'package:app_main/src/domain/entities/bank.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-
-enum Bank { vpbank, sacombank, mbbank, vietcombank, tpbank }
-
-extension BankExt on Bank {
-  String getText() {
-    switch (this) {
-      case Bank.vpbank:
-        return 'VP Bank';
-      case Bank.sacombank:
-        return 'Sacombank';
-      case Bank.mbbank:
-        return 'MB Bank';
-      case Bank.vietcombank:
-        return 'Vietcombank';
-      case Bank.tpbank:
-        return 'TPBank';
-    }
-  }
-
-  String toValue() {
-    switch (this) {
-      case Bank.vpbank:
-        return 'VP Bank';
-      case Bank.sacombank:
-        return 'Sacombank';
-      case Bank.mbbank:
-        return 'MB Bank';
-      case Bank.vietcombank:
-        return 'Vietcombank';
-      case Bank.tpbank:
-        return 'TPBank';
-    }
-  }
-}
 
 class BankDropdown extends StatefulWidget {
   final Function(String) onChange;
   final bool required;
+  final List<Bank> banks;
+
   const BankDropdown({
     super.key,
     required this.onChange,
     this.required = false,
+    this.banks = const [],
   });
 
   @override
@@ -49,8 +19,6 @@ class BankDropdown extends StatefulWidget {
 }
 
 class _BankDropdownState extends State<BankDropdown> {
-  Bank value = Bank.vpbank;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -90,12 +58,12 @@ class _BankDropdownState extends State<BankDropdown> {
             'Chọn ngân hàng.',
             style: TextStyle(fontSize: 14),
           ),
-          value: value,
-          items: Bank.values
+          value: widget.banks.first,
+          items: widget.banks
               .map((item) => DropdownMenuItem<Bank>(
                     value: item,
                     child: Text(
-                      item.getText(),
+                      item.name!,
                       style: const TextStyle(
                         fontSize: 14,
                       ),
@@ -111,7 +79,7 @@ class _BankDropdownState extends State<BankDropdown> {
           },
           onChanged: (value) {
             if (value != null) {
-              widget.onChange(value.toValue());
+              widget.onChange(value.name!);
               value = value;
               setState(() {});
             }

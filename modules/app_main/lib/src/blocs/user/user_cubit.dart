@@ -4,6 +4,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
+import 'package:app_main/src/data/models/responses/update_none_pdone_profile_response.dart';
 import 'package:app_main/src/data/models/responses/update_pdone_profile_response.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/domain/entities/update_account/otp/otp.dart';
@@ -424,18 +425,17 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-    Future<void> updateNonePDoneProfile({required UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload}) async {
-    if (state is UpdatePDoneProfileLoading) return;
+  Future<void> updateNonePDoneProfile({required UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload}) async {
+    if (state is UpdateNonePDoneProfileLoading) return;
     try {
-      emit(UpdatePDoneProfileLoading());
+      emit(UpdateNonePDoneProfileLoading());
       final response = await _userUsecase.updateNonePNoneDoneProfile(updateNonePDoneProfilePayload);
-      emit(UpdatePDoneProfileSuccess(user: response));
+      emit(UpdateNonePDoneProfileSuccess(user: response));
     } catch (error) {
       debugPrint("update pdone profile error: $error");
       emit(UpdatePDoneProfileFailed(message: error.toString()));
     }
   }
-
 }
 
 enum AuthClaimType { v1, v2 }

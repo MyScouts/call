@@ -1,40 +1,25 @@
+import 'package:app_main/src/domain/entities/bank.dart';
+import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-enum National { vn }
-
-extension NationalExt on National {
-  String getText() {
-    switch (this) {
-      case National.vn:
-        return 'Việt Nam';
-    }
-  }
-
-  String toValue() {
-    switch (this) {
-      case National.vn:
-        return "Việt Nam";
-    }
-  }
-}
-
-class NationalDropdown extends StatefulWidget {
-  final Function(String) onChange;
+class ProtectorDropdown extends StatefulWidget {
+  final Function(int) onChange;
   final bool required;
-  const NationalDropdown({
+  final List<Protector> protectors;
+
+  const ProtectorDropdown({
     super.key,
     required this.onChange,
     this.required = false,
+    this.protectors = const [],
   });
 
   @override
-  State<NationalDropdown> createState() => _NationalDropdownState();
+  State<ProtectorDropdown> createState() => _ProtectorDropdownState();
 }
 
-class _NationalDropdownState extends State<NationalDropdown> {
-  National value = National.vn;
-
+class _ProtectorDropdownState extends State<ProtectorDropdown> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -43,7 +28,7 @@ class _NationalDropdownState extends State<NationalDropdown> {
         Row(
           children: [
             const Text(
-              "Quốc gia",
+              "Tên ngân hàng",
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Color(0xFF212121),
@@ -62,7 +47,7 @@ class _NationalDropdownState extends State<NationalDropdown> {
           ],
         ),
         const SizedBox(height: 7),
-        DropdownButtonFormField2<National>(
+        DropdownButtonFormField2<Protector>(
           isExpanded: true,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 12),
@@ -71,15 +56,15 @@ class _NationalDropdownState extends State<NationalDropdown> {
             ),
           ),
           hint: const Text(
-            'Chọn quốc gia.',
+            'Chọn người bảo hộ.',
             style: TextStyle(fontSize: 14),
           ),
-          value: value,
-          items: National.values
-              .map((item) => DropdownMenuItem<National>(
+          value: widget.protectors.first,
+          items: widget.protectors
+              .map((item) => DropdownMenuItem<Protector>(
                     value: item,
                     child: Text(
-                      item.getText(),
+                      item.name!,
                       style: const TextStyle(
                         fontSize: 14,
                       ),
@@ -89,13 +74,13 @@ class _NationalDropdownState extends State<NationalDropdown> {
           validator: (value) {
             print(value);
             if (value == null) {
-              return 'Chọn quốc gia.';
+              return 'Chọn người bảo hộ.';
             }
             return null;
           },
           onChanged: (value) {
             if (value != null) {
-              widget.onChange(value.toValue());
+              widget.onChange(value.id!);
               value = value;
               setState(() {});
             }

@@ -1,23 +1,23 @@
-import 'package:app_main/src/domain/entities/update_account/place/district.dart';
+import 'package:app_main/src/domain/entities/update_account/place/country.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-class DistrictDropDown extends StatefulWidget {
-  final Function(District) onChange;
+class CountriesDropdown extends StatefulWidget {
+  final Function(Country) onChange;
   final bool required;
-  final List<District> districts;
-  const DistrictDropDown({
+  final List<Country> countries;
+  const CountriesDropdown({
     super.key,
     required this.onChange,
     this.required = false,
-    required this.districts,
+    required this.countries,
   });
 
   @override
-  State<DistrictDropDown> createState() => _DistrictDropDownState();
+  State<CountriesDropdown> createState() => _CountriesDropdownState();
 }
 
-class _DistrictDropDownState extends State<DistrictDropDown> {
+class _CountriesDropdownState extends State<CountriesDropdown> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,7 +26,7 @@ class _DistrictDropDownState extends State<DistrictDropDown> {
         Row(
           children: [
             const Text(
-              "Quận/huyện",
+              "Quốc gia",
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Color(0xFF212121),
@@ -45,7 +45,7 @@ class _DistrictDropDownState extends State<DistrictDropDown> {
           ],
         ),
         const SizedBox(height: 7),
-        DropdownButtonFormField2<District>(
+        DropdownButtonFormField2<Country>(
           isExpanded: true,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 12),
@@ -54,12 +54,12 @@ class _DistrictDropDownState extends State<DistrictDropDown> {
             ),
           ),
           hint: const Text(
-            'Chọn quận huyện.',
+            'Chọn quốc gia.',
             style: TextStyle(fontSize: 14),
           ),
-          value: widget.districts.first,
-          items: widget.districts
-              .map((item) => DropdownMenuItem<District>(
+          value: widget.countries.first,
+          items: widget.countries
+              .map((item) => DropdownMenuItem<Country>(
                     value: item,
                     child: Text(
                       item.name!,
@@ -72,7 +72,7 @@ class _DistrictDropDownState extends State<DistrictDropDown> {
           validator: (value) {
             print(value);
             if (value == null) {
-              return 'Chọn quận huyện.';
+              return 'Chọn quốc gia.';
             }
             return null;
           },

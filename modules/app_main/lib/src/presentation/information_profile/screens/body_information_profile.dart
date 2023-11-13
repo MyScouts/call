@@ -1,6 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
-import 'package:app_main/src/presentation/information_profile/widgets/update_information_profile.dart';
+import 'package:app_main/src/presentation/information_profile/screens/update_information_profile_sreen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -14,6 +14,7 @@ class BodyInformationProfile extends StatefulWidget {
 
 class _BodyInformationProfileState extends State<BodyInformationProfile> {
   late final userCubit = context.read<UserCubit>();
+
   late User _authInfo;
 
   @override
@@ -125,7 +126,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> {
           ],
         ),
         Positioned(
-          bottom: 25,
+          bottom: 0,
           left: 0,
           right: 0,
           child: Column(
@@ -161,7 +162,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> {
               ),
               const SizedBox(height: 5),
               Padding(
-                padding: const EdgeInsets.only(left: 25.0),
+                padding: const EdgeInsets.only(left: 20.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -192,6 +193,17 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> {
                           )
                         : Container(),
                   ],
+                ),
+              ),
+              Visibility(
+                visible: true,
+                child: Text(
+                  _authInfo.nickname ?? "Anonymous",
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                    color: AppColors.grey15,
+                  ),
                 ),
               ),
               const SizedBox(height: 8),

@@ -1,44 +1,23 @@
+import 'package:app_main/src/domain/entities/update_account/place/province.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-enum City { hanoi, hochiminh }
-
-extension CityExt on City {
-  String getText() {
-    switch (this) {
-      case City.hanoi:
-        return 'Hà Nội';
-      case City.hochiminh:
-        return 'Hồ Chí Minh';
-    }
-  }
-
-  String toValue() {
-    switch (this) {
-      case City.hanoi:
-        return 'Hà Nội';
-      case City.hochiminh:
-        return 'Hồ Chí Minh';
-    }
-  }
-}
-
-class CityDropDown extends StatefulWidget {
-  final Function(String) onChange;
+class ProvinceDropDown extends StatefulWidget {
+  final Function(Province) onChange;
   final bool required;
-  const CityDropDown({
+  final List<Province> provinces;
+  const ProvinceDropDown({
     super.key,
     required this.onChange,
     this.required = false,
+    required this.provinces,
   });
 
   @override
-  State<CityDropDown> createState() => _CityDropDownState();
+  State<ProvinceDropDown> createState() => _ProvinceDropDownState();
 }
 
-class _CityDropDownState extends State<CityDropDown> {
-  City value = City.hanoi;
-
+class _ProvinceDropDownState extends State<ProvinceDropDown> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -66,7 +45,7 @@ class _CityDropDownState extends State<CityDropDown> {
           ],
         ),
         const SizedBox(height: 7),
-        DropdownButtonFormField2<City>(
+        DropdownButtonFormField2<Province>(
           isExpanded: true,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 12),
@@ -78,12 +57,12 @@ class _CityDropDownState extends State<CityDropDown> {
             'Chọn tỉnh thành.',
             style: TextStyle(fontSize: 14),
           ),
-          value: value,
-          items: City.values
-              .map((item) => DropdownMenuItem<City>(
+          value: widget.provinces.first,
+          items: widget.provinces
+              .map((item) => DropdownMenuItem<Province>(
                     value: item,
                     child: Text(
-                      item.getText(),
+                      item.name!,
                       style: const TextStyle(
                         fontSize: 14,
                       ),
@@ -99,7 +78,7 @@ class _CityDropDownState extends State<CityDropDown> {
           },
           onChanged: (value) {
             if (value != null) {
-              widget.onChange(value.toValue());
+              widget.onChange(value);
               value = value;
               setState(() {});
             }

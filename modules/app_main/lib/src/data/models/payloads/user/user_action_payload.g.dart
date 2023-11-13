@@ -64,7 +64,6 @@ UpdatePDoneProfilePayload _$UpdatePDoneProfilePayloadFromJson(
         Map<String, dynamic> json) =>
     UpdatePDoneProfilePayload(
       nickName: json['nickName'] as String,
-      currentPlace: Map<String, String>.from(json['currentPlace'] as Map),
       height: json['height'] as int,
       weight: json['weight'] as int,
       maritalStatus: json['maritalStatus'] as String,
@@ -94,7 +93,6 @@ UpdateNonePDoneProfilePayload _$UpdateNonePDoneProfilePayloadFromJson(
         Map<String, dynamic> json) =>
     UpdateNonePDoneProfilePayload(
       nickName: json['nickName'] as String,
-      currentPlace: Map<String, String>.from(json['currentPlace'] as Map),
       height: json['height'] as int,
       weight: json['weight'] as int,
       maritalStatus: json['maritalStatus'] as String,
@@ -104,7 +102,6 @@ UpdateNonePDoneProfilePayload _$UpdateNonePDoneProfilePayloadFromJson(
       interest: json['interest'] as String,
       talent: json['talent'] as String,
       sex: json['sex'] as int,
-      birthPlace: Map<String, String>.from(json['birthPlace'] as Map),
       birthday: json['birthday'] as String,
       identityNumber: json['identityNumber'] as String,
       supplyDate: json['supplyDate'] as String,
