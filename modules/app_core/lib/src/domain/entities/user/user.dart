@@ -65,7 +65,7 @@ extension UserExtNull on User? {
   bool get getIsPDone => this?.isPDone ?? false;
 }
 
-const _userDefaultName = 'PDone User';
+const _userDefaultName = null;
 
 extension UserExtension on User {
   Role role(int? hostUserID) {

@@ -23,8 +23,7 @@ class UpdateTeamOptionsScreen extends StatelessWidget {
     menus.removeWhere(
       (element) =>
           team.boss?.id != team.group?.boss?.id &&
-          [UpdateTeamOption.revokeBoss, UpdateTeamOption.assignBoss]
-              .contains(element),
+          [UpdateTeamOption.assignBoss].contains(element),
     );
     return Scaffold(
         appBar: BaseAppBar(

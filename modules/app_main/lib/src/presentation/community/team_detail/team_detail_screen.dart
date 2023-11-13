@@ -213,7 +213,8 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                               const SizedBox(width: 5),
                               Flexible(
                                 child: Text(
-                                  '${team?.boss.getdisplayName}',
+                                  team?.boss?.getdisplayName ??
+                                      'Không có Boss Team',
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
                                       .textTheme
@@ -222,7 +223,9 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                                           fontSize: 14,
                                           fontWeight: FontWeight.w400,
                                           height: 1.5,
-                                          color: const Color(0xFF353DFF)),
+                                          color: team?.boss == null
+                                              ? Colors.black
+                                              : const Color(0xFF353DFF)),
                                 ),
                               ),
                             ],
@@ -499,9 +502,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
 
   void _onTeamDetailBlocListen(BuildContext context, TeamDetailState state) {
     if (state is FetchTeamDetailSuccess) {
-      if (state.team.boss == null &&
-          widget.bossGroupId != null &&
-          widget.bossGroupId == myId) {
+      if (state.team.boss == null && state.team.group?.boss?.id == myId) {
         context.askAssignBoss(team: state.team);
       }
     }
