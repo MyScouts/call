@@ -20,6 +20,7 @@ Country _$CountryFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Country {
+  String? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get iso2 => throw _privateConstructorUsedError;
 
@@ -33,7 +34,7 @@ abstract class $CountryCopyWith<$Res> {
   factory $CountryCopyWith(Country value, $Res Function(Country) then) =
       _$CountryCopyWithImpl<$Res, Country>;
   @useResult
-  $Res call({String? name, String? iso2});
+  $Res call({String? id, String? name, String? iso2});
 }
 
 /// @nodoc
@@ -49,10 +50,15 @@ class _$CountryCopyWithImpl<$Res, $Val extends Country>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? name = freezed,
     Object? iso2 = freezed,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -72,7 +78,7 @@ abstract class _$$CountryImplCopyWith<$Res> implements $CountryCopyWith<$Res> {
       __$$CountryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? name, String? iso2});
+  $Res call({String? id, String? name, String? iso2});
 }
 
 /// @nodoc
@@ -86,10 +92,15 @@ class __$$CountryImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? name = freezed,
     Object? iso2 = freezed,
   }) {
     return _then(_$CountryImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -105,11 +116,13 @@ class __$$CountryImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CountryImpl implements _Country {
-  const _$CountryImpl({this.name, this.iso2});
+  const _$CountryImpl({this.id, this.name, this.iso2});
 
   factory _$CountryImpl.fromJson(Map<String, dynamic> json) =>
       _$$CountryImplFromJson(json);
 
+  @override
+  final String? id;
   @override
   final String? name;
   @override
@@ -117,7 +130,7 @@ class _$CountryImpl implements _Country {
 
   @override
   String toString() {
-    return 'Country(name: $name, iso2: $iso2)';
+    return 'Country(id: $id, name: $name, iso2: $iso2)';
   }
 
   @override
@@ -125,13 +138,14 @@ class _$CountryImpl implements _Country {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CountryImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.iso2, iso2) || other.iso2 == iso2));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, iso2);
+  int get hashCode => Object.hash(runtimeType, id, name, iso2);
 
   @JsonKey(ignore: true)
   @override
@@ -148,11 +162,15 @@ class _$CountryImpl implements _Country {
 }
 
 abstract class _Country implements Country {
-  const factory _Country({final String? name, final String? iso2}) =
-      _$CountryImpl;
+  const factory _Country(
+      {final String? id,
+      final String? name,
+      final String? iso2}) = _$CountryImpl;
 
   factory _Country.fromJson(Map<String, dynamic> json) = _$CountryImpl.fromJson;
 
+  @override
+  String? get id;
   @override
   String? get name;
   @override
