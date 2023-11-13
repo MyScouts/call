@@ -88,61 +88,38 @@ class _GroupRequestWidgetState extends State<GroupRequestWidget> {
               color: const Color(0xFFFFF5C7),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                      child: Text(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Text(
                     'Thời gian phê duyệt còn lại',
                     softWrap: true,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
                         ),
-                  )),
-                  Flexible(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0XFFFF7626),
-                        borderRadius: BorderRadius.circular(90),
-                      ),
-                      child: DayCountdownWidget(
-                        durationInSeconds: widget.request.createdAt!
-                            .add(const Duration(
-                                days: CommunityConstant
-                                    .dayForRelinquishBossGroupRequest))
-                            .difference(DateTime.now())
-                            .inSeconds,
-                      ),
-                    ),
                   ),
-                  // Container(
-                  //   alignment: Alignment.center,
-                  //   constraints: const BoxConstraints(minWidth: 135),
-                  //   padding: const EdgeInsets.symmetric(
-                  //     vertical: 15,
-                  //     horizontal: 12,
-                  //   ),
-                  //   decoration: BoxDecoration(
-                  //     color: const Color(0xFFFF7626),
-                  //     borderRadius: BorderRadius.circular(50),
-                  //   ),
-                  //   child: DayCountdownWidget(
-                  //     durationInSeconds: widget.request.createdAt!
-                  //         .add(const Duration(
-                  //             days: CommunityConstant
-                  //                 .dayForRelinquishBossGroupRequest))
-                  //         .difference(DateTime.now())
-                  //         .inSeconds,
-                  //   ),
-                  // )
-                ],
-              ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0XFFFF7626),
+                    borderRadius: BorderRadius.circular(90),
+                  ),
+                  child: DayCountdownWidget(
+                    durationInSeconds: widget.request.createdAt!
+                        .add(const Duration(
+                            days: CommunityConstant
+                                .dayForRelinquishBossGroupRequest))
+                        .difference(DateTime.now())
+                        .inSeconds,
+                  ),
+                ),
+              ],
             ),
           ),
           Text(
@@ -159,14 +136,7 @@ class _GroupRequestWidgetState extends State<GroupRequestWidget> {
                 .map(
                   (type) => Expanded(
                     child: GestureDetector(
-                      onTap: () {
-                        widget.onReplyRequest.call(type.status);
-                        // if(type == ApproveGroupRequest.approved){
-                        //   widget.onApproved.call();
-                        // } else {
-                        //   widget.onReject.call();
-                        // }
-                      },
+                      onTap: () => widget.onReplyRequest.call(type.status),
                       child: Container(
                         margin: const EdgeInsets.fromLTRB(10, 15, 10, 5),
                         padding: const EdgeInsets.symmetric(vertical: 12),
