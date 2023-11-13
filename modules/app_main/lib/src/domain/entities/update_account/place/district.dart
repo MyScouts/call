@@ -9,10 +9,14 @@ part 'district.g.dart';
 @freezed
 class District with _$District {
   const factory District({
+    int? id,
     String? name,
+    String? countryId,
+    String? countryCode,
+    String? countryName,  
+    int? provinceCode,
     String? code,
   }) = _District;
 
-  factory District.fromJson(Map<String, dynamic> json) =>
-      _$DistrictFromJson(json);
+  factory District.fromJson(Map<String, dynamic> json) => _$DistrictFromJson(json);
 }

@@ -7,6 +7,8 @@ import 'package:app_main/src/domain/entities/update_account/place/country.dart';
 import 'package:app_main/src/domain/entities/update_account/place/district.dart';
 import 'package:app_main/src/domain/entities/update_account/place/province.dart';
 import 'package:app_main/src/domain/entities/update_account/place/ward.dart';
+import 'package:app_main/src/domain/entities/update_account/update_pdone_birth_place_payload.dart';
+import 'package:app_main/src/domain/entities/update_account/update_place_information_payload.dart';
 import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/bank_dropdown.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/bloodtype_dropdown.dart';
@@ -56,6 +58,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
   int _genderParam = 1;
   int _protectorID = 1;
   String _bankParam = "";
+
   String _eduParam = "";
   String _jobParam = "";
   String _bloodTypeParam = "";
@@ -64,7 +67,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
   String _martialStatusParam = "";
 
   List<Protector> protectors = [];
-  List<Gender> genders = [];
+  ValueNotifier<List<Gender>> gendersChanged = ValueNotifier([]);
   List<MaritalStatus> maritals = [];
   List<Job> jobs = [];
   List<BloodGroup> bloodTypes = [];
@@ -89,7 +92,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
     if (state is GetListMasterSuccess) {
       hideLoading();
       protectors = state.upgradeAccount.protectors ?? [];
-      genders = state.upgradeAccount.genders ?? [];
+      gendersChanged.value = state.upgradeAccount.genders ?? [];
       maritals = state.upgradeAccount.maritalStatus ?? [];
       jobs = state.upgradeAccount.jobs ?? [];
       bloodTypes = state.upgradeAccount.bloodGroups ?? [];
@@ -150,6 +153,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: validationFormBuilder(
@@ -198,9 +202,75 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
       child: GradiantButton(
-        onPressed: () => widget.userCubit.updatePDoneProfile(
-          updatePDoneProfilePayload: UpdatePDoneProfilePayload.fromJson(json)
-        ),
+        onPressed: () => widget.authInfo.isPDone
+            ? widget.userCubit.updatePDoneProfile(
+                updatePDoneProfilePayload: UpdatePDoneProfilePayload(
+                  nickName: nickNameTxtController.text,
+                  currentPlace: UpdatePlaceInformationPayload(
+                    countryName: currentCountry!.name!,
+                    provinceName: currentProvince!.name!,
+                    districtName: currentDistrict!.name!,
+                    wardName: currentWard!.name!,
+                    street: addressTxtController.text,
+                    address: addressTxtController.text,
+                    countryCode: currentCountry!.iso2!,
+                    provinceCode: currentProvince!.stateCode!.toStringAsFixed(0),
+                    districtCode: currentDistrict!.code!,
+                    wardCode: currentWard!.id!.toStringAsFixed(0),
+                  ),
+                  height: 1,
+                  weight: 1,
+                  maritalStatus: _martialStatusParam,
+                  bloodGroup: _bloodTypeParam,
+                  academicLevel: _eduParam,
+                  job: _jobParam,
+                  interest: _hobbyParam,
+                  talent: _talentParam,
+                ),
+              )
+            : widget.userCubit.updateNonePDoneProfile(
+                updateNonePDoneProfilePayload: UpdateNonePDoneProfilePayload(
+                  nickName: nickNameTxtController.text,
+                  currentPlace: UpdatePlaceInformationPayload(
+                    countryName: currentCountry!.name!,
+                    provinceName: currentProvince!.name!,
+                    districtName: currentDistrict!.name!,
+                    wardName: currentWard!.name!,
+                    street: addressTxtController.text,
+                    address: addressTxtController.text,
+                    countryCode: currentCountry!.iso2!,
+                    provinceCode: currentProvince!.stateCode!.toStringAsFixed(0),
+                    districtCode: currentDistrict!.code!,
+                    wardCode: currentWard!.id!.toStringAsFixed(0),
+                  ),
+                  height: 1,
+                  weight: 1,
+                  maritalStatus: _martialStatusParam,
+                  bloodGroup: _bloodTypeParam,
+                  academicLevel: _eduParam,
+                  job: _jobParam,
+                  interest: _hobbyParam,
+                  talent: _talentParam,
+                  sex: _genderParam,
+                  birthPlace: UpdatePDoneBirthPlacePayload(
+                    countryName: currentCountry!.name!,
+                    provinceName: currentProvince!.name!,
+                    districtName: currentDistrict!.name!,
+                    wardName: currentWard!.name!,
+                    street: addressTxtController.text,
+                    address: addressTxtController.text,
+                    countryCode: currentCountry!.iso2!,
+                    countryId: currentDistrict!.code!, //
+                    provinceId: currentProvince!.stateCode!.toStringAsFixed(0),
+                    districtId: currentDistrict!.code!, //
+                    wardId: currentWard!.id!.toStringAsFixed(0),
+                  ),
+                  birthday: birthDay!.day.toStringAsFixed(0),
+                  identityNumber: idNumberTxtController.text,
+                  supplyDate: supplyDate!.day.toStringAsExponential(0),
+                  supplyAddress: placeOfNumberTxtController.text,
+                ),
+              ),
         child: Text(
           "Cập nhật",
           style: Theme.of(context).textTheme.labelLarge?.copyWith(
@@ -256,14 +326,27 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
           Row(
             children: [
               Expanded(
-                child: GenderDropdown(
-                  required: true,
-                  genders: genders,
-                  onChange: (sex) {
-                    _genderParam = sex;
-                  },
-                ),
-              ),
+                  child: ValueListenableBuilder(
+                builder: (_, genderValue, __) {
+                  if (genderValue.isNotEmpty) {
+                    return GenderDropdown(
+                      required: true,
+                      genders: genderValue,
+                      onChange: (sex) {
+                        _genderParam = sex;
+                      },
+                    );
+                  }
+                  return GenderDropdown(
+                    required: true,
+                    genders: genders,
+                    onChange: (sex) {
+                      _genderParam = sex;
+                    },
+                  );
+                },
+                valueListenable: gendersChanged,
+              )),
               const SizedBox(width: 20),
               Expanded(
                 child: InformationLayoutFieldWidget(
@@ -537,7 +620,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
               return filteredAndSortedJobs;
             },
             onSelected: (String itemSelected) {
-              _jobParam = itemSelected;
+              _talentParam = itemSelected;
             },
           ),
           const SizedBox(height: 15),
@@ -567,7 +650,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
               return filteredAndSortedJobs;
             },
             onSelected: (String itemSelected) {
-              _jobParam = itemSelected;
+              _hobbyParam = itemSelected;
             },
           ),
         ],
@@ -895,7 +978,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                     formatText: (date) => S.of(context).formatDateDDmmYYYYhhMM(date, date).split('|').first,
                     max: DateTime.now(),
                     onChange: (dateTime) {
-                      birthDay = dateTime;
+                      supplyDate = dateTime;
                     },
                   ),
                 ),

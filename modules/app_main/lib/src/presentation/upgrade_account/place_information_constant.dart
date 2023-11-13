@@ -1,6 +1,7 @@
 import 'package:app_main/src/domain/entities/update_account/place/district.dart';
 import 'package:app_main/src/domain/entities/update_account/place/province.dart';
 import 'package:app_main/src/domain/entities/update_account/place/ward.dart';
+import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
 
 import '../../domain/entities/update_account/place/country.dart';
 
@@ -10,6 +11,12 @@ enum PlaceInformationType {
   district,
   ward,
 }
+
+List<Gender> genders = [
+  const Gender(key: 1, value: 'Nam'),
+  const Gender(key: 0, value: 'Nữ'),
+  const Gender(key: 2, value: 'Khác'),
+];
 
 List<Country> countries = [
   const Country(name: 'Vietnam', iso2: 'VN '),
