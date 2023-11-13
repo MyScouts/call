@@ -47,10 +47,10 @@ class _UpdatePdoneSelectTypeUserState extends State<UpdatePdoneSelectTypeUser> {
 
   bool get enableBtn => true;
 
-  PDoneOptionAge _pDoneOptionAge = PDoneOptionAge.over15;
+  PDoneOptionAge _pDoneOptionAge = PDoneOptionAge.under15;
   PDoneOptionMethod _pDoneOptionMethod = PDoneOptionMethod.userIdentityCard;
 
-  final ageOptions = [PDoneOptionAge.over15];
+  final ageOptions = [PDoneOptionAge.over14];
   final methodOptions = PDoneOptionMethod.values;
 
   get methodOptionUnder15 => PDoneOptionMethod.values;
@@ -191,9 +191,9 @@ class _UpdatePdoneSelectTypeUserState extends State<UpdatePdoneSelectTypeUser> {
           switch(_pDoneOptionMethod){
 
             case PDoneOptionMethod.userBirthCer:
-              ageOptions..clear()..add(PDoneOptionAge.under14);
+              ageOptions..clear()..add(PDoneOptionAge.under15);
             case PDoneOptionMethod.userIdentityCard:
-              ageOptions..clear()..add(PDoneOptionAge.over15);
+              ageOptions..clear()..add(PDoneOptionAge.over14);
           }
 
         _pDoneOptionAge = ageOptions[0];
