@@ -16,7 +16,11 @@ import '../widgets/read_more_policy.dart';
 
 class RegisterCustomerScreen extends StatefulWidget {
   static const String routeName = "upgrade-marshop";
-  const RegisterCustomerScreen({super.key});
+  final String? marshopId;
+  const RegisterCustomerScreen({
+    super.key,
+    this.marshopId,
+  });
 
   @override
   State<RegisterCustomerScreen> createState() => _RegisterCustomerScreenState();
@@ -33,6 +37,9 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
   @override
   void initState() {
     super.initState();
+    if (widget.marshopId != null) {
+      _marshopIdCtrl.text = widget.marshopId!;
+    }
     _acceptTerm.addListener(() {
       onValidation();
     });

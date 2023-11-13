@@ -54,6 +54,7 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
               type: AuthClaimType.v1,
               code: data['code'],
             );
+            controller?.dispose();
             return;
           }
 
@@ -61,7 +62,9 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
             context.confirmLoginQrCode(
               type: AuthClaimType.v2,
               code: data['code'],
+              marshopId: data['marshopId'].toString(),
             );
+            controller?.dispose();
             return;
           }
         } else {

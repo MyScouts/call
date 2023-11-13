@@ -350,17 +350,11 @@ class UserCubit extends Cubit<UserState> {
         emit(LoginQRCodeSuccess());
       }
     } on DioException catch (error) {
-      String err = S.current.messages_server_internal_error.capitalize();
       final data = error.response!.data;
-      switch (data['code']) {
-        case "MARSHOP_NOT_FOUND":
-          err = "Không tìm thấy Marshop.";
-      }
-      emit(LoginQRCodeFail(message: err));
+      emit(LoginQRCodeFail(code: data['code']));
     } catch (error) {
       debugPrint("authQrCode: $error");
-      String err = S.current.messages_server_internal_error.capitalize();
-      emit(LoginQRCodeFail(message: err));
+      emit(LoginQRCodeFail(code: ""));
     }
   }
 
