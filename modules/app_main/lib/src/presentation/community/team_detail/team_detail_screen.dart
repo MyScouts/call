@@ -448,54 +448,53 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
               ),
         ),
         ...members.map(
-          (member) => TeamMemberWidget(
-            user: member,
-            trailing: isBossGroup && member.id != myId
-                ? PopupMenuButton(
-                    onSelected: (value) {
-                      if (value == BossGroupActionToMember.assignBossTeam.name) {
-                        context
-                            .confirmAssignBossTeam(
-                          onAction: () {},
-                          member: member,
-                          team: team,
-                        )
-                            .then((value) {
-                          if (value != null && value == true) {
-                            teamDetailBloc.add(FetchTeamDetailEvent(widget.id));
-                          }
-                        });
-                      } else {
-                        //TODO: remove member event
-                      }
-                    },
-                    icon:
-                        const Icon(Icons.more_horiz, color: Color(0xFF212121)),
-                    offset: const Offset(0, 30),
-                    itemBuilder: (BuildContext bc) {
-                      List<BossGroupActionToMember> menus =
-                          List.from(BossGroupActionToMember.values);
-                      menus.removeWhere((element) =>
-                          team.boss?.id != null &&
-                          element == BossGroupActionToMember.assignBossTeam);
-                      return [
-                        ...menus.map(
-                          (action) => PopupMenuItem(
-                            value: action.name,
-                            child: Text(
-                              action.textMenu,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(color: action.textMenuColor),
+          (member) {
+            return TeamMemberWidget(
+              user: member,
+              trailing: isBossGroup && member.id != myId
+                  ? PopupMenuButton(
+                      onSelected: (value) {
+                        if (value ==
+                            BossGroupActionToMember.assignBossTeam.name) {
+                          context
+                              .confirmAssignBossTeam(
+                            onAction: () {},
+                            member: member,
+                            team: team,
+                          )
+                              .then((value) {
+                            if (value != null && value == true) {
+                              teamDetailBloc
+                                  .add(FetchTeamDetailEvent(widget.id));
+                            }
+                          });
+                        } else {
+                          //TODO: remove member event
+                        }
+                      },
+                      icon: const Icon(Icons.more_horiz,
+                          color: Color(0xFF212121)),
+                      offset: const Offset(0, 30),
+                      itemBuilder: (BuildContext bc) {
+                        return [
+                          ...BossGroupActionToMember.values.map(
+                            (action) => PopupMenuItem(
+                              value: action.name,
+                              child: Text(
+                                action.textMenu,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(color: action.textMenuColor),
+                              ),
                             ),
-                          ),
-                        )
-                      ];
-                    },
-                  )
-                : null,
-          ),
+                          )
+                        ];
+                      },
+                    )
+                  : null,
+            );
+          },
         )
       ],
     );
