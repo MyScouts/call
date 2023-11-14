@@ -1,5 +1,4 @@
 import 'package:app_main/src/core/services/notification_center.dart';
-import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_background_builder.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_community_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_ecommerce_tab.dart';
@@ -35,10 +34,9 @@ class DashBoardScreen extends StatefulWidget {
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
   final PageController _pageController = PageController();
+  final GlobalKey<NotificationScreenState> notificationKey = GlobalKey();
 
   int _page = 0;
-
-  bool _showNotification = false;
 
   bool _showEditMode = false;
 
@@ -91,9 +89,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       enableEditMode: _showEditMode,
                       openAppStore: () => context.startSystemSetting(_page),
                       openNotification: () {
-                        setState(() {
-                          _showNotification = true;
-                        });
+                        notificationKey.currentState?.forward();
                       },
                       onCanceled: () {
                         setState(() {
@@ -143,14 +139,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ],
               ),
             ),
-            if (_showNotification)
-              NotificationScreen(
-                onClose: () {
-                  setState(() {
-                    _showNotification = false;
-                  });
-                },
-              ),
+            NotificationScreen(
+              key: notificationKey,
+              onClose: () {
+                notificationKey.currentState?.revert();
+              },
+            ),
           ],
         ),
       ),

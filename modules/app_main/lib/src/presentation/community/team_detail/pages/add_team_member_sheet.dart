@@ -22,6 +22,16 @@ class _AddTeamMemberSheetState extends State<AddTeamMemberSheet> {
   late final controller = getIt<AddMemberChangeNotifier>();
   final TextEditingController search = TextEditingController();
 
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final state = context.read<TeamDetailBloc>().state;
+    final team = (state as FetchTeamsMemberSuccess).team;
+    final bossID = team.boss?.id ?? 0;
+    controller.setBossId(bossID);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -391,6 +401,12 @@ class AddMemberChangeNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  int _bossID = 0;
+
+  void setBossId(int value) {
+    _bossID = value;
+  }
+
   void removeFriend(User user) {
     _addFriend.remove(user);
     notifyListeners();
@@ -404,13 +420,13 @@ class AddMemberChangeNotifier extends ChangeNotifier {
 
   void _initData() async {
     final res = await useCase.listFriends();
-    _friends = res;
+    _friends = res.where((e) => e.id != _bossID).toList();
     _isLoading = false;
     notifyListeners();
   }
 
   Future confirm(String teamID) async {
-    if(addFriend.isEmpty) return;
+    if (addFriend.isEmpty) return;
     for (final i in addFriend) {
       await useCase.invite(teamID, {'userId': i.id});
     }

@@ -1,23 +1,31 @@
 import 'package:flutter/cupertino.dart';
 
+enum CustomerItemType {
+  widget,
+  group,
+  icon,
+}
+
 class CustomerItem {
   final String id;
   final int? crossAxisCellCount;
   final int? mainAxisCellCount;
   final Widget child;
+  final CustomerItemType type;
 
   CustomerItem({
     required this.id,
     required this.child,
     this.crossAxisCellCount = 1,
     this.mainAxisCellCount = 1,
+    required this.type,
   });
 
   bool compare(CustomerItem next) {
     if (id == next.id &&
         crossAxisCellCount == next.crossAxisCellCount &&
         mainAxisCellCount == next.mainAxisCellCount &&
-        child == next.child) {
+        child == next.child && type == next.type) {
       return true;
     }
     return false;
