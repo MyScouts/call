@@ -7,6 +7,7 @@ import 'package:design_system/design_system.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:localization/localization.dart';
 import 'package:ui/ui.dart';
 
@@ -286,7 +287,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
   Widget build(BuildContext context) {
     return validationFormBuilder(
       child: ScaffoldHideKeyboard(
-        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
           physics: const ClampingScrollPhysics(),
           scrollDirection: Axis.vertical,
@@ -651,9 +652,10 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                         );
                       },
                     ),
-                    Padding(
-                        padding: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).viewInsets.bottom)),
+                    KeyboardVisibilityBuilder(
+                        builder: (context, isKeyboardVisible) {
+                      return SizedBox(height: isKeyboardVisible ? 250 : 0);
+                    }),
                   ],
                 ),
               );

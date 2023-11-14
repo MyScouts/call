@@ -87,4 +87,9 @@ class AuthRepositoryImpl extends AuthRepository {
   Future changePassword(ChangePasswordPayload payload) {
     return _authApi.changePassword(payload);
   }
+
+  @override
+  Future getOtpV1() {
+    return _authApi.getOtpV1();
+  }
 }

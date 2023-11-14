@@ -71,6 +71,10 @@ class AuthenticationUsecase {
     return response;
   }
 
+  Future getOtpV1() {
+    return _authRepository.getOtp();
+  }
+
   Future forgotPassword(ForgotPasswordPayload payload) async {
     await _authRepository.forgotPassword(payload);
     return true;
@@ -94,6 +98,10 @@ class AuthenticationUsecase {
 
   Future otp() async {
     return _authRepository.getOtp();
+  }
+
+  Future otpV1() async {
+    return _authRepository.getOtpV1();
   }
 
   Future logout() async {

@@ -15,7 +15,7 @@ class AuthCubit extends Cubit<AuthState> {
     if (state is OnSendOTP) return;
     try {
       emit(OnSendOTP());
-      await _authenticationUsecase.otp();
+      await _authenticationUsecase.otpV1();
       emit(SendOTPSuccess());
     } catch (e) {
       String err = S.current.messages_server_internal_error.capitalize();
@@ -27,7 +27,7 @@ class AuthCubit extends Cubit<AuthState> {
     if (state is OnResendOTP) return;
     try {
       emit(OnResendOTP());
-      await _authenticationUsecase.otp();
+      await _authenticationUsecase.otpV1();
       emit(ResendOTPSuccess());
     } catch (e) {
       String err = S.current.messages_server_internal_error.capitalize();
