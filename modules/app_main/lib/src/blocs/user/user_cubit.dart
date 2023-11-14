@@ -286,12 +286,12 @@ class UserCubit extends Cubit<UserState> {
   Future<void> getOtp({bool? isResend}) async {
     try {
       emit(GetOTPLoading());
-      await _authenticationUsecase.getOtp();
+      final otp = await _authenticationUsecase.getOtp();
       if (isResend == true) {
-        emit(ResendUserOTPSuccess());
+        emit(ResendUserOTPSuccess(otp: otp));
         return;
       }
-      emit(GetOTPSuccess());
+      emit(GetOTPSuccess(otp: otp));
     } catch (error) {
       debugPrint("phoneRegister: $error");
       emit(GetOTPFail(message: "international_error"));
