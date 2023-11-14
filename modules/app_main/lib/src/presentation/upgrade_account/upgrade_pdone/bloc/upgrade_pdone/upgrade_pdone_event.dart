@@ -102,3 +102,16 @@ class RequestProtectorEvent extends UpgradePDoneEvent {
 
   RequestProtectorEvent({required this.req, required this.userId});
 }
+
+
+
+@immutable
+class ProtectorRejectedEvent extends UpgradePDoneEvent {
+  ProtectorRejectedEvent();
+}
+
+
+@immutable
+class ProtectorApprovedEvent extends UpgradePDoneEvent {
+  ProtectorApprovedEvent();
+}

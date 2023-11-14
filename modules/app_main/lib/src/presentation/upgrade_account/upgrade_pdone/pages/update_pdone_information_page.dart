@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:design_system/design_system.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:localization/localization.dart';
@@ -125,10 +128,23 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
     }
 
     if (state is RequestedSuccessProtectorState) {
-      hideLoading();
       showToastMessage(
           'Đã gửi thông báo đến người bảo hộ!', ToastMessageType.success);
-      showLoading();
+      hideLoading();
+      Future.delayed(Duration(milliseconds: 200)).then((value) {
+        showLoading();
+      });
+      FirebaseMessaging.onMessage.listen((message) {
+        final data = message.data;
+        final dataRes = jsonDecode(data['data']);
+        if (data['type'] == 'PROTECTOR_REQUEST_REPLY') {
+          if (dataRes['isApproved']) {
+            upgradePDoneBloc.add(ProtectorApprovedEvent());
+          } else {
+            upgradePDoneBloc.add(ProtectorRejectedEvent());
+          }
+        }
+      });
     }
 
     if (state is ApproveProtectorState) {
@@ -145,8 +161,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
 
     if (state is RequestedFailureProtectorState) {
       hideLoading();
-      showToastMessage(
-          'Gửi thông tin đến người bảo hộ thất bại', ToastMessageType.error);
+      showToastMessage(state.errorMessage, ToastMessageType.error);
     }
   }
 
@@ -255,11 +270,9 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       supplyDate = eKycData['issue_date'].toString().parseDateTime();
       expiryDate = eKycData['valid_date'].toString().parseDateTime();
       if (DateTime.now().year - (birthDay?.year ?? 0) > 18) {
-        print(birthDay?.year ?? 0);
         pDoneAPICaller = PDoneAPICaller.adult;
         // pDoneAPICaller = PDoneAPICaller.teenager;
       } else {
-        print(birthDay?.year ?? 0);
         pDoneAPICaller = PDoneAPICaller.teenager;
         // pDoneAPICaller = PDoneAPICaller.adult;
       }

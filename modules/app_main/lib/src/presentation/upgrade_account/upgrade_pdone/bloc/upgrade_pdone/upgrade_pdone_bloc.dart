@@ -46,6 +46,8 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     on<VerifyProtectorEvent>(_mapVerifyProtectorEvent);
     on<UploadImageBirthCerEvent>(_mapUploadImageBirthCerEvent);
     on<RequestProtectorEvent>(_mapRequestProtectorEvent);
+    on<ProtectorApprovedEvent>(_mapProtectorApprovedEvent);
+    on<ProtectorRejectedEvent>(_mapProtectorRejectedEvent);
   }
 
   FutureOr<void> _mapExtractingIdCardEvent(
@@ -307,17 +309,7 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     emit(RequestingProtectorState());
 
     try {
-      FirebaseMessaging.onMessage.listen((message) {
-        final data = message.data;
-        if (data['type'] == 'PROTECTOR_REQUEST_REPLY') {
-          final dataRes = jsonDecode(data['data']);
-          if (dataRes['isApproved']) {
-            emit(ApproveProtectorState());
-          } else {
-            emit(RejectProtectorState());
-          }
-        }
-      });
+
 
       final userId = await _upgradeAccountUsecase.verifyProtector(event.req);
       final reqProtectorRequest = PDoneRequestProtectorReq(
@@ -326,8 +318,31 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
 
       emit(RequestedSuccessProtectorState());
     } catch (e) {
-      emit(RequestedFailureProtectorState(
-          errorMessage: 'Có lỗi xảy ra, vui lòng thử lại!'));
+      if (e is DioException) {
+        if (e.response?.data['code'] == "INVALID_P_DONE_ID") {
+          emit(RequestedFailureProtectorState(
+              errorMessage: 'Người bảo hộ không tồn tại'));
+        }
+
+        if (e.response?.data['code'] == 'ALREADY_REQUESTED') {
+          emit(RequestedFailureProtectorState(
+              errorMessage:
+                  'Đã có yêu cầu gửi trước đó, vui lòng chờ người bảo hộ xét duyệt!'));
+        }
+      } else {
+        emit(RequestedFailureProtectorState(
+            errorMessage: 'Có lỗi xảy ra, vui lòng thử lại!'));
+      }
     }
+  }
+
+
+  FutureOr<void> _mapProtectorApprovedEvent(
+      ProtectorApprovedEvent event, Emitter<UpgradePDoneState> emit) async {
+    emit(ApproveProtectorState());
+  }
+  FutureOr<void> _mapProtectorRejectedEvent(
+      ProtectorRejectedEvent event, Emitter<UpgradePDoneState> emit) async {
+    emit(RejectProtectorState());
   }
 }
