@@ -20,6 +20,7 @@ import '../../models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
 import '../../models/responses/api_response.dart';
 import '../../models/responses/api_verify_response.dart';
 import '../../models/responses/check_protector_response.dart';
+import '../../models/responses/pdone/pdone_information_response.dart';
 import '../../models/responses/register_pdone_response.dart';
 import '../../models/responses/upgrade_account_response.dart';
 
@@ -57,6 +58,7 @@ class UpgradeAccountApiConstants {
   static const requestProtector = 'api/v1/protector/request';
   static const updateBankAccount = '/api/bank-account';
   static const getDefaultBank = '/api/bank-account/default';
+  static const pDoneProfile = '/api/v1/p-done/profile';
 }
 
 @RestApi()
@@ -97,8 +99,6 @@ abstract class UpgradeAccountApi {
   Future<ApiResponse<APIVerifyResponse>> updatePDoneProfileBirthCer({
     @Body() required dynamic payload,
   });
-
-
 
   @POST(UpgradeAccountApiConstants.registerPDone)
   Future<ApiResponse<RegisterPDoneResponse>> registerPDoneAccount({
@@ -148,7 +148,6 @@ abstract class UpgradeAccountApi {
     @Body() required CheckProtectorPayload payload,
   });
 
-
   @POST(UpgradeAccountApiConstants.updateBankAccount)
   Future<ApiResponse<BankAccount>> updateBankAccount({
     @Body() required UpdateBankAccountPayload payload,
@@ -174,4 +173,7 @@ abstract class UpgradeAccountApi {
   Future<ApiResponse<APIVerifyResponse>> requestProtector({
     @Body() required PDoneRequestProtectorReq payload,
   });
+
+  @GET(UpgradeAccountApiConstants.pDoneProfile)
+  Future<ApiResponse<PDoneInformationResponse>> pDoneProfile();
 }

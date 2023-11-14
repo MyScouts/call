@@ -52,6 +52,7 @@ class ImageConstants {
   static String birthCerCapture = ImageApp.birthCerCapture.path;
   static String birthCerBackgroundConfirm =
       ImageApp.birthCerBackgroundConfirm.path;
+  static String pDoneNotification = ImageApp.pDoneNotification.path;
 }
 
 enum ImageApp {
@@ -96,6 +97,7 @@ enum ImageApp {
   guidePdone('assets/images/guidePdone.png'),
   birthCerCapture('assets/images/birth_cer_capture.jpg'),
   birthCerBackgroundConfirm('assets/images/birth_cer_background_confirm.jpg'),
+  pDoneNotification('assets/images/pdone_notification.png'),
   bg1('assets/images/bg1.png'),
   bg2('assets/images/bg2.png'),
   bg3('assets/images/bg3.png'),

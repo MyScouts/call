@@ -162,7 +162,7 @@ class _UpdatePDoneOtpState extends State<UpdatePDoneOtp> with TimerMixin {
   }
 
   void _handleResendOTP() {
-    widget.blocUpdate.add(UpdatePDoneSendOTP());
+    widget.blocUpdate.add(UpdatePDoneSendOTPEvent());
     showLoading();
     // context.read<UserCubit>().resendOTP(
     //   AuthenticationPhonePayload(

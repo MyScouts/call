@@ -150,7 +150,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
     if (state is ApproveProtectorState) {
       hideLoading();
       showToastMessage('Người bảo hộ đã đồng ý!', ToastMessageType.success);
-      upgradePDoneBloc.add(UpdatePDoneSendOTP());
+      upgradePDoneBloc.add(UpdatePDoneSendOTPEvent());
     }
 
     if (state is RejectProtectorState) {
@@ -208,7 +208,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
   }
 
   void _sendOTP() {
-    upgradePDoneBloc.add(UpdatePDoneSendOTP());
+    upgradePDoneBloc.add(UpdatePDoneSendOTPEvent());
   }
 
   void onUpdatePayload(UpdateProfilePayload val) {
@@ -270,11 +270,11 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       supplyDate = eKycData['issue_date'].toString().parseDateTime();
       expiryDate = eKycData['valid_date'].toString().parseDateTime();
       if (DateTime.now().year - (birthDay?.year ?? 0) > 18) {
-        pDoneAPICaller = PDoneAPICaller.adult;
-        // pDoneAPICaller = PDoneAPICaller.teenager;
-      } else {
-        pDoneAPICaller = PDoneAPICaller.teenager;
         // pDoneAPICaller = PDoneAPICaller.adult;
+        pDoneAPICaller = PDoneAPICaller.teenager;
+      } else {
+        // pDoneAPICaller = PDoneAPICaller.teenager;
+        pDoneAPICaller = PDoneAPICaller.adult;
       }
     } else {
       pDoneOptionMethod = PDoneOptionMethod.userBirthCer;

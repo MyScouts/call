@@ -42,7 +42,7 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     on<UploadKYCImageEvent>(_mapUploadKYCImageEvent);
     on<ResendOtpEvent>(_mapResendOtpEvent);
     on<ExtractingIdCardEvent>(_mapExtractingIdCardEvent);
-    on<UpdatePDoneSendOTP>(_mapSendOTPVerifyUpdatePdoneEvent);
+    on<UpdatePDoneSendOTPEvent>(_mapSendOTPVerifyUpdatePdoneEvent);
     on<VerifyProtectorEvent>(_mapVerifyProtectorEvent);
     on<UploadImageBirthCerEvent>(_mapUploadImageBirthCerEvent);
     on<RequestProtectorEvent>(_mapRequestProtectorEvent);
@@ -99,7 +99,7 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
   }
 
   FutureOr<void> _mapSendOTPVerifyUpdatePdoneEvent(
-      UpdatePDoneSendOTP event, Emitter<UpgradePDoneState> emit) async {
+      UpdatePDoneSendOTPEvent event, Emitter<UpgradePDoneState> emit) async {
     try {
       final res = await _userUsecase.genOtp();
 

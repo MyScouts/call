@@ -56,7 +56,8 @@ class Setting {
           Setting(
             text: "PDone",
             icon: IconAppConstants.icUpgrade,
-            onPressed: () => context.startUpgradePDone(),
+            onPressed: () => context.startPDoneInformation(),
+            // onPressed: () => context.startUpgradePDone(),
           ),
           Setting(
             text: "JA",
