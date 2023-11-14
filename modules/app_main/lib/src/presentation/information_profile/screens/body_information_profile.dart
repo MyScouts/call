@@ -175,23 +175,38 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> {
                       ),
                     ),
                     const SizedBox(width: 5),
-                    _authInfo.isJA!
-                        ? Container(
-                            width: 30,
-                            height: 16,
-                            decoration: BoxDecoration(
-                              color: AppColors.blue32,
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            alignment: Alignment.center,
-                            child: const Text(
-                              "JA",
-                              style: TextStyle(
-                                color: AppColors.white,
-                              ),
-                            ),
-                          )
-                        : Container(),
+                    Container(
+                      width: 30,
+                      height: 16,
+                      decoration: BoxDecoration(
+                        color: AppColors.blue32,
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        "JA",
+                        style: TextStyle(
+                          color: AppColors.white,
+                        ),
+                      ),
+                    )
+                    // _authInfo.isJA!
+                    //     ? Container(
+                    //         width: 30,
+                    //         height: 16,
+                    //         decoration: BoxDecoration(
+                    //           color: AppColors.blue32,
+                    //           borderRadius: BorderRadius.circular(30.0),
+                    //         ),
+                    //         alignment: Alignment.center,
+                    //         child: const Text(
+                    //           "JA",
+                    //           style: TextStyle(
+                    //             color: AppColors.white,
+                    //           ),
+                    //         ),
+                    //       )
+                    //     : Container(),
                   ],
                 ),
               ),

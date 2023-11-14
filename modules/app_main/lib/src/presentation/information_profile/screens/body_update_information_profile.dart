@@ -3,13 +3,6 @@ import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/domain/entities/bank.dart';
-import 'package:app_main/src/domain/entities/update_account/place/country.dart';
-import 'package:app_main/src/domain/entities/update_account/place/district.dart';
-import 'package:app_main/src/domain/entities/update_account/place/province.dart';
-import 'package:app_main/src/domain/entities/update_account/place/ward.dart';
-import 'package:app_main/src/domain/entities/update_account/update_pdone_birth_place_payload.dart';
-import 'package:app_main/src/domain/entities/update_account/update_place_information_payload.dart';
-import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/bank_dropdown.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/bloodtype_dropdown.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/provinces_dropdown.dart';
@@ -54,36 +47,6 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
   @override
   bool get wantKeepAlive => true;
 
-  String _phoneCode = "+84";
-  int _genderParam = 1;
-  int _protectorID = 1;
-  String _bankParam = "";
-
-  String _eduParam = "";
-  String _jobParam = "";
-  String _bloodTypeParam = "";
-  String _hobbyParam = "";
-  String _talentParam = "";
-  String _martialStatusParam = "";
-
-  List<Protector> protectors = [];
-  ValueNotifier<List<Gender>> gendersChanged = ValueNotifier([]);
-  List<MaritalStatus> maritals = [];
-  List<Job> jobs = [];
-  List<BloodGroup> bloodTypes = [];
-  List<AcademicLevel> educations = [];
-  List<Interest> hobbies = [];
-  List<Talent> talents = [];
-  ValueNotifier<List<Bank>> banksChanged = ValueNotifier([]);
-
-  PDoneOptionMethod pDoneOptionMethod = PDoneOptionMethod.userIdentityCard;
-
-  PDoneOptionRangeAge rangeAge = PDoneOptionRangeAge.over18;
-
-  bool isShowProtector() {
-    return rangeAge == PDoneOptionRangeAge.under18AndOver15 || pDoneOptionMethod == PDoneOptionMethod.userBirthCer;
-  }
-
   void _listenerInformations(BuildContext context, UpgradePDoneState state) {
     if (state is GetListMasterLoading) {
       showLoading();
@@ -91,35 +54,20 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
 
     if (state is GetListMasterSuccess) {
       hideLoading();
-      protectors = state.upgradeAccount.protectors ?? [];
+      protectorsChanged.value = state.upgradeAccount.protectors ?? [];
       gendersChanged.value = state.upgradeAccount.genders ?? [];
-      maritals = state.upgradeAccount.maritalStatus ?? [];
-      jobs = state.upgradeAccount.jobs ?? [];
-      bloodTypes = state.upgradeAccount.bloodGroups ?? [];
-      educations = state.upgradeAccount.academicLevels ?? [];
-      hobbies = state.upgradeAccount.interests ?? [];
-      talents = state.upgradeAccount.talents ?? [];
+      maritalsChanged.value = state.upgradeAccount.maritalStatus ?? [];
+      jobsChanged.value = state.upgradeAccount.jobs ?? [];
+      bloodTypesChanged.value = state.upgradeAccount.bloodGroups ?? [];
+      educationsChanged.value = state.upgradeAccount.academicLevels ?? [];
+      hobbiesChanged.value = state.upgradeAccount.interests ?? [];
+      talentsChanged.value = state.upgradeAccount.talents ?? [];
     }
 
     if (state is GetListMasterFailure) {
       hideLoading();
     }
   }
-
-  Country? currentCountry;
-  Province? currentProvince;
-  District? currentDistrict;
-  Ward? currentWard;
-
-  ValueNotifier<List<Country>?> countriesChanged = ValueNotifier([]);
-  ValueNotifier<List<Province>?> provincesChanged = ValueNotifier([]);
-  ValueNotifier<List<District>?> districtsChanged = ValueNotifier([]);
-  ValueNotifier<List<Ward>?> wardsChanged = ValueNotifier([]);
-
-  ValueNotifier<List<Country>?> countries2Changed = ValueNotifier([]);
-  ValueNotifier<List<Province>?> provinces2Changed = ValueNotifier([]);
-  ValueNotifier<List<District>?> districts2Changed = ValueNotifier([]);
-  ValueNotifier<List<Ward>?> wards2Changed = ValueNotifier([]);
 
   void _listenerPlaces(BuildContext context, PlaceInformationState state) {
     if (state is PlaceInformationInitial) {
@@ -202,75 +150,9 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
       child: GradiantButton(
-        onPressed: () => widget.authInfo.isPDone
-            ? widget.userCubit.updatePDoneProfile(
-                updatePDoneProfilePayload: UpdatePDoneProfilePayload(
-                  nickName: nickNameTxtController.text,
-                  currentPlace: UpdatePlaceInformationPayload(
-                    countryName: currentCountry!.name!,
-                    provinceName: currentProvince!.name!,
-                    districtName: currentDistrict!.name!,
-                    wardName: currentWard!.name!,
-                    street: addressTxtController.text,
-                    address: addressTxtController.text,
-                    countryCode: currentCountry!.iso2!,
-                    provinceCode: currentProvince!.stateCode!.toStringAsFixed(0),
-                    districtCode: currentDistrict!.code!,
-                    wardCode: currentWard!.id!.toStringAsFixed(0),
-                  ),
-                  height: 1,
-                  weight: 1,
-                  maritalStatus: _martialStatusParam,
-                  bloodGroup: _bloodTypeParam,
-                  academicLevel: _eduParam,
-                  job: _jobParam,
-                  interest: _hobbyParam,
-                  talent: _talentParam,
-                ),
-              )
-            : widget.userCubit.updateNonePDoneProfile(
-                updateNonePDoneProfilePayload: UpdateNonePDoneProfilePayload(
-                  nickName: nickNameTxtController.text,
-                  currentPlace: UpdatePlaceInformationPayload(
-                    countryName: currentCountry!.name!,
-                    provinceName: currentProvince!.name!,
-                    districtName: currentDistrict!.name!,
-                    wardName: currentWard!.name!,
-                    street: addressTxtController.text,
-                    address: addressTxtController.text,
-                    countryCode: currentCountry!.iso2!,
-                    provinceCode: currentProvince!.stateCode!.toStringAsFixed(0),
-                    districtCode: currentDistrict!.code!,
-                    wardCode: currentWard!.id!.toStringAsFixed(0),
-                  ),
-                  height: 1,
-                  weight: 1,
-                  maritalStatus: _martialStatusParam,
-                  bloodGroup: _bloodTypeParam,
-                  academicLevel: _eduParam,
-                  job: _jobParam,
-                  interest: _hobbyParam,
-                  talent: _talentParam,
-                  sex: _genderParam,
-                  birthPlace: UpdatePDoneBirthPlacePayload(
-                    countryName: currentCountry!.name!,
-                    provinceName: currentProvince!.name!,
-                    districtName: currentDistrict!.name!,
-                    wardName: currentWard!.name!,
-                    street: addressTxtController.text,
-                    address: addressTxtController.text,
-                    countryCode: currentCountry!.iso2!,
-                    countryId: currentDistrict!.code!, //
-                    provinceId: currentProvince!.stateCode!.toStringAsFixed(0),
-                    districtId: currentDistrict!.code!, //
-                    wardId: currentWard!.id!.toStringAsFixed(0),
-                  ),
-                  birthday: birthDay!.day.toStringAsFixed(0),
-                  identityNumber: idNumberTxtController.text,
-                  supplyDate: supplyDate!.day.toStringAsExponential(0),
-                  supplyAddress: placeOfNumberTxtController.text,
-                ),
-              ),
+        onPressed: () => !widget.authInfo.isPDone!
+            ? widget.userCubit.updatePDoneProfile(updatePDoneProfilePayload: passPdonePayload())
+            : widget.userCubit.updateNonePDoneProfile(updateNonePDoneProfilePayload: passNonePDonePayload()),
         child: Text(
           "Cập nhật",
           style: Theme.of(context).textTheme.labelLarge?.copyWith(
@@ -333,7 +215,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                       required: true,
                       genders: genderValue,
                       onChange: (sex) {
-                        _genderParam = sex;
+                        genderParam = sex;
                       },
                     );
                   }
@@ -341,7 +223,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                     required: true,
                     genders: genders,
                     onChange: (sex) {
-                      _genderParam = sex;
+                      genderParam = sex;
                     },
                   );
                 },
@@ -402,12 +284,20 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
           ),
           const SizedBox(height: 20),
           //Người bảo hộ
-          ProtectorDropdown(
-            required: true,
-            protectors: protectors,
-            onChange: (protector) {
-              _protectorID = protector;
+          ValueListenableBuilder(
+            builder: (_, protectorsValue, __) {
+              if (protectorsValue.isNotEmpty) {
+                return ProtectorDropdown(
+                  required: true,
+                  protectors: protectorsValue,
+                  onChange: (protector) {
+                    protectorID = protector;
+                  },
+                );
+              }
+              return Container();
             },
+            valueListenable: protectorsChanged,
           ),
 
           /// ID Pdone
@@ -438,7 +328,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             onChange: (value) => onValidation(),
             onPhoneCodeChange: (value) {
               if (value.dialCode != null) {
-                _phoneCode = value.dialCode!;
+                phoneCode = value.dialCode!;
                 debugPrint("$value");
               }
             },
@@ -481,7 +371,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                   required: true,
                   banks: banksValue,
                   onChange: (bank) {
-                    _bankParam = bank;
+                    bankParam = bank;
                   },
                 );
               }
@@ -531,12 +421,20 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             ),
           ),
           const SizedBox(height: 20),
-          EducationDropdown(
-            educations: educations,
-            required: false,
-            onChange: (edu) {
-              _eduParam = edu;
+          ValueListenableBuilder(
+            builder: (_, educationsValue, __) {
+              if (educationsValue.isNotEmpty) {
+                return EducationDropdown(
+                  educations: educationsValue,
+                  required: false,
+                  onChange: (edu) {
+                    eduParam = edu;
+                  },
+                );
+              }
+              return Container();
             },
+            valueListenable: educationsChanged,
           ),
           const SizedBox(height: 20),
           const Text(
@@ -555,7 +453,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                 return const Iterable<String>.empty();
               }
 
-              var filteredAndSortedJobs = jobs
+              var filteredAndSortedJobs = jobsChanged.value
                   .where((element) => element.name!.contains(textEditingValue.text.toLowerCase()))
                   .map((job) => job.name!) // Extract job names
                   .toList();
@@ -566,29 +464,45 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
               return filteredAndSortedJobs;
             },
             onSelected: (String itemSelected) {
-              _jobParam = itemSelected;
+              jobParam = itemSelected;
             },
           ),
           const SizedBox(height: 12),
           Row(
             children: [
               Expanded(
-                child: BloodTypeDropDown(
-                  required: false,
-                  bloodTypes: bloodTypes,
-                  onChange: (bloodType) {
-                    _bloodTypeParam = bloodType;
+                child: ValueListenableBuilder(
+                  builder: (_, bloodTypesValue, __) {
+                    if (bloodTypesValue.isNotEmpty) {
+                      return BloodTypeDropDown(
+                        required: false,
+                        bloodTypes: bloodTypesValue,
+                        onChange: (bloodType) {
+                          bloodTypeParam = bloodType;
+                        },
+                      );
+                    }
+                    return Container();
                   },
+                  valueListenable: bloodTypesChanged,
                 ),
               ),
               const SizedBox(width: 20),
               Expanded(
-                child: MaritalStatusDropDown(
-                  required: false,
-                  maritals: maritals,
-                  onChange: (martialStatus) {
-                    _martialStatusParam = martialStatus;
+                child: ValueListenableBuilder(
+                  builder: (_, maritalsValue, __) {
+                    if (maritalsValue.isNotEmpty) {
+                      return MaritalStatusDropDown(
+                        required: false,
+                        maritals: maritalsValue,
+                        onChange: (marital) {
+                          martialStatusParam = marital;
+                        },
+                      );
+                    }
+                    return Container();
                   },
+                  valueListenable: maritalsChanged,
                 ),
               ),
             ],
@@ -610,7 +524,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                 return const Iterable<String>.empty();
               }
 
-              var filteredAndSortedJobs = talents
+              var filteredAndSortedJobs = talentsChanged.value
                   .where((element) => element.name!.contains(textEditingValue.text.toLowerCase()))
                   .map((job) => job.name!)
                   .toList();
@@ -620,7 +534,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
               return filteredAndSortedJobs;
             },
             onSelected: (String itemSelected) {
-              _talentParam = itemSelected;
+              talentParam = itemSelected;
             },
           ),
           const SizedBox(height: 15),
@@ -640,7 +554,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                 return const Iterable<String>.empty();
               }
 
-              var filteredAndSortedJobs = hobbies
+              var filteredAndSortedJobs = hobbiesChanged.value
                   .where((element) => element.name!.contains(textEditingValue.text.toLowerCase()))
                   .map((job) => job.name!)
                   .toList();
@@ -650,7 +564,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
               return filteredAndSortedJobs;
             },
             onSelected: (String itemSelected) {
-              _hobbyParam = itemSelected;
+              hobbyParam = itemSelected;
             },
           ),
         ],
@@ -1085,7 +999,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      widget.authInfo.getdisplayName,
+                      widget.authInfo.displayName!,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -1093,23 +1007,38 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                       ),
                     ),
                     const SizedBox(width: 5),
-                    widget.authInfo.isJA!
-                        ? Container(
-                            width: 30,
-                            height: 16,
-                            decoration: BoxDecoration(
-                              color: AppColors.blue32,
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            alignment: Alignment.center,
-                            child: const Text(
-                              "JA",
-                              style: TextStyle(
-                                color: AppColors.white,
-                              ),
-                            ),
-                          )
-                        : Container(),
+                    Container(
+                      width: 30,
+                      height: 16,
+                      decoration: BoxDecoration(
+                        color: AppColors.blue32,
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        "JA",
+                        style: TextStyle(
+                          color: AppColors.white,
+                        ),
+                      ),
+                    )
+                    // widget.authInfo.isJA!
+                    //     ? Container(
+                    //         width: 30,
+                    //         height: 16,
+                    //         decoration: BoxDecoration(
+                    //           color: AppColors.blue32,
+                    //           borderRadius: BorderRadius.circular(30.0),
+                    //         ),
+                    //         alignment: Alignment.center,
+                    //         child: const Text(
+                    //           "JA",
+                    //           style: TextStyle(
+                    //             color: AppColors.white,
+                    //           ),
+                    //         ),
+                    //       )
+                    //     : Container(),
                   ],
                 ),
               ),

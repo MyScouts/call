@@ -62,10 +62,15 @@ class User with _$User {
 extension UserExtNull on User? {
   String get getdisplayName => [this?.displayName, _userDefaultName]
       .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+
+  String get getEmail => [this?.email, _userDefaultEmail]
+      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+    
   bool get getIsPDone => this?.isPDone ?? false;
 }
 
 const _userDefaultName = 'PDone User';
+const _userDefaultEmail = 'pdoneuser@gmail.com';
 
 extension UserExtension on User {
   Role role(int? hostUserID) {

@@ -1,4 +1,12 @@
+import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
+import 'package:app_main/src/domain/entities/bank.dart';
+import 'package:app_main/src/domain/entities/update_account/place/country.dart';
+import 'package:app_main/src/domain/entities/update_account/place/district.dart';
 import 'package:app_main/src/domain/entities/update_account/place/place_information.dart';
+import 'package:app_main/src/domain/entities/update_account/place/province.dart';
+import 'package:app_main/src/domain/entities/update_account/place/ward.dart';
+import 'package:app_main/src/domain/entities/update_account/update_pdone_birth_place_payload.dart';
+import 'package:app_main/src/domain/entities/update_account/update_place_information_payload.dart';
 import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
 import 'package:flutter/material.dart';
 import 'package:app_core/app_core.dart';
@@ -38,6 +46,21 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
   final pDoneIdProtectorCtrl = TextEditingController();
   final emailOrPhoneProtectorCtrl = TextEditingController();
 
+  Country? currentCountry;
+  Province? currentProvince;
+  District? currentDistrict;
+  Ward? currentWard;
+
+  ValueNotifier<List<Country>?> countriesChanged = ValueNotifier([]);
+  ValueNotifier<List<Province>?> provincesChanged = ValueNotifier([]);
+  ValueNotifier<List<District>?> districtsChanged = ValueNotifier([]);
+  ValueNotifier<List<Ward>?> wardsChanged = ValueNotifier([]);
+
+  ValueNotifier<List<Country>?> countries2Changed = ValueNotifier([]);
+  ValueNotifier<List<Province>?> provinces2Changed = ValueNotifier([]);
+  ValueNotifier<List<District>?> districts2Changed = ValueNotifier([]);
+  ValueNotifier<List<Ward>?> wards2Changed = ValueNotifier([]);
+
   Gender? currentGender;
   DateTime? birthDay;
   DateTime? supplyDate;
@@ -52,8 +75,108 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
   PlaceInformation? birthPlace;
   PlaceInformation? currentPlace;
 
+  String phoneCode = "+84";
+  int genderParam = 1;
+  int protectorID = 1;
+  String bankParam = "";
+
+  String eduParam = "";
+  String jobParam = "";
+  String bloodTypeParam = "";
+  String hobbyParam = "";
+  String talentParam = "";
+  String martialStatusParam = "";
+
+  ValueNotifier<List<Protector>> protectorsChanged = ValueNotifier([]);
+  ValueNotifier<List<Gender>> gendersChanged = ValueNotifier([]);
+  ValueNotifier<List<MaritalStatus>> maritalsChanged = ValueNotifier([]);
+  ValueNotifier<List<Job>> jobsChanged = ValueNotifier([]);
+  ValueNotifier<List<BloodGroup>> bloodTypesChanged = ValueNotifier([]);
+  ValueNotifier<List<AcademicLevel>> educationsChanged = ValueNotifier([]);
+  ValueNotifier<List<Interest>> hobbiesChanged = ValueNotifier([]);
+  ValueNotifier<List<Talent>> talentsChanged = ValueNotifier([]);
+  ValueNotifier<List<Bank>> banksChanged = ValueNotifier([]);
+
+  PDoneOptionMethod pDoneOptionMethod = PDoneOptionMethod.userIdentityCard;
+
+  PDoneOptionRangeAge rangeAge = PDoneOptionRangeAge.over18;
+
+  bool isShowProtector() {
+    return rangeAge == PDoneOptionRangeAge.under18AndOver15 || pDoneOptionMethod == PDoneOptionMethod.userBirthCer;
+  }
+
   bool checkIsUnder15ShouldEnableField() {
     return birthDay == null || birthDay != null && !birthDay!.isUnder15yearsAgo();
+  }
+
+  UpdateNonePDoneProfilePayload passNonePDonePayload() {
+    return UpdateNonePDoneProfilePayload(
+      nickName: nickNameTxtController.text,
+      currentPlace: UpdatePlaceInformationPayload(
+        countryName: currentCountry!.name!,
+        provinceName: currentProvince!.name!,
+        districtName: currentDistrict!.name!,
+        wardName: currentWard!.name!,
+        street: addressTxtController.text,
+        address: addressTxtController.text,
+        countryCode: currentCountry!.iso2!,
+        provinceCode: currentProvince!.stateCode!.toStringAsFixed(0),
+        districtCode: currentDistrict!.code!,
+        wardCode: currentWard!.id!.toStringAsFixed(0),
+      ),
+      height: 1,
+      weight: 1,
+      maritalStatus: martialStatusParam,
+      bloodGroup: bloodTypeParam,
+      academicLevel: eduParam,
+      job: jobParam,
+      interest: hobbyParam,
+      talent: talentParam,
+      sex: genderParam,
+      birthPlace: UpdatePDoneBirthPlacePayload(
+        countryName: currentCountry!.name!,
+        provinceName: currentProvince!.name!,
+        districtName: currentDistrict!.name!,
+        wardName: currentWard!.name!,
+        street: addressTxtController.text,
+        address: addressTxtController.text,
+        countryCode: currentCountry!.iso2!,
+        countryId: currentDistrict!.code!,
+        provinceId: currentProvince!.stateCode!.toStringAsFixed(0),
+        districtId: currentDistrict!.code!,
+        wardId: currentWard!.id!.toStringAsFixed(0),
+      ),
+      birthday: birthDay!.day.toStringAsFixed(0),
+      identityNumber: idNumberTxtController.text,
+      supplyDate: supplyDate!.day.toStringAsExponential(0),
+      supplyAddress: placeOfNumberTxtController.text,
+    );
+  }
+
+  UpdatePDoneProfilePayload passPdonePayload() {
+    return UpdatePDoneProfilePayload(
+      nickName: nickNameTxtController.text,
+      currentPlace: UpdatePlaceInformationPayload(
+        countryName: currentCountry!.name!,
+        provinceName: currentProvince!.name!,
+        districtName: currentDistrict!.name!,
+        wardName: currentWard!.name!,
+        street: addressTxtController.text,
+        address: addressTxtController.text,
+        countryCode: currentCountry!.iso2!,
+        provinceCode: currentProvince!.stateCode!.toStringAsFixed(0),
+        districtCode: currentDistrict!.code!,
+        wardCode: currentWard!.id!.toStringAsFixed(0),
+      ),
+      height: 1,
+      weight: 1,
+      maritalStatus: martialStatusParam,
+      bloodGroup: bloodTypeParam,
+      academicLevel: eduParam,
+      job: jobParam,
+      interest: hobbyParam,
+      talent: talentParam,
+    );
   }
 
   @override
