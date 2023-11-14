@@ -109,13 +109,14 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
           context: context,
           isScrollControlled: true,
           builder: (context) {
-            return StatefulBuilder(builder: (ctx, state) {
+            return StatefulBuilder(builder: (ctx, _) {
               return FractionallySizedBox(
                 heightFactor: 1,
                 child: UpdatePDoneOtp(
                   blocUpdate: upgradePDoneBloc,
                   payload: payload,
                   pDoneAPICaller: pDoneAPICaller,
+                  phoneNumber: state.currentPhoneNumber,
                 ),
               );
             });

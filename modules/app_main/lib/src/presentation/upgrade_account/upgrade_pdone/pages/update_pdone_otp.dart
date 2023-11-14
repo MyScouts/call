@@ -13,12 +13,14 @@ class UpdatePDoneOtp extends StatefulWidget {
   UpgradePDoneBloc blocUpdate;
   UpdateProfilePayload payload;
   PDoneAPICaller pDoneAPICaller;
+  String phoneNumber;
 
   UpdatePDoneOtp({
     super.key,
     required this.blocUpdate,
     required this.payload,
     required this.pDoneAPICaller,
+    required this.phoneNumber
   });
 
   @override
@@ -66,7 +68,8 @@ class _UpdatePDoneOtpState extends State<UpdatePDoneOtp> with TimerMixin {
                       text: S.current.confirmation_code_has_been_sent,
                       children: [
                         TextSpan(
-                          text: " (+84) ${383916526}",
+                          // text: " (+84) ${383916526}",
+                          text: widget.phoneNumber,
                           style: context.text.titleSmall!.copyWith(
                             fontWeight: FontWeight.w800,
                           ),
