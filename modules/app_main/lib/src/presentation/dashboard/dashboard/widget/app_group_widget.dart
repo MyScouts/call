@@ -50,6 +50,7 @@ class AppGroupWidget extends AppWidget {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: GridView.count(
+                    physics: const NeverScrollableScrollPhysics(),
                     padding: const EdgeInsets.all(16.0),
                     crossAxisCount: 3,
                     mainAxisSpacing: 5,

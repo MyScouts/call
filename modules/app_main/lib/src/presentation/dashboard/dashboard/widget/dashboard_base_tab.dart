@@ -67,7 +67,7 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
       channel: changeGroupEvent,
       observer: this,
       onNotification: (data) {
-        if(!isPage) return;
+        if (!isPage) return;
         if ((data as DashBoardGroupItem).items.isEmpty) {
           bloc.add(RemoveItem(data));
           return;
@@ -80,7 +80,7 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
       channel: cancelEditMode,
       observer: this,
       onNotification: (data) {
-        if(!isPage) return;
+        if (!isPage) return;
         dashBoardController.enableEditMode = false;
       },
     );
@@ -89,7 +89,7 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
       channel: showEditMode,
       observer: this,
       onNotification: (data) {
-        if(!isPage) return;
+        if (!isPage) return;
         dashBoardController.enableEditMode = true;
       },
     );
@@ -152,18 +152,6 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
     }).toList();
   }
 
-  List<ReorderableStaggeredScrollViewGridItem> notDragList = List.generate(
-    10,
-    (index) => ReorderableStaggeredScrollViewGridItem(
-      mainAxisCellCount: 1,
-      crossAxisCellCount: 1,
-      widget: const AppEmptyWidget(
-        app: DashBoardEmptyItem(),
-      ),
-      key: ValueKey('empty $index'),
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -207,6 +195,7 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
                       children: items
                           .map(
                             (e) => CustomerItem(
+                              type: e.type,
                               id: e.id,
                               mainAxisCellCount: e.height,
                               crossAxisCellCount: e.width,
@@ -258,7 +247,11 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
                                     .read<T>()
                                     .add(AddItemToGroup(group, [icon1]));
                               } else {
-                                ctx.read<T>().add(AddItem(group));
+                                final index =
+                                    items.indexWhere((e) => icon2.id == e.id);
+                                if (index != -1) {
+                                  ctx.read<T>().add(InsertItem(group, index));
+                                }
                               }
                             },
                           ),
