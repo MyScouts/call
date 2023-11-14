@@ -66,8 +66,9 @@ class AuthenticationUsecase {
     return true;
   }
 
-  Future getOtp() async {
-    await _authRepository.getOtp();
+  Future<Otp> getOtp() async {
+    final response = await _authRepository.getOtp();
+    return response;
   }
 
   Future forgotPassword(ForgotPasswordPayload payload) async {

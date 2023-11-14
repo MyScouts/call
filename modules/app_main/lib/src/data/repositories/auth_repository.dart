@@ -32,7 +32,7 @@ abstract class AuthRepository {
     ResetPasswordTokenPayload payload,
   );
   Future<ResetPasswordResponse> resetPassword(ResetPasswordPayload payload);
-  Future getOtp();
+  Future<Otp> getOtp();
 
   Future authClaimV1(AuthClaimPayload payload);
   Future authClaimV2(AuthClaimPayload payload);

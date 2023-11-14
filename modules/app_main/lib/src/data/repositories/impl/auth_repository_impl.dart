@@ -68,8 +68,9 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future getOtp() {
-    return _authApi.getOtp();
+  Future<Otp> getOtp() async {
+    final response = await _authApi.getOtp();
+    return response.data.otp;
   }
 
   @override
