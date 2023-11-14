@@ -5,7 +5,6 @@ import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
 import 'package:app_main/src/presentation/protector/manage_protector_screen.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
-import 'package:app_main/src/presentation/shared/user/bloc/user_bloc.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'package:design_system/design_system.dart';
@@ -29,6 +28,7 @@ class Setting {
     BuildContext context, {
     User? user,
     OnboardingResponse? onboarding,
+    Function()? onUpdate,
   }) =>
       [
         [
@@ -59,7 +59,8 @@ class Setting {
           Setting(
             text: "PDone",
             icon: IconAppConstants.icUpgrade,
-            onPressed: () => context.startUpgradePDone(),
+            onPressed: () =>
+                context.startUpgradePDone().then((value) => onUpdate!()),
           ),
           Setting(
             text: "JA",

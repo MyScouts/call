@@ -453,7 +453,8 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
             trailing: isBossGroup && member.id != myId
                 ? PopupMenuButton(
                     onSelected: (value) {
-                      if (value == BossGroupActionToMember.assignBossTeam.name) {
+                      if (value ==
+                          BossGroupActionToMember.assignBossTeam.name) {
                         context
                             .confirmAssignBossTeam(
                           onAction: () {},
@@ -502,7 +503,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
   }
 
   void _onTeamDetailBlocListen(BuildContext context, TeamDetailState state) {
-    if (state is FetchTeamDetailSuccess) {
+    if (state is FetchTeamsMemberSuccess) {
       if (state.team.boss == null && state.team.group?.boss?.id == myId) {
         context.askAssignBoss(team: state.team);
       }

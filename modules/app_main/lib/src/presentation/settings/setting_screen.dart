@@ -189,6 +189,9 @@ class _SettingScreenState extends State<SettingScreen> {
           children: Setting.session1Menus(
             context,
             user: userCubit.currentUser,
+            onUpdate: () {
+              userCubit.onboarding();
+            },
             onboarding: state is OnboardingSuccess ? state.onboarding : null,
           ).map((settings) => _buildMenus(settings)).toList(),
         );
