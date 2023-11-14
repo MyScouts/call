@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../blocs/user/user_cubit.dart';
+
 class AddTeamMemberSheet extends StatefulWidget {
   const AddTeamMemberSheet({super.key});
 
@@ -22,6 +24,7 @@ class _AddTeamMemberSheetState extends State<AddTeamMemberSheet> {
   late final controller = getIt<AddMemberChangeNotifier>();
   final TextEditingController search = TextEditingController();
 
+  final myId = injector.get<UserCubit>().currentUser?.id;
 
   @override
   void didChangeDependencies() {
@@ -177,8 +180,13 @@ class _AddTeamMemberSheetState extends State<AddTeamMemberSheet> {
                                 );
                               }
 
+                              final friendList = controller.friends
+                                  .where((friend) => friend.id != myId)
+                                  .toList();
+
                               if (search.text.trim().isNotEmpty) {
                                 final users = controller.friends
+                                    .where((friend) => friend.id != myId)
                                     .where((e) =>
                                         e.pDoneId?.contains(search.text) ??
                                         false)
@@ -213,23 +221,25 @@ class _AddTeamMemberSheetState extends State<AddTeamMemberSheet> {
                                 shrinkWrap: true,
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 8),
-                                itemBuilder: (_, index) => _UserFriendCard(
-                                  user: controller.friends[index],
-                                  active: controller.addFriend
-                                      .contains(controller.friends[index]),
-                                  callBack: () {
-                                    if (controller.addFriend
-                                        .contains(controller.friends[index])) {
-                                      controller.removeFriend(
-                                          controller.friends[index]);
-                                    } else {
-                                      controller.add(controller.friends[index]);
-                                    }
-                                  },
-                                ),
+                                itemBuilder: (_, index) {
+                                  return _UserFriendCard(
+                                    user: friendList[index],
+                                    active: controller.addFriend
+                                        .contains(friendList[index]),
+                                    callBack: () {
+                                      if (controller.addFriend
+                                          .contains(friendList[index])) {
+                                        controller
+                                            .removeFriend(friendList[index]);
+                                      } else {
+                                        controller.add(friendList[index]);
+                                      }
+                                    },
+                                  );
+                                },
                                 separatorBuilder: (_, __) =>
                                     const SizedBox(height: 10),
-                                itemCount: controller.friends.length,
+                                itemCount: friendList.length,
                               );
                             },
                           ),

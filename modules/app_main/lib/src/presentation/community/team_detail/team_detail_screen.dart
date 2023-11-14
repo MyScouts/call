@@ -5,6 +5,7 @@ import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:design_system/design_system.dart';
+
 // import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -136,7 +137,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                           const SizedBox(height: 20),
                           _membersWidget(
                             members: members,
-                            canUpdateMembers: canUpdateMembers,
+                            isBossGroup: isBossGroup,
                             team: team!,
                           ),
                         ],
@@ -433,7 +434,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
 
   Widget _membersWidget({
     required List<User> members,
-    required bool canUpdateMembers,
+    required bool isBossGroup,
     required Team team,
   }) {
     return Column(
@@ -449,10 +450,10 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
         ...members.map(
           (member) => TeamMemberWidget(
             user: member,
-            trailing: canUpdateMembers && member.id != myId
+            trailing: isBossGroup && member.id != myId
                 ? PopupMenuButton(
                     onSelected: (value) {
-                      if (value == BossTeamActionToMember.assignBossTeam.name) {
+                      if (value == BossGroupActionToMember.assignBossTeam.name) {
                         context
                             .confirmAssignBossTeam(
                           onAction: () {},
@@ -472,11 +473,11 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                         const Icon(Icons.more_horiz, color: Color(0xFF212121)),
                     offset: const Offset(0, 30),
                     itemBuilder: (BuildContext bc) {
-                      List<BossTeamActionToMember> menus =
-                          List.from(BossTeamActionToMember.values);
+                      List<BossGroupActionToMember> menus =
+                          List.from(BossGroupActionToMember.values);
                       menus.removeWhere((element) =>
                           team.boss?.id != null &&
-                          element == BossTeamActionToMember.assignBossTeam);
+                          element == BossGroupActionToMember.assignBossTeam);
                       return [
                         ...menus.map(
                           (action) => PopupMenuItem(
