@@ -27,6 +27,15 @@ class _AddTeamMemberSheetState extends State<AddTeamMemberSheet> {
   final myId = injector.get<UserCubit>().currentUser?.id;
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final state = context.read<TeamDetailBloc>().state;
+    final team = (state as FetchTeamsMemberSuccess).team;
+    final bossID = team.boss?.id ?? 0;
+    controller.setBossId(bossID);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.transparent,
@@ -402,6 +411,12 @@ class AddMemberChangeNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  int _bossID = 0;
+
+  void setBossId(int value) {
+    _bossID = value;
+  }
+
   void removeFriend(User user) {
     _addFriend.remove(user);
     notifyListeners();
@@ -415,7 +430,7 @@ class AddMemberChangeNotifier extends ChangeNotifier {
 
   void _initData() async {
     final res = await useCase.listFriends();
-    _friends = res;
+    _friends = res.where((e) => e.id != _bossID).toList();
     _isLoading = false;
     notifyListeners();
   }

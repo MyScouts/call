@@ -48,6 +48,8 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
 
   bool _disableUpdate = false;
 
+  bool show = false;
+
   @override
   void initState() {
     _group = widget.group;
@@ -56,6 +58,14 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
     }
     enableRemoveButton = widget.enableRemoveIcon;
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Future.delayed(const Duration(milliseconds: 300), () {
+        setState(() {
+          show = true;
+        });
+      });
+    });
   }
 
   @override
@@ -155,7 +165,7 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
             width: double.infinity,
             color: Colors.black.withOpacity(.5),
             alignment: Alignment.center,
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               children: [
                 const Spacer(),
@@ -174,37 +184,43 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
                         color: Colors.white,
                       ),
                       decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(10.0),
-                        fillColor: node.hasFocus
-                            ? const Color.fromRGBO(17, 17, 17, 0.40)
-                            : Colors.transparent,
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            borderSide:
-                                const BorderSide(color: Colors.transparent)),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                            borderSide:
-                                const BorderSide(color: Colors.transparent)),
-                        suffixIcon: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            if (node.hasFocus)
-                              IconButton(
-                                onPressed: controller.clear,
-                                icon: const Icon(
-                                  Icons.close,
-                                  color: Colors.white,
-                                  size: 24,
+                          contentPadding: const EdgeInsets.all(10.0),
+                          fillColor: node.hasFocus
+                              ? const Color.fromRGBO(17, 17, 17, 0.40)
+                              : Colors.transparent,
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              borderSide:
+                                  const BorderSide(color: Colors.transparent)),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              borderSide:
+                                  const BorderSide(color: Colors.transparent)),
+                          suffixIcon: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (node.hasFocus)
+                                IconButton(
+                                  onPressed: controller.clear,
+                                  icon: const Icon(
+                                    Icons.close,
+                                    color: Colors.white,
+                                    size: 24,
+                                  ),
                                 ),
-                              ),
-                          ],
-                        ),
-                      ),
+                            ],
+                          ),
+                          prefixIcon: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (node.hasFocus)
+                                const SizedBox.square(dimension: 20)
+                            ],
+                          )),
                     );
                   },
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 80),
                 _GroupItemBuilder(
                   builder: (ctx) {
                     recorderCtx = ctx;
@@ -216,178 +232,159 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
                         });
                       },
                       behavior: HitTestBehavior.opaque,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(32),
-                        child: ClipRect(
-                          child: BackdropFilter(
-                            filter: ui.ImageFilter.blur(
-                              sigmaX: 16.0,
-                              sigmaY: 16.0,
-                            ),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width - 32,
-                              height:
-                              (MediaQuery.of(context).size.width - 32) +
-                                  20,
-                              decoration: BoxDecoration(
-                                color:
-                                const Color.fromRGBO(17, 17, 17, 0.40),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width - 60,
+                        height: (MediaQuery.of(context).size.width - 60) + 20,
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Hero(
+                              tag: widget.group.id,
+                              child: ClipRRect(
                                 borderRadius: BorderRadius.circular(32),
-                              ),
-                              child: Stack(
-                                fit: StackFit.expand,
-                                children: [
-                                  Hero(
-                                    tag: widget.group.id,
-                                    child: const SizedBox.expand(),
+                                child: ClipRect(
+                                  child: BackdropFilter(
+                                    filter: ui.ImageFilter.blur(
+                                      sigmaX: 16.0,
+                                      sigmaY: 16.0,
+                                    ),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width - 60,
+                                      height: (MediaQuery.of(context).size.width - 60) + 20,
+                                      decoration: BoxDecoration(
+                                        color: const Color.fromRGBO(
+                                            17, 17, 17, 0.40),
+                                        borderRadius: BorderRadius.circular(32),
+                                      ),
+                                    ),
                                   ),
-                                  Builder(
-                                    builder: (_) {
-                                      if (widget.group.items.length <= 9) {
-                                        return ReorderableStaggeredScrollView
-                                            .grid(
-                                          key: UniqueKey(),
-                                          isLongPressDraggable: false,
-                                          padding: const EdgeInsets.all(16),
-                                          enable: enableRemoveButton,
-                                          onGroup: (p1, p2) {},
-                                          onDragStarted: (_) {
-                                            _isDraging = true;
-                                          },
-                                          onDragUpdate: (_, p1) {
-                                            final i =
-                                                (p1.widget as AppWidget)
-                                                    .app;
-                                            calculateDraggablePositionFromOut(
-                                                i);
-                                          },
-                                          onDraggablePosition: (offset) {
-                                            _dragPosition = offset;
-                                          },
-                                          onDragEnd: (_, __) {
-                                            _isDraging = false;
-                                          },
-                                          children: [
-                                            if (enableRemoveButton)
-                                              ..._group.items.map(
-                                                    (e) =>
-                                                    ReorderableStaggeredScrollViewGridItem(
-                                                      key: ValueKey(e.id),
-                                                      widget:
-                                                      AppWidgetGroupBuilder(
-                                                        app: e,
-                                                        enableEditMode:
-                                                        enableRemoveButton,
-                                                        onRemoved: () {
-                                                          isChanged = true;
-                                                          setState(
-                                                                () {
-                                                              _group = _group
-                                                                  .copyWith(
-                                                                items: _group
-                                                                    .items
-                                                                    .where((i) =>
-                                                                i.id !=
-                                                                    e.id)
-                                                                    .toList(),
-                                                              );
-                                                            },
-                                                          );
-                                                        },
-                                                      ),
-                                                      mainAxisCellCount:
-                                                      e.height,
-                                                      crossAxisCellCount:
-                                                      e.width,
-                                                    ),
-                                              ),
-                                            if (!enableRemoveButton)
-                                              ..._group.items.map(
-                                                    (e) =>
-                                                    ReorderableStaggeredScrollViewGridItem(
-                                                      key: ValueKey(e.id),
-                                                      mainAxisCellCount:
-                                                      e.height,
-                                                      crossAxisCellCount:
-                                                      e.width,
-                                                      widget:
-                                                      AppWidgetGroupBuilder(
-                                                        app: e,
-                                                        enableEditMode:
-                                                        enableRemoveButton,
-                                                        onRemoved: () {
-                                                          isChanged = true;
-                                                          setState(() {
-                                                            _group =
-                                                                _group.copyWith(
-                                                                  items: _group
-                                                                      .items
-                                                                      .where((i) =>
-                                                                  i.id !=
-                                                                      e.id)
-                                                                      .toList(),
-                                                                );
-                                                          });
-                                                        },
-                                                      ),
-                                                    ),
-                                              ),
-                                            if (widget.moveItem != null &&
-                                                widget.moveItem
-                                                is DashBoardIconItem)
+                                ),
+                              ),
+                            ),
+                            if(show)
+                            Builder(
+                              builder: (_) {
+                                if (widget.group.items.length <= 9) {
+                                  return ReorderableStaggeredScrollView.grid(
+                                    key: UniqueKey(),
+                                    isLongPressDraggable: false,
+                                    padding: const EdgeInsets.all(16),
+                                    enable: enableRemoveButton,
+                                    onGroup: (p1, p2) {},
+                                    onDragStarted: (_) {
+                                      _isDraging = true;
+                                    },
+                                    onDragUpdate: (_, p1) {
+                                      final i = (p1.widget as AppWidget).app;
+                                      calculateDraggablePositionFromOut(i);
+                                    },
+                                    onDraggablePosition: (offset) {
+                                      _dragPosition = offset;
+                                    },
+                                    onDragEnd: (_, __) {
+                                      _isDraging = false;
+                                    },
+                                    children: [
+                                      if (enableRemoveButton)
+                                        ..._group.items.map(
+                                          (e) =>
                                               ReorderableStaggeredScrollViewGridItem(
-                                                key: ValueKey(
-                                                    widget.moveItem!.id),
-                                                widget:
-                                                AppWidgetGroupBuilder(
-                                                  app: widget.moveItem!,
-                                                  enableEditMode:
+                                            key: ValueKey(e.id),
+                                            widget: AppWidgetGroupBuilder(
+                                              app: e,
+                                              enableEditMode:
                                                   enableRemoveButton,
-                                                  onRemoved: () {},
-                                                ),
-                                                mainAxisCellCount:
-                                                widget.moveItem!.height,
-                                                crossAxisCellCount:
-                                                widget.moveItem!.width,
-                                              ),
-                                          ],
-                                          crossAxisCount: 3,
-                                          onChildrenChanged: onUpdate,
-                                        );
-                                      }
-                                      return Column(
-                                        children: [
-                                          Expanded(
-                                            child: PageView(
-                                              onPageChanged: (page) {
+                                              onRemoved: () {
+                                                isChanged = true;
+                                                setState(
+                                                  () {
+                                                    _group = _group.copyWith(
+                                                      items: _group.items
+                                                          .where((i) =>
+                                                              i.id != e.id)
+                                                          .toList(),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                            mainAxisCellCount: e.height,
+                                            crossAxisCellCount: e.width,
+                                          ),
+                                        ),
+                                      if (!enableRemoveButton)
+                                        ..._group.items.map(
+                                          (e) =>
+                                              ReorderableStaggeredScrollViewGridItem(
+                                            key: ValueKey(e.id),
+                                            mainAxisCellCount: e.height,
+                                            crossAxisCellCount: e.width,
+                                            widget: AppWidgetGroupBuilder(
+                                              app: e,
+                                              enableEditMode:
+                                                  enableRemoveButton,
+                                              onRemoved: () {
+                                                isChanged = true;
                                                 setState(() {
-                                                  _page = page;
+                                                  _group = _group.copyWith(
+                                                    items: _group.items
+                                                        .where(
+                                                            (i) => i.id != e.id)
+                                                        .toList(),
+                                                  );
                                                 });
                                               },
-                                              children: buildLayout(),
                                             ),
                                           ),
-                                          const SizedBox(height: 8),
-                                          Builder(
-                                            builder: (ctx) => Row(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                              children: List.generate(
-                                                2,
-                                                    (index) =>
-                                                    _buildDot(ctx, index),
-                                              ),
-                                            ),
+                                        ),
+                                      if (widget.moveItem != null &&
+                                          widget.moveItem is DashBoardIconItem)
+                                        ReorderableStaggeredScrollViewGridItem(
+                                          key: ValueKey(widget.moveItem!.id),
+                                          widget: AppWidgetGroupBuilder(
+                                            app: widget.moveItem!,
+                                            enableEditMode: enableRemoveButton,
+                                            onRemoved: () {},
                                           ),
-                                          const SizedBox(height: 8),
-                                        ],
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
+                                          mainAxisCellCount:
+                                              widget.moveItem!.height,
+                                          crossAxisCellCount:
+                                              widget.moveItem!.width,
+                                        ),
+                                    ],
+                                    crossAxisCount: 3,
+                                    onChildrenChanged: onUpdate,
+                                  );
+                                }
+                                return Column(
+                                  children: [
+                                    Expanded(
+                                      child: PageView(
+                                        onPageChanged: (page) {
+                                          setState(() {
+                                            _page = page;
+                                          });
+                                        },
+                                        children: buildLayout(),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Builder(
+                                      builder: (ctx) => Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: List.generate(
+                                          2,
+                                          (index) => _buildDot(ctx, index),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                  ],
+                                );
+                              },
                             ),
-                          ),
+                          ],
                         ),
                       ),
                     );
@@ -405,6 +402,7 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
   List<Widget> buildLayout() {
     return [
       ReorderableStaggeredScrollView.grid(
+        scrollDirection: Axis.horizontal,
         key: UniqueKey(),
         isLongPressDraggable: false,
         padding: const EdgeInsets.all(16),
@@ -486,6 +484,7 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
         onChildrenChanged: onUpdate,
       ),
       ReorderableStaggeredScrollView.grid(
+        scrollDirection: Axis.horizontal,
         key: UniqueKey(),
         isLongPressDraggable: false,
         padding: const EdgeInsets.all(16),
@@ -632,8 +631,9 @@ class HeroDialogRoute<T> extends PageRoute<T> {
   Widget buildTransitions(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation, Widget child) {
     return FadeTransition(
-        opacity: CurvedAnimation(parent: animation, curve: Curves.easeOut),
-        child: child);
+      opacity: CurvedAnimation(parent: animation, curve: Curves.easeOut),
+      child: child,
+    );
   }
 
   @override
