@@ -26,10 +26,10 @@ class LoginButtonTab extends StatelessWidget {
         AnimatedAlign(
           alignment: Alignment(page == 0 ? -1.0 : 1.0, 0),
           duration: const Duration(milliseconds: 200),
-          child: Padding(
-            padding: const EdgeInsets.all(4),
+          child: Container(
+            margin: const EdgeInsets.all(5),
             child: Container(
-              width: 150,
+              width: (MediaQuery.of(context).size.width / 2) - 30,
               height: 40,
               margin: const EdgeInsets.symmetric(horizontal: 30),
               decoration: BoxDecoration(
@@ -53,7 +53,7 @@ class LoginButtonTab extends StatelessWidget {
         ),
         Center(
           child: Container(
-            padding: const EdgeInsets.all(4),
+            padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
             ),
