@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/networking/data_rows_response.dart';
+import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
 import 'package:app_main/src/data/models/payloads/community/reply_give_up_boss_team_role_payload.dart';
 import 'package:app_main/src/data/models/responses/group_request_response.dart';
 import 'package:app_main/src/data/models/responses/member_join_request.dart';
@@ -178,10 +179,14 @@ abstract class CommunityApi {
   Future<LeaveTeamStatusResponse> getLeaveTeamStatus();
 
   @GET(CommunityApiConstants.memberJoinRequest)
-  Future<MemberJoinRequestResponse> memberJoinRequest();
+  Future<MemberJoinRequestResponse> memberJoinRequest(
+    @Queries() GetCommunityPayload queries,
+  );
 
   @GET(CommunityApiConstants.memberLeaveRequest)
-  Future<MemberJoinRequestResponse> memberLeaverRequest();
+  Future<MemberJoinRequestResponse> memberLeaverRequest(
+    @Queries() GetCommunityPayload queries,
+  );
 
   @POST(CommunityApiConstants.replyJoinRequest)
   Future replyJoinRequest(

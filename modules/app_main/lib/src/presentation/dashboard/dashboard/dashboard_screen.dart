@@ -1,3 +1,4 @@
+import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_background_builder.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_community_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_ecommerce_tab.dart';
@@ -33,10 +34,11 @@ class DashBoardScreen extends StatefulWidget {
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
   final PageController _pageController = PageController();
+  final GlobalKey<NotificationScreenState> notificationKey = GlobalKey();
 
   int _page = 0;
 
-  bool _showNotification = false;
+  bool _showEditMode = false;
 
   Widget _buildDot(BuildContext context, int index) {
     final page = _page;
@@ -49,6 +51,18 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         color: page == index ? Colors.white : Colors.white.withOpacity(.2),
       ),
     );
+  }
+
+  void enableEditMode() {
+    setState(() {
+      _showEditMode = true;
+    });
+  }
+
+  void disableEditMode() {
+    setState(() {
+      _showEditMode = false;
+    });
   }
 
   @override
@@ -72,21 +86,35 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: StatusBarWidget(
+                      enableEditMode: _showEditMode,
                       openAppStore: () => context.startSystemSetting(_page),
                       openNotification: () {
+                        notificationKey.currentState?.forward();
+                      },
+                      onCanceled: () {
                         setState(() {
-                          _showNotification = true;
+                          _showEditMode = false;
                         });
+                        NotificationCenter.post(channel: cancelEditMode);
                       },
                     ),
                   ),
                   Expanded(
                     child: PageView(
                       controller: _pageController,
-                      children: const [
-                        DashBoardCommunityTab(),
-                        DashBoardPersonalTab(),
-                        DashBoardEcommerceTab(),
+                      children: [
+                        DashBoardCommunityTab(
+                          enableEditMode: enableEditMode,
+                          disableEditMode: disableEditMode,
+                        ),
+                        DashBoardPersonalTab(
+                          enableEditMode: enableEditMode,
+                          disableEditMode: disableEditMode,
+                        ),
+                        DashBoardEcommerceTab(
+                          enableEditMode: enableEditMode,
+                          disableEditMode: disableEditMode,
+                        ),
                       ],
                       onPageChanged: (page) {
                         setState(() {
@@ -111,14 +139,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ],
               ),
             ),
-            if (_showNotification)
-              NotificationScreen(
-                onClose: () {
-                  setState(() {
-                    _showNotification = false;
-                  });
-                },
-              ),
+            NotificationScreen(
+              key: notificationKey,
+              onClose: () {
+                notificationKey.currentState?.revert();
+              },
+            ),
           ],
         ),
       ),

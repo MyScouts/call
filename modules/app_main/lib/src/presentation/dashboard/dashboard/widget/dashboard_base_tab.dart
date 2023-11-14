@@ -6,27 +6,39 @@ import 'package:app_main/src/presentation/dashboard/dashboard/state/dashboard_ba
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_community_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_ecommerce_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_personal_tab.dart';
-import 'package:app_main/src/presentation/dashboard/dashboard/widget/remove_confirm_dialog.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:flutter/material.dart';
 import 'package:reorderable/reorderable.dart';
+import 'package:staggered_reorderable/staggered_reorderable.dart';
 
 import 'app_group_widget.dart';
 import 'app_widget.dart';
 import 'dashboard_group_screen.dart';
 
-class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
-    extends State<S> with AutomaticKeepAliveClientMixin {
+abstract class DashBoardBaseState<T extends DashboardBaseBloc,
+        S extends StatefulWidget> extends State<S>
+    with AutomaticKeepAliveClientMixin {
   late final T bloc;
   late final DashBoardController dashBoardController;
   bool _isDragging = false;
+
+  void enableEditMode();
+
+  void disableEditMode();
 
   @override
   void initState() {
     bloc = getIt<T>();
     dashBoardController = DashBoardController();
     super.initState();
+    dashBoardController.addListener(() {
+      if (dashBoardController.enableEditMode) {
+        enableEditMode();
+      } else {
+        disableEditMode();
+      }
+    });
   }
 
   @override
@@ -55,13 +67,7 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
       channel: changeGroupEvent,
       observer: this,
       onNotification: (data) {
-        final controller = context
-            .findAncestorWidgetOfExactType<DashBoardInheritedData>()
-            ?.pageController;
-        if (controller == null) return;
-        if (!(controller.page == 0 && S == DashBoardCommunityTab) &&
-            !(controller.page == 1 && S == DashBoardPersonalTab) &&
-            !(controller.page == 2 && S == DashBoardEcommerceTab)) return;
+        if (!isPage) return;
         if ((data as DashBoardGroupItem).items.isEmpty) {
           bloc.add(RemoveItem(data));
           return;
@@ -69,6 +75,35 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
         bloc.add(ChangeGroup(data));
       },
     );
+
+    NotificationCenter.subscribe(
+      channel: cancelEditMode,
+      observer: this,
+      onNotification: (data) {
+        if (!isPage) return;
+        dashBoardController.enableEditMode = false;
+      },
+    );
+
+    NotificationCenter.subscribe(
+      channel: showEditMode,
+      observer: this,
+      onNotification: (data) {
+        if (!isPage) return;
+        dashBoardController.enableEditMode = true;
+      },
+    );
+  }
+
+  bool get isPage {
+    final controller = context
+        .findAncestorWidgetOfExactType<DashBoardInheritedData>()
+        ?.pageController;
+    if (controller == null) return false;
+    if (!(controller.page == 0 && S == DashBoardCommunityTab) &&
+        !(controller.page == 1 && S == DashBoardPersonalTab) &&
+        !(controller.page == 2 && S == DashBoardEcommerceTab)) return false;
+    return true;
   }
 
   @override
@@ -81,6 +116,15 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
       channel: changeGroupEvent,
       observer: this,
     );
+    NotificationCenter.unsubscribe(
+      channel: cancelEditMode,
+      observer: this,
+    );
+    NotificationCenter.unsubscribe(
+      channel: showEditMode,
+      observer: this,
+    );
+    dashBoardController.dispose();
     super.dispose();
   }
 
@@ -108,18 +152,6 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
     }).toList();
   }
 
-  List<ReorderableStaggeredScrollViewGridItem> notDragList = List.generate(
-    10,
-    (index) => ReorderableStaggeredScrollViewGridItem(
-      mainAxisCellCount: 1,
-      crossAxisCellCount: 1,
-      widget: const AppEmptyWidget(
-        app: DashBoardEmptyItem(),
-      ),
-      key: ValueKey('empty $index'),
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -137,129 +169,113 @@ class DashBoardBaseState<T extends DashboardBaseBloc, S extends StatefulWidget>
 
           final items = (state as DashboardBaseFetchDataSuccess).items;
 
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                dashBoardController.enableEditMode = false;
-              });
-            },
-            onLongPress: () {
-              setState(() {
-                dashBoardController.enableEditMode = true;
-              });
-            },
-            behavior: HitTestBehavior.opaque,
-            child: Stack(
-              children: [
-                ReorderableStaggeredScrollView.grid(
-                  key: UniqueKey(),
-                  enable: dashBoardController.enableEditMode,
-                  padding: const EdgeInsets.all(16.0),
-                  scrollDirection: Axis.vertical,
-                  physics: const BouncingScrollPhysics(),
-                  crossAxisCount: 4,
-                  onChildrenChanged: (list) {
-                    final items = (list ?? [])
-                        .map((e) => (e.widget as AppWidget).app)
-                        .toList();
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    dashBoardController.enableEditMode = false;
+                  });
+                },
+                onLongPress: () {
+                  setState(() {
+                    dashBoardController.enableEditMode = true;
+                  });
+                },
+                child: SizedBox(
+                  height: constraints.maxHeight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 16,
+                      right: 5,
+                    ),
+                    child: StaggeredReorderableView.customer(
+                      isDraggable: dashBoardController.enableEditMode,
+                      padding: 10,
+                      children: items
+                          .map(
+                            (e) => CustomerItem(
+                              type: e.type,
+                              id: e.id,
+                              mainAxisCellCount: e.height,
+                              crossAxisCellCount: e.width,
+                              child: AppWidgetBuilder(
+                                app: e,
+                                controller: dashBoardController,
+                                onRemoved: () {
+                                  context.removeConfirm(onRemoved: () {
+                                    bloc.add(RemoveItem(e));
+                                  });
+                                },
+                              ),
+                            ),
+                          )
+                          .toList(),
+                      onGroup: (moveData, toData) {
+                        final item1 = moveData;
+                        final item2 = toData;
 
-                    ctx.read<T>().add(ChangeItem(
-                        items.where((e) => e.id != 'empty').toList()));
-                  },
-                  onDragStarted: (_) {
-                    _isDragging = true;
-                  },
-                  onAccept: (p0, p1, p2) {
-                    final item1 =
-                        p0 as ReorderableStaggeredScrollViewGridItem;
-                    final item2 =
-                        p1 as ReorderableStaggeredScrollViewGridItem;
-                    debugPrint("onAccept ${item1.key}");
-                    debugPrint("onAccept ${item2.key}");
-                    return true;
-                  },
-                  isLongPressDraggable: false,
-                  onDragEnd: (p0, p1) {
-                    _isDragging = false;
-                  },
-                  onGroup: (moveData, data) {
-                    final item1 =
-                        moveData as ReorderableStaggeredScrollViewGridItem;
-                    final item2 =
-                        data as ReorderableStaggeredScrollViewGridItem;
-                    debugPrint("onGroup ${item1.key}");
-                    debugPrint("onGroup ${item2.key}");
+                        final icon1 = (item1.child as AppWidget).app;
+                        final icon2 = (item2.child as AppWidget).app;
 
-                    final icon1 = (item1.widget as AppWidget).app;
-                    final icon2 = (item2.widget as AppWidget).app;
+                        if (!validateGroupItem(icon1, icon2)) return;
 
-                    if (!validateGroupItem(icon1, icon2)) return;
+                        final isGroup = icon2 is DashBoardGroupItem;
+                        DashBoardGroupItem groupItem;
+                        if (isGroup) {
+                          groupItem = icon2;
+                        } else {
+                          groupItem = DashBoardGroupItem(
+                            id: UniqueKey().toString(),
+                            items: [icon2 as DashBoardIconItem],
+                            title: 'Thư mục',
+                            backgroundImage: '',
+                          );
+                        }
 
-                    final isGroup = icon2 is DashBoardGroupItem;
-                    DashBoardGroupItem groupItem;
-                    if (isGroup) {
-                      groupItem = icon2;
-                    } else {
-                      groupItem = DashBoardGroupItem(
-                        id: UniqueKey().toString(),
-                        items: [icon2 as DashBoardIconItem],
-                        title: 'Thư mục',
-                        backgroundImage: '',
-                      );
-                    }
-
-                    showDialog(
-                      useSafeArea: false,
-                      barrierColor: Colors.transparent,
-                      context: context,
-                      builder: (_) => DashBoardGroupScreen(
-                        group: groupItem,
-                        moveItem: icon1,
-                        onGroupCreated: (DashBoardGroupItem group) {
-                          if (isGroup) {
-                            ctx.read<T>().add(AddItemToGroup(group, [icon1]));
-                          } else {
-                            ctx.read<T>().add(AddItem(group));
-                          }
-                        },
-                      ),
-                    );
-                  },
-                  // isNotDragList: notDragList,
-                  children: [
-                    ...items.map((item) {
-                      return ReorderableStaggeredScrollViewGridItem(
-                        key: ValueKey(item.id),
-                        mainAxisCellCount: item.height,
-                        crossAxisCellCount: item.width,
-                        widget: AppWidgetBuilder(
-                          app: item,
-                          controller: dashBoardController,
-                          onRemoved: () {
-                            context.removeConfirm(onRemoved: () {
-                              bloc.add(RemoveItem(item));
-                            });
-                          },
-                        ),
-                      );
-                    }),
-                    if (dashBoardController.enableEditMode)
-                      ...List.generate(
-                        10,
-                        (index) => ReorderableStaggeredScrollViewGridItem(
-                          isDrag: false,
-                          mainAxisCellCount: 1,
-                          crossAxisCellCount: 1,
-                          widget: const AppEmptyWidget(
-                            app: DashBoardEmptyItem(),
+                        showDialog(
+                          useSafeArea: false,
+                          barrierColor: Colors.transparent,
+                          context: context,
+                          builder: (_) => DashBoardGroupScreen(
+                            enableRemoveIcon: true,
+                            group: groupItem,
+                            moveItem: icon1,
+                            onGroupCreated: (DashBoardGroupItem group) {
+                              if (isGroup) {
+                                ctx
+                                    .read<T>()
+                                    .add(AddItemToGroup(group, [icon1]));
+                              } else {
+                                final index =
+                                    items.indexWhere((e) => icon2.id == e.id);
+                                if (index != -1) {
+                                  ctx.read<T>().add(InsertItem(group, index));
+                                }
+                              }
+                            },
                           ),
-                          key: ValueKey('empty $index'),
-                        ),
-                      ),
-                  ],
+                        );
+                      },
+                      onChildrenChanged: (list) {
+                        final items = (list ?? [])
+                            .map((e) => (e.child as AppWidget).app)
+                            .toList();
+
+                        ctx.read<T>().add(ChangeItem(
+                            items.where((e) => e.id != 'empty').toList()));
+                      },
+                      onDragStarted: () {
+                        _isDragging = true;
+                      },
+                      onDragEnd: () {
+                        _isDragging = false;
+                      },
+                    ),
+                  ),
                 ),
-              ],
-            ),
+              );
+            },
           );
         },
       ),

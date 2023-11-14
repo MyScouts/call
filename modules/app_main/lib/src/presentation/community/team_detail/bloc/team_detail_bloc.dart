@@ -4,8 +4,6 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:localization/generated/intl/messages_en.dart';
 import 'package:localization/localization.dart';
 
 import '../../../../data/models/responses/leave_team_status_response.dart';
@@ -75,7 +73,6 @@ class TeamDetailBloc extends Bloc<TeamDetailEvent, TeamDetailState> {
       emit(AskToJoinSuccess());
     } on DioException catch (e) {
       emit(AskToJoinError(e));
-
       if (kDebugMode) {
         rethrow;
       }

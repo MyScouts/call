@@ -106,8 +106,6 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
 
   PDoneOptionMethod pDoneOptionMethod = PDoneOptionMethod.userIdentityCard;
 
-  PDoneOptionRangeAge rangeAge = PDoneOptionRangeAge.over18;
-
   bool checkIsUnder15ShouldEnableField() {
     return birthDay == null || birthDay != null && !birthDay!.isUnder15yearsAgo();
   }

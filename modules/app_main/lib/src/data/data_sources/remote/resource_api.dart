@@ -1,6 +1,11 @@
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_request_protector_req.dart';
+import 'package:app_main/src/data/models/responses/storage_upload_url_response.dart';
+import 'package:camera/camera.dart';
 import 'package:dio/dio.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -41,4 +46,6 @@ abstract class ResourceApi {
     @Path('type') required String type,
     @Path('category') required String category,
   });
+
+  Future<String> storageUploadUrl(XFile file, String prefix);
 }

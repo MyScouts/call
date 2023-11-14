@@ -6,8 +6,10 @@ import 'package:app_main/src/domain/entities/bank.dart';
 import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
 import 'package:app_main/src/presentation/information_profile/bloc/bloc/information_update_profil_bloc.dart';
 import 'package:app_main/src/presentation/information_profile/bloc/place_information_2/place_information_2_bloc.dart';
+import 'package:app_main/src/presentation/information_profile/screens/information_profile_screen.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/bank_dropdown.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/bloodtype_dropdown.dart';
+import 'package:app_main/src/presentation/information_profile/widgets/constants.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/provinces_dropdown.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/district_dropdown.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/education_dropdown.dart';
@@ -153,9 +155,12 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                     if (state is InformationNoneUpdateProfilSuccess) {
                       hideLoading();
                       showToastMessage("Update success");
-                      Navigator.of(context).pop();
+                      MyAppConstants.myConstantVariable.value = true;
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const InformationProfileScreen()),
+                      );
                     }
-
                     if (state is InformationUpdateProfilFailed) {
                       hideLoading();
                       showToastMessage(state.message!, ToastMessageType.error);

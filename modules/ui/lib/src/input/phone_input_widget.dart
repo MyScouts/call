@@ -10,6 +10,7 @@ import 'custom_text_field.dart';
 class AppPhoneInput extends StatefulWidget {
   final TextEditingController controller;
   final Function(String)? onChange;
+  final Function(String?)? onError;
   final Function(CountryCode)? onPhoneCodeChange;
 
   const AppPhoneInput({
@@ -17,6 +18,7 @@ class AppPhoneInput extends StatefulWidget {
     required this.controller,
     this.onChange,
     this.onPhoneCodeChange,
+    this.onError,
   });
 
   @override
@@ -30,7 +32,13 @@ class _AppPhoneInputState extends State<AppPhoneInput> {
       key: const ValueKey("phone"),
       onChange: widget.onChange,
       controller: widget.controller,
-      validator: ValidationHelper.phone,
+      validator: (phone) {
+        final String? error = ValidationHelper.phone(phone);
+        if (widget.onError != null) {
+          widget.onError!(error);
+        }
+        return error;
+      },
       textInputType: TextInputType.number,
       prefixIcon: IntrinsicHeight(
         child: buildVgFlag(),
@@ -94,7 +102,7 @@ class _AppPhoneInputState extends State<AppPhoneInput> {
                   children: [
                     ImageWidget(
                       country != null
-                          ? "assets/${country.flagUri!}"
+                          ? 'assets/${country.flagUri!}'
                           : IconAppConstants.icVnFlag,
                       width: 22,
                       fit: BoxFit.cover,

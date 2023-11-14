@@ -87,4 +87,12 @@ class UserUsecase {
   Future<UpdateNonePDoneProfileReponse> getPDoneProfile() {
     return _userRepository.getPDoneProfile();
   }
+
+  Future<List<User>> listFriends() {
+    return _userRepository.listFriends();
+  }
+
+  Future invite(String teamID, Map<String, dynamic> json) {
+    return _userRepository.invite(teamID, json);
+  }
 }

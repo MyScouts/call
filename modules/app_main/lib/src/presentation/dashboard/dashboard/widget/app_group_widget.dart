@@ -1,4 +1,3 @@
-import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
@@ -9,7 +8,6 @@ import 'package:imagewidget/imagewidget.dart';
 import 'app_icon_animation.dart';
 import 'app_widget.dart';
 import 'dashboard_group_screen.dart';
-
 
 class AppGroupWidget extends AppWidget {
   const AppGroupWidget({super.key, required super.app});
@@ -25,38 +23,43 @@ class AppGroupWidget extends AppWidget {
         Expanded(
           child: GestureDetector(
             onTap: () {
-              showDialog(
-                useSafeArea: false,
-                barrierColor: Colors.transparent,
-                context: context,
-                builder: (_) => DashBoardGroupScreen(
-                  enableRemoveIcon: widget != null,
-                  group: group,
-                  onGroupCreated: (DashBoardGroupItem group) {
-                    NotificationCenter.post(
-                      channel: changeGroupEvent,
-                      options: group,
+              Navigator.of(context).push(
+                HeroDialogRoute(
+                  builder: (BuildContext context) {
+                    return DashBoardGroupScreen(
+                      enableRemoveIcon: widget != null,
+                      group: group,
+                      onGroupCreated: (DashBoardGroupItem group) {
+                        NotificationCenter.post(
+                          channel: changeGroupEvent,
+                          options: group,
+                        );
+                      },
                     );
                   },
                 ),
               );
             },
-            onLongPress: () {},
-            child: AspectRatio(
-              aspectRatio: 1,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color.fromRGBO(17, 17, 17, 0.40),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: GridView.count(
-                  padding: const EdgeInsets.all(16.0),
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 5,
-                  crossAxisSpacing: 5,
-                  children: group.items.take(9)
-                      .map((e) => ImageWidget(e.backgroundImage))
-                      .toList(),
+            child: Hero(
+              tag: group.id,
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color.fromRGBO(17, 17, 17, 0.40),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: GridView.count(
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.all(16.0),
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 5,
+                    crossAxisSpacing: 5,
+                    children: group.items
+                        .take(9)
+                        .map((e) => ImageWidget(e.backgroundImage))
+                        .toList(),
+                  ),
                 ),
               ),
             ),
@@ -100,7 +103,8 @@ class AppEmptyWidget extends AppWidget {
                 color: Colors.grey,
                 borderRadius: BorderRadius.circular(14),
               ),
-              child: const Icon(Icons.filter_center_focus, color: Colors.white),
+              child:
+                  const Icon(Icons.filter_center_focus, color: Colors.white),
             ),
           ),
         ),

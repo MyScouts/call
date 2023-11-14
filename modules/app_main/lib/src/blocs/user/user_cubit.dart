@@ -9,6 +9,7 @@ import 'package:app_main/src/data/models/responses/update_pdone_profile_response
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/domain/entities/update_account/otp/otp.dart';
 import 'package:app_main/src/domain/usecases/authentication_usecase.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:localization/localization.dart';
@@ -112,6 +113,8 @@ class UserCubit extends Cubit<UserState> {
   Future<void> fetchUser() async {
     _currentUser = _userSharePreferencesUsecase.getUserInfo();
     final id = _currentUser?.id;
+    final topic = 'user_$id';
+    FirebaseMessaging.instance.subscribeToTopic(topic);
 
     if (id != null) {
       try {
@@ -348,17 +351,11 @@ class UserCubit extends Cubit<UserState> {
         emit(LoginQRCodeSuccess());
       }
     } on DioException catch (error) {
-      String err = S.current.messages_server_internal_error.capitalize();
       final data = error.response!.data;
-      switch (data['code']) {
-        case "MARSHOP_NOT_FOUND":
-          err = "Không tìm thấy Marshop.";
-      }
-      emit(LoginQRCodeFail(message: err));
+      emit(LoginQRCodeFail(code: data['code']));
     } catch (error) {
       debugPrint("authQrCode: $error");
-      String err = S.current.messages_server_internal_error.capitalize();
-      emit(LoginQRCodeFail(message: err));
+      emit(LoginQRCodeFail(code: ""));
     }
   }
 

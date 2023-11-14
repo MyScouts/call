@@ -4,6 +4,7 @@ import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/domain/entities/update_account/information_none_pdone_profile.dart';
 import 'package:app_main/src/presentation/information_profile/bloc/bloc/information_update_profil_bloc.dart';
 import 'package:app_main/src/presentation/information_profile/screens/update_information_profile_sreen.dart';
+import 'package:app_main/src/presentation/information_profile/widgets/constants.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/update_information_profile_mixin.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,6 @@ extension GenderExtension on int {
     }
   }
 }
-
 
 class BodyInformationProfile extends StatefulWidget {
   const BodyInformationProfile({super.key});
@@ -60,18 +60,18 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
           _buildToolbar(),
           const SizedBox(height: 20),
           ValueListenableBuilder(
-            valueListenable: isUpdateChanged,
+            valueListenable: MyAppConstants.myConstantVariable,
             builder: (_, isUpdate, __) {
-              if (!isUpdate) {
+              if (isUpdate) {
                 return Container();
               }
               return Container(height: 20, color: AppColors.bgColor);
             },
           ),
           ValueListenableBuilder(
-            valueListenable: isUpdateChanged,
+            valueListenable: MyAppConstants.myConstantVariable,
             builder: (_, isUpdate, __) {
-              if (!isUpdate) {
+              if (isUpdate) {
                 return _buildInformation();
               }
               return _buildEmpty();

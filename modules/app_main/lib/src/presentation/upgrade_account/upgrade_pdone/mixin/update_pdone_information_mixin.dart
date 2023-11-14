@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/extensions/datetime_ext.dart';
 import 'package:app_core/app_core.dart';
+import '../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
 import '../../../../domain/entities/update_account/pdone_profile.dart';
 import '../../../../domain/entities/update_account/place/place_information.dart';
 import '../../../../domain/entities/update_account/update_pdone_birth_place_payload.dart';
@@ -71,6 +72,7 @@ mixin UpdatePDoneInformationMixin<T extends StatefulWidget> on State<T> {
   // Interest? interest;
   PlaceInformation? birthPlace;
   PlaceInformation? currentPlace;
+  PDoneVerifyProtectorRequest pDoneVerifyProtectorRequest = PDoneVerifyProtectorRequest();
 
   void updateInformation(PDoneProfile? pDoneProfile) {
     if (pDoneProfile == null) {

@@ -50,8 +50,11 @@ extension ErrorMessage on String {
       'PASSWORD_NOT_MATCH': 'Mật khẩu sai',
       'MISSING_DEFAULT_BANK': 'Bạn chưa có Tài khoản thanh toán mặc định',
       'TEAM_MEMBER_REQUIRED': 'Bạn phải tham gia team trước khi đăng ký JA.',
-      'DEFAULT_BANK_ACCOUNT_NOT_FOUND': 'Bạn chưa có tài khoản thanh toán mặc định',
-      'ALREADY_JOINED_TEAM': 'Bạn đã có team, không thể gửi yêu cầu mới.'
+      'DEFAULT_BANK_ACCOUNT_NOT_FOUND':
+          'Bạn chưa có tài khoản thanh toán mặc định',
+      'ALREADY_JOINED_TEAM': 'Bạn đã có team, không thể gửi yêu cầu mới.',
+      'ALREADY_SENT_REQUEST':
+          "Bạn đã gửi yêu cầu trước đó vui lòng chờ Boss Team xác nhận",
     };
 
     final message = errorCodeAuthenticationMessage[this];

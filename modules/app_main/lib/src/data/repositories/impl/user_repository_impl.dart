@@ -89,4 +89,14 @@ class AuthRepositoryImpl extends UserRepository {
   Future<UpdateNonePDoneProfileReponse> getPDoneProfile() {
     return _userAPI.getPDoneProfile();
   }
+
+  Future<List<User>> listFriends() async {
+    final res = await _userAPI.listFriends();
+    return res.users;
+  }
+
+  @override
+  Future invite(String teamID, Map<String, dynamic> json) {
+    return _userAPI.invite(json, teamID);
+  }
 }

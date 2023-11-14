@@ -61,9 +61,6 @@ abstract class AuthApi {
     @Body() ResetPasswordPayload payload,
   );
 
-  @POST(AuthApiConstant.otp)
-  Future otp();
-
   @GET(AuthApiConstant.getOtp)
   Future<ApiResponse<OtpResponse>> getOtp();
 

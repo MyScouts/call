@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
+import 'package:app_main/src/presentation/qr_code/qr_code_constants.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_screen.dart';
 import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class QrCodeRoutes extends RouteModule {
             value: injector.get<UserCubit>(),
             child: ScanQrCodeScanScreen(
               showMyQr: args['showMyQr'] ?? true,
+              type: args['type'] ?? QrCodeScanType.auth,
             ),
           );
         },

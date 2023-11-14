@@ -40,6 +40,7 @@ _$UpdateProfilePayloadImpl _$$UpdateProfilePayloadImplFromJson(
       protectorEmailPhone: json['protectorEmailPhone'] as String?,
       protectorPhoneCode: json['protectorPhoneCode'] as String?,
       otp: json['otp'] as String?,
+      birthCertificateUrl: json['birthCertificateUrl'] as String?,
     );
 
 Map<String, dynamic> _$$UpdateProfilePayloadImplToJson(
@@ -77,5 +78,6 @@ Map<String, dynamic> _$$UpdateProfilePayloadImplToJson(
   writeNotNull('protectorEmailPhone', instance.protectorEmailPhone);
   writeNotNull('protectorPhoneCode', instance.protectorPhoneCode);
   writeNotNull('otp', instance.otp);
+  writeNotNull('birthCertificateUrl', instance.birthCertificateUrl);
   return val;
 }

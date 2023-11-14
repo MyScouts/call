@@ -34,4 +34,8 @@ abstract class UserRepository {
   Future<UpdatePDoneProfileReponse> updatePDoneProfile(UpdatePDoneProfilePayload updatePDoneProfilePayload);
   Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload);
   Future<UpdateNonePDoneProfileReponse> getPDoneProfile();
+
+  Future<List<User>> listFriends();
+
+  Future invite(String teamID, Map<String, dynamic> json);
 }

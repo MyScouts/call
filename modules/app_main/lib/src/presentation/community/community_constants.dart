@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:app_main/src/presentation/community/team_detail/bloc/team_detail_bloc.dart';
+import 'package:app_main/src/presentation/community/team_detail/pages/add_team_member_sheet.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/remove_member_sheet.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -157,15 +158,15 @@ extension UpdateGroupOptionExt on UpdateGroupOption {
   }
 }
 
-enum ApproveGroupRequest { reject, approved }
+enum ApproveGroupRequest { approved }
 
 extension ApproveGroupRequestExt on ApproveGroupRequest {
   bool get status {
     switch (this) {
       case ApproveGroupRequest.approved:
         return true;
-      case ApproveGroupRequest.reject:
-        return false;
+      // case ApproveGroupRequest.reject:
+      //   return false;
     }
   }
 
@@ -173,8 +174,8 @@ extension ApproveGroupRequestExt on ApproveGroupRequest {
     switch (this) {
       case ApproveGroupRequest.approved:
         return 'Phê duyệt';
-      case ApproveGroupRequest.reject:
-        return 'Từ chối';
+      // case ApproveGroupRequest.reject:
+      //   return 'Từ chối';
     }
   }
 
@@ -182,8 +183,8 @@ extension ApproveGroupRequestExt on ApproveGroupRequest {
     switch (this) {
       case ApproveGroupRequest.approved:
         return AppColors.white;
-      case ApproveGroupRequest.reject:
-        return const Color(0xFF4B84F7);
+      // case ApproveGroupRequest.reject:
+      //   return const Color(0xFF4B84F7);
     }
   }
 
@@ -192,8 +193,8 @@ extension ApproveGroupRequestExt on ApproveGroupRequest {
       case ApproveGroupRequest.approved:
         return const Color(0xFF4B84F7);
 
-      case ApproveGroupRequest.reject:
-        return const Color(0xFFE8F0FE);
+      // case ApproveGroupRequest.reject:
+      //   return const Color(0xFFE8F0FE);
     }
   }
 
@@ -203,30 +204,30 @@ extension ApproveGroupRequestExt on ApproveGroupRequest {
         return ImageWidget(IconAppConstants.icApprovedTick,
             height: 25, width: 25);
 
-      case ApproveGroupRequest.reject:
-        return ImageWidget(IconAppConstants.icReject, height: 25, width: 25);
+      // case ApproveGroupRequest.reject:
+      //   return ImageWidget(IconAppConstants.icReject, height: 25, width: 25);
     }
   }
 }
 
-enum BossTeamActionToMember { assignBossTeam, remove }
+enum BossGroupActionToMember { assignBossTeam }
 
-extension BossTeamActionToMemberExt on BossTeamActionToMember {
+extension BossGroupActionToMemberExt on BossGroupActionToMember {
   Color get textMenuColor {
     switch (this) {
-      case BossTeamActionToMember.assignBossTeam:
+      case BossGroupActionToMember.assignBossTeam:
         return const Color(0xFF101B28);
-      case BossTeamActionToMember.remove:
-        return AppColors.red3;
+      // case BossGroupActionToMember.remove:
+      //   return AppColors.red3;
     }
   }
 
   String get textMenu {
     switch (this) {
-      case BossTeamActionToMember.assignBossTeam:
+      case BossGroupActionToMember.assignBossTeam:
         return 'Chỉ định Boss Team';
-      case BossTeamActionToMember.remove:
-        return 'Loại bỏ khỏi team';
+      // case BossGroupActionToMember.remove:
+      //   return 'Loại bỏ khỏi team';
     }
   }
 }
@@ -236,9 +237,8 @@ enum UpdateTeamOption {
   requests,
   invite,
   kick,
-  relinquish,
   assignBoss,
-  revokeBoss
+  relinquish,
 }
 
 extension UpdateTeamOptionExt on UpdateTeamOption {
@@ -248,16 +248,14 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
         return 'Chỉnh sửa thông tin Team';
       case UpdateTeamOption.requests:
         return 'Yêu cầu cần phê duyệt';
-      case UpdateTeamOption.relinquish:
-        return 'Từ chức Boss Team';
       case UpdateTeamOption.invite:
         return 'Mời thêm thành viên';
       case UpdateTeamOption.kick:
         return 'Loại bỏ thành viên';
       case UpdateTeamOption.assignBoss:
         return 'Chỉ định Boss Team';
-      case UpdateTeamOption.revokeBoss:
-        return 'Huỷ quyền Boss Team';
+      case UpdateTeamOption.relinquish:
+        return 'Từ chức Boss Team';
     }
   }
 
@@ -267,7 +265,6 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
       case UpdateTeamOption.requests:
       case UpdateTeamOption.invite:
       case UpdateTeamOption.kick:
-      case UpdateTeamOption.revokeBoss:
       case UpdateTeamOption.assignBoss:
         return const Color(0xFF212121);
       case UpdateTeamOption.relinquish:
@@ -275,7 +272,7 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
     }
   }
 
-  Future<void> onTap(BuildContext context, {required Team team}) async {
+  Future<dynamic> onTap(BuildContext context, {required Team team}) async {
     switch (this) {
       case UpdateTeamOption.relinquish:
         final getBossTeamRelinquishStatus =
@@ -284,28 +281,38 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
             .add(GetDetailDataParam1Event(team.id));
 
       case UpdateTeamOption.invite:
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (_) {
+            return BlocProvider<TeamDetailBloc>.value(
+              value: context.read<TeamDetailBloc>(),
+              child: const AddTeamMemberSheet(),
+            );
+          },
+        );
+        // Navigator.of(context).push(MaterialPageRoute(
+        //     builder: (_) => BlocProvider<TeamDetailBloc>.value(
+        //           value: context.read<TeamDetailBloc>(),
+        //           child: const AddTeamMemberSheet(),
+        //         )));
+        break;
       case UpdateTeamOption.kick:
-        Navigator.of(context).push(MaterialPageRoute(builder: (_) => BlocProvider<TeamDetailBloc>.value(
-          value: context.read<TeamDetailBloc>(),
-          child: RemoveMemberSheet(),
-        )));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (_) => BlocProvider<TeamDetailBloc>.value(
+                  value: context.read<TeamDetailBloc>(),
+                  child: const RemoveMemberSheet(),
+                )));
+        break;
       case UpdateTeamOption.edit:
         return context.showToastMessage(
           'Tính năng này đang được phát triển',
           ToastMessageType.warning,
         );
       case UpdateTeamOption.requests:
-        return await context.startTeamRequestsScreen();
+        return await context.startTeamRequestsScreen(team: team);
       case UpdateTeamOption.assignBoss:
         return await context.startAssignTeam(team);
-      case UpdateTeamOption.revokeBoss:
-        if (team.boss == null) {
-          return context.askAssignBoss(team: team);
-        }
-        return await context.startRemoveBossModal(
-          member: team.boss!,
-          team: team,
-        );
     }
   }
 }

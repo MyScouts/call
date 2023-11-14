@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
@@ -24,54 +26,63 @@ class RegisterWidget extends StatefulWidget {
   State<RegisterWidget> createState() => _RegisterWidgetState();
 }
 
-class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
-  bool _showScrollbar = false;
-  bool _passwordValid = false;
-  final List<PasswordRules> _rules = [];
+class _RegisterWidgetState extends State<RegisterWidget> {
+  final ValueNotifier<bool> _formValidCtrl = ValueNotifier(false);
+  final ValueNotifier<bool> _phoneValidCtrl = ValueNotifier(false);
+  final ValueNotifier<bool> _confirmPasswordValidCtrl = ValueNotifier(false);
+
+  final ValueNotifier<String?> _birthDateError = ValueNotifier("");
+  final ValueNotifier<List<PasswordRules>> _passwordRuleCtrl =
+      ValueNotifier([]);
   final _phoneCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
   final _rePasswordCtrl = TextEditingController();
   final genderCtrl = TextEditingController();
-  final ValueNotifier<String?> _birthDateError = ValueNotifier("");
   DateTime? birthDay;
   int _gender = 1;
   String _phoneCode = "+84";
 
   @override
-  bool get conditionValidator =>
-      _birthDateError.value == null && _passwordValid;
-
-  @override
   void initState() {
     super.initState();
+    _phoneValidCtrl.addListener(() => _onValidate());
+    _passwordRuleCtrl.addListener(() => _onValidate());
+    _confirmPasswordValidCtrl.addListener(() => _onValidate());
+    _birthDateError.addListener(() => _onValidate());
     _passwordCtrl.addListener(() {
+      List<PasswordRules> rules = [];
       final password = _passwordCtrl.text;
-      _rules.clear();
+      _passwordRuleCtrl.value = [];
       if (password.length >= 8) {
-        _rules.add(PasswordRules.min8Character);
+        rules.add(PasswordRules.min8Character);
       } else {
-        _rules.removeWhere((element) => element == PasswordRules.min8Character);
+        rules.removeWhere((element) => element == PasswordRules.min8Character);
       }
 
       if (password.hasNumber) {
-        _rules.add(PasswordRules.hasOneNumber);
+        rules.add(PasswordRules.hasOneNumber);
       } else {
-        _rules.removeWhere((element) => element == PasswordRules.hasOneNumber);
+        rules.removeWhere((element) => element == PasswordRules.hasOneNumber);
       }
 
       if (password.hasUppercase) {
-        _rules.add(PasswordRules.hasOneCapital);
+        rules.add(PasswordRules.hasOneCapital);
       } else {
-        _rules.removeWhere((element) => element == PasswordRules.hasOneCapital);
+        rules.removeWhere((element) => element == PasswordRules.hasOneCapital);
       }
 
-      _passwordValid = _rules.length == PasswordRules.values.length;
-      setState(() {});
+      _passwordRuleCtrl.value = rules;
     });
+  }
 
-    _birthDateError.addListener(() {
-      onValidation();
-    });
+  _onValidate() {
+    _formValidCtrl.value = _phoneValidCtrl.value &&
+        _passwordRuleCtrl.value.length == PasswordRules.values.length &&
+        _confirmPasswordValidCtrl.value &&
+        _birthDateError.value == null;
+
+    print(
+        "_formValidCtrl.value: ${_phoneValidCtrl.value} ${_confirmPasswordValidCtrl.value} ${_birthDateError.value} ${_passwordRuleCtrl.value.length}");
   }
 
   @override
@@ -101,7 +112,6 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
         child: Padding(
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: Form(
-            key: formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -116,7 +126,7 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                 const SizedBox(height: 4),
                 AppPhoneInput(
                   controller: _phoneCtrl,
-                  onChange: (value) => onValidation(),
+                  onError: (error) => _phoneValidCtrl.value = error == null,
                   onPhoneCodeChange: (value) {
                     if (value.dialCode != null) {
                       _phoneCode = value.dialCode!;
@@ -136,9 +146,9 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                 ),
                 const SizedBox(height: 4),
                 CustomTextField(
-                  onChange: (value) => onValidation(),
                   controller: _passwordCtrl,
                   hintText: "**************",
+                  // onError: (error) => _passwordValidCtrl.value = error == null,
                   hintStyle: const TextStyle(
                     color: Color(0xFF8C8C8C),
                     fontSize: 14,
@@ -159,12 +169,14 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                 ),
                 const SizedBox(height: 4),
                 CustomTextField(
-                  onChange: (value) => onValidation(),
                   controller: _rePasswordCtrl,
                   validator: (value) => ValidationHelper.match(
                     value,
                     _passwordCtrl.text,
                   ),
+                  onError: (error) {
+                    _confirmPasswordValidCtrl.value = error == null;
+                  },
                   hintText: "**************",
                   hintStyle: const TextStyle(
                     color: Color(0xFF8C8C8C),
@@ -253,46 +265,51 @@ class _RegisterWidgetState extends State<RegisterWidget> with ValidationMixin {
                           color: Color(0xFF6E6E6E)),
                     ),
                     const SizedBox(height: 8),
-                    Column(
-                      children: PasswordRules.values
-                          .map((e) => Container(
-                                margin: const EdgeInsets.only(bottom: 5),
-                                child: Row(
-                                  children: [
-                                    ImageWidget(
-                                      _rules.contains(e)
-                                          ? IconAppConstants.icCheckCircle
-                                          : IconAppConstants.icErrorCircle,
-                                      width: 16,
-                                      fit: BoxFit.cover,
+                    ValueListenableBuilder(
+                      valueListenable: _passwordRuleCtrl,
+                      builder: (context, rules, child) {
+                        return Column(
+                          children: PasswordRules.values
+                              .map((e) => Container(
+                                    margin: const EdgeInsets.only(bottom: 5),
+                                    child: Row(
+                                      children: [
+                                        ImageWidget(
+                                          rules.contains(e)
+                                              ? IconAppConstants.icCheckCircle
+                                              : IconAppConstants.icErrorCircle,
+                                          width: 16,
+                                          fit: BoxFit.cover,
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          e.getText(),
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              height: 20 / 14,
+                                              leadingDistribution:
+                                                  TextLeadingDistribution.even,
+                                              color: Color(0xFF6E6E6E)),
+                                        ),
+                                      ],
                                     ),
-                                    const SizedBox(width: 4),
-                                    Text(
-                                      e.getText(),
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          height: 20 / 14,
-                                          leadingDistribution:
-                                              TextLeadingDistribution.even,
-                                          color: Color(0xFF6E6E6E)),
-                                    ),
-                                  ],
-                                ),
-                              ))
-                          .toList(),
+                                  ))
+                              .toList(),
+                        );
+                      },
                     )
                   ],
                 ),
                 const SizedBox(height: 24),
-                validationListenableBuilder(
-                  builder: (isValid) {
-                    debugPrint("$_rules $_passwordValid");
+                ValueListenableBuilder(
+                  valueListenable: _formValidCtrl,
+                  builder: (context, isValid, child) {
                     return PrimaryButton(
                       title: S.current.register.capitalize(),
                       onTap: _onRegister,
                       color: Colors.white,
-                      disabled: !isValid || !_passwordValid,
+                      disabled: !isValid,
                       width: MediaQuery.of(context).size.width,
                     );
                   },

@@ -10,7 +10,7 @@ NotificationUserModel _$NotificationUserModelFromJson(
         Map<String, dynamic> json) =>
     NotificationUserModel(
       id: json['id'] as int,
-      avatar: json['avatar'] as String,
+      avatar: json['avatar'] as String?,
       displayName: json['displayName'] as String,
       isPDone: json['isPDone'] as bool,
       hexId: json['hexId'] as String,

@@ -9,9 +9,16 @@ import 'package:intl/intl.dart';
 import 'calendar_builder.dart';
 
 class WeatherBannerWidget extends StatelessWidget {
-  const WeatherBannerWidget({super.key, this.textColor});
+  const WeatherBannerWidget({
+    super.key,
+    this.textColor,
+    this.enableEditMode = false,
+    this.onRemoved,
+  });
 
   final Color? textColor;
+  final bool enableEditMode;
+  final Function()? onRemoved;
 
   @override
   Widget build(BuildContext context) {
@@ -328,13 +335,41 @@ class WeatherBannerWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(22.0),
-                  color: Colors.white,
-                ),
-                padding: const EdgeInsets.all(16.0),
-                child: child,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(22.0),
+                      color: Colors.white,
+                    ),
+                    padding: const EdgeInsets.all(16.0),
+                    child: child,
+                  ),
+                  if (enableEditMode)
+                    Positioned(
+                      left: -5,
+                      top: -10,
+                      child: GestureDetector(
+                        onTap: onRemoved,
+                        behavior: HitTestBehavior.opaque,
+                        child: const SizedBox.square(
+                          dimension: 25,
+                          child: Center(
+                            child: CircleAvatar(
+                              backgroundColor: Colors.grey,
+                              radius: 15,
+                              child: Icon(
+                                Icons.remove,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
             const SizedBox(height: 5),

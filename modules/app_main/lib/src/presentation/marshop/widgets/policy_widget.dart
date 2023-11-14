@@ -1,3 +1,4 @@
+import 'package:app_main/src/presentation/general_setting/general_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -21,14 +22,14 @@ class PolicyWidget extends StatelessWidget {
             ),
         children: [
           TextSpan(
-              text: 'Điều khoản dịch vụ và Chính sách ',
-              style: TextStyle(
-                decoration: TextDecoration.underline,
-                color: isAccepted == true ? AppColors.blue31 : Colors.grey,
-              ),
-              recognizer: TapGestureRecognizer()
-              // ..onTap = context.startTermsAndCondition,
-              ),
+            text: 'Điều khoản dịch vụ và Chính sách ',
+            style: TextStyle(
+              decoration: TextDecoration.underline,
+              color: isAccepted == true ? AppColors.blue31 : Colors.grey,
+            ),
+            recognizer: TapGestureRecognizer()
+              ..onTap = context.startTermsAndCondition,
+          ),
           const TextSpan(text: 'của VDONE')
         ],
       ),

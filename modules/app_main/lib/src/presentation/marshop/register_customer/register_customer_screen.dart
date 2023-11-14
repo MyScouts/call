@@ -2,9 +2,9 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/auth/auth_cubit.dart';
 import 'package:app_main/src/blocs/marshop/marshop_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
-import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/authentication/widget/custom_text_field.dart';
 import 'package:app_main/src/presentation/marshop/register_customer/register_customer_coordinator.dart';
+import 'package:app_main/src/presentation/qr_code/qr_code_constants.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,11 @@ import '../widgets/read_more_policy.dart';
 
 class RegisterCustomerScreen extends StatefulWidget {
   static const String routeName = "upgrade-marshop";
-  const RegisterCustomerScreen({super.key});
+  final String? marshopId;
+  const RegisterCustomerScreen({
+    super.key,
+    this.marshopId,
+  });
 
   @override
   State<RegisterCustomerScreen> createState() => _RegisterCustomerScreenState();
@@ -33,6 +37,9 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
   @override
   void initState() {
     super.initState();
+    if (widget.marshopId != null) {
+      _marshopIdCtrl.text = widget.marshopId!;
+    }
     _acceptTerm.addListener(() {
       onValidation();
     });
@@ -131,7 +138,12 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
   }
 
   void _startQrCodeScan() async {
-    context.startScanQrCode(showMyQr: false).then((results) {
+    context
+        .startScanQrCode(
+      showMyQr: false,
+      type: QrCodeScanType.registerCustomer,
+    )
+        .then((results) {
       if (results != null && results is String) {
         if (!results.isNumber()) {
           showToastMessage("Mã Marshop không hợp lệ!", ToastMessageType.error);

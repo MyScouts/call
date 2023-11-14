@@ -4,6 +4,7 @@ import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
 import 'package:app_main/src/presentation/dashboard/widget/clock_widget.dart';
 import 'package:app_main/src/presentation/dashboard/widget/weather_banner_widget.dart';
 import 'package:app_main/src/presentation/dashboard/widget/weather_widget.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -45,47 +46,63 @@ class AppWidget extends StatelessWidget {
                     return;
                   }
                 },
-                onLongPress: () {},
-                child: AspectRatio(
-                  aspectRatio: (app.width) / app.height,
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(14),
-                        child: ImageWidget(
-                          app.backgroundImage,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
+                child: Builder(
+                  builder: (_) {
+                    Widget child = Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(14),
+                          child: ImageWidget(
+                            app.backgroundImage,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      if (enableRemoveIcon)
-                        Positioned(
-                          left: -10,
-                          top: -10,
-                          child: GestureDetector(
-                            onTap: onRemoved,
-                            behavior: HitTestBehavior.opaque,
-                            child: const CircleAvatar(
-                              backgroundColor: Colors.grey,
-                              radius: 10,
-                              child: Icon(
-                                Icons.remove,
-                                size: 20,
-                                color: Colors.white,
+                        if (enableRemoveIcon)
+                          Positioned(
+                            left: -10,
+                            top: -10,
+                            child: GestureDetector(
+                              onTap: onRemoved,
+                              behavior: HitTestBehavior.opaque,
+                              child: const SizedBox.square(
+                                dimension: 25,
+                                child: Center(
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.grey,
+                                    radius: 15,
+                                    child: Icon(
+                                      Icons.remove,
+                                      size: 20,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                    ],
-                  ),
+                      ],
+                    );
+
+                    if (app.id.contains('banner')) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: child,
+                      );
+                    }
+                    return AspectRatio(
+                      aspectRatio: (app.width) / app.height,
+                      child: child,
+                    );
+                  },
                 ),
               ),
             ),
           ),
           if (app.title.isNotEmpty) const SizedBox(height: 5),
           if (app.title.isNotEmpty)
-            Text(
+            AutoSizeText(
               app.title,
               maxLines: 1,
               textAlign: TextAlign.center,
@@ -118,18 +135,28 @@ class AppWidgetBuilder extends AppWidget {
       listenable: controller,
       builder: (_, __) {
         if (app.id == 'wg_clock') {
-          return const ClockWidget();
+          return ClockWidget(
+            enableRemoveIcon: controller.enableEditMode,
+            onRemoved: onRemoved,
+          );
         }
         if (app.id == 'wg_weather') {
-          return WeatherWidget(key: key);
+          return WeatherWidget(
+            key: key,
+            enableEditMode: controller.enableEditMode,
+            onRemoved: onRemoved,
+          );
         }
 
-        if(app.id == 'wg_weather_banner') {
-          return const WeatherBannerWidget();
+        if (app.id == 'wg_weather_banner') {
+          return WeatherBannerWidget(
+            enableEditMode: controller.enableEditMode,
+            onRemoved: onRemoved,
+          );
         }
 
         if (app is DashBoardGroupItem) {
-          if(controller.enableEditMode) {
+          if (controller.enableEditMode) {
             return AppIconAnimation(
               child: AppGroupWidget(app: app),
             );
@@ -152,6 +179,58 @@ class AppWidgetBuilder extends AppWidget {
           onRemoved: onRemoved,
         );
       },
+    );
+  }
+}
+
+class AppWidgetGroupBuilder extends AppWidget {
+  const AppWidgetGroupBuilder({
+    super.key,
+    required super.app,
+    required super.onRemoved,
+    this.enableEditMode = false,
+  });
+
+  final bool enableEditMode;
+
+  @override
+  Widget build(BuildContext context) {
+    if (app.id == 'wg_clock') {
+      return const ClockWidget();
+    }
+    if (app.id == 'wg_weather') {
+      return WeatherWidget(
+        key: key,
+        enableEditMode: false,
+      );
+    }
+
+    if (app.id == 'wg_weather_banner') {
+      return const WeatherBannerWidget();
+    }
+
+    if (app is DashBoardGroupItem) {
+      if (enableEditMode) {
+        return AppIconAnimation(
+          child: AppGroupWidget(app: app),
+        );
+      }
+      return AppGroupWidget(app: app);
+    }
+
+    if (enableEditMode) {
+      return AppIconAnimation(
+        child: AppWidget(
+          app: app,
+          enableRemoveIcon: enableEditMode,
+          onRemoved: onRemoved,
+        ),
+      );
+    }
+    return AppWidget(
+      app: app,
+      enableRemoveIcon: enableEditMode,
+      onRemoved: onRemoved,
     );
   }
 }

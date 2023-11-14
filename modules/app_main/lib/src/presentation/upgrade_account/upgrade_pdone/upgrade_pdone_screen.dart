@@ -106,6 +106,7 @@ class _UpgradePDoneScreenState extends State<UpgradePDoneScreen>
           ),
         ],
       ),
+      resizeToAvoidBottomInset: false,
     );
   }
 }

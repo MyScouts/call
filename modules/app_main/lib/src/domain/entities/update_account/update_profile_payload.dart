@@ -37,6 +37,7 @@ class UpdateProfilePayload with _$UpdateProfilePayload {
     @JsonKey(includeIfNull: false) String? protectorEmailPhone,
     @JsonKey(includeIfNull: false) String? protectorPhoneCode,
     @JsonKey(includeIfNull: false) String? otp,
+    @JsonKey(includeIfNull: false) String? birthCertificateUrl,
   }) = _UpdateProfilePayload;
 
   factory UpdateProfilePayload.fromJson(Map<String, dynamic> json) =>

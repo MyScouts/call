@@ -66,9 +66,11 @@ abstract class CommunityRepository {
 
   Future<LeaveTeamStatusResponse> getLeaveTeamStatus();
 
-  Future<MemberJoinRequestResponse> memberJoinRequest();
+  Future<MemberJoinRequestResponse> memberJoinRequest(
+      GetCommunityPayload query);
 
-  Future<MemberJoinRequestResponse> memberLeaveRequest();
+  Future<MemberJoinRequestResponse> memberLeaveRequest(
+      GetCommunityPayload query);
 
   Future kickMember(int userId, String teamId);
 

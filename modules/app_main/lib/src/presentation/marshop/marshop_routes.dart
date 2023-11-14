@@ -10,12 +10,18 @@ class MarkShopRoutes extends RouteModule {
   @override
   Map<String, WidgetBuilder> getAll(RouteSettings settings) => {
         RegisterCustomerScreen.routeName: (context) {
-          return const RegisterCustomerScreen();
+          final args = settings.arguments as Map<String, dynamic>;
+          return RegisterCustomerScreen(
+            marshopId: args['marshopId'],
+          );
         },
         RegisterMarshopScreen.routeName: (context) {
+          final args = settings.arguments as Map<String, dynamic>;
           return BlocProvider.value(
             value: injector.get<UserCubit>(),
-            child: const RegisterMarshopScreen(),
+            child: RegisterMarshopScreen(
+              marshopId: args['marshopId'],
+            ),
           );
         },
       };

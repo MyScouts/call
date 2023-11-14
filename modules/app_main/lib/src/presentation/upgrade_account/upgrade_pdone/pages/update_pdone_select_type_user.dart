@@ -47,10 +47,10 @@ class _UpdatePdoneSelectTypeUserState extends State<UpdatePdoneSelectTypeUser> {
 
   bool get enableBtn => true;
 
-  PDoneOptionAge _pDoneOptionAge = PDoneOptionAge.over15;
+  PDoneOptionAge _pDoneOptionAge = PDoneOptionAge.over14;
   PDoneOptionMethod _pDoneOptionMethod = PDoneOptionMethod.userIdentityCard;
 
-  get ageOptions => PDoneOptionAge.values;
+  final ageOptions = [PDoneOptionAge.over14];
   final methodOptions = PDoneOptionMethod.values;
 
   get methodOptionUnder15 => PDoneOptionMethod.values;
@@ -148,7 +148,7 @@ class _UpdatePdoneSelectTypeUserState extends State<UpdatePdoneSelectTypeUser> {
     final json = await _channel.invokeMethod(methodName, ekycInfo);
     log(json);
     upgradePDoneBloc.add(
-      ExtractingIdCardEvent(jsonDecode(json)),
+      ExtractingIdCardEvent(jsonDecode(json), const {}),
     );
   }
 
@@ -188,6 +188,16 @@ class _UpdatePdoneSelectTypeUserState extends State<UpdatePdoneSelectTypeUser> {
       onChanged: (val) {
         if (val != null) {
           _pDoneOptionMethod = val;
+          switch(_pDoneOptionMethod){
+
+            case PDoneOptionMethod.userBirthCer:
+              ageOptions..clear()..add(PDoneOptionAge.under15);
+            case PDoneOptionMethod.userIdentityCard:
+              ageOptions..clear()..add(PDoneOptionAge.over14);
+          }
+
+        _pDoneOptionAge = ageOptions[0];
+
           setState(() {});
         }
       },

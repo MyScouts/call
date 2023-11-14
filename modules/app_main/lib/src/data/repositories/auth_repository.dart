@@ -32,8 +32,6 @@ abstract class AuthRepository {
     ResetPasswordTokenPayload payload,
   );
   Future<ResetPasswordResponse> resetPassword(ResetPasswordPayload payload);
-  Future otp();
-
   Future<Otp> getOtp();
 
   Future authClaimV1(AuthClaimPayload payload);

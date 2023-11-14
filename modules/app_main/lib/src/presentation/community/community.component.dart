@@ -23,7 +23,6 @@ class CommunityWidget extends StatefulWidget {
 class _CommunityWidgetState extends State<CommunityWidget>
     with SingleTickerProviderStateMixin {
   late TabController _communityTabController;
-  User? get currentUser => context.read<UserBloc>().state.currentUser;
 
   @override
   void initState() {
@@ -58,10 +57,8 @@ class _CommunityWidgetState extends State<CommunityWidget>
                   child: Row(
                     children: [
                       GestureDetector(
-                        onTap: () => context.startDiary(
-                          userId: currentUser!.id.toString(),
-                        ),
-                        child: const AvatarWidget(size: 38),
+                        onTap: () => context.startDiary(),
+                        child: const AppAvatarWidget(),
                       ),
                       const SizedBox(width: 15),
                       Expanded(
@@ -105,16 +102,6 @@ class _CommunityWidgetState extends State<CommunityWidget>
                           highlightColor: Colors.transparent,
                         ),
                       ),
-                      // SizedBox(
-                      //   width: 35,
-                      //   height: 35,
-                      //   child: IconButton(
-                      //     padding: EdgeInsets.zero,
-                      //     onPressed: () => Navigator.pop(context),
-                      //     icon: ImageWidget(IconAppConstants.menu),
-                      //     highlightColor: Colors.transparent,
-                      //   ),
-                      // ),
                       SizedBox(
                         width: 35,
                         height: 35,

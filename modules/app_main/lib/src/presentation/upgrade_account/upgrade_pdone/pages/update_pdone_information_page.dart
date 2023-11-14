@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:design_system/design_system.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:localization/localization.dart';
@@ -15,6 +18,7 @@ import '../../../../domain/entities/update_account/update_profile_payload.dart';
 import '../../../../domain/entities/update_account/upgrade_account.dart';
 import '../../../app_constants.dart';
 import '../../../shared/extensions/validation_extension.dart';
+import '../../../shared/mixins/user_info_mixin.dart';
 import '../../upgrade_account_constants.dart';
 import '../../upgrade_account_coordinator.dart';
 import '../../upgrade_ja/widgets/gradiant_button.dart';
@@ -68,32 +72,36 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
   // prevent change after validate protector
   bool needValidatingProtector = false;
 
-  final _showResultValidateProtectorCtrl = ValueNotifier<String>('');
-
   PDoneOptionMethod pDoneOptionMethod = PDoneOptionMethod.userIdentityCard;
 
-  PDoneOptionRangeAge rangeAge = PDoneOptionRangeAge.over18;
+  PDoneAPICaller pDoneAPICaller = PDoneAPICaller.adult;
 
   bool isShowProtector() {
-    return rangeAge == PDoneOptionRangeAge.under18AndOver15 ||
+    return pDoneAPICaller == PDoneAPICaller.teenager ||
         pDoneOptionMethod == PDoneOptionMethod.userBirthCer;
   }
 
   void _onListenerBloc(BuildContext context, UpgradePDoneState state) {
-    if (state is UpdateProfileLoading) {
+    if (state is UpdatePDoneProfileLoading) {
       showLoading();
-    } else if (state is UpdateProfileSuccess) {
+    }
+    if (state is UpdatePdoneAdultProfileSuccess ||
+        state is UpdatePdoneTeenagerProfileSuccess) {
       hideLoading();
       context.upgradePdoneSuccess();
-    } else if (state is UpdateProfileFailure) {
+    }
+
+    if (state is UpdatePdoneChildrenProfileSuccess) {
+      hideLoading();
+      context.upgradePdoneChildrenSuccess();
+    }
+
+    if (state is UpdatePDoneProfileFailure) {
       hideLoading();
 
       showToastMessage(state.errorMessage, ToastMessageType.warning);
-    } else if (state is GetMyProfileSuccess) {}
-    if (state is VerifyOTPProtectorSuccessState) {
-      hideLoading();
-      context.upgradePdoneWithProtectorSuccess();
     }
+    if (state is GetMyProfileSuccess) {}
 
     if (state is UpdatePDoneSendOTPSuccessState) {
       hideLoading();
@@ -107,7 +115,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                 child: UpdatePDoneOtp(
                   blocUpdate: upgradePDoneBloc,
                   payload: payload,
-                  rangeAge: rangeAge,
+                  pDoneAPICaller: pDoneAPICaller,
                 ),
               );
             });
@@ -118,7 +126,40 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       hideLoading();
       showToastMessage(state.errorMessage, ToastMessageType.error);
     }
-    if (state is VerifyOTPProtectorFailureState) {
+
+    if (state is RequestedSuccessProtectorState) {
+      showToastMessage(
+          'Đã gửi thông báo đến người bảo hộ!', ToastMessageType.success);
+      hideLoading();
+      Future.delayed(Duration(milliseconds: 200)).then((value) {
+        showLoading();
+      });
+      FirebaseMessaging.onMessage.listen((message) {
+        final data = message.data;
+        final dataRes = jsonDecode(data['data']);
+        if (data['type'] == 'PROTECTOR_REQUEST_REPLY') {
+          if (dataRes['isApproved']) {
+            upgradePDoneBloc.add(ProtectorApprovedEvent());
+          } else {
+            upgradePDoneBloc.add(ProtectorRejectedEvent());
+          }
+        }
+      });
+    }
+
+    if (state is ApproveProtectorState) {
+      hideLoading();
+      showToastMessage('Người bảo hộ đã đồng ý!', ToastMessageType.success);
+      upgradePDoneBloc.add(UpdatePDoneSendOTP());
+    }
+
+    if (state is RejectProtectorState) {
+      hideLoading();
+      showToastMessage(
+          'Người bảo hộ đã từ chối yêu cầu của bạn!', ToastMessageType.error);
+    }
+
+    if (state is RequestedFailureProtectorState) {
       hideLoading();
       showToastMessage(state.errorMessage, ToastMessageType.error);
     }
@@ -144,7 +185,6 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       interest: interestCtrl.text,
       talent: talentCtrl.text,
     );
-
     if (pDoneOptionMethod == PDoneOptionMethod.userIdentityCard) {
       payload = payload.copyWith(
         birthPlace: UpdatePDoneBirthPlacePayload(
@@ -155,7 +195,19 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
             wardName: bpWardCtrl.text),
       );
     }
+    if (pDoneAPICaller == PDoneAPICaller.adult) {
+      _sendOTP();
+    } else {
+      _requestProtector();
+    }
+  }
 
+  void _requestProtector() {
+    upgradePDoneBloc.add(
+        RequestProtectorEvent(req: pDoneVerifyProtectorRequest, userId: 0));
+  }
+
+  void _sendOTP() {
     upgradePDoneBloc.add(UpdatePDoneSendOTP());
   }
 
@@ -167,127 +219,31 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
     });
   }
 
-  Future<void> validatePDoneID(String? text) async {
-    final validate =
-        context.validateformatPDoneAccount(text, 'ID P-Done không hợp lệ!');
-
-    needValidatingProtector = true;
-    _showResultValidateProtectorCtrl.value = '';
-
-    if (validate != null) {
-      validatorPDoneId = validate;
-      checkValidation();
-      return;
-    }
-
-    EasyDebounce.debounce('testDeb', const Duration(milliseconds: 300),
-        () async {
-      // final id = text!.trim();
-      // final res = await upgradePDoneBloc.checkPDoneAccountEvent(id);
-      // validatorPDoneId = res ? null : 'ID P-Done không tồn tại';
-      // checkValidation();
-      //
-      // if (res) {
-      //   onUpdatePayload(payload.copyWith(protectorPDoneId: id));
-      // }
-    });
-  }
-
-  void _validateIdentifyNumber(String? text) {
-    needValidatingProtector = true;
-    final validate = context.validateCCCD(text, 'Thông tin không hợp lệ');
-    validatorIdentifyNumber = validate;
-    checkValidation();
-    _showResultValidateProtectorCtrl.value = '';
-  }
-
-  Future<void> _onValidateProtector() async {
-    if (isValidatingProtector) {
-      return;
-    }
-
-    isValidatingProtector = true;
-
-    final pDoneId = pDoneIdProtectorCtrl.text;
-
-    final validate =
-        context.validateformatPDoneAccount(pDoneId, 'ID P-Done không hợp lệ!');
-
-    if (validate != null) {
-      validatorPDoneId = validate;
-      showToastMessage('ID P-Done không hợp lệ!', ToastMessageType.error);
-      checkValidation();
-      isValidatingProtector = false;
-      return;
-    }
-
-    final emailOrPhone = emailOrPhoneProtectorCtrl.text;
-    final identifyNumber = identifyNumberProtectorCtrl.text;
-
-    final validiIdentifyNumber = identifyNumber.isNotEmpty &&
-        context.validateEmptyInfo(identifyNumber, 'messageError') == null;
-
-    if (!validiIdentifyNumber) {
-      isValidatingProtector = false;
-      showToastMessage('Số ID/CCCD/HC không hợp lệ', ToastMessageType.error);
-      return;
-    }
-
-    try {
-      final payload = CheckProtectorPayload(
-        protectorPDoneId: pDoneIdProtectorCtrl.text,
-        protectorEmailPhone: emailOrPhone,
-        protectorIdentityNumber: identifyNumber,
-      );
-    } catch (e) {
-      if (e is DioError) {
-        if (e.response != null && e.response?.data['errors'] != null) {
-          final errors = e.response?.data['errors'] as List;
-          for (final e in errors) {
-            if (e == 'PROTECTOR_IDENTITY_INVALID') {
-              validatorIdentifyNumber = 'Thông tin không hợp lệ';
-              checkValidation();
-              showToastMessage(
-                  'Số ID/CCCD/HC không hợp lệ', ToastMessageType.error);
-            }
-            if (e == 'PROTECTOR_EMAIL_OR_PHONE_INVALID') {
-              validatorEmailOrPhone = 'Thông tin không hợp lệ';
-              checkValidation();
-              showToastMessage(
-                  'Email hoặc phone không hợp lệ', ToastMessageType.error);
-            }
-            if (e == 'PROTECTOR_NOT_FOUND') {
-              validatorPDoneId = 'Thông tin không hợp lệ';
-              showToastMessage(
-                  'ID P-DONE không hợp lệ', ToastMessageType.error);
-              checkValidation();
-            }
-            if (e == 'PROTECTOR_GTE_18_OLD') {
-              validatorPDoneId = 'Người bảo hộ phải trên 18 tuổi';
-              showToastMessage(
-                  'Người bảo hộ phải trên 18 tuổi', ToastMessageType.error);
-              checkValidation();
-            }
-          }
-        }
-      }
-    } finally {
-      isValidatingProtector = false;
-    }
-  }
-
   @override
   void initState() {
     super.initState();
     _initTextFormField();
+    _initBirthCer();
+  }
+
+  void _initBirthCer() {
+    if (((upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).metaData
+            as Map<dynamic, dynamic>)
+        .isNotEmpty) {
+      payload = payload.copyWith(
+          birthCertificateUrl:
+              (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess)
+                  .metaData[UpgradePDoneMeta.imageBirthCer]);
+      pDoneAPICaller = PDoneAPICaller.children;
+    }
   }
 
   void _initTextFormField() {
-    if (((upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).data
+    if (((upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).dataEKyc
             as Map<dynamic, dynamic>)
         .isNotEmpty) {
-      final eKycData =
-          (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).data['object'];
+      final eKycData = (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess)
+          .dataEKyc['object'];
       identifyNumberCtrl.text = eKycData['id'] ?? '';
       final nameArr = eKycData['name'].toString().split(" ");
 
@@ -313,11 +269,12 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       birthDay = eKycData['birth_day'].toString().parseDateTime();
       supplyDate = eKycData['issue_date'].toString().parseDateTime();
       expiryDate = eKycData['valid_date'].toString().parseDateTime();
-
       if (DateTime.now().year - (birthDay?.year ?? 0) > 18) {
-        rangeAge = PDoneOptionRangeAge.over18;
+        pDoneAPICaller = PDoneAPICaller.adult;
+        // pDoneAPICaller = PDoneAPICaller.teenager;
       } else {
-        rangeAge = PDoneOptionRangeAge.under18AndOver15;
+        pDoneAPICaller = PDoneAPICaller.teenager;
+        // pDoneAPICaller = PDoneAPICaller.adult;
       }
     } else {
       pDoneOptionMethod = PDoneOptionMethod.userBirthCer;
@@ -327,8 +284,11 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
   @override
   Widget build(BuildContext context) {
     return validationFormBuilder(
-      child: AutoHideKeyboard(
-        child: SingleChildScrollView(
+      child: ScaffoldHideKeyboard(
+        resizeToAvoidBottomInset: true,
+        body: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          scrollDirection: Axis.vertical,
           padding: const EdgeInsets.fromLTRB(
             UpgradeAccountConstants.horizontalScreen,
             0,
@@ -342,348 +302,359 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                 hideLoading();
               }
 
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  /// Họ tên - Tên đệm
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: InformationFieldWidget(
-                          required: true,
-                          shouldEnabled: pDoneOptionMethod !=
-                              PDoneOptionMethod.userIdentityCard,
-                          controller: firstNameCtrl,
-                          onChanged: (value) => onUpdatePayload(
-                              payload.copyWith(firstName: value)),
-                          type: UpdateInformationType.firstName,
-                          validator: (value) => context.validateEmptyInfo(
-                            firstNameCtrl.text,
-                            'Vui lòng nhập họ',
-                          ),
-                        ),
-                      ),
-                      _buildSpacerBetweenFields(),
-                      Expanded(
-                        child: InformationFieldWidget(
-                          controller: middleNameCtrl,
-                          shouldEnabled: pDoneOptionMethod !=
-                              PDoneOptionMethod.userIdentityCard,
-                          onChanged: (value) => onUpdatePayload(
-                              payload.copyWith(middleName: value)),
-                          type: UpdateInformationType.middleName,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  /// Tên
-                  InformationFieldWidget(
-                    required: true,
-                    shouldEnabled:
-                        pDoneOptionMethod != PDoneOptionMethod.userIdentityCard,
-                    controller: lastNameCtrl,
-                    onChanged: (value) =>
-                        onUpdatePayload(payload.copyWith(lastName: value)),
-                    type: UpdateInformationType.lastName,
-                    validator: (value) => context.validateEmptyInfo(
-                      lastNameCtrl.text,
-                      'Vui lòng nhập tên',
-                    ),
-                  ),
-
-                  /// Nickname
-                  InformationFieldWidget(
-                    required: true,
-                    controller: nickNameCtrl,
-                    onChanged: (value) =>
-                        onUpdatePayload(payload.copyWith(nickname: value)),
-                    type: UpdateInformationType.nickName,
-                    validator: (value) => context.validateEmptyInfo(
-                      nickNameCtrl.text,
-                      'Vui lòng nhập Nickname',
-                    ),
-                    maxLength: 40,
-                  ),
-                  InformationLayoutFieldWidget(
-                    required: false,
-                    label: UpdateInformationType.birthDay.title(context),
-                    child: InputDateTimeWidget(
-                      hintText: 'Ngày sinh',
-                      useHorizontalLayout: true,
-                      enabled: pDoneOptionMethod !=
-                          PDoneOptionMethod.userIdentityCard,
-                      radius: 17,
-                      date: birthDay,
-                      formatText: (date) => S
-                          .of(context)
-                          .formatDateDDmmYYYYhhMM(date, date)
-                          .split('|')
-                          .first,
-                      max: DateTime.now(),
-                      onChange: (dateTime) {
-                        birthDay = dateTime;
-                      },
-                    ),
-                  ),
-
-                  /// Giới tính - Ngày sinh
-                  InformationFieldWidget(
-                    required: true,
-                    controller: genderCtrl,
-                    shouldEnabled:
-                        pDoneOptionMethod != PDoneOptionMethod.userIdentityCard,
-                    onChanged: (value) => onUpdatePayload(
-                      payload.copyWith(sex: value == 'Nam' ? 1 : 0),
-                    ),
-                    type: UpdateInformationType.gender,
-                    maxLength: 4,
-                  ),
-
-                  pDoneOptionMethod == PDoneOptionMethod.userIdentityCard
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: Text(
-                                'Nơi sinh',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineSmall
-                                    ?.copyWith(fontSize: 14),
-                              ),
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: InformationFieldWidget(
-                                    required: true,
-                                    shouldEnabled: pDoneOptionMethod !=
-                                        PDoneOptionMethod.userIdentityCard,
-                                    controller: bpProvinceCtrl,
-                                    onChanged: (value) => onUpdatePayload(
-                                        payload.copyWith(firstName: value)),
-                                    type: UpdateInformationType.province,
-                                    validator: (value) =>
-                                        context.validateEmptyInfo(
-                                      bpProvinceCtrl.text,
-                                      'Vui lòng nhập tỉnh thành',
-                                    ),
-                                  ),
-                                ),
-                                _buildSpacerBetweenFields(),
-                                Expanded(
-                                  child: InformationFieldWidget(
-                                    shouldEnabled: pDoneOptionMethod !=
-                                        PDoneOptionMethod.userIdentityCard,
-                                    controller: bpDistrictCtrl,
-                                    required: true,
-                                    onChanged: (value) => onUpdatePayload(
-                                        payload.copyWith(middleName: value)),
-                                    type: UpdateInformationType.district,
-                                    validator: (value) =>
-                                        context.validateEmptyInfo(
-                                      bpDistrictCtrl.text,
-                                      'Vui lòng nhập quận/huyện',
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Expanded(
-                                  child: InformationFieldWidget(
-                                    shouldEnabled: pDoneOptionMethod !=
-                                        PDoneOptionMethod.userIdentityCard,
-                                    required: true,
-                                    controller: bpWardCtrl,
-                                    onChanged: (value) => onUpdatePayload(
-                                        payload.copyWith(firstName: value)),
-                                    type: UpdateInformationType.ward,
-                                    validator: (value) =>
-                                        context.validateEmptyInfo(
-                                      bpWardCtrl.text,
-                                      'Vui lòng nhập xã/phường',
-                                    ),
-                                  ),
-                                ),
-                                _buildSpacerBetweenFields(),
-                                Expanded(
-                                  child: InformationFieldWidget(
-                                    controller: bpStreetCtrl,
-                                    required: true,
-                                    shouldEnabled: pDoneOptionMethod !=
-                                        PDoneOptionMethod.userIdentityCard,
-                                    onChanged: (value) => onUpdatePayload(
-                                        payload.copyWith(middleName: value)),
-                                    type: UpdateInformationType.street,
-                                    validator: (value) =>
-                                        context.validateEmptyInfo(
-                                      bpStreetCtrl.text,
-                                      'Vui lòng nhập đường/thôn',
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
-                      : BlocProvider<PlaceInformationBloc>(
-                          create: (context) => injector.get(),
-                          child: PlaceInformationWidget(
-                            title: 'Nơi sinh',
-                            initPlaceInformation: birthPlace,
-                            onUpdatePlaceInformation: (value) {
-                              onUpdatePayload(
-                                payload.copyWith(
-                                  birthPlace: UpdatePDoneBirthPlacePayload(
-                                      countryName: 'VN',
-                                      countryCode: '',
-                                      address: birthPlaceAddressCtrl.text,
-                                      provinceName:
-                                          birthPlace?.province?.name ?? '',
-                                      districtName: birthPlace?.district?.name,
-                                      wardName: birthPlace?.ward?.name),
-                                ),
-                              );
-                            },
-                            addressCtrl: birthPlaceAddressCtrl,
+              return Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    /// Họ tên - Tên đệm
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: InformationFieldWidget(
                             required: true,
+                            shouldEnabled: pDoneOptionMethod !=
+                                PDoneOptionMethod.userIdentityCard,
+                            controller: firstNameCtrl,
+                            onChanged: (value) => onUpdatePayload(
+                                payload.copyWith(firstName: value)),
+                            type: UpdateInformationType.firstName,
+                            validator: (value) => context.validateEmptyInfo(
+                              firstNameCtrl.text,
+                              'Vui lòng nhập họ',
+                            ),
                           ),
                         ),
-
-                  BlocProvider<PlaceInformationBloc>(
-                    create: (context) => injector.get(),
-                    child: PlaceInformationWidget(
-                      title: 'Địa chỉ ở hiện tại',
-                      initPlaceInformation: currentPlace,
-                      onUpdatePlaceInformation: (value) {
-                        onUpdatePayload(payload.copyWith(currentPlace: value));
-                      },
-                      addressCtrl: currentPlaceAddressCtrl,
-                      required: true,
+                        _buildSpacerBetweenFields(),
+                        Expanded(
+                          child: InformationFieldWidget(
+                            controller: middleNameCtrl,
+                            shouldEnabled: pDoneOptionMethod !=
+                                PDoneOptionMethod.userIdentityCard,
+                            onChanged: (value) => onUpdatePayload(
+                                payload.copyWith(middleName: value)),
+                            type: UpdateInformationType.middleName,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  pDoneOptionMethod == PDoneOptionMethod.userIdentityCard
-                      ? Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: InformationFieldWidget(
-                                required: true,
-                                isBold: true,
-                                maxLength: 12,
-                                controller: identifyNumberCtrl,
-                                onChanged: (value) => onUpdatePayload(
-                                    payload.copyWith(identityNumber: value)),
-                                type: UpdateInformationType.idNumber,
-                                textInputType: TextInputType.number,
-                                validator: (value) =>
-                                    checkIsUnder15ShouldEnableField()
-                                        ? context.validateCCCD(
-                                            identifyNumberCtrl.text,
-                                            'Thông tin không hợp lệ')
-                                        : null,
-                                shouldEnabled: pDoneOptionMethod !=
-                                    PDoneOptionMethod.userIdentityCard,
+
+                    /// Tên
+                    InformationFieldWidget(
+                      required: true,
+                      shouldEnabled: pDoneOptionMethod !=
+                          PDoneOptionMethod.userIdentityCard,
+                      controller: lastNameCtrl,
+                      onChanged: (value) =>
+                          onUpdatePayload(payload.copyWith(lastName: value)),
+                      type: UpdateInformationType.lastName,
+                      validator: (value) => context.validateEmptyInfo(
+                        lastNameCtrl.text,
+                        'Vui lòng nhập tên',
+                      ),
+                    ),
+
+                    /// Nickname
+                    InformationFieldWidget(
+                      required: true,
+                      controller: nickNameCtrl,
+                      onChanged: (value) =>
+                          onUpdatePayload(payload.copyWith(nickname: value)),
+                      type: UpdateInformationType.nickName,
+                      validator: (value) => context.validateEmptyInfo(
+                        nickNameCtrl.text,
+                        'Vui lòng nhập Nickname',
+                      ),
+                      maxLength: 40,
+                    ),
+                    InformationLayoutFieldWidget(
+                      required: false,
+                      label: UpdateInformationType.birthDay.title(context),
+                      child: InputDateTimeWidget(
+                        hintText: 'Ngày sinh',
+                        useHorizontalLayout: true,
+                        enabled: pDoneOptionMethod !=
+                            PDoneOptionMethod.userIdentityCard,
+                        radius: 17,
+                        date: birthDay,
+                        formatText: (date) => S
+                            .of(context)
+                            .formatDateDDmmYYYYhhMM(date, date)
+                            .split('|')
+                            .first,
+                        max: DateTime.now(),
+                        onChange: (dateTime) {
+                          birthDay = dateTime;
+                        },
+                      ),
+                    ),
+
+                    /// Giới tính - Ngày sinh
+                    InformationFieldWidget(
+                      required: true,
+                      controller: genderCtrl,
+                      shouldEnabled: pDoneOptionMethod !=
+                          PDoneOptionMethod.userIdentityCard,
+                      onChanged: (value) => onUpdatePayload(
+                        payload.copyWith(sex: value == 'Nam' ? 1 : 0),
+                      ),
+                      type: UpdateInformationType.gender,
+                      maxLength: 4,
+                    ),
+
+                    pDoneOptionMethod == PDoneOptionMethod.userIdentityCard
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20),
+                                child: Text(
+                                  'Nơi sinh',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall
+                                      ?.copyWith(fontSize: 14),
+                                ),
                               ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: InformationFieldWidget(
+                                      required: true,
+                                      shouldEnabled: pDoneOptionMethod !=
+                                          PDoneOptionMethod.userIdentityCard,
+                                      controller: bpProvinceCtrl,
+                                      onChanged: (value) => onUpdatePayload(
+                                          payload.copyWith(firstName: value)),
+                                      type: UpdateInformationType.province,
+                                      validator: (value) {
+                                        context.validateEmptyInfo(
+                                          bpProvinceCtrl.text,
+                                          'Vui lòng nhập tỉnh thành',
+                                        );
+                                        onValidation();
+                                      },
+                                    ),
+                                  ),
+                                  _buildSpacerBetweenFields(),
+                                  Expanded(
+                                    child: InformationFieldWidget(
+                                      shouldEnabled: pDoneOptionMethod !=
+                                          PDoneOptionMethod.userIdentityCard,
+                                      controller: bpDistrictCtrl,
+                                      required: true,
+                                      onChanged: (value) => onUpdatePayload(
+                                          payload.copyWith(middleName: value)),
+                                      type: UpdateInformationType.district,
+                                      validator: (value) =>
+                                          context.validateEmptyInfo(
+                                        bpDistrictCtrl.text,
+                                        'Vui lòng nhập quận/huyện',
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: InformationFieldWidget(
+                                      shouldEnabled: pDoneOptionMethod !=
+                                          PDoneOptionMethod.userIdentityCard,
+                                      required: true,
+                                      controller: bpWardCtrl,
+                                      onChanged: (value) => onUpdatePayload(
+                                          payload.copyWith(firstName: value)),
+                                      type: UpdateInformationType.ward,
+                                      validator: (value) =>
+                                          context.validateEmptyInfo(
+                                        bpWardCtrl.text,
+                                        'Vui lòng nhập xã/phường',
+                                      ),
+                                    ),
+                                  ),
+                                  _buildSpacerBetweenFields(),
+                                  Expanded(
+                                    child: InformationFieldWidget(
+                                      controller: bpStreetCtrl,
+                                      required: true,
+                                      shouldEnabled: pDoneOptionMethod !=
+                                          PDoneOptionMethod.userIdentityCard,
+                                      onChanged: (value) {
+                                        onUpdatePayload(payload.copyWith(
+                                            middleName: value));
+                                        onValidation();
+                                      },
+                                      type: UpdateInformationType.street,
+                                      validator: (value) =>
+                                          context.validateEmptyInfo(
+                                        bpStreetCtrl.text,
+                                        'Vui lòng nhập đường/thôn',
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        : BlocProvider<PlaceInformationBloc>(
+                            create: (context) => injector.get(),
+                            child: PlaceInformationWidget(
+                              title: 'Nơi sinh',
+                              initPlaceInformation: birthPlace,
+                              onUpdatePlaceInformation: (value) {
+                                onUpdatePayload(
+                                  payload.copyWith(
+                                    birthPlace: UpdatePDoneBirthPlacePayload(
+                                        countryName: 'VN',
+                                        countryCode: '',
+                                        address: birthPlaceAddressCtrl.text,
+                                        provinceName:
+                                            birthPlace?.province?.name ?? '',
+                                        districtName:
+                                            birthPlace?.district?.name,
+                                        wardName: birthPlace?.ward?.name),
+                                  ),
+                                );
+                              },
+                              addressCtrl: birthPlaceAddressCtrl,
+                              required: true,
                             ),
-                            _buildSpacerBetweenFields(),
-                            Expanded(
-                              child: InformationLayoutFieldWidget(
-                                required: false,
-                                label: UpdateInformationType.supplyDate
-                                    .title(context),
-                                child: InputDateTimeWidget(
-                                  hintText: 'Ngày cấp',
-                                  useHorizontalLayout: true,
-                                  enabled: pDoneOptionMethod !=
-                                      PDoneOptionMethod.userIdentityCard,
-                                  radius: 17,
-                                  date: supplyDate,
-                                  formatText: (date) => S
-                                      .of(context)
-                                      .formatDateDDmmYYYYhhMM(date, date)
-                                      .split('|')
-                                      .first,
-                                  max: DateTime.now(),
-                                  onChange: (dateTime) {
-                                    supplyDate = dateTime;
+                          ),
+
+                    BlocProvider<PlaceInformationBloc>(
+                      create: (context) => injector.get(),
+                      child: PlaceInformationWidget(
+                        title: 'Địa chỉ ở hiện tại',
+                        initPlaceInformation: currentPlace,
+                        onUpdatePlaceInformation: (value) {
+                          onUpdatePayload(
+                              payload.copyWith(currentPlace: value));
+                        },
+                        addressCtrl: currentPlaceAddressCtrl,
+                        required: true,
+                      ),
+                    ),
+                    pDoneOptionMethod == PDoneOptionMethod.userIdentityCard
+                        ? Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: InformationFieldWidget(
+                                  required: true,
+                                  isBold: true,
+                                  maxLength: 12,
+                                  controller: identifyNumberCtrl,
+                                  onChanged: (value) {
+                                    onUpdatePayload(payload.copyWith(
+                                        identityNumber: value));
+                                    onValidation();
                                   },
+                                  type: UpdateInformationType.idNumber,
+                                  textInputType: TextInputType.number,
+                                  validator: (value) =>
+                                      checkIsUnder15ShouldEnableField()
+                                          ? context.validateCCCD(
+                                              identifyNumberCtrl.text,
+                                              'Thông tin không hợp lệ')
+                                          : null,
+                                  shouldEnabled: pDoneOptionMethod !=
+                                      PDoneOptionMethod.userIdentityCard,
                                 ),
                               ),
-                            ),
-                          ],
-                        )
-                      : Container(),
-
-                  /// Ngày Cấp - Nơi Cấp
-                  pDoneOptionMethod == PDoneOptionMethod.userIdentityCard
-                      ? InformationFieldWidget(
-                          required: true,
-                          shouldEnabled: pDoneOptionMethod !=
-                              PDoneOptionMethod.userIdentityCard,
-                          controller: supplyAddressCtrl,
-                          onChanged: (value) {
-                            onUpdatePayload(
-                              payload.copyWith(supplyAddress: value),
-                            );
-                          },
-                          type: UpdateInformationType.placeofIdNumber,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.deny(RegExp('[0-9]'))
-                          ],
-                          validator: (value) =>
-                              checkIsUnder15ShouldEnableField()
-                                  ? context.validateEmptyInfo(
-                                      supplyAddressCtrl.text,
-                                      'Vui lòng nhập nơi cấp')
-                                  : null,
-                        )
-                      : Container(),
-                  isShowProtector()
-                      ? BlocProvider<UpgradePDoneBloc>(
-                          create: (context) => injector.get(),
-                          child: VerifyProtectorWidget(
-                            onUpdatePDoneVerifyProtector:
-                                (PDoneVerifyProtectorRequest value) {
-                              onUpdatePayload(
-                                payload.copyWith(
-                                  protector: value.protector,
-                                  protectorPDoneId: value.identityNumber,
-                                  protectorEmailPhone: value.phoneNumber,
-                                  protectorIdentityNumber: value.identityNumber,
-                                  protectorPhoneCode: value.phoneCode,
+                              _buildSpacerBetweenFields(),
+                              Expanded(
+                                child: InformationLayoutFieldWidget(
+                                  required: false,
+                                  label: UpdateInformationType.supplyDate
+                                      .title(context),
+                                  child: InputDateTimeWidget(
+                                    hintText: 'Ngày cấp',
+                                    useHorizontalLayout: true,
+                                    enabled: pDoneOptionMethod !=
+                                        PDoneOptionMethod.userIdentityCard,
+                                    radius: 17,
+                                    date: supplyDate,
+                                    formatText: (date) => S
+                                        .of(context)
+                                        .formatDateDDmmYYYYhhMM(date, date)
+                                        .split('|')
+                                        .first,
+                                    max: DateTime.now(),
+                                    onChange: (dateTime) {
+                                      onValidation();
+                                      supplyDate = dateTime;
+                                    },
+                                  ),
                                 ),
-                              );
-                            },
-                          ),
-                        )
-                      : Container(),
+                              ),
+                            ],
+                          )
+                        : Container(),
 
-                  validationListenableBuilder(
-                    builder: (isValid) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 38),
-                        child: GradiantButton(
-                          onPressed: isValid ? _onTapNext : null,
-                          child: Text(
-                            'TIẾP THEO',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge
-                                ?.copyWith(color: AppColors.white),
+                    /// Ngày Cấp - Nơi Cấp
+                    pDoneOptionMethod == PDoneOptionMethod.userIdentityCard
+                        ? InformationFieldWidget(
+                            required: true,
+                            shouldEnabled: pDoneOptionMethod !=
+                                PDoneOptionMethod.userIdentityCard,
+                            controller: supplyAddressCtrl,
+                            onChanged: (value) {
+                              onUpdatePayload(
+                                payload.copyWith(supplyAddress: value),
+                              );
+                              onValidation();
+                            },
+                            type: UpdateInformationType.placeofIdNumber,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.deny(RegExp('[0-9]'))
+                            ],
+                            validator: (value) =>
+                                checkIsUnder15ShouldEnableField()
+                                    ? context.validateEmptyInfo(
+                                        supplyAddressCtrl.text,
+                                        'Vui lòng nhập nơi cấp')
+                                    : null,
+                          )
+                        : Container(),
+                    isShowProtector()
+                        ? BlocProvider<UpgradePDoneBloc>(
+                            create: (context) => injector.get(),
+                            child: VerifyProtectorWidget(
+                              onUpdatePlaceInformation:
+                                  (PDoneVerifyProtectorRequest value) {
+                                pDoneVerifyProtectorRequest = value;
+                              },
+                            ),
+                          )
+                        : Container(),
+
+                    validationListenableBuilder(
+                      builder: (isValid) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 38),
+                          child: GradiantButton(
+                            onPressed: isValid ? _onTapNext : null,
+                            child: Text(
+                              'TIẾP THEO',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge
+                                  ?.copyWith(color: AppColors.white),
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                        );
+                      },
+                    ),
+                    Padding(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom)),
+                  ],
+                ),
               );
             },
           ),

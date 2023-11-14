@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/presentation/community/team_detail/bloc/team_detail_bloc.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
@@ -66,7 +67,6 @@ class _RemoveMemberSheetState extends State<RemoveMemberSheet> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
@@ -259,7 +259,6 @@ class _RemoveMemberSheetState extends State<RemoveMemberSheet> {
 
 class _UserCard extends StatelessWidget {
   const _UserCard({
-    super.key,
     required this.user,
     this.enableChoose = false,
     this.active = false,
@@ -273,9 +272,12 @@ class _UserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isBossTeam =
+        context.read<UserCubit>().currentUser?.pDoneId == user.pDoneId;
+
     return Row(
       children: [
-        if (enableChoose) ...[
+        if (enableChoose && !isBossTeam) ...[
           AnimatedContainer(
             duration: const Duration(milliseconds: 150),
             curve: Curves.easeInOut,
@@ -319,7 +321,7 @@ class _UserCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'ID: ${user.vShopId ?? ''}',
+                      'ID: ${user.pDoneId ?? ''}',
                       style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w500,
@@ -329,7 +331,7 @@ class _UserCard extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
-                if (!enableChoose)
+                if (!isBossTeam)
                   TextButton(
                     onPressed: force,
                     style: TextButton.styleFrom(
@@ -359,7 +361,7 @@ class _UserCard extends StatelessWidget {
 }
 
 class _ListMemberHeader extends StatelessWidget {
-  const _ListMemberHeader({super.key});
+  const _ListMemberHeader();
 
   @override
   Widget build(BuildContext context) {

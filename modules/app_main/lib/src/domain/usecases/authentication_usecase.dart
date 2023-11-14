@@ -93,7 +93,7 @@ class AuthenticationUsecase {
   }
 
   Future otp() async {
-    return _authRepository.otp();
+    return _authRepository.getOtp();
   }
 
   Future logout() async {

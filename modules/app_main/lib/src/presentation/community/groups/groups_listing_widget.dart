@@ -37,7 +37,11 @@ class _GroupsListingWidgetState extends State<GroupsListingWidget>
 
   @override
   void initState() {
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(
+      length: 4,
+      vsync: this,
+      animationDuration: const Duration(milliseconds: 100),
+    );
     super.initState();
   }
 
@@ -90,47 +94,6 @@ class _GroupsListingWidgetState extends State<GroupsListingWidget>
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(20)),
             ),
-            // child: Column(
-            //   children: [
-            //     Padding(
-            //       padding: const EdgeInsets.symmetric(horizontal: 10),
-            //       child:
-            //           ImageWidget(ImageConstants.communityBanner, width: width),
-            //     ),
-            //     const SizedBox(height: 20),
-            //     CommunityTabBar(controller: _tabController),
-            //     CommunityGroupWidget(
-            //       groups: groupsCommunity,
-            //       onTap: _onTapGroupDetail,
-            //     ),
-            //     // Padding(
-            //     //   padding: const EdgeInsets.only(top: 15),
-            //     //   child: BlocBuilder<GetFanGroupBloc, GetDetailState>(
-            //     //     builder: (context, state) {
-            //     //       FanGroup? fanGroup;
-            //     //       if (state is GetDetailDataSuccess<FanGroup>) {
-            //     //         fanGroup = state.data;
-            //     //       }
-            //     //
-            //     //       return ConstrainedBox(
-            //     //         constraints: const BoxConstraints(maxHeight: 200),
-            //     //         child: GestureDetector(
-            //     //           onTap: () {
-            //     //             if (fanGroup != null) {
-            //     //               context.startFanGroupDetail(fanGroup);
-            //     //             }
-            //     //           },
-            //     //           child: ImageWidget(
-            //     //             ImageConstants.bannerFanDanca,
-            //     //             width: width,
-            //     //           ),
-            //     //         ),
-            //     //       );
-            //     //     },
-            //     //   ),
-            //     // ),
-            //   ],
-            // ),
           ),
           sliverItemsBlockBuilder: (List<Group> items) {
             return [
@@ -148,32 +111,6 @@ class _GroupsListingWidgetState extends State<GroupsListingWidget>
                       groups: items,
                       onTap: _onTapGroupDetail,
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(top: 15),
-                    //   child: BlocBuilder<GetFanGroupBloc, GetDetailState>(
-                    //     builder: (context, state) {
-                    //       FanGroup? fanGroup;
-                    //       if (state is GetDetailDataSuccess<FanGroup>) {
-                    //         fanGroup = state.data;
-                    //       }
-                    //
-                    //       return ConstrainedBox(
-                    //         constraints: const BoxConstraints(maxHeight: 200),
-                    //         child: GestureDetector(
-                    //           onTap: () {
-                    //             if (fanGroup != null) {
-                    //               context.startFanGroupDetail(fanGroup);
-                    //             }
-                    //           },
-                    //           child: ImageWidget(
-                    //             ImageConstants.bannerFanDanca,
-                    //             width: width,
-                    //           ),
-                    //         ),
-                    //       );
-                    //     },
-                    //   ),
-                    // ),
                   ],
                 ),
               ),

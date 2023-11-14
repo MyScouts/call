@@ -23,6 +23,13 @@ class OpenWeatherBloc extends Bloc<FetchWeather, OpenWeatherState> {
     FetchWeather event,
     Emitter<OpenWeatherState> emit,
   ) async {
+    if(_state != null) {
+      emit(OpenWeatherState(
+        openWeatherCurrent: _state!.openWeatherCurrent,
+        list: List.from(_state!.list),
+      ));
+      return;
+    }
     final res = await Future.wait([
       openWeatherUseCase.get(lat: event.lat, lon: event.lon),
       openWeatherUseCase.getFeature(lat: event.lat, lon: event.lon),
@@ -35,7 +42,7 @@ class OpenWeatherBloc extends Bloc<FetchWeather, OpenWeatherState> {
   }
 }
 
-class OpenWeatherState extends Equatable {
+class OpenWeatherState {
   final OpenWeatherCurrent? openWeatherCurrent;
   final List<OpenWeatherFeature> list;
 
@@ -54,9 +61,6 @@ class OpenWeatherState extends Equatable {
     }
     return result;
   }
-
-  @override
-  List<Object?> get props => [openWeatherCurrent, list];
 }
 
 abstract class OpenWeatherEvent {}

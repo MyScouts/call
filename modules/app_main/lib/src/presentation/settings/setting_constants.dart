@@ -3,6 +3,7 @@ import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
+import 'package:app_main/src/presentation/protector/manage_protector_screen.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart';
@@ -27,6 +28,7 @@ class Setting {
     BuildContext context, {
     User? user,
     OnboardingResponse? onboarding,
+    Function()? onUpdate,
   }) =>
       [
         [
@@ -34,6 +36,14 @@ class Setting {
             text: "Cài đặt tài khoản",
             icon: IconAppConstants.icSettingAccount,
           ),
+          if ((user?.old ?? 0) >= 18)
+            Setting(
+              text: "Quản lý người bảo hộ",
+              icon: IconAppConstants.icCare,
+              onPressed: () {
+                Navigator.pushNamed(context, ManageProtectorScreen.routerName);
+              },
+            ),
           Setting(
             text: "Tin nhắn office",
             icon: IconAppConstants.icChat,
@@ -42,14 +52,15 @@ class Setting {
         [
           Setting(
             text: "Team",
-            icon: IconAppConstants.icECommerce,
+            icon: IconAppConstants.icTeamProfile,
             onPressed: () =>
                 Navigator.pushNamed(context, CommunityWidget.routeName),
           ),
           Setting(
             text: "PDone",
             icon: IconAppConstants.icUpgrade,
-            onPressed: () => context.startUpgradePDone(),
+            onPressed: () =>
+                context.startUpgradePDone().then((value) => onUpdate!()),
           ),
           Setting(
             text: "JA",
