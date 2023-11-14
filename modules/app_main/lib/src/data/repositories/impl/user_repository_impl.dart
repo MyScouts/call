@@ -2,6 +2,8 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/data_sources/remote/user_api.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
+import 'package:app_main/src/data/models/responses/update_none_pdone_profile_response.dart';
+import 'package:app_main/src/data/models/responses/update_pdone_profile_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/data/repositories/user_repository.dart';
@@ -73,6 +75,21 @@ class AuthRepositoryImpl extends UserRepository {
   }
 
   @override
+  Future<UpdatePDoneProfileReponse> updatePDoneProfile(UpdatePDoneProfilePayload updatePDoneProfilePayload) {
+    return _userAPI.updatePDoneProfile(updatePDoneProfilePayload);
+  }
+
+  @override
+  Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(
+      UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload) {
+    return _userAPI.updateNonePDoneProfile(updateNonePDoneProfilePayload);
+  }
+
+  @override
+  Future<UpdateNonePDoneProfileReponse> getPDoneProfile() {
+    return _userAPI.getPDoneProfile();
+  }
+
   Future<List<User>> listFriends() async {
     final res = await _userAPI.listFriends();
     return res.users;

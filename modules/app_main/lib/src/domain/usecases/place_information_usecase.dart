@@ -21,12 +21,12 @@ class PlaceInformationUsecase {
     return _repository.provincesOfCountry(iso2);
   }
 
-  Future<List<District>> districtsByProvince(String iso2, int stateCode) async {
+  Future<List<District>> districtsByProvince(String iso2, dynamic stateCode) async {
     return _repository.districtsByProvince(iso2, stateCode);
   }
 
   Future<List<Ward>> wardsByDistrict(
-      String iso2, int stateCode, String district) async {
+      String iso2, dynamic stateCode, String district) async {
     return _repository.wardsByDistrict(iso2, stateCode, district);
   }
 }

@@ -1,12 +1,15 @@
 import 'dart:async';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/networking/api_response.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
+import 'package:app_main/src/data/models/responses/update_pdone_profile_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../data/models/responses/update_none_pdone_profile_response.dart';
 import '../../data/repositories/user_repository.dart';
 
 @injectable
@@ -70,6 +73,19 @@ class UserUsecase {
 
   Future<OnboardingResponse> onboarding() {
     return _userRepository.onboarding();
+  }
+
+  Future<UpdatePDoneProfileReponse> updatePDoneProfile(UpdatePDoneProfilePayload updatePDoneProfilePayload) {
+    return _userRepository.updatePDoneProfile(updatePDoneProfilePayload);
+  }
+
+  Future<UpdateNonePDoneProfileReponse> updateNonePNoneDoneProfile(
+      UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload) {
+    return _userRepository.updateNonePDoneProfile(updateNonePDoneProfilePayload);
+  }
+
+  Future<UpdateNonePDoneProfileReponse> getPDoneProfile() {
+    return _userRepository.getPDoneProfile();
   }
 
   Future<List<User>> listFriends() {

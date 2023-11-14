@@ -2,6 +2,8 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/list_friends_user_response.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
+import 'package:app_main/src/data/models/responses/update_none_pdone_profile_response.dart';
+import 'package:app_main/src/data/models/responses/update_pdone_profile_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:injectable/injectable.dart';
@@ -21,6 +23,8 @@ class UserApiConstants {
   static const authOTP = 'api/v1/auth/otp';
   static const search = "api/v1/user/search";
   static const onboarding = "api/v1/onboarding/ecom";
+  static const updatePDoneProfile = "api/v1/p-done/profile";
+  static const updateNonePDoneProfile = "api/v1/p-done/non-p-done-profile";
   static const listFriends = "api/users/list-friends";
   static const invite = "api/v1/team/{id}/invite";
 }
@@ -73,6 +77,15 @@ abstract class UserApi {
   @GET(UserApiConstants.onboarding)
   Future<OnboardingResponse> onboarding();
 
+  @PATCH(UserApiConstants.updatePDoneProfile)
+  Future<UpdatePDoneProfileReponse> updatePDoneProfile(UpdatePDoneProfilePayload updatePDoneProfilePayload);
+
+  @GET(UserApiConstants.updatePDoneProfile)
+  Future<UpdateNonePDoneProfileReponse> getPDoneProfile();
+
+  @PATCH(UserApiConstants.updateNonePDoneProfile)
+  Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(
+      UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload);
   @GET(UserApiConstants.listFriends)
   Future<ListFriendUserResponse> listFriends();
 

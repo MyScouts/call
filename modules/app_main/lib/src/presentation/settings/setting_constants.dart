@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/presentation/community/community.component.dart';
+import 'package:app_main/src/presentation/information_profile/information_profile_coordinator.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
 import 'package:app_main/src/presentation/protector/manage_protector_screen.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
@@ -10,6 +11,8 @@ import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/upgrade_agr
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
+
+import '../information_profile/screens/information_profile_screen.dart';
 
 class Setting {
   final String text;
@@ -35,6 +38,8 @@ class Setting {
           Setting(
             text: "Cài đặt tài khoản",
             icon: IconAppConstants.icSettingAccount,
+            onPressed: () => Navigator.of(context)
+                .pushNamed(InformationProfileScreen.routeName),
           ),
           if ((user?.old ?? 0) >= 18)
             Setting(

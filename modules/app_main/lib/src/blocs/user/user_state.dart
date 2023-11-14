@@ -159,6 +159,32 @@ final class DeleteUserFail extends UserState {
   DeleteUserFail({required this.message});
 }
 
+//Update Pdone Profile
+final class UpdatePDoneProfileLoading extends UserState {}
+
+final class UpdatePDoneProfileSuccess extends UserState {
+  final UpdatePDoneProfileReponse user;
+  UpdatePDoneProfileSuccess({required this.user});
+}
+
+final class UpdatePDoneProfileFailed extends UserState {
+  final String message;
+  UpdatePDoneProfileFailed({required this.message});
+}
+
+//Update None Pdone Profile
+final class UpdateNonePDoneProfileLoading extends UserState {}
+
+final class UpdateNonePDoneProfileSuccess extends UserState {
+  final UpdateNonePDoneProfileReponse user;
+  UpdateNonePDoneProfileSuccess({required this.user});
+}
+
+final class UpdateNonePDoneProfileFailed extends UserState {
+  final String message;
+  UpdateNonePDoneProfileFailed({required this.message});
+}
+
 // Get Onboarding
 final class OnGetOnboarding extends UserState {}
 

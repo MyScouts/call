@@ -42,7 +42,7 @@ class AuthenticationUsecase {
       response.accessToken,
       response.refreshToken,
     );
-    await _syncUser();
+    await syncUser();
     return response;
   }
 
@@ -62,7 +62,7 @@ class AuthenticationUsecase {
       response.accessToken,
       response.refreshToken,
     );
-    await _syncUser();
+    await syncUser();
     return true;
   }
 
@@ -92,7 +92,7 @@ class AuthenticationUsecase {
       response.accessToken,
       response.refreshToken,
     );
-    await _syncUser();
+    await syncUser();
     return true;
   }
 
@@ -108,7 +108,7 @@ class AuthenticationUsecase {
     await _userSharePreferencesUsecase.clearUserData();
   }
 
-  Future _syncUser() async {
+  Future syncUser() async {
     final user = await _userRepository.getProfile();
     _userSharePreferencesUsecase.saveUserInfo(user!);
     await _syncFCMToken();

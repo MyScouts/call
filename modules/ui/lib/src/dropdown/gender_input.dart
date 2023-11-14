@@ -29,9 +29,11 @@ extension GenderTypeExt on GenderType {
 
 class GenderInput extends StatefulWidget {
   final Function(int) onChange;
+  final bool required;
   const GenderInput({
     super.key,
     required this.onChange,
+    this.required = false,
   });
 
   @override
@@ -46,14 +48,26 @@ class _GenderInputState extends State<GenderInput> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Giới tính",
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            color: Color(0xFF212121),
-            height: 20 / 14,
-            leadingDistribution: TextLeadingDistribution.even,
-          ),
+        Row(
+          children: [
+            const Text(
+              "Giới tính",
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF212121),
+                height: 20 / 14,
+                leadingDistribution: TextLeadingDistribution.even,
+              ),
+            ),
+            widget.required
+                ? Text(
+                    ' *',
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          color: Colors.red,
+                        ),
+                  )
+                : const SizedBox(),
+          ],
         ),
         const SizedBox(height: 7),
         DropdownButtonFormField2<GenderType>(

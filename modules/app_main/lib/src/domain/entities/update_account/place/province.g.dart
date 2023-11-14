@@ -8,12 +8,14 @@ part of 'province.dart';
 
 _$ProvinceImpl _$$ProvinceImplFromJson(Map<String, dynamic> json) =>
     _$ProvinceImpl(
+      id: json['id'] as int?,
       name: json['name'] as String?,
-      stateCode: json['stateCode'] as int?,
+      stateCode: json['stateCode'],
     );
 
 Map<String, dynamic> _$$ProvinceImplToJson(_$ProvinceImpl instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'stateCode': instance.stateCode,
     };

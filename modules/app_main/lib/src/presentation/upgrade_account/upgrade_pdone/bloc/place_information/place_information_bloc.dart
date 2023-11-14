@@ -16,20 +16,17 @@ part 'place_information_event.dart';
 part 'place_information_state.dart';
 
 @injectable
-class PlaceInformationBloc
-    extends Bloc<PlaceInformationEvent, PlaceInformationState> {
+class PlaceInformationBloc extends Bloc<PlaceInformationEvent, PlaceInformationState> {
   final PlaceInformationUsecase _placeInformationUsecase;
 
-  PlaceInformationBloc(this._placeInformationUsecase)
-      : super(PlaceInformationInitial(countries)) {
+  PlaceInformationBloc(this._placeInformationUsecase) : super(PlaceInformationInitial(countries)) {
     on<GetListProvincesEvent>(_mapGetListProvincesEvent);
     on<GetDistrictsByProvinceEvent>(_mapGetDistrictsByProvinceEvent);
     on<GetWardsByDistrictEvent>(_mapGetWardsByDistrictEvent);
     on<UserClearCountryEvent>(_mapUserClearCountryEvent);
   }
 
-  FutureOr<void> _mapGetListProvincesEvent(
-      GetListProvincesEvent event, Emitter<PlaceInformationState> emit) async {
+  FutureOr<void> _mapGetListProvincesEvent(GetListProvincesEvent event, Emitter<PlaceInformationState> emit) async {
     try {
       final res = await _placeInformationUsecase.provincesOfCountry(event.iso2);
 
@@ -40,8 +37,7 @@ class PlaceInformationBloc
   }
 
   FutureOr<void> _mapGetDistrictsByProvinceEvent(
-      GetDistrictsByProvinceEvent event,
-      Emitter<PlaceInformationState> emit) async {
+      GetDistrictsByProvinceEvent event, Emitter<PlaceInformationState> emit) async {
     try {
       final res = await _placeInformationUsecase.districtsByProvince(
         event.iso2,
@@ -54,22 +50,18 @@ class PlaceInformationBloc
     }
   }
 
-  FutureOr<void> _mapGetWardsByDistrictEvent(GetWardsByDistrictEvent event,
-      Emitter<PlaceInformationState> emit) async {
+  FutureOr<void> _mapGetWardsByDistrictEvent(GetWardsByDistrictEvent event, Emitter<PlaceInformationState> emit) async {
     try {
-      final res = await _placeInformationUsecase.wardsByDistrict(
-          event.iso2, event.stateCode, event.district);
+      final res = await _placeInformationUsecase.wardsByDistrict(event.iso2, event.stateCode, event.district);
 
-      emit(GetWardsSuccess(
-          state.countries!, state.provinces!, state.districts!, res));
+      emit(GetWardsSuccess(state.countries!, state.provinces!, state.districts!, res));
     } catch (e) {
       // emit(GetWardsFailure(e.toString()));
     }
   }
 
-  FutureOr<void> _mapUserClearCountryEvent(
-      UserClearCountryEvent event, Emitter<PlaceInformationState> emit) async {
-    // final res = await _placeInformationUsecase.countries();
-    emit(PlaceInformationInitial(countries));
+  FutureOr<void> _mapUserClearCountryEvent(UserClearCountryEvent event, Emitter<PlaceInformationState> emit) async {
+    final resCountries = await _placeInformationUsecase.countries();
+    emit(PlaceInformationInitial(resCountries));
   }
 }

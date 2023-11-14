@@ -16,7 +16,7 @@ class GetListProvincesEvent extends PlaceInformationEvent {
 @immutable
 class GetDistrictsByProvinceEvent extends PlaceInformationEvent {
   final String iso2;
-  final int stateCode;
+  final dynamic stateCode;
 
   GetDistrictsByProvinceEvent(this.iso2, this.stateCode);
 }
@@ -24,7 +24,7 @@ class GetDistrictsByProvinceEvent extends PlaceInformationEvent {
 @immutable
 class GetWardsByDistrictEvent extends PlaceInformationEvent {
   final String iso2;
-  final int stateCode;
+  final dynamic stateCode;
   final String district;
 
   GetWardsByDistrictEvent(this.iso2, this.stateCode, this.district);

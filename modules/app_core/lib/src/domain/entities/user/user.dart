@@ -60,12 +60,39 @@ class User with _$User {
 }
 
 extension UserExtNull on User? {
-  String get getdisplayName => [this?.displayName, _userDefaultName]
-      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getdisplayName =>
+      [this?.displayName, _userDefaultName].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+
+  String get getEmail => [this?.email, _userDefaultEmail].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getAddress => [this?.address, _userDefaultAddress].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getNickname => [this?.nickname, _userDefaultNickname].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getBirthday {
+    final DateTime? birthday = this?.birthday;
+
+    return birthday != null ? birthday.toString() : _userDefaulBirthday;
+  }
+
   bool get getIsPDone => this?.isPDone ?? false;
+  bool get getIsJA => this?.isJA ?? false;
+  bool get getIsHasNickname => this?.nickname != null && this!.nickname!.isNotEmpty;
+  bool get getIsHasEmail => this?.email != null && this!.email!.isNotEmpty;
+
+  bool isUnderFifteen() {
+    final DateTime? birthday = this?.birthday;
+    if (birthday == null) {
+      return false;
+    }
+
+    final int age = calculateAge(birthday);
+    return age < 15;
+  }
 }
 
-const _userDefaultName = null;
+const _userDefaultName = 'PDone User';
+const _userDefaultEmail = 'pdoneuser@gmail.com';
+const _userDefaultNickname = 'PDone';
+const _userDefaulBirthday = '01/01/2000';
+const _userDefaultAddress = 'default';
 
 extension UserExtension on User {
   Role role(int? hostUserID) {
