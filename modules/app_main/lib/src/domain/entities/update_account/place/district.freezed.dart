@@ -22,7 +22,7 @@ District _$DistrictFromJson(Map<String, dynamic> json) {
 mixin _$District {
   int? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
-  String? get countryId => throw _privateConstructorUsedError;
+  int? get countryId => throw _privateConstructorUsedError;
   String? get countryCode => throw _privateConstructorUsedError;
   String? get countryName => throw _privateConstructorUsedError;
   int? get provinceCode => throw _privateConstructorUsedError;
@@ -42,7 +42,7 @@ abstract class $DistrictCopyWith<$Res> {
   $Res call(
       {int? id,
       String? name,
-      String? countryId,
+      int? countryId,
       String? countryCode,
       String? countryName,
       int? provinceCode,
@@ -82,7 +82,7 @@ class _$DistrictCopyWithImpl<$Res, $Val extends District>
       countryId: freezed == countryId
           ? _value.countryId
           : countryId // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       countryCode: freezed == countryCode
           ? _value.countryCode
           : countryCode // ignore: cast_nullable_to_non_nullable
@@ -114,7 +114,7 @@ abstract class _$$DistrictImplCopyWith<$Res>
   $Res call(
       {int? id,
       String? name,
-      String? countryId,
+      int? countryId,
       String? countryCode,
       String? countryName,
       int? provinceCode,
@@ -152,7 +152,7 @@ class __$$DistrictImplCopyWithImpl<$Res>
       countryId: freezed == countryId
           ? _value.countryId
           : countryId // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       countryCode: freezed == countryCode
           ? _value.countryCode
           : countryCode // ignore: cast_nullable_to_non_nullable
@@ -193,7 +193,7 @@ class _$DistrictImpl implements _District {
   @override
   final String? name;
   @override
-  final String? countryId;
+  final int? countryId;
   @override
   final String? countryCode;
   @override
@@ -249,7 +249,7 @@ abstract class _District implements District {
   const factory _District(
       {final int? id,
       final String? name,
-      final String? countryId,
+      final int? countryId,
       final String? countryCode,
       final String? countryName,
       final int? provinceCode,
@@ -263,7 +263,7 @@ abstract class _District implements District {
   @override
   String? get name;
   @override
-  String? get countryId;
+  int? get countryId;
   @override
   String? get countryCode;
   @override

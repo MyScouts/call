@@ -77,6 +77,9 @@ abstract class UserApi {
   @PATCH(UserApiConstants.updatePDoneProfile)
   Future<UpdatePDoneProfileReponse> updatePDoneProfile(UpdatePDoneProfilePayload updatePDoneProfilePayload);
 
+  @GET(UserApiConstants.updatePDoneProfile)
+  Future<UpdateNonePDoneProfileReponse> getPDoneProfile();
+
   @PATCH(UserApiConstants.updateNonePDoneProfile)
   Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(
       UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload);

@@ -79,7 +79,12 @@ class UserUsecase {
     return _userRepository.updatePDoneProfile(updatePDoneProfilePayload);
   }
 
-  Future<UpdateNonePDoneProfileReponse> updateNonePNoneDoneProfile(UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload) {
+  Future<UpdateNonePDoneProfileReponse> updateNonePNoneDoneProfile(
+      UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload) {
     return _userRepository.updateNonePDoneProfile(updateNonePDoneProfilePayload);
+  }
+
+  Future<UpdateNonePDoneProfileReponse> getPDoneProfile() {
+    return _userRepository.getPDoneProfile();
   }
 }

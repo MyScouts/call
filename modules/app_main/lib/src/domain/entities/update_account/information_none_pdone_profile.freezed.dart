@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'information_profile.dart';
+part of 'information_none_pdone_profile.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,16 +14,17 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-InformationProfile _$InformationProfileFromJson(Map<String, dynamic> json) {
-  return _InformationProfile.fromJson(json);
+InformationNonePdoneProfile _$InformationNonePdoneProfileFromJson(
+    Map<String, dynamic> json) {
+  return _InformationNonePdoneProfile.fromJson(json);
 }
 
 /// @nodoc
-mixin _$InformationProfile {
+mixin _$InformationNonePdoneProfile {
   String get firstName => throw _privateConstructorUsedError;
-  String get middleName => throw _privateConstructorUsedError;
-  String get lastName => throw _privateConstructorUsedError;
-  String get nickName => throw _privateConstructorUsedError;
+  String? get middleName => throw _privateConstructorUsedError;
+  String? get lastName => throw _privateConstructorUsedError;
+  String? get nickName => throw _privateConstructorUsedError;
   int get sex => throw _privateConstructorUsedError;
   String get birthday => throw _privateConstructorUsedError;
   InformationPDoneBirthPlace get birthPlace =>
@@ -39,32 +40,34 @@ mixin _$InformationProfile {
   String get interest => throw _privateConstructorUsedError;
   String get talent => throw _privateConstructorUsedError;
   String get identityNumber => throw _privateConstructorUsedError;
-  String get supplyDate => throw _privateConstructorUsedError;
-  String get supplyAddress => throw _privateConstructorUsedError;
-  int get protector => throw _privateConstructorUsedError;
-  String get protectorPDoneId => throw _privateConstructorUsedError;
-  String get birthCertificateUrl => throw _privateConstructorUsedError;
-  String get birthCertificateSupplyDate => throw _privateConstructorUsedError;
-  Map<String, dynamic> get kycMetadata => throw _privateConstructorUsedError;
-  Map<String, dynamic> get type => throw _privateConstructorUsedError;
+  String? get supplyDate => throw _privateConstructorUsedError;
+  String? get supplyAddress => throw _privateConstructorUsedError;
+  int? get protector => throw _privateConstructorUsedError;
+  String? get protectorPDoneId => throw _privateConstructorUsedError;
+  String? get birthCertificateUrl => throw _privateConstructorUsedError;
+  String? get birthCertificateSupplyDate => throw _privateConstructorUsedError;
+  Map<String, dynamic>? get kycMetadata => throw _privateConstructorUsedError;
+  int? get type => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $InformationProfileCopyWith<InformationProfile> get copyWith =>
-      throw _privateConstructorUsedError;
+  $InformationNonePdoneProfileCopyWith<InformationNonePdoneProfile>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $InformationProfileCopyWith<$Res> {
-  factory $InformationProfileCopyWith(
-          InformationProfile value, $Res Function(InformationProfile) then) =
-      _$InformationProfileCopyWithImpl<$Res, InformationProfile>;
+abstract class $InformationNonePdoneProfileCopyWith<$Res> {
+  factory $InformationNonePdoneProfileCopyWith(
+          InformationNonePdoneProfile value,
+          $Res Function(InformationNonePdoneProfile) then) =
+      _$InformationNonePdoneProfileCopyWithImpl<$Res,
+          InformationNonePdoneProfile>;
   @useResult
   $Res call(
       {String firstName,
-      String middleName,
-      String lastName,
-      String nickName,
+      String? middleName,
+      String? lastName,
+      String? nickName,
       int sex,
       String birthday,
       InformationPDoneBirthPlace birthPlace,
@@ -78,23 +81,24 @@ abstract class $InformationProfileCopyWith<$Res> {
       String interest,
       String talent,
       String identityNumber,
-      String supplyDate,
-      String supplyAddress,
-      int protector,
-      String protectorPDoneId,
-      String birthCertificateUrl,
-      String birthCertificateSupplyDate,
-      Map<String, dynamic> kycMetadata,
-      Map<String, dynamic> type});
+      String? supplyDate,
+      String? supplyAddress,
+      int? protector,
+      String? protectorPDoneId,
+      String? birthCertificateUrl,
+      String? birthCertificateSupplyDate,
+      Map<String, dynamic>? kycMetadata,
+      int? type});
 
   $InformationPDoneBirthPlaceCopyWith<$Res> get birthPlace;
   $InformationDPoneCurrentPlaceCopyWith<$Res> get currentPlace;
 }
 
 /// @nodoc
-class _$InformationProfileCopyWithImpl<$Res, $Val extends InformationProfile>
-    implements $InformationProfileCopyWith<$Res> {
-  _$InformationProfileCopyWithImpl(this._value, this._then);
+class _$InformationNonePdoneProfileCopyWithImpl<$Res,
+        $Val extends InformationNonePdoneProfile>
+    implements $InformationNonePdoneProfileCopyWith<$Res> {
+  _$InformationNonePdoneProfileCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -105,9 +109,9 @@ class _$InformationProfileCopyWithImpl<$Res, $Val extends InformationProfile>
   @override
   $Res call({
     Object? firstName = null,
-    Object? middleName = null,
-    Object? lastName = null,
-    Object? nickName = null,
+    Object? middleName = freezed,
+    Object? lastName = freezed,
+    Object? nickName = freezed,
     Object? sex = null,
     Object? birthday = null,
     Object? birthPlace = null,
@@ -121,32 +125,32 @@ class _$InformationProfileCopyWithImpl<$Res, $Val extends InformationProfile>
     Object? interest = null,
     Object? talent = null,
     Object? identityNumber = null,
-    Object? supplyDate = null,
-    Object? supplyAddress = null,
-    Object? protector = null,
-    Object? protectorPDoneId = null,
-    Object? birthCertificateUrl = null,
-    Object? birthCertificateSupplyDate = null,
-    Object? kycMetadata = null,
-    Object? type = null,
+    Object? supplyDate = freezed,
+    Object? supplyAddress = freezed,
+    Object? protector = freezed,
+    Object? protectorPDoneId = freezed,
+    Object? birthCertificateUrl = freezed,
+    Object? birthCertificateSupplyDate = freezed,
+    Object? kycMetadata = freezed,
+    Object? type = freezed,
   }) {
     return _then(_value.copyWith(
       firstName: null == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String,
-      middleName: null == middleName
+      middleName: freezed == middleName
           ? _value.middleName
           : middleName // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastName: null == lastName
+              as String?,
+      lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
-              as String,
-      nickName: null == nickName
+              as String?,
+      nickName: freezed == nickName
           ? _value.nickName
           : nickName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       sex: null == sex
           ? _value.sex
           : sex // ignore: cast_nullable_to_non_nullable
@@ -199,38 +203,38 @@ class _$InformationProfileCopyWithImpl<$Res, $Val extends InformationProfile>
           ? _value.identityNumber
           : identityNumber // ignore: cast_nullable_to_non_nullable
               as String,
-      supplyDate: null == supplyDate
+      supplyDate: freezed == supplyDate
           ? _value.supplyDate
           : supplyDate // ignore: cast_nullable_to_non_nullable
-              as String,
-      supplyAddress: null == supplyAddress
+              as String?,
+      supplyAddress: freezed == supplyAddress
           ? _value.supplyAddress
           : supplyAddress // ignore: cast_nullable_to_non_nullable
-              as String,
-      protector: null == protector
+              as String?,
+      protector: freezed == protector
           ? _value.protector
           : protector // ignore: cast_nullable_to_non_nullable
-              as int,
-      protectorPDoneId: null == protectorPDoneId
+              as int?,
+      protectorPDoneId: freezed == protectorPDoneId
           ? _value.protectorPDoneId
           : protectorPDoneId // ignore: cast_nullable_to_non_nullable
-              as String,
-      birthCertificateUrl: null == birthCertificateUrl
+              as String?,
+      birthCertificateUrl: freezed == birthCertificateUrl
           ? _value.birthCertificateUrl
           : birthCertificateUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      birthCertificateSupplyDate: null == birthCertificateSupplyDate
+              as String?,
+      birthCertificateSupplyDate: freezed == birthCertificateSupplyDate
           ? _value.birthCertificateSupplyDate
           : birthCertificateSupplyDate // ignore: cast_nullable_to_non_nullable
-              as String,
-      kycMetadata: null == kycMetadata
+              as String?,
+      kycMetadata: freezed == kycMetadata
           ? _value.kycMetadata
           : kycMetadata // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
-      type: null == type
+              as Map<String, dynamic>?,
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
+              as int?,
     ) as $Val);
   }
 
@@ -254,18 +258,19 @@ class _$InformationProfileCopyWithImpl<$Res, $Val extends InformationProfile>
 }
 
 /// @nodoc
-abstract class _$$InformationProfileImplCopyWith<$Res>
-    implements $InformationProfileCopyWith<$Res> {
-  factory _$$InformationProfileImplCopyWith(_$InformationProfileImpl value,
-          $Res Function(_$InformationProfileImpl) then) =
-      __$$InformationProfileImplCopyWithImpl<$Res>;
+abstract class _$$InformationNonePdoneProfileImplCopyWith<$Res>
+    implements $InformationNonePdoneProfileCopyWith<$Res> {
+  factory _$$InformationNonePdoneProfileImplCopyWith(
+          _$InformationNonePdoneProfileImpl value,
+          $Res Function(_$InformationNonePdoneProfileImpl) then) =
+      __$$InformationNonePdoneProfileImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String firstName,
-      String middleName,
-      String lastName,
-      String nickName,
+      String? middleName,
+      String? lastName,
+      String? nickName,
       int sex,
       String birthday,
       InformationPDoneBirthPlace birthPlace,
@@ -279,14 +284,14 @@ abstract class _$$InformationProfileImplCopyWith<$Res>
       String interest,
       String talent,
       String identityNumber,
-      String supplyDate,
-      String supplyAddress,
-      int protector,
-      String protectorPDoneId,
-      String birthCertificateUrl,
-      String birthCertificateSupplyDate,
-      Map<String, dynamic> kycMetadata,
-      Map<String, dynamic> type});
+      String? supplyDate,
+      String? supplyAddress,
+      int? protector,
+      String? protectorPDoneId,
+      String? birthCertificateUrl,
+      String? birthCertificateSupplyDate,
+      Map<String, dynamic>? kycMetadata,
+      int? type});
 
   @override
   $InformationPDoneBirthPlaceCopyWith<$Res> get birthPlace;
@@ -295,20 +300,22 @@ abstract class _$$InformationProfileImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$InformationProfileImplCopyWithImpl<$Res>
-    extends _$InformationProfileCopyWithImpl<$Res, _$InformationProfileImpl>
-    implements _$$InformationProfileImplCopyWith<$Res> {
-  __$$InformationProfileImplCopyWithImpl(_$InformationProfileImpl _value,
-      $Res Function(_$InformationProfileImpl) _then)
+class __$$InformationNonePdoneProfileImplCopyWithImpl<$Res>
+    extends _$InformationNonePdoneProfileCopyWithImpl<$Res,
+        _$InformationNonePdoneProfileImpl>
+    implements _$$InformationNonePdoneProfileImplCopyWith<$Res> {
+  __$$InformationNonePdoneProfileImplCopyWithImpl(
+      _$InformationNonePdoneProfileImpl _value,
+      $Res Function(_$InformationNonePdoneProfileImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? firstName = null,
-    Object? middleName = null,
-    Object? lastName = null,
-    Object? nickName = null,
+    Object? middleName = freezed,
+    Object? lastName = freezed,
+    Object? nickName = freezed,
     Object? sex = null,
     Object? birthday = null,
     Object? birthPlace = null,
@@ -322,32 +329,32 @@ class __$$InformationProfileImplCopyWithImpl<$Res>
     Object? interest = null,
     Object? talent = null,
     Object? identityNumber = null,
-    Object? supplyDate = null,
-    Object? supplyAddress = null,
-    Object? protector = null,
-    Object? protectorPDoneId = null,
-    Object? birthCertificateUrl = null,
-    Object? birthCertificateSupplyDate = null,
-    Object? kycMetadata = null,
-    Object? type = null,
+    Object? supplyDate = freezed,
+    Object? supplyAddress = freezed,
+    Object? protector = freezed,
+    Object? protectorPDoneId = freezed,
+    Object? birthCertificateUrl = freezed,
+    Object? birthCertificateSupplyDate = freezed,
+    Object? kycMetadata = freezed,
+    Object? type = freezed,
   }) {
-    return _then(_$InformationProfileImpl(
+    return _then(_$InformationNonePdoneProfileImpl(
       firstName: null == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String,
-      middleName: null == middleName
+      middleName: freezed == middleName
           ? _value.middleName
           : middleName // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastName: null == lastName
+              as String?,
+      lastName: freezed == lastName
           ? _value.lastName
           : lastName // ignore: cast_nullable_to_non_nullable
-              as String,
-      nickName: null == nickName
+              as String?,
+      nickName: freezed == nickName
           ? _value.nickName
           : nickName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       sex: null == sex
           ? _value.sex
           : sex // ignore: cast_nullable_to_non_nullable
@@ -400,50 +407,51 @@ class __$$InformationProfileImplCopyWithImpl<$Res>
           ? _value.identityNumber
           : identityNumber // ignore: cast_nullable_to_non_nullable
               as String,
-      supplyDate: null == supplyDate
+      supplyDate: freezed == supplyDate
           ? _value.supplyDate
           : supplyDate // ignore: cast_nullable_to_non_nullable
-              as String,
-      supplyAddress: null == supplyAddress
+              as String?,
+      supplyAddress: freezed == supplyAddress
           ? _value.supplyAddress
           : supplyAddress // ignore: cast_nullable_to_non_nullable
-              as String,
-      protector: null == protector
+              as String?,
+      protector: freezed == protector
           ? _value.protector
           : protector // ignore: cast_nullable_to_non_nullable
-              as int,
-      protectorPDoneId: null == protectorPDoneId
+              as int?,
+      protectorPDoneId: freezed == protectorPDoneId
           ? _value.protectorPDoneId
           : protectorPDoneId // ignore: cast_nullable_to_non_nullable
-              as String,
-      birthCertificateUrl: null == birthCertificateUrl
+              as String?,
+      birthCertificateUrl: freezed == birthCertificateUrl
           ? _value.birthCertificateUrl
           : birthCertificateUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      birthCertificateSupplyDate: null == birthCertificateSupplyDate
+              as String?,
+      birthCertificateSupplyDate: freezed == birthCertificateSupplyDate
           ? _value.birthCertificateSupplyDate
           : birthCertificateSupplyDate // ignore: cast_nullable_to_non_nullable
-              as String,
-      kycMetadata: null == kycMetadata
+              as String?,
+      kycMetadata: freezed == kycMetadata
           ? _value._kycMetadata
           : kycMetadata // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
-      type: null == type
-          ? _value._type
+              as Map<String, dynamic>?,
+      type: freezed == type
+          ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>,
+              as int?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$InformationProfileImpl implements _InformationProfile {
-  const _$InformationProfileImpl(
+class _$InformationNonePdoneProfileImpl
+    implements _InformationNonePdoneProfile {
+  const _$InformationNonePdoneProfileImpl(
       {required this.firstName,
-      required this.middleName,
-      required this.lastName,
-      required this.nickName,
+      this.middleName,
+      this.lastName,
+      this.nickName,
       required this.sex,
       required this.birthday,
       required this.birthPlace,
@@ -457,28 +465,28 @@ class _$InformationProfileImpl implements _InformationProfile {
       required this.interest,
       required this.talent,
       required this.identityNumber,
-      required this.supplyDate,
-      required this.supplyAddress,
-      required this.protector,
-      required this.protectorPDoneId,
-      required this.birthCertificateUrl,
-      required this.birthCertificateSupplyDate,
-      required final Map<String, dynamic> kycMetadata,
-      required final Map<String, dynamic> type})
-      : _kycMetadata = kycMetadata,
-        _type = type;
+      this.supplyDate,
+      this.supplyAddress,
+      this.protector,
+      this.protectorPDoneId,
+      this.birthCertificateUrl,
+      this.birthCertificateSupplyDate,
+      final Map<String, dynamic>? kycMetadata,
+      this.type})
+      : _kycMetadata = kycMetadata;
 
-  factory _$InformationProfileImpl.fromJson(Map<String, dynamic> json) =>
-      _$$InformationProfileImplFromJson(json);
+  factory _$InformationNonePdoneProfileImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$InformationNonePdoneProfileImplFromJson(json);
 
   @override
   final String firstName;
   @override
-  final String middleName;
+  final String? middleName;
   @override
-  final String lastName;
+  final String? lastName;
   @override
-  final String nickName;
+  final String? nickName;
   @override
   final int sex;
   @override
@@ -506,43 +514,40 @@ class _$InformationProfileImpl implements _InformationProfile {
   @override
   final String identityNumber;
   @override
-  final String supplyDate;
+  final String? supplyDate;
   @override
-  final String supplyAddress;
+  final String? supplyAddress;
   @override
-  final int protector;
+  final int? protector;
   @override
-  final String protectorPDoneId;
+  final String? protectorPDoneId;
   @override
-  final String birthCertificateUrl;
+  final String? birthCertificateUrl;
   @override
-  final String birthCertificateSupplyDate;
-  final Map<String, dynamic> _kycMetadata;
+  final String? birthCertificateSupplyDate;
+  final Map<String, dynamic>? _kycMetadata;
   @override
-  Map<String, dynamic> get kycMetadata {
+  Map<String, dynamic>? get kycMetadata {
+    final value = _kycMetadata;
+    if (value == null) return null;
     if (_kycMetadata is EqualUnmodifiableMapView) return _kycMetadata;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_kycMetadata);
+    return EqualUnmodifiableMapView(value);
   }
 
-  final Map<String, dynamic> _type;
   @override
-  Map<String, dynamic> get type {
-    if (_type is EqualUnmodifiableMapView) return _type;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_type);
-  }
+  final int? type;
 
   @override
   String toString() {
-    return 'InformationProfile(firstName: $firstName, middleName: $middleName, lastName: $lastName, nickName: $nickName, sex: $sex, birthday: $birthday, birthPlace: $birthPlace, currentPlace: $currentPlace, height: $height, weight: $weight, maritalStatus: $maritalStatus, bloodGroup: $bloodGroup, academicLevel: $academicLevel, job: $job, interest: $interest, talent: $talent, identityNumber: $identityNumber, supplyDate: $supplyDate, supplyAddress: $supplyAddress, protector: $protector, protectorPDoneId: $protectorPDoneId, birthCertificateUrl: $birthCertificateUrl, birthCertificateSupplyDate: $birthCertificateSupplyDate, kycMetadata: $kycMetadata, type: $type)';
+    return 'InformationNonePdoneProfile(firstName: $firstName, middleName: $middleName, lastName: $lastName, nickName: $nickName, sex: $sex, birthday: $birthday, birthPlace: $birthPlace, currentPlace: $currentPlace, height: $height, weight: $weight, maritalStatus: $maritalStatus, bloodGroup: $bloodGroup, academicLevel: $academicLevel, job: $job, interest: $interest, talent: $talent, identityNumber: $identityNumber, supplyDate: $supplyDate, supplyAddress: $supplyAddress, protector: $protector, protectorPDoneId: $protectorPDoneId, birthCertificateUrl: $birthCertificateUrl, birthCertificateSupplyDate: $birthCertificateSupplyDate, kycMetadata: $kycMetadata, type: $type)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$InformationProfileImpl &&
+            other is _$InformationNonePdoneProfileImpl &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.middleName, middleName) ||
@@ -588,7 +593,7 @@ class _$InformationProfileImpl implements _InformationProfile {
                     birthCertificateSupplyDate) &&
             const DeepCollectionEquality()
                 .equals(other._kycMetadata, _kycMetadata) &&
-            const DeepCollectionEquality().equals(other._type, _type));
+            (identical(other.type, type) || other.type == type));
   }
 
   @JsonKey(ignore: true)
@@ -619,30 +624,31 @@ class _$InformationProfileImpl implements _InformationProfile {
         birthCertificateUrl,
         birthCertificateSupplyDate,
         const DeepCollectionEquality().hash(_kycMetadata),
-        const DeepCollectionEquality().hash(_type)
+        type
       ]);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$InformationProfileImplCopyWith<_$InformationProfileImpl> get copyWith =>
-      __$$InformationProfileImplCopyWithImpl<_$InformationProfileImpl>(
-          this, _$identity);
+  _$$InformationNonePdoneProfileImplCopyWith<_$InformationNonePdoneProfileImpl>
+      get copyWith => __$$InformationNonePdoneProfileImplCopyWithImpl<
+          _$InformationNonePdoneProfileImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$InformationProfileImplToJson(
+    return _$$InformationNonePdoneProfileImplToJson(
       this,
     );
   }
 }
 
-abstract class _InformationProfile implements InformationProfile {
-  const factory _InformationProfile(
+abstract class _InformationNonePdoneProfile
+    implements InformationNonePdoneProfile {
+  const factory _InformationNonePdoneProfile(
       {required final String firstName,
-      required final String middleName,
-      required final String lastName,
-      required final String nickName,
+      final String? middleName,
+      final String? lastName,
+      final String? nickName,
       required final int sex,
       required final String birthday,
       required final InformationPDoneBirthPlace birthPlace,
@@ -656,26 +662,26 @@ abstract class _InformationProfile implements InformationProfile {
       required final String interest,
       required final String talent,
       required final String identityNumber,
-      required final String supplyDate,
-      required final String supplyAddress,
-      required final int protector,
-      required final String protectorPDoneId,
-      required final String birthCertificateUrl,
-      required final String birthCertificateSupplyDate,
-      required final Map<String, dynamic> kycMetadata,
-      required final Map<String, dynamic> type}) = _$InformationProfileImpl;
+      final String? supplyDate,
+      final String? supplyAddress,
+      final int? protector,
+      final String? protectorPDoneId,
+      final String? birthCertificateUrl,
+      final String? birthCertificateSupplyDate,
+      final Map<String, dynamic>? kycMetadata,
+      final int? type}) = _$InformationNonePdoneProfileImpl;
 
-  factory _InformationProfile.fromJson(Map<String, dynamic> json) =
-      _$InformationProfileImpl.fromJson;
+  factory _InformationNonePdoneProfile.fromJson(Map<String, dynamic> json) =
+      _$InformationNonePdoneProfileImpl.fromJson;
 
   @override
   String get firstName;
   @override
-  String get middleName;
+  String? get middleName;
   @override
-  String get lastName;
+  String? get lastName;
   @override
-  String get nickName;
+  String? get nickName;
   @override
   int get sex;
   @override
@@ -703,23 +709,23 @@ abstract class _InformationProfile implements InformationProfile {
   @override
   String get identityNumber;
   @override
-  String get supplyDate;
+  String? get supplyDate;
   @override
-  String get supplyAddress;
+  String? get supplyAddress;
   @override
-  int get protector;
+  int? get protector;
   @override
-  String get protectorPDoneId;
+  String? get protectorPDoneId;
   @override
-  String get birthCertificateUrl;
+  String? get birthCertificateUrl;
   @override
-  String get birthCertificateSupplyDate;
+  String? get birthCertificateSupplyDate;
   @override
-  Map<String, dynamic> get kycMetadata;
+  Map<String, dynamic>? get kycMetadata;
   @override
-  Map<String, dynamic> get type;
+  int? get type;
   @override
   @JsonKey(ignore: true)
-  _$$InformationProfileImplCopyWith<_$InformationProfileImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$InformationNonePdoneProfileImplCopyWith<_$InformationNonePdoneProfileImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

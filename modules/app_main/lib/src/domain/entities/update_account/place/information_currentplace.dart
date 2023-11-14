@@ -6,12 +6,12 @@ part 'information_currentplace.g.dart';
 @freezed
 class InformationDPoneCurrentPlace with _$InformationDPoneCurrentPlace {
   const factory InformationDPoneCurrentPlace({
-      String? countryName,
-    String? provinceName,
-    String? districtName,
-    String? wardName,
-    String? street,
-    String? address,
+    required String countryName,
+    required String provinceName,
+    required String districtName,
+    required String wardName,
+    required String street,
+    required String address,
     String? countryCode,
     String? provinceCode,
     String? districtCode,

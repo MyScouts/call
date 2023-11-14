@@ -21,12 +21,12 @@ InformationDPoneCurrentPlace _$InformationDPoneCurrentPlaceFromJson(
 
 /// @nodoc
 mixin _$InformationDPoneCurrentPlace {
-  String? get countryName => throw _privateConstructorUsedError;
-  String? get provinceName => throw _privateConstructorUsedError;
-  String? get districtName => throw _privateConstructorUsedError;
-  String? get wardName => throw _privateConstructorUsedError;
-  String? get street => throw _privateConstructorUsedError;
-  String? get address => throw _privateConstructorUsedError;
+  String get countryName => throw _privateConstructorUsedError;
+  String get provinceName => throw _privateConstructorUsedError;
+  String get districtName => throw _privateConstructorUsedError;
+  String get wardName => throw _privateConstructorUsedError;
+  String get street => throw _privateConstructorUsedError;
+  String get address => throw _privateConstructorUsedError;
   String? get countryCode => throw _privateConstructorUsedError;
   String? get provinceCode => throw _privateConstructorUsedError;
   String? get districtCode => throw _privateConstructorUsedError;
@@ -47,12 +47,12 @@ abstract class $InformationDPoneCurrentPlaceCopyWith<$Res> {
           InformationDPoneCurrentPlace>;
   @useResult
   $Res call(
-      {String? countryName,
-      String? provinceName,
-      String? districtName,
-      String? wardName,
-      String? street,
-      String? address,
+      {String countryName,
+      String provinceName,
+      String districtName,
+      String wardName,
+      String street,
+      String address,
       String? countryCode,
       String? provinceCode,
       String? districtCode,
@@ -73,42 +73,42 @@ class _$InformationDPoneCurrentPlaceCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? countryName = freezed,
-    Object? provinceName = freezed,
-    Object? districtName = freezed,
-    Object? wardName = freezed,
-    Object? street = freezed,
-    Object? address = freezed,
+    Object? countryName = null,
+    Object? provinceName = null,
+    Object? districtName = null,
+    Object? wardName = null,
+    Object? street = null,
+    Object? address = null,
     Object? countryCode = freezed,
     Object? provinceCode = freezed,
     Object? districtCode = freezed,
     Object? wardCode = freezed,
   }) {
     return _then(_value.copyWith(
-      countryName: freezed == countryName
+      countryName: null == countryName
           ? _value.countryName
           : countryName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      provinceName: freezed == provinceName
+              as String,
+      provinceName: null == provinceName
           ? _value.provinceName
           : provinceName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      districtName: freezed == districtName
+              as String,
+      districtName: null == districtName
           ? _value.districtName
           : districtName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      wardName: freezed == wardName
+              as String,
+      wardName: null == wardName
           ? _value.wardName
           : wardName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      street: freezed == street
+              as String,
+      street: null == street
           ? _value.street
           : street // ignore: cast_nullable_to_non_nullable
-              as String?,
-      address: freezed == address
+              as String,
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       countryCode: freezed == countryCode
           ? _value.countryCode
           : countryCode // ignore: cast_nullable_to_non_nullable
@@ -139,12 +139,12 @@ abstract class _$$InformationDPoneCurrentPlaceImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? countryName,
-      String? provinceName,
-      String? districtName,
-      String? wardName,
-      String? street,
-      String? address,
+      {String countryName,
+      String provinceName,
+      String districtName,
+      String wardName,
+      String street,
+      String address,
       String? countryCode,
       String? provinceCode,
       String? districtCode,
@@ -164,42 +164,42 @@ class __$$InformationDPoneCurrentPlaceImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? countryName = freezed,
-    Object? provinceName = freezed,
-    Object? districtName = freezed,
-    Object? wardName = freezed,
-    Object? street = freezed,
-    Object? address = freezed,
+    Object? countryName = null,
+    Object? provinceName = null,
+    Object? districtName = null,
+    Object? wardName = null,
+    Object? street = null,
+    Object? address = null,
     Object? countryCode = freezed,
     Object? provinceCode = freezed,
     Object? districtCode = freezed,
     Object? wardCode = freezed,
   }) {
     return _then(_$InformationDPoneCurrentPlaceImpl(
-      countryName: freezed == countryName
+      countryName: null == countryName
           ? _value.countryName
           : countryName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      provinceName: freezed == provinceName
+              as String,
+      provinceName: null == provinceName
           ? _value.provinceName
           : provinceName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      districtName: freezed == districtName
+              as String,
+      districtName: null == districtName
           ? _value.districtName
           : districtName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      wardName: freezed == wardName
+              as String,
+      wardName: null == wardName
           ? _value.wardName
           : wardName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      street: freezed == street
+              as String,
+      street: null == street
           ? _value.street
           : street // ignore: cast_nullable_to_non_nullable
-              as String?,
-      address: freezed == address
+              as String,
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       countryCode: freezed == countryCode
           ? _value.countryCode
           : countryCode // ignore: cast_nullable_to_non_nullable
@@ -225,12 +225,12 @@ class __$$InformationDPoneCurrentPlaceImplCopyWithImpl<$Res>
 class _$InformationDPoneCurrentPlaceImpl
     implements _InformationDPoneCurrentPlace {
   const _$InformationDPoneCurrentPlaceImpl(
-      {this.countryName,
-      this.provinceName,
-      this.districtName,
-      this.wardName,
-      this.street,
-      this.address,
+      {required this.countryName,
+      required this.provinceName,
+      required this.districtName,
+      required this.wardName,
+      required this.street,
+      required this.address,
       this.countryCode,
       this.provinceCode,
       this.districtCode,
@@ -241,17 +241,17 @@ class _$InformationDPoneCurrentPlaceImpl
       _$$InformationDPoneCurrentPlaceImplFromJson(json);
 
   @override
-  final String? countryName;
+  final String countryName;
   @override
-  final String? provinceName;
+  final String provinceName;
   @override
-  final String? districtName;
+  final String districtName;
   @override
-  final String? wardName;
+  final String wardName;
   @override
-  final String? street;
+  final String street;
   @override
-  final String? address;
+  final String address;
   @override
   final String? countryCode;
   @override
@@ -325,12 +325,12 @@ class _$InformationDPoneCurrentPlaceImpl
 abstract class _InformationDPoneCurrentPlace
     implements InformationDPoneCurrentPlace {
   const factory _InformationDPoneCurrentPlace(
-      {final String? countryName,
-      final String? provinceName,
-      final String? districtName,
-      final String? wardName,
-      final String? street,
-      final String? address,
+      {required final String countryName,
+      required final String provinceName,
+      required final String districtName,
+      required final String wardName,
+      required final String street,
+      required final String address,
       final String? countryCode,
       final String? provinceCode,
       final String? districtCode,
@@ -340,17 +340,17 @@ abstract class _InformationDPoneCurrentPlace
       _$InformationDPoneCurrentPlaceImpl.fromJson;
 
   @override
-  String? get countryName;
+  String get countryName;
   @override
-  String? get provinceName;
+  String get provinceName;
   @override
-  String? get districtName;
+  String get districtName;
   @override
-  String? get wardName;
+  String get wardName;
   @override
-  String? get street;
+  String get street;
   @override
-  String? get address;
+  String get address;
   @override
   String? get countryCode;
   @override

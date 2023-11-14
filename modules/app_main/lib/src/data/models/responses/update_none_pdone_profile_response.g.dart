@@ -9,7 +9,7 @@ part of 'update_none_pdone_profile_response.dart';
 _$UpdateNonePDoneProfileReponseImpl
     _$$UpdateNonePDoneProfileReponseImplFromJson(Map<String, dynamic> json) =>
         _$UpdateNonePDoneProfileReponseImpl(
-          profile: InformationProfile.fromJson(
+          profile: InformationNonePdoneProfile.fromJson(
               json['profile'] as Map<String, dynamic>),
         );
 

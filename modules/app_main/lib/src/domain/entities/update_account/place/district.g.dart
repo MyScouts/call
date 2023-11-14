@@ -10,7 +10,7 @@ _$DistrictImpl _$$DistrictImplFromJson(Map<String, dynamic> json) =>
     _$DistrictImpl(
       id: json['id'] as int?,
       name: json['name'] as String?,
-      countryId: json['countryId'] as String?,
+      countryId: json['countryId'] as int?,
       countryCode: json['countryCode'] as String?,
       countryName: json['countryName'] as String?,
       provinceCode: json['provinceCode'] as int?,

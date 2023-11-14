@@ -21,14 +21,14 @@ class PlaceInformationRepositoryImpl extends PlaceInformationRepository {
   }
 
   @override
-  Future<List<District>> districtsByProvince(String iso2, int stateCode) async {
+  Future<List<District>> districtsByProvince(String iso2, dynamic stateCode) async {
     final res = await _placeInformationApi.districtsByProvinces(iso2: iso2, stateCode: stateCode);
 
     return res.data;
   }
 
   @override
-  Future<List<Ward>> wardsByDistrict(String iso2, int stateCode, String districtId) async {
+  Future<List<Ward>> wardsByDistrict(String iso2, dynamic stateCode, String districtId) async {
     final res = await _placeInformationApi.ward(iso2: iso2, stateCode: stateCode, districtId: districtId);
 
     return res.data;

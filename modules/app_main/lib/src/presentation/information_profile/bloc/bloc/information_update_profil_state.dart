@@ -8,15 +8,15 @@ final class InformationUpdateProfilInitial extends InformationUpdateProfilState 
 final class InformationUpdateProfilLoading extends InformationUpdateProfilState {}
 
 final class InformationNoneUpdateProfilSuccess extends InformationUpdateProfilState {
-  final UpdateNonePDoneProfileReponse user;
-
-  InformationNoneUpdateProfilSuccess({required this.user});
 }
 
 final class InformationUpdateProfilSuccess extends InformationUpdateProfilState {
-  final UpdatePDoneProfileReponse user;
+}
 
-  InformationUpdateProfilSuccess({required this.user});
+final class GetInformationPDoneProfileSuccess extends InformationUpdateProfilState {
+  final UpdateNonePDoneProfileReponse user;
+
+  GetInformationPDoneProfileSuccess({required this.user});
 }
 
 final class InformationUpdateProfilFailed extends InformationUpdateProfilState {

@@ -21,7 +21,7 @@ UpdateNonePDoneProfileReponse _$UpdateNonePDoneProfileReponseFromJson(
 
 /// @nodoc
 mixin _$UpdateNonePDoneProfileReponse {
-  InformationProfile get profile => throw _privateConstructorUsedError;
+  InformationNonePdoneProfile get profile => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,9 +37,9 @@ abstract class $UpdateNonePDoneProfileReponseCopyWith<$Res> {
       _$UpdateNonePDoneProfileReponseCopyWithImpl<$Res,
           UpdateNonePDoneProfileReponse>;
   @useResult
-  $Res call({InformationProfile profile});
+  $Res call({InformationNonePdoneProfile profile});
 
-  $InformationProfileCopyWith<$Res> get profile;
+  $InformationNonePdoneProfileCopyWith<$Res> get profile;
 }
 
 /// @nodoc
@@ -62,14 +62,14 @@ class _$UpdateNonePDoneProfileReponseCopyWithImpl<$Res,
       profile: null == profile
           ? _value.profile
           : profile // ignore: cast_nullable_to_non_nullable
-              as InformationProfile,
+              as InformationNonePdoneProfile,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $InformationProfileCopyWith<$Res> get profile {
-    return $InformationProfileCopyWith<$Res>(_value.profile, (value) {
+  $InformationNonePdoneProfileCopyWith<$Res> get profile {
+    return $InformationNonePdoneProfileCopyWith<$Res>(_value.profile, (value) {
       return _then(_value.copyWith(profile: value) as $Val);
     });
   }
@@ -84,10 +84,10 @@ abstract class _$$UpdateNonePDoneProfileReponseImplCopyWith<$Res>
       __$$UpdateNonePDoneProfileReponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({InformationProfile profile});
+  $Res call({InformationNonePdoneProfile profile});
 
   @override
-  $InformationProfileCopyWith<$Res> get profile;
+  $InformationNonePdoneProfileCopyWith<$Res> get profile;
 }
 
 /// @nodoc
@@ -109,7 +109,7 @@ class __$$UpdateNonePDoneProfileReponseImplCopyWithImpl<$Res>
       profile: null == profile
           ? _value.profile
           : profile // ignore: cast_nullable_to_non_nullable
-              as InformationProfile,
+              as InformationNonePdoneProfile,
     ));
   }
 }
@@ -125,7 +125,7 @@ class _$UpdateNonePDoneProfileReponseImpl
       _$$UpdateNonePDoneProfileReponseImplFromJson(json);
 
   @override
-  final InformationProfile profile;
+  final InformationNonePdoneProfile profile;
 
   @override
   String toString() {
@@ -163,14 +163,14 @@ class _$UpdateNonePDoneProfileReponseImpl
 abstract class _UpdateNonePDoneProfileReponse
     implements UpdateNonePDoneProfileReponse {
   const factory _UpdateNonePDoneProfileReponse(
-          {required final InformationProfile profile}) =
+          {required final InformationNonePdoneProfile profile}) =
       _$UpdateNonePDoneProfileReponseImpl;
 
   factory _UpdateNonePDoneProfileReponse.fromJson(Map<String, dynamic> json) =
       _$UpdateNonePDoneProfileReponseImpl.fromJson;
 
   @override
-  InformationProfile get profile;
+  InformationNonePdoneProfile get profile;
   @override
   @JsonKey(ignore: true)
   _$$UpdateNonePDoneProfileReponseImplCopyWith<

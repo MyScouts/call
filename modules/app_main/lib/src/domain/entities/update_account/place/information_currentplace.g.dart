@@ -9,12 +9,12 @@ part of 'information_currentplace.dart';
 _$InformationDPoneCurrentPlaceImpl _$$InformationDPoneCurrentPlaceImplFromJson(
         Map<String, dynamic> json) =>
     _$InformationDPoneCurrentPlaceImpl(
-      countryName: json['countryName'] as String?,
-      provinceName: json['provinceName'] as String?,
-      districtName: json['districtName'] as String?,
-      wardName: json['wardName'] as String?,
-      street: json['street'] as String?,
-      address: json['address'] as String?,
+      countryName: json['countryName'] as String,
+      provinceName: json['provinceName'] as String,
+      districtName: json['districtName'] as String,
+      wardName: json['wardName'] as String,
+      street: json['street'] as String,
+      address: json['address'] as String,
       countryCode: json['countryCode'] as String?,
       provinceCode: json['provinceCode'] as String?,
       districtCode: json['districtCode'] as String?,

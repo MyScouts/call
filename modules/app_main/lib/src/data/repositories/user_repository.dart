@@ -33,4 +33,5 @@ abstract class UserRepository {
   Future<OnboardingResponse> onboarding();
   Future<UpdatePDoneProfileReponse> updatePDoneProfile(UpdatePDoneProfilePayload updatePDoneProfilePayload);
   Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload);
+  Future<UpdateNonePDoneProfileReponse> getPDoneProfile();
 }

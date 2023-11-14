@@ -3,7 +3,6 @@ part of 'information_update_profil_bloc.dart';
 @immutable
 abstract class InformationEvent {}
 
-@immutable
 class InformationUpdateProfilEvent extends InformationEvent {
   final UpdatePDoneProfilePayload? updatePDoneProfilePayload;
 
@@ -15,3 +14,5 @@ class InformationNoneUpdateProfilEvent extends InformationEvent {
 
   InformationNoneUpdateProfilEvent(this.updateNonePDoneProfilePayload);
 }
+
+class GetInformationPDoneProfileEvent extends InformationEvent {}

@@ -11,9 +11,9 @@ class District with _$District {
   const factory District({
     int? id,
     String? name,
-    String? countryId,
+    int? countryId,
     String? countryCode,
-    String? countryName,  
+    String? countryName,
     int? provinceCode,
     String? code,
   }) = _District;

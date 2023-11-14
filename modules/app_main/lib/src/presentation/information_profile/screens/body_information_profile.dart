@@ -1,10 +1,27 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/domain/entities/update_account/information_none_pdone_profile.dart';
+import 'package:app_main/src/presentation/information_profile/bloc/bloc/information_update_profil_bloc.dart';
 import 'package:app_main/src/presentation/information_profile/screens/update_information_profile_sreen.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/update_information_profile_mixin.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
+
+extension GenderExtension on int {
+  String get genderToString {
+    switch (this) {
+      case 0:
+        return "Nữ";
+      case 1:
+        return "Nam";
+      default:
+        return "Khác";
+    }
+  }
+}
+
 
 class BodyInformationProfile extends StatefulWidget {
   const BodyInformationProfile({super.key});
@@ -15,13 +32,23 @@ class BodyInformationProfile extends StatefulWidget {
 
 class _BodyInformationProfileState extends State<BodyInformationProfile> with UpdateInformationProfileMixin {
   late final userCubit = context.read<UserCubit>();
+  late final updatePDoneProfile = context.read<InformationUpdateProfilBloc>();
 
   late User _authInfo;
+  ValueNotifier<String> birthDayChanged = ValueNotifier('');
+  ValueNotifier<String> supplyDateChanged = ValueNotifier('');
+  ValueNotifier<String> supplyAddressChanged = ValueNotifier('');
+  ValueNotifier<String> identifierCardChanged = ValueNotifier('');
+  ValueNotifier<String> addressChanged = ValueNotifier('');
+  ValueNotifier<String> fullNameChanged = ValueNotifier('');
+  ValueNotifier<String> nickNameChanged = ValueNotifier('');
+  ValueNotifier<int> genderChanged = ValueNotifier(0);
 
   @override
   void initState() {
     super.initState();
     _authInfo = userCubit.currentUser!;
+    updatePDoneProfile.add(GetInformationPDoneProfileEvent());
   }
 
   @override
@@ -35,7 +62,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
           ValueListenableBuilder(
             valueListenable: isUpdateChanged,
             builder: (_, isUpdate, __) {
-              if (isUpdate) {
+              if (!isUpdate) {
                 return Container();
               }
               return Container(height: 20, color: AppColors.bgColor);
@@ -44,7 +71,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
           ValueListenableBuilder(
             valueListenable: isUpdateChanged,
             builder: (_, isUpdate, __) {
-              if (isUpdate) {
+              if (!isUpdate) {
                 return _buildInformation();
               }
               return _buildEmpty();
@@ -55,46 +82,60 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
     );
   }
 
-  Container _buildInformation() {
-    return Container(
-      padding: const EdgeInsets.only(right: 15, left: 15, bottom: 20),
-      decoration: const BoxDecoration(
-        color: AppColors.bgColor,
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                "Thông tin cá nhân",
-                style: TextStyle(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                ),
-              ),
-              TextButton(
-                onPressed: () => Navigator.of(context).push(_createRoute(isEdit: true)),
-                child: const Text(
-                  "Chỉnh sửa",
+  Widget _buildInformation() {
+    return BlocListener<InformationUpdateProfilBloc, InformationUpdateProfilState>(
+      listener: (context, state) {
+        if (state is GetInformationPDoneProfileSuccess) {
+          fullNameChanged.value = state.user.profile.firstName;
+          identifierCardChanged.value = state.user.profile.identityNumber;
+          birthDayChanged.value = state.user.profile.birthday;
+          nickNameChanged.value = state.user.profile.nickName!;
+          addressChanged.value = state.user.profile.currentPlace.address;
+          genderChanged.value = state.user.profile.sex;
+          supplyDateChanged.value = state.user.profile.supplyDate!;
+          supplyAddressChanged.value = state.user.profile.supplyAddress!;
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.only(right: 15, left: 15, bottom: 20),
+        decoration: const BoxDecoration(
+          color: AppColors.bgColor,
+        ),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Thông tin cá nhân",
                   style: TextStyle(
-                    color: AppColors.blueEdit,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 15,
+                    color: AppColors.black,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
                   ),
                 ),
-              ),
-            ],
-          ),
-          _buildPersonalInformation(),
-          const SizedBox(height: 20),
-          _buildAddressInformation(),
-          const SizedBox(height: 20),
-          _buildBankInformation(),
-          const SizedBox(height: 20),
-          _buildMoreInformation(),
-        ],
+                TextButton(
+                  onPressed: () => Navigator.of(context).push(_createRoute(isEdit: true)),
+                  child: const Text(
+                    "Chỉnh sửa",
+                    style: TextStyle(
+                      color: AppColors.blueEdit,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            _buildPersonalInformation(),
+            const SizedBox(height: 20),
+            _buildAddressInformation(),
+            const SizedBox(height: 20),
+            _buildBankInformation(),
+            const SizedBox(height: 20),
+            _buildMoreInformation(),
+          ],
+        ),
       ),
     );
   }
@@ -122,13 +163,28 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                   fontSize: 15,
                 ),
               ),
-              Text(
-                _authInfo.getdisplayName,
-                style: const TextStyle(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 13,
-                ),
+              ValueListenableBuilder(
+                builder: (_, value, child) {
+                  if (value.isNotEmpty) {
+                    return Text(
+                      value,
+                      style: const TextStyle(
+                        color: AppColors.black,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 13,
+                      ),
+                    );
+                  }
+                  return const Text(
+                    "N/A",
+                    style: TextStyle(
+                      color: AppColors.black,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 13,
+                    ),
+                  );
+                },
+                valueListenable: fullNameChanged,
               ),
             ],
           ),
@@ -144,13 +200,28 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                   fontSize: 15,
                 ),
               ),
-              Text(
-                _authInfo.getdisplayName,
-                style: const TextStyle(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 13,
-                ),
+              ValueListenableBuilder(
+                builder: (_, value, child) {
+                  if (value.isNotEmpty) {
+                    return Text(
+                      value,
+                      style: const TextStyle(
+                        color: AppColors.black,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 13,
+                      ),
+                    );
+                  }
+                  return const Text(
+                    "N/A",
+                    style: TextStyle(
+                      color: AppColors.black,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 13,
+                    ),
+                  );
+                },
+                valueListenable: nickNameChanged,
               ),
             ],
           ),
@@ -166,13 +237,18 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                   fontSize: 15,
                 ),
               ),
-              Text(
-                _authInfo.getdisplayName,
-                style: const TextStyle(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 13,
-                ),
+              ValueListenableBuilder(
+                builder: (_, value, child) {
+                  return Text(
+                    value.genderToString,
+                    style: const TextStyle(
+                      color: AppColors.black,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 13,
+                    ),
+                  );
+                },
+                valueListenable: genderChanged,
               ),
             ],
           ),
@@ -188,13 +264,28 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                   fontSize: 15,
                 ),
               ),
-              Text(
-                _authInfo.getBirthday,
-                style: const TextStyle(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 13,
-                ),
+              ValueListenableBuilder(
+                builder: (_, value, child) {
+                  if (value.isNotEmpty) {
+                    return Text(
+                      value,
+                      style: const TextStyle(
+                        color: AppColors.black,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 13,
+                      ),
+                    );
+                  }
+                  return const Text(
+                    "N/A",
+                    style: TextStyle(
+                      color: AppColors.black,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 13,
+                    ),
+                  );
+                },
+                valueListenable: birthDayChanged,
               ),
             ],
           ),
@@ -248,13 +339,28 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                   fontSize: 15,
                 ),
               ),
-              Text(
-                _authInfo.getAddress,
-                style: const TextStyle(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 13,
-                ),
+              ValueListenableBuilder(
+                builder: (_, value, child) {
+                  if (value.isNotEmpty) {
+                    return Text(
+                      value,
+                      style: const TextStyle(
+                        color: AppColors.black,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 13,
+                      ),
+                    );
+                  }
+                  return const Text(
+                    "N/A",
+                    style: TextStyle(
+                      color: AppColors.black,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 13,
+                    ),
+                  );
+                },
+                valueListenable: addressChanged,
               ),
             ],
           ),
@@ -270,13 +376,28 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                   fontSize: 15,
                 ),
               ),
-              Text(
-                _authInfo.getAddress,
-                style: const TextStyle(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 13,
-                ),
+              ValueListenableBuilder(
+                builder: (_, value, child) {
+                  if (value.isNotEmpty) {
+                    return Text(
+                      value,
+                      style: const TextStyle(
+                        color: AppColors.black,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 13,
+                      ),
+                    );
+                  }
+                  return const Text(
+                    "N/A",
+                    style: TextStyle(
+                      color: AppColors.black,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 13,
+                    ),
+                  );
+                },
+                valueListenable: addressChanged,
               ),
             ],
           ),
@@ -292,13 +413,28 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                   fontSize: 15,
                 ),
               ),
-              Text(
-                _authInfo.getNickname,
-                style: const TextStyle(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 13,
-                ),
+              ValueListenableBuilder(
+                builder: (_, value, child) {
+                  if (value.isNotEmpty) {
+                    return Text(
+                      value,
+                      style: const TextStyle(
+                        color: AppColors.black,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 13,
+                      ),
+                    );
+                  }
+                  return const Text(
+                    "N/A",
+                    style: TextStyle(
+                      color: AppColors.black,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 13,
+                    ),
+                  );
+                },
+                valueListenable: identifierCardChanged,
               ),
             ],
           ),
@@ -314,13 +450,28 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                   fontSize: 15,
                 ),
               ),
-              Text(
-                _authInfo.getBirthday,
-                style: const TextStyle(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 13,
-                ),
+              ValueListenableBuilder(
+                builder: (_, value, child) {
+                  if (value.isNotEmpty) {
+                    return Text(
+                      value,
+                      style: const TextStyle(
+                        color: AppColors.black,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 13,
+                      ),
+                    );
+                  }
+                  return const Text(
+                    "N/A",
+                    style: TextStyle(
+                      color: AppColors.black,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 13,
+                    ),
+                  );
+                },
+                valueListenable: supplyDateChanged,
               ),
             ],
           ),
@@ -336,13 +487,28 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                   fontSize: 15,
                 ),
               ),
-              Text(
-                _authInfo.getAddress,
-                style: const TextStyle(
-                  color: AppColors.black,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 13,
-                ),
+              ValueListenableBuilder(
+                builder: (_, value, child) {
+                  if (value.isNotEmpty) {
+                    return Text(
+                      value,
+                      style: const TextStyle(
+                        color: AppColors.black,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 13,
+                      ),
+                    );
+                  }
+                  return const Text(
+                    "N/A",
+                    style: TextStyle(
+                      color: AppColors.black,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 13,
+                    ),
+                  );
+                },
+                valueListenable: supplyAddressChanged,
               ),
             ],
           )

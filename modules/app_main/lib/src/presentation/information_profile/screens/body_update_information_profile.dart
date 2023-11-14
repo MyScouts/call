@@ -173,7 +173,9 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                         Container(height: 20, color: AppColors.bgColor),
                         _buildFieldIdentifierInformation(),
                         Container(height: 20, color: AppColors.bgColor),
-                        widget.isEdit ? _buildProtectorInformation() : Container(),
+                        (widget.isEdit && !widget.authInfo.isUnderFifteen())
+                            ? _buildProtectorInformation()
+                            : Container(),
                         _buildBankInformation(),
                         Container(height: 20, color: AppColors.bgColor),
                         _buildMoreInformation(),
@@ -1162,11 +1164,5 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
         )
       ],
     );
-  }
-
-  void onUpdatePayload(UpdatePDoneProfilePayload val) {
-    EasyDebounce.debounce('onUpdateInfomationPayload', const Duration(milliseconds: 200), () {
-      onValidation();
-    });
   }
 }

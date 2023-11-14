@@ -33,7 +33,7 @@ class _ProtectorDropdownState extends State<ProtectorDropdown> {
               "Người bảo hộ",
               style: TextStyle(
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF353DFF),
+                // color: Color(0xFF353DFF),
                 height: 20 / 14,
                 leadingDistribution: TextLeadingDistribution.even,
               ),

@@ -1,6 +1,8 @@
+import 'package:app_main/src/data/data_sources/local/information_pdone_profile/information_pdone_profile_local.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/update_none_pdone_profile_response.dart';
 import 'package:app_main/src/data/models/responses/update_pdone_profile_response.dart';
+import 'package:app_main/src/domain/usecases/authentication_usecase.dart';
 import 'package:app_main/src/domain/usecases/user_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +14,13 @@ part 'information_update_profil_state.dart';
 @injectable
 class InformationUpdateProfilBloc extends Bloc<InformationEvent, InformationUpdateProfilState> {
   final UserUsecase _userUsecase;
+  final InformationPDoneSharePreferencesUsecase _informationPDoneSharePreferencesUsecase;
 
-  InformationUpdateProfilBloc(this._userUsecase) : super(InformationUpdateProfilInitial()) {
+  InformationUpdateProfilBloc(this._userUsecase, this._informationPDoneSharePreferencesUsecase)
+      : super(InformationUpdateProfilInitial()) {
     on<InformationUpdateProfilEvent>(updatePDoneProfile);
     on<InformationNoneUpdateProfilEvent>(updateNonePDoneProfile);
+    on<GetInformationPDoneProfileEvent>(getPDoneProfile);
   }
 
   Future<void> updatePDoneProfile(
@@ -24,9 +29,11 @@ class InformationUpdateProfilBloc extends Bloc<InformationEvent, InformationUpda
     try {
       emit(InformationUpdateProfilLoading());
       final response = await _userUsecase.updatePDoneProfile(event.updatePDoneProfilePayload!);
-      emit(InformationUpdateProfilSuccess(user: response));
+      debugPrint("updatePDoneProfile response: ${response.profile}");
+      await _informationPDoneSharePreferencesUsecase.saveInfoPDoneProfile(response.profile);
+      emit(InformationUpdateProfilSuccess());
     } catch (error) {
-      debugPrint("update pdone profile error: $error");
+      debugPrint("updatePDoneProfile error: $error");
       emit(InformationUpdateProfilFailed(message: error.toString()));
     }
   }
@@ -37,10 +44,22 @@ class InformationUpdateProfilBloc extends Bloc<InformationEvent, InformationUpda
     try {
       emit(InformationUpdateProfilLoading());
       final response = await _userUsecase.updateNonePNoneDoneProfile(event.updateNonePDoneProfilePayload!);
-      emit(InformationNoneUpdateProfilSuccess(user: response));
+      debugPrint("updateNonePDoneProfile response: ${response.profile}");
+      await _informationPDoneSharePreferencesUsecase.saveInfoNonePDoneProfile(response.profile);
+      emit(InformationNoneUpdateProfilSuccess());
     } catch (error) {
-      debugPrint("update pdone profile error: $error");
+      debugPrint("updateNonePDoneProfile error: $error");
       emit(InformationUpdateProfilFailed(message: error.toString()));
+    }
+  }
+
+  Future<void> getPDoneProfile(
+      GetInformationPDoneProfileEvent event, Emitter<InformationUpdateProfilState> emit) async {
+    try {
+      final response = await _userUsecase.getPDoneProfile();
+      emit(GetInformationPDoneProfileSuccess(user: response));
+    } catch (error) {
+      debugPrint("getPDoneProfile error: $error");
     }
   }
 }

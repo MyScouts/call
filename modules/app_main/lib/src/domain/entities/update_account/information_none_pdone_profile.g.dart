@@ -1,18 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'information_profile.dart';
+part of 'information_none_pdone_profile.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$InformationProfileImpl _$$InformationProfileImplFromJson(
+_$InformationNonePdoneProfileImpl _$$InformationNonePdoneProfileImplFromJson(
         Map<String, dynamic> json) =>
-    _$InformationProfileImpl(
+    _$InformationNonePdoneProfileImpl(
       firstName: json['firstName'] as String,
-      middleName: json['middleName'] as String,
-      lastName: json['lastName'] as String,
-      nickName: json['nickName'] as String,
+      middleName: json['middleName'] as String?,
+      lastName: json['lastName'] as String?,
+      nickName: json['nickName'] as String?,
       sex: json['sex'] as int,
       birthday: json['birthday'] as String,
       birthPlace: InformationPDoneBirthPlace.fromJson(
@@ -28,18 +28,18 @@ _$InformationProfileImpl _$$InformationProfileImplFromJson(
       interest: json['interest'] as String,
       talent: json['talent'] as String,
       identityNumber: json['identityNumber'] as String,
-      supplyDate: json['supplyDate'] as String,
-      supplyAddress: json['supplyAddress'] as String,
-      protector: json['protector'] as int,
-      protectorPDoneId: json['protectorPDoneId'] as String,
-      birthCertificateUrl: json['birthCertificateUrl'] as String,
-      birthCertificateSupplyDate: json['birthCertificateSupplyDate'] as String,
-      kycMetadata: json['kycMetadata'] as Map<String, dynamic>,
-      type: json['type'] as Map<String, dynamic>,
+      supplyDate: json['supplyDate'] as String?,
+      supplyAddress: json['supplyAddress'] as String?,
+      protector: json['protector'] as int?,
+      protectorPDoneId: json['protectorPDoneId'] as String?,
+      birthCertificateUrl: json['birthCertificateUrl'] as String?,
+      birthCertificateSupplyDate: json['birthCertificateSupplyDate'] as String?,
+      kycMetadata: json['kycMetadata'] as Map<String, dynamic>?,
+      type: json['type'] as int?,
     );
 
-Map<String, dynamic> _$$InformationProfileImplToJson(
-        _$InformationProfileImpl instance) =>
+Map<String, dynamic> _$$InformationNonePdoneProfileImplToJson(
+        _$InformationNonePdoneProfileImpl instance) =>
     <String, dynamic>{
       'firstName': instance.firstName,
       'middleName': instance.middleName,
