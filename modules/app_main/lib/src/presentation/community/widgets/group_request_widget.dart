@@ -1,4 +1,3 @@
-import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/responses/group_request_response.dart';
 import 'package:app_main/src/presentation/community/widgets/day_countdown_widget.dart';
 import 'package:design_system/design_system.dart';
