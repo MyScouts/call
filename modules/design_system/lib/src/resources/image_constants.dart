@@ -50,6 +50,7 @@ class ImageConstants {
   static String guidePdone = ImageApp.guidePdone.path;
   static String imageCamera = ImageApp.imageCamera.path;
   static String imageEmpty = ImageApp.imageEmpty.path;
+  static String imageType = ImageApp.imageType.path;
   static String bgEmpty = ImageApp.bgEmpty.path;
   static String birthCerCapture = ImageApp.birthCerCapture.path;
   static String birthCerBackgroundConfirm =
@@ -110,7 +111,8 @@ enum ImageApp {
   bg10('assets/images/bg10.png'),
   bg11('assets/images/bg11.png'),
   imageCamera('assets/images/img_camera.png'),
-  imageEmpty('assets/images/img_empty.png');
+  imageEmpty('assets/images/img_empty.png'),
+  imageType('assets/images/ic_type.png');
 
   const ImageApp(this.path);
 
