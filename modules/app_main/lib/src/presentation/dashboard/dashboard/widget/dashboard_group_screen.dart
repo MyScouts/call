@@ -69,7 +69,7 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
   }
 
   void calculateDraggablePositionFromOut(DashBoardItem item) {
-    if(!_isDraging) return;
+    if (!_isDraging) return;
     if (recorderCtx == null) return;
     final box = recorderCtx?.findRenderObject() as RenderBox?;
     final offset = box?.localToGlobal(Offset.zero);
@@ -82,7 +82,7 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
         items: _group.items.where((e) => e.id != item.id).toList(),
       );
       isChanged = true;
-      if(_group.items.length == 1) {
+      if (_group.items.length == 1) {
         NotificationCenter.post(
           channel: addDashBoardItemEvent,
           options: _group.items.first,
@@ -94,7 +94,7 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
         options: item,
       );
       Future.delayed(const Duration(milliseconds: 300), () {
-        if(Navigator.of(context).canPop()) {
+        if (Navigator.of(context).canPop()) {
           Navigator.of(context).pop();
         }
       });
@@ -102,7 +102,7 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
   }
 
   void onUpdate(list) {
-    if(_disableUpdate) return;
+    if (_disableUpdate) return;
     isChanged = true;
     final items = (list ?? [])
         .map((e) => (e.widget as AppWidget).app as DashBoardIconItem)
@@ -148,6 +148,7 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
             setState(() {
               enableRemoveButton = true;
             });
+            NotificationCenter.post(channel: showEditMode);
           },
           child: Container(
             height: double.infinity,
@@ -211,30 +212,36 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
                       onTap: () {
                         setState(() {
                           enableRemoveButton = false;
+                          NotificationCenter.post(channel: cancelEditMode);
                         });
                       },
                       behavior: HitTestBehavior.opaque,
-                      child: Hero(
-                          tag: widget.group.id,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(32),
-                            child: ClipRect(
-                              child: BackdropFilter(
-                                filter: ui.ImageFilter.blur(
-                                  sigmaX: 16.0,
-                                  sigmaY: 16.0,
-                                ),
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width - 32,
-                                  height:
-                                      (MediaQuery.of(context).size.width - 32) +
-                                          20,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        const Color.fromRGBO(17, 17, 17, 0.40),
-                                    borderRadius: BorderRadius.circular(32),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(32),
+                        child: ClipRect(
+                          child: BackdropFilter(
+                            filter: ui.ImageFilter.blur(
+                              sigmaX: 16.0,
+                              sigmaY: 16.0,
+                            ),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width - 32,
+                              height:
+                              (MediaQuery.of(context).size.width - 32) +
+                                  20,
+                              decoration: BoxDecoration(
+                                color:
+                                const Color.fromRGBO(17, 17, 17, 0.40),
+                                borderRadius: BorderRadius.circular(32),
+                              ),
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  Hero(
+                                    tag: widget.group.id,
+                                    child: const SizedBox.expand(),
                                   ),
-                                  child: Builder(
+                                  Builder(
                                     builder: (_) {
                                       if (widget.group.items.length <= 9) {
                                         return ReorderableStaggeredScrollView
@@ -249,7 +256,8 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
                                           },
                                           onDragUpdate: (_, p1) {
                                             final i =
-                                                (p1.widget as AppWidget).app;
+                                                (p1.widget as AppWidget)
+                                                    .app;
                                             calculateDraggablePositionFromOut(
                                                 i);
                                           },
@@ -262,75 +270,85 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
                                           children: [
                                             if (enableRemoveButton)
                                               ..._group.items.map(
-                                                (e) =>
+                                                    (e) =>
                                                     ReorderableStaggeredScrollViewGridItem(
-                                                  key: ValueKey(e.id),
-                                                  widget: AppWidgetGroupBuilder(
-                                                    app: e,
-                                                    enableEditMode:
+                                                      key: ValueKey(e.id),
+                                                      widget:
+                                                      AppWidgetGroupBuilder(
+                                                        app: e,
+                                                        enableEditMode:
                                                         enableRemoveButton,
-                                                    onRemoved: () {
-                                                      isChanged = true;
-                                                      setState(
-                                                        () {
-                                                          _group =
-                                                              _group.copyWith(
-                                                            items: _group.items
-                                                                .where((i) =>
-                                                                    i.id !=
+                                                        onRemoved: () {
+                                                          isChanged = true;
+                                                          setState(
+                                                                () {
+                                                              _group = _group
+                                                                  .copyWith(
+                                                                items: _group
+                                                                    .items
+                                                                    .where((i) =>
+                                                                i.id !=
                                                                     e.id)
-                                                                .toList(),
+                                                                    .toList(),
+                                                              );
+                                                            },
                                                           );
                                                         },
-                                                      );
-                                                    },
-                                                  ),
-                                                  mainAxisCellCount: e.height,
-                                                  crossAxisCellCount: e.width,
-                                                ),
+                                                      ),
+                                                      mainAxisCellCount:
+                                                      e.height,
+                                                      crossAxisCellCount:
+                                                      e.width,
+                                                    ),
                                               ),
                                             if (!enableRemoveButton)
                                               ..._group.items.map(
-                                                (e) =>
+                                                    (e) =>
                                                     ReorderableStaggeredScrollViewGridItem(
-                                                  key: ValueKey(e.id),
-                                                  mainAxisCellCount: e.height,
-                                                  crossAxisCellCount: e.width,
-                                                  widget: AppWidgetGroupBuilder(
-                                                    app: e,
-                                                    enableEditMode:
+                                                      key: ValueKey(e.id),
+                                                      mainAxisCellCount:
+                                                      e.height,
+                                                      crossAxisCellCount:
+                                                      e.width,
+                                                      widget:
+                                                      AppWidgetGroupBuilder(
+                                                        app: e,
+                                                        enableEditMode:
                                                         enableRemoveButton,
-                                                    onRemoved: () {
-                                                      isChanged = true;
-                                                      setState(() {
-                                                        _group =
-                                                            _group.copyWith(
-                                                          items: _group.items
-                                                              .where((i) =>
-                                                                  i.id != e.id)
-                                                              .toList(),
-                                                        );
-                                                      });
-                                                    },
-                                                  ),
-                                                ),
+                                                        onRemoved: () {
+                                                          isChanged = true;
+                                                          setState(() {
+                                                            _group =
+                                                                _group.copyWith(
+                                                                  items: _group
+                                                                      .items
+                                                                      .where((i) =>
+                                                                  i.id !=
+                                                                      e.id)
+                                                                      .toList(),
+                                                                );
+                                                          });
+                                                        },
+                                                      ),
+                                                    ),
                                               ),
                                             if (widget.moveItem != null &&
                                                 widget.moveItem
-                                                    is DashBoardIconItem)
+                                                is DashBoardIconItem)
                                               ReorderableStaggeredScrollViewGridItem(
                                                 key: ValueKey(
                                                     widget.moveItem!.id),
-                                                widget: AppWidgetGroupBuilder(
+                                                widget:
+                                                AppWidgetGroupBuilder(
                                                   app: widget.moveItem!,
                                                   enableEditMode:
-                                                      enableRemoveButton,
+                                                  enableRemoveButton,
                                                   onRemoved: () {},
                                                 ),
                                                 mainAxisCellCount:
-                                                    widget.moveItem!.height,
+                                                widget.moveItem!.height,
                                                 crossAxisCellCount:
-                                                    widget.moveItem!.width,
+                                                widget.moveItem!.width,
                                               ),
                                           ],
                                           crossAxisCount: 3,
@@ -353,10 +371,10 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
                                           Builder(
                                             builder: (ctx) => Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                              MainAxisAlignment.center,
                                               children: List.generate(
                                                 2,
-                                                (index) =>
+                                                    (index) =>
                                                     _buildDot(ctx, index),
                                               ),
                                             ),
@@ -366,10 +384,12 @@ class _DashBoardGroupScreenState extends State<DashBoardGroupScreen> {
                                       );
                                     },
                                   ),
-                                ),
+                                ],
                               ),
                             ),
-                          )),
+                          ),
+                        ),
+                      ),
                     );
                   },
                 ),

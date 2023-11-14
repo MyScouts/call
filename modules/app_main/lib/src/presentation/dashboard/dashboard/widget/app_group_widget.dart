@@ -40,11 +40,10 @@ class AppGroupWidget extends AppWidget {
                 ),
               );
             },
-            onLongPress: () {},
-            child: AspectRatio(
-              aspectRatio: 1,
-              child: Hero(
-                tag: group.id,
+            child: Hero(
+              tag: group.id,
+              child: AspectRatio(
+                aspectRatio: 1,
                 child: Container(
                   decoration: BoxDecoration(
                     color: const Color.fromRGBO(17, 17, 17, 0.40),
@@ -103,7 +102,8 @@ class AppEmptyWidget extends AppWidget {
                 color: Colors.grey,
                 borderRadius: BorderRadius.circular(14),
               ),
-              child: const Icon(Icons.filter_center_focus, color: Colors.white),
+              child:
+                  const Icon(Icons.filter_center_focus, color: Colors.white),
             ),
           ),
         ),

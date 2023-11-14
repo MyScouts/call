@@ -237,9 +237,8 @@ enum UpdateTeamOption {
   requests,
   invite,
   kick,
-  relinquish,
   assignBoss,
-  revokeBoss
+  relinquish,
 }
 
 extension UpdateTeamOptionExt on UpdateTeamOption {
@@ -249,16 +248,14 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
         return 'Chỉnh sửa thông tin Team';
       case UpdateTeamOption.requests:
         return 'Yêu cầu cần phê duyệt';
-      case UpdateTeamOption.relinquish:
-        return 'Từ chức Boss Team';
       case UpdateTeamOption.invite:
         return 'Mời thêm thành viên';
       case UpdateTeamOption.kick:
         return 'Loại bỏ thành viên';
       case UpdateTeamOption.assignBoss:
         return 'Chỉ định Boss Team';
-      case UpdateTeamOption.revokeBoss:
-        return 'Huỷ quyền Boss Team';
+      case UpdateTeamOption.relinquish:
+        return 'Từ chức Boss Team';
     }
   }
 
@@ -268,7 +265,6 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
       case UpdateTeamOption.requests:
       case UpdateTeamOption.invite:
       case UpdateTeamOption.kick:
-      case UpdateTeamOption.revokeBoss:
       case UpdateTeamOption.assignBoss:
         return const Color(0xFF212121);
       case UpdateTeamOption.relinquish:
@@ -317,14 +313,6 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
         return await context.startTeamRequestsScreen(team: team);
       case UpdateTeamOption.assignBoss:
         return await context.startAssignTeam(team);
-      case UpdateTeamOption.revokeBoss:
-        if (team.boss == null) {
-          return context.askAssignBoss(team: team);
-        }
-        return await context.startRemoveBossModal(
-          member: team.boss!,
-          team: team,
-        );
     }
   }
 }

@@ -86,6 +86,8 @@ class IconAppConstants {
   static String icClear = IconApp.icClear.path;
   static String icUploadImage = IconApp.icUploadImage.path;
   static String icCameraRound = IconApp.icCameraRound.path;
+  static String icCare = IconApp.icCare.path;
+  static String icTeamProfile = IconApp.icTeamProfile.path;
 }
 
 enum IconApp {
@@ -177,6 +179,8 @@ enum IconApp {
   icClear('assets/icons/ic_clear.svg'),
   icUploadImage('assets/icons/ic_upload_image.png'),
   icCameraRound('assets/icons/ic_camera_round.png'),
+  icCare('assets/icons/ic_care.svg'),
+  icTeamProfile('assets/icons/ic_team.svg'),
   icLeaveTeam('assets/icons/ic_leave_team.svg');
 
   const IconApp(this.path);

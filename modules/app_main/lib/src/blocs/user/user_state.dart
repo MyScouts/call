@@ -102,13 +102,11 @@ final class ResetPasswordFail extends UserState {
 final class GetOTPLoading extends UserState {}
 
 final class ResendUserOTPSuccess extends UserState {
-  final Otp otp;
-  ResendUserOTPSuccess({required this.otp});
+  ResendUserOTPSuccess();
 }
 
 final class GetOTPSuccess extends UserState {
-  final Otp otp;
-  GetOTPSuccess({required this.otp});
+  GetOTPSuccess();
 }
 
 final class GetOTPFail extends UserState {
@@ -142,8 +140,10 @@ final class OnLoginQRCode extends UserState {}
 final class LoginQRCodeSuccess extends UserState {}
 
 final class LoginQRCodeFail extends UserState {
-  final String message;
-  LoginQRCodeFail({required this.message});
+  final String code;
+  LoginQRCodeFail({
+    required this.code,
+  });
 }
 
 // Delete user

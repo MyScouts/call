@@ -608,7 +608,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                                     : null,
                           )
                         : Container(),
-                    !isShowProtector()
+                    isShowProtector()
                         ? BlocProvider<UpgradePDoneBloc>(
                             create: (context) => injector.get(),
                             child: VerifyProtectorWidget(

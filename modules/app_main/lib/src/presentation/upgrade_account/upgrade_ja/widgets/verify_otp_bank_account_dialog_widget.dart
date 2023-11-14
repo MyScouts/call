@@ -79,13 +79,10 @@ class _VerifyOTPBankAccountDialogWidgetState
   }
 
   void _onListenerResendOTPBloc(BuildContext context, UserState state) {
-    if (state is GetOTPSuccess) {
-      token = state.otp.token ?? '';
-    }
+    if (state is GetOTPSuccess) {}
     if (state is ResendUserOTPSuccess) {
       restartTimer();
       showToastMessage('Yêu cầu gửi lại OTP thành công');
-      token = state.otp.token ?? '';
     } else if (state is GetOTPFail) {
       showToastMessage(
         state.message,

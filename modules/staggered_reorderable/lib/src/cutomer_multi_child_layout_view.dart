@@ -217,7 +217,7 @@ class _CustomerMultiChildViewState extends State<CustomerMultiChildView>
     int _nowAcceptIndex = nowAcceptIndex;
     int _nowMoveIndex = nowMoveIndex;
     if (_nowAcceptIndex == -1 || _nowMoveIndex == -1) return;
-    Future.delayed(const Duration(milliseconds: 300), () {
+    Future.delayed(const Duration(milliseconds: 150), () {
       if (_nowAcceptIndex == nowAcceptIndex && _nowMoveIndex == nowMoveIndex) {
         nowAcceptIndex = -1;
         nowMoveIndex = -1;
@@ -294,7 +294,7 @@ class _CustomerMultiChildViewState extends State<CustomerMultiChildView>
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16),
+        padding: const EdgeInsets.only(top: 16, bottom: 16),
         child: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: CustomMultiChildLayout(

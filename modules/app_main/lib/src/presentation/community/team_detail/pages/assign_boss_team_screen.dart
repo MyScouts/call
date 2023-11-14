@@ -164,7 +164,7 @@ class _AssignBossTeamScreenState extends State<AssignBossTeamScreen> {
                             if (!isBoss)
                               GestureDetector(
                                 onTap: () {
-                                  if (isBoss) return;
+                                  if (_bossId != null) return;
                                   context.startDialogConfirmAssignBoss(
                                     onAction: () {
                                       teamDetailBloc.add(AssignBossEvent(

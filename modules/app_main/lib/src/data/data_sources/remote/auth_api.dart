@@ -62,10 +62,7 @@ abstract class AuthApi {
   );
 
   @POST(AuthApiConstant.otp)
-  Future otp();
-
-  @GET(AuthApiConstant.getOtp)
-  Future<ApiResponse<OtpResponse>> getOtp();
+  Future getOtp();
 
   @POST(AuthApiConstant.authClaimV1)
   Future authClaimV1(@Body() AuthClaimPayload payload);

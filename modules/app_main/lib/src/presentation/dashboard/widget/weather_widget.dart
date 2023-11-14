@@ -7,9 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 class WeatherWidget extends StatelessWidget {
-  const WeatherWidget({super.key, this.textColor});
+  const WeatherWidget({
+    super.key,
+    this.textColor,
+    this.enableEditMode = false,
+    this.onRemoved,
+  });
 
   final Color? textColor;
+  final bool enableEditMode;
+  final VoidCallback? onRemoved;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +70,7 @@ class WeatherWidget extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  Text(
+                  AutoSizeText(
                     '${state.openWeatherCurrent?.temp ?? 0}°',
                     style: context.text.titleSmall!.copyWith(
                       color: AppColors.white,
@@ -114,20 +121,48 @@ class WeatherWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(22.0),
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xff007AF6),
-                      Color(0xff77B1EB),
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(22.0),
+                      gradient: const LinearGradient(
+                        colors: [
+                          Color(0xff007AF6),
+                          Color(0xff77B1EB),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(12.0),
+                    child: child,
                   ),
-                ),
-                padding: const EdgeInsets.all(12.0),
-                child: child,
+                  if (enableEditMode)
+                    Positioned(
+                      left: -5,
+                      top: -10,
+                      child: GestureDetector(
+                        onTap: onRemoved,
+                        behavior: HitTestBehavior.opaque,
+                        child: const SizedBox.square(
+                          dimension: 25,
+                          child: Center(
+                            child: CircleAvatar(
+                              backgroundColor: Colors.grey,
+                              radius: 15,
+                              child: Icon(
+                                Icons.remove,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
             const SizedBox(height: 5),

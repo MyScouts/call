@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/presentation/settings/setting_screen.dart';
+import 'package:app_main/src/presentation/settings/widget/manage_protector_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -22,5 +23,8 @@ class SettingRoutes extends RouteModule {
             child: const SettingScreen(),
           );
         },
+        ManageProtectorScreen.routerName: (context) {
+          return const ManageProtectorScreen();
+        }
       };
 }

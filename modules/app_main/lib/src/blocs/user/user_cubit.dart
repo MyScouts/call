@@ -286,12 +286,12 @@ class UserCubit extends Cubit<UserState> {
   Future<void> getOtp({bool? isResend}) async {
     try {
       emit(GetOTPLoading());
-      final otp = await _authenticationUsecase.getOtp();
+      await _authenticationUsecase.getOtp();
       if (isResend == true) {
-        emit(ResendUserOTPSuccess(otp: otp));
+        emit(ResendUserOTPSuccess());
         return;
       }
-      emit(GetOTPSuccess(otp: otp));
+      emit(GetOTPSuccess());
     } catch (error) {
       debugPrint("phoneRegister: $error");
       emit(GetOTPFail(message: "international_error"));
@@ -350,17 +350,11 @@ class UserCubit extends Cubit<UserState> {
         emit(LoginQRCodeSuccess());
       }
     } on DioException catch (error) {
-      String err = S.current.messages_server_internal_error.capitalize();
       final data = error.response!.data;
-      switch (data['code']) {
-        case "MARSHOP_NOT_FOUND":
-          err = "Không tìm thấy Marshop.";
-      }
-      emit(LoginQRCodeFail(message: err));
+      emit(LoginQRCodeFail(code: data['code']));
     } catch (error) {
       debugPrint("authQrCode: $error");
-      String err = S.current.messages_server_internal_error.capitalize();
-      emit(LoginQRCodeFail(message: err));
+      emit(LoginQRCodeFail(code: ""));
     }
   }
 

@@ -35,6 +35,13 @@ class Setting {
             icon: IconAppConstants.icSettingAccount,
           ),
           Setting(
+            text: "Quản lý người bảo hộ",
+            icon: IconAppConstants.icCare,
+            onPressed: () {
+              Navigator.pushNamed(context, CommunityWidget.routeName);
+            },
+          ),
+          Setting(
             text: "Tin nhắn office",
             icon: IconAppConstants.icChat,
           ),
@@ -42,7 +49,7 @@ class Setting {
         [
           Setting(
             text: "Team",
-            icon: IconAppConstants.icECommerce,
+            icon: IconAppConstants.icTeamProfile,
             onPressed: () =>
                 Navigator.pushNamed(context, CommunityWidget.routeName),
           ),
