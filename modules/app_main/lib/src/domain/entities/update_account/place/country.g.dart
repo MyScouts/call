@@ -8,7 +8,7 @@ part of 'country.dart';
 
 _$CountryImpl _$$CountryImplFromJson(Map<String, dynamic> json) =>
     _$CountryImpl(
-      id: json['id'] as String?,
+      id: json['id'] as int?,
       name: json['name'] as String?,
       iso2: json['iso2'] as String?,
     );

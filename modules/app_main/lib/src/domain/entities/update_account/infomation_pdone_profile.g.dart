@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'information_profile.dart';
+part of 'infomation_pdone_profile.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$InformationProfileImpl _$$InformationProfileImplFromJson(
+_$InformationPdoneProfileImpl _$$InformationPdoneProfileImplFromJson(
         Map<String, dynamic> json) =>
-    _$InformationProfileImpl(
+    _$InformationPdoneProfileImpl(
       firstName: json['firstName'] as String,
       middleName: json['middleName'] as String,
       lastName: json['lastName'] as String,
@@ -38,8 +38,8 @@ _$InformationProfileImpl _$$InformationProfileImplFromJson(
       type: json['type'] as Map<String, dynamic>,
     );
 
-Map<String, dynamic> _$$InformationProfileImplToJson(
-        _$InformationProfileImpl instance) =>
+Map<String, dynamic> _$$InformationPdoneProfileImplToJson(
+        _$InformationPdoneProfileImpl instance) =>
     <String, dynamic>{
       'firstName': instance.firstName,
       'middleName': instance.middleName,

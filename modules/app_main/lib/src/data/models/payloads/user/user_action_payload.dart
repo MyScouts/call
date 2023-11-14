@@ -1,4 +1,5 @@
 import 'package:app_main/src/domain/entities/update_account/update_pdone_birth_place_payload.dart';
+import 'package:app_main/src/domain/entities/update_account/update_pdone_birth_place_payload_2.dart';
 import 'package:app_main/src/domain/entities/update_account/update_place_information_payload.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -113,7 +114,7 @@ class UpdateNonePDoneProfilePayload {
   final String interest;
   final String talent;
   final int sex;
-  final UpdatePDoneBirthPlacePayload? birthPlace;
+  final UpdatePDoneBirthPlacePayload2? birthPlace;
   final String birthday;
   final String identityNumber;
   final String supplyDate;

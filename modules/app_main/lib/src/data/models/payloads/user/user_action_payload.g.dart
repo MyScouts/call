@@ -112,7 +112,7 @@ UpdateNonePDoneProfilePayload _$UpdateNonePDoneProfilePayloadFromJson(
       sex: json['sex'] as int,
       birthPlace: json['birthPlace'] == null
           ? null
-          : UpdatePDoneBirthPlacePayload.fromJson(
+          : UpdatePDoneBirthPlacePayload2.fromJson(
               json['birthPlace'] as Map<String, dynamic>),
       birthday: json['birthday'] as String,
       identityNumber: json['identityNumber'] as String,

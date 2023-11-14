@@ -3,6 +3,9 @@ import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/domain/entities/bank.dart';
+import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
+import 'package:app_main/src/presentation/information_profile/bloc/bloc/information_update_profil_bloc.dart';
+import 'package:app_main/src/presentation/information_profile/bloc/place_information_2/place_information_2_bloc.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/bank_dropdown.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/bloodtype_dropdown.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/provinces_dropdown.dart';
@@ -30,7 +33,14 @@ import 'package:ui/ui.dart';
 class BodyUpdateInformationProfile extends StatefulWidget {
   final UserCubit userCubit;
   final User authInfo;
-  const BodyUpdateInformationProfile({super.key, required this.userCubit, required this.authInfo});
+  final bool isEdit;
+
+  const BodyUpdateInformationProfile({
+    super.key,
+    required this.userCubit,
+    required this.authInfo,
+    required this.isEdit,
+  });
 
   @override
   State<BodyUpdateInformationProfile> createState() => _BodyUpdateInformationProfileState();
@@ -43,6 +53,8 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
   late final upgradePDoneBloc = context.read<UpgradePDoneBloc>();
   late final getListBankBloc = context.read<GetListBanksBloc>();
   late final placeInformationBloc = context.read<PlaceInformationBloc>();
+  late final placeInformationBloc2 = context.read<PlaceInformationBloc2>();
+  late final updateInformationBloc = context.read<InformationUpdateProfilBloc>();
 
   @override
   bool get wantKeepAlive => true;
@@ -72,21 +84,35 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
   void _listenerPlaces(BuildContext context, PlaceInformationState state) {
     if (state is PlaceInformationInitial) {
       countriesChanged.value = state.countries;
-      countries2Changed.value = state.countries;
     }
 
     if (state is GetListProvincesSuccess) {
       provincesChanged.value = state.provinces;
-      provinces2Changed.value = state.provinces;
     }
 
     if (state is GetDistrictsSuccess) {
       districtsChanged.value = state.districts;
-      districts2Changed.value = state.districts;
     }
 
     if (state is GetWardsSuccess) {
       wardsChanged.value = state.wards;
+    }
+  }
+
+  void _listenerPlaces2(BuildContext context, PlaceInformationState2 state) {
+    if (state is PlaceInformationInitial2) {
+      countries2Changed.value = state.countries;
+    }
+
+    if (state is GetListProvincesSuccess2) {
+      provinces2Changed.value = state.provinces;
+    }
+
+    if (state is GetDistrictsSuccess2) {
+      districts2Changed.value = state.districts;
+    }
+
+    if (state is GetWardsSuccess2) {
       wards2Changed.value = state.wards;
     }
   }
@@ -96,6 +122,8 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
     upgradePDoneBloc.add(GetListMasterEvent());
     getListBankBloc.add(GetListDataEvent());
     placeInformationBloc.add(UserClearCountryEvent());
+    placeInformationBloc2.add(UserClearCountryEvent2());
+
     super.initState();
   }
 
@@ -103,7 +131,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
   Widget build(BuildContext context) {
     super.build(context);
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
+      padding: const EdgeInsets.only(top: 8.0, bottom: 25),
       child: validationFormBuilder(
         child: AutoHideKeyboard(
           child: BlocConsumer<UpgradePDoneBloc, UpgradePDoneState>(
@@ -116,27 +144,43 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                     LoggerService.print("Banks: $banksChanged");
                   }
                 },
-                child: BlocListener<PlaceInformationBloc, PlaceInformationState>(
-                  listener: _listenerPlaces,
-                  child: ListView(
-                    shrinkWrap: true,
-                    addAutomaticKeepAlives: true,
-                    children: [
-                      _buildToolbar(),
-                      const SizedBox(height: 20),
-                      Container(height: 20, color: AppColors.bgColor),
-                      _buildFieldInformation(),
-                      Container(height: 20, color: AppColors.bgColor),
-                      _buildFieldIdentifierInformation(),
-                      Container(height: 20, color: AppColors.bgColor),
-                      isShowProtector() ? _buildProtectorInformation() : Container(),
-                      Container(height: 20, color: AppColors.bgColor),
-                      _buildBankInformation(),
-                      Container(height: 20, color: AppColors.bgColor),
-                      _buildMoreInformation(),
-                      _buildButtonUpdate(context),
-                    ],
-                  ),
+                child: BlocConsumer<InformationUpdateProfilBloc, InformationUpdateProfilState>(
+                  listener: (context, state) {
+                    if (state is InformationUpdateProfilLoading) {
+                      showLoading();
+                    }
+
+                    if (state is InformationNoneUpdateProfilSuccess) {
+                      hideLoading();
+                      showToastMessage("Update success");
+                      Navigator.of(context).pop();
+                    }
+
+                    if (state is InformationUpdateProfilFailed) {
+                      hideLoading();
+                      showToastMessage(state.message!, ToastMessageType.error);
+                    }
+                  },
+                  builder: (context, state) {
+                    return ListView(
+                      shrinkWrap: true,
+                      addAutomaticKeepAlives: true,
+                      children: [
+                        _buildToolbar(),
+                        const SizedBox(height: 20),
+                        Container(height: 20, color: AppColors.bgColor),
+                        _buildFieldInformation(),
+                        Container(height: 20, color: AppColors.bgColor),
+                        _buildFieldIdentifierInformation(),
+                        Container(height: 20, color: AppColors.bgColor),
+                        widget.isEdit ? _buildProtectorInformation() : Container(),
+                        _buildBankInformation(),
+                        Container(height: 20, color: AppColors.bgColor),
+                        _buildMoreInformation(),
+                        _buildButtonUpdate(context),
+                      ],
+                    );
+                  },
                 ),
               );
             },
@@ -150,9 +194,9 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
       child: GradiantButton(
-        onPressed: () => !widget.authInfo.isPDone!
-            ? widget.userCubit.updatePDoneProfile(updatePDoneProfilePayload: passPdonePayload())
-            : widget.userCubit.updateNonePDoneProfile(updateNonePDoneProfilePayload: passNonePDonePayload()),
+        onPressed: () => widget.authInfo.getIsPDone
+            ? updateInformationBloc.add(InformationUpdateProfilEvent(passPdonePayload()))
+            : updateInformationBloc.add(InformationNoneUpdateProfilEvent(passNonePDonePayload())),
         child: Text(
           "Cập nhật",
           style: Theme.of(context).textTheme.labelLarge?.copyWith(
@@ -177,20 +221,62 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
               fontWeight: FontWeight.w500,
             ),
           ),
-
-          /// Họ và tên
-          InformationFieldWidget(
-            required: true,
-            shouldEnabled: true,
-            controller: fullNameTxtController,
-            type: UpdateInformationType.fullName,
-            validator: (value) => context.validateEmptyInfo(
-              fullNameTxtController.text,
-              'Vui lòng nhập họ và tên',
-            ),
-            onChanged: (String? value) {},
-          ),
-
+          widget.isEdit
+              ? Row(
+                  children: [
+                    Expanded(
+                      child: InformationFieldWidget(
+                        required: true,
+                        shouldEnabled: false,
+                        controller: fullNameTxtController,
+                        type: UpdateInformationType.firstName,
+                        validator: (value) => context.validateEmptyInfo(
+                          fullNameTxtController.text,
+                          'Vui lòng nhập họ',
+                        ),
+                        onChanged: (String? value) {},
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: InformationFieldWidget(
+                        required: false,
+                        shouldEnabled: false,
+                        controller: fullNameTxtController,
+                        type: UpdateInformationType.middleName,
+                        validator: (value) => context.validateEmptyInfo(
+                          fullNameTxtController.text,
+                          'Vui lòng nhập tên đệm',
+                        ),
+                        onChanged: (String? value) {},
+                      ),
+                    )
+                  ],
+                )
+              : InformationFieldWidget(
+                  required: true,
+                  shouldEnabled: true,
+                  controller: fullNameTxtController,
+                  type: UpdateInformationType.fullName,
+                  validator: (value) => context.validateEmptyInfo(
+                    fullNameTxtController.text,
+                    'Vui lòng nhập họ và tên',
+                  ),
+                  onChanged: (String? value) {},
+                ),
+          widget.isEdit
+              ? InformationFieldWidget(
+                  required: true,
+                  shouldEnabled: false,
+                  controller: fullNameTxtController,
+                  type: UpdateInformationType.lastName,
+                  validator: (value) => context.validateEmptyInfo(
+                    fullNameTxtController.text,
+                    'Vui lòng nhập tên',
+                  ),
+                  onChanged: (String? value) {},
+                )
+              : Container(),
           //Nick name
           InformationFieldWidget(
             required: true,
@@ -447,25 +533,28 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             ),
           ),
           const SizedBox(height: 7),
-          Autocomplete<String>(
+          Autocomplete<AutocompleteOption>(
             optionsBuilder: (TextEditingValue textEditingValue) {
               if (textEditingValue.text.isEmpty) {
-                return const Iterable<String>.empty();
+                return const Iterable<AutocompleteOption>.empty();
               }
 
               var filteredAndSortedJobs = jobsChanged.value
                   .where((element) => element.name!.contains(textEditingValue.text.toLowerCase()))
-                  .map((job) => job.name!) // Extract job names
+                  .map((job) => AutocompleteOption(
+                        displayText: job.name!,
+                        key: job.key!,
+                      ))
                   .toList();
 
-              // Sort the job names
-              filteredAndSortedJobs.sort((a, b) => a.compareTo(b));
+              filteredAndSortedJobs.sort((a, b) => a.displayText!.compareTo(b.displayText!));
 
               return filteredAndSortedJobs;
             },
-            onSelected: (String itemSelected) {
-              jobParam = itemSelected;
+            onSelected: (AutocompleteOption itemSelected) {
+              jobParam = itemSelected.key!;
             },
+            displayStringForOption: (option) => option.displayText!,
           ),
           const SizedBox(height: 12),
           Row(
@@ -518,24 +607,28 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             ),
           ),
           const SizedBox(height: 7),
-          Autocomplete<String>(
+          Autocomplete<AutocompleteOption>(
             optionsBuilder: (TextEditingValue textEditingValue) {
               if (textEditingValue.text.isEmpty) {
-                return const Iterable<String>.empty();
+                return const Iterable<AutocompleteOption>.empty();
               }
 
-              var filteredAndSortedJobs = talentsChanged.value
+              var filteredAndSortedTalents = talentsChanged.value
                   .where((element) => element.name!.contains(textEditingValue.text.toLowerCase()))
-                  .map((job) => job.name!)
+                  .map((talent) => AutocompleteOption(
+                        displayText: talent.name!,
+                        key: talent.key!,
+                      ))
                   .toList();
 
-              filteredAndSortedJobs.sort((a, b) => a.compareTo(b));
+              filteredAndSortedTalents.sort((a, b) => a.displayText!.compareTo(b.displayText!));
 
-              return filteredAndSortedJobs;
+              return filteredAndSortedTalents;
             },
-            onSelected: (String itemSelected) {
-              talentParam = itemSelected;
+            onSelected: (AutocompleteOption itemSelected) {
+              talentParam = itemSelected.key!;
             },
+            displayStringForOption: (option) => option.displayText!,
           ),
           const SizedBox(height: 15),
           const Text(
@@ -548,24 +641,28 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             ),
           ),
           const SizedBox(height: 7),
-          Autocomplete<String>(
+          Autocomplete<AutocompleteOption>(
             optionsBuilder: (TextEditingValue textEditingValue) {
               if (textEditingValue.text.isEmpty) {
-                return const Iterable<String>.empty();
+                return const Iterable<AutocompleteOption>.empty();
               }
 
-              var filteredAndSortedJobs = hobbiesChanged.value
+              var filteredAndSortedInterests = hobbiesChanged.value
                   .where((element) => element.name!.contains(textEditingValue.text.toLowerCase()))
-                  .map((job) => job.name!)
+                  .map((hobbie) => AutocompleteOption(
+                        displayText: hobbie.name!,
+                        key: hobbie.key!,
+                      ))
                   .toList();
 
-              filteredAndSortedJobs.sort((a, b) => a.compareTo(b));
+              filteredAndSortedInterests.sort((a, b) => a.displayText!.compareTo(b.displayText!));
 
-              return filteredAndSortedJobs;
+              return filteredAndSortedInterests;
             },
-            onSelected: (String itemSelected) {
-              hobbyParam = itemSelected;
+            onSelected: (AutocompleteOption itemSelected) {
+              hobbyParam = itemSelected.key!;
             },
+            displayStringForOption: (option) => option.displayText!,
           ),
         ],
       ),
@@ -595,124 +692,130 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
               fontWeight: FontWeight.w500,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Row(
+          BlocListener<PlaceInformationBloc, PlaceInformationState>(
+            listener: _listenerPlaces,
+            child: Column(
               children: [
-                //Quốc gia
-                Expanded(
-                  child: ValueListenableBuilder(
-                    builder: (_, countriesValue, __) {
-                      if (countriesValue!.isNotEmpty) {
-                        return CountriesDropdown(
-                          required: true,
-                          countries: countriesValue,
-                          onChange: (country) {
-                            currentCountry = country;
-                            placeInformationBloc.add(GetListProvincesEvent(country.iso2!));
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Row(
+                    children: [
+                      //Quốc gia
+                      Expanded(
+                        child: ValueListenableBuilder(
+                          builder: (_, countriesValue, __) {
+                            if (countriesValue!.isNotEmpty) {
+                              return CountriesDropdown(
+                                required: true,
+                                countries: countriesValue,
+                                onChange: (country) {
+                                  currentCountry = country;
+                                  placeInformationBloc.add(GetListProvincesEvent(country.iso2!));
+                                },
+                              );
+                            }
+                            return CountriesDropdown(
+                              required: true,
+                              countries: countries,
+                              onChange: (country) {
+                                currentCountry = country;
+                                placeInformationBloc.add(GetListProvincesEvent(country.iso2!));
+                              },
+                            );
                           },
-                        );
-                      }
-                      return CountriesDropdown(
-                        required: true,
-                        countries: countries,
-                        onChange: (country) {
-                          currentCountry = country;
-
-                          placeInformationBloc.add(GetListProvincesEvent(country.iso2!));
-                        },
-                      );
-                    },
-                    valueListenable: countriesChanged,
+                          valueListenable: countriesChanged,
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      //Tỉnh thành
+                      Expanded(
+                        child: ValueListenableBuilder(
+                          builder: (_, provincesValue, __) {
+                            if (provincesValue!.isNotEmpty) {
+                              return ProvinceDropDown(
+                                required: true,
+                                provinces: provincesValue,
+                                onChange: (province) {
+                                  currentProvince = province;
+                                  placeInformationBloc
+                                      .add(GetDistrictsByProvinceEvent(currentCountry!.iso2!, province.stateCode!));
+                                },
+                              );
+                            }
+                            return ProvinceDropDown(
+                              required: true,
+                              provinces: provinces,
+                              onChange: (province) {
+                                currentProvince = province;
+                                placeInformationBloc
+                                    .add(GetDistrictsByProvinceEvent(currentCountry!.iso2!, province.stateCode!));
+                              },
+                            );
+                          },
+                          valueListenable: provincesChanged,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 20),
-                //Tỉnh thành
-                Expanded(
-                  child: ValueListenableBuilder(
-                    builder: (_, provincesValue, __) {
-                      if (provincesValue!.isNotEmpty) {
-                        return ProvinceDropDown(
-                          required: true,
-                          provinces: provincesValue,
-                          onChange: (province) {
-                            currentProvince = province;
-                            placeInformationBloc
-                                .add(GetDistrictsByProvinceEvent(currentCountry!.iso2!, province.stateCode!));
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Row(
+                    children: [
+                      //Quận/huyện
+                      Expanded(
+                        child: ValueListenableBuilder(
+                          builder: (_, districtsValue, __) {
+                            if (districtsValue!.isNotEmpty) {
+                              return DistrictDropDown(
+                                required: true,
+                                districts: districtsValue,
+                                onChange: (district) {
+                                  currentDistrict = district;
+                                  placeInformationBloc.add(GetWardsByDistrictEvent(
+                                      currentCountry!.iso2!, currentProvince!.stateCode!, district.code!));
+                                },
+                              );
+                            }
+                            return DistrictDropDown(
+                              required: true,
+                              districts: districts,
+                              onChange: (district) {
+                                currentDistrict = district;
+                                placeInformationBloc.add(GetWardsByDistrictEvent(
+                                    currentCountry!.iso2!, currentProvince!.stateCode!, district.code!));
+                              },
+                            );
                           },
-                        );
-                      }
-                      return ProvinceDropDown(
-                        required: true,
-                        provinces: provinces,
-                        onChange: (province) {
-                          currentProvince = province;
-                          placeInformationBloc
-                              .add(GetDistrictsByProvinceEvent(currentCountry!.iso2!, province.stateCode!));
-                        },
-                      );
-                    },
-                    valueListenable: provincesChanged,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Row(
-              children: [
-                //Quận/huyện
-                Expanded(
-                  child: ValueListenableBuilder(
-                    builder: (_, districtsValue, __) {
-                      if (districtsValue!.isNotEmpty) {
-                        return DistrictDropDown(
-                          required: true,
-                          districts: districtsValue,
-                          onChange: (district) {
-                            currentDistrict = district;
-                            placeInformationBloc.add(GetWardsByDistrictEvent(
-                                currentCountry!.iso2!, currentProvince!.stateCode!, district.code!));
+                          valueListenable: districtsChanged,
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      //Phường/xã
+                      Expanded(
+                        child: ValueListenableBuilder(
+                          builder: (_, wardsValue, __) {
+                            if (wardsValue!.isNotEmpty) {
+                              return WardDropDown(
+                                required: true,
+                                wards: wardsValue,
+                                onChange: (ward) {
+                                  currentWard = ward;
+                                },
+                              );
+                            }
+                            return WardDropDown(
+                              required: true,
+                              wards: wards,
+                              onChange: (ward) {
+                                currentWard = ward;
+                              },
+                            );
                           },
-                        );
-                      }
-                      return DistrictDropDown(
-                        required: true,
-                        districts: districts,
-                        onChange: (district) {
-                          currentDistrict = district;
-                          placeInformationBloc.add(GetWardsByDistrictEvent(
-                              currentCountry!.iso2!, currentProvince!.stateCode!, district.code!));
-                        },
-                      );
-                    },
-                    valueListenable: districtsChanged,
-                  ),
-                ),
-                const SizedBox(width: 20),
-                //Phường/xã
-                Expanded(
-                  child: ValueListenableBuilder(
-                    builder: (_, wardsValue, __) {
-                      if (wardsValue!.isNotEmpty) {
-                        return WardDropDown(
-                          required: true,
-                          wards: wardsValue,
-                          onChange: (ward) {
-                            currentWard = ward;
-                          },
-                        );
-                      }
-                      return WardDropDown(
-                        required: true,
-                        wards: wards,
-                        onChange: (ward) {
-                          currentWard = ward;
-                        },
-                      );
-                    },
-                    valueListenable: wardsChanged,
+                          valueListenable: wardsChanged,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -728,129 +831,136 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
               fontWeight: FontWeight.w500,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Row(
+          BlocListener<PlaceInformationBloc2, PlaceInformationState2>(
+            listener: _listenerPlaces2,
+            child: Column(
               children: [
-                //Quốc gia
-                Expanded(
-                  child: ValueListenableBuilder(
-                    builder: (_, countriesValue, __) {
-                      if (countriesValue!.isNotEmpty) {
-                        return CountriesDropdown(
-                          required: true,
-                          countries: countriesValue,
-                          onChange: (country) {
-                            currentCountry = country;
-                            placeInformationBloc.add(GetListProvincesEvent(country.iso2!));
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Row(
+                    children: [
+                      //Quốc gia
+                      Expanded(
+                        child: ValueListenableBuilder(
+                          builder: (_, countriesValue, __) {
+                            if (countriesValue!.isNotEmpty) {
+                              return CountriesDropdown(
+                                required: true,
+                                countries: countriesValue,
+                                onChange: (country) {
+                                  currentCountry2 = country;
+                                  placeInformationBloc2.add(GetListProvincesEvent2(country.iso2!));
+                                },
+                              );
+                            }
+                            return CountriesDropdown(
+                              required: true,
+                              countries: countries,
+                              onChange: (country) {
+                                currentCountry2 = country;
+                                placeInformationBloc2.add(GetListProvincesEvent2(country.iso2!));
+                              },
+                            );
                           },
-                        );
-                      }
-                      return CountriesDropdown(
-                        required: true,
-                        countries: countries,
-                        onChange: (country) {
-                          currentCountry = country;
+                          valueListenable: countries2Changed,
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      //Tỉnh thành
+                      Expanded(
+                        child: ValueListenableBuilder(
+                          builder: (_, provincesValue, __) {
+                            if (provincesValue!.isNotEmpty) {
+                              return ProvinceDropDown(
+                                required: true,
+                                provinces: provincesValue,
+                                onChange: (province) {
+                                  currentProvince2 = province;
+                                  placeInformationBloc2
+                                      .add(GetDistrictsByProvinceEvent2(currentCountry2!.iso2!, province.stateCode!));
+                                },
+                              );
+                            }
+                            return ProvinceDropDown(
+                              required: true,
+                              provinces: provinces,
+                              onChange: (province) {
+                                currentProvince2 = province;
+                                placeInformationBloc2
+                                    .add(GetDistrictsByProvinceEvent2(currentCountry2!.iso2!, province.stateCode!));
+                              },
+                            );
+                          },
+                          valueListenable: provinces2Changed,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Row(
+                    children: [
+                      //Quận/huyện
+                      Expanded(
+                        child: ValueListenableBuilder(
+                          builder: (_, districtsValue, __) {
+                            if (districtsValue!.isNotEmpty) {
+                              return DistrictDropDown(
+                                required: true,
+                                districts: districtsValue,
+                                onChange: (district) {
+                                  currentDistrict2 = district;
+                                  placeInformationBloc2.add(GetWardsByDistrictEvent2(
+                                      currentCountry2!.iso2!, currentProvince2!.stateCode!, district.code!));
+                                },
+                              );
+                            }
+                            return DistrictDropDown(
+                              required: true,
+                              districts: districts,
+                              onChange: (district) {
+                                currentDistrict2 = district;
+                                placeInformationBloc2.add(GetWardsByDistrictEvent2(
+                                    currentCountry2!.iso2!, currentProvince2!.stateCode!, district.code!));
+                              },
+                            );
+                          },
+                          valueListenable: districts2Changed,
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      //Phường/xã
+                      Expanded(
+                        child: ValueListenableBuilder(
+                          builder: (_, wardsValue, __) {
+                            if (wardsValue!.isNotEmpty) {
+                              return WardDropDown(
+                                required: true,
+                                wards: wardsValue,
+                                onChange: (ward) {
+                                  currentWard2 = ward;
+                                },
+                              );
+                            }
+                            return WardDropDown(
+                              required: true,
+                              wards: wards,
+                              onChange: (ward) {
+                                currentWard2 = ward;
+                              },
+                            );
+                          },
+                          valueListenable: wards2Changed,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
 
-                          placeInformationBloc.add(GetListProvincesEvent(country.iso2!));
-                        },
-                      );
-                    },
-                    valueListenable: countries2Changed,
-                  ),
-                ),
-                const SizedBox(width: 20),
-                //Tỉnh thành
-                Expanded(
-                  child: ValueListenableBuilder(
-                    builder: (_, provincesValue, __) {
-                      if (provincesValue!.isNotEmpty) {
-                        return ProvinceDropDown(
-                          required: true,
-                          provinces: provincesValue,
-                          onChange: (province) {
-                            currentProvince = province;
-                            placeInformationBloc
-                                .add(GetDistrictsByProvinceEvent(currentCountry!.iso2!, province.stateCode!));
-                          },
-                        );
-                      }
-                      return ProvinceDropDown(
-                        required: true,
-                        provinces: provinces,
-                        onChange: (province) {
-                          currentProvince = province;
-                          placeInformationBloc
-                              .add(GetDistrictsByProvinceEvent(currentCountry!.iso2!, province.stateCode!));
-                        },
-                      );
-                    },
-                    valueListenable: provinces2Changed,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0),
-            child: Row(
-              children: [
-                //Quận/huyện
-                Expanded(
-                  child: ValueListenableBuilder(
-                    builder: (_, districtsValue, __) {
-                      if (districtsValue!.isNotEmpty) {
-                        return DistrictDropDown(
-                          required: true,
-                          districts: districtsValue,
-                          onChange: (district) {
-                            currentDistrict = district;
-                            placeInformationBloc.add(GetWardsByDistrictEvent(
-                                currentCountry!.iso2!, currentProvince!.stateCode!, district.code!));
-                          },
-                        );
-                      }
-                      return DistrictDropDown(
-                        required: true,
-                        districts: districts,
-                        onChange: (district) {
-                          currentDistrict = district;
-                          placeInformationBloc.add(GetWardsByDistrictEvent(
-                              currentCountry!.iso2!, currentProvince!.stateCode!, district.code!));
-                        },
-                      );
-                    },
-                    valueListenable: districts2Changed,
-                  ),
-                ),
-                const SizedBox(width: 20),
-                //Phường/xã
-                Expanded(
-                  child: ValueListenableBuilder(
-                    builder: (_, wardsValue, __) {
-                      if (wardsValue!.isNotEmpty) {
-                        return WardDropDown(
-                          required: true,
-                          wards: wardsValue,
-                          onChange: (ward) {
-                            currentWard = ward;
-                          },
-                        );
-                      }
-                      return WardDropDown(
-                        required: true,
-                        wards: wards,
-                        onChange: (ward) {
-                          currentWard = ward;
-                        },
-                      );
-                    },
-                    valueListenable: wards2Changed,
-                  ),
-                ),
-              ],
-            ),
-          ),
           //Address
           InformationFieldWidget(
             required: true,
@@ -958,7 +1068,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
           ],
         ),
         Positioned(
-          bottom: 25,
+          bottom: 0,
           left: 0,
           right: 0,
           child: Column(
@@ -973,7 +1083,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                         color: AppColors.white,
                         width: 1,
                       ),
-                      borderRadius: BorderRadius.circular(90),
+                      borderRadius: BorderRadius.circular(120),
                     ),
                     child: ClipRRect(
                       child: ImageWidget(
@@ -984,9 +1094,9 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                   ),
                   Positioned(
                     bottom: 0,
-                    right: 0,
+                    right: 5,
                     child: ImageWidget(
-                      ImageConstants.imageCamera,
+                      ImageConstants.imageType,
                       width: 30,
                     ),
                   ),
@@ -994,12 +1104,12 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
               ),
               const SizedBox(height: 5),
               Padding(
-                padding: const EdgeInsets.only(left: 25.0),
+                padding: const EdgeInsets.only(left: 20.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      widget.authInfo.displayName!,
+                      widget.authInfo.getdisplayName,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -1007,48 +1117,44 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                       ),
                     ),
                     const SizedBox(width: 5),
-                    Container(
-                      width: 30,
-                      height: 16,
-                      decoration: BoxDecoration(
-                        color: AppColors.blue32,
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        "JA",
-                        style: TextStyle(
-                          color: AppColors.white,
-                        ),
-                      ),
-                    )
-                    // widget.authInfo.isJA!
-                    //     ? Container(
-                    //         width: 30,
-                    //         height: 16,
-                    //         decoration: BoxDecoration(
-                    //           color: AppColors.blue32,
-                    //           borderRadius: BorderRadius.circular(30.0),
-                    //         ),
-                    //         alignment: Alignment.center,
-                    //         child: const Text(
-                    //           "JA",
-                    //           style: TextStyle(
-                    //             color: AppColors.white,
-                    //           ),
-                    //         ),
-                    //       )
-                    //     : Container(),
+                    widget.authInfo.getIsJA
+                        ? Container(
+                            width: 30,
+                            height: 16,
+                            decoration: BoxDecoration(
+                              color: AppColors.blue32,
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            alignment: Alignment.center,
+                            child: const Text(
+                              "JA",
+                              style: TextStyle(
+                                color: AppColors.white,
+                              ),
+                            ),
+                          )
+                        : Container(),
                   ],
+                ),
+              ),
+              Visibility.maintain(
+                visible: widget.authInfo.getIsHasNickname,
+                child: Text(
+                  widget.authInfo.getNickname,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                    color: AppColors.grey15,
+                  ),
                 ),
               ),
               const SizedBox(height: 8),
               Text(
                 "ID: ${widget.authInfo.pDoneId}",
                 style: const TextStyle(
-                  fontSize: 16,
+                  fontSize: 15,
                   fontWeight: FontWeight.normal,
-                  color: AppColors.grey15,
+                  color: AppColors.black,
                 ),
               ),
             ],

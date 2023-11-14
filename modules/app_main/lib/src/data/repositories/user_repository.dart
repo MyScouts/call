@@ -1,5 +1,4 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/core/networking/api_response.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
 import 'package:app_main/src/data/models/responses/update_none_pdone_profile_response.dart';
 import 'package:app_main/src/data/models/responses/update_pdone_profile_response.dart';

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class ProtectorDropdown extends StatefulWidget {
   final Function(int) onChange;
   final bool required;
+  final bool isDisable;
   final List<Protector> protectors;
 
   const ProtectorDropdown({
@@ -13,6 +14,7 @@ class ProtectorDropdown extends StatefulWidget {
     required this.onChange,
     this.required = false,
     this.protectors = const [],
+    this.isDisable = false,
   });
 
   @override
@@ -28,10 +30,10 @@ class _ProtectorDropdownState extends State<ProtectorDropdown> {
         Row(
           children: [
             const Text(
-              "Tên ngân hàng",
+              "Người bảo hộ",
               style: TextStyle(
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF212121),
+                color: Color(0xFF353DFF),
                 height: 20 / 14,
                 leadingDistribution: TextLeadingDistribution.even,
               ),
@@ -79,7 +81,7 @@ class _ProtectorDropdownState extends State<ProtectorDropdown> {
             return null;
           },
           onChanged: (value) {
-            if (value != null) {
+            if (value != null && widget.isDisable) {
               widget.onChange(value.id!);
               value = value;
               setState(() {});

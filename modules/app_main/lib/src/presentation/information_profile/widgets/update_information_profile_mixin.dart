@@ -5,7 +5,7 @@ import 'package:app_main/src/domain/entities/update_account/place/district.dart'
 import 'package:app_main/src/domain/entities/update_account/place/place_information.dart';
 import 'package:app_main/src/domain/entities/update_account/place/province.dart';
 import 'package:app_main/src/domain/entities/update_account/place/ward.dart';
-import 'package:app_main/src/domain/entities/update_account/update_pdone_birth_place_payload.dart';
+import 'package:app_main/src/domain/entities/update_account/update_pdone_birth_place_payload_2.dart';
 import 'package:app_main/src/domain/entities/update_account/update_place_information_payload.dart';
 import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +51,11 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
   District? currentDistrict;
   Ward? currentWard;
 
+  Country? currentCountry2;
+  Province? currentProvince2;
+  District? currentDistrict2;
+  Ward? currentWard2;
+
   ValueNotifier<List<Country>?> countriesChanged = ValueNotifier([]);
   ValueNotifier<List<Province>?> provincesChanged = ValueNotifier([]);
   ValueNotifier<List<District>?> districtsChanged = ValueNotifier([]);
@@ -60,6 +65,8 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
   ValueNotifier<List<Province>?> provinces2Changed = ValueNotifier([]);
   ValueNotifier<List<District>?> districts2Changed = ValueNotifier([]);
   ValueNotifier<List<Ward>?> wards2Changed = ValueNotifier([]);
+
+  ValueNotifier<bool> isUpdateChanged = ValueNotifier(false);
 
   Gender? currentGender;
   DateTime? birthDay;
@@ -101,10 +108,6 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
 
   PDoneOptionRangeAge rangeAge = PDoneOptionRangeAge.over18;
 
-  bool isShowProtector() {
-    return rangeAge == PDoneOptionRangeAge.under18AndOver15 || pDoneOptionMethod == PDoneOptionMethod.userBirthCer;
-  }
-
   bool checkIsUnder15ShouldEnableField() {
     return birthDay == null || birthDay != null && !birthDay!.isUnder15yearsAgo();
   }
@@ -120,9 +123,9 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
         street: addressTxtController.text,
         address: addressTxtController.text,
         countryCode: currentCountry!.iso2!,
-        provinceCode: currentProvince!.stateCode!.toStringAsFixed(0),
+        provinceCode: currentProvince!.stateCode!.toString(),
         districtCode: currentDistrict!.code!,
-        wardCode: currentWard!.id!.toStringAsFixed(0),
+        wardCode: currentWard!.id!.toString(),
       ),
       height: 1,
       weight: 1,
@@ -133,7 +136,7 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
       interest: hobbyParam,
       talent: talentParam,
       sex: genderParam,
-      birthPlace: UpdatePDoneBirthPlacePayload(
+      birthPlace: UpdatePDoneBirthPlacePayload2(
         countryName: currentCountry!.name!,
         provinceName: currentProvince!.name!,
         districtName: currentDistrict!.name!,
@@ -141,14 +144,15 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
         street: addressTxtController.text,
         address: addressTxtController.text,
         countryCode: currentCountry!.iso2!,
-        countryId: currentDistrict!.code!,
-        provinceId: currentProvince!.stateCode!.toStringAsFixed(0),
-        districtId: currentDistrict!.code!,
-        wardId: currentWard!.id!.toStringAsFixed(0),
+        countryId: currentCountry!.id!,
+        provinceId: currentProvince!.stateCode!,
+        districtId:
+            currentDistrict?.code != null && currentDistrict!.code!.isNotEmpty ? int.parse(currentDistrict!.code!) : 0,
+        wardId: currentWard!.id!,
       ),
-      birthday: birthDay!.day.toStringAsFixed(0),
+      birthday: birthDay!.toString(),
       identityNumber: idNumberTxtController.text,
-      supplyDate: supplyDate!.day.toStringAsExponential(0),
+      supplyDate: supplyDate!.toString(),
       supplyAddress: placeOfNumberTxtController.text,
     );
   }

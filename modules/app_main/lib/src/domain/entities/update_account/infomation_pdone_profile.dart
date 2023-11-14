@@ -2,12 +2,12 @@ import 'package:app_main/src/domain/entities/update_account/place/information_bi
 import 'package:app_main/src/domain/entities/update_account/place/information_currentplace.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'information_profile.freezed.dart';
-part 'information_profile.g.dart';
+part 'infomation_pdone_profile.freezed.dart';
+part 'infomation_pdone_profile.g.dart';
 
 @freezed
-class InformationProfile with _$InformationProfile {
-  const factory InformationProfile({
+class InformationPdoneProfile with _$InformationPdoneProfile {
+  const factory InformationPdoneProfile({
     required String firstName,
     required String middleName,
     required String lastName,
@@ -33,7 +33,7 @@ class InformationProfile with _$InformationProfile {
     required String birthCertificateSupplyDate,
     required Map<String, dynamic> kycMetadata,
     required Map<String, dynamic> type,
-  }) = _InformationProfile;
+  }) = _InformationPdoneProfile;
 
-  factory InformationProfile.fromJson(Map<String, dynamic> json) => _$InformationProfileFromJson(json);
+  factory InformationPdoneProfile.fromJson(Map<String, dynamic> json) => _$InformationPdoneProfileFromJson(json);
 }

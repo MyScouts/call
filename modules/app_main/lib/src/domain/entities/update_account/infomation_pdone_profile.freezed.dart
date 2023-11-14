@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'information_profile.dart';
+part of 'infomation_pdone_profile.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,13 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-InformationProfile _$InformationProfileFromJson(Map<String, dynamic> json) {
-  return _InformationProfile.fromJson(json);
+InformationPdoneProfile _$InformationPdoneProfileFromJson(
+    Map<String, dynamic> json) {
+  return _InformationPdoneProfile.fromJson(json);
 }
 
 /// @nodoc
-mixin _$InformationProfile {
+mixin _$InformationPdoneProfile {
   String get firstName => throw _privateConstructorUsedError;
   String get middleName => throw _privateConstructorUsedError;
   String get lastName => throw _privateConstructorUsedError;
@@ -50,15 +51,15 @@ mixin _$InformationProfile {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $InformationProfileCopyWith<InformationProfile> get copyWith =>
+  $InformationPdoneProfileCopyWith<InformationPdoneProfile> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $InformationProfileCopyWith<$Res> {
-  factory $InformationProfileCopyWith(
-          InformationProfile value, $Res Function(InformationProfile) then) =
-      _$InformationProfileCopyWithImpl<$Res, InformationProfile>;
+abstract class $InformationPdoneProfileCopyWith<$Res> {
+  factory $InformationPdoneProfileCopyWith(InformationPdoneProfile value,
+          $Res Function(InformationPdoneProfile) then) =
+      _$InformationPdoneProfileCopyWithImpl<$Res, InformationPdoneProfile>;
   @useResult
   $Res call(
       {String firstName,
@@ -92,9 +93,10 @@ abstract class $InformationProfileCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$InformationProfileCopyWithImpl<$Res, $Val extends InformationProfile>
-    implements $InformationProfileCopyWith<$Res> {
-  _$InformationProfileCopyWithImpl(this._value, this._then);
+class _$InformationPdoneProfileCopyWithImpl<$Res,
+        $Val extends InformationPdoneProfile>
+    implements $InformationPdoneProfileCopyWith<$Res> {
+  _$InformationPdoneProfileCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -254,11 +256,12 @@ class _$InformationProfileCopyWithImpl<$Res, $Val extends InformationProfile>
 }
 
 /// @nodoc
-abstract class _$$InformationProfileImplCopyWith<$Res>
-    implements $InformationProfileCopyWith<$Res> {
-  factory _$$InformationProfileImplCopyWith(_$InformationProfileImpl value,
-          $Res Function(_$InformationProfileImpl) then) =
-      __$$InformationProfileImplCopyWithImpl<$Res>;
+abstract class _$$InformationPdoneProfileImplCopyWith<$Res>
+    implements $InformationPdoneProfileCopyWith<$Res> {
+  factory _$$InformationPdoneProfileImplCopyWith(
+          _$InformationPdoneProfileImpl value,
+          $Res Function(_$InformationPdoneProfileImpl) then) =
+      __$$InformationPdoneProfileImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -295,11 +298,13 @@ abstract class _$$InformationProfileImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$InformationProfileImplCopyWithImpl<$Res>
-    extends _$InformationProfileCopyWithImpl<$Res, _$InformationProfileImpl>
-    implements _$$InformationProfileImplCopyWith<$Res> {
-  __$$InformationProfileImplCopyWithImpl(_$InformationProfileImpl _value,
-      $Res Function(_$InformationProfileImpl) _then)
+class __$$InformationPdoneProfileImplCopyWithImpl<$Res>
+    extends _$InformationPdoneProfileCopyWithImpl<$Res,
+        _$InformationPdoneProfileImpl>
+    implements _$$InformationPdoneProfileImplCopyWith<$Res> {
+  __$$InformationPdoneProfileImplCopyWithImpl(
+      _$InformationPdoneProfileImpl _value,
+      $Res Function(_$InformationPdoneProfileImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -331,7 +336,7 @@ class __$$InformationProfileImplCopyWithImpl<$Res>
     Object? kycMetadata = null,
     Object? type = null,
   }) {
-    return _then(_$InformationProfileImpl(
+    return _then(_$InformationPdoneProfileImpl(
       firstName: null == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -438,8 +443,8 @@ class __$$InformationProfileImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$InformationProfileImpl implements _InformationProfile {
-  const _$InformationProfileImpl(
+class _$InformationPdoneProfileImpl implements _InformationPdoneProfile {
+  const _$InformationPdoneProfileImpl(
       {required this.firstName,
       required this.middleName,
       required this.lastName,
@@ -468,8 +473,8 @@ class _$InformationProfileImpl implements _InformationProfile {
       : _kycMetadata = kycMetadata,
         _type = type;
 
-  factory _$InformationProfileImpl.fromJson(Map<String, dynamic> json) =>
-      _$$InformationProfileImplFromJson(json);
+  factory _$InformationPdoneProfileImpl.fromJson(Map<String, dynamic> json) =>
+      _$$InformationPdoneProfileImplFromJson(json);
 
   @override
   final String firstName;
@@ -535,14 +540,14 @@ class _$InformationProfileImpl implements _InformationProfile {
 
   @override
   String toString() {
-    return 'InformationProfile(firstName: $firstName, middleName: $middleName, lastName: $lastName, nickName: $nickName, sex: $sex, birthday: $birthday, birthPlace: $birthPlace, currentPlace: $currentPlace, height: $height, weight: $weight, maritalStatus: $maritalStatus, bloodGroup: $bloodGroup, academicLevel: $academicLevel, job: $job, interest: $interest, talent: $talent, identityNumber: $identityNumber, supplyDate: $supplyDate, supplyAddress: $supplyAddress, protector: $protector, protectorPDoneId: $protectorPDoneId, birthCertificateUrl: $birthCertificateUrl, birthCertificateSupplyDate: $birthCertificateSupplyDate, kycMetadata: $kycMetadata, type: $type)';
+    return 'InformationPdoneProfile(firstName: $firstName, middleName: $middleName, lastName: $lastName, nickName: $nickName, sex: $sex, birthday: $birthday, birthPlace: $birthPlace, currentPlace: $currentPlace, height: $height, weight: $weight, maritalStatus: $maritalStatus, bloodGroup: $bloodGroup, academicLevel: $academicLevel, job: $job, interest: $interest, talent: $talent, identityNumber: $identityNumber, supplyDate: $supplyDate, supplyAddress: $supplyAddress, protector: $protector, protectorPDoneId: $protectorPDoneId, birthCertificateUrl: $birthCertificateUrl, birthCertificateSupplyDate: $birthCertificateSupplyDate, kycMetadata: $kycMetadata, type: $type)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$InformationProfileImpl &&
+            other is _$InformationPdoneProfileImpl &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.middleName, middleName) ||
@@ -625,48 +630,49 @@ class _$InformationProfileImpl implements _InformationProfile {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$InformationProfileImplCopyWith<_$InformationProfileImpl> get copyWith =>
-      __$$InformationProfileImplCopyWithImpl<_$InformationProfileImpl>(
-          this, _$identity);
+  _$$InformationPdoneProfileImplCopyWith<_$InformationPdoneProfileImpl>
+      get copyWith => __$$InformationPdoneProfileImplCopyWithImpl<
+          _$InformationPdoneProfileImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$InformationProfileImplToJson(
+    return _$$InformationPdoneProfileImplToJson(
       this,
     );
   }
 }
 
-abstract class _InformationProfile implements InformationProfile {
-  const factory _InformationProfile(
-      {required final String firstName,
-      required final String middleName,
-      required final String lastName,
-      required final String nickName,
-      required final int sex,
-      required final String birthday,
-      required final InformationPDoneBirthPlace birthPlace,
-      required final InformationDPoneCurrentPlace currentPlace,
-      required final int height,
-      required final int weight,
-      required final String maritalStatus,
-      required final String bloodGroup,
-      required final String academicLevel,
-      required final String job,
-      required final String interest,
-      required final String talent,
-      required final String identityNumber,
-      required final String supplyDate,
-      required final String supplyAddress,
-      required final int protector,
-      required final String protectorPDoneId,
-      required final String birthCertificateUrl,
-      required final String birthCertificateSupplyDate,
-      required final Map<String, dynamic> kycMetadata,
-      required final Map<String, dynamic> type}) = _$InformationProfileImpl;
+abstract class _InformationPdoneProfile implements InformationPdoneProfile {
+  const factory _InformationPdoneProfile(
+          {required final String firstName,
+          required final String middleName,
+          required final String lastName,
+          required final String nickName,
+          required final int sex,
+          required final String birthday,
+          required final InformationPDoneBirthPlace birthPlace,
+          required final InformationDPoneCurrentPlace currentPlace,
+          required final int height,
+          required final int weight,
+          required final String maritalStatus,
+          required final String bloodGroup,
+          required final String academicLevel,
+          required final String job,
+          required final String interest,
+          required final String talent,
+          required final String identityNumber,
+          required final String supplyDate,
+          required final String supplyAddress,
+          required final int protector,
+          required final String protectorPDoneId,
+          required final String birthCertificateUrl,
+          required final String birthCertificateSupplyDate,
+          required final Map<String, dynamic> kycMetadata,
+          required final Map<String, dynamic> type}) =
+      _$InformationPdoneProfileImpl;
 
-  factory _InformationProfile.fromJson(Map<String, dynamic> json) =
-      _$InformationProfileImpl.fromJson;
+  factory _InformationPdoneProfile.fromJson(Map<String, dynamic> json) =
+      _$InformationPdoneProfileImpl.fromJson;
 
   @override
   String get firstName;
@@ -720,6 +726,6 @@ abstract class _InformationProfile implements InformationProfile {
   Map<String, dynamic> get type;
   @override
   @JsonKey(ignore: true)
-  _$$InformationProfileImplCopyWith<_$InformationProfileImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$InformationPdoneProfileImplCopyWith<_$InformationPdoneProfileImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

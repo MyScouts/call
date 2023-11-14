@@ -21,8 +21,7 @@ UpdateNonePDoneProfileReponse _$UpdateNonePDoneProfileReponseFromJson(
 
 /// @nodoc
 mixin _$UpdateNonePDoneProfileReponse {
-  Map<String, InformationProfile> get profile =>
-      throw _privateConstructorUsedError;
+  InformationProfile get profile => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,7 +37,9 @@ abstract class $UpdateNonePDoneProfileReponseCopyWith<$Res> {
       _$UpdateNonePDoneProfileReponseCopyWithImpl<$Res,
           UpdateNonePDoneProfileReponse>;
   @useResult
-  $Res call({Map<String, InformationProfile> profile});
+  $Res call({InformationProfile profile});
+
+  $InformationProfileCopyWith<$Res> get profile;
 }
 
 /// @nodoc
@@ -61,8 +62,16 @@ class _$UpdateNonePDoneProfileReponseCopyWithImpl<$Res,
       profile: null == profile
           ? _value.profile
           : profile // ignore: cast_nullable_to_non_nullable
-              as Map<String, InformationProfile>,
+              as InformationProfile,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $InformationProfileCopyWith<$Res> get profile {
+    return $InformationProfileCopyWith<$Res>(_value.profile, (value) {
+      return _then(_value.copyWith(profile: value) as $Val);
+    });
   }
 }
 
@@ -75,7 +84,10 @@ abstract class _$$UpdateNonePDoneProfileReponseImplCopyWith<$Res>
       __$$UpdateNonePDoneProfileReponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Map<String, InformationProfile> profile});
+  $Res call({InformationProfile profile});
+
+  @override
+  $InformationProfileCopyWith<$Res> get profile;
 }
 
 /// @nodoc
@@ -95,9 +107,9 @@ class __$$UpdateNonePDoneProfileReponseImplCopyWithImpl<$Res>
   }) {
     return _then(_$UpdateNonePDoneProfileReponseImpl(
       profile: null == profile
-          ? _value._profile
+          ? _value.profile
           : profile // ignore: cast_nullable_to_non_nullable
-              as Map<String, InformationProfile>,
+              as InformationProfile,
     ));
   }
 }
@@ -106,21 +118,14 @@ class __$$UpdateNonePDoneProfileReponseImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UpdateNonePDoneProfileReponseImpl
     implements _UpdateNonePDoneProfileReponse {
-  const _$UpdateNonePDoneProfileReponseImpl(
-      {required final Map<String, InformationProfile> profile})
-      : _profile = profile;
+  const _$UpdateNonePDoneProfileReponseImpl({required this.profile});
 
   factory _$UpdateNonePDoneProfileReponseImpl.fromJson(
           Map<String, dynamic> json) =>
       _$$UpdateNonePDoneProfileReponseImplFromJson(json);
 
-  final Map<String, InformationProfile> _profile;
   @override
-  Map<String, InformationProfile> get profile {
-    if (_profile is EqualUnmodifiableMapView) return _profile;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_profile);
-  }
+  final InformationProfile profile;
 
   @override
   String toString() {
@@ -132,13 +137,12 @@ class _$UpdateNonePDoneProfileReponseImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UpdateNonePDoneProfileReponseImpl &&
-            const DeepCollectionEquality().equals(other._profile, _profile));
+            (identical(other.profile, profile) || other.profile == profile));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_profile));
+  int get hashCode => Object.hash(runtimeType, profile);
 
   @JsonKey(ignore: true)
   @override
@@ -159,14 +163,14 @@ class _$UpdateNonePDoneProfileReponseImpl
 abstract class _UpdateNonePDoneProfileReponse
     implements UpdateNonePDoneProfileReponse {
   const factory _UpdateNonePDoneProfileReponse(
-          {required final Map<String, InformationProfile> profile}) =
+          {required final InformationProfile profile}) =
       _$UpdateNonePDoneProfileReponseImpl;
 
   factory _UpdateNonePDoneProfileReponse.fromJson(Map<String, dynamic> json) =
       _$UpdateNonePDoneProfileReponseImpl.fromJson;
 
   @override
-  Map<String, InformationProfile> get profile;
+  InformationProfile get profile;
   @override
   @JsonKey(ignore: true)
   _$$UpdateNonePDoneProfileReponseImplCopyWith<

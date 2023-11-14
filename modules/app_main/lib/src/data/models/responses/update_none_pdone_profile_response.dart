@@ -6,9 +6,8 @@ part 'update_none_pdone_profile_response.g.dart';
 
 @freezed
 class UpdateNonePDoneProfileReponse with _$UpdateNonePDoneProfileReponse {
-  // Constructor to initialize the model
   const factory UpdateNonePDoneProfileReponse({
-    required Map<String, InformationProfile> profile,
+    required InformationProfile profile,
   }) = _UpdateNonePDoneProfileReponse;
 
   factory UpdateNonePDoneProfileReponse.fromJson(Map<String, dynamic> json) =>
