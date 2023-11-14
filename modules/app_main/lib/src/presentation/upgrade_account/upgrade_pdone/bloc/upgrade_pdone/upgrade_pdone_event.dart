@@ -77,8 +77,8 @@ class ExtractingIdCardEvent extends UpgradePDoneEvent {
 }
 
 @immutable
-class UpdatePDoneSendOTP extends UpgradePDoneEvent {
-  UpdatePDoneSendOTP();
+class UpdatePDoneSendOTPEvent extends UpgradePDoneEvent {
+  UpdatePDoneSendOTPEvent();
 }
 
 @immutable

@@ -9,6 +9,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
 import '../../data/models/responses/confirm_register_ja_response.dart';
+import '../../data/models/responses/pdone/pdone_information_response.dart';
 import '../../data/models/responses/register_pdone_response.dart';
 import '../../data/models/responses/upgrade_account_response.dart';
 import '../entities/bank.dart';
@@ -127,4 +128,9 @@ class UpgradeAccountUsecase {
       {required PDoneRequestProtectorReq req}) {
     return _upgradeAccountRepository.requestProtector(req: req);
   }
+
+  Future<PDoneInformationResponse> pDoneProfile(){
+    return _upgradeAccountRepository.pDoneProfile();
+  }
+
 }

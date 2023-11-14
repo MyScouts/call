@@ -5,6 +5,7 @@ import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/
 import 'package:app_main/src/data/models/responses/api_verify_response.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
+import 'package:app_main/src/data/models/responses/pdone/pdone_information_response.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
 import 'package:camera/camera.dart';
 
@@ -26,7 +27,9 @@ abstract class UpgradeAccountRepository {
   Future<UpgradeAccount> getListData();
 
   Future<bool> updatePDoneProfileOver18(UpdateProfilePayload payload);
+
   Future<bool> updatePDoneProfileRange15To18(UpdateProfilePayload payload);
+
   Future<bool> updatePDoneProfileBirthCer(UpdateProfilePayload payload);
 
   Future<bool> updateKyc(UpdatePDoneKYCPayload payload);
@@ -54,7 +57,6 @@ abstract class UpgradeAccountRepository {
 
   Future<RegisterPDoneResponse> checkProtector(CheckProtectorPayload payload);
 
-
   Future<BankAccount> updateBankAccount(UpdateBankAccountPayload payload);
 
   Future<JAStatusResponse> getJAStatus();
@@ -68,5 +70,8 @@ abstract class UpgradeAccountRepository {
 
   Future<String> uploadBirthCer(XFile xFile, String prefix);
 
-  Future<APIVerifyResponse> requestProtector({required PDoneRequestProtectorReq req});
+  Future<APIVerifyResponse> requestProtector(
+      {required PDoneRequestProtectorReq req});
+
+  Future<PDoneInformationResponse> pDoneProfile();
 }

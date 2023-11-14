@@ -141,7 +141,8 @@ class ExtractedEKycIdCardFailure extends UpgradePDoneState {
 }
 
 class UpdatePDoneSendOTPSuccessState extends UpgradePDoneState {
-  UpdatePDoneSendOTPSuccessState();
+  final String currentPhoneNumber;
+  UpdatePDoneSendOTPSuccessState({required this.currentPhoneNumber});
 }
 
 class UpdatePDoneSendOTPFailureState extends UpgradePDoneState {

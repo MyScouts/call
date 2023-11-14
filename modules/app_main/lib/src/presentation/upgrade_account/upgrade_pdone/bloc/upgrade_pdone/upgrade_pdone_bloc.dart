@@ -16,6 +16,7 @@ import '../../../../../domain/entities/update_account/update_profile_payload.dar
 import '../../../../../domain/entities/update_account/upgrade_account.dart';
 import '../../../../../domain/entities/update_account/verify_phone_register_pdone_payload.dart';
 import '../../../../../domain/usecases/upgrade_account_usecase.dart';
+import '../../../../../domain/usecases/user_share_preferences_usecase.dart';
 import '../../../../../domain/usecases/user_usecase.dart';
 import '../../../upgrade_account_constants.dart';
 
@@ -26,13 +27,15 @@ part 'upgrade_pdone_state.dart';
 @injectable
 class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
   final UpgradeAccountUsecase _upgradeAccountUsecase;
+  final UserSharePreferencesUsecase _userSharePreferencesUsecase;
 
   // final ResourceUsecase _resourceUsecase;
   final UserUsecase _userUsecase;
 
   // final UserSharePreferencesUsecase _userSharePreferencesUsecase;
 
-  UpgradePDoneBloc(this._upgradeAccountUsecase, this._userUsecase)
+  UpgradePDoneBloc(this._upgradeAccountUsecase, this._userUsecase,
+      this._userSharePreferencesUsecase)
       : super(UpgradePDoneInitial()) {
     on<GetListMasterEvent>(_mapGetListMasterEvent);
     on<RegisterPDoneAccountEvent>(_mapRegisterPDoneAccountEvent);
@@ -42,7 +45,7 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     on<UploadKYCImageEvent>(_mapUploadKYCImageEvent);
     on<ResendOtpEvent>(_mapResendOtpEvent);
     on<ExtractingIdCardEvent>(_mapExtractingIdCardEvent);
-    on<UpdatePDoneSendOTP>(_mapSendOTPVerifyUpdatePdoneEvent);
+    on<UpdatePDoneSendOTPEvent>(_mapSendOTPVerifyUpdatePdoneEvent);
     on<VerifyProtectorEvent>(_mapVerifyProtectorEvent);
     on<UploadImageBirthCerEvent>(_mapUploadImageBirthCerEvent);
     on<RequestProtectorEvent>(_mapRequestProtectorEvent);
@@ -99,12 +102,14 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
   }
 
   FutureOr<void> _mapSendOTPVerifyUpdatePdoneEvent(
-      UpdatePDoneSendOTP event, Emitter<UpgradePDoneState> emit) async {
+      UpdatePDoneSendOTPEvent event, Emitter<UpgradePDoneState> emit) async {
     try {
       final res = await _userUsecase.genOtp();
 
       if (res) {
-        emit(UpdatePDoneSendOTPSuccessState());
+        emit(UpdatePDoneSendOTPSuccessState(
+            currentPhoneNumber:
+                '(+${_userSharePreferencesUsecase.getUserInfo()!.phoneCode})${_userSharePreferencesUsecase.getUserInfo()!.phone}'));
       } else {
         emit(UpdatePDoneSendOTPFailureState(
             errorMessage: 'Có lỗi xảy ra, vui lòng thử lại!'));
@@ -309,8 +314,6 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     emit(RequestingProtectorState());
 
     try {
-
-
       final userId = await _upgradeAccountUsecase.verifyProtector(event.req);
       final reqProtectorRequest = PDoneRequestProtectorReq(
           relation: event.req.protector, protectorId: userId);
@@ -336,11 +339,11 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     }
   }
 
-
   FutureOr<void> _mapProtectorApprovedEvent(
       ProtectorApprovedEvent event, Emitter<UpgradePDoneState> emit) async {
     emit(ApproveProtectorState());
   }
+
   FutureOr<void> _mapProtectorRejectedEvent(
       ProtectorRejectedEvent event, Emitter<UpgradePDoneState> emit) async {
     emit(RejectProtectorState());
