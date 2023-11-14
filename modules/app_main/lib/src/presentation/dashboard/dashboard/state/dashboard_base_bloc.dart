@@ -15,6 +15,10 @@ abstract class DashboardBaseBloc
       onAddItem,
       transformer: (event, mapper) => event.asyncExpand(mapper),
     );
+    on<InsertItem>(
+      onInsertItem,
+      transformer: (event, mapper) => event.asyncExpand(mapper),
+    );
     on<RemoveItem>(
       onRemoveItem,
       transformer: (event, mapper) => event.asyncExpand(mapper),
@@ -27,6 +31,33 @@ abstract class DashboardBaseBloc
   }
 
   String cacheKey = '';
+
+  void onInsertItem(
+    InsertItem event,
+    Emitter<DashboardBaseState> emit,
+  ) {
+    if (state is DashboardBaseInitial) return;
+    final s = state as DashboardBaseFetchDataSuccess;
+    final ids = s.items.map((e) => e.id).toList();
+    List<DashBoardItem> list;
+    if (ids.contains(event.item.id)) {
+      s.items.removeWhere((e) => e.id == event.item.id);
+
+    }
+    list = s.items;
+    list.insert(event.index, event.item);
+    if (event.item is DashBoardGroupItem) {
+      final gIds =
+      (event.item as DashBoardGroupItem).items.map((e) => e.id).toList();
+      list = list.where((e) => !gIds.contains(e.id)).toList();
+    }
+    dashboardSharePreferenceUseCase.saveDashboardItems(
+      cacheKey,
+      list.map((e) => e).toList(),
+    );
+    emit(DashboardBaseFetchDataSuccess(items: list));
+
+  }
 
   void onChangeGroup(
     ChangeGroup event,
@@ -179,6 +210,13 @@ class AddItem extends DashboardBaseEvent {
   final DashBoardItem item;
 
   AddItem(this.item);
+}
+
+class InsertItem extends DashboardBaseEvent {
+  final DashBoardItem item;
+  final int index;
+
+  InsertItem(this.item, this.index);
 }
 
 class RemoveItem extends DashboardBaseEvent {

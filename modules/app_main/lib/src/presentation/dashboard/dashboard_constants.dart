@@ -3,6 +3,7 @@ import 'package:app_main/src/presentation/qr_code/qr_code_screen.dart';
 import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:equatable/equatable.dart';
+import 'package:staggered_reorderable/staggered_reorderable.dart';
 
 import '../upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
 
@@ -30,6 +31,8 @@ abstract class DashBoardItem extends Equatable {
   bool get isIcon => this is DashBoardIconItem;
 
   bool get isGroup => this is DashBoardGroupItem;
+
+  CustomerItemType get type;
 
   Map<String, dynamic> toJson() {
     return {
@@ -74,6 +77,9 @@ class DashBoardIconItem extends DashBoardItem {
       path: json['path'],
     );
   }
+
+  @override
+  CustomerItemType get type => CustomerItemType.icon;
 }
 
 class DashBoardWidgetItem extends DashBoardItem {
@@ -85,6 +91,9 @@ class DashBoardWidgetItem extends DashBoardItem {
     required super.height,
     super.path,
   });
+
+  @override
+  CustomerItemType get type => CustomerItemType.widget;
 
   @override
   List<Object?> get props => [id];
@@ -114,6 +123,9 @@ class DashBoardGroupItem extends DashBoardItem {
     required this.items,
     super.path,
   }) : super(width: 1, height: 1);
+
+  @override
+  CustomerItemType get type => CustomerItemType.group;
 
   @override
   List<Object?> get props => [items, id, title];
@@ -149,23 +161,6 @@ class DashBoardGroupItem extends DashBoardItem {
       items: items ?? this.items,
     );
   }
-}
-
-class DashBoardEmptyItem extends DashBoardItem {
-  const DashBoardEmptyItem()
-      : super(
-          width: 1,
-          height: 1,
-          backgroundImage: '',
-          title: '',
-          id: 'empty',
-        );
-
-  @override
-  Map<String, dynamic> childToJson() => {};
-
-  @override
-  List<Object?> get props => [];
 }
 
 final Map<String, DashBoardItem> mapItems = {
