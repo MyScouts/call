@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/authentication/forgot_password/forgot_password_verify_otp.dart';
 import 'package:app_main/src/presentation/authentication/forgot_password/reset_password_screen.dart';
+import 'package:app_main/src/presentation/authentication/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'forgot_password/forgot_password_screen.dart';
@@ -11,6 +12,9 @@ import 'login/verify_otp_screen.dart';
 class AuthenticationRoutes extends RouteModule {
   @override
   Map<String, WidgetBuilder> getAll(RouteSettings settings) => {
+        SplashScreen.routeName: (context) {
+          return const SplashScreen();
+        },
         AuthenticateScreen.routeName: (context) {
           return const AuthenticateScreen();
         },

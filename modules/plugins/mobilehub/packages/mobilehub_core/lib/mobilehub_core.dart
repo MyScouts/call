@@ -1,5 +1,7 @@
 library mobilehub_core;
 
+export 'package:package_info_plus/package_info_plus.dart';
+
 export 'src/controller/value_notifier_saved.dart';
 export 'src/dependency_injection/mobilehub_core_micro.dart';
 export 'src/dependency_injection/mobilehub_core_micro.module.dart';

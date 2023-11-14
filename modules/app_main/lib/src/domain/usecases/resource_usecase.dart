@@ -4,7 +4,6 @@ import 'package:injectable/injectable.dart';
 
 import '../repository/resource_responsitory.dart';
 
-
 @injectable
 class ResourceUsecase {
   final ResourceRepository _resourceRepository;

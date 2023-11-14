@@ -1,6 +1,6 @@
 final Map<String, dynamic> environmentDev = {
   'environment': 'dev',
-  'isProduction': true,
+  'isProduction': false,
   'baseUrl': 'https://dev.vdone.info/',
   'ecommereBaseUrl': 'https://dev-api.vdone.vn/',
   'userIdOffice': 168,

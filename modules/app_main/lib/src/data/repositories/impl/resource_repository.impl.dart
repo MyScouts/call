@@ -1,11 +1,10 @@
 import 'dart:io';
 
+import 'package:app_main/src/data/models/responses/resource_response.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../domain/entities/media/media_model.dart';
 import '../../../domain/repository/resource_responsitory.dart';
 import '../../data_sources/remote/resource_api.dart';
-
 
 @Injectable(as: ResourceRepository)
 class ResourceRepositoryImpl extends ResourceRepository {
@@ -34,6 +33,12 @@ class ResourceRepositoryImpl extends ResourceRepository {
     final result = await _resourceApi.uploadFile(file);
 
     return result.data['filename'];
+  }
+
+  @override
+  Future<VersionResponse?> latestVersion() async {
+    final response = await _resourceApi.latestVersion();
+    return response.appVersion;
   }
 
   // @override

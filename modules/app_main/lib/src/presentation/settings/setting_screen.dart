@@ -79,6 +79,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     _buildSearch(),
                     const SizedBox(height: 10),
                     _buildSessionMenus(),
+                    _buildVersion(),
                   ],
                 ),
               ),
@@ -321,6 +322,37 @@ class _SettingScreenState extends State<SettingScreen> {
           );
         }).toList(),
       ),
+    );
+  }
+
+  _buildVersion() {
+    return FutureBuilder<PackageInfo>(
+      future: DeviceService.getPackageInfo(),
+      builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
+        if (!snapshot.hasData || snapshot.hasError) {
+          print(snapshot.error);
+          return const SizedBox.shrink();
+        }
+        final version = snapshot.data!;
+        return Container(
+          margin: const EdgeInsets.only(top: 30),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Phiên bản: ${version.version}',
+                style: context.textTheme.titleSmall,
+              ),
+              if (!Configurations.isProduction) const SizedBox(width: 5),
+              if (!Configurations.isProduction)
+                Text(
+                  '(${version.buildNumber})',
+                  style: context.textTheme.titleSmall,
+                ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

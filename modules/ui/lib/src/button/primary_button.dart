@@ -8,15 +8,17 @@ class PrimaryButton extends StatelessWidget {
     required this.onTap,
     this.color,
     required this.disabled,
-    this.backgroundColor,
+    this.disableColor,
     required this.width,
     this.height,
     this.prefix,
     this.isLoading = false,
+    this.backgroundColor,
   });
   final String title;
   final Function()? onTap;
   final Color? color;
+  final Color? disableColor;
   final Color? backgroundColor;
   final double? width;
   final double? height;
@@ -31,10 +33,10 @@ class PrimaryButton extends StatelessWidget {
       child: Container(
         width: width,
         height: height ?? 48,
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: disabled ? AppColors.grey12 : backgroundColor,
+          color: disabled ? AppColors.grey12 : disableColor,
           gradient: disabled ? null : context.themeDecoration.gradientPrimary,
         ),
         child: isLoading

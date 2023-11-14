@@ -52,9 +52,13 @@ class ImageConstants {
   static String birthCerCapture = ImageApp.birthCerCapture.path;
   static String birthCerBackgroundConfirm =
       ImageApp.birthCerBackgroundConfirm.path;
+  static String bgAppLogo = ImageApp.bgAppLogo.path;
+  static String bgUpgradeApp = ImageApp.bgUpgradeApp.path;
 }
 
 enum ImageApp {
+  bgUpgradeApp('assets/images/bg_upgrade.png'),
+  bgAppLogo('assets/images/app_logo.png'),
   bgEmpty('assets/images/empty.png'),
   bgQrCode('assets/images/bg_qrcode.png'),
   defaultUserAvatar('assets/images/avatar.png'),
