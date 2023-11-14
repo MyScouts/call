@@ -39,6 +39,7 @@ export 'src/input/widgets/label_field_widget.dart';
 export 'src/input/widgets/text_input_layout.dart';
 export 'src/keyboard/auto_hide_keyboard.dart';
 export 'src/otp/otp_widget.dart';
+export 'src/segment_picker/segment_picker.dart';
 export 'src/skeleton/box_skeleton.dart';
 export 'src/slider/carousel_slider_widget.dart';
 export 'src/slider/page_indicator_widget.dart';

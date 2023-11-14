@@ -40,7 +40,7 @@ class NotificationData {
 @JsonSerializable()
 class NotificationUserModel {
   final int id;
-  final String avatar;
+  final String? avatar;
   final String pDoneId;
   final String hexId;
   final String displayName;
@@ -48,7 +48,7 @@ class NotificationUserModel {
 
   NotificationUserModel({
     required this.id,
-    required this.avatar,
+    this.avatar,
     required this.displayName,
     required this.isPDone,
     required this.hexId,

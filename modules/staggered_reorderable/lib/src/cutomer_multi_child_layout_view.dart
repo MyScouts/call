@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -222,9 +221,17 @@ class _CustomerMultiChildViewState extends State<CustomerMultiChildView>
         nowAcceptIndex = -1;
         nowMoveIndex = -1;
 
-        if (groupAvailable(_nowMoveIndex, _nowAcceptIndex)) {
-          groupActive(_nowMoveIndex, _nowAcceptIndex);
-          return;
+        final moveIndexType = itemAll[_nowMoveIndex].type;
+        final acceptIndexType = itemAll[_nowAcceptIndex].type;
+
+        if (moveIndexType == CustomerItemType.icon) {
+          if (acceptIndexType == CustomerItemType.icon ||
+              acceptIndexType == CustomerItemType.group) {
+            if (groupAvailable(_nowMoveIndex, _nowAcceptIndex)) {
+              groupActive(_nowMoveIndex, _nowAcceptIndex);
+              return;
+            }
+          }
         }
 
         if (_timer != null) _timer?.cancel();
