@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/presentation/community/community_coordinator.dart';
+import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
+import 'package:app_main/src/presentation/qr_code/qr_code_constants.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
 import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:design_system/design_system.dart';
@@ -18,9 +19,11 @@ import '../../blocs/user/user_cubit.dart';
 class ScanQrCodeScanScreen extends StatefulWidget {
   static const String routeName = 'qr-code-scan';
   final bool showMyQr;
+  final QrCodeScanType? type;
   const ScanQrCodeScanScreen({
     super.key,
     this.showMyQr = true,
+    this.type,
   });
 
   @override
@@ -41,6 +44,7 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
     _authInfo = userCubit.currentUser!;
     _result.addListener(() {
       if (_result.value != null) {
+        controller?.dispose();
         final code = _result.value!;
         if (code.isJSON() && jsonDecode(code) is! int) {
           final data = jsonDecode(code);
@@ -49,12 +53,17 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
             return;
           }
 
+          if ([QrCodeScanType.registerCustomer, QrCodeScanType.registerMarshop]
+              .contains(widget.type)) {
+            Navigator.pop(context, data['marshopId'].toString());
+            return;
+          }
+
           if (data['type'] == 'auth1') {
             context.confirmLoginQrCode(
               type: AuthClaimType.v1,
               code: data['code'],
             );
-            controller?.dispose();
             return;
           }
 
@@ -64,7 +73,6 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
               code: data['code'],
               marshopId: data['marshopId'].toString(),
             );
-            controller?.dispose();
             return;
           }
         } else {
@@ -83,7 +91,6 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
             return;
           }
           Navigator.pop(context, code);
-          controller?.dispose();
         }
       }
     });

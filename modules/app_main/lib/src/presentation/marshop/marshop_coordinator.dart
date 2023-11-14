@@ -22,7 +22,20 @@ extension UpgradeMarshopCoordinator on BuildContext {
     );
   }
 
-  Future<T?> startRegisterMarshop<T>() {
-    return Navigator.of(this).pushNamed(RegisterMarshopScreen.routeName);
+  Future<T?> startRegisterMarshop<T>({String? marshopId}) {
+    return Navigator.of(this)
+        .pushNamed(RegisterMarshopScreen.routeName, arguments: {
+      "marshopId": marshopId,
+    });
+  }
+
+  Future<T?> startReplaceRegisterMarshop<T>({String? marshopId}) {
+    return Navigator.of(this).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (BuildContext context) =>
+            RegisterMarshopScreen(marshopId: marshopId),
+      ),
+      ModalRoute.withName(DashBoardScreen.routeName),
+    );
   }
 }
