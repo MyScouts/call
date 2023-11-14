@@ -158,15 +158,15 @@ extension UpdateGroupOptionExt on UpdateGroupOption {
   }
 }
 
-enum ApproveGroupRequest { reject, approved }
+enum ApproveGroupRequest { approved }
 
 extension ApproveGroupRequestExt on ApproveGroupRequest {
   bool get status {
     switch (this) {
       case ApproveGroupRequest.approved:
         return true;
-      case ApproveGroupRequest.reject:
-        return false;
+      // case ApproveGroupRequest.reject:
+      //   return false;
     }
   }
 
@@ -174,8 +174,8 @@ extension ApproveGroupRequestExt on ApproveGroupRequest {
     switch (this) {
       case ApproveGroupRequest.approved:
         return 'Phê duyệt';
-      case ApproveGroupRequest.reject:
-        return 'Từ chối';
+      // case ApproveGroupRequest.reject:
+      //   return 'Từ chối';
     }
   }
 
@@ -183,8 +183,8 @@ extension ApproveGroupRequestExt on ApproveGroupRequest {
     switch (this) {
       case ApproveGroupRequest.approved:
         return AppColors.white;
-      case ApproveGroupRequest.reject:
-        return const Color(0xFF4B84F7);
+      // case ApproveGroupRequest.reject:
+      //   return const Color(0xFF4B84F7);
     }
   }
 
@@ -193,8 +193,8 @@ extension ApproveGroupRequestExt on ApproveGroupRequest {
       case ApproveGroupRequest.approved:
         return const Color(0xFF4B84F7);
 
-      case ApproveGroupRequest.reject:
-        return const Color(0xFFE8F0FE);
+      // case ApproveGroupRequest.reject:
+      //   return const Color(0xFFE8F0FE);
     }
   }
 
@@ -204,30 +204,30 @@ extension ApproveGroupRequestExt on ApproveGroupRequest {
         return ImageWidget(IconAppConstants.icApprovedTick,
             height: 25, width: 25);
 
-      case ApproveGroupRequest.reject:
-        return ImageWidget(IconAppConstants.icReject, height: 25, width: 25);
+      // case ApproveGroupRequest.reject:
+      //   return ImageWidget(IconAppConstants.icReject, height: 25, width: 25);
     }
   }
 }
 
-enum BossTeamActionToMember { assignBossTeam, remove }
+enum BossGroupActionToMember { assignBossTeam }
 
-extension BossTeamActionToMemberExt on BossTeamActionToMember {
+extension BossGroupActionToMemberExt on BossGroupActionToMember {
   Color get textMenuColor {
     switch (this) {
-      case BossTeamActionToMember.assignBossTeam:
+      case BossGroupActionToMember.assignBossTeam:
         return const Color(0xFF101B28);
-      case BossTeamActionToMember.remove:
-        return AppColors.red3;
+      // case BossGroupActionToMember.remove:
+      //   return AppColors.red3;
     }
   }
 
   String get textMenu {
     switch (this) {
-      case BossTeamActionToMember.assignBossTeam:
+      case BossGroupActionToMember.assignBossTeam:
         return 'Chỉ định Boss Team';
-      case BossTeamActionToMember.remove:
-        return 'Loại bỏ khỏi team';
+      // case BossGroupActionToMember.remove:
+      //   return 'Loại bỏ khỏi team';
     }
   }
 }
