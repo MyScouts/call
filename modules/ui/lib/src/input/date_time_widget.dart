@@ -240,6 +240,7 @@ extension _InputDateTimeWidgetStateExt on _InputDateTimeWidgetState {
         initialDate: _initialDate,
         firstDate: minimumDate,
         lastDate: maximumDate,
+        fieldHintText: "dd/mm/yyyy",
         // TODO: fix heare
         // confirmText: S.of(context).cta_Accept.toUpperCase(),
         builder: (BuildContext? context, Widget? child) {
