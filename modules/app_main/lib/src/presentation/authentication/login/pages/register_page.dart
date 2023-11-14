@@ -9,6 +9,7 @@ import 'package:app_main/src/presentation/general_setting/general_coordinator.da
 import 'package:design_system/design_system.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:localization/localization.dart';
 import 'package:ui/ui.dart';
@@ -343,6 +344,10 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     ),
                   ),
                 ),
+                KeyboardVisibilityBuilder(
+                    builder: (context, isKeyboardVisible) {
+                  return SizedBox(height: isKeyboardVisible ? 400 : 0);
+                }),
               ],
             ),
           ),
