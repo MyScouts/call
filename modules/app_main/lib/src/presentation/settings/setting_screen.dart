@@ -2,14 +2,12 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
-import 'package:app_main/src/presentation/information_profile/information_profile_coordinator.dart';
 import 'package:app_main/src/presentation/information_profile/screens/information_profile_screen.dart';
 import 'package:app_main/src/presentation/settings/setting_constants.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:app_main/src/presentation/settings/widget/item_setting_widget.dart';
-import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
@@ -54,7 +52,8 @@ class _SettingScreenState extends State<SettingScreen> {
           BlocListener<UserCubit, UserState>(
             listener: (context, state) {
               if (state is OnboardingFail) {
-                showToastMessage("Lỗi hệ thống, vui lòng thử lại sau.", ToastMessageType.warning);
+                showToastMessage("Lỗi hệ thống, vui lòng thử lại sau.",
+                    ToastMessageType.warning);
                 context.startDashboardUtil();
                 return;
               }
@@ -306,7 +305,8 @@ class _SettingScreenState extends State<SettingScreen> {
 
   Route _createRoute() {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => const InformationProfileScreen(),
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const InformationProfileScreen(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return child;
       },
@@ -327,8 +327,10 @@ class _SettingScreenState extends State<SettingScreen> {
             border: BorderRadius.only(
               topLeft: Radius.circular(index == 0 ? 10 : 0),
               topRight: Radius.circular(index == 0 ? 10 : 0),
-              bottomLeft: Radius.circular(index == settings.length - 1 ? 10 : 0),
-              bottomRight: Radius.circular(index == settings.length - 1 ? 10 : 0),
+              bottomLeft:
+                  Radius.circular(index == settings.length - 1 ? 10 : 0),
+              bottomRight:
+                  Radius.circular(index == settings.length - 1 ? 10 : 0),
             ),
           );
         }).toList(),
