@@ -10,6 +10,7 @@ import '../../../../../domain/entities/update_account/place/place_information.da
 import '../../../../../domain/entities/update_account/place/province.dart';
 import '../../../../../domain/entities/update_account/place/ward.dart';
 import '../../../../../domain/entities/update_account/update_place_information_payload.dart';
+import '../../../place_information_constant.dart';
 import '../../bloc/place_information/place_information_bloc.dart';
 
 class PlaceInformationWidget extends StatefulWidget {
@@ -57,6 +58,7 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
     final code = currentDistrict?.code;
 
     if (state is GetListProvincesSuccess && currentDistrict != null) {
+      print('state : ${state.provinces!.length}');
       if (stateCode != null && iso2 != null) {
         bloc.add(GetDistrictsByProvinceEvent(iso2, stateCode));
       }
@@ -102,7 +104,7 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
     return BlocConsumer<PlaceInformationBloc, PlaceInformationState>(
         listener: _listenerBloc,
         builder: (context, state) {
-          final countries = state.countries ?? [];
+          // final countries = state.countries ?? [];
           var provinces = state.provinces ?? [];
           var districts = state.districts ?? [];
           var wards = state.wards ?? [];
@@ -178,7 +180,7 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
                         districts = [];
                         wards = [];
 
-                        bloc.add(UserClearCountryEvent());
+                        // bloc.add(UserClearCountryEvent());
 
                         payload = UpdatePlaceInformationPayload(
                             address: widget.addressCtrl.text);
