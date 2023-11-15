@@ -125,6 +125,8 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
                   label: "Mã marshop",
                   controller: _marshopIdCtrl,
                   onChange: (value) => onValidation(),
+                  validator: (value) =>
+                      ValidationHelper.requiredValid(value, "Mã Marshop"),
                   hintText: "",
                   textInputType: TextInputType.number,
                   prefixIcon: GestureDetector(

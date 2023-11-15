@@ -136,7 +136,7 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
                 if (!_isActive) return;
                 widget.onVerify(_otpCode.toString());
               },
-              disabled: false,
+              disabled: !_isActive,
               width: MediaQuery.of(context).size.width,
             ),
           ),
