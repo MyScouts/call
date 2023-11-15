@@ -26,8 +26,11 @@ class _CommunityWidgetState extends State<CommunityWidget>
 
   @override
   void initState() {
-    _communityTabController =
-        TabController(length: 2, vsync: this, initialIndex: 1);
+    _communityTabController = TabController(
+        length: 2,
+        vsync: this,
+        initialIndex: 1,
+        animationDuration: Duration.zero);
     super.initState();
   }
 
@@ -45,6 +48,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
       body: SafeArea(
         child: DefaultTabController(
           length: 2,
+          animationDuration: Duration.zero,
           child: ColoredBox(
             color: AppColors.bgColor,
             child: Column(
