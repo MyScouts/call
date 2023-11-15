@@ -29,7 +29,7 @@ class PlaceInformationBloc extends Bloc<PlaceInformationEvent, PlaceInformationS
   FutureOr<void> _mapGetListProvincesEvent(GetListProvincesEvent event, Emitter<PlaceInformationState> emit) async {
     try {
       final res = await _placeInformationUsecase.provincesOfCountry(event.iso2);
-
+      print('tate.countries! : ${state.countries!.length}');
       emit(GetListProvincesSuccess(state.countries!, res));
     } catch (e) {
       // emit(GetListProvincesFailure(e.toString()));
