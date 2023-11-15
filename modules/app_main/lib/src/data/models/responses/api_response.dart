@@ -1,12 +1,13 @@
 // Copyright 2022 Fighttech.vn, Ltd. All rights reserved.
 
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../core/exceptions/api_exception.dart';
 
 part 'api_response.g.dart';
 
 @JsonSerializable(genericArgumentFactories: true)
+@freezed
 class ApiResponse<T> {
   @JsonKey(name: 'status', includeIfNull: false, readValue: _readValueStatus)
   final int status;

@@ -82,6 +82,8 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
         pDoneOptionMethod == PDoneOptionMethod.userBirthCer;
   }
 
+  bool protectorApprove = false;
+
   void _onListenerBloc(BuildContext context, UpgradePDoneState state) {
     if (state is UpdatePDoneProfileLoading) {
       showLoading();
@@ -101,6 +103,15 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       hideLoading();
 
       showToastMessage(state.errorMessage, ToastMessageType.warning);
+    }
+
+    if (state is RejectProtectorState) {
+      hideLoading();
+      Future.delayed(const Duration(milliseconds: 200)).then((value) {
+        setState(() {});
+      });
+      showToastMessage(
+          'Người bảo hộ đã từ chối yêu cầu của bạn!', ToastMessageType.error);
     }
     if (state is GetMyProfileSuccess) {}
 
@@ -128,43 +139,6 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       hideLoading();
       showToastMessage(state.errorMessage, ToastMessageType.error);
     }
-
-    if (state is RequestedSuccessProtectorState) {
-      showToastMessage(
-          'Đã gửi thông báo đến người bảo hộ!', ToastMessageType.success);
-      hideLoading();
-      Future.delayed(Duration(milliseconds: 200)).then((value) {
-        showLoading();
-      });
-      FirebaseMessaging.onMessage.listen((message) {
-        final data = message.data;
-        final dataRes = jsonDecode(data['data']);
-        if (data['type'] == 'PROTECTOR_REQUEST_REPLY') {
-          if (dataRes['isApproved']) {
-            upgradePDoneBloc.add(ProtectorApprovedEvent());
-          } else {
-            upgradePDoneBloc.add(ProtectorRejectedEvent());
-          }
-        }
-      });
-    }
-
-    if (state is ApproveProtectorState) {
-      hideLoading();
-      showToastMessage('Người bảo hộ đã đồng ý!', ToastMessageType.success);
-      upgradePDoneBloc.add(UpdatePDoneSendOTPEvent());
-    }
-
-    if (state is RejectProtectorState) {
-      hideLoading();
-      showToastMessage(
-          'Người bảo hộ đã từ chối yêu cầu của bạn!', ToastMessageType.error);
-    }
-
-    if (state is RequestedFailureProtectorState) {
-      hideLoading();
-      showToastMessage(state.errorMessage, ToastMessageType.error);
-    }
   }
 
   void _onTapNext() {
@@ -173,7 +147,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       lastName: lastNameCtrl.text,
       middleName: middleNameCtrl.text,
       nickname: nickNameCtrl.text,
-      sex: genderCtrl.text == 'Nam' ? 1 : 0,
+      sex: gender,
       birthday: birthDay?.toYYYYmmdd ?? '',
       identityNumber: identifyNumberCtrl.text,
       supplyDate: supplyDate?.toYYYYmmdd ?? '',
@@ -197,16 +171,12 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
             wardName: bpWardCtrl.text),
       );
     }
-    if (pDoneAPICaller == PDoneAPICaller.adult) {
-      _sendOTP();
-    } else {
-      _requestProtector();
-    }
-  }
-
-  void _requestProtector() {
-    upgradePDoneBloc.add(
-        RequestProtectorEvent(req: pDoneVerifyProtectorRequest, userId: 0));
+    _sendOTP();
+    // if ((pDoneAPICaller == PDoneAPICaller.adult) ||
+    //     (pDoneAPICaller != PDoneAPICaller.adult &&
+    //         (upgradePDoneBloc.state is ApproveProtectorState))) {
+    //   _sendOTP();
+    // }
   }
 
   void _sendOTP() {
@@ -261,7 +231,13 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       }
       final postCode = eKycData['post_code'][0];
       nickNameCtrl.text = eKycData['name'] ?? '';
-      genderCtrl.text = eKycData['gender'] ?? 'Nam';
+      if (GenderType.female.getText() == eKycData['gender']) {
+        gender = GenderType.female.toValue();
+      }
+      if (GenderType.male.getText() == eKycData['gender']) {
+        gender = GenderType.male.toValue();
+      }
+
       supplyAddressCtrl.text = eKycData['issue_place'];
       birthPlaceAddressCtrl.text = eKycData['recent_location'];
       bpProvinceCtrl.text = postCode['city'][1];
@@ -272,14 +248,18 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       supplyDate = eKycData['issue_date'].toString().parseDateTime();
       expiryDate = eKycData['valid_date'].toString().parseDateTime();
       if (DateTime.now().year - (birthDay?.year ?? 0) > 18) {
-        // pDoneAPICaller = PDoneAPICaller.adult;
-        pDoneAPICaller = PDoneAPICaller.teenager;
-      } else {
-        // pDoneAPICaller = PDoneAPICaller.teenager;
         pDoneAPICaller = PDoneAPICaller.adult;
+        // pDoneAPICaller = PDoneAPICaller.teenager;
+      } else {
+        pDoneAPICaller = PDoneAPICaller.teenager;
+        // pDoneAPICaller = PDoneAPICaller.adult;
       }
     } else {
       pDoneOptionMethod = PDoneOptionMethod.userBirthCer;
+    }
+
+    if (pDoneAPICaller == PDoneAPICaller.adult) {
+      protectorApprove = true;
     }
   }
 
@@ -394,16 +374,11 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                     ),
 
                     /// Giới tính - Ngày sinh
-                    InformationFieldWidget(
-                      required: true,
-                      controller: genderCtrl,
-                      shouldEnabled: pDoneOptionMethod !=
-                          PDoneOptionMethod.userIdentityCard,
-                      onChanged: (value) => onUpdatePayload(
-                        payload.copyWith(sex: value == 'Nam' ? 1 : 0),
-                      ),
-                      type: UpdateInformationType.gender,
-                      maxLength: 4,
+                    GenderInput(
+                      onChange: (sex) {
+                        gender = sex;
+                        setState(() {});
+                      },
                     ),
 
                     pDoneOptionMethod == PDoneOptionMethod.userIdentityCard
@@ -631,6 +606,12 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                                   (PDoneVerifyProtectorRequest value) {
                                 pDoneVerifyProtectorRequest = value;
                               },
+                              updateProtectorStatus: (bool value) {
+                                protectorApprove = value;
+                                setState(() {
+
+                                });
+                              },
                             ),
                           )
                         : Container(),
@@ -640,7 +621,9 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 38),
                           child: GradiantButton(
-                            onPressed: isValid ? _onTapNext : null,
+                            onPressed: (isValid && protectorApprove)
+                                ? _onTapNext
+                                : null,
                             child: Text(
                               'TIẾP THEO',
                               style: Theme.of(context)

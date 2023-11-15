@@ -98,9 +98,8 @@ class UploadImageBirthCerEvent extends UpgradePDoneEvent {
 @immutable
 class RequestProtectorEvent extends UpgradePDoneEvent {
   final PDoneVerifyProtectorRequest req;
-  final int userId;
 
-  RequestProtectorEvent({required this.req, required this.userId});
+  RequestProtectorEvent({required this.req});
 }
 
 
