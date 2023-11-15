@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
+import 'package:app_main/src/presentation/community/notification/community_notification_screen.dart';
 import 'package:app_main/src/presentation/community/team_detail/bloc/team_detail_bloc.dart';
 import 'package:app_main/src/presentation/community/group_detail/update_group_options_screen.dart';
 import 'package:app_main/src/presentation/community/groups/group_listing_bloc.dart';
@@ -69,10 +70,6 @@ extension CommunityCoordinator on BuildContext {
     required Community community,
     required CommunityType type,
   }) {
-    // if (!isAuthenticated) {
-    //   return startLogin<T>(hasDashboard: true);
-    // }
-
     return Navigator.of(this)
         .pushNamed(EditCommunityDetailScreen.routeName, arguments: {
       'community': community,
@@ -81,10 +78,6 @@ extension CommunityCoordinator on BuildContext {
   }
 
   Future<T?> startFanGroupDetail<T>(FanGroup fanGroup) {
-    // if (!isAuthenticated) {
-    //   return startLogin<T>(hasDashboard: true);
-    // }
-
     return Navigator.of(this)
         .pushNamed(FanGroupDetailScreen.routeName, arguments: {
       'fanGroup': fanGroup,
@@ -383,5 +376,9 @@ extension CommunityCoordinator on BuildContext {
         return AskAssignBossModal(team: team);
       },
     );
+  }
+
+  Future<T?> startCommunityNotification<T>() {
+    return Navigator.of(this).pushNamed(CommunityNotificationScreen.routeName);
   }
 }
