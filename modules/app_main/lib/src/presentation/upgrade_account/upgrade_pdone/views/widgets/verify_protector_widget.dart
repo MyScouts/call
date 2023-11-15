@@ -11,6 +11,7 @@ import 'package:localization/generated/l10n.dart';
 import 'package:ui/ui.dart';
 
 import '../../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
+import '../../../../../data/models/responses/pdone/pdone_my_protector_information_response.dart';
 import '../../../../marshop/widgets/gradiant_button.dart';
 import '../../bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 import 'information_field_guardian_widget.dart';
@@ -33,7 +34,8 @@ class VerifyProtectorWidget extends StatefulWidget {
 
 class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
   final _phoneCtl = TextEditingController();
-  final _idNumberOfProtector = TextEditingController();
+  final _pDoneIDOfProtectorCtl = TextEditingController();
+  final _idNumberOfProtectorCtl = TextEditingController();
   List<Protector> protectors = [];
   PDoneVerifyProtectorRequest protectorRequest =
       PDoneVerifyProtectorRequest(phoneCode: '84');
@@ -60,11 +62,11 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
       _requestProtector();
     }
 
-    if(state is ApproveProtectorState){
+    if (state is ApproveProtectorState) {
       widget.updateProtectorStatus(true);
     }
 
-    if(state is RejectProtectorState){
+    if (state is RejectProtectorState) {
       widget.updateProtectorStatus(false);
     }
 
@@ -108,16 +110,17 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
     upgradePDoneBloc.add(GetListMasterEvent());
   }
 
+  SummaryProtectorRequestedResponse? protectorRequested;
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<UpgradePDoneBloc, UpgradePDoneState>(
       listener: _listenerBloc,
       builder: (BuildContext context, UpgradePDoneState state) {
         if (state is GetListMasterSuccess) {
-          protectors = (upgradePDoneBloc.state as GetListMasterSuccess)
-                  .upgradeAccount
-                  .protectors ??
-              [];
+          final state = upgradePDoneBloc.state as GetListMasterSuccess;
+          protectors = state.upgradeAccount.protectors ?? [];
+          protectorRequested = state.protector;
         }
 
         if (state is! GetListMasterLoading) {
@@ -145,11 +148,32 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
   }
 
   Widget _buildForm(BuildContext context) {
+    Protector? protector;
+
+    if (protectors.isNotEmpty) {
+      protector = protectors[0];
+    }
+
+    if (protectorRequested != null) {
+      protector = protectors
+          .where((element) => element.id == protectorRequested!.relation)
+          .first;
+      _pDoneIDOfProtectorCtl.text = protectorRequested?.protector.pDoneId ?? '';
+      _phoneCtl.text = protectorRequested?.protector.phoneNumber ?? '';
+      _idNumberOfProtectorCtl.text =
+          protectorRequested?.protector.identityNumber ?? '';
+      widget.updateProtectorStatus(true);
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SearchInputInformationWidget<Protector>(
           type: UpdateInformationType.protector,
+          initialValue: protector != null
+              ? SuggestionsField<Protector>(
+                  name: protector.name ?? '', data: protector)
+              : null,
           suggestions: protectors
               .map(
                 (e) => SuggestionsField<Protector>(name: e.name ?? '', data: e),
@@ -163,6 +187,7 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
         InformationFieldGuardianWidget(
           type: UpdateInformationType.pDoneIDOfProtector,
           required: false,
+          controller: _pDoneIDOfProtectorCtl,
           onChanged: (String? value) {
             protectorRequest.pDoneId = value;
             widget.onUpdatePlaceInformation(protectorRequest);
@@ -193,6 +218,7 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
         ),
         InformationFieldGuardianWidget(
           type: UpdateInformationType.idNumberOfProtector,
+          controller: _idNumberOfProtectorCtl,
           required: false,
           onChanged: (String? value) {
             protectorRequest.identityNumber = value;

@@ -608,8 +608,9 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                               },
                               updateProtectorStatus: (bool value) {
                                 protectorApprove = value;
-                                setState(() {
-
+                                Future.delayed(Duration(milliseconds: 200))
+                                    .then((value) {
+                                  setState(() {});
                                 });
                               },
                             ),

@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_request_protector_req.dart';
 import '../../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
+import '../../../../../data/models/responses/pdone/pdone_my_protector_information_response.dart';
 import '../../../../../data/models/responses/register_pdone_response.dart';
 import '../../../../../domain/entities/update_account/check_protector_payload.dart';
 import '../../../../../domain/entities/update_account/pdone_account.dart';
@@ -94,8 +95,14 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     emit(GetListMasterLoading());
     try {
       final res = await _upgradeAccountUsecase.getListData();
+      final protectorRequested =
+          await _upgradeAccountUsecase.protectorRequested();
 
-      emit(GetListMasterSuccess(res));
+      emit(GetListMasterSuccess(
+          upgradeAccount: res,
+          protector: protectorRequested.requests.isEmpty
+              ? null
+              : protectorRequested.requests[0]));
     } catch (e) {
       emit(GetListMasterFailure(e.toString()));
     }
