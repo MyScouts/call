@@ -5,7 +5,7 @@ part of 'api_response.dart';
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
-@freezed
+
 ApiResponse<T> _$ApiResponseFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
