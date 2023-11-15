@@ -255,38 +255,6 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
       padding: const EdgeInsets.only(bottom: 20),
       child: Row(
         children: [
-          if (showInvite)
-            Expanded(
-              child: GestureDetector(
-                onTap: context.startAddMember,
-                child: Container(
-                  margin: const EdgeInsets.only(right: 20),
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFE8F0FE),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    children: [
-                      ImageWidget(IconAppConstants.icInviteTeamMember),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Text(
-                          'Mời thêm thành viên',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge
-                              ?.copyWith(
-                                  color: const Color(0xFF4B84F7),
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
           Expanded(
             child: GestureDetector(
               onTap: () {

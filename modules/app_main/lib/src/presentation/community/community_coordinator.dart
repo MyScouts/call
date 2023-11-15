@@ -57,10 +57,6 @@ extension CommunityCoordinator on BuildContext {
 
   Future<T?> startTeamDetailFromQR<T>(
       {required String? id, String? name, int? bossGroupId}) {
-    // if (!isAuthenticated) {
-    //   return startLogin<T>(hasDashboard: true);
-    // }
-
     return Navigator.of(this)
         .pushReplacementNamed(TeamDetailScreen.routeName, arguments: {
       'id': id,

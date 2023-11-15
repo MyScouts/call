@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
+import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_constants.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
 import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
@@ -50,6 +50,15 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
           final data = jsonDecode(code);
           if (data['type'] == 'diary' && data["id"] != null) {
             context.startReplaceDiary(userId: data["id"].toString());
+            return;
+          }
+
+          if (data['type'] == 'team' && data["id"] != null) {
+            context.startTeamDetailFromQR(
+              id: data["id"],
+              bossGroupId: data['bossGroupId'],
+              name: data['name'],
+            );
             return;
           }
 
