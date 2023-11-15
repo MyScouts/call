@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/presentation/information_profile/bloc/bloc/information_update_profil_bloc.dart';
+import 'package:app_main/src/presentation/information_profile/bloc/cubit/information_pdone_profile_cubit.dart';
 import 'package:app_main/src/presentation/information_profile/bloc/place_information_2/place_information_2_bloc.dart';
 import 'package:app_main/src/presentation/information_profile/screens/body_update_information_profile.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart';
@@ -48,8 +49,11 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
           BlocProvider(
             create: (context) => injector<PlaceInformationBloc2>(),
           ),
-           BlocProvider(
+          BlocProvider(
             create: (context) => injector<InformationUpdateProfilBloc>(),
+          ),
+          BlocProvider(
+            create: (context) => injector<InformationPdoneProfileCubit>(),
           ),
         ],
         child: Builder(
