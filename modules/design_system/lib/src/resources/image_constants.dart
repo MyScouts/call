@@ -56,9 +56,11 @@ class ImageConstants {
   static String birthCerBackgroundConfirm =
       ImageApp.birthCerBackgroundConfirm.path;
   static String pDoneNotification = ImageApp.pDoneNotification.path;
+  static String bgNotiEmpty = ImageApp.bgNotiEmpty.path;
 }
 
 enum ImageApp {
+  bgNotiEmpty('assets/images/noti_empty.png'),
   bgEmpty('assets/images/empty.png'),
   bgQrCode('assets/images/bg_qrcode.png'),
   defaultUserAvatar('assets/images/avatar.png'),
