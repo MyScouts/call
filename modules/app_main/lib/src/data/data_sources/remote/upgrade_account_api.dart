@@ -21,6 +21,7 @@ import '../../models/responses/api_response.dart';
 import '../../models/responses/api_verify_response.dart';
 import '../../models/responses/check_protector_response.dart';
 import '../../models/responses/pdone/pdone_information_response.dart';
+import '../../models/responses/pdone/pdone_my_protector_information_response.dart';
 import '../../models/responses/register_pdone_response.dart';
 import '../../models/responses/upgrade_account_response.dart';
 
@@ -59,6 +60,7 @@ class UpgradeAccountApiConstants {
   static const updateBankAccount = '/api/bank-account';
   static const getDefaultBank = '/api/bank-account/default';
   static const pDoneProfile = '/api/v1/p-done/profile';
+  static const protectorRequested = '/api/v1/protector/sent-request?page=1&pageSize=10&status=1';
 }
 
 @RestApi()
@@ -176,4 +178,7 @@ abstract class UpgradeAccountApi {
 
   @GET(UpgradeAccountApiConstants.pDoneProfile)
   Future<ApiResponse<PDoneInformationResponse>> pDoneProfile();
+
+  @GET(UpgradeAccountApiConstants.protectorRequested)
+  Future<ApiResponse<PDoneMyProtectorInformationResponse>> protectorRequested();
 }

@@ -37,6 +37,7 @@ class _SettingScreenState extends State<SettingScreen> {
     super.initState();
     _authInfo = userCubit.currentUser!;
     userCubit.onboarding();
+    userCubit.fetchUser();
   }
 
   @override

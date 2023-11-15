@@ -10,8 +10,9 @@ class GetListMasterLoading extends UpgradePDoneState {}
 
 class GetListMasterSuccess extends UpgradePDoneState {
   final UpgradeAccount upgradeAccount;
+  final SummaryProtectorRequestedResponse? protector;
 
-  GetListMasterSuccess(this.upgradeAccount);
+  GetListMasterSuccess({required this.upgradeAccount, required this.protector});
 }
 
 class GetListMasterFailure extends UpgradePDoneState {
@@ -49,17 +50,14 @@ class VerifyOtpFailure extends UpgradePDoneState {
 class UpdatePDoneProfileLoading extends UpgradePDoneState {}
 
 class UpdatePdoneAdultProfileSuccess extends UpgradePDoneState {
-
   UpdatePdoneAdultProfileSuccess();
 }
 
 class UpdatePdoneTeenagerProfileSuccess extends UpgradePDoneState {
-
   UpdatePdoneTeenagerProfileSuccess();
 }
 
 class UpdatePdoneChildrenProfileSuccess extends UpgradePDoneState {
-
   UpdatePdoneChildrenProfileSuccess();
 }
 
@@ -129,7 +127,8 @@ class ExtractingEKycIdCard extends UpgradePDoneState {}
 class ExtractedEKycIdCardSuccess extends UpgradePDoneState {
   final dynamic dataEKyc;
   final dynamic imageEKyc;
-  final dynamic metaData; // cái này có thể là url ảnh giấy khai sinh từ những bước trước
+  final dynamic
+      metaData; // cái này có thể là url ảnh giấy khai sinh từ những bước trước
 
   ExtractedEKycIdCardSuccess(this.dataEKyc, this.imageEKyc, this.metaData);
 }
@@ -142,6 +141,7 @@ class ExtractedEKycIdCardFailure extends UpgradePDoneState {
 
 class UpdatePDoneSendOTPSuccessState extends UpgradePDoneState {
   final String currentPhoneNumber;
+
   UpdatePDoneSendOTPSuccessState({required this.currentPhoneNumber});
 }
 
@@ -156,6 +156,7 @@ class VerifyingProtectorState extends UpgradePDoneState {}
 
 class VerifyProtectorSuccessState extends UpgradePDoneState {
   final int userId;
+
   VerifyProtectorSuccessState({required this.userId});
 }
 
@@ -169,6 +170,7 @@ class UploadingImageBirthCer extends UpgradePDoneState {}
 
 class UploadedSuccessImageBirthCer extends UpgradePDoneState {
   final String imageBirthCerUrl;
+
   UploadedSuccessImageBirthCer({required this.imageBirthCerUrl});
 }
 
@@ -178,11 +180,9 @@ class UploadedFailureImageBirthCer extends UpgradePDoneState {
   UploadedFailureImageBirthCer({required this.errorMessage});
 }
 
-
 class RequestingProtectorState extends UpgradePDoneState {
   RequestingProtectorState();
 }
-
 
 class RequestedSuccessProtectorState extends UpgradePDoneState {
   RequestedSuccessProtectorState();
@@ -198,5 +198,6 @@ class RejectProtectorState extends UpgradePDoneState {
 
 class RequestedFailureProtectorState extends UpgradePDoneState {
   final String errorMessage;
+
   RequestedFailureProtectorState({required this.errorMessage});
 }

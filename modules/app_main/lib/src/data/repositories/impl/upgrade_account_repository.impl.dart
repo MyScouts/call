@@ -6,6 +6,7 @@ import 'package:app_main/src/data/models/responses/api_verify_response.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:app_main/src/data/models/responses/pdone/pdone_information_response.dart';
+import 'package:app_main/src/data/models/responses/pdone/pdone_my_protector_information_response.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
 import 'package:camera/camera.dart';
 import 'package:injectable/injectable.dart';
@@ -215,6 +216,13 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   Future<PDoneInformationResponse> pDoneProfile() async{
     // TODO: implement pDoneProfile
     final res = await _upgradeAccountApi.pDoneProfile();
+    return res.data;
+  }
+
+  @override
+  Future<PDoneMyProtectorInformationResponse> protectorRequested() async{
+    // TODO: implement protectorRequested
+    final res = await _upgradeAccountApi.protectorRequested();
     return res.data;
   }
 }
