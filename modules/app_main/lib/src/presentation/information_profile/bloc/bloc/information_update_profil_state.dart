@@ -7,16 +7,22 @@ final class InformationUpdateProfilInitial extends InformationUpdateProfilState 
 
 final class InformationUpdateProfilLoading extends InformationUpdateProfilState {}
 
-final class InformationNoneUpdateProfilSuccess extends InformationUpdateProfilState {
-}
+final class InformationNoneUpdateProfilSuccess extends InformationUpdateProfilState {}
 
-final class InformationUpdateProfilSuccess extends InformationUpdateProfilState {
-}
+final class InformationUpdateProfilSuccess extends InformationUpdateProfilState {}
+
+final class GetInformationPDoneProfileLoading extends InformationUpdateProfilState {}
 
 final class GetInformationPDoneProfileSuccess extends InformationUpdateProfilState {
   final UpdateNonePDoneProfileReponse user;
 
   GetInformationPDoneProfileSuccess({required this.user});
+}
+
+final class GetInformationPDoneProfileFailed extends InformationUpdateProfilState {
+  final String? message;
+
+  GetInformationPDoneProfileFailed({required this.message});
 }
 
 final class InformationUpdateProfilFailed extends InformationUpdateProfilState {

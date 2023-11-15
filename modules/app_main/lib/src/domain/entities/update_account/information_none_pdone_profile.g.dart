@@ -35,7 +35,7 @@ _$InformationNonePdoneProfileImpl _$$InformationNonePdoneProfileImplFromJson(
       birthCertificateUrl: json['birthCertificateUrl'] as String?,
       birthCertificateSupplyDate: json['birthCertificateSupplyDate'] as String?,
       kycMetadata: json['kycMetadata'] as Map<String, dynamic>?,
-      type: json['type'] as int?,
+      type: json['type'],
     );
 
 Map<String, dynamic> _$$InformationNonePdoneProfileImplToJson(

@@ -1,13 +1,15 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/domain/entities/update_account/information_none_pdone_profile.dart';
+import 'package:app_main/src/presentation/information_profile/bloc/bloc/information_update_profil_bloc.dart';
 import 'package:app_main/src/presentation/information_profile/bloc/cubit/information_pdone_profile_cubit.dart';
 import 'package:app_main/src/presentation/information_profile/screens/update_information_profile_sreen.dart';
-import 'package:app_main/src/presentation/information_profile/widgets/constants.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/update_information_profile_mixin.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:localization/generated/l10n.dart';
 
 extension GenderExtension on int {
   String get genderToString {
@@ -32,47 +34,73 @@ class BodyInformationProfile extends StatefulWidget {
 class _BodyInformationProfileState extends State<BodyInformationProfile> with UpdateInformationProfileMixin {
   late final userCubit = context.read<UserCubit>();
   late final informationCubit = context.read<InformationPdoneProfileCubit>();
+  late final informationBloc = context.read<InformationUpdateProfilBloc>();
 
   late User _authInfo;
   late InformationNonePdoneProfile _informationNonePdoneProfile;
 
-  ValueNotifier<String> inforChanged = ValueNotifier("");
+  ValueNotifier<String> nickNameChanged = ValueNotifier("");
 
   @override
   void initState() {
     super.initState();
     _authInfo = userCubit.currentUser!;
-    _informationNonePdoneProfile = informationCubit.currentNoneInformation!;
-    inforChanged.value = _informationNonePdoneProfile.currentPlace.address;
+    informationBloc.add(GetInformationPDoneProfileEvent());
+    // if (!_authInfo.getIsPDone) {
+    //   if (informationCubit.currentNoneInformation != null) {
+    //     _informationNonePdoneProfile = informationCubit.currentNoneInformation!;
+    //     inforChanged.value = _informationNonePdoneProfile.currentPlace.address;
+    //   }
+    // } else {
+    //   if (informationCubit.currentInformation != null) {
+    //     _informationPdoneProfile = informationCubit.currentInformation!;
+    //     inforChanged.value = _informationPdoneProfile.currentPlace.address;
+    //   }
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
-      child: ListView(
-        children: [
-          _buildToolbar(),
-          const SizedBox(height: 20),
-          ValueListenableBuilder(
-            valueListenable: inforChanged,
-            builder: (_, isUpdate, __) {
-              if (isUpdate.isNotEmpty) {
-                return Container();
-              }
-              return Container(height: 20, color: AppColors.bgColor);
+      child: SingleChildScrollView(
+        child: BlocListener<InformationUpdateProfilBloc, InformationUpdateProfilState>(
+          listener: (_, state) {
+            if (state is GetInformationPDoneProfileLoading) {
+              showLoading();
+            }
+
+            if (state is GetInformationPDoneProfileSuccess) {
+              _informationNonePdoneProfile = state.user.profile;
+              nickNameChanged.value = _informationNonePdoneProfile.birthPlace.countryName!;
+              hideLoading();
+            }
+
+            if (state is GetInformationPDoneProfileFailed) {
+              showToastMessage(state.message!, ToastMessageType.error);
+              hideLoading();
+            }
+          },
+          child: ValueListenableBuilder(
+            builder: (_, datas, __) {
+              return Column(
+                children: [
+                  _buildToolbar(),
+                  const SizedBox(height: 20),
+                  if (datas.isNotEmpty) ...[
+                    Container(),
+                    _buildInformation(),
+                  ],
+                  if (datas.isEmpty) ...[
+                    Container(height: 20, color: AppColors.bgColor),
+                    _buildEmpty(),
+                  ]
+                ],
+              );
             },
+            valueListenable: nickNameChanged,
           ),
-          ValueListenableBuilder(
-            valueListenable: inforChanged,
-            builder: (_, isUpdate, __) {
-              if (isUpdate.isNotEmpty) {
-                return _buildInformation();
-              }
-              return _buildEmpty();
-            },
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -145,12 +173,14 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                 ),
               ),
               Text(
-                _informationNonePdoneProfile.firstName,
+                _informationNonePdoneProfile.nickName ?? "N/A",
                 style: const TextStyle(
                   color: AppColors.black,
                   fontWeight: FontWeight.normal,
                   fontSize: 13,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
@@ -173,6 +203,8 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                   fontWeight: FontWeight.normal,
                   fontSize: 13,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
@@ -195,6 +227,8 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                   fontWeight: FontWeight.normal,
                   fontSize: 13,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
@@ -217,6 +251,8 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                   fontWeight: FontWeight.normal,
                   fontSize: 13,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
@@ -239,6 +275,8 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                   fontWeight: FontWeight.normal,
                   fontSize: 13,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           )
@@ -271,7 +309,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                 ),
               ),
               Text(
-                _informationNonePdoneProfile.currentPlace.address,
+                _informationNonePdoneProfile.currentPlace.provinceName,
                 style: const TextStyle(
                   color: AppColors.black,
                   fontWeight: FontWeight.normal,
@@ -293,12 +331,14 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                 ),
               ),
               Text(
-                _informationNonePdoneProfile.currentPlace.address,
+                _informationNonePdoneProfile.currentPlace.provinceName,
                 style: const TextStyle(
                   color: AppColors.black,
                   fontWeight: FontWeight.normal,
                   fontSize: 13,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.clip,
               ),
             ],
           ),
@@ -705,6 +745,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
         authInfo: _authInfo,
         userCubit: userCubit,
         isEdit: isEdit,
+        informationNonePdoneProfile: _informationNonePdoneProfile,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return child;

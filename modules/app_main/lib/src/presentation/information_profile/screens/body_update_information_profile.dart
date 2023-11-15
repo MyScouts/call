@@ -2,15 +2,16 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/domain/entities/bank.dart';
+import 'package:app_main/src/domain/entities/update_account/infomation_pdone_profile.dart';
 import 'package:app_main/src/domain/entities/update_account/information_none_pdone_profile.dart';
 import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
 import 'package:app_main/src/presentation/information_profile/bloc/bloc/information_update_profil_bloc.dart';
 import 'package:app_main/src/presentation/information_profile/bloc/cubit/information_pdone_profile_cubit.dart';
 import 'package:app_main/src/presentation/information_profile/bloc/place_information_2/place_information_2_bloc.dart';
+import 'package:app_main/src/presentation/information_profile/screens/body_information_profile.dart';
 import 'package:app_main/src/presentation/information_profile/screens/information_profile_screen.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/bank_dropdown.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/bloodtype_dropdown.dart';
-import 'package:app_main/src/presentation/information_profile/widgets/constants.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/provinces_dropdown.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/district_dropdown.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/education_dropdown.dart';
@@ -38,12 +39,13 @@ class BodyUpdateInformationProfile extends StatefulWidget {
   final UserCubit userCubit;
   final User authInfo;
   final bool isEdit;
-
+  final InformationNonePdoneProfile informationNonePdoneProfile;
   const BodyUpdateInformationProfile({
     super.key,
     required this.userCubit,
     required this.authInfo,
     required this.isEdit,
+    required this.informationNonePdoneProfile,
   });
 
   @override
@@ -54,7 +56,9 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
     with ValidationMixin, UpdateInformationProfileMixin, AutomaticKeepAliveClientMixin {
   final _phoneCtrl = TextEditingController();
 
-  InformationNonePdoneProfile? information;
+  bool isFirstTimeOne = false;
+  bool isFirstTimeTwo = false;
+
   DateTime? tempDate;
   late final informationCubit = context.read<InformationPdoneProfileCubit>();
   late final upgradePDoneBloc = context.read<UpgradePDoneBloc>();
@@ -91,43 +95,78 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
   void _listenerPlaces(BuildContext context, PlaceInformationState state) {
     if (state is PlaceInformationInitial) {
       countriesChanged.value = state.countries;
+      if (!isFirstTimeOne) {
+        currentCountry = state.countries!.first;
+        placeInformationBloc.add(GetListProvincesEvent(state.countries!.first.iso2!));
+      }
     }
 
     if (state is GetListProvincesSuccess) {
       provincesChanged.value = state.provinces;
+      if (!isFirstTimeOne) {
+        currentProvince = state.provinces!.first;
+        placeInformationBloc
+            .add(GetDistrictsByProvinceEvent(state.countries!.first.iso2!, state.provinces!.first.stateCode));
+      }
     }
 
     if (state is GetDistrictsSuccess) {
       districtsChanged.value = state.districts;
+      if (!isFirstTimeOne) {
+        currentDistrict = state.districts!.first;
+        placeInformationBloc.add(GetWardsByDistrictEvent(
+            state.countries!.first.iso2!, state.provinces!.first.stateCode, state.districts!.first.code!));
+      }
     }
 
     if (state is GetWardsSuccess) {
       wardsChanged.value = state.wards;
+      if (!isFirstTimeOne) {
+        currentWard = state.wards!.first;
+        isFirstTimeOne = true;
+      }
     }
   }
 
   void _listenerPlaces2(BuildContext context, PlaceInformationState2 state) {
     if (state is PlaceInformationInitial2) {
       countries2Changed.value = state.countries;
+      if (!isFirstTimeTwo) {
+        currentCountry2 = state.countries!.first;
+        placeInformationBloc2.add(GetListProvincesEvent2(state.countries!.first.iso2!));
+      }
     }
 
     if (state is GetListProvincesSuccess2) {
       provinces2Changed.value = state.provinces;
+      if (!isFirstTimeTwo) {
+        currentProvince2 = state.provinces!.first;
+        placeInformationBloc2
+            .add(GetDistrictsByProvinceEvent2(state.countries!.first.iso2!, state.provinces!.first.stateCode));
+      }
     }
 
     if (state is GetDistrictsSuccess2) {
       districts2Changed.value = state.districts;
+      if (!isFirstTimeTwo) {
+        currentDistrict2 = state.districts!.first;
+        placeInformationBloc2.add(GetWardsByDistrictEvent2(
+            state.countries!.first.iso2!, state.provinces!.first.stateCode, state.districts!.first.code!));
+      }
     }
 
     if (state is GetWardsSuccess2) {
       wards2Changed.value = state.wards;
+      if (!isFirstTimeTwo) {
+        currentWard2 = state.wards!.first;
+        isFirstTimeTwo = true;
+      }
     }
   }
 
   @override
   void initState() {
-    information = informationCubit.currentNoneInformation!;
-    tempDate = DateFormat("yyyy-MM-dd").parse(information!.birthday);
+    tempDate = DateFormat("yyyy-MM-dd").parse(widget.informationNonePdoneProfile.birthday);
 
     upgradePDoneBloc.add(GetListMasterEvent());
     getListBankBloc.add(GetListDataEvent());
@@ -146,16 +185,16 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
         child: AutoHideKeyboard(
           child: BlocConsumer<UpgradePDoneBloc, UpgradePDoneState>(
             listener: _listenerInformations,
-            builder: (context, state) {
+            builder: (_, state) {
               return BlocListener<GetListBanksBloc, GetListState>(
-                listener: (context, state) {
+                listener: (_, state) {
                   if (state is GetListDataSuccess<Bank>) {
                     banksChanged.value = state.data;
                     LoggerService.print("Banks: $banksChanged");
                   }
                 },
                 child: BlocConsumer<InformationUpdateProfilBloc, InformationUpdateProfilState>(
-                  listener: (context, state) {
+                  listener: (_, state) {
                     if (state is InformationUpdateProfilLoading) {
                       showLoading();
                     }
@@ -163,7 +202,6 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                     if (state is InformationNoneUpdateProfilSuccess) {
                       hideLoading();
                       showToastMessage("Nâng cấp tài khoản thành công");
-                      MyAppConstants.myConstantVariable.value = true;
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => const InformationProfileScreen()),
@@ -175,25 +213,30 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                     }
                   },
                   builder: (context, state) {
-                    return ListView(
-                      shrinkWrap: true,
-                      addAutomaticKeepAlives: true,
-                      children: [
-                        _buildToolbar(),
-                        const SizedBox(height: 20),
-                        Container(height: 20, color: AppColors.bgColor),
-                        _buildFieldInformation(),
-                        Container(height: 20, color: AppColors.bgColor),
-                        _buildFieldIdentifierInformation(),
-                        Container(height: 20, color: AppColors.bgColor),
-                        (widget.isEdit && !widget.authInfo.isUnderFifteen(tempDate))
-                            ? _buildProtectorInformation()
-                            : Container(),
-                        _buildBankInformation(),
-                        Container(height: 20, color: AppColors.bgColor),
-                        _buildMoreInformation(),
-                        _buildButtonUpdate(context),
-                      ],
+                    return SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          _buildToolbar(),
+                          const SizedBox(height: 20),
+                          Container(height: 20, color: AppColors.bgColor),
+                          _buildFieldInformation(),
+                          Container(height: 20, color: AppColors.bgColor),
+                          _buildFieldIdentifierInformation(),
+                          Container(height: 20, color: AppColors.bgColor),
+                          if (tempDate != null && widget.isEdit && widget.authInfo.getIsPDone) ...[
+                            (widget.authInfo.isUnderFifteen(tempDate)) ? _buildProtectorInformation() : Container(),
+                          ],
+                          if (tempDate != null && widget.isEdit && widget.authInfo.getIsPDone) ...[
+                            (widget.authInfo.isUnderFifteen(tempDate))
+                                ? Container(height: 20, color: AppColors.bgColor)
+                                : Container(),
+                          ],
+                          _buildBankInformation(),
+                          Container(height: 20, color: AppColors.bgColor),
+                          _buildMoreInformation(),
+                          _buildButtonUpdate(context),
+                        ],
+                      ),
                     );
                   },
                 ),
@@ -236,20 +279,22 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
               fontWeight: FontWeight.w500,
             ),
           ),
-          widget.isEdit
+          (widget.isEdit && widget.authInfo.getIsPDone)
               ? Row(
                   children: [
                     Expanded(
                       child: InformationFieldWidget(
                         required: true,
                         shouldEnabled: false,
-                        controller: fullNameTxtController,
+                        controller: firstNameTxtController,
                         type: UpdateInformationType.firstName,
                         validator: (value) => context.validateEmptyInfo(
-                          fullNameTxtController.text,
+                          firstNameTxtController.text,
                           'Vui lòng nhập họ',
                         ),
-                        onChanged: (String? value) {},
+                        onChanged: (value) {
+                          firstName = value!;
+                        },
                       ),
                     ),
                     const SizedBox(width: 20),
@@ -257,13 +302,15 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                       child: InformationFieldWidget(
                         required: false,
                         shouldEnabled: false,
-                        controller: fullNameTxtController,
+                        controller: middleNameTxtController,
                         type: UpdateInformationType.middleName,
                         validator: (value) => context.validateEmptyInfo(
-                          fullNameTxtController.text,
+                          middleNameTxtController.text,
                           'Vui lòng nhập tên đệm',
                         ),
-                        onChanged: (String? value) {},
+                        onChanged: (value) {
+                          middleName = value!;
+                        },
                       ),
                     )
                   ],
@@ -277,19 +324,23 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                     fullNameTxtController.text,
                     'Vui lòng nhập họ và tên',
                   ),
-                  onChanged: (String? value) {},
+                  onChanged: (value) {
+                    fullName = value!;
+                  },
                 ),
-          widget.isEdit
+          (widget.isEdit && widget.authInfo.getIsPDone)
               ? InformationFieldWidget(
                   required: true,
                   shouldEnabled: false,
-                  controller: fullNameTxtController,
+                  controller: lastNameTxtController,
                   type: UpdateInformationType.lastName,
                   validator: (value) => context.validateEmptyInfo(
-                    fullNameTxtController.text,
+                    lastNameTxtController.text,
                     'Vui lòng nhập tên',
                   ),
-                  onChanged: (String? value) {},
+                  onChanged: (value) {
+                    lastName = value!;
+                  },
                 )
               : Container(),
           //Nick name
@@ -298,59 +349,94 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             shouldEnabled: true,
             maxLength: 24,
             controller: nickNameTxtController,
-            onChanged: (String? value) {},
+            onChanged: (String? value) {
+              nickName = value!;
+            },
             type: UpdateInformationType.nickName,
             validator: (value) => context.validateNicknameInfo(
               nickNameTxtController.text,
               'Nickname không được vượt quá 24 ký tự',
             ),
           ),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              Expanded(
-                  child: ValueListenableBuilder(
-                builder: (_, genderValue, __) {
-                  if (genderValue.isNotEmpty) {
-                    return GenderDropdown(
-                      required: true,
-                      genders: genderValue,
-                      onChange: (sex) {
-                        genderParam = sex;
+          (widget.isEdit && widget.authInfo.getIsPDone) ? Container() : const SizedBox(height: 3),
+          (widget.isEdit && widget.authInfo.getIsPDone)
+              ? Row(
+                  children: [
+                    Expanded(
+                      child: InformationFieldWidget(
+                        required: true,
+                        shouldEnabled: false,
+                        hintText: widget.informationNonePdoneProfile.sex.genderToString,
+                        controller: lastNameTxtController,
+                        type: UpdateInformationType.gender,
+                        validator: (value) {},
+                        onChanged: (value) {},
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: InformationFieldWidget(
+                        required: true,
+                        shouldEnabled: false,
+                        hintText: widget.informationNonePdoneProfile.birthday,
+                        controller: lastNameTxtController,
+                        type: UpdateInformationType.birthDay,
+                        validator: (value) {},
+                        onChanged: (value) {},
+                      ),
+                    )
+                  ],
+                )
+              : Row(
+                  children: [
+                    Expanded(
+                        child: ValueListenableBuilder(
+                      builder: (_, genderValue, __) {
+                        if (genderValue.isNotEmpty) {
+                          return GenderDropdown(
+                            required: true,
+                            genders: genderValue,
+                            onChange: (sex) {
+                              genderParam = sex;
+                            },
+                          );
+                        }
+                        return GenderDropdown(
+                          required: true,
+                          genders: genders,
+                          onChange: (sex) {
+                            genderParam = sex;
+                          },
+                        );
                       },
-                    );
-                  }
-                  return GenderDropdown(
-                    required: true,
-                    genders: genders,
-                    onChange: (sex) {
-                      genderParam = sex;
-                    },
-                  );
-                },
-                valueListenable: gendersChanged,
-              )),
-              const SizedBox(width: 20),
-              Expanded(
-                child: InformationLayoutFieldWidget(
-                  required: true,
-                  label: UpdateInformationType.birthDay.title(context),
-                  child: InputDateTimeWidget(
-                    hintText: 'Ngày sinh',
-                    useHorizontalLayout: true,
-                    enabled: true,
-                    radius: 17,
-                    date: birthDay,
-                    formatText: (date) => S.of(context).formatDateDDmmYYYYhhMM(date, date).split('|').first,
-                    max: DateTime.now(),
-                    onChange: (dateTime) {
-                      birthDay = dateTime;
-                    },
-                  ),
+                      valueListenable: gendersChanged,
+                    )),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: ValueListenableBuilder(
+                        builder: (_, dateTimeValue, __) {
+                          return InformationLayoutFieldWidget(
+                            required: true,
+                            label: UpdateInformationType.birthDay.title(context),
+                            child: InputDateTimeWidget(
+                              hintText: 'Ngày sinh',
+                              useHorizontalLayout: true,
+                              enabled: true,
+                              radius: 17,
+                              date: dateTimeValue,
+                              formatText: (date) => S.of(context).formatDateDDmmYYYYhhMM(date, date).split('|').first,
+                              max: DateTime.now(),
+                              onChange: (dateTime) {
+                                birthDay = dateTime!;
+                              },
+                            ),
+                          );
+                        },
+                        valueListenable: birthDayChanged,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
 
           //Email
           InformationFieldWidget(
@@ -441,7 +527,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             controller: idNumberProtectorTxtController,
             onChanged: (String? value) {},
             type: UpdateInformationType.idNumber,
-            validator: (value) => checkIsUnder15ShouldEnableField()
+            validator: (value) => widget.authInfo.isUnderFifteen(tempDate)
                 ? context.validateCCCD(idNumberProtectorTxtController.text, 'Thông tin không hợp lệ')
                 : null,
           ),
@@ -981,12 +1067,14 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             required: true,
             shouldEnabled: true,
             controller: addressTxtController,
-            onChanged: (String? value) {},
             type: UpdateInformationType.address,
             validator: (value) => context.validateEmptyInfo(
               addressTxtController.text,
               'Vui lòng nhập địa chỉ cụ thể',
             ),
+            onChanged: (String? value) {
+              address = value!;
+            },
           ),
           Row(
             children: [
@@ -995,31 +1083,38 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                   required: true,
                   shouldEnabled: true,
                   controller: idNumberTxtController,
-                  onChanged: (String? value) {},
                   type: UpdateInformationType.idNumber,
                   validator: (value) => context.validateEmptyInfo(
                     idNumberTxtController.text,
                     'Vui lòng nhập số ID/CCCD/HC',
                   ),
+                  onChanged: (String? value) {
+                    idNumber = value!;
+                  },
                 ),
               ),
               const SizedBox(width: 20),
               Expanded(
-                child: InformationLayoutFieldWidget(
-                  required: true,
-                  label: UpdateInformationType.dateOfIdNumber.title(context),
-                  child: InputDateTimeWidget(
-                    hintText: 'Ngày cấp',
-                    useHorizontalLayout: true,
-                    enabled: true,
-                    radius: 17,
-                    date: birthDay,
-                    formatText: (date) => S.of(context).formatDateDDmmYYYYhhMM(date, date).split('|').first,
-                    max: DateTime.now(),
-                    onChange: (dateTime) {
-                      supplyDate = dateTime;
-                    },
-                  ),
+                child: ValueListenableBuilder(
+                  builder: (_, dateTimeValue, __) {
+                    return InformationLayoutFieldWidget(
+                      required: true,
+                      label: UpdateInformationType.dateOfIdNumber.title(context),
+                      child: InputDateTimeWidget(
+                        hintText: 'Ngày cấp',
+                        useHorizontalLayout: true,
+                        enabled: true,
+                        radius: 17,
+                        date: dateTimeValue,
+                        formatText: (date) => S.of(context).formatDateDDmmYYYYhhMM(date, date).split('|').first,
+                        max: DateTime.now(),
+                        onChange: (dateTime) {
+                          supplyDate = dateTime!;
+                        },
+                      ),
+                    );
+                  },
+                  valueListenable: supplyDateChanged,
                 ),
               ),
             ],
@@ -1030,12 +1125,14 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             required: true,
             shouldEnabled: true,
             controller: placeOfNumberTxtController,
-            onChanged: (String? value) {},
             type: UpdateInformationType.placeofIdNumber,
             validator: (value) => context.validateEmptyInfo(
               placeOfNumberTxtController.text,
               'Vui lòng nhập nơi cấp',
             ),
+            onChanged: (String? value) {
+              placeOfNumber = value!;
+            },
           ),
         ],
       ),

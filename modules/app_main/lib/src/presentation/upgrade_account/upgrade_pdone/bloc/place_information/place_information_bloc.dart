@@ -61,7 +61,7 @@ class PlaceInformationBloc extends Bloc<PlaceInformationEvent, PlaceInformationS
   }
 
   FutureOr<void> _mapUserClearCountryEvent(UserClearCountryEvent event, Emitter<PlaceInformationState> emit) async {
-    final resCountries = await _placeInformationUsecase.countries();
-    emit(PlaceInformationInitial(resCountries));
+    // final resCountries = await _placeInformationUsecase.countries();
+    emit(PlaceInformationInitial(countries));
   }
 }

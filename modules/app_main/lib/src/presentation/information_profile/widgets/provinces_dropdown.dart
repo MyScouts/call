@@ -47,6 +47,7 @@ class _ProvinceDropDownState extends State<ProvinceDropDown> {
         const SizedBox(height: 7),
         DropdownButtonFormField2<Province>(
           isExpanded: true,
+          isDense: false,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 12),
             border: OutlineInputBorder(

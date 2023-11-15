@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
+import 'package:app_main/src/domain/entities/update_account/information_none_pdone_profile.dart';
 import 'package:app_main/src/presentation/information_profile/bloc/bloc/information_update_profil_bloc.dart';
 import 'package:app_main/src/presentation/information_profile/bloc/cubit/information_pdone_profile_cubit.dart';
 import 'package:app_main/src/presentation/information_profile/bloc/place_information_2/place_information_2_bloc.dart';
@@ -14,12 +15,13 @@ class UpdateInformationProfileScreen extends StatefulWidget {
   final User authInfo;
   final UserCubit userCubit;
   final bool isEdit;
-
+  final InformationNonePdoneProfile informationNonePdoneProfile;
   const UpdateInformationProfileScreen({
     super.key,
     required this.authInfo,
     required this.userCubit,
     required this.isEdit,
+    required this.informationNonePdoneProfile,
   });
 
   @override
@@ -62,6 +64,7 @@ class _UpdateInformationProfileScreenState extends State<UpdateInformationProfil
               userCubit: widget.userCubit,
               authInfo: widget.authInfo,
               isEdit: widget.isEdit,
+              informationNonePdoneProfile: widget.informationNonePdoneProfile,
             );
           },
         ),

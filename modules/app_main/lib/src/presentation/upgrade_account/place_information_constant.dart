@@ -19,7 +19,7 @@ List<Gender> genders = [
 ];
 
 List<Country> countries = [
-  const Country(name: 'Việt Nam', iso2: 'vn'),
+  const Country(id: 240, name: 'Việt Nam', iso2: 'vn'),
 ];
 
 List<Province> provinces = [

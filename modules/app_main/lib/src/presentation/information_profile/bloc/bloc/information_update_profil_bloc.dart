@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/data_sources/local/information_pdone_profile/information_pdone_profile_local.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/update_none_pdone_profile_response.dart';
@@ -5,6 +6,7 @@ import 'package:app_main/src/domain/usecases/user_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:localization/generated/l10n.dart';
 
 part 'information_update_profil_event.dart';
 part 'information_update_profil_state.dart';
@@ -55,10 +57,12 @@ class InformationUpdateProfilBloc extends Bloc<InformationEvent, InformationUpda
   Future<void> getPDoneProfile(
       GetInformationPDoneProfileEvent event, Emitter<InformationUpdateProfilState> emit) async {
     try {
-      final response = await _userUsecase.getPDoneProfile();
-      emit(GetInformationPDoneProfileSuccess(user: response));
+      emit(GetInformationPDoneProfileLoading());
+      await _userUsecase.getPDoneProfile().then((value) => emit(GetInformationPDoneProfileSuccess(user: value)));
     } catch (error) {
       debugPrint("getPDoneProfile error: $error");
+      String err = S.current.messages_server_internal_error.capitalize();
+      emit(GetInformationPDoneProfileFailed(message: err));
     }
   }
 }
