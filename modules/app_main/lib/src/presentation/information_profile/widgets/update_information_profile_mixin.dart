@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/domain/entities/bank.dart';
 import 'package:app_main/src/domain/entities/update_account/place/country.dart';
@@ -9,7 +10,6 @@ import 'package:app_main/src/domain/entities/update_account/update_pdone_birth_p
 import 'package:app_main/src/domain/entities/update_account/update_place_information_payload.dart';
 import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
 import 'package:flutter/material.dart';
-import 'package:app_core/app_core.dart';
 
 mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
   final forcusCCCD = ValueNotifier(false);
@@ -17,7 +17,10 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
   final forcusCCCDPlace = ValueNotifier(false);
 
   /// ------------------------------------------
+  final firstNameTxtController = TextEditingController();
+  final middleNameTxtController = TextEditingController();
   final fullNameTxtController = TextEditingController();
+  final lastNameTxtController = TextEditingController();
   final nickNameTxtController = TextEditingController();
   final emailAddressTxtController = TextEditingController();
   final addressTxtController = TextEditingController();
@@ -69,8 +72,8 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
   ValueNotifier<bool> isUpdateChanged = ValueNotifier(false);
 
   Gender? currentGender;
-  DateTime? birthDay;
-  DateTime? supplyDate;
+  ValueNotifier<DateTime?> birthDayChanged = ValueNotifier(DateTime.now());
+  ValueNotifier<DateTime?> supplyDateChanged = ValueNotifier(DateTime.now());
   DateTime? expiryDate;
   Protector? currentProtector;
   BloodGroup? bloodGroup;
@@ -81,6 +84,18 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
   Interest? interest;
   PlaceInformation? birthPlace;
   PlaceInformation? currentPlace;
+
+  String firstName = "";
+  String middleName = "";
+  String lastName = "";
+  String fullName = "";
+  String nickName = "";
+  String emailAddress = "";
+  String address = "";
+  String idNumber = "";
+  String placeOfNumber = "";
+  DateTime supplyDate = DateTime.now();
+  DateTime birthDay = DateTime.now();
 
   String phoneCode = "+84";
   int genderParam = 1;
@@ -104,22 +119,16 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
   ValueNotifier<List<Talent>> talentsChanged = ValueNotifier([]);
   ValueNotifier<List<Bank>> banksChanged = ValueNotifier([]);
 
-  PDoneOptionMethod pDoneOptionMethod = PDoneOptionMethod.userIdentityCard;
-
-  bool checkIsUnder15ShouldEnableField() {
-    return birthDay == null || birthDay != null && !birthDay!.isUnder15yearsAgo();
-  }
-
   UpdateNonePDoneProfilePayload passNonePDonePayload() {
     return UpdateNonePDoneProfilePayload(
-      nickName: nickNameTxtController.text,
+      nickName: nickName,
       currentPlace: UpdatePlaceInformationPayload(
         countryName: currentCountry!.name!,
         provinceName: currentProvince!.name!,
         districtName: currentDistrict!.name!,
         wardName: currentWard!.name!,
-        street: addressTxtController.text,
-        address: addressTxtController.text,
+        street: address,
+        address: address,
         countryCode: currentCountry!.iso2!,
         provinceCode: currentProvince!.stateCode!.toString(),
         districtCode: currentDistrict!.code!,
@@ -139,8 +148,8 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
         provinceName: currentProvince!.name!,
         districtName: currentDistrict!.name!,
         wardName: currentWard!.name!,
-        street: addressTxtController.text,
-        address: addressTxtController.text,
+        street: address,
+        address: address,
         countryCode: currentCountry!.iso2!,
         countryId: currentCountry!.id!,
         provinceId: currentProvince!.stateCode!,
@@ -148,10 +157,10 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
             currentDistrict?.code != null && currentDistrict!.code!.isNotEmpty ? int.parse(currentDistrict!.code!) : 0,
         wardId: currentWard!.id!,
       ),
-      birthday: birthDay!.toString(),
-      identityNumber: idNumberTxtController.text,
-      supplyDate: supplyDate!.toString(),
-      supplyAddress: placeOfNumberTxtController.text,
+      birthday: birthDay.toString(),
+      identityNumber: idNumber,
+      supplyDate: supplyDate.toString(),
+      supplyAddress: placeOfNumber,
     );
   }
 
@@ -183,6 +192,9 @@ mixin UpdateInformationProfileMixin<T extends StatefulWidget> on State<T> {
 
   @override
   void dispose() {
+    middleNameTxtController.dispose();
+    lastNameTxtController.dispose();
+    firstNameTxtController.dispose();
     fullNameTxtController.dispose();
     nickNameTxtController.dispose();
     emailAddressTxtController.dispose();

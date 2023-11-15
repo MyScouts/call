@@ -25,6 +25,7 @@ class _GenderDropdownState extends State<GenderDropdown> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(height: 15),
         Row(
           children: [
             const Text(
@@ -46,11 +47,11 @@ class _GenderDropdownState extends State<GenderDropdown> {
                 : const SizedBox(),
           ],
         ),
-        const SizedBox(height: 7),
+        const SizedBox(height: 10),
         DropdownButtonFormField2<Gender>(
           isExpanded: true,
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(vertical: 12),
+            contentPadding: const EdgeInsets.symmetric(vertical: 10),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
             ),

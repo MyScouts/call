@@ -47,7 +47,7 @@ mixin _$InformationNonePdoneProfile {
   String? get birthCertificateUrl => throw _privateConstructorUsedError;
   String? get birthCertificateSupplyDate => throw _privateConstructorUsedError;
   Map<String, dynamic>? get kycMetadata => throw _privateConstructorUsedError;
-  int? get type => throw _privateConstructorUsedError;
+  dynamic get type => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -88,7 +88,7 @@ abstract class $InformationNonePdoneProfileCopyWith<$Res> {
       String? birthCertificateUrl,
       String? birthCertificateSupplyDate,
       Map<String, dynamic>? kycMetadata,
-      int? type});
+      dynamic type});
 
   $InformationPDoneBirthPlaceCopyWith<$Res> get birthPlace;
   $InformationDPoneCurrentPlaceCopyWith<$Res> get currentPlace;
@@ -234,7 +234,7 @@ class _$InformationNonePdoneProfileCopyWithImpl<$Res,
       type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
     ) as $Val);
   }
 
@@ -291,7 +291,7 @@ abstract class _$$InformationNonePdoneProfileImplCopyWith<$Res>
       String? birthCertificateUrl,
       String? birthCertificateSupplyDate,
       Map<String, dynamic>? kycMetadata,
-      int? type});
+      dynamic type});
 
   @override
   $InformationPDoneBirthPlaceCopyWith<$Res> get birthPlace;
@@ -438,7 +438,7 @@ class __$$InformationNonePdoneProfileImplCopyWithImpl<$Res>
       type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as dynamic,
     ));
   }
 }
@@ -536,7 +536,7 @@ class _$InformationNonePdoneProfileImpl
   }
 
   @override
-  final int? type;
+  final dynamic type;
 
   @override
   String toString() {
@@ -593,7 +593,7 @@ class _$InformationNonePdoneProfileImpl
                     birthCertificateSupplyDate) &&
             const DeepCollectionEquality()
                 .equals(other._kycMetadata, _kycMetadata) &&
-            (identical(other.type, type) || other.type == type));
+            const DeepCollectionEquality().equals(other.type, type));
   }
 
   @JsonKey(ignore: true)
@@ -624,7 +624,7 @@ class _$InformationNonePdoneProfileImpl
         birthCertificateUrl,
         birthCertificateSupplyDate,
         const DeepCollectionEquality().hash(_kycMetadata),
-        type
+        const DeepCollectionEquality().hash(type)
       ]);
 
   @JsonKey(ignore: true)
@@ -669,7 +669,7 @@ abstract class _InformationNonePdoneProfile
       final String? birthCertificateUrl,
       final String? birthCertificateSupplyDate,
       final Map<String, dynamic>? kycMetadata,
-      final int? type}) = _$InformationNonePdoneProfileImpl;
+      final dynamic type}) = _$InformationNonePdoneProfileImpl;
 
   factory _InformationNonePdoneProfile.fromJson(Map<String, dynamic> json) =
       _$InformationNonePdoneProfileImpl.fromJson;
@@ -723,7 +723,7 @@ abstract class _InformationNonePdoneProfile
   @override
   Map<String, dynamic>? get kycMetadata;
   @override
-  int? get type;
+  dynamic get type;
   @override
   @JsonKey(ignore: true)
   _$$InformationNonePdoneProfileImplCopyWith<_$InformationNonePdoneProfileImpl>

@@ -32,11 +32,9 @@ class InformationNonePdoneProfile with _$InformationNonePdoneProfile {
     String? birthCertificateUrl,
     String? birthCertificateSupplyDate,
     Map<String, dynamic>? kycMetadata,
-    int? type,
+    dynamic type,
   }) = _InformationNonePdoneProfile;
 
   factory InformationNonePdoneProfile.fromJson(Map<String, dynamic> json) =>
       _$InformationNonePdoneProfileFromJson(json);
 }
-
-

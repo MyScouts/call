@@ -47,6 +47,7 @@ class _DistrictDropDownState extends State<DistrictDropDown> {
         const SizedBox(height: 7),
         DropdownButtonFormField2<District>(
           isExpanded: true,
+          isDense: false,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 12),
             border: OutlineInputBorder(

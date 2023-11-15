@@ -30,6 +30,9 @@ class _InformationProfileScreenState extends State<InformationProfileScreen> wit
           BlocProvider(
             create: (context) => injector<InformationPdoneProfileCubit>(),
           ),
+          BlocProvider(
+            create: (context) => injector<InformationUpdateProfilBloc>(),
+          ),
         ],
         child: Builder(
           builder: (c) {

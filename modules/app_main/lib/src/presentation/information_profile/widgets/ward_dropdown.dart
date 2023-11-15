@@ -48,6 +48,7 @@ class _WardDropDownState extends State<WardDropDown> {
         const SizedBox(height: 7),
         DropdownButtonFormField2<Ward>(
           isExpanded: true,
+          isDense: false,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 12),
             border: OutlineInputBorder(
