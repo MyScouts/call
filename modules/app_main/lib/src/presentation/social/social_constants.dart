@@ -4,9 +4,9 @@ String friendStatusStr({
   required bool isFollowing,
   required bool isBlocked,
 }) {
-  // if (isBlocked) {
-  //   return "Bỏ chặn";
-  // }
+  if (isFollowing && !isFollowed) {
+    return "Theo dõi lại";
+  }
   if (isFollowed) {
     if (isFriend) {
       return "Bạn bè";
