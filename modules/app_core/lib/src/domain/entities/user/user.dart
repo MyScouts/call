@@ -77,13 +77,12 @@ extension UserExtNull on User? {
   bool get getIsHasNickname => this?.nickname != null && this!.nickname!.isNotEmpty;
   bool get getIsHasEmail => this?.email != null && this!.email!.isNotEmpty;
 
-  bool isUnderFifteen() {
-    final DateTime? birthday = this?.birthday;
-    if (birthday == null) {
+  bool isUnderFifteen(DateTime? birthDay) {
+    if (birthDay == null) {
       return false;
     }
 
-    final int age = calculateAge(birthday);
+    final int age = calculateAge(birthDay);
     return age < 15;
   }
 }

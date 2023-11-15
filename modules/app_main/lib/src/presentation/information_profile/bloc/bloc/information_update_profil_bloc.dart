@@ -1,8 +1,6 @@
 import 'package:app_main/src/data/data_sources/local/information_pdone_profile/information_pdone_profile_local.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/update_none_pdone_profile_response.dart';
-import 'package:app_main/src/data/models/responses/update_pdone_profile_response.dart';
-import 'package:app_main/src/domain/usecases/authentication_usecase.dart';
 import 'package:app_main/src/domain/usecases/user_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -44,8 +42,9 @@ class InformationUpdateProfilBloc extends Bloc<InformationEvent, InformationUpda
     try {
       emit(InformationUpdateProfilLoading());
       final response = await _userUsecase.updateNonePNoneDoneProfile(event.updateNonePDoneProfilePayload!);
-      debugPrint("updateNonePDoneProfile response: ${response.profile}");
       await _informationPDoneSharePreferencesUsecase.saveInfoNonePDoneProfile(response.profile);
+      final values = _informationPDoneSharePreferencesUsecase.getInfoNonePDoneProfile();
+      debugPrint("updateNonePDoneProfile values: $values");
       emit(InformationNoneUpdateProfilSuccess());
     } catch (error) {
       debugPrint("updateNonePDoneProfile error: $error");

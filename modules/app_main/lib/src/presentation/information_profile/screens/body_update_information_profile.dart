@@ -1,10 +1,11 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
-import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/domain/entities/bank.dart';
+import 'package:app_main/src/domain/entities/update_account/information_none_pdone_profile.dart';
 import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
 import 'package:app_main/src/presentation/information_profile/bloc/bloc/information_update_profil_bloc.dart';
+import 'package:app_main/src/presentation/information_profile/bloc/cubit/information_pdone_profile_cubit.dart';
 import 'package:app_main/src/presentation/information_profile/bloc/place_information_2/place_information_2_bloc.dart';
 import 'package:app_main/src/presentation/information_profile/screens/information_profile_screen.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/bank_dropdown.dart';
@@ -28,6 +29,7 @@ import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/bloc/upg
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:intl/intl.dart';
 import 'package:localization/generated/l10n.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
@@ -52,6 +54,9 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
     with ValidationMixin, UpdateInformationProfileMixin, AutomaticKeepAliveClientMixin {
   final _phoneCtrl = TextEditingController();
 
+  InformationNonePdoneProfile? information;
+  DateTime? tempDate;
+  late final informationCubit = context.read<InformationPdoneProfileCubit>();
   late final upgradePDoneBloc = context.read<UpgradePDoneBloc>();
   late final getListBankBloc = context.read<GetListBanksBloc>();
   late final placeInformationBloc = context.read<PlaceInformationBloc>();
@@ -121,6 +126,9 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
 
   @override
   void initState() {
+    information = informationCubit.currentNoneInformation!;
+    tempDate = DateFormat("yyyy-MM-dd").parse(information!.birthday);
+
     upgradePDoneBloc.add(GetListMasterEvent());
     getListBankBloc.add(GetListDataEvent());
     placeInformationBloc.add(UserClearCountryEvent());
@@ -154,7 +162,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
 
                     if (state is InformationNoneUpdateProfilSuccess) {
                       hideLoading();
-                      showToastMessage("Update success");
+                      showToastMessage("Nâng cấp tài khoản thành công");
                       MyAppConstants.myConstantVariable.value = true;
                       Navigator.pushReplacement(
                         context,
@@ -178,7 +186,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                         Container(height: 20, color: AppColors.bgColor),
                         _buildFieldIdentifierInformation(),
                         Container(height: 20, color: AppColors.bgColor),
-                        (widget.isEdit && !widget.authInfo.isUnderFifteen())
+                        (widget.isEdit && !widget.authInfo.isUnderFifteen(tempDate))
                             ? _buildProtectorInformation()
                             : Container(),
                         _buildBankInformation(),

@@ -29,8 +29,10 @@ class InformationPdoneProfileCubit extends Cubit<InformationPdoneProfileState> {
     _currentNoneInformation = _doneSharePreferencesUsecase.getInfoNonePDoneProfile();
 
     try {
-      await _doneSharePreferencesUsecase.saveInfoNonePDoneProfile(informationNonePdoneProfile);
-      setCurrentNoneInformation(informationNonePdoneProfile);
+      if (_currentNoneInformation!.birthday.isEmpty) {
+        await _doneSharePreferencesUsecase.saveInfoNonePDoneProfile(informationNonePdoneProfile);
+        setCurrentNoneInformation(informationNonePdoneProfile);
+      }
       emit(GetInforNoneProfileSuccess(informationNonePdoneProfile));
     } on DioException catch (error) {
       debugPrint("getInforPDone: $error");
@@ -47,7 +49,7 @@ class InformationPdoneProfileCubit extends Cubit<InformationPdoneProfileState> {
   }
 
   Future<void> fetchInfor(InformationPdoneProfile informationPdoneProfile) async {
-    _currentNoneInformation = _doneSharePreferencesUsecase.getInfoNonePDoneProfile();
+    _currentInformation = _doneSharePreferencesUsecase.getInfoPDoneProfile();
 
     try {
       await _doneSharePreferencesUsecase.saveInfoPDoneProfile(informationPdoneProfile);
