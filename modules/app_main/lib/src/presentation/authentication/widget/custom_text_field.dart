@@ -14,6 +14,7 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.textInputType,
     this.label,
+    this.node,
     this.onError,
   });
   final TextEditingController controller;
@@ -27,6 +28,7 @@ class CustomTextField extends StatefulWidget {
   final String? Function(String?)? validator;
   final Function(String?)? onError;
   final String? label;
+  final FocusNode? node;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -61,6 +63,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           Text(widget.label!, style: context.text.titleMedium),
         if (widget.label != null) const SizedBox(height: 3),
         TextFormField(
+          focusNode: widget.node,
           key: widget.key,
           controller: widget.controller,
           obscureText: widget.isPassword && !isShowPassword,

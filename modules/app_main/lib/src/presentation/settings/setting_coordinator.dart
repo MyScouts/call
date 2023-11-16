@@ -51,7 +51,6 @@ extension SettingCoordinator on BuildContext {
   Future<T?> confirmDeleteAccount<T>({required int userId}) {
     return showModalBottomSheet(
       context: this,
-      useRootNavigator: true,
       backgroundColor: Colors.transparent,
       isDismissible: false,
       isScrollControlled: true,

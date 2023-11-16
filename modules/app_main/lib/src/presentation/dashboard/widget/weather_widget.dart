@@ -70,15 +70,17 @@ class WeatherWidget extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  AutoSizeText(
-                    '${state.openWeatherCurrent?.temp ?? 0}°',
-                    style: context.text.titleSmall!.copyWith(
-                      color: AppColors.white,
-                      fontSize: 52,
-                      fontWeight: FontWeight.w200,
+                  Flexible(
+                    child: AutoSizeText(
+                      '${state.openWeatherCurrent?.temp ?? 0}°',
+                      style: context.text.titleSmall!.copyWith(
+                        color: AppColors.white,
+                        fontSize: 52,
+                        fontWeight: FontWeight.w200,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                   ),
                   Align(
                     alignment: Alignment.centerLeft,

@@ -24,6 +24,7 @@ export 'src/dropdown/dropdown_selector_widget.dart';
 export 'src/dropdown/dropdown_widget.dart';
 export 'src/dropdown/gender_input.dart';
 export 'src/dropdown/items/dropdown_item_widget.dart';
+export 'src/expandable_fab/expandable_fab.dart';
 /// extensions
 export 'src/extensions/device_media/device_image_extension.dart';
 export 'src/extensions/device_media/picked_file.dart';

@@ -1,4 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:app_main/src/core/services/notification_center.dart';
+import 'package:app_main/src/di/di.dart';
+import 'package:app_main/src/domain/usecases/dashboard_share_preferences_usecase.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_background_builder.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_community_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_ecommerce_tab.dart';
@@ -7,8 +11,12 @@ import 'package:app_main/src/presentation/dashboard/dashboard/widget/dock_widget
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/statusbar_widget.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/notification/notification_screen.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:injectable/injectable.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:ui/ui.dart';
 
 class DashBoardInheritedData extends InheritedWidget {
   final PageController pageController;
@@ -26,17 +34,21 @@ class DashBoardInheritedData extends InheritedWidget {
 class DashBoardScreen extends StatefulWidget {
   static const String routeName = "dashboard";
 
-  const DashBoardScreen({super.key});
+  const DashBoardScreen({super.key, this.page});
+
+  final int? page;
 
   @override
   State<DashBoardScreen> createState() => _DashBoardScreenState();
 }
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
-  final PageController _pageController = PageController();
+  final controller = getIt<DashBoardScreenController>();
+  late final PageController _pageController =
+      PageController(initialPage: widget.page ?? (controller.mainPage ?? 0));
   final GlobalKey<NotificationScreenState> notificationKey = GlobalKey();
 
-  int _page = 0;
+  late int _page = widget.page ?? (controller.mainPage ?? 0);
 
   bool _showEditMode = false;
 
@@ -139,6 +151,86 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ],
               ),
             ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: ExpandableFab(
+                  fabMargin: 8,
+                  children: [
+                    ActionButton(
+                        icon: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: const Color(0xffBFE0FF),
+                              width: 3,
+                            ),
+                            shape: BoxShape.circle,
+                            gradient: const LinearGradient(
+                              colors: [
+                                Color(0xff66B2FF),
+                                Color(0xff0080FF),
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                          ),
+                          padding: const EdgeInsets.all(15),
+                          child: ImageWidget(IconAppConstants.icEdit2),
+                        ),
+                        onPressed: () {
+                          print("===M1");
+                        }),
+                    ActionButton(
+                        icon: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: const Color(0xffBFE0FF),
+                              width: 3,
+                            ),
+                            shape: BoxShape.circle,
+                            gradient: const LinearGradient(
+                              colors: [
+                                Color(0xff66B2FF),
+                                Color(0xff0080FF),
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                          ),
+                          padding: const EdgeInsets.all(15),
+                          child: ImageWidget(IconAppConstants.icVideoOc),
+                        ),
+                        onPressed: () {
+                          print("===M1");
+                        }),
+                    ActionButton(
+                        icon: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: const Color(0xffBFE0FF),
+                              width: 3,
+                            ),
+                            shape: BoxShape.circle,
+                            gradient: const LinearGradient(
+                              colors: [
+                                Color(0xff66B2FF),
+                                Color(0xff0080FF),
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                          ),
+                          padding: const EdgeInsets.all(15),
+                          child: ImageWidget(IconAppConstants.icVideo),
+                        ),
+                        onPressed: () {
+                          print("===M1");
+                        }),
+                  ],
+                ),
+              ),
+            ),
             NotificationScreen(
               key: notificationKey,
               onClose: () {
@@ -149,5 +241,47 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         ),
       ),
     );
+  }
+}
+
+@lazySingleton
+class DashBoardScreenController extends ChangeNotifier {
+  final DashboardSharePreferenceUseCase useCase;
+
+  DashBoardScreenController(this.useCase) {
+    mainPage = useCase.getPageInitial();
+    capture();
+  }
+
+  int? mainPage;
+
+  Uint8List? _page1;
+
+  Uint8List? _page2;
+
+  Uint8List? _page3;
+
+  Uint8List? get page1 => _page1;
+
+  Uint8List? get page2 => _page2;
+
+  Uint8List? get page3 => _page3;
+
+  ScreenshotController screenshotController = ScreenshotController();
+
+  void save(int page) {
+    useCase.savePage(page);
+  }
+
+  void capture() async {
+    // _page1 = await screenshotController.captureFromWidget(
+    //   const DashBoardScreen(page: 0),
+    // );
+    // _page2 = await screenshotController.captureFromWidget(
+    //   const DashBoardScreen(page: 1),
+    // );
+    // _page3 = await screenshotController.captureFromWidget(
+    //   const DashBoardScreen(page: 2),
+    // );
   }
 }
