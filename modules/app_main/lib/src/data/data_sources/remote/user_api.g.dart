@@ -403,7 +403,7 @@ class _UserApi implements UserApi {
     )
             .compose(
               _dio.options,
-              'api/users/list-friends',
+              '/api/v1/following/friend',
               queryParameters: queryParameters,
               data: _data,
             )

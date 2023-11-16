@@ -90,9 +90,10 @@ class AuthRepositoryImpl extends UserRepository {
     return _userAPI.getPDoneProfile();
   }
 
+  @override
   Future<List<User>> listFriends() async {
     final res = await _userAPI.listFriends();
-    return res.users;
+    return res.friends ?? [];
   }
 
   @override

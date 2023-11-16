@@ -926,7 +926,7 @@ class _CommunityApi implements CommunityApi {
     )
         .compose(
           _dio.options,
-          'api/v1/team/${teamId}/kick-member/${userId}',
+          '/api/v1/team/${teamId}/member/${userId}',
           queryParameters: queryParameters,
           data: _data,
         )
