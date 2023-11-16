@@ -7,6 +7,7 @@ import 'package:app_main/src/data/models/responses/confirm_response.dart';
 import 'package:app_main/src/data/models/responses/group_request_response.dart';
 import 'package:app_main/src/data/models/responses/leave_team_status_response.dart';
 import 'package:app_main/src/data/models/responses/member_join_request.dart';
+import 'package:app_main/src/data/models/responses/my_team_response.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/repository/community_repository.dart';
@@ -229,5 +230,10 @@ class CommunityRepositoryImpl extends CommunityRepository {
   Future<BossTeamRelinquishStatusResponse> getBossTeamRelinquishStatus(
       String id) async {
     return await _communityApi.getBossTeamRelinquishStatus(id);
+  }
+
+  @override
+  Future<MyTeamResponse> myTeams() {
+    return _communityApi.myTeams();
   }
 }

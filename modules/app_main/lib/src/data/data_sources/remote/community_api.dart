@@ -4,6 +4,7 @@ import 'package:app_main/src/data/models/payloads/community/community_payload.da
 import 'package:app_main/src/data/models/payloads/community/reply_give_up_boss_team_role_payload.dart';
 import 'package:app_main/src/data/models/responses/group_request_response.dart';
 import 'package:app_main/src/data/models/responses/member_join_request.dart';
+import 'package:app_main/src/data/models/responses/my_team_response.dart';
 import 'package:app_main/src/data/models/responses/team_member_response.dart';
 import 'package:app_main/src/data/models/responses/team_response.dart';
 import 'package:injectable/injectable.dart';
@@ -62,6 +63,7 @@ class CommunityApiConstants {
   static const String getBossTeamRelinquishStatus =
       '/api/v1/team/{id}/boss-status';
   static const String kickMember = 'api/v1/team/{teamId}/kick-member/{userId}';
+  static const String myTeam = 'api/v1/team/me';
 }
 
 @RestApi()
@@ -222,4 +224,7 @@ abstract class CommunityApi {
     @Path('userId') int userId,
     @Path('teamId') String teamId,
   );
+
+  @GET(CommunityApiConstants.myTeam)
+  Future<MyTeamResponse> myTeams();
 }

@@ -263,7 +263,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                 ? updateInformationBloc.add(InformationUpdateProfilEvent(passPdonePayload()))
                 : updateInformationBloc.add(InformationNoneUpdateProfilEvent(passNonePDonePayload())),
             height: 45,
-            title: 'Lưu',
+            title: 'Cập nhật',
             width: MediaQuery.of(context).size.width,
           ),
         );

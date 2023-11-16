@@ -1,6 +1,7 @@
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_group_widget.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_base_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard/widget/clock_widget.dart';
 import 'package:app_main/src/presentation/dashboard/widget/weather_banner_widget.dart';
 import 'package:app_main/src/presentation/dashboard/widget/weather_widget.dart';
@@ -40,12 +41,8 @@ class AppWidget extends StatelessWidget {
             child: IgnorePointer(
               ignoring: disablePress,
               child: GestureDetector(
-                onTap: () {
-                  if (app.path != null) {
-                    Navigator.of(context).pushNamed(app.path!);
-                    return;
-                  }
-                },
+                onTap: () =>
+                    context.handleStartAppWidget(id: app.id, path: app.path),
                 child: Builder(
                   builder: (_) {
                     Widget child = Stack(

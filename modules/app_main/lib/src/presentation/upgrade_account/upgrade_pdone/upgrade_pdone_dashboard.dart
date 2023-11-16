@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
 import 'package:design_system/design_system.dart';
@@ -55,6 +56,7 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
   }
 
   String getStatus() {
+    print('data?.type : ${data?.type}');
     if (data?.type == 0) {
       return 'Đang xác thực';
     }
@@ -79,6 +81,11 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
         UpgradePDoneScreen.routeName,
       );
     }
+
+    if (state is PDoneLoadedFailureInformation) {
+      showToastMessage(state.errorMessage);
+    }
+
   }
 
   @override

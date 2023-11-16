@@ -1,13 +1,12 @@
 import 'package:app_main/src/presentation/community/community.component.dart';
-import 'package:app_main/src/presentation/qr_code/qr_code_screen.dart';
 import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:equatable/equatable.dart';
 import 'package:staggered_reorderable/staggered_reorderable.dart';
 
-import '../upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
-
 enum DashboardType { community, personal, ecommerce }
+
+enum AppId { team }
 
 abstract class DashBoardItem extends Equatable {
   final String id;
@@ -299,11 +298,10 @@ final personalDefault = {
     title: 'Điện thoại',
     backgroundImage: IconAppConstants.icCall,
   ),
-  'ic_group': DashBoardIconItem(
-    id: 'ic_group',
-    title: 'Group Team',
-    backgroundImage: IconAppConstants.icGroupTeam,
-    path: CommunityWidget.routeName,
+  'ic_team': DashBoardIconItem(
+    id: 'ic_team',
+    title: 'Team',
+    backgroundImage: IconAppConstants.icTeam,
   ),
   'wg_weather_banner': DashBoardWidgetItem(
     id: 'wg_weather_banner',
