@@ -244,7 +244,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 notificationKey.currentState?.revert();
               },
             ),
-            if (_showAppStore) const AppStoreScreen(),
+            if (_showAppStore) AppStoreScreen(onClose: () {
+              setState(() {
+                _showAppStore = false;
+              });
+            },),
           ],
         ),
       ),
