@@ -247,16 +247,16 @@ final communityDefault = {
     backgroundImage: IconAppConstants.icQr,
     path: ScanQrCodeScanScreen.routeName,
   ),
-  'ic_profile': DashBoardIconItem(
-    id: 'ic_profile',
-    title: 'Profile',
-    backgroundImage: IconAppConstants.icProfile,
-  ),
   'ic_group': DashBoardIconItem(
     id: 'ic_group',
     title: 'Group Team',
-    backgroundImage: IconAppConstants.icProfile,
+    backgroundImage: IconAppConstants.icGroupTeam,
     path: CommunityWidget.routeName,
+  ),
+  'ic_team': DashBoardIconItem(
+    id: 'ic_team',
+    title: 'Team',
+    backgroundImage: IconAppConstants.icTeam,
   ),
   'ic_calenda': DashBoardIconItem(
     id: 'ic_calenda',
@@ -298,11 +298,6 @@ final personalDefault = {
     id: 'ic_call',
     title: 'Điện thoại',
     backgroundImage: IconAppConstants.icCall,
-  ),
-  'ic_team': DashBoardIconItem(
-    id: 'ic_team',
-    title: 'Team',
-    backgroundImage: IconAppConstants.icTeam,
   ),
   'wg_weather_banner': DashBoardWidgetItem(
     id: 'wg_weather_banner',
