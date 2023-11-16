@@ -39,13 +39,13 @@ class BodyUpdateInformationProfile extends StatefulWidget {
   final UserCubit userCubit;
   final User authInfo;
   final bool isEdit;
-  final InformationNonePdoneProfile informationNonePdoneProfile;
+  final InformationNonePdoneProfile? informationNonePdoneProfile;
   const BodyUpdateInformationProfile({
     super.key,
     required this.userCubit,
     required this.authInfo,
     required this.isEdit,
-    required this.informationNonePdoneProfile,
+    this.informationNonePdoneProfile,
   });
 
   @override
@@ -166,7 +166,11 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
 
   @override
   void initState() {
-    tempDate = DateFormat("yyyy-MM-dd").parse(widget.informationNonePdoneProfile.birthday);
+    if (widget.informationNonePdoneProfile != null) {
+      if (widget.informationNonePdoneProfile!.birthday.isNotEmpty) {
+        tempDate = DateFormat("yyyy-MM-dd").parse(widget.informationNonePdoneProfile!.birthday);
+      }
+    }
 
     upgradePDoneBloc.add(GetListMasterEvent());
     getListBankBloc.add(GetListDataEvent());
@@ -181,39 +185,39 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
     super.build(context);
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, bottom: 25),
-      child: validationFormBuilder(
-        child: AutoHideKeyboard(
-          child: BlocConsumer<UpgradePDoneBloc, UpgradePDoneState>(
-            listener: _listenerInformations,
-            builder: (_, state) {
-              return BlocListener<GetListBanksBloc, GetListState>(
+      child: AutoHideKeyboard(
+        child: BlocConsumer<UpgradePDoneBloc, UpgradePDoneState>(
+          listener: _listenerInformations,
+          builder: (_, state) {
+            return BlocListener<GetListBanksBloc, GetListState>(
+              listener: (_, state) {
+                if (state is GetListDataSuccess<Bank>) {
+                  banksChanged.value = state.data;
+                  LoggerService.print("Banks: $banksChanged");
+                }
+              },
+              child: BlocConsumer<InformationUpdateProfilBloc, InformationUpdateProfilState>(
                 listener: (_, state) {
-                  if (state is GetListDataSuccess<Bank>) {
-                    banksChanged.value = state.data;
-                    LoggerService.print("Banks: $banksChanged");
+                  if (state is InformationUpdateProfilLoading) {
+                    showLoading();
+                  }
+
+                  if (state is InformationNoneUpdateProfilSuccess) {
+                    hideLoading();
+                    showToastMessage("Nâng cấp tài khoản thành công");
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const InformationProfileScreen()),
+                    );
+                  }
+                  if (state is InformationUpdateProfilFailed) {
+                    hideLoading();
+                    showToastMessage(state.message!, ToastMessageType.error);
                   }
                 },
-                child: BlocConsumer<InformationUpdateProfilBloc, InformationUpdateProfilState>(
-                  listener: (_, state) {
-                    if (state is InformationUpdateProfilLoading) {
-                      showLoading();
-                    }
-
-                    if (state is InformationNoneUpdateProfilSuccess) {
-                      hideLoading();
-                      showToastMessage("Nâng cấp tài khoản thành công");
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => const InformationProfileScreen()),
-                      );
-                    }
-                    if (state is InformationUpdateProfilFailed) {
-                      hideLoading();
-                      showToastMessage(state.message!, ToastMessageType.error);
-                    }
-                  },
-                  builder: (context, state) {
-                    return SingleChildScrollView(
+                builder: (context, state) {
+                  return SingleChildScrollView(
+                    child: validationFormBuilder(
                       child: Column(
                         children: [
                           _buildToolbar(),
@@ -237,31 +241,33 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                           _buildButtonUpdate(context),
                         ],
                       ),
-                    );
-                  },
-                ),
-              );
-            },
-          ),
+                    ),
+                  );
+                },
+              ),
+            );
+          },
         ),
       ),
     );
   }
 
-  Padding _buildButtonUpdate(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
-      child: GradiantButton(
-        onPressed: () => widget.authInfo.getIsPDone
-            ? updateInformationBloc.add(InformationUpdateProfilEvent(passPdonePayload()))
-            : updateInformationBloc.add(InformationNoneUpdateProfilEvent(passNonePDonePayload())),
-        child: Text(
-          "Cập nhật",
-          style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                color: AppColors.white,
-              ),
-        ),
-      ),
+  Widget _buildButtonUpdate(BuildContext context) {
+    return validationListenableBuilder(
+      builder: (isValid) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
+          child: PrimaryButton(
+            disabled: !isValid,
+            onTap: () => widget.authInfo.getIsPDone
+                ? updateInformationBloc.add(InformationUpdateProfilEvent(passPdonePayload()))
+                : updateInformationBloc.add(InformationNoneUpdateProfilEvent(passNonePDonePayload())),
+            height: 45,
+            title: 'Cập nhật',
+            width: MediaQuery.of(context).size.width,
+          ),
+        );
+      },
     );
   }
 
@@ -294,6 +300,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                         ),
                         onChanged: (value) {
                           firstName = value!;
+                          onValidation();
                         },
                       ),
                     ),
@@ -310,6 +317,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                         ),
                         onChanged: (value) {
                           middleName = value!;
+                          onValidation();
                         },
                       ),
                     )
@@ -326,6 +334,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                   ),
                   onChanged: (value) {
                     fullName = value!;
+                    onValidation();
                   },
                 ),
           (widget.isEdit && widget.authInfo.getIsPDone)
@@ -340,6 +349,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                   ),
                   onChanged: (value) {
                     lastName = value!;
+                    onValidation();
                   },
                 )
               : Container(),
@@ -351,11 +361,12 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             controller: nickNameTxtController,
             onChanged: (String? value) {
               nickName = value!;
+              onValidation();
             },
             type: UpdateInformationType.nickName,
             validator: (value) => context.validateNicknameInfo(
               nickNameTxtController.text,
-              'Nickname không được vượt quá 24 ký tự',
+              'Vui lòng nhập nick name',
             ),
           ),
           (widget.isEdit && widget.authInfo.getIsPDone) ? Container() : const SizedBox(height: 3),
@@ -366,7 +377,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                       child: InformationFieldWidget(
                         required: true,
                         shouldEnabled: false,
-                        hintText: widget.informationNonePdoneProfile.sex.genderToString,
+                        hintText: widget.informationNonePdoneProfile!.sex.genderToString,
                         controller: lastNameTxtController,
                         type: UpdateInformationType.gender,
                         validator: (value) {},
@@ -378,7 +389,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                       child: InformationFieldWidget(
                         required: true,
                         shouldEnabled: false,
-                        hintText: widget.informationNonePdoneProfile.birthday,
+                        hintText: widget.informationNonePdoneProfile!.birthday,
                         controller: lastNameTxtController,
                         type: UpdateInformationType.birthDay,
                         validator: (value) {},
@@ -428,6 +439,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                               max: DateTime.now(),
                               onChange: (dateTime) {
                                 birthDay = dateTime!;
+                                onValidation();
                               },
                             ),
                           );
@@ -443,7 +455,9 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             required: true,
             shouldEnabled: true,
             controller: emailAddressTxtController,
-            onChanged: (String? value) {},
+            onChanged: (String? value) {
+              onValidation();
+            },
             type: UpdateInformationType.email,
             validator: (value) => context.validateEmailInfo(
               emailAddressTxtController.text,
@@ -492,7 +506,9 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             required: true,
             shouldEnabled: true,
             controller: idPDoneProtectorTxtController,
-            onChanged: (String? value) {},
+            onChanged: (String? value) {
+              onValidation();
+            },
             type: UpdateInformationType.pDoneID,
             validator: (value) => context.validateEmptyInfo(
               idPDoneProtectorTxtController.text,
@@ -525,7 +541,9 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             required: true,
             shouldEnabled: true,
             controller: idNumberProtectorTxtController,
-            onChanged: (String? value) {},
+            onChanged: (String? value) {
+              onValidation();
+            },
             type: UpdateInformationType.idNumber,
             validator: (value) => widget.authInfo.isUnderFifteen(tempDate)
                 ? context.validateCCCD(idNumberProtectorTxtController.text, 'Thông tin không hợp lệ')
@@ -570,7 +588,9 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             required: true,
             shouldEnabled: true,
             controller: bankNumberTxtController,
-            onChanged: (String? value) {},
+            onChanged: (String? value) {
+              onValidation();
+            },
             type: UpdateInformationType.bankNumber,
             validator: (value) => context.validateEmptyInfo(
               bankNumberTxtController.text,
@@ -581,7 +601,9 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             required: true,
             shouldEnabled: true,
             controller: bankAccountHolderTxtController,
-            onChanged: (String? value) {},
+            onChanged: (String? value) {
+              onValidation();
+            },
             type: UpdateInformationType.bankAccountHolder,
             validator: (value) => context.validateEmptyInfo(
               bankAccountHolderTxtController.text,
@@ -1074,6 +1096,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             ),
             onChanged: (String? value) {
               address = value!;
+              onValidation();
             },
           ),
           Row(
@@ -1132,6 +1155,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             ),
             onChanged: (String? value) {
               placeOfNumber = value!;
+              onValidation();
             },
           ),
         ],

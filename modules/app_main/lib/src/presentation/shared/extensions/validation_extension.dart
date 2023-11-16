@@ -78,7 +78,7 @@ extension BuildContextExtValidation on BuildContext {
   }
 
   String? validateNicknameInfo(String? value, String messageError) {
-    final isTooLong = value!.length > 25;
+    final isTooLong = value!.length > 25 || value.isEmpty;
 
     if (isTooLong) {
       return messageError;

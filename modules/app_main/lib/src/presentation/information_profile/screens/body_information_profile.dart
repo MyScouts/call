@@ -77,7 +77,6 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
             }
 
             if (state is GetInformationPDoneProfileFailed) {
-              showToastMessage(state.message!, ToastMessageType.error);
               hideLoading();
             }
           },
@@ -125,7 +124,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                 ),
               ),
               TextButton(
-                onPressed: () => Navigator.of(context).push(_createRoute(isEdit: true)),
+                onPressed: () => Navigator.of(context).push(_createRouteEditTrue(isEdit: true)),
                 child: const Text(
                   "Chỉnh sửa",
                   style: TextStyle(
@@ -173,7 +172,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                 ),
               ),
               Text(
-                _informationNonePdoneProfile.nickName ?? "N/A",
+                _informationNonePdoneProfile.firstName,
                 style: const TextStyle(
                   color: AppColors.black,
                   fontWeight: FontWeight.normal,
@@ -197,7 +196,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                 ),
               ),
               Text(
-                _informationNonePdoneProfile.nickName ?? "N/A",
+                _informationNonePdoneProfile.firstName,
                 style: const TextStyle(
                   color: AppColors.black,
                   fontWeight: FontWeight.normal,
@@ -586,7 +585,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
           ),
           const SizedBox(height: 8),
           TextButton(
-            onPressed: () => Navigator.of(context).push(_createRoute()),
+            onPressed: () => Navigator.of(context).push(_createRouteNotEdit()),
             child: const Text(
               "Cập nhật thông tin",
               style: TextStyle(
@@ -739,13 +738,26 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
     );
   }
 
-  Route _createRoute({bool isEdit = false}) {
+  Route _createRouteEditTrue({bool isEdit = true}) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => UpdateInformationProfileScreen(
         authInfo: _authInfo,
         userCubit: userCubit,
         isEdit: isEdit,
         informationNonePdoneProfile: _informationNonePdoneProfile,
+      ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return child;
+      },
+    );
+  }
+
+  Route _createRouteNotEdit({bool isEdit = false}) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => UpdateInformationProfileScreen(
+        authInfo: _authInfo,
+        userCubit: userCubit,
+        isEdit: isEdit,
       ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return child;

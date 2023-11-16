@@ -15,13 +15,13 @@ class UpdateInformationProfileScreen extends StatefulWidget {
   final User authInfo;
   final UserCubit userCubit;
   final bool isEdit;
-  final InformationNonePdoneProfile informationNonePdoneProfile;
+  final InformationNonePdoneProfile? informationNonePdoneProfile;
   const UpdateInformationProfileScreen({
     super.key,
     required this.authInfo,
     required this.userCubit,
     required this.isEdit,
-    required this.informationNonePdoneProfile,
+    this.informationNonePdoneProfile,
   });
 
   @override

@@ -27,7 +27,7 @@ class _WardDropDownState extends State<WardDropDown> {
         Row(
           children: [
             const Text(
-              "Phường/huyện",
+              "Phường/xã",
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Color(0xFF212121),
@@ -48,7 +48,6 @@ class _WardDropDownState extends State<WardDropDown> {
         const SizedBox(height: 7),
         DropdownButtonFormField2<Ward>(
           isExpanded: true,
-          isDense: false,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 12),
             border: OutlineInputBorder(
