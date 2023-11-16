@@ -200,4 +200,10 @@ class _ResourceApi implements ResourceApi {
 
     return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
+
+  @override
+  Future<String> storageUploadUrl(XFile file, String prefix) {
+    // TODO: implement storageUploadUrl
+    throw UnimplementedError();
+  }
 }

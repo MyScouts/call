@@ -14,6 +14,7 @@ import 'app_icon_animation.dart';
 
 class AppWidget extends StatelessWidget {
   final DashBoardItem app;
+  final bool fromAppStore;
 
   const AppWidget({
     super.key,
@@ -22,12 +23,15 @@ class AppWidget extends StatelessWidget {
     this.disablePress = false,
     this.enableRemoveIcon = false,
     this.onRemoved,
+    this.fromAppStore = false,
+    this.onAdd,
   });
 
   final Color? textColor;
   final bool disablePress;
   final bool enableRemoveIcon;
   final Function()? onRemoved;
+  final Function()? onAdd;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +60,7 @@ class AppWidget extends StatelessWidget {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        if (enableRemoveIcon)
+                        if (enableRemoveIcon && !fromAppStore)
                           Positioned(
                             left: -10,
                             top: -10,
@@ -71,6 +75,52 @@ class AppWidget extends StatelessWidget {
                                     radius: 15,
                                     child: Icon(
                                       Icons.remove,
+                                      size: 20,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        if (enableRemoveIcon && fromAppStore && onAdd == null)
+                          Positioned(
+                            right: -15,
+                            top: -20,
+                            child: GestureDetector(
+                              onTap: onRemoved,
+                              behavior: HitTestBehavior.opaque,
+                              child: const SizedBox.square(
+                                dimension: 40,
+                                child: Center(
+                                  child: CircleAvatar(
+                                    backgroundColor: Color(0xffFF3B30),
+                                    radius: 10,
+                                    child: Icon(
+                                      Icons.remove,
+                                      size: 20,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        if (enableRemoveIcon && fromAppStore && onAdd != null)
+                          Positioned(
+                            right: -15,
+                            top: -20,
+                            child: GestureDetector(
+                              onTap: onAdd,
+                              behavior: HitTestBehavior.opaque,
+                              child: const SizedBox.square(
+                                dimension: 40,
+                                child: Center(
+                                  child: CircleAvatar(
+                                    backgroundColor: Color(0xff00D379),
+                                    radius: 10,
+                                    child: Icon(
+                                      Icons.add,
                                       size: 20,
                                       color: Colors.white,
                                     ),
@@ -228,6 +278,40 @@ class AppWidgetGroupBuilder extends AppWidget {
       app: app,
       enableRemoveIcon: enableEditMode,
       onRemoved: onRemoved,
+    );
+  }
+}
+
+class AppStoreWidgetBuilder extends AppWidget {
+  const AppStoreWidgetBuilder({
+    super.key,
+    required super.app,
+    required super.onRemoved,
+    this.enableEditMode = false,
+    super.onAdd,
+  });
+
+  final bool enableEditMode;
+
+  @override
+  Widget build(BuildContext context) {
+    if (enableEditMode) {
+      return AppIconAnimation(
+        child: AppWidget(
+          app: app,
+          enableRemoveIcon: enableEditMode,
+          onRemoved: onRemoved,
+          fromAppStore: true,
+          onAdd: onAdd,
+        ),
+      );
+    }
+    return AppWidget(
+      app: app,
+      enableRemoveIcon: enableEditMode,
+      onRemoved: onRemoved,
+      fromAppStore: true,
+      onAdd: onAdd,
     );
   }
 }

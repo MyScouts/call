@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/usecases/dashboard_share_preferences_usecase.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_store_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_background_builder.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_community_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_ecommerce_tab.dart';
@@ -52,6 +53,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   bool _showEditMode = false;
 
+  bool _showAppStore = false;
+
   Widget _buildDot(BuildContext context, int index) {
     final page = _page;
     return Container(
@@ -99,7 +102,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     padding: const EdgeInsets.only(top: 16),
                     child: StatusBarWidget(
                       enableEditMode: _showEditMode,
-                      openAppStore: () => context.startSystemSetting(_page),
+                      openAppStore: () {
+                        setState(() {
+                          _showAppStore = true;
+                        });
+                      },
                       openNotification: () {
                         notificationKey.currentState?.forward();
                       },
@@ -237,6 +244,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 notificationKey.currentState?.revert();
               },
             ),
+            if (_showAppStore) const AppStoreScreen(),
           ],
         ),
       ),
