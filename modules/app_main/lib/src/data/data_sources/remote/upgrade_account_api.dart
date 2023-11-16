@@ -60,7 +60,8 @@ class UpgradeAccountApiConstants {
   static const updateBankAccount = '/api/bank-account';
   static const getDefaultBank = '/api/bank-account/default';
   static const pDoneProfile = '/api/v1/p-done/profile';
-  static const protectorRequested = '/api/v1/protector/sent-request?page=1&pageSize=10&status=1';
+  static const protectorRequested =
+      '/api/v1/protector/sent-request?page=1&pageSize=10&status=1';
 }
 
 @RestApi()
@@ -124,7 +125,7 @@ abstract class UpgradeAccountApi {
   Future<UpgradeAccountResponse> registerJA();
 
   @POST(UpgradeAccountApiConstants.registerJAVerifyOtp)
-  Future<ApiResponse<bool>> registerJAVerifyOtp({
+  Future registerJAVerifyOtp({
     @Body() required VerifyPhoneOtpPayload payload,
   });
 

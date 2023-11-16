@@ -76,7 +76,7 @@ class UpgradeAccountUsecase {
     return _upgradeAccountRepository.registerJA();
   }
 
-  Future<bool> verifyOtpPhone(VerifyPhoneOtpPayload payload) {
+  Future<dynamic> verifyOtpPhone(VerifyPhoneOtpPayload payload) {
     return _upgradeAccountRepository.registerJAVerifyOtp(payload: payload);
   }
 
@@ -130,7 +130,7 @@ class UpgradeAccountUsecase {
     return _upgradeAccountRepository.requestProtector(req: req);
   }
 
-  Future<PDoneInformationResponse> pDoneProfile(){
+  Future<PDoneInformationResponse> pDoneProfile() {
     return _upgradeAccountRepository.pDoneProfile();
   }
 

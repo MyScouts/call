@@ -116,11 +116,8 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   }
 
   @override
-  Future<bool> registerJAVerifyOtp(
-      {required VerifyPhoneOtpPayload payload}) async {
-    final response =
-        await _upgradeAccountApi.registerJAVerifyOtp(payload: payload);
-    return response.success;
+  Future registerJAVerifyOtp({required VerifyPhoneOtpPayload payload}) async {
+    await _upgradeAccountApi.registerJAVerifyOtp(payload: payload);
   }
 
   @override
@@ -213,14 +210,14 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   }
 
   @override
-  Future<PDoneInformationResponse> pDoneProfile() async{
+  Future<PDoneInformationResponse> pDoneProfile() async {
     // TODO: implement pDoneProfile
     final res = await _upgradeAccountApi.pDoneProfile();
     return res.data;
   }
 
   @override
-  Future<PDoneMyProtectorInformationResponse> protectorRequested() async{
+  Future<PDoneMyProtectorInformationResponse> protectorRequested() async {
     // TODO: implement protectorRequested
     final res = await _upgradeAccountApi.protectorRequested();
     return res.data;

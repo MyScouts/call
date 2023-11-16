@@ -247,7 +247,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       birthDay = eKycData['birth_day'].toString().parseDateTime();
       supplyDate = eKycData['issue_date'].toString().parseDateTime();
       expiryDate = eKycData['valid_date'].toString().parseDateTime();
-      if (DateTime.now().year - (birthDay?.year ?? 0) > 18) {
+      if (DateTime.now().year - (birthDay?.year ?? 0) >= 18) {
         pDoneAPICaller = PDoneAPICaller.adult;
         // pDoneAPICaller = PDoneAPICaller.teenager;
       } else {
@@ -610,7 +610,9 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                                 protectorApprove = value;
                                 Future.delayed(Duration(milliseconds: 200))
                                     .then((value) {
-                                  setState(() {});
+                                  setState(() {
+                                    onValidation();
+                                  });
                                 });
                               },
                             ),
