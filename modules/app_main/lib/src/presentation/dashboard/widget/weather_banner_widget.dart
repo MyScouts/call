@@ -149,7 +149,7 @@ class WeatherBannerWidget extends StatelessWidget {
                 ),
               ),
             ),
-            Expanded(
+            const Expanded(
               flex: 60,
               child: SizedBox(),
             )
@@ -305,9 +305,14 @@ class WeatherBannerWidget extends StatelessWidget {
                                       color: Color(0xff5686DF),
                                     ),
                                   ),
-                                  SizedBox.square(
-                                    dimension: 30,
-                                    child: ImageWidget(e.condition.image),
+                                  Expanded(
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: SizedBox.square(
+                                        dimension: 30,
+                                        child: ImageWidget(e.condition.image),
+                                      ),
+                                    ),
                                   ),
                                   Text(
                                     DateFormat('EEEE').format(e.time),

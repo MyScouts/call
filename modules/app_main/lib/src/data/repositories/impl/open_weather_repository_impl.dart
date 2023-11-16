@@ -3,7 +3,7 @@ import 'package:app_main/src/domain/entities/open_weather/open_weather_current.d
 import 'package:app_main/src/domain/repository/open_weather_repository.dart';
 import 'package:injectable/injectable.dart';
 
-const apiKey = '2ada79972da82547b4ccd4dc6c6fe43e';
+const apiKey = 'd2434015cd88e66d08d12f872b9aac1f';
 
 @LazySingleton(as: OpenWeatherRepository)
 class OpenWeatherRepositoryImpl extends OpenWeatherRepository {

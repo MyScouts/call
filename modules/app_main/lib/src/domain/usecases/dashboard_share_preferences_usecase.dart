@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const _dashboardItems = '_dashboardItems';
+const _dashboardPage = '_dashboardPage';
 
 @injectable
 class DashboardSharePreferenceUseCase {
@@ -40,4 +41,13 @@ class DashboardSharePreferenceUseCase {
   Future<bool> saveDashBoardBg(String key, String path) {
     return _shared.setString('$key $_dashboardItems', path);
   }
+
+  int getPageInitial() {
+    return _shared.getInt(_dashboardPage) ?? 0;
+  }
+
+  void savePage(int page) {
+    _shared.setInt(_dashboardPage, page);
+  }
+
 }

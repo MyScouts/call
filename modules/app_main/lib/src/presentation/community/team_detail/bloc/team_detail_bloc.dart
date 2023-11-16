@@ -140,11 +140,9 @@ class TeamDetailBloc extends Bloc<TeamDetailEvent, TeamDetailState> {
     } on DioException catch (error) {
       final data = error.response!.data;
       String err = S.current.messages_server_internal_error.capitalize();
-      print(data);
-      emit(AssignBossFail(message: err));
+      emit(AssignBossFail(message: 'Boss team phải là JA'));
     } catch (error) {
-      String err = S.current.messages_server_internal_error.capitalize();
-      emit(AssignBossFail(message: err));
+      emit(AssignBossFail(message: 'Boss team phải là JA'));
     }
   }
 

@@ -88,6 +88,10 @@ class IconAppConstants {
   static String icCameraRound = IconApp.icCameraRound.path;
   static String icCare = IconApp.icCare.path;
   static String icTeamProfile = IconApp.icTeamProfile.path;
+  static String icSetting = IconApp.icSetting.path;
+  static String icVideoOc = IconApp.icVideoOc.path;
+  static String icVideo = IconApp.icVideo.path;
+  static String icEdit2 = IconApp.icEdit2.path;
 }
 
 enum IconApp {
@@ -181,6 +185,10 @@ enum IconApp {
   icCameraRound('assets/icons/ic_camera_round.png'),
   icCare('assets/icons/ic_care.svg'),
   icTeamProfile('assets/icons/ic_team.svg'),
+  icSetting('assets/icons/ic_setting.svg'),
+  icEdit2('assets/icons/ic_edit_2.svg'),
+  icVideoOc('assets/icons/ic_video_oc.svg'),
+  icVideo('assets/icons/ic_video.svg'),
   icLeaveTeam('assets/icons/ic_leave_team.svg');
 
   const IconApp(this.path);

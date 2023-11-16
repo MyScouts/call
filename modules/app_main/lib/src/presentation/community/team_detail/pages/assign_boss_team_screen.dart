@@ -60,7 +60,7 @@ class _AssignBossTeamScreenState extends State<AssignBossTeamScreen> {
 
         if (state is AssignBossFail) {
           hideLoading();
-          showToastMessage(state.message);
+          showToastMessage(state.message, ToastMessageType.error);
         }
       },
       child: ScaffoldHideKeyboard(

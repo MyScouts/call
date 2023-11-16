@@ -100,7 +100,13 @@ class _ChangePasswordState extends State<ChangePassword> with ValidationMixin {
               PrimaryButton(
                 title: 'Đổi mật khẩu',
                 onTap: () async {
-                  if(newPass.text.trim().isEmpty) return;
+                  if(newPass.text.trim().isEmpty) {
+                    showToastMessage(
+                      "Không được để trống",
+                      ToastMessageType.error,
+                    );
+                    return;
+                  }
                   if (newPass.text != reConfirmPass.text) {
                     showToastMessage(
                       "Mật khẩu không khớp",

@@ -52,6 +52,9 @@ class ImageConstants {
   static String birthCerCapture = ImageApp.birthCerCapture.path;
   static String birthCerBackgroundConfirm =
       ImageApp.birthCerBackgroundConfirm.path;
+  static String screenshot1 = ImageApp.screenshot1.path;
+  static String screenshot2 = ImageApp.screenshot2.path;
+  static String screenshot3 = ImageApp.screenshot3.path;
 }
 
 enum ImageApp {
@@ -106,7 +109,10 @@ enum ImageApp {
   bg8('assets/images/bg8.png'),
   bg9('assets/images/bg9.png'),
   bg10('assets/images/bg10.png'),
-  bg11('assets/images/bg11.png');
+  bg11('assets/images/bg11.png'),
+  screenshot1('assets/images/screenshot_1.png'),
+  screenshot2('assets/images/screenshot_2.png'),
+  screenshot3('assets/images/screenshot_3.png');
 
   const ImageApp(this.path);
 
