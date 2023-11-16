@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_request_protector_req.dart';
 import '../../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
+import '../../../../../data/models/responses/pdone/pdone_my_protector_information_response.dart';
 import '../../../../../data/models/responses/register_pdone_response.dart';
 import '../../../../../domain/entities/update_account/check_protector_payload.dart';
 import '../../../../../domain/entities/update_account/pdone_account.dart';
@@ -16,6 +17,7 @@ import '../../../../../domain/entities/update_account/update_profile_payload.dar
 import '../../../../../domain/entities/update_account/upgrade_account.dart';
 import '../../../../../domain/entities/update_account/verify_phone_register_pdone_payload.dart';
 import '../../../../../domain/usecases/upgrade_account_usecase.dart';
+import '../../../../../domain/usecases/user_share_preferences_usecase.dart';
 import '../../../../../domain/usecases/user_usecase.dart';
 import '../../../upgrade_account_constants.dart';
 
@@ -26,13 +28,15 @@ part 'upgrade_pdone_state.dart';
 @injectable
 class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
   final UpgradeAccountUsecase _upgradeAccountUsecase;
+  final UserSharePreferencesUsecase _userSharePreferencesUsecase;
 
   // final ResourceUsecase _resourceUsecase;
   final UserUsecase _userUsecase;
 
   // final UserSharePreferencesUsecase _userSharePreferencesUsecase;
 
-  UpgradePDoneBloc(this._upgradeAccountUsecase, this._userUsecase)
+  UpgradePDoneBloc(this._upgradeAccountUsecase, this._userUsecase,
+      this._userSharePreferencesUsecase)
       : super(UpgradePDoneInitial()) {
     on<GetListMasterEvent>(_mapGetListMasterEvent);
     on<RegisterPDoneAccountEvent>(_mapRegisterPDoneAccountEvent);
@@ -42,10 +46,12 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     on<UploadKYCImageEvent>(_mapUploadKYCImageEvent);
     on<ResendOtpEvent>(_mapResendOtpEvent);
     on<ExtractingIdCardEvent>(_mapExtractingIdCardEvent);
-    on<UpdatePDoneSendOTP>(_mapSendOTPVerifyUpdatePdoneEvent);
+    on<UpdatePDoneSendOTPEvent>(_mapSendOTPVerifyUpdatePdoneEvent);
     on<VerifyProtectorEvent>(_mapVerifyProtectorEvent);
     on<UploadImageBirthCerEvent>(_mapUploadImageBirthCerEvent);
     on<RequestProtectorEvent>(_mapRequestProtectorEvent);
+    on<ProtectorApprovedEvent>(_mapProtectorApprovedEvent);
+    on<ProtectorRejectedEvent>(_mapProtectorRejectedEvent);
   }
 
   FutureOr<void> _mapExtractingIdCardEvent(
@@ -89,20 +95,28 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     emit(GetListMasterLoading());
     try {
       final res = await _upgradeAccountUsecase.getListData();
+      final protectorRequested =
+          await _upgradeAccountUsecase.protectorRequested();
 
-      emit(GetListMasterSuccess(res));
+      emit(GetListMasterSuccess(
+          upgradeAccount: res,
+          protector: protectorRequested.requests.isEmpty
+              ? null
+              : protectorRequested.requests[0]));
     } catch (e) {
       emit(GetListMasterFailure(e.toString()));
     }
   }
 
   FutureOr<void> _mapSendOTPVerifyUpdatePdoneEvent(
-      UpdatePDoneSendOTP event, Emitter<UpgradePDoneState> emit) async {
+      UpdatePDoneSendOTPEvent event, Emitter<UpgradePDoneState> emit) async {
     try {
       final res = await _userUsecase.genOtp();
 
       if (res) {
-        emit(UpdatePDoneSendOTPSuccessState());
+        emit(UpdatePDoneSendOTPSuccessState(
+            currentPhoneNumber:
+                '(+${_userSharePreferencesUsecase.getUserInfo()!.phoneCode})${_userSharePreferencesUsecase.getUserInfo()!.phone}'));
       } else {
         emit(UpdatePDoneSendOTPFailureState(
             errorMessage: 'Có lỗi xảy ra, vui lòng thử lại!'));
@@ -307,18 +321,6 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     emit(RequestingProtectorState());
 
     try {
-      FirebaseMessaging.onMessage.listen((message) {
-        final data = message.data;
-        if (data['type'] == 'PROTECTOR_REQUEST_REPLY') {
-          final dataRes = jsonDecode(data['data']);
-          if (dataRes['isApproved']) {
-            emit(ApproveProtectorState());
-          } else {
-            emit(RejectProtectorState());
-          }
-        }
-      });
-
       final userId = await _upgradeAccountUsecase.verifyProtector(event.req);
       final reqProtectorRequest = PDoneRequestProtectorReq(
           relation: event.req.protector, protectorId: userId);
@@ -326,8 +328,31 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
 
       emit(RequestedSuccessProtectorState());
     } catch (e) {
-      emit(RequestedFailureProtectorState(
-          errorMessage: 'Có lỗi xảy ra, vui lòng thử lại!'));
+      if (e is DioException) {
+        if (e.response?.data['code'] == "INVALID_P_DONE_ID") {
+          emit(RequestedFailureProtectorState(
+              errorMessage: 'Người bảo hộ không tồn tại'));
+        }
+
+        if (e.response?.data['code'] == 'ALREADY_REQUESTED') {
+          emit(RequestedFailureProtectorState(
+              errorMessage:
+                  'Đã có yêu cầu gửi trước đó, vui lòng chờ người bảo hộ xét duyệt!'));
+        }
+      } else {
+        emit(RequestedFailureProtectorState(
+            errorMessage: 'Có lỗi xảy ra, vui lòng thử lại!'));
+      }
     }
+  }
+
+  FutureOr<void> _mapProtectorApprovedEvent(
+      ProtectorApprovedEvent event, Emitter<UpgradePDoneState> emit) async {
+    emit(ApproveProtectorState());
+  }
+
+  FutureOr<void> _mapProtectorRejectedEvent(
+      ProtectorRejectedEvent event, Emitter<UpgradePDoneState> emit) async {
+    emit(RejectProtectorState());
   }
 }

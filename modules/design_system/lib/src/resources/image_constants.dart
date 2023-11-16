@@ -48,16 +48,22 @@ class ImageConstants {
   static String bg11 = ImageApp.bg11.path;
   static String imgDefaultTeamBanner = ImageApp.imgDefaultTeamBanner.path;
   static String guidePdone = ImageApp.guidePdone.path;
+  static String imageCamera = ImageApp.imageCamera.path;
+  static String imageEmpty = ImageApp.imageEmpty.path;
+  static String imageType = ImageApp.imageType.path;
   static String bgEmpty = ImageApp.bgEmpty.path;
   static String birthCerCapture = ImageApp.birthCerCapture.path;
   static String birthCerBackgroundConfirm =
       ImageApp.birthCerBackgroundConfirm.path;
+  static String pDoneNotification = ImageApp.pDoneNotification.path;
+  static String bgNotiEmpty = ImageApp.bgNotiEmpty.path;
   static String screenshot1 = ImageApp.screenshot1.path;
   static String screenshot2 = ImageApp.screenshot2.path;
   static String screenshot3 = ImageApp.screenshot3.path;
 }
 
 enum ImageApp {
+  bgNotiEmpty('assets/images/noti_empty.png'),
   bgEmpty('assets/images/empty.png'),
   bgQrCode('assets/images/bg_qrcode.png'),
   defaultUserAvatar('assets/images/avatar.png'),
@@ -99,6 +105,7 @@ enum ImageApp {
   guidePdone('assets/images/guidePdone.png'),
   birthCerCapture('assets/images/birth_cer_capture.jpg'),
   birthCerBackgroundConfirm('assets/images/birth_cer_background_confirm.jpg'),
+  pDoneNotification('assets/images/pdone_notification.png'),
   bg1('assets/images/bg1.png'),
   bg2('assets/images/bg2.png'),
   bg3('assets/images/bg3.png'),
@@ -110,6 +117,9 @@ enum ImageApp {
   bg9('assets/images/bg9.png'),
   bg10('assets/images/bg10.png'),
   bg11('assets/images/bg11.png'),
+  imageCamera('assets/images/img_camera.png'),
+  imageEmpty('assets/images/img_empty.png'),
+  imageType('assets/images/ic_type.png'),
   screenshot1('assets/images/screenshot_1.png'),
   screenshot2('assets/images/screenshot_2.png'),
   screenshot3('assets/images/screenshot_3.png');

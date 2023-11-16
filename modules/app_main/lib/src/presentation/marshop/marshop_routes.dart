@@ -16,9 +16,12 @@ class MarkShopRoutes extends RouteModule {
           );
         },
         RegisterMarshopScreen.routeName: (context) {
+          final args = settings.arguments as Map<String, dynamic>;
           return BlocProvider.value(
             value: injector.get<UserCubit>(),
-            child: const RegisterMarshopScreen(),
+            child: RegisterMarshopScreen(
+              marshopId: args['marshopId'],
+            ),
           );
         },
       };

@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
 import 'package:app_main/src/data/models/responses/group_request_response.dart';
 import 'package:app_main/src/data/models/responses/member_join_request.dart';
+import 'package:app_main/src/data/models/responses/my_team_response.dart';
 
 import '../../data/models/payloads/community/reply_give_up_boss_team_role_payload.dart';
 import '../../data/models/payloads/community/update_community_payload.dart';
@@ -84,4 +85,6 @@ abstract class CommunityRepository {
 
   Future<BossTeamRelinquishStatusResponse> getBossTeamRelinquishStatus(
       String id);
+
+  Future<MyTeamResponse> myTeams();
 }

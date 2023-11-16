@@ -1,9 +1,9 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:app_main/src/presentation/community/groups/group_listing_bloc.dart';
 import 'package:app_main/src/presentation/community/groups/groups_listing_widget.dart';
 import 'package:app_main/src/presentation/community/groups/widget/tab-bar-groups.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
-import 'package:app_main/src/presentation/shared/user/bloc/user_bloc.dart';
 import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +26,11 @@ class _CommunityWidgetState extends State<CommunityWidget>
 
   @override
   void initState() {
-    _communityTabController =
-        TabController(length: 2, vsync: this, initialIndex: 1);
+    _communityTabController = TabController(
+        length: 2,
+        vsync: this,
+        initialIndex: 1,
+        animationDuration: Duration.zero);
     super.initState();
   }
 
@@ -45,6 +48,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
       body: SafeArea(
         child: DefaultTabController(
           length: 2,
+          animationDuration: Duration.zero,
           child: ColoredBox(
             color: AppColors.bgColor,
             child: Column(
@@ -97,7 +101,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
                         height: 35,
                         child: IconButton(
                           padding: EdgeInsets.zero,
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: () => context.startCommunityNotification(),
                           icon: ImageWidget(IconAppConstants.bell),
                           highlightColor: Colors.transparent,
                         ),

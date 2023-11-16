@@ -15,6 +15,7 @@ class CustomTextField extends StatefulWidget {
     this.textInputType,
     this.label,
     this.node,
+    this.onError,
   });
   final TextEditingController controller;
   final Widget? prefixIcon;
@@ -25,6 +26,7 @@ class CustomTextField extends StatefulWidget {
   final bool isPassword;
   final TextInputType? textInputType;
   final String? Function(String?)? validator;
+  final Function(String?)? onError;
   final String? label;
   final FocusNode? node;
 
@@ -44,6 +46,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
         String? error = widget.validator!(widget.controller.text);
         _isError = error != null;
         setState(() {});
+
+        if (widget.onError != null) {
+          widget.onError!(error);
+        }
       }
     });
   }
@@ -65,7 +71,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           onChanged: widget.onChange,
           keyboardType: widget.textInputType,
           enableSuggestions: !widget.isPassword,
-          autovalidateMode: AutovalidateMode.disabled,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: widget.validator,
           decoration: InputDecoration(
             prefixIcon: widget.prefixIcon,

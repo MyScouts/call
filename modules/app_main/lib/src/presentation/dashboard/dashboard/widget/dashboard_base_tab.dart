@@ -9,10 +9,7 @@ import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_p
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:flutter/material.dart';
-import 'package:reorderable/reorderable.dart';
 import 'package:staggered_reorderable/staggered_reorderable.dart';
-
-import 'app_group_widget.dart';
 import 'app_widget.dart';
 import 'dashboard_group_screen.dart';
 

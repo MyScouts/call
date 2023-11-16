@@ -23,7 +23,7 @@ typedef ConfirmRegisterJABloc
     = GetDetailBlocParam1<ConfirmRegisterJAResponse, ConfirmRegisterJAPayload>;
 
 typedef UpgradeAccountVerifyPhoneBloc
-    = GetDetailBlocParam1<bool, VerifyPhoneOtpPayload>;
+    = GetDetailBlocParam1<dynamic, VerifyPhoneOtpPayload>;
 
 typedef ResendOTPPhoneBloc
     = GetDetailBlocParam1<UpgradeAccountResponse, PDoneActionType>;

@@ -4,8 +4,6 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:localization/generated/intl/messages_en.dart';
 import 'package:localization/localization.dart';
 
 import '../../../../data/models/responses/leave_team_status_response.dart';
@@ -140,9 +138,16 @@ class TeamDetailBloc extends Bloc<TeamDetailEvent, TeamDetailState> {
     } on DioException catch (error) {
       final data = error.response!.data;
       String err = S.current.messages_server_internal_error.capitalize();
-      emit(AssignBossFail(message: 'Boss team phải là JA'));
+      switch (data['code']) {
+        case "NOT_JA":
+          err = "Boss Team phải là JA.";
+          break;
+        default:
+      }
+      emit(AssignBossFail(message: err));
     } catch (error) {
-      emit(AssignBossFail(message: 'Boss team phải là JA'));
+      String err = S.current.messages_server_internal_error.capitalize();
+      emit(AssignBossFail(message: err));
     }
   }
 

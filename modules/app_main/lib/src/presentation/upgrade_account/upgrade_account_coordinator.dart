@@ -20,6 +20,7 @@ import 'upgrade_ja/widgets/upgrade_success_widget.dialog.dart';
 import 'upgrade_ja/widgets/verify_phone_otp_dialog_widget.dart';
 import 'upgrade_pdone/bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 import 'upgrade_pdone/pages/register_state_page.dart';
+import 'upgrade_pdone/upgrade_pdone_dashboard.dart';
 import 'upgrade_pdone/upgrade_pdone_screen.dart';
 import 'upgrade_pdone/views/widgets/upgrade_account_verify_otp_dialog.dart';
 
@@ -281,6 +282,12 @@ extension UpgradeAccountCoordinator on BuildContext {
   Future<T?> startUpgradePDone<T>() {
     return Navigator.of(this).pushNamed(
       UpgradePDoneScreen.routeName,
+    );
+  }
+
+  Future<T?> startPDoneInformation<T>() {
+    return Navigator.of(this).pushNamed(
+      UpgradePDoneDashboard.routeName,
     );
   }
 

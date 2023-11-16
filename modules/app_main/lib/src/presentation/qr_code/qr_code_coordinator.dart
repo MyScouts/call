@@ -5,6 +5,7 @@ import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
+import 'package:app_main/src/presentation/qr_code/qr_code_constants.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_screen.dart';
 import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +13,14 @@ import 'package:localization/localization.dart';
 import 'package:ui/ui.dart';
 
 extension DeeplinkCoordinator on BuildContext {
-  Future<T?> startScanQrCode<T>({bool? showMyQr}) {
+  Future<T?> startScanQrCode<T>({
+    bool? showMyQr,
+    required QrCodeScanType type,
+  }) {
     return Navigator.of(this)
         .pushNamed(ScanQrCodeScanScreen.routeName, arguments: {
       "showMyQr": showMyQr,
+      "type": type,
     });
   }
 
@@ -69,6 +74,7 @@ extension DeeplinkCoordinator on BuildContext {
             isBack: false,
             title: "Bạn có muốn đăng nhập trên thiết bị?",
             actionTitle: S.current.confirm.capitalize(),
+            onCancel: () => context.startDashboardUtil(),
             onAction: () {
               context.read<UserCubit>().authQrCode(qrCode: code, type: type);
             },

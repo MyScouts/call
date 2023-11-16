@@ -77,8 +77,8 @@ class ExtractingIdCardEvent extends UpgradePDoneEvent {
 }
 
 @immutable
-class UpdatePDoneSendOTP extends UpgradePDoneEvent {
-  UpdatePDoneSendOTP();
+class UpdatePDoneSendOTPEvent extends UpgradePDoneEvent {
+  UpdatePDoneSendOTPEvent();
 }
 
 @immutable
@@ -98,7 +98,19 @@ class UploadImageBirthCerEvent extends UpgradePDoneEvent {
 @immutable
 class RequestProtectorEvent extends UpgradePDoneEvent {
   final PDoneVerifyProtectorRequest req;
-  final int userId;
 
-  RequestProtectorEvent({required this.req, required this.userId});
+  RequestProtectorEvent({required this.req});
+}
+
+
+
+@immutable
+class ProtectorRejectedEvent extends UpgradePDoneEvent {
+  ProtectorRejectedEvent();
+}
+
+
+@immutable
+class ProtectorApprovedEvent extends UpgradePDoneEvent {
+  ProtectorApprovedEvent();
 }

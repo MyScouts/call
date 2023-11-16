@@ -9,7 +9,9 @@ import '../settings/contract_ja/contract_ja_screen.dart';
 import '../shared/user/bloc/user_bloc.dart';
 import 'upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'upgrade_ja/upgrade_ja_screen.dart';
+import 'upgrade_pdone/bloc/pdone_information/pdone_information_bloc.dart';
 import 'upgrade_pdone/bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
+import 'upgrade_pdone/upgrade_pdone_dashboard.dart';
 
 @injectable
 class UpgradeAccountRoutes extends RouteModule {
@@ -49,6 +51,19 @@ class UpgradeAccountRoutes extends RouteModule {
             child: const UpgradePDoneScreen(
               currentStep: 0,
             ),
+          );
+        },
+        UpgradePDoneDashboard.routeName: (context) {
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<PDoneInformationBloc>(
+                create: (context) => injector.get(),
+              ),
+              BlocProvider<UserBloc>(
+                create: (context) => injector.get(),
+              )
+            ],
+            child: const UpgradePDoneDashboard(),
           );
         },
         UpdateBankAccountScreen.routeName: (context) {

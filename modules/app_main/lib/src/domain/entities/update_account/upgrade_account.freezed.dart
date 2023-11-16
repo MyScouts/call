@@ -1449,6 +1449,162 @@ abstract class _Interest implements Interest {
       throw _privateConstructorUsedError;
 }
 
+AutocompleteOption _$AutocompleteOptionFromJson(Map<String, dynamic> json) {
+  return _AutocompleteOption.fromJson(json);
+}
+
+/// @nodoc
+mixin _$AutocompleteOption {
+  String? get displayText => throw _privateConstructorUsedError;
+  String? get key => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AutocompleteOptionCopyWith<AutocompleteOption> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AutocompleteOptionCopyWith<$Res> {
+  factory $AutocompleteOptionCopyWith(
+          AutocompleteOption value, $Res Function(AutocompleteOption) then) =
+      _$AutocompleteOptionCopyWithImpl<$Res, AutocompleteOption>;
+  @useResult
+  $Res call({String? displayText, String? key});
+}
+
+/// @nodoc
+class _$AutocompleteOptionCopyWithImpl<$Res, $Val extends AutocompleteOption>
+    implements $AutocompleteOptionCopyWith<$Res> {
+  _$AutocompleteOptionCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? displayText = freezed,
+    Object? key = freezed,
+  }) {
+    return _then(_value.copyWith(
+      displayText: freezed == displayText
+          ? _value.displayText
+          : displayText // ignore: cast_nullable_to_non_nullable
+              as String?,
+      key: freezed == key
+          ? _value.key
+          : key // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$AutocompleteOptionImplCopyWith<$Res>
+    implements $AutocompleteOptionCopyWith<$Res> {
+  factory _$$AutocompleteOptionImplCopyWith(_$AutocompleteOptionImpl value,
+          $Res Function(_$AutocompleteOptionImpl) then) =
+      __$$AutocompleteOptionImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? displayText, String? key});
+}
+
+/// @nodoc
+class __$$AutocompleteOptionImplCopyWithImpl<$Res>
+    extends _$AutocompleteOptionCopyWithImpl<$Res, _$AutocompleteOptionImpl>
+    implements _$$AutocompleteOptionImplCopyWith<$Res> {
+  __$$AutocompleteOptionImplCopyWithImpl(_$AutocompleteOptionImpl _value,
+      $Res Function(_$AutocompleteOptionImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? displayText = freezed,
+    Object? key = freezed,
+  }) {
+    return _then(_$AutocompleteOptionImpl(
+      displayText: freezed == displayText
+          ? _value.displayText
+          : displayText // ignore: cast_nullable_to_non_nullable
+              as String?,
+      key: freezed == key
+          ? _value.key
+          : key // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$AutocompleteOptionImpl implements _AutocompleteOption {
+  const _$AutocompleteOptionImpl({this.displayText, this.key});
+
+  factory _$AutocompleteOptionImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AutocompleteOptionImplFromJson(json);
+
+  @override
+  final String? displayText;
+  @override
+  final String? key;
+
+  @override
+  String toString() {
+    return 'AutocompleteOption(displayText: $displayText, key: $key)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AutocompleteOptionImpl &&
+            (identical(other.displayText, displayText) ||
+                other.displayText == displayText) &&
+            (identical(other.key, key) || other.key == key));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, displayText, key);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AutocompleteOptionImplCopyWith<_$AutocompleteOptionImpl> get copyWith =>
+      __$$AutocompleteOptionImplCopyWithImpl<_$AutocompleteOptionImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$AutocompleteOptionImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _AutocompleteOption implements AutocompleteOption {
+  const factory _AutocompleteOption(
+      {final String? displayText,
+      final String? key}) = _$AutocompleteOptionImpl;
+
+  factory _AutocompleteOption.fromJson(Map<String, dynamic> json) =
+      _$AutocompleteOptionImpl.fromJson;
+
+  @override
+  String? get displayText;
+  @override
+  String? get key;
+  @override
+  @JsonKey(ignore: true)
+  _$$AutocompleteOptionImplCopyWith<_$AutocompleteOptionImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 Talent _$TalentFromJson(Map<String, dynamic> json) {
   return _Talent.fromJson(json);
 }

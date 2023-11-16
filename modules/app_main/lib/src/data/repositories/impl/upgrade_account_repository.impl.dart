@@ -5,6 +5,8 @@ import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/
 import 'package:app_main/src/data/models/responses/api_verify_response.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
+import 'package:app_main/src/data/models/responses/pdone/pdone_information_response.dart';
+import 'package:app_main/src/data/models/responses/pdone/pdone_my_protector_information_response.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
 import 'package:camera/camera.dart';
 import 'package:injectable/injectable.dart';
@@ -47,7 +49,7 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   }
 
   @override
-  Future<bool> updatePDoneProfileBirthCer(UpdateProfilePayload payload) async{
+  Future<bool> updatePDoneProfileBirthCer(UpdateProfilePayload payload) async {
     // TODO: implement updatePDoneProfileBirthCer
     final res = await _upgradeAccountApi.updatePDoneProfileBirthCer(
         payload: payload.toJson());
@@ -145,6 +147,7 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
     final response = await _upgradeAccountApi.checkProtector(payload: payload);
     return response.data;
   }
+
   @override
   Future<BankAccount> updateBankAccount(
       UpdateBankAccountPayload payload) async {
@@ -202,11 +205,24 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   }
 
   @override
-  Future<APIVerifyResponse> requestProtector({required PDoneRequestProtectorReq req}) async{
+  Future<APIVerifyResponse> requestProtector(
+      {required PDoneRequestProtectorReq req}) async {
     // TODO: implement requestProtector
     final res = await _upgradeAccountApi.requestProtector(payload: req);
     return res.data;
   }
 
+  @override
+  Future<PDoneInformationResponse> pDoneProfile() async{
+    // TODO: implement pDoneProfile
+    final res = await _upgradeAccountApi.pDoneProfile();
+    return res.data;
+  }
 
+  @override
+  Future<PDoneMyProtectorInformationResponse> protectorRequested() async{
+    // TODO: implement protectorRequested
+    final res = await _upgradeAccountApi.protectorRequested();
+    return res.data;
+  }
 }
