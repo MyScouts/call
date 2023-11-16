@@ -14,13 +14,12 @@ class StatusBarWidget extends StatelessWidget {
   final Function()? onCanceled;
   final bool enableEditMode;
 
-  const StatusBarWidget({
-    super.key,
-    required this.openAppStore,
-    required this.openNotification,
-    this.enableEditMode = false,
-    this.onCanceled
-  });
+  const StatusBarWidget(
+      {super.key,
+      required this.openAppStore,
+      required this.openNotification,
+      this.enableEditMode = false,
+      this.onCanceled});
 
   @override
   Widget build(BuildContext context) {
@@ -85,12 +84,16 @@ class StatusBarWidget extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: BlocBuilder<UserBloc, UserState>(
                     builder: (_, state) {
-                      return CircleNetworkImage(
-                        url: state.currentUser?.avatar ?? '',
-                        size: 40,
-                        defaultImage: ImageWidget(
-                          ImageConstants.defaultUserAvatar,
-                          borderRadius: 100,
+                      return AspectRatio(
+                        aspectRatio: 1,
+                        child: CircleNetworkImage(
+                          url: state.currentUser?.avatar ?? '',
+                          size: 40,
+                          defaultImage: ImageWidget(
+                            ImageConstants.defaultUserAvatar,
+                            borderRadius: 100,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       );
                     },
