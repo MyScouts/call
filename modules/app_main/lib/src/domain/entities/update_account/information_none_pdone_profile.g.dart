@@ -10,9 +10,6 @@ _$InformationNonePdoneProfileImpl _$$InformationNonePdoneProfileImplFromJson(
         Map<String, dynamic> json) =>
     _$InformationNonePdoneProfileImpl(
       firstName: json['firstName'] as String,
-      middleName: json['middleName'] as String?,
-      lastName: json['lastName'] as String?,
-      nickName: json['nickName'] as String?,
       sex: json['sex'] as int,
       birthday: json['birthday'] as String,
       birthPlace: InformationPDoneBirthPlace.fromJson(
@@ -35,16 +32,13 @@ _$InformationNonePdoneProfileImpl _$$InformationNonePdoneProfileImplFromJson(
       birthCertificateUrl: json['birthCertificateUrl'] as String?,
       birthCertificateSupplyDate: json['birthCertificateSupplyDate'] as String?,
       kycMetadata: json['kycMetadata'] as Map<String, dynamic>?,
-      type: json['type'],
+      type: json['type'] as int?,
     );
 
 Map<String, dynamic> _$$InformationNonePdoneProfileImplToJson(
         _$InformationNonePdoneProfileImpl instance) =>
     <String, dynamic>{
       'firstName': instance.firstName,
-      'middleName': instance.middleName,
-      'lastName': instance.lastName,
-      'nickName': instance.nickName,
       'sex': instance.sex,
       'birthday': instance.birthday,
       'birthPlace': instance.birthPlace,

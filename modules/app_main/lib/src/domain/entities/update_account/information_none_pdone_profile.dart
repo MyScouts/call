@@ -9,9 +9,6 @@ part 'information_none_pdone_profile.g.dart';
 class InformationNonePdoneProfile with _$InformationNonePdoneProfile {
   const factory InformationNonePdoneProfile({
     required String firstName,
-    String? middleName,
-    String? lastName,
-    String? nickName,
     required int sex,
     required String birthday,
     required InformationPDoneBirthPlace birthPlace,
@@ -32,7 +29,7 @@ class InformationNonePdoneProfile with _$InformationNonePdoneProfile {
     String? birthCertificateUrl,
     String? birthCertificateSupplyDate,
     Map<String, dynamic>? kycMetadata,
-    dynamic type,
+    int? type,
   }) = _InformationNonePdoneProfile;
 
   factory InformationNonePdoneProfile.fromJson(Map<String, dynamic> json) =>

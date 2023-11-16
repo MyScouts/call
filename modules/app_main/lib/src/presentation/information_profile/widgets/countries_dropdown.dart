@@ -47,7 +47,6 @@ class _CountriesDropdownState extends State<CountriesDropdown> {
         const SizedBox(height: 7),
         DropdownButtonFormField2<Country>(
           isExpanded: true,
-          isDense: false,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 12),
             border: OutlineInputBorder(

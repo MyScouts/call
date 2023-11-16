@@ -32,6 +32,9 @@ class InformationUpdateProfilBloc extends Bloc<InformationEvent, InformationUpda
       debugPrint("updatePDoneProfile response: ${response.profile}");
       await _informationPDoneSharePreferencesUsecase.saveInfoPDoneProfile(response.profile);
       emit(InformationUpdateProfilSuccess());
+    } on DioException catch (dioError) {
+      debugPrint("updateNonePDoneProfile error: $dioError");
+      emit(InformationUpdateProfilFailed(message: dioError.toString()));
     } catch (error) {
       debugPrint("updatePDoneProfile error: $error");
       emit(InformationUpdateProfilFailed(message: error.toString()));
@@ -48,6 +51,11 @@ class InformationUpdateProfilBloc extends Bloc<InformationEvent, InformationUpda
       final values = _informationPDoneSharePreferencesUsecase.getInfoNonePDoneProfile();
       debugPrint("updateNonePDoneProfile values: $values");
       emit(InformationNoneUpdateProfilSuccess());
+    } on DioException catch (dioError) {
+      if (dioError.response?.statusCode == 401) {
+        debugPrint("updateNonePDoneProfile dioError: Unauthorized");
+        emit(InformationUpdateProfilFailed(message: 'Unauthorized'));
+      }
     } catch (error) {
       debugPrint("updateNonePDoneProfile error: $error");
       emit(InformationUpdateProfilFailed(message: error.toString()));
@@ -61,8 +69,7 @@ class InformationUpdateProfilBloc extends Bloc<InformationEvent, InformationUpda
       await _userUsecase.getPDoneProfile().then((value) => emit(GetInformationPDoneProfileSuccess(user: value)));
     } catch (error) {
       debugPrint("getPDoneProfile error: $error");
-      String err = S.current.messages_server_internal_error.capitalize();
-      emit(GetInformationPDoneProfileFailed(message: err));
+      emit(GetInformationPDoneProfileFailed(message: error.toString()));
     }
   }
 }

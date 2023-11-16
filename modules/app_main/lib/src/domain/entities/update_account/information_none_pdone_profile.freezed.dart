@@ -22,9 +22,6 @@ InformationNonePdoneProfile _$InformationNonePdoneProfileFromJson(
 /// @nodoc
 mixin _$InformationNonePdoneProfile {
   String get firstName => throw _privateConstructorUsedError;
-  String? get middleName => throw _privateConstructorUsedError;
-  String? get lastName => throw _privateConstructorUsedError;
-  String? get nickName => throw _privateConstructorUsedError;
   int get sex => throw _privateConstructorUsedError;
   String get birthday => throw _privateConstructorUsedError;
   InformationPDoneBirthPlace get birthPlace =>
@@ -47,7 +44,7 @@ mixin _$InformationNonePdoneProfile {
   String? get birthCertificateUrl => throw _privateConstructorUsedError;
   String? get birthCertificateSupplyDate => throw _privateConstructorUsedError;
   Map<String, dynamic>? get kycMetadata => throw _privateConstructorUsedError;
-  dynamic get type => throw _privateConstructorUsedError;
+  int? get type => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -65,9 +62,6 @@ abstract class $InformationNonePdoneProfileCopyWith<$Res> {
   @useResult
   $Res call(
       {String firstName,
-      String? middleName,
-      String? lastName,
-      String? nickName,
       int sex,
       String birthday,
       InformationPDoneBirthPlace birthPlace,
@@ -88,7 +82,7 @@ abstract class $InformationNonePdoneProfileCopyWith<$Res> {
       String? birthCertificateUrl,
       String? birthCertificateSupplyDate,
       Map<String, dynamic>? kycMetadata,
-      dynamic type});
+      int? type});
 
   $InformationPDoneBirthPlaceCopyWith<$Res> get birthPlace;
   $InformationDPoneCurrentPlaceCopyWith<$Res> get currentPlace;
@@ -109,9 +103,6 @@ class _$InformationNonePdoneProfileCopyWithImpl<$Res,
   @override
   $Res call({
     Object? firstName = null,
-    Object? middleName = freezed,
-    Object? lastName = freezed,
-    Object? nickName = freezed,
     Object? sex = null,
     Object? birthday = null,
     Object? birthPlace = null,
@@ -139,18 +130,6 @@ class _$InformationNonePdoneProfileCopyWithImpl<$Res,
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String,
-      middleName: freezed == middleName
-          ? _value.middleName
-          : middleName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lastName: freezed == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      nickName: freezed == nickName
-          ? _value.nickName
-          : nickName // ignore: cast_nullable_to_non_nullable
-              as String?,
       sex: null == sex
           ? _value.sex
           : sex // ignore: cast_nullable_to_non_nullable
@@ -234,7 +213,7 @@ class _$InformationNonePdoneProfileCopyWithImpl<$Res,
       type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as int?,
     ) as $Val);
   }
 
@@ -268,9 +247,6 @@ abstract class _$$InformationNonePdoneProfileImplCopyWith<$Res>
   @useResult
   $Res call(
       {String firstName,
-      String? middleName,
-      String? lastName,
-      String? nickName,
       int sex,
       String birthday,
       InformationPDoneBirthPlace birthPlace,
@@ -291,7 +267,7 @@ abstract class _$$InformationNonePdoneProfileImplCopyWith<$Res>
       String? birthCertificateUrl,
       String? birthCertificateSupplyDate,
       Map<String, dynamic>? kycMetadata,
-      dynamic type});
+      int? type});
 
   @override
   $InformationPDoneBirthPlaceCopyWith<$Res> get birthPlace;
@@ -313,9 +289,6 @@ class __$$InformationNonePdoneProfileImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? firstName = null,
-    Object? middleName = freezed,
-    Object? lastName = freezed,
-    Object? nickName = freezed,
     Object? sex = null,
     Object? birthday = null,
     Object? birthPlace = null,
@@ -343,18 +316,6 @@ class __$$InformationNonePdoneProfileImplCopyWithImpl<$Res>
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
               as String,
-      middleName: freezed == middleName
-          ? _value.middleName
-          : middleName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lastName: freezed == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      nickName: freezed == nickName
-          ? _value.nickName
-          : nickName // ignore: cast_nullable_to_non_nullable
-              as String?,
       sex: null == sex
           ? _value.sex
           : sex // ignore: cast_nullable_to_non_nullable
@@ -438,7 +399,7 @@ class __$$InformationNonePdoneProfileImplCopyWithImpl<$Res>
       type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as int?,
     ));
   }
 }
@@ -449,9 +410,6 @@ class _$InformationNonePdoneProfileImpl
     implements _InformationNonePdoneProfile {
   const _$InformationNonePdoneProfileImpl(
       {required this.firstName,
-      this.middleName,
-      this.lastName,
-      this.nickName,
       required this.sex,
       required this.birthday,
       required this.birthPlace,
@@ -481,12 +439,6 @@ class _$InformationNonePdoneProfileImpl
 
   @override
   final String firstName;
-  @override
-  final String? middleName;
-  @override
-  final String? lastName;
-  @override
-  final String? nickName;
   @override
   final int sex;
   @override
@@ -536,11 +488,11 @@ class _$InformationNonePdoneProfileImpl
   }
 
   @override
-  final dynamic type;
+  final int? type;
 
   @override
   String toString() {
-    return 'InformationNonePdoneProfile(firstName: $firstName, middleName: $middleName, lastName: $lastName, nickName: $nickName, sex: $sex, birthday: $birthday, birthPlace: $birthPlace, currentPlace: $currentPlace, height: $height, weight: $weight, maritalStatus: $maritalStatus, bloodGroup: $bloodGroup, academicLevel: $academicLevel, job: $job, interest: $interest, talent: $talent, identityNumber: $identityNumber, supplyDate: $supplyDate, supplyAddress: $supplyAddress, protector: $protector, protectorPDoneId: $protectorPDoneId, birthCertificateUrl: $birthCertificateUrl, birthCertificateSupplyDate: $birthCertificateSupplyDate, kycMetadata: $kycMetadata, type: $type)';
+    return 'InformationNonePdoneProfile(firstName: $firstName, sex: $sex, birthday: $birthday, birthPlace: $birthPlace, currentPlace: $currentPlace, height: $height, weight: $weight, maritalStatus: $maritalStatus, bloodGroup: $bloodGroup, academicLevel: $academicLevel, job: $job, interest: $interest, talent: $talent, identityNumber: $identityNumber, supplyDate: $supplyDate, supplyAddress: $supplyAddress, protector: $protector, protectorPDoneId: $protectorPDoneId, birthCertificateUrl: $birthCertificateUrl, birthCertificateSupplyDate: $birthCertificateSupplyDate, kycMetadata: $kycMetadata, type: $type)';
   }
 
   @override
@@ -550,12 +502,6 @@ class _$InformationNonePdoneProfileImpl
             other is _$InformationNonePdoneProfileImpl &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
-            (identical(other.middleName, middleName) ||
-                other.middleName == middleName) &&
-            (identical(other.lastName, lastName) ||
-                other.lastName == lastName) &&
-            (identical(other.nickName, nickName) ||
-                other.nickName == nickName) &&
             (identical(other.sex, sex) || other.sex == sex) &&
             (identical(other.birthday, birthday) ||
                 other.birthday == birthday) &&
@@ -593,7 +539,7 @@ class _$InformationNonePdoneProfileImpl
                     birthCertificateSupplyDate) &&
             const DeepCollectionEquality()
                 .equals(other._kycMetadata, _kycMetadata) &&
-            const DeepCollectionEquality().equals(other.type, type));
+            (identical(other.type, type) || other.type == type));
   }
 
   @JsonKey(ignore: true)
@@ -601,9 +547,6 @@ class _$InformationNonePdoneProfileImpl
   int get hashCode => Object.hashAll([
         runtimeType,
         firstName,
-        middleName,
-        lastName,
-        nickName,
         sex,
         birthday,
         birthPlace,
@@ -624,7 +567,7 @@ class _$InformationNonePdoneProfileImpl
         birthCertificateUrl,
         birthCertificateSupplyDate,
         const DeepCollectionEquality().hash(_kycMetadata),
-        const DeepCollectionEquality().hash(type)
+        type
       ]);
 
   @JsonKey(ignore: true)
@@ -646,9 +589,6 @@ abstract class _InformationNonePdoneProfile
     implements InformationNonePdoneProfile {
   const factory _InformationNonePdoneProfile(
       {required final String firstName,
-      final String? middleName,
-      final String? lastName,
-      final String? nickName,
       required final int sex,
       required final String birthday,
       required final InformationPDoneBirthPlace birthPlace,
@@ -669,19 +609,13 @@ abstract class _InformationNonePdoneProfile
       final String? birthCertificateUrl,
       final String? birthCertificateSupplyDate,
       final Map<String, dynamic>? kycMetadata,
-      final dynamic type}) = _$InformationNonePdoneProfileImpl;
+      final int? type}) = _$InformationNonePdoneProfileImpl;
 
   factory _InformationNonePdoneProfile.fromJson(Map<String, dynamic> json) =
       _$InformationNonePdoneProfileImpl.fromJson;
 
   @override
   String get firstName;
-  @override
-  String? get middleName;
-  @override
-  String? get lastName;
-  @override
-  String? get nickName;
   @override
   int get sex;
   @override
@@ -723,7 +657,7 @@ abstract class _InformationNonePdoneProfile
   @override
   Map<String, dynamic>? get kycMetadata;
   @override
-  dynamic get type;
+  int? get type;
   @override
   @JsonKey(ignore: true)
   _$$InformationNonePdoneProfileImplCopyWith<_$InformationNonePdoneProfileImpl>
