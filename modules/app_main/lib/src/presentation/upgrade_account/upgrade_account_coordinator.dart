@@ -5,6 +5,7 @@ import 'package:app_main/src/presentation/settings/setting_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_constants.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/update_bank_account_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/widgets/verify_otp_bank_account_dialog_widget.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/views/upgrade_pdone_otp_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
@@ -329,8 +330,6 @@ extension UpgradeAccountCoordinator on BuildContext {
     }
   }
 
-
-
   List<Widget> buildGuide() {
     return [
       Padding(
@@ -346,9 +345,9 @@ extension UpgradeAccountCoordinator on BuildContext {
             text: TextSpan(
               text: '1. Hình ảnh rõ ràng, ',
               style: Theme.of(this).textTheme.labelMedium!.copyWith(
-                color: AppColors.black12,
-                fontWeight: FontWeight.w500,
-              ),
+                    color: AppColors.black12,
+                    fontWeight: FontWeight.w500,
+                  ),
               children: const [
                 TextSpan(
                   text: 'không bị mờ & cắt góc',
@@ -387,9 +386,9 @@ extension UpgradeAccountCoordinator on BuildContext {
             text: TextSpan(
               text: '3. Giấy tờ gốc, ',
               style: Theme.of(this).textTheme.labelMedium!.copyWith(
-                color: AppColors.black12,
-                fontWeight: FontWeight.w500,
-              ),
+                    color: AppColors.black12,
+                    fontWeight: FontWeight.w500,
+                  ),
               children: const [
                 TextSpan(
                   text: 'còn hạn sử dụng',
@@ -406,11 +405,15 @@ extension UpgradeAccountCoordinator on BuildContext {
         child: Text(
           securityInformation,
           style: Theme.of(this).textTheme.labelMedium!.copyWith(
-            color: AppColors.blue33,
-            fontWeight: FontWeight.w400,
-          ),
+                color: AppColors.blue33,
+                fontWeight: FontWeight.w400,
+              ),
         ),
       ),
     ];
+  }
+
+  Future<T?> startUpgradePDoneOTP<T>() {
+    return Navigator.of(this).pushNamed(UpgradePDoneOTPScreen.routeName);
   }
 }

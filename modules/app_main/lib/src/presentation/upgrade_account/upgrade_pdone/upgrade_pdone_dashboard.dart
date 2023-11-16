@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/app_coordinator.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -269,7 +270,7 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
           Expanded(
             child: PrimarySolidButton(
               title: "Nâng cấp",
-              onTap: () {},
+              onTap: () => context.startUpgradePDoneOTP(),
               disabled: false,
               width: null,
             ),

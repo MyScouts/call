@@ -2,6 +2,7 @@ import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/con
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_request_protector_req.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/upgrade_pdone_payload.dart';
 import 'package:app_main/src/data/models/responses/api_verify_response.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
@@ -222,4 +223,8 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
     final res = await _upgradeAccountApi.protectorRequested();
     return res.data;
   }
+
+  @override
+  Future upgradePDone(UpgradePDonePayload payload) =>
+      _upgradeAccountApi.upgradePDone(payload);
 }
