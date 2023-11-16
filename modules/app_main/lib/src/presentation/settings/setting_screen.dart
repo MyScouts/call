@@ -8,6 +8,7 @@ import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:app_main/src/presentation/settings/widget/item_setting_widget.dart';
+import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
@@ -202,8 +203,8 @@ class _SettingScreenState extends State<SettingScreen> {
 
   _buildSession1() {
     return GestureDetector(
-      // onTap: () => context.startDiary(userId: _authInfo.id.toString()),
-      onTap: () => Navigator.of(context).push(_createRoute()),
+      onTap: () => context.startDiary(userId: _authInfo.id.toString()),
+      // onTap: () => Navigator.of(context).push(_createRoute()),
       child: Container(
         padding: const EdgeInsets.symmetric(
           vertical: 15,
