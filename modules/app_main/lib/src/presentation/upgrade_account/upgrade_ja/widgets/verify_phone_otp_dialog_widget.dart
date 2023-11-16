@@ -66,6 +66,7 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
   }
 
   void _onListenerBloc(BuildContext context, GetDetailState state) {
+    print(state);
     if (state is GetDetailDataLoading) {
       showLoading();
     } else if (state is GetDetailDataSuccess<dynamic>) {
