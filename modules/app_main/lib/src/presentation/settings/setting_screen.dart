@@ -204,7 +204,6 @@ class _SettingScreenState extends State<SettingScreen> {
   _buildSession1() {
     return GestureDetector(
       onTap: () => context.startDiary(userId: _authInfo.id.toString()),
-      // onTap: () => Navigator.of(context).push(_createRoute()),
       child: Container(
         padding: const EdgeInsets.symmetric(
           vertical: 15,

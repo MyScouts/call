@@ -1,10 +1,11 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
-import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
+import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:ui/ui.dart';
 
 import '../../../data/models/responses/pdone/pdone_information_response.dart';
 import 'bloc/pdone_information/pdone_information_bloc.dart';
@@ -85,12 +86,10 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
     if (state is PDoneLoadedFailureInformation) {
       showToastMessage(state.errorMessage);
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       backgroundColor: const Color.fromRGBO(243, 248, 255, 1),
       appBar: AppBar(
@@ -124,6 +123,8 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
                     _buildTitle(context),
                     _buildBody(context),
                     _buildNoti(context),
+                    const Spacer(),
+                    _buildButtons(context),
                   ],
                 ),
               );
@@ -146,6 +147,7 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(10)),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _buildComponentBodyMethod(context),
           Container(
@@ -237,6 +239,40 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
             'Bạn đang là tài khoản PDONE ${getAge().toLowerCase()}.\nNếu có thay đổi về độ tuổi của bạn\nVui lòng nâng cấp!',
             textAlign: TextAlign.center,
             style: context.textTheme.displaySmall!.copyWith(fontSize: 15),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _buildButtons(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20),
+      child: Row(
+        children: [
+          Expanded(
+              child: IntrinsicHeight(
+            child: TextButton(
+              onPressed: () => context.pop(),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(AppColors.white),
+              ),
+              child: Text(
+                "Quay lại",
+                style: context.textTheme.bodyLarge!.copyWith(
+                  color: context.theme.primaryColor,
+                ),
+              ),
+            ),
+          )),
+          const SizedBox(width: 10),
+          Expanded(
+            child: PrimarySolidButton(
+              title: "Nâng cấp",
+              onTap: () {},
+              disabled: false,
+              width: null,
+            ),
           ),
         ],
       ),
