@@ -25,7 +25,7 @@ class UserApiConstants {
   static const onboarding = "api/v1/onboarding/ecom";
   static const updatePDoneProfile = "api/v1/p-done/profile";
   static const updateNonePDoneProfile = "api/v1/p-done/non-p-done-profile";
-  static const listFriends = "api/users/list-friends";
+  static const listFriends = "/api/v1/following/friend";
   static const invite = "api/v1/team/{id}/invite";
 }
 

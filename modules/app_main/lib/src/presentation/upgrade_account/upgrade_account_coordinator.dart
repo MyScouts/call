@@ -100,7 +100,7 @@ extension UpgradeAccountCoordinator on BuildContext {
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
-          content: UpgradePdoneSuccessDialog(
+          content: UpgradePdoneSuccessWidthProtectorDialog(
             onClickBtn: () {
               Navigator.of(context).pop();
             },

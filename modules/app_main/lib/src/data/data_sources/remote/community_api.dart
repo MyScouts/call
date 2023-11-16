@@ -62,7 +62,7 @@ class CommunityApiConstants {
       '/api/v1/team/{id}/give-up-boss-role';
   static const String getBossTeamRelinquishStatus =
       '/api/v1/team/{id}/boss-status';
-  static const String kickMember = 'api/v1/team/{teamId}/kick-member/{userId}';
+  static const String kickMember = '/api/v1/team/{teamId}/member/{userId}';
   static const String myTeam = 'api/v1/team/me';
 }
 
