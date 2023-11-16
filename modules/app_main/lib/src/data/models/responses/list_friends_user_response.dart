@@ -1,15 +1,17 @@
 import 'package:app_core/app_core.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'list_friends_user_response.g.dart';
+
+@JsonSerializable()
 class ListFriendUserResponse {
-  final List<User> users;
+  final int? total;
+  final List<User>? friends;
 
-  ListFriendUserResponse(this.users);
+  ListFriendUserResponse({this.friends, this.total});
 
-  factory ListFriendUserResponse.fromJson(Map<String, dynamic> json) {
-    return ListFriendUserResponse(
-      List<User>.from((json['data']?['rows'] ?? []).map(
-            (e) => User.fromJson(Map<String, dynamic>.from(e['userFollow'])),
-      )),
-    );
-  }
+  factory ListFriendUserResponse.fromJson(Map<String, dynamic> json) =>
+      _$ListFriendUserResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ListFriendUserResponseToJson(this);
 }

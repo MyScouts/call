@@ -60,11 +60,18 @@ class _AddTeamMemberSheetState extends State<AddTeamMemberSheet> {
                   onPressed: () async {
                     context.showLoading();
                     final state = context.read<TeamDetailBloc>().state;
-                    final team = (state as FetchTeamsMemberSuccess).team;
-                    await controller.confirm(team.id ?? '');
-                    context.hideLoading();
-                    Navigator.of(context).pop();
-                    context.showToastMessage('Mời thành viên thành công');
+                    if(state is FetchTeamsMemberSuccess){
+                      final team = state.team;
+                      await controller.confirm(team.id ?? '');
+                      context.hideLoading();
+
+                      if(controller.addFriend.isEmpty){
+                        context.showToastMessage('Chưa có người nào được chọn', ToastMessageType.warning);
+                      } else {
+                        Navigator.of(context).pop();
+                        context.showToastMessage('Mời thành viên thành công');
+                      }
+                    }
                   },
                   child: const Text(
                     'Thêm',
