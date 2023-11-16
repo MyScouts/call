@@ -1,4 +1,5 @@
 import 'package:app_main/src/presentation/community/community.component.dart';
+import 'package:app_main/src/presentation/dashboard/system_setting/system_setting.dart';
 import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:equatable/equatable.dart';
@@ -309,6 +310,12 @@ final personalDefault = {
     backgroundImage: IconAppConstants.icClock,
     width: 4,
     height: 2,
+  ),
+  'ic_setting': DashBoardIconItem(
+    id: 'ic_setting',
+    title: 'Cài đặt',
+    backgroundImage: IconAppConstants.appSetting,
+    path: SystemSetting.routerName,
   ),
   'ic_mess': DashBoardIconItem(
     id: 'ic_mess',
