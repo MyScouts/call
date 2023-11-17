@@ -16,12 +16,10 @@ import '../views/widgets/select_information_widget.dart';
 
 class UpdatePdoneSelectTypeUser extends StatefulWidget {
   final Function(PDoneOptionMethod? pdoneMethod) onNextPage;
-  final bool isUpgrade;
 
   const UpdatePdoneSelectTypeUser({
     super.key,
     required this.onNextPage,
-    required this.isUpgrade,
   });
 
   @override

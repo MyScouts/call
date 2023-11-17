@@ -14,11 +14,9 @@ class UpgradePDoneScreen extends StatefulWidget {
   const UpgradePDoneScreen({
     super.key,
     required this.currentStep,
-    this.isUpgrade = false,
   });
 
   final int currentStep;
-  final bool isUpgrade;
 
   @override
   State<UpgradePDoneScreen> createState() => _UpgradePDoneScreenState();
@@ -86,7 +84,6 @@ class _UpgradePDoneScreenState extends State<UpgradePDoneScreen>
               physics: const NeverScrollableScrollPhysics(),
               children: [
                 UpdatePdoneSelectTypeUser(
-                  isUpgrade: widget.isUpgrade,
                   onNextPage: (PDoneOptionMethod? pdoneMethod) {
                     if (pdoneMethod != null) {
                       verifyPdoneMethod = pdoneMethod;
@@ -104,7 +101,7 @@ class _UpgradePDoneScreenState extends State<UpgradePDoneScreen>
                         onNextPage: () => nextPage(2),
                       ),
                 UpdatePdoneFaceLiveNessConfirm(onNextPage: () => nextPage(3)),
-                UpdatePDoneInformationPage(isUpgrade: widget.isUpgrade),
+                const UpdatePDoneInformationPage(),
               ],
             ),
           ),

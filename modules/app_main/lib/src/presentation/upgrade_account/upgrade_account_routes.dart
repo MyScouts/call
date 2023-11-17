@@ -40,7 +40,6 @@ class UpgradeAccountRoutes extends RouteModule {
           );
         },
         UpgradePDoneScreen.routeName: (context) {
-          final args = settings.arguments as Map;
           return MultiBlocProvider(
             providers: [
               BlocProvider<UpgradePDoneBloc>(
@@ -50,10 +49,7 @@ class UpgradeAccountRoutes extends RouteModule {
                 create: (context) => injector.get(),
               )
             ],
-            child: UpgradePDoneScreen(
-              currentStep: 0,
-              isUpgrade: args['isUpgrade'] ?? false,
-            ),
+            child: const UpgradePDoneScreen(currentStep: 0),
           );
         },
         UpgradePDoneDashboard.routeName: (context) {

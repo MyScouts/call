@@ -29,15 +29,8 @@ class UpdatePDoneInformationPage extends StatefulWidget {
   const UpdatePDoneInformationPage({
     super.key,
     this.onNextPage,
-    required this.isUpgrade,
-    // this.pDoneProfile,
   });
-
   final VoidCallback? onNextPage;
-  final bool isUpgrade;
-
-  // final PDoneProfile? pDoneProfile;
-
   @override
   State<UpdatePDoneInformationPage> createState() =>
       _UpdatePDoneInformationPageState();
@@ -159,12 +152,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
             wardName: bpWardCtrl.text),
       );
     }
-
-    if (widget.isUpgrade) {
-      context.startUpgradePDoneOTP(payload: payload);
-    } else {
-      _sendOTP();
-    }
+    _sendOTP();
   }
 
   void _sendOTP() {
