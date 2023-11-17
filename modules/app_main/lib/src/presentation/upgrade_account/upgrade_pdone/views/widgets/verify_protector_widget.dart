@@ -38,7 +38,7 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
   final _idNumberOfProtectorCtl = TextEditingController();
   List<Protector> protectors = [];
   PDoneVerifyProtectorRequest protectorRequest =
-      PDoneVerifyProtectorRequest(phoneCode: '84', protector: 0);
+      PDoneVerifyProtectorRequest(phoneCode: '84', protector: 1);
 
   UpgradePDoneBloc get upgradePDoneBloc => context.read();
 
@@ -155,9 +155,12 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
     }
 
     if (protectorRequested != null) {
-      protector = protectors
-          .where((element) => element.id == protectorRequested!.relation)
-          .first;
+      final filterProtector = protectors
+          .where((element) => element.id == protectorRequested!.relation);
+      if (filterProtector.isNotEmpty) {
+        protector = filterProtector.first;
+      }
+
       _pDoneIDOfProtectorCtl.text = protectorRequested?.protector.pDoneId ?? '';
       _phoneCtl.text = protectorRequested?.protector.phoneNumber ?? '';
       _idNumberOfProtectorCtl.text =
