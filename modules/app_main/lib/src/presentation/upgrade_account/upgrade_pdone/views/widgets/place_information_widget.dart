@@ -321,6 +321,13 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
 
                               widget.onUpdatePlaceInformation(payload);
                             },
+                            validator: (value) =>
+                                widget.enabled && widget.required
+                                    ? validateEmptyInfo(
+                                        currentDistrict?.name,
+                                        'Vui lòng chọn quận huyện',
+                                      )
+                                    : null,
                           ),
                         ),
                         _buildSpacer(),
@@ -363,6 +370,13 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
 
                               widget.onUpdatePlaceInformation(payload);
                             },
+                            validator: (value) =>
+                                widget.enabled && widget.required
+                                    ? validateEmptyInfo(
+                                        currentWard?.name,
+                                        'Vui lòng chọn phường/xã',
+                                      )
+                                    : null,
                           ),
                         ),
                       ],
@@ -380,6 +394,12 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
                       controller: widget.addressCtrl,
                       shouldEnabled: widget.enabled,
                       required: true,
+                      validator: (value) => widget.enabled && widget.required
+                          ? validateEmptyInfo(
+                              widget.addressCtrl.text,
+                              'Vui lòng nhập địa chỉ cụ thể',
+                            )
+                          : null,
                     )
                   : const SizedBox(),
             ],
