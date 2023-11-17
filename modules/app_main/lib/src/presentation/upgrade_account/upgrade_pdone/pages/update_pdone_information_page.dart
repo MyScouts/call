@@ -588,23 +588,20 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                           )
                         : Container(),
                     isShowProtector()
-                        ? BlocProvider<UpgradePDoneBloc>(
-                            create: (context) => injector.get(),
-                            child: VerifyProtectorWidget(
-                              onUpdatePlaceInformation:
-                                  (PDoneVerifyProtectorRequest value) {
-                                pDoneVerifyProtectorRequest = value;
-                              },
-                              updateProtectorStatus: (bool value) {
-                                protectorApprove = value;
-                                Future.delayed(Duration(milliseconds: 200))
-                                    .then((value) {
-                                  setState(() {
-                                    onValidation();
-                                  });
+                        ? VerifyProtectorWidget(
+                            onUpdatePlaceInformation:
+                                (PDoneVerifyProtectorRequest value) {
+                              pDoneVerifyProtectorRequest = value;
+                            },
+                            updateProtectorStatus: (bool value) {
+                              protectorApprove = value;
+                              Future.delayed(Duration(milliseconds: 200))
+                                  .then((value) {
+                                setState(() {
+                                  onValidation();
                                 });
-                              },
-                            ),
+                              });
+                            },
                           )
                         : Container(),
 
