@@ -102,7 +102,7 @@ class ProfileNonePDoneView extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ].separated(SizedBox()),
+                    ].separated(const SizedBox(height: 12)),
                   ),
                 ),
                 // Container(
