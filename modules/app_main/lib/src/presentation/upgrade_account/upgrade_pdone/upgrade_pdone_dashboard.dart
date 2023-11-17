@@ -2,7 +2,6 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
-import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -18,7 +17,6 @@ class UpgradePDoneDashboard extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _UpgradePDoneDashboardState();
   }
 }
@@ -68,7 +66,6 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     pDoneInformationBloc.add(PDoneGetInformationEvent());
   }
@@ -79,9 +76,7 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
     }
 
     if (state is PDoneNotYetRegisterState) {
-      Navigator.of(context).pushReplacementNamed(
-        UpgradePDoneScreen.routeName,
-      );
+      context.startReplaceUpgradePDone();
     }
 
     if (state is PDoneLoadedFailureInformation) {
@@ -270,7 +265,8 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
           Expanded(
             child: PrimarySolidButton(
               title: "Nâng cấp",
-              onTap: () => context.startUpgradePDoneOTP(),
+              // onTap: () => context.startUpgradePDoneOTP(),
+              onTap: () => context.startReplaceUpgradePDone(isUpgrade: true),
               disabled: false,
               width: null,
             ),

@@ -78,5 +78,8 @@ abstract class UpgradeAccountRepository {
   Future<PDoneInformationResponse> pDoneProfile();
 
   Future<PDoneMyProtectorInformationResponse> protectorRequested();
+
   Future upgradePDone(UpgradePDonePayload payload);
+
+  Future<bool> upgradeEkyc(UpdateProfilePayload payload);
 }

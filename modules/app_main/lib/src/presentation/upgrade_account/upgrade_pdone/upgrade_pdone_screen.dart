@@ -14,9 +14,11 @@ class UpgradePDoneScreen extends StatefulWidget {
   const UpgradePDoneScreen({
     super.key,
     required this.currentStep,
+    this.isUpgrade = false,
   });
 
   final int currentStep;
+  final bool isUpgrade;
 
   @override
   State<UpgradePDoneScreen> createState() => _UpgradePDoneScreenState();
@@ -61,7 +63,6 @@ class _UpgradePDoneScreenState extends State<UpgradePDoneScreen>
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         title: const Text('Đăng ký thành viên P-Done '),
@@ -85,6 +86,7 @@ class _UpgradePDoneScreenState extends State<UpgradePDoneScreen>
               physics: const NeverScrollableScrollPhysics(),
               children: [
                 UpdatePdoneSelectTypeUser(
+                  isUpgrade: widget.isUpgrade,
                   onNextPage: (PDoneOptionMethod? pdoneMethod) {
                     if (pdoneMethod != null) {
                       verifyPdoneMethod = pdoneMethod;
@@ -96,11 +98,13 @@ class _UpgradePDoneScreenState extends State<UpgradePDoneScreen>
                 // RegisterPdoneBirthCerCapture(),
                 verifyPdoneMethod == PDoneOptionMethod.userIdentityCard
                     ? UpdatePdoneIdentityCardConfirm(
-                        onNextPage: () => nextPage(2))
+                        onNextPage: () => nextPage(2),
+                      )
                     : RegisterPdoneBirthCerCapture(
-                        onNextPage: () => nextPage(2)),
+                        onNextPage: () => nextPage(2),
+                      ),
                 UpdatePdoneFaceLiveNessConfirm(onNextPage: () => nextPage(3)),
-                const UpdatePDoneInformationPage(),
+                UpdatePDoneInformationPage(isUpgrade: widget.isUpgrade),
               ],
             ),
           ),

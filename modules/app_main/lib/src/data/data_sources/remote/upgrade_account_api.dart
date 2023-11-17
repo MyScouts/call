@@ -64,6 +64,7 @@ class UpgradeAccountApiConstants {
   static const protectorRequested =
       '/api/v1/protector/sent-request?page=1&pageSize=10&status=1';
   static const upgradePdone = "api/v1/p-done/upgrade";
+  static const eKycUpgrade = "api/v1/p-done/e-kyc-upgrade";
 }
 
 @RestApi()
@@ -131,16 +132,8 @@ abstract class UpgradeAccountApi {
     @Body() required VerifyPhoneOtpPayload payload,
   });
 
-  // @POST(UpgradeAccountApiConstants.registerVShopVerifyOtp)
-  // Future<ApiResponse<bool>> registerVShopVerifyOtp({
-  //   @Body() required VerifyPhoneOtpPayload payload,
-  // });
-
   @POST(UpgradeAccountApiConstants.resendOtpJA)
   Future<UpgradeAccountResponse> resendOtpJA();
-
-  // @POST(UpgradeAccountApiConstants.resendOtpVShop)
-  // Future<ApiResponse<UpgradeAccountResponse>> resendOtpVShop();
 
   @GET(UpgradeAccountApiConstants.checkIsPDone)
   Future<ApiResponse<bool>> checkIsPDone({@Path('id') required String id});
@@ -187,4 +180,9 @@ abstract class UpgradeAccountApi {
 
   @POST(UpgradeAccountApiConstants.upgradePdone)
   Future upgradePDone(@Body() UpgradePDonePayload payload);
+
+  @POST(UpgradeAccountApiConstants.eKycUpgrade)
+  Future<APIVerifyResponse> upgradeEkyc({
+    @Body() required dynamic payload,
+  });
 }

@@ -142,4 +142,8 @@ class UpgradeAccountUsecase {
   Future upgradePdone(UpgradePDonePayload payload) {
     return _upgradeAccountRepository.upgradePDone(payload);
   }
+
+  Future upgradeEkyc(UpdateProfilePayload payload) {
+    return _upgradeAccountRepository.upgradeEkyc(payload);
+  }
 }

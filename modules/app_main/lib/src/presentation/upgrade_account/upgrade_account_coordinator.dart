@@ -14,6 +14,7 @@ import 'package:ui/ui.dart';
 import '../../data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
 import '../../data/models/responses/register_pdone_response.dart';
 import '../../data/models/responses/upgrade_account_response.dart';
+import '../../domain/entities/update_account/update_profile_payload.dart';
 import '../settings/contract_ja/contract_ja_screen.dart';
 import 'upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'upgrade_ja/upgrade_ja_screen.dart';
@@ -286,6 +287,13 @@ extension UpgradeAccountCoordinator on BuildContext {
     );
   }
 
+  Future<T?> startReplaceUpgradePDone<T>({bool isUpgrade = false}) {
+    return Navigator.of(this)
+        .pushReplacementNamed(UpgradePDoneScreen.routeName, arguments: {
+      'isUpgrade': isUpgrade,
+    });
+  }
+
   Future<T?> startPDoneInformation<T>() {
     return Navigator.of(this).pushNamed(
       UpgradePDoneDashboard.routeName,
@@ -413,7 +421,10 @@ extension UpgradeAccountCoordinator on BuildContext {
     ];
   }
 
-  Future<T?> startUpgradePDoneOTP<T>() {
-    return Navigator.of(this).pushNamed(UpgradePDoneOTPScreen.routeName);
+  Future<T?> startUpgradePDoneOTP<T>({UpdateProfilePayload? payload}) {
+    return Navigator.of(this)
+        .pushNamed(UpgradePDoneOTPScreen.routeName, arguments: {
+      'payload': payload,
+    });
   }
 }

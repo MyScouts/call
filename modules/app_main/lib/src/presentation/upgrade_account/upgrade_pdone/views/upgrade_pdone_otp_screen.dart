@@ -1,7 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/auth/auth_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
-import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/upgrade_pdone_payload.dart';
 import 'package:app_main/src/presentation/authentication/authentication_constants.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/bloc/upgrade/upgrade_cubit.dart';
 import 'package:design_system/design_system.dart';
@@ -10,10 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:ui/ui.dart';
 
+import '../../../../data/models/payloads/upgrade_account/upgrade_pdone/upgrade_pdone_payload.dart';
+import '../../../../domain/entities/update_account/update_profile_payload.dart';
+
 class UpgradePDoneOTPScreen extends StatefulWidget {
   static const String routeName = 'upgrade-pdone-otp';
+  final UpdateProfilePayload? payload;
 
   const UpgradePDoneOTPScreen({
+    this.payload,
     super.key,
   });
 
@@ -100,9 +104,7 @@ class _UpgradePDoneOTPScreenState extends State<UpgradePDoneOTPScreen>
                       const SizedBox(height: 30),
                       PrimaryButton(
                         title: S.current.confirm,
-                        onTap: () => _upgradeCubit.onUpgradeOTP(
-                          UpgradePDonePayload(otp: _otp),
-                        ),
+                        onTap: _handleUpgradePDone,
                         color: Colors.white,
                         disabled: _disabled,
                         width: MediaQuery.of(context).size.width,
@@ -145,6 +147,14 @@ class _UpgradePDoneOTPScreenState extends State<UpgradePDoneOTPScreen>
         ),
       ),
     );
+  }
+
+  _handleUpgradePDone() {
+    if (widget.payload != null) {
+      _upgradeCubit.upgradeEkyc(widget.payload!.copyWith(otp: _otp));
+    } else {
+      _upgradeCubit.onUpgradeOTP(UpgradePDonePayload(otp: _otp));
+    }
   }
 
   @override

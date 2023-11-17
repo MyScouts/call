@@ -39,7 +39,7 @@ class UpgradeAccountRoutes extends RouteModule {
           );
         },
         UpgradePDoneScreen.routeName: (context) {
-          // final args = settings.arguments as Map;
+          final args = settings.arguments as Map;
           return MultiBlocProvider(
             providers: [
               BlocProvider<UpgradePDoneBloc>(
@@ -49,8 +49,9 @@ class UpgradeAccountRoutes extends RouteModule {
                 create: (context) => injector.get(),
               )
             ],
-            child: const UpgradePDoneScreen(
+            child: UpgradePDoneScreen(
               currentStep: 0,
+              isUpgrade: args['isUpgrade'] ?? false,
             ),
           );
         },
@@ -84,7 +85,10 @@ class UpgradeAccountRoutes extends RouteModule {
           return const ContractJAScreen();
         },
         UpgradePDoneOTPScreen.routeName: (context) {
-          return const UpgradePDoneOTPScreen();
+          final args = settings.arguments as Map;
+          return UpgradePDoneOTPScreen(
+            payload: args['payload'],
+          );
         }
       };
 }

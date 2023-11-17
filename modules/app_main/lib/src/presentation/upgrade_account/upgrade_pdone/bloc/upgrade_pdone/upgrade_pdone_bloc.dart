@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:app_core/app_core.dart';
 import 'package:camera/camera.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_request_protector_req.dart';

@@ -806,6 +806,33 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
     return value;
   }
 
+  @override
+  Future<APIVerifyResponse> upgradeEkyc({required dynamic payload}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = payload;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<APIVerifyResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/v1/p-done/e-kyc-upgrade',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = APIVerifyResponse.fromJson(_result.data!);
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

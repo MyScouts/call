@@ -13,3 +13,13 @@ final class UpgradePdoneOTPFail extends UpgradeState {
   final String message;
   UpgradePdoneOTPFail({required this.message});
 }
+
+final class OnUpgradeEkyc extends UpgradeState {}
+
+final class UpgradeEkycSuccess extends UpgradeState {}
+
+final class UpgradeEkycFail extends UpgradeState {
+  final String message;
+  UpgradeEkycFail({required this.message});
+}
+
