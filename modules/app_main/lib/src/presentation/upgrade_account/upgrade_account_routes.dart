@@ -1,7 +1,9 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/views/widgets/upgrade_ekyc_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/update_bank_account_screen.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/views/upgrade_pdone_otp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
@@ -38,7 +40,6 @@ class UpgradeAccountRoutes extends RouteModule {
           );
         },
         UpgradePDoneScreen.routeName: (context) {
-          // final args = settings.arguments as Map;
           return MultiBlocProvider(
             providers: [
               BlocProvider<UpgradePDoneBloc>(
@@ -48,9 +49,7 @@ class UpgradeAccountRoutes extends RouteModule {
                 create: (context) => injector.get(),
               )
             ],
-            child: const UpgradePDoneScreen(
-              currentStep: 0,
-            ),
+            child: const UpgradePDoneScreen(currentStep: 0),
           );
         },
         UpgradePDoneDashboard.routeName: (context) {
@@ -81,6 +80,25 @@ class UpgradeAccountRoutes extends RouteModule {
         },
         ContractJAScreen.routeName: (context) {
           return const ContractJAScreen();
+        },
+        UpgradePDoneOTPScreen.routeName: (context) {
+          final args = settings.arguments as Map;
+          return UpgradePDoneOTPScreen(
+            payload: args['payload'],
+          );
+        },
+        UpgradeEkycScreen.routeName: (context) {
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => injector.get<UpgradePDoneBloc>(),
+              ),
+              BlocProvider(
+                create: (context) => injector.get<PDoneInformationBloc>(),
+              ),
+            ],
+            child: const UpgradeEkycScreen(),
+          );
         }
       };
 }

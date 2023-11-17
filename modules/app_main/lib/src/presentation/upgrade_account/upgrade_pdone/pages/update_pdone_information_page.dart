@@ -1,10 +1,6 @@
-import 'dart:convert';
-
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
-import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:design_system/design_system.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -12,14 +8,9 @@ import 'package:localization/localization.dart';
 import 'package:ui/ui.dart';
 
 import '../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
-import '../../../../domain/entities/update_account/check_protector_payload.dart';
 import '../../../../domain/entities/update_account/update_pdone_birth_place_payload.dart';
-import '../../../../domain/entities/update_account/update_place_information_payload.dart';
 import '../../../../domain/entities/update_account/update_profile_payload.dart';
-import '../../../../domain/entities/update_account/upgrade_account.dart';
-import '../../../app_constants.dart';
 import '../../../shared/extensions/validation_extension.dart';
-import '../../../shared/mixins/user_info_mixin.dart';
 import '../../upgrade_account_constants.dart';
 import '../../upgrade_account_coordinator.dart';
 import '../../upgrade_ja/widgets/gradiant_button.dart';
@@ -27,7 +18,6 @@ import '../bloc/place_information/place_information_bloc.dart';
 import '../bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 import '../mixin/update_pdone_information_mixin.dart';
 import '../views/widgets/place_information_widget.dart';
-import '../views/widgets/select_information_widget.dart';
 import '../views/widgets/verify_protector_widget.dart';
 import 'update_pdone_otp.dart';
 
@@ -39,13 +29,8 @@ class UpdatePDoneInformationPage extends StatefulWidget {
   const UpdatePDoneInformationPage({
     super.key,
     this.onNextPage,
-    // this.pDoneProfile,
   });
-
   final VoidCallback? onNextPage;
-
-  // final PDoneProfile? pDoneProfile;
-
   @override
   State<UpdatePDoneInformationPage> createState() =>
       _UpdatePDoneInformationPageState();
@@ -54,10 +39,6 @@ class UpdatePDoneInformationPage extends StatefulWidget {
 class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
     with ValidationMixin, UpdatePDoneInformationMixin {
   UpgradePDoneBloc get upgradePDoneBloc => context.read();
-
-  // UserBloc get userBloc => context.read();
-
-  final _showProtectorCtrl = ValueNotifier<bool>(false);
 
   // validator protector PDoneId
   String? validatorPDoneId = 'Bạn phải nhập ID P-Done';
@@ -172,11 +153,6 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       );
     }
     _sendOTP();
-    // if ((pDoneAPICaller == PDoneAPICaller.adult) ||
-    //     (pDoneAPICaller != PDoneAPICaller.adult &&
-    //         (upgradePDoneBloc.state is ApproveProtectorState))) {
-    //   _sendOTP();
-    // }
   }
 
   void _sendOTP() {
@@ -413,6 +389,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                                           'Vui lòng nhập tỉnh thành',
                                         );
                                         onValidation();
+                                        return null;
                                       },
                                     ),
                                   ),
@@ -599,23 +576,20 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                           )
                         : Container(),
                     isShowProtector()
-                        ? BlocProvider<UpgradePDoneBloc>(
-                            create: (context) => injector.get(),
-                            child: VerifyProtectorWidget(
-                              onUpdatePlaceInformation:
-                                  (PDoneVerifyProtectorRequest value) {
-                                pDoneVerifyProtectorRequest = value;
-                              },
-                              updateProtectorStatus: (bool value) {
-                                protectorApprove = value;
-                                Future.delayed(Duration(milliseconds: 200))
-                                    .then((value) {
-                                  setState(() {
-                                    onValidation();
-                                  });
+                        ? VerifyProtectorWidget(
+                            onUpdatePlaceInformation:
+                                (PDoneVerifyProtectorRequest value) {
+                              pDoneVerifyProtectorRequest = value;
+                            },
+                            updateProtectorStatus: (bool value) {
+                              protectorApprove = value;
+                              Future.delayed(Duration(milliseconds: 200))
+                                  .then((value) {
+                                setState(() {
+                                  onValidation();
                                 });
-                              },
-                            ),
+                              });
+                            },
                           )
                         : Container(),
 

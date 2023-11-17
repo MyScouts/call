@@ -73,7 +73,9 @@ class ActionDialog extends StatelessWidget {
                     child: PrimaryButton(
                       title: actionTitle,
                       onTap: () {
-                        if (isBack!) Navigator.pop(context);
+                        if (isBack) {
+                          Navigator.pop(context);
+                        }
                         onAction.call();
                       },
                       disabled: false,

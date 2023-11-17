@@ -12,7 +12,6 @@ import 'package:ui/ui.dart';
 
 import '../../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
 import '../../../../../data/models/responses/pdone/pdone_my_protector_information_response.dart';
-import '../../../../marshop/widgets/gradiant_button.dart';
 import '../../bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 import 'information_field_guardian_widget.dart';
 
@@ -38,7 +37,7 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
   final _idNumberOfProtectorCtl = TextEditingController();
   List<Protector> protectors = [];
   PDoneVerifyProtectorRequest protectorRequest =
-      PDoneVerifyProtectorRequest(phoneCode: '84', protector: 0);
+      PDoneVerifyProtectorRequest(phoneCode: '84', protector: 1);
 
   UpgradePDoneBloc get upgradePDoneBloc => context.read();
 
@@ -105,7 +104,6 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     upgradePDoneBloc.add(GetListMasterEvent());
   }
@@ -155,9 +153,12 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
     }
 
     if (protectorRequested != null) {
-      protector = protectors
-          .where((element) => element.id == protectorRequested!.relation)
-          .first;
+      final filterProtector = protectors
+          .where((element) => element.id == protectorRequested!.relation);
+      if (filterProtector.isNotEmpty) {
+        protector = filterProtector.first;
+      }
+
       _pDoneIDOfProtectorCtl.text = protectorRequested?.protector.pDoneId ?? '';
       _phoneCtl.text = protectorRequested?.protector.phoneNumber ?? '';
       _idNumberOfProtectorCtl.text =
