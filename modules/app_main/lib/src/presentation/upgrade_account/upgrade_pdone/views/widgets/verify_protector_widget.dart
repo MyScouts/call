@@ -38,7 +38,7 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
   final _idNumberOfProtectorCtl = TextEditingController();
   List<Protector> protectors = [];
   PDoneVerifyProtectorRequest protectorRequest =
-      PDoneVerifyProtectorRequest(phoneCode: '84');
+      PDoneVerifyProtectorRequest(phoneCode: '84', protector: 0);
 
   UpgradePDoneBloc get upgradePDoneBloc => context.read();
 
