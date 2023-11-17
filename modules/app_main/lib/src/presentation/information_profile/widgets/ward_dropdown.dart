@@ -19,6 +19,33 @@ class WardDropDown extends StatefulWidget {
 }
 
 class _WardDropDownState extends State<WardDropDown> {
+  List<Ward> _wards = [];
+
+  @override
+  void initState() {
+    initWard();
+    super.initState();
+  }
+
+  void initWard() {
+    _wards = widget.wards.map((e) {
+      String name = e.name?.replaceAll('Thị trấn', '') ?? '';
+      name = name.replaceAll('Thị Trấn', '');
+      name = name.replaceAll('Xã', '');
+      name = name.replaceAll('Phường', '');
+      return e.copyWith(name: name);
+    }).toList();
+  }
+
+  @override
+  void didUpdateWidget(covariant WardDropDown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.wards != widget.wards) {
+      initWard();
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -58,8 +85,8 @@ class _WardDropDownState extends State<WardDropDown> {
             'Chọn phường xã.',
             style: TextStyle(fontSize: 14),
           ),
-          value: widget.wards.first,
-          items: widget.wards
+          value: _wards.first,
+          items: _wards
               .map((item) => DropdownMenuItem<Ward>(
                     value: item,
                     child: Text(

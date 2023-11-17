@@ -4,6 +4,7 @@ import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/information_profile/information_profile_coordinator.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
+import 'package:app_main/src/presentation/profile/user_profile_screen.dart';
 import 'package:app_main/src/presentation/protector/manage_protector_screen.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
@@ -38,8 +39,8 @@ class Setting {
           Setting(
             text: "Cài đặt tài khoản",
             icon: IconAppConstants.icSettingAccount,
-            onPressed: () => Navigator.of(context)
-                .pushNamed(InformationProfileScreen.routeName),
+            onPressed: () =>
+                Navigator.of(context).pushNamed(UserProfileScreen.routerName),
           ),
           if ((user?.old ?? 0) >= 18)
             Setting(
@@ -58,8 +59,9 @@ class Setting {
           Setting(
             text: "Team",
             icon: IconAppConstants.icTeamProfile,
-            onPressed: () =>
-                Navigator.pushNamed(context, CommunityWidget.routeName),
+            onPressed: () => Navigator.pushNamed(
+                context, InformationProfileScreen.routeName),
+            // Navigator.pushNamed(context, CommunityWidget.routeName),
           ),
           Setting(
             text: "PDone",

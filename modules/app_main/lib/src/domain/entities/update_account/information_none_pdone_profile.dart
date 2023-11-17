@@ -8,13 +8,16 @@ part 'information_none_pdone_profile.g.dart';
 @freezed
 class InformationNonePdoneProfile with _$InformationNonePdoneProfile {
   const factory InformationNonePdoneProfile({
-    required String firstName,
+    String? firstName,
+    String? middleName,
+    String? lastName,
+    String? nickName,
     required int sex,
     required String birthday,
     required InformationPDoneBirthPlace birthPlace,
     required InformationDPoneCurrentPlace currentPlace,
-    required int height,
-    required int weight,
+    int? height,
+    int? weight,
     required String maritalStatus,
     required String bloodGroup,
     required String academicLevel,

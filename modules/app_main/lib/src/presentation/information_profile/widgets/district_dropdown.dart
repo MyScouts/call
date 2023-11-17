@@ -18,6 +18,33 @@ class DistrictDropDown extends StatefulWidget {
 }
 
 class _DistrictDropDownState extends State<DistrictDropDown> {
+  List<District> _districts = [];
+  
+  @override
+  void initState() {
+    initDistrict();
+    super.initState();
+  }
+  
+  void initDistrict() {
+    _districts = widget.districts.map((e) {
+      String name = e.name?.replaceAll('Quận', '') ?? '';
+      name = name.replaceAll('Huyện', '');
+      name = name.replaceAll('Thành phố', '');
+      name = name.replaceAll('Thành Phố', '');
+      return e.copyWith(name: name);
+    }).toList();
+  }
+
+  @override
+  void didUpdateWidget(covariant DistrictDropDown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if(oldWidget.districts != widget.districts) {
+      initDistrict();
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -57,8 +84,8 @@ class _DistrictDropDownState extends State<DistrictDropDown> {
             'Chọn quận huyện.',
             style: TextStyle(fontSize: 14),
           ),
-          value: widget.districts.first,
-          items: widget.districts
+          value: _districts.first,
+          items: _districts
               .map((item) => DropdownMenuItem<District>(
                     value: item,
                     child: Text(

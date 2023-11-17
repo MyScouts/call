@@ -6,6 +6,7 @@ class ProvinceDropDown extends StatefulWidget {
   final Function(Province) onChange;
   final bool required;
   final List<Province> provinces;
+
   const ProvinceDropDown({
     super.key,
     required this.onChange,
@@ -18,6 +19,25 @@ class ProvinceDropDown extends StatefulWidget {
 }
 
 class _ProvinceDropDownState extends State<ProvinceDropDown> {
+  List<Province> _provinces = [];
+
+  @override
+  void initState() {
+    _provinces = widget.provinces.map((e) {
+      final name = e.name?.replaceAll('Tỉnh', '');
+      return e.copyWith(name: name?.replaceAll('Thành phố', ''));
+    }).toList();
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant ProvinceDropDown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if(oldWidget.provinces != widget.provinces) {
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -57,8 +77,8 @@ class _ProvinceDropDownState extends State<ProvinceDropDown> {
             'Chọn tỉnh thành.',
             style: TextStyle(fontSize: 14),
           ),
-          value: widget.provinces.first,
-          items: widget.provinces
+          value: _provinces.first,
+          items: _provinces
               .map((item) => DropdownMenuItem<Province>(
                     value: item,
                     child: Text(
@@ -70,7 +90,6 @@ class _ProvinceDropDownState extends State<ProvinceDropDown> {
                   ))
               .toList(),
           validator: (value) {
-            print(value);
             if (value == null) {
               return 'Chọn tình thành.';
             }

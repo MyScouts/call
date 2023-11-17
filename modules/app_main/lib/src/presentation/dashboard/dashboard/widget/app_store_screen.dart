@@ -123,8 +123,8 @@ class _AppStoreScreenState extends State<AppStoreScreen> {
                                   ),
                                   shrinkWrap: true,
                                   crossAxisCount: 4,
-                                  crossAxisSpacing: 24,
-                                  mainAxisSpacing: 20,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10,
                                   children: _favorites
                                       .map(
                                         (e) => AppStoreWidgetBuilder(
@@ -152,8 +152,8 @@ class _AppStoreScreenState extends State<AppStoreScreen> {
                                 GridView.count(
                                   shrinkWrap: true,
                                   crossAxisCount: 4,
-                                  crossAxisSpacing: 24,
-                                  mainAxisSpacing: 20,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 10,
                                   children: _items
                                       .map(
                                         (e) => AppStoreWidgetBuilder(

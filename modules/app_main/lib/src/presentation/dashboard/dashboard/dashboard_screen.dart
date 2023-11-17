@@ -10,7 +10,6 @@ import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_e
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_personal_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dock_widget.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/statusbar_widget.dart';
-import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/notification/notification_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -78,6 +77,26 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     setState(() {
       _showEditMode = false;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    NotificationCenter.subscribe(
+      channel: showAppStore,
+      observer: this,
+      onNotification: (data) {
+        setState(() {
+          _showAppStore = true;
+        });
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    NotificationCenter.unsubscribe(channel: showAppStore, observer: this);
   }
 
   @override
@@ -244,11 +263,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 notificationKey.currentState?.revert();
               },
             ),
-            if (_showAppStore) AppStoreScreen(onClose: () {
-              setState(() {
-                _showAppStore = false;
-              });
-            },),
+            if (_showAppStore)
+              AppStoreScreen(
+                onClose: () {
+                  setState(() {
+                    _showAppStore = false;
+                  });
+                },
+              ),
           ],
         ),
       ),

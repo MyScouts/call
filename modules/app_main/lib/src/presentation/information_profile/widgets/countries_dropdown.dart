@@ -6,6 +6,7 @@ class CountriesDropdown extends StatefulWidget {
   final Function(Country) onChange;
   final bool required;
   final List<Country> countries;
+
   const CountriesDropdown({
     super.key,
     required this.onChange,
@@ -18,6 +19,14 @@ class CountriesDropdown extends StatefulWidget {
 }
 
 class _CountriesDropdownState extends State<CountriesDropdown> {
+  List<Country> _countries = [];
+
+  @override
+  void initState() {
+    _countries = widget.countries.map((e) => e).toList();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -57,20 +66,22 @@ class _CountriesDropdownState extends State<CountriesDropdown> {
             'Chọn quốc gia.',
             style: TextStyle(fontSize: 14),
           ),
-          value: widget.countries.first,
-          items: widget.countries
-              .map((item) => DropdownMenuItem<Country>(
-                    value: item,
-                    child: Text(
-                      item.name!,
-                      style: const TextStyle(
-                        fontSize: 14,
-                      ),
+          value: _countries.first,
+          items: _countries
+              .map(
+                (item) => DropdownMenuItem<Country>(
+                  value: item,
+                  child: Text(
+                    item.name!,
+                    style: const TextStyle(
+                      fontSize: 14,
                     ),
-                  ))
+                    maxLines: 1,
+                  ),
+                ),
+              )
               .toList(),
           validator: (value) {
-            print(value);
             if (value == null) {
               return 'Chọn quốc gia.';
             }

@@ -94,6 +94,8 @@ class IconAppConstants {
   static String icVideo = IconApp.icVideo.path;
   static String icEdit2 = IconApp.icEdit2.path;
   static String appSetting = IconApp.appSetting.path;
+  static String icLiveArea = IconApp.icLiveArea.path;
+  static String icSettingApp = IconApp.icSettingApp.path;
 }
 
 enum IconApp {
@@ -192,6 +194,8 @@ enum IconApp {
   icEdit2('assets/icons/ic_edit_2.svg'),
   icVideoOc('assets/icons/ic_video_oc.svg'),
   icVideo('assets/icons/ic_video.svg'),
+  icLiveArea('assets/icons/ic_live_area.svg'),
+  icSettingApp('assets/icons/ic_setting_app.svg'),
   appSetting('assets/icons/app_setting.png'),
   icLeaveTeam('assets/icons/ic_leave_team.svg');
 

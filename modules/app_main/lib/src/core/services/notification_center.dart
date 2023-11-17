@@ -5,6 +5,7 @@ const String changeGroupEvent = 'changeGroupEvent';
 const String changeBg = 'changeBg';
 const String cancelEditMode = 'cancelEditMode';
 const String showEditMode = 'showEditMode';
+const String showAppStore = 'showAppStore';
 
 typedef ObserverCallback = void Function(dynamic options);
 

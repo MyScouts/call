@@ -9,15 +9,18 @@ part of 'information_none_pdone_profile.dart';
 _$InformationNonePdoneProfileImpl _$$InformationNonePdoneProfileImplFromJson(
         Map<String, dynamic> json) =>
     _$InformationNonePdoneProfileImpl(
-      firstName: json['firstName'] as String,
+      firstName: json['firstName'] as String?,
+      middleName: json['middleName'] as String?,
+      lastName: json['lastName'] as String?,
+      nickName: json['nickName'] as String?,
       sex: json['sex'] as int,
       birthday: json['birthday'] as String,
       birthPlace: InformationPDoneBirthPlace.fromJson(
           json['birthPlace'] as Map<String, dynamic>),
       currentPlace: InformationDPoneCurrentPlace.fromJson(
           json['currentPlace'] as Map<String, dynamic>),
-      height: json['height'] as int,
-      weight: json['weight'] as int,
+      height: json['height'] as int?,
+      weight: json['weight'] as int?,
       maritalStatus: json['maritalStatus'] as String,
       bloodGroup: json['bloodGroup'] as String,
       academicLevel: json['academicLevel'] as String,
@@ -39,6 +42,9 @@ Map<String, dynamic> _$$InformationNonePdoneProfileImplToJson(
         _$InformationNonePdoneProfileImpl instance) =>
     <String, dynamic>{
       'firstName': instance.firstName,
+      'middleName': instance.middleName,
+      'lastName': instance.lastName,
+      'nickName': instance.nickName,
       'sex': instance.sex,
       'birthday': instance.birthday,
       'birthPlace': instance.birthPlace,
