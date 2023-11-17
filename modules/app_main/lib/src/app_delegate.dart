@@ -30,6 +30,7 @@ abstract class IAppDelegate {
 }
 
 final onLogout = BehaviorSubject();
+final isAuthenticate = BehaviorSubject()..add(false);
 
 @singleton
 class AppDelegate extends IAppDelegate {
@@ -62,6 +63,7 @@ class AppDelegate extends IAppDelegate {
 
     var initialRoute = AuthenticateScreen.routeName;
     if (userSharePreferencesUsecase.isAuthenticated) {
+      isAuthenticate.add(true);
       initialRoute = DashBoardScreen.routeName;
     }
 

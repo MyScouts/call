@@ -1,8 +1,10 @@
 import 'dart:typed_data';
 
+import 'package:app_main/app_main.dart';
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/usecases/dashboard_share_preferences_usecase.dart';
+import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_store_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_background_builder.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_community_tab.dart';
@@ -53,6 +55,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   bool _showEditMode = false;
 
   bool _showAppStore = false;
+  bool get authenticate => isAuthenticate.value;
 
   Widget _buildDot(BuildContext context, int index) {
     final page = _page;
@@ -107,6 +110,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         });
                       },
                       openNotification: () {
+                        if (!authenticate) {
+                          context.requiredLogin();
+                          return;
+                        }
                         notificationKey.currentState?.forward();
                       },
                       onCanceled: () {
@@ -162,6 +169,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: ExpandableFab(
+                  onClick: authenticate ? null : () => context.requiredLogin(),
                   fabMargin: 8,
                   children: [
                     ActionButton(

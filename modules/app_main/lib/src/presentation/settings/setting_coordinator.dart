@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/app_main.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
@@ -27,6 +28,7 @@ extension SettingCoordinator on BuildContext {
 
             if (state is LogoutSuccess) {
               hideLoading();
+              isAuthenticate.add(false);
               showToastMessage("Đăng xuất thành công");
               context.startLoginUtil();
             }

@@ -1,3 +1,5 @@
+import 'package:app_main/app_main.dart';
+import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_group_widget.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_base_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
@@ -33,6 +35,8 @@ class AppWidget extends StatelessWidget {
   final Function()? onRemoved;
   final Function()? onAdd;
 
+  bool get authenticate => isAuthenticate.value;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,8 +49,14 @@ class AppWidget extends StatelessWidget {
             child: IgnorePointer(
               ignoring: disablePress,
               child: GestureDetector(
-                onTap: () =>
-                    context.handleStartAppWidget(id: app.id, path: app.path),
+                onTap: () {
+                  if (authenticate) {
+                    context.handleStartAppWidget(id: app.id, path: app.path);
+                    return;
+                  }
+                  context.requiredLogin();
+                  return;
+                },
                 child: Builder(
                   builder: (_) {
                     Widget child = Stack(
