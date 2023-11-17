@@ -98,8 +98,8 @@ extension DatetimeFormat on String {
     return '$date at $time';
   }
 
-  DateTime parseDateTime() {
-    final DateFormat format = DateFormat('dd/MM/yyyy');
+  DateTime parseDateTime({String? pattern}) {
+    final DateFormat format = DateFormat(pattern ?? 'dd/MM/yyyy');
     final DateTime dateTime = format.parse(this);
     return dateTime;
   }

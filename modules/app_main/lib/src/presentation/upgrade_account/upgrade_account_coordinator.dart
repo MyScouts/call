@@ -1,18 +1,24 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/confirm_register_ja_payload.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
+import 'package:app_main/src/presentation/app_coordinator.dart';
+import 'package:app_main/src/presentation/marshop/widgets/gradiant_button.dart';
 import 'package:app_main/src/presentation/settings/setting_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_constants.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/update_bank_account_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/widgets/verify_otp_bank_account_dialog_widget.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/views/widgets/upgrade_ekyc_screen.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/views/upgrade_pdone_otp_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
 
 import '../../data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
 import '../../data/models/responses/register_pdone_response.dart';
 import '../../data/models/responses/upgrade_account_response.dart';
+import '../../domain/entities/update_account/update_profile_payload.dart';
 import '../settings/contract_ja/contract_ja_screen.dart';
 import 'upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'upgrade_ja/upgrade_ja_screen.dart';
@@ -285,6 +291,13 @@ extension UpgradeAccountCoordinator on BuildContext {
     );
   }
 
+  Future<T?> startReplaceUpgradePDone<T>({bool isUpgrade = false}) {
+    return Navigator.of(this)
+        .pushReplacementNamed(UpgradePDoneScreen.routeName, arguments: {
+      'isUpgrade': isUpgrade,
+    });
+  }
+
   Future<T?> startPDoneInformation<T>() {
     return Navigator.of(this).pushNamed(
       UpgradePDoneDashboard.routeName,
@@ -329,8 +342,6 @@ extension UpgradeAccountCoordinator on BuildContext {
     }
   }
 
-
-
   List<Widget> buildGuide() {
     return [
       Padding(
@@ -346,9 +357,9 @@ extension UpgradeAccountCoordinator on BuildContext {
             text: TextSpan(
               text: '1. Hình ảnh rõ ràng, ',
               style: Theme.of(this).textTheme.labelMedium!.copyWith(
-                color: AppColors.black12,
-                fontWeight: FontWeight.w500,
-              ),
+                    color: AppColors.black12,
+                    fontWeight: FontWeight.w500,
+                  ),
               children: const [
                 TextSpan(
                   text: 'không bị mờ & cắt góc',
@@ -387,9 +398,9 @@ extension UpgradeAccountCoordinator on BuildContext {
             text: TextSpan(
               text: '3. Giấy tờ gốc, ',
               style: Theme.of(this).textTheme.labelMedium!.copyWith(
-                color: AppColors.black12,
-                fontWeight: FontWeight.w500,
-              ),
+                    color: AppColors.black12,
+                    fontWeight: FontWeight.w500,
+                  ),
               children: const [
                 TextSpan(
                   text: 'còn hạn sử dụng',
@@ -406,11 +417,85 @@ extension UpgradeAccountCoordinator on BuildContext {
         child: Text(
           securityInformation,
           style: Theme.of(this).textTheme.labelMedium!.copyWith(
-            color: AppColors.blue33,
-            fontWeight: FontWeight.w400,
-          ),
+                color: AppColors.blue33,
+                fontWeight: FontWeight.w400,
+              ),
         ),
       ),
     ];
+  }
+
+  Future<T?> startUpgradePDoneOTP<T>({UpdateProfilePayload? payload}) {
+    return Navigator.of(this)
+        .pushNamed(UpgradePDoneOTPScreen.routeName, arguments: {
+      'payload': payload,
+    });
+  }
+
+  Future<T?> startConfirmUpgradePDone18<T>({
+    required Function onConfirm,
+  }) {
+    final width = MediaQuery.of(this).size.width;
+    return showGeneralDialog<T>(
+        context: this,
+        barrierDismissible: true,
+        barrierLabel: '',
+        pageBuilder: (context, animation1, animation2) {
+          return AlertDialog(
+            contentPadding: const EdgeInsets.only(top: 10, bottom: 20),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            content: Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: paddingHorizontal),
+              width: width,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: CustomCloseButton(
+                      onPressed: () => context.pop(),
+                    ),
+                  ),
+                  SizedBox(
+                    child: ImageWidget(
+                      IconAppConstants.icUpgrade,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    "Nâng cấp PDONE",
+                    style: context.textTheme.titleMedium!
+                        .copyWith(fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Để nâng cấp lên độ tuổi trên 18, bạn cần phải có xác nhận từ người bảo hộ.",
+                    textAlign: TextAlign.center,
+                    style: context.textTheme.titleSmall!.copyWith(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  GradiantButton(
+                    onPressed: () {
+                      context.pop();
+                      onConfirm();
+                    },
+                    child: Text("Gửi OTP"),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  Future<T?> startUpgradeEkyc<T>() {
+    return Navigator.of(this).pushNamed(UpgradeEkycScreen.routeName);
   }
 }

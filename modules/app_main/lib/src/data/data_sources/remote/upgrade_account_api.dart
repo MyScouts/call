@@ -3,6 +3,7 @@ import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/con
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_request_protector_req.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/upgrade_pdone_payload.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
@@ -62,6 +63,8 @@ class UpgradeAccountApiConstants {
   static const pDoneProfile = '/api/v1/p-done/profile';
   static const protectorRequested =
       '/api/v1/protector/sent-request?page=1&pageSize=10&status=1';
+  static const upgradePdone = "api/v1/p-done/upgrade";
+  static const eKycUpgrade = "api/v1/p-done/e-kyc-upgrade";
 }
 
 @RestApi()
@@ -129,16 +132,8 @@ abstract class UpgradeAccountApi {
     @Body() required VerifyPhoneOtpPayload payload,
   });
 
-  // @POST(UpgradeAccountApiConstants.registerVShopVerifyOtp)
-  // Future<ApiResponse<bool>> registerVShopVerifyOtp({
-  //   @Body() required VerifyPhoneOtpPayload payload,
-  // });
-
   @POST(UpgradeAccountApiConstants.resendOtpJA)
   Future<UpgradeAccountResponse> resendOtpJA();
-
-  // @POST(UpgradeAccountApiConstants.resendOtpVShop)
-  // Future<ApiResponse<UpgradeAccountResponse>> resendOtpVShop();
 
   @GET(UpgradeAccountApiConstants.checkIsPDone)
   Future<ApiResponse<bool>> checkIsPDone({@Path('id') required String id});
@@ -182,4 +177,10 @@ abstract class UpgradeAccountApi {
 
   @GET(UpgradeAccountApiConstants.protectorRequested)
   Future<ApiResponse<PDoneMyProtectorInformationResponse>> protectorRequested();
+
+  @POST(UpgradeAccountApiConstants.upgradePdone)
+  Future upgradePDone(@Body() UpgradePDonePayload payload);
+
+  @POST(UpgradeAccountApiConstants.eKycUpgrade)
+  Future<APIVerifyResponse> upgradeEkyc(@Body() dynamic payload);
 }

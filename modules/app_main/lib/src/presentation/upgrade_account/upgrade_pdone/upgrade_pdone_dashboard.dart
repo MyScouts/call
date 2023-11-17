@@ -1,10 +1,11 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
-import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
-import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
+import 'package:app_main/src/presentation/app_coordinator.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:ui/ui.dart';
 
 import '../../../data/models/responses/pdone/pdone_information_response.dart';
 import 'bloc/pdone_information/pdone_information_bloc.dart';
@@ -16,7 +17,6 @@ class UpgradePDoneDashboard extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _UpgradePDoneDashboardState();
   }
 }
@@ -51,7 +51,6 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
     if (data?.type == 1 || data?.type == 2) {
       return 'Trên 14 tuổi';
     }
-
     return '';
   }
 
@@ -66,7 +65,6 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     pDoneInformationBloc.add(PDoneGetInformationEvent());
   }
@@ -77,20 +75,16 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
     }
 
     if (state is PDoneNotYetRegisterState) {
-      Navigator.of(context).pushReplacementNamed(
-        UpgradePDoneScreen.routeName,
-      );
+      context.startReplaceUpgradePDone();
     }
 
     if (state is PDoneLoadedFailureInformation) {
       showToastMessage(state.errorMessage);
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       backgroundColor: const Color.fromRGBO(243, 248, 255, 1),
       appBar: AppBar(
@@ -124,6 +118,8 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
                     _buildTitle(context),
                     _buildBody(context),
                     _buildNoti(context),
+                    const Spacer(),
+                    _buildButtons(context),
                   ],
                 ),
               );
@@ -146,6 +142,7 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(10)),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _buildComponentBodyMethod(context),
           Container(
@@ -241,5 +238,76 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
         ],
       ),
     );
+  }
+
+  _buildButtons(BuildContext context) {
+    int? old = data?.birthday?.parseDateTime(pattern: 'yyyy-MM-dd').getOld;
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20),
+      child: Row(
+        children: [
+          Expanded(
+              child: IntrinsicHeight(
+            child: TextButton(
+              onPressed: () => context.pop(),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(AppColors.white),
+              ),
+              child: Text(
+                "Quay lại",
+                style: context.textTheme.bodyLarge!.copyWith(
+                  color: context.theme.primaryColor,
+                ),
+              ),
+            ),
+          )),
+          const SizedBox(width: 10),
+          Expanded(
+            child: PrimarySolidButton(
+              title: "Nâng cấp",
+              onTap: () async {
+                if (data == null || data?.type == null) return;
+                dynamic result;
+                if (data!.type! == 1) {
+                  result = await context.startUpgradeEkyc();
+                } else if (data!.type == 2) {
+                  result = await context.startUpgradePDoneOTP();
+                } else if (data!.type == 3) {
+                  context.startConfirmUpgradePDone18(
+                      onConfirm: () =>
+                          context.startUpgradePDoneOTP().then((value) {
+                            if (value != null) {
+                              pDoneInformationBloc
+                                  .add(PDoneGetInformationEvent());
+                            }
+                          }));
+                }
+                if (result != null) {
+                  pDoneInformationBloc.add(PDoneGetInformationEvent());
+                }
+              },
+              disabled: _getStatusButton(old ?? 0, data?.type ?? 4),
+              width: null,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  bool _getStatusButton(int old, int type) {
+    if ((type == 1 || type == 2) && old <= 14) {
+      return true;
+    }
+
+    if (type == 3 && old < 18) {
+      return true;
+    }
+
+    if (type == 4) {
+      return true;
+    }
+
+    return false;
   }
 }

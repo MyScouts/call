@@ -15,7 +15,6 @@ import '../bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 import '../views/widgets/select_information_widget.dart';
 
 class UpdatePdoneSelectTypeUser extends StatefulWidget {
-  // final VoidCallback onNextPage;
   final Function(PDoneOptionMethod? pdoneMethod) onNextPage;
 
   const UpdatePdoneSelectTypeUser({
@@ -25,7 +24,6 @@ class UpdatePdoneSelectTypeUser extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _UpdatePdoneSelectTypeUserState();
   }
 }
@@ -35,12 +33,10 @@ class _UpdatePdoneSelectTypeUserState extends State<UpdatePdoneSelectTypeUser> {
 
   void _onListenerBloc(BuildContext context, UpgradePDoneState state) {
     if (state is ExtractedEKycIdCardSuccess) {
-      // context.upgradePdoneSuccess();
       widget.onNextPage(null);
     }
 
     if (state is ExtractedEKycIdCardFailure) {
-      // context.upgradePdoneSuccess();
       context.showToastMessage(state.errorMessage, ToastMessageType.error);
     }
   }
@@ -69,7 +65,6 @@ class _UpdatePdoneSelectTypeUserState extends State<UpdatePdoneSelectTypeUser> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BlocListener<UpgradePDoneBloc, UpgradePDoneState>(
       listener: _onListenerBloc,
       child: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
@@ -188,15 +183,18 @@ class _UpdatePdoneSelectTypeUserState extends State<UpdatePdoneSelectTypeUser> {
       onChanged: (val) {
         if (val != null) {
           _pDoneOptionMethod = val;
-          switch(_pDoneOptionMethod){
-
+          switch (_pDoneOptionMethod) {
             case PDoneOptionMethod.userBirthCer:
-              ageOptions..clear()..add(PDoneOptionAge.under15);
+              ageOptions
+                ..clear()
+                ..add(PDoneOptionAge.under15);
             case PDoneOptionMethod.userIdentityCard:
-              ageOptions..clear()..add(PDoneOptionAge.over14);
+              ageOptions
+                ..clear()
+                ..add(PDoneOptionAge.over14);
           }
 
-        _pDoneOptionAge = ageOptions[0];
+          _pDoneOptionAge = ageOptions[0];
 
           setState(() {});
         }

@@ -11,10 +11,10 @@ import 'shared/app_setting/bloc/app_setting_bloc.dart';
 
 extension AppMainCoordinator on BuildContext {
   Future<T?> pickedImage<T>(
-      DeviceMediaSource source, {
-        CropType cropType = CropType.circle,
-        bool needCrop = false,
-      }) async {
+    DeviceMediaSource source, {
+    CropType cropType = CropType.circle,
+    bool needCrop = false,
+  }) async {
     return await DeviceMediaServiceImpl().openPickImage(
       source,
       needCompress: true,
@@ -22,38 +22,17 @@ extension AppMainCoordinator on BuildContext {
       needCrop: needCrop,
     ) as T?;
   }
-  void pop() => Navigator.of(this).pop();
+
+  void pop({dynamic data}) => Navigator.of(this).pop(data);
 
   void startSelectedBottomBarItem(int index) {
-    this.read<AppSettingBloc>().add(BottomBarItemSelected(index));
+    read<AppSettingBloc>().add(BottomBarItemSelected(index));
   }
 
   Future<T?> startDashboard<T>() {
     return Navigator.of(this)
         .pushNamedAndRemoveUntil(DashBoardScreen.routeName, (route) => false);
   }
-
-  // Future<T?> startPDoneTab<T>() {
-  //   final currentName = ModalRoute.of(this)?.settings.name;
-  //   if (currentName != DashboardScreen.routeName) {
-  //     startDashboard();
-  //   }
-  //
-  //   startSelectedBottomBarItem(DashboardBottomNavigationBarItem.pdone.index);
-  //   return Future.value(null);
-  // }
-
-  // Future<T?> startVshopWithIdFullScreen<T>(int? id) {
-  //   return startVshopDetailById(id: id, showAppbar: true);
-  // }
-
-  // void startVshopWithId<T>(int? id) {
-  //   this.read<AppSettingBloc>().add(BottomBarItemSelected(
-  //           DashboardBottomNavigationBarItem.explore.index, handler: () {
-  //         AppCoordinator.exploreKey.currentContext
-  //             ?.startVshopDetailById(id: id);
-  //       }));
-  // }
 
   Future<bool?> checkAndRequestPermissionPhoto() async {
     final status = await Permission.photos.status;
@@ -109,6 +88,7 @@ extension AppMainCoordinator on BuildContext {
       return false;
     });
   }
+
   Future<T?> takePhoto<T>({bool needCrop = false}) async {
     if (kDebugMode) {
       return pickedImage<T?>(DeviceMediaSource.gallery, needCrop: needCrop);

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:app_core/app_core.dart';
@@ -27,7 +26,6 @@ class RegisterPdoneBirthCerCapture extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _RegisterPdoneBirthCerCaptureState();
   }
 }
@@ -38,7 +36,6 @@ class _RegisterPdoneBirthCerCaptureState
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _channel = const MethodChannel('flutter.sdk.ekyc/integrate');
   }

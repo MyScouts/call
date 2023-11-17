@@ -2,6 +2,7 @@ import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/con
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_request_protector_req.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/upgrade_pdone_payload.dart';
 import 'package:app_main/src/data/models/responses/api_verify_response.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
@@ -50,7 +51,6 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
 
   @override
   Future<bool> updatePDoneProfileBirthCer(UpdateProfilePayload payload) async {
-    // TODO: implement updatePDoneProfileBirthCer
     final res = await _upgradeAccountApi.updatePDoneProfileBirthCer(
         payload: payload.toJson());
 
@@ -180,7 +180,6 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   @override
   Future<int> verifyProtector(
       {required PDoneVerifyProtectorRequest payload}) async {
-    // TODO: implement verifyProtector
     final response = await _upgradeAccountApi.verifyProtector(payload: payload);
     return response.data.userId;
   }
@@ -196,7 +195,6 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
 
   @override
   Future<String> uploadBirthCer(XFile xFile, String prefix) async {
-    // TODO: implement uploadBirthCer
     final res = await _resourceApi.storageUploadUrl(xFile, prefix);
     return res;
   }
@@ -204,22 +202,29 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   @override
   Future<APIVerifyResponse> requestProtector(
       {required PDoneRequestProtectorReq req}) async {
-    // TODO: implement requestProtector
     final res = await _upgradeAccountApi.requestProtector(payload: req);
     return res.data;
   }
 
   @override
   Future<PDoneInformationResponse> pDoneProfile() async {
-    // TODO: implement pDoneProfile
     final res = await _upgradeAccountApi.pDoneProfile();
     return res.data;
   }
 
   @override
   Future<PDoneMyProtectorInformationResponse> protectorRequested() async {
-    // TODO: implement protectorRequested
     final res = await _upgradeAccountApi.protectorRequested();
     return res.data;
+  }
+
+  @override
+  Future upgradePDone(UpgradePDonePayload payload) =>
+      _upgradeAccountApi.upgradePDone(payload);
+
+  @override
+  Future<bool> upgradeEkyc(UpdateProfilePayload payload) async {
+    final response = await _upgradeAccountApi.upgradeEkyc(payload.toJson());
+    return response.result;
   }
 }

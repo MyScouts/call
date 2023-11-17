@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:camera/camera.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/cupertino.dart';
@@ -95,7 +94,8 @@ class _BirthCerCameraScreenState extends State<BirthCerCameraScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 36),
+        padding:
+            const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 36),
         child: captureFile == null ? _buildCam(context) : _buildResult(context),
       ),
     );
@@ -179,7 +179,9 @@ class _BirthCerCameraScreenState extends State<BirthCerCameraScreen>
   Widget _buildResult(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 80,),
+        SizedBox(
+          height: 80,
+        ),
         Image.file(
           File(captureFile!.path),
           height: 520,
