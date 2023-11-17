@@ -102,6 +102,29 @@ class ProfileNonePDoneView extends StatelessWidget {
                           ),
                         ],
                       ),
+                      Row(
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              'Nickname',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              state.pDoneProfile?.nickName ?? '',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ].separated(const SizedBox(height: 12)),
                   ),
                 ),
