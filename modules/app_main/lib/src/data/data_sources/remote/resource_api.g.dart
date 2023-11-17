@@ -216,8 +216,6 @@ class _ResourceApi implements ResourceApi {
       ),
       data: imageData,
     );
-    print(_responseGetUrlUpload.publicUrl);
-
     return _responseGetUrlUpload.publicUrl;
   }
 }
