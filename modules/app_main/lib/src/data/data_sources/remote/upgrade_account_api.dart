@@ -182,7 +182,5 @@ abstract class UpgradeAccountApi {
   Future upgradePDone(@Body() UpgradePDonePayload payload);
 
   @POST(UpgradeAccountApiConstants.eKycUpgrade)
-  Future<APIVerifyResponse> upgradeEkyc({
-    @Body() required dynamic payload,
-  });
+  Future<APIVerifyResponse> upgradeEkyc(@Body() dynamic payload);
 }

@@ -269,8 +269,7 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
                 if (data == null || data?.type == null) return;
                 dynamic result;
                 if (data!.type! == 1) {
-                  result =
-                      await context.startReplaceUpgradePDone(isUpgrade: true);
+                  result = await context.startUpgradeEkyc();
                 } else if (data!.type == 2) {
                   result = await context.startUpgradePDoneOTP();
                 } else if (data!.type == 3) {

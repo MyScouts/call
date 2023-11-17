@@ -807,7 +807,7 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
   }
 
   @override
-  Future<APIVerifyResponse> upgradeEkyc({required dynamic payload}) async {
+  Future<APIVerifyResponse> upgradeEkyc(dynamic payload) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};

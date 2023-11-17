@@ -224,9 +224,7 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
 
   @override
   Future<bool> upgradeEkyc(UpdateProfilePayload payload) async {
-    final response = await _upgradeAccountApi.upgradeEkyc(
-      payload: payload.toJson(),
-    );
+    final response = await _upgradeAccountApi.upgradeEkyc(payload.toJson());
     return response.result;
   }
 }

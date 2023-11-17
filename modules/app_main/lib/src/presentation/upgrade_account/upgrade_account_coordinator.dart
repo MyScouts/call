@@ -7,6 +7,7 @@ import 'package:app_main/src/presentation/settings/setting_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_constants.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/update_bank_account_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/widgets/verify_otp_bank_account_dialog_widget.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/views/widgets/upgrade_ekyc_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/views/upgrade_pdone_otp_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -492,5 +493,9 @@ extension UpgradeAccountCoordinator on BuildContext {
             ),
           );
         });
+  }
+
+  Future<T?> startUpgradeEkyc<T>() {
+    return Navigator.of(this).pushNamed(UpgradeEkycScreen.routeName);
   }
 }

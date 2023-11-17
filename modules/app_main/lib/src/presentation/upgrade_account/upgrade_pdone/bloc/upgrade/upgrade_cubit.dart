@@ -4,7 +4,6 @@ import 'package:app_main/src/domain/entities/update_account/update_profile_paylo
 import 'package:app_main/src/domain/usecases/upgrade_account_usecase.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:localization/localization.dart';
 
 part 'upgrade_state.dart';
 
@@ -28,6 +27,7 @@ class UpgradeCubit extends Cubit<UpgradeState> {
   }
 
   Future upgradeEkyc(UpdateProfilePayload payload) async {
+    print(payload);
     if (state is OnUpgradeEkyc) return;
     try {
       emit(OnUpgradeEkyc());

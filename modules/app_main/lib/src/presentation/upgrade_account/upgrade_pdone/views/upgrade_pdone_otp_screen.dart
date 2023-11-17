@@ -70,21 +70,27 @@ class _UpgradePDoneOTPScreenState extends State<UpgradePDoneOTPScreen>
           ),
           BlocListener<UpgradeCubit, UpgradeState>(
             listener: (context, state) {
-              if (state is OnUpgradePdoneOTP) {
+              if (state is OnUpgradePdoneOTP || state is OnUpgradeEkyc) {
                 showLoading();
               }
 
-              if (state is UpgradePdoneOTPSuccess) {
+              if (state is UpgradePdoneOTPSuccess ||
+                  state is UpgradeEkycSuccess) {
                 hideLoading();
                 showToastMessage("Bạn đã nâng cấp PDone thành công.");
                 context.pop(data: true);
               }
 
-              if (state is UpgradePdoneOTPFail) {
+              if (state is UpgradePdoneOTPFail || state is UpgradeEkycFail) {
+                final code = state is UpgradeEkycFail
+                    ? state.code
+                    : state is UpgradeEkycFail
+                        ? state.code
+                        : null;
                 hideLoading();
                 String message =
                     S.current.messages_server_internal_error.capitalize();
-                switch (state.code) {
+                switch (code) {
                   case "ALREADY_P_DONE_TYPE":
                     message = "Bạn chưa đủ tuổi để nâng cấp.";
                     break;
