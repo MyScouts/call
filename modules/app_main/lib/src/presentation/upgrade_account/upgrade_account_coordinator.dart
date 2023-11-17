@@ -1,6 +1,8 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/confirm_register_ja_payload.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
+import 'package:app_main/src/presentation/app_coordinator.dart';
+import 'package:app_main/src/presentation/marshop/widgets/gradiant_button.dart';
 import 'package:app_main/src/presentation/settings/setting_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_constants.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/update_bank_account_screen.dart';
@@ -8,6 +10,7 @@ import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/widgets/ver
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/views/upgrade_pdone_otp_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
 
@@ -426,5 +429,68 @@ extension UpgradeAccountCoordinator on BuildContext {
         .pushNamed(UpgradePDoneOTPScreen.routeName, arguments: {
       'payload': payload,
     });
+  }
+
+  Future<T?> startConfirmUpgradePDone18<T>({
+    required Function onConfirm,
+  }) {
+    final width = MediaQuery.of(this).size.width;
+    return showGeneralDialog<T>(
+        context: this,
+        barrierDismissible: true,
+        barrierLabel: '',
+        pageBuilder: (context, animation1, animation2) {
+          return AlertDialog(
+            contentPadding: const EdgeInsets.only(top: 10, bottom: 20),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            content: Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: paddingHorizontal),
+              width: width,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: CustomCloseButton(
+                      onPressed: () => context.pop(),
+                    ),
+                  ),
+                  SizedBox(
+                    child: ImageWidget(
+                      IconAppConstants.icUpgrade,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    "Nâng cấp PDONE",
+                    style: context.textTheme.titleMedium!
+                        .copyWith(fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Để nâng cấp lên độ tuổi trên 18, bạn cần phải có xác nhận từ người bảo hộ.",
+                    textAlign: TextAlign.center,
+                    style: context.textTheme.titleSmall!.copyWith(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  GradiantButton(
+                    onPressed: () {
+                      context.pop();
+                      onConfirm();
+                    },
+                    child: Text("Gửi OTP"),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

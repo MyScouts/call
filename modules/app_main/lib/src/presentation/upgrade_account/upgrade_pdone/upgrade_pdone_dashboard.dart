@@ -51,7 +51,6 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
     if (data?.type == 1 || data?.type == 2) {
       return 'Trên 14 tuổi';
     }
-
     return '';
   }
 
@@ -242,6 +241,7 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
   }
 
   _buildButtons(BuildContext context) {
+    int? old = data?.birthday?.parseDateTime(pattern: 'yyyy-MM-dd').getOld;
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       child: Row(
@@ -265,14 +265,50 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
           Expanded(
             child: PrimarySolidButton(
               title: "Nâng cấp",
-              // onTap: () => context.startUpgradePDoneOTP(),
-              onTap: () => context.startReplaceUpgradePDone(isUpgrade: true),
-              disabled: false,
+              onTap: () async {
+                if (data == null || data?.type == null) return;
+                dynamic result;
+                if (data!.type! == 1) {
+                  result =
+                      await context.startReplaceUpgradePDone(isUpgrade: true);
+                } else if (data!.type == 2) {
+                  result = await context.startUpgradePDoneOTP();
+                } else if (data!.type == 3) {
+                  context.startConfirmUpgradePDone18(
+                      onConfirm: () =>
+                          context.startUpgradePDoneOTP().then((value) {
+                            if (value != null) {
+                              pDoneInformationBloc
+                                  .add(PDoneGetInformationEvent());
+                            }
+                          }));
+                }
+                if (result != null) {
+                  pDoneInformationBloc.add(PDoneGetInformationEvent());
+                }
+              },
+              disabled: _getStatusButton(old ?? 0, data?.type ?? 4),
               width: null,
             ),
           ),
         ],
       ),
     );
+  }
+
+  bool _getStatusButton(int old, int type) {
+    if ((type == 1 || type == 2) && old <= 14) {
+      return true;
+    }
+
+    if (type == 3 && old < 18) {
+      return true;
+    }
+
+    if (type == 4) {
+      return true;
+    }
+
+    return false;
   }
 }

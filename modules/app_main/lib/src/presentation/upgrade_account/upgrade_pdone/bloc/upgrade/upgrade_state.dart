@@ -10,8 +10,8 @@ final class OnUpgradePdoneOTP extends UpgradeState {}
 final class UpgradePdoneOTPSuccess extends UpgradeState {}
 
 final class UpgradePdoneOTPFail extends UpgradeState {
-  final String message;
-  UpgradePdoneOTPFail({required this.message});
+  final String code;
+  UpgradePdoneOTPFail({required this.code});
 }
 
 final class OnUpgradeEkyc extends UpgradeState {}
@@ -19,7 +19,6 @@ final class OnUpgradeEkyc extends UpgradeState {}
 final class UpgradeEkycSuccess extends UpgradeState {}
 
 final class UpgradeEkycFail extends UpgradeState {
-  final String message;
-  UpgradeEkycFail({required this.message});
+  final String code;
+  UpgradeEkycFail({required this.code});
 }
-

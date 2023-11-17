@@ -1,6 +1,8 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/auth/auth_cubit.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart' as user;
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/authentication/authentication_constants.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/bloc/upgrade/upgrade_cubit.dart';
 import 'package:design_system/design_system.dart';
@@ -29,13 +31,17 @@ class _UpgradePDoneOTPScreenState extends State<UpgradePDoneOTPScreen>
     with TimerMixin {
   final AuthCubit _bloc = injector.get();
   final UpgradeCubit _upgradeCubit = injector.get();
+  late final userCubit = context.read<user.UserCubit>();
   final ValueNotifier<bool> _errorCtr = ValueNotifier(false);
-  String _otp = "";
+  late User _authInfo;
   bool _disabled = true;
+  String _otp = "";
 
   @override
   void initState() {
     _bloc.sendOTP();
+    _authInfo = userCubit.currentUser!;
+    print(_authInfo);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) => startTimer());
     super.initState();
   }
@@ -64,7 +70,31 @@ class _UpgradePDoneOTPScreenState extends State<UpgradePDoneOTPScreen>
           ),
           BlocListener<UpgradeCubit, UpgradeState>(
             listener: (context, state) {
-              print(state);
+              if (state is OnUpgradePdoneOTP) {
+                showLoading();
+              }
+
+              if (state is UpgradePdoneOTPSuccess) {
+                hideLoading();
+                showToastMessage("Bạn đã nâng cấp PDone thành công.");
+                context.pop(data: true);
+              }
+
+              if (state is UpgradePdoneOTPFail) {
+                hideLoading();
+                String message =
+                    S.current.messages_server_internal_error.capitalize();
+                switch (state.code) {
+                  case "ALREADY_P_DONE_TYPE":
+                    message = "Bạn chưa đủ tuổi để nâng cấp.";
+                    break;
+                  case "OTP_NOT_MATCH":
+                    message = "Mã xác nhận không hợp lệ.";
+                    break;
+                  default:
+                }
+                showToastMessage(message, ToastMessageType.error);
+              }
             },
           ),
         ],
@@ -86,6 +116,21 @@ class _UpgradePDoneOTPScreenState extends State<UpgradePDoneOTPScreen>
                             .copyWith(fontWeight: FontWeight.w700),
                       ),
                       const SizedBox(height: 5),
+                      Text.rich(
+                        TextSpan(
+                          style: context.text.bodySmall,
+                          text: S.current.confirmation_code_has_been_sent,
+                          children: [
+                            TextSpan(
+                              text:
+                                  "(+${_authInfo.phoneCode}) ${_authInfo.phone}",
+                              style: context.text.titleSmall!.copyWith(
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       const SizedBox(height: 30),
                       OTPInputWidget(
                         onCompleted: (value) {

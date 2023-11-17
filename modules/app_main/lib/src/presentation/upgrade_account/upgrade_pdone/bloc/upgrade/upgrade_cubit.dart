@@ -21,22 +21,9 @@ class UpgradeCubit extends Cubit<UpgradeState> {
       emit(UpgradePdoneOTPSuccess());
     } on DioException catch (error) {
       final data = error.response!.data;
-      debugPrint("onUpgradeOTP: $error");
-      String err = S.current.messages_server_internal_error.capitalize();
-      switch (data['code']) {
-        case "NOT_CHILD_P_DONE":
-          err = S.current.message_otp_not_match;
-        case "USER_NOT_FOUND":
-          break;
-        default:
-          err = S.current.message_otp_not_match;
-          break;
-      }
-      emit(UpgradePdoneOTPFail(message: err));
+      emit(UpgradePdoneOTPFail(code: data['code']));
     } catch (e) {
-      emit(UpgradePdoneOTPFail(
-        message: S.current.messages_server_internal_error.capitalize(),
-      ));
+      emit(UpgradePdoneOTPFail(code: "INTERNAL_SERVER_ERROR"));
     }
   }
 
@@ -48,18 +35,9 @@ class UpgradeCubit extends Cubit<UpgradeState> {
       emit(UpgradeEkycSuccess());
     } on DioException catch (error) {
       final data = error.response!.data;
-      debugPrint("upgradeEkyc: $error");
-      String err = S.current.messages_server_internal_error.capitalize();
-      switch (data['code']) {
-        default:
-          err = S.current.message_otp_not_match;
-          break;
-      }
-      emit(UpgradeEkycFail(message: err));
+      emit(UpgradeEkycFail(code: data['code']));
     } catch (e) {
-      emit(UpgradeEkycFail(
-        message: S.current.messages_server_internal_error.capitalize(),
-      ));
+      emit(UpgradeEkycFail(code: "INTERNAL_SERVER_ERROR"));
     }
   }
 }
