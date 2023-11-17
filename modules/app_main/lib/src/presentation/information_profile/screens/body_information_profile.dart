@@ -172,7 +172,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                 ),
               ),
               Text(
-                _informationNonePdoneProfile.firstName,
+                _informationNonePdoneProfile.firstName ?? '',
                 style: const TextStyle(
                   color: AppColors.black,
                   fontWeight: FontWeight.normal,
@@ -196,7 +196,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                 ),
               ),
               Text(
-                _informationNonePdoneProfile.firstName,
+                _informationNonePdoneProfile.firstName ?? '',
                 style: const TextStyle(
                   color: AppColors.black,
                   fontWeight: FontWeight.normal,

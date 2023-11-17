@@ -83,6 +83,26 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    NotificationCenter.subscribe(
+      channel: showAppStore,
+      observer: this,
+      onNotification: (data) {
+        setState(() {
+          _showAppStore = true;
+        });
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    NotificationCenter.unsubscribe(channel: showAppStore, observer: this);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DashBoardInheritedData(
       pageController: _pageController,

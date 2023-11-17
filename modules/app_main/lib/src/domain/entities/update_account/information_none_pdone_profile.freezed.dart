@@ -21,15 +21,18 @@ InformationNonePdoneProfile _$InformationNonePdoneProfileFromJson(
 
 /// @nodoc
 mixin _$InformationNonePdoneProfile {
-  String get firstName => throw _privateConstructorUsedError;
+  String? get firstName => throw _privateConstructorUsedError;
+  String? get middleName => throw _privateConstructorUsedError;
+  String? get lastName => throw _privateConstructorUsedError;
+  String? get nickName => throw _privateConstructorUsedError;
   int get sex => throw _privateConstructorUsedError;
   String get birthday => throw _privateConstructorUsedError;
   InformationPDoneBirthPlace get birthPlace =>
       throw _privateConstructorUsedError;
   InformationDPoneCurrentPlace get currentPlace =>
       throw _privateConstructorUsedError;
-  int get height => throw _privateConstructorUsedError;
-  int get weight => throw _privateConstructorUsedError;
+  int? get height => throw _privateConstructorUsedError;
+  int? get weight => throw _privateConstructorUsedError;
   String get maritalStatus => throw _privateConstructorUsedError;
   String get bloodGroup => throw _privateConstructorUsedError;
   String get academicLevel => throw _privateConstructorUsedError;
@@ -61,13 +64,16 @@ abstract class $InformationNonePdoneProfileCopyWith<$Res> {
           InformationNonePdoneProfile>;
   @useResult
   $Res call(
-      {String firstName,
+      {String? firstName,
+      String? middleName,
+      String? lastName,
+      String? nickName,
       int sex,
       String birthday,
       InformationPDoneBirthPlace birthPlace,
       InformationDPoneCurrentPlace currentPlace,
-      int height,
-      int weight,
+      int? height,
+      int? weight,
       String maritalStatus,
       String bloodGroup,
       String academicLevel,
@@ -102,13 +108,16 @@ class _$InformationNonePdoneProfileCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? firstName = null,
+    Object? firstName = freezed,
+    Object? middleName = freezed,
+    Object? lastName = freezed,
+    Object? nickName = freezed,
     Object? sex = null,
     Object? birthday = null,
     Object? birthPlace = null,
     Object? currentPlace = null,
-    Object? height = null,
-    Object? weight = null,
+    Object? height = freezed,
+    Object? weight = freezed,
     Object? maritalStatus = null,
     Object? bloodGroup = null,
     Object? academicLevel = null,
@@ -126,10 +135,22 @@ class _$InformationNonePdoneProfileCopyWithImpl<$Res,
     Object? type = freezed,
   }) {
     return _then(_value.copyWith(
-      firstName: null == firstName
+      firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      middleName: freezed == middleName
+          ? _value.middleName
+          : middleName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastName: freezed == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nickName: freezed == nickName
+          ? _value.nickName
+          : nickName // ignore: cast_nullable_to_non_nullable
+              as String?,
       sex: null == sex
           ? _value.sex
           : sex // ignore: cast_nullable_to_non_nullable
@@ -146,14 +167,14 @@ class _$InformationNonePdoneProfileCopyWithImpl<$Res,
           ? _value.currentPlace
           : currentPlace // ignore: cast_nullable_to_non_nullable
               as InformationDPoneCurrentPlace,
-      height: null == height
+      height: freezed == height
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
-              as int,
-      weight: null == weight
+              as int?,
+      weight: freezed == weight
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       maritalStatus: null == maritalStatus
           ? _value.maritalStatus
           : maritalStatus // ignore: cast_nullable_to_non_nullable
@@ -246,13 +267,16 @@ abstract class _$$InformationNonePdoneProfileImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String firstName,
+      {String? firstName,
+      String? middleName,
+      String? lastName,
+      String? nickName,
       int sex,
       String birthday,
       InformationPDoneBirthPlace birthPlace,
       InformationDPoneCurrentPlace currentPlace,
-      int height,
-      int weight,
+      int? height,
+      int? weight,
       String maritalStatus,
       String bloodGroup,
       String academicLevel,
@@ -288,13 +312,16 @@ class __$$InformationNonePdoneProfileImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? firstName = null,
+    Object? firstName = freezed,
+    Object? middleName = freezed,
+    Object? lastName = freezed,
+    Object? nickName = freezed,
     Object? sex = null,
     Object? birthday = null,
     Object? birthPlace = null,
     Object? currentPlace = null,
-    Object? height = null,
-    Object? weight = null,
+    Object? height = freezed,
+    Object? weight = freezed,
     Object? maritalStatus = null,
     Object? bloodGroup = null,
     Object? academicLevel = null,
@@ -312,10 +339,22 @@ class __$$InformationNonePdoneProfileImplCopyWithImpl<$Res>
     Object? type = freezed,
   }) {
     return _then(_$InformationNonePdoneProfileImpl(
-      firstName: null == firstName
+      firstName: freezed == firstName
           ? _value.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      middleName: freezed == middleName
+          ? _value.middleName
+          : middleName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastName: freezed == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nickName: freezed == nickName
+          ? _value.nickName
+          : nickName // ignore: cast_nullable_to_non_nullable
+              as String?,
       sex: null == sex
           ? _value.sex
           : sex // ignore: cast_nullable_to_non_nullable
@@ -332,14 +371,14 @@ class __$$InformationNonePdoneProfileImplCopyWithImpl<$Res>
           ? _value.currentPlace
           : currentPlace // ignore: cast_nullable_to_non_nullable
               as InformationDPoneCurrentPlace,
-      height: null == height
+      height: freezed == height
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
-              as int,
-      weight: null == weight
+              as int?,
+      weight: freezed == weight
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       maritalStatus: null == maritalStatus
           ? _value.maritalStatus
           : maritalStatus // ignore: cast_nullable_to_non_nullable
@@ -409,13 +448,16 @@ class __$$InformationNonePdoneProfileImplCopyWithImpl<$Res>
 class _$InformationNonePdoneProfileImpl
     implements _InformationNonePdoneProfile {
   const _$InformationNonePdoneProfileImpl(
-      {required this.firstName,
+      {this.firstName,
+      this.middleName,
+      this.lastName,
+      this.nickName,
       required this.sex,
       required this.birthday,
       required this.birthPlace,
       required this.currentPlace,
-      required this.height,
-      required this.weight,
+      this.height,
+      this.weight,
       required this.maritalStatus,
       required this.bloodGroup,
       required this.academicLevel,
@@ -438,7 +480,13 @@ class _$InformationNonePdoneProfileImpl
       _$$InformationNonePdoneProfileImplFromJson(json);
 
   @override
-  final String firstName;
+  final String? firstName;
+  @override
+  final String? middleName;
+  @override
+  final String? lastName;
+  @override
+  final String? nickName;
   @override
   final int sex;
   @override
@@ -448,9 +496,9 @@ class _$InformationNonePdoneProfileImpl
   @override
   final InformationDPoneCurrentPlace currentPlace;
   @override
-  final int height;
+  final int? height;
   @override
-  final int weight;
+  final int? weight;
   @override
   final String maritalStatus;
   @override
@@ -492,7 +540,7 @@ class _$InformationNonePdoneProfileImpl
 
   @override
   String toString() {
-    return 'InformationNonePdoneProfile(firstName: $firstName, sex: $sex, birthday: $birthday, birthPlace: $birthPlace, currentPlace: $currentPlace, height: $height, weight: $weight, maritalStatus: $maritalStatus, bloodGroup: $bloodGroup, academicLevel: $academicLevel, job: $job, interest: $interest, talent: $talent, identityNumber: $identityNumber, supplyDate: $supplyDate, supplyAddress: $supplyAddress, protector: $protector, protectorPDoneId: $protectorPDoneId, birthCertificateUrl: $birthCertificateUrl, birthCertificateSupplyDate: $birthCertificateSupplyDate, kycMetadata: $kycMetadata, type: $type)';
+    return 'InformationNonePdoneProfile(firstName: $firstName, middleName: $middleName, lastName: $lastName, nickName: $nickName, sex: $sex, birthday: $birthday, birthPlace: $birthPlace, currentPlace: $currentPlace, height: $height, weight: $weight, maritalStatus: $maritalStatus, bloodGroup: $bloodGroup, academicLevel: $academicLevel, job: $job, interest: $interest, talent: $talent, identityNumber: $identityNumber, supplyDate: $supplyDate, supplyAddress: $supplyAddress, protector: $protector, protectorPDoneId: $protectorPDoneId, birthCertificateUrl: $birthCertificateUrl, birthCertificateSupplyDate: $birthCertificateSupplyDate, kycMetadata: $kycMetadata, type: $type)';
   }
 
   @override
@@ -502,6 +550,12 @@ class _$InformationNonePdoneProfileImpl
             other is _$InformationNonePdoneProfileImpl &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
+            (identical(other.middleName, middleName) ||
+                other.middleName == middleName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName) &&
+            (identical(other.nickName, nickName) ||
+                other.nickName == nickName) &&
             (identical(other.sex, sex) || other.sex == sex) &&
             (identical(other.birthday, birthday) ||
                 other.birthday == birthday) &&
@@ -547,6 +601,9 @@ class _$InformationNonePdoneProfileImpl
   int get hashCode => Object.hashAll([
         runtimeType,
         firstName,
+        middleName,
+        lastName,
+        nickName,
         sex,
         birthday,
         birthPlace,
@@ -588,13 +645,16 @@ class _$InformationNonePdoneProfileImpl
 abstract class _InformationNonePdoneProfile
     implements InformationNonePdoneProfile {
   const factory _InformationNonePdoneProfile(
-      {required final String firstName,
+      {final String? firstName,
+      final String? middleName,
+      final String? lastName,
+      final String? nickName,
       required final int sex,
       required final String birthday,
       required final InformationPDoneBirthPlace birthPlace,
       required final InformationDPoneCurrentPlace currentPlace,
-      required final int height,
-      required final int weight,
+      final int? height,
+      final int? weight,
       required final String maritalStatus,
       required final String bloodGroup,
       required final String academicLevel,
@@ -615,7 +675,13 @@ abstract class _InformationNonePdoneProfile
       _$InformationNonePdoneProfileImpl.fromJson;
 
   @override
-  String get firstName;
+  String? get firstName;
+  @override
+  String? get middleName;
+  @override
+  String? get lastName;
+  @override
+  String? get nickName;
   @override
   int get sex;
   @override
@@ -625,9 +691,9 @@ abstract class _InformationNonePdoneProfile
   @override
   InformationDPoneCurrentPlace get currentPlace;
   @override
-  int get height;
+  int? get height;
   @override
-  int get weight;
+  int? get weight;
   @override
   String get maritalStatus;
   @override

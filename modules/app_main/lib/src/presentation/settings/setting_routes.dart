@@ -1,5 +1,8 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
+import 'package:app_main/src/di/di.dart';
+import 'package:app_main/src/presentation/profile/state/user_profile_bloc.dart';
+import 'package:app_main/src/presentation/profile/user_profile_screen.dart';
 import 'package:app_main/src/presentation/settings/setting_screen.dart';
 import 'package:app_main/src/presentation/protector/manage_protector_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart';
@@ -25,6 +28,12 @@ class SettingRoutes extends RouteModule {
         },
         ManageProtectorScreen.routerName: (context) {
           return const ManageProtectorScreen();
+        },
+        UserProfileScreen.routerName: (context) {
+          return BlocProvider(
+            create: (_) => getIt<UserProfileBloc>(),
+            child: const UserProfileScreen(),
+          );
         }
       };
 }
