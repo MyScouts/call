@@ -336,6 +336,12 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                       label: UpdateInformationType.birthDay.title(context),
                       child: InputDateTimeWidget(
                         hintText: 'Ngày sinh',
+                        validator: (value) {
+                          return context.validateEmptyInfo(
+                            bpProvinceCtrl.text,
+                            'Vui lòng nhập ngày sinh',
+                          );
+                        },
                         useHorizontalLayout: true,
                         enabled: pDoneOptionMethod !=
                             PDoneOptionMethod.userIdentityCard,

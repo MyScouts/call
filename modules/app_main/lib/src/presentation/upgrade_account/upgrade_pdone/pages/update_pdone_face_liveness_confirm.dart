@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:app_core/app_core.dart';
 import 'package:design_system/design_system.dart';
@@ -30,9 +31,26 @@ class _UpdatePdoneFaceLiveNessConfirmState
   void initState() {
     // TODO: implement initState
     super.initState();
-    final faceLiveNessData =
+    var faceLiveNessData =
         (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).imageEKyc;
+
+    if (faceLiveNessData is String) {
+      faceLiveNessData = convertStringResultToMap(faceLiveNessData);
+    }
+
     faceLiveNessPath = faceLiveNessData['face_live_ness'];
+  }
+
+  Map<String, dynamic> convertStringResultToMap(String input) {
+    input = input.replaceAll('{', '').replaceAll('}', '');
+    final arr = input.split(',').map((e) => e.trim()).toList();
+    final output = <String, dynamic>{};
+    for (final String element in arr) {
+      final key = element.split('=')[0];
+      final val = element.split('=')[1];
+      output[key] = val;
+    }
+    return output;
   }
 
   @override

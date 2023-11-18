@@ -30,14 +30,15 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
   PDoneRegisteringProfileData? registeringProfileData;
 
   String getMethod() {
-    if (profileData?.type == 4 || profileData?.type == 3) {
+    if (profileData?.type == 4 ||
+        profileData?.type == 3 ||
+        profileData?.type == 2) {
       return 'Dùng căn cước';
     }
 
-    if (profileData?.type == 1 || profileData?.type == 2) {
+    if (profileData?.type == 1) {
       return 'Dùng giấy khai sinh';
     }
-
 
     if (registeringProfileData?.type == 1) {
       return 'Dùng giấy khai sinh';
@@ -48,18 +49,18 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
 
   String getAge() {
     if (profileData?.type == 4) {
-      return 'Trên 15 tuổi';
+      return 'Trên 18 tuổi';
     }
     if (profileData?.type == 3) {
-      return 'Dưới 15 tuổi';
+      return 'Trên 15 tuổi';
     }
 
     if (profileData?.type == 1 || profileData?.type == 2) {
-      return 'Trên 14 tuổi';
+      return 'Dưới 15 tuổi';
     }
 
     if (registeringProfileData?.type == 1) {
-      return 'Trên 14 tuổi';
+      return 'Dưới 15 tuổi';
     }
 
     return '';
@@ -111,9 +112,7 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
         leading: IconButton(
           padding: const EdgeInsets.all(2),
           icon: const Icon(Icons.arrow_back),
-          onPressed: Navigator
-              .of(context)
-              .pop,
+          onPressed: Navigator.of(context).pop,
         ),
       ),
       body: BlocListener<PDoneInformationBloc, PDoneInformationState>(
@@ -248,8 +247,7 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
             height: 23,
           ),
           Text(
-            'Bạn đang là tài khoản PDONE ${getAge()
-                .toLowerCase()}.\nNếu có thay đổi về độ tuổi của bạn\nVui lòng nâng cấp!',
+            'Bạn đang là tài khoản PDONE ${getAge().toLowerCase()}.\nNếu có thay đổi về độ tuổi của bạn\nVui lòng nâng cấp!',
             textAlign: TextAlign.center,
             style: context.textTheme.displaySmall!.copyWith(fontSize: 15),
           ),
@@ -259,28 +257,27 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
   }
 
   _buildButtons(BuildContext context) {
-    int? old = profileData?.birthday
-        ?.parseDateTime(pattern: 'yyyy-MM-dd')
-        .getOld;
+    int? old =
+        profileData?.birthday?.parseDateTime(pattern: 'yyyy-MM-dd').getOld;
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       child: Row(
         children: [
           Expanded(
               child: IntrinsicHeight(
-                child: TextButton(
-                  onPressed: () => context.pop(),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(AppColors.white),
-                  ),
-                  child: Text(
-                    "Quay lại",
-                    style: context.textTheme.bodyLarge!.copyWith(
-                      color: context.theme.primaryColor,
-                    ),
-                  ),
+            child: TextButton(
+              onPressed: () => context.pop(),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(AppColors.white),
+              ),
+              child: Text(
+                "Quay lại",
+                style: context.textTheme.bodyLarge!.copyWith(
+                  color: context.theme.primaryColor,
                 ),
-              )),
+              ),
+            ),
+          )),
           const SizedBox(width: 10),
           Expanded(
             child: PrimarySolidButton(
