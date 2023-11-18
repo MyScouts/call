@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:app_main/src/domain/entities/update_account/place/district.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -6,11 +7,14 @@ class DistrictDropDown extends StatefulWidget {
   final Function(District) onChange;
   final bool required;
   final List<District> districts;
+  final District? district;
+
   const DistrictDropDown({
     super.key,
     required this.onChange,
     this.required = false,
     required this.districts,
+    this.district,
   });
 
   @override
@@ -19,13 +23,17 @@ class DistrictDropDown extends StatefulWidget {
 
 class _DistrictDropDownState extends State<DistrictDropDown> {
   List<District> _districts = [];
-  
+  District? _district;
+
   @override
   void initState() {
     initDistrict();
+    _district =
+        _districts.firstWhereOrNull((e) => e.id == widget.district?.id) ??
+            _districts.first;
     super.initState();
   }
-  
+
   void initDistrict() {
     _districts = widget.districts.map((e) {
       String name = e.name?.replaceAll('Quận', '') ?? '';
@@ -39,9 +47,16 @@ class _DistrictDropDownState extends State<DistrictDropDown> {
   @override
   void didUpdateWidget(covariant DistrictDropDown oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if(oldWidget.districts != widget.districts) {
+    if (oldWidget.districts != widget.districts) {
       initDistrict();
       setState(() {});
+    }
+    if(oldWidget.district != widget.district) {
+      setState(() {
+        _district =
+            _districts.firstWhereOrNull((e) => e.id == widget.district?.id) ??
+                _districts.first;
+      });
     }
   }
 
@@ -84,7 +99,7 @@ class _DistrictDropDownState extends State<DistrictDropDown> {
             'Chọn quận huyện.',
             style: TextStyle(fontSize: 14),
           ),
-          value: _districts.first,
+          value: _district,
           items: _districts
               .map((item) => DropdownMenuItem<District>(
                     value: item,

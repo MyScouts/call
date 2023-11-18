@@ -78,14 +78,16 @@ abstract class UserApi {
   Future<OnboardingResponse> onboarding();
 
   @PATCH(UserApiConstants.updatePDoneProfile)
-  Future<UpdatePDoneProfileReponse> updatePDoneProfile(UpdatePDoneProfilePayload updatePDoneProfilePayload);
+  Future<UpdateNonePDoneProfileReponse> updatePDoneProfile(
+      @Body() UpdateNonePDoneProfilePayload updatePDoneProfilePayload);
 
   @GET(UserApiConstants.updatePDoneProfile)
   Future<UpdateNonePDoneProfileReponse> getPDoneProfile();
 
   @PATCH(UserApiConstants.updateNonePDoneProfile)
   Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(
-      UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload);
+      @Body() UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload);
+
   @GET(UserApiConstants.listFriends)
   Future<ListFriendUserResponse> listFriends();
 

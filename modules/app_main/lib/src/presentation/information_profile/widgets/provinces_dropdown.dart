@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:app_main/src/domain/entities/update_account/place/province.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -6,12 +7,14 @@ class ProvinceDropDown extends StatefulWidget {
   final Function(Province) onChange;
   final bool required;
   final List<Province> provinces;
+  final Province? province;
 
   const ProvinceDropDown({
     super.key,
     required this.onChange,
     this.required = false,
     required this.provinces,
+    this.province,
   });
 
   @override
@@ -20,6 +23,7 @@ class ProvinceDropDown extends StatefulWidget {
 
 class _ProvinceDropDownState extends State<ProvinceDropDown> {
   List<Province> _provinces = [];
+  late Province _province;
 
   @override
   void initState() {
@@ -27,13 +31,19 @@ class _ProvinceDropDownState extends State<ProvinceDropDown> {
       final name = e.name?.replaceAll('Tỉnh', '');
       return e.copyWith(name: name?.replaceAll('Thành phố', ''));
     }).toList();
+    _province =
+        _provinces.firstWhereOrNull((e) => e.id == widget.province?.id) ??
+            _provinces.first;
     super.initState();
   }
 
   @override
   void didUpdateWidget(covariant ProvinceDropDown oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if(oldWidget.provinces != widget.provinces) {
+    if (oldWidget.provinces != widget.provinces) {
+      setState(() {});
+    }
+    if (oldWidget.province != widget.province) {
       setState(() {});
     }
   }
@@ -77,7 +87,7 @@ class _ProvinceDropDownState extends State<ProvinceDropDown> {
             'Chọn tỉnh thành.',
             style: TextStyle(fontSize: 14),
           ),
-          value: _provinces.first,
+          value: _province,
           items: _provinces
               .map((item) => DropdownMenuItem<Province>(
                     value: item,

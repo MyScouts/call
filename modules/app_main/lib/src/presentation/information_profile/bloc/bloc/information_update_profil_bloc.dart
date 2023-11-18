@@ -28,9 +28,9 @@ class InformationUpdateProfilBloc extends Bloc<InformationEvent, InformationUpda
     if (state is InformationUpdateProfilLoading) return;
     try {
       emit(InformationUpdateProfilLoading());
-      final response = await _userUsecase.updatePDoneProfile(event.updatePDoneProfilePayload!);
-      debugPrint("updatePDoneProfile response: ${response.profile}");
-      await _informationPDoneSharePreferencesUsecase.saveInfoPDoneProfile(response.profile);
+      // final response = await _userUsecase.updatePDoneProfile(event.updatePDoneProfilePayload!);
+      // debugPrint("updatePDoneProfile response: ${response.profile}");
+      // await _informationPDoneSharePreferencesUsecase.saveInfoPDoneProfile(response.profile);
       emit(InformationUpdateProfilSuccess());
     } on DioException catch (dioError) {
       debugPrint("updateNonePDoneProfile error: $dioError");

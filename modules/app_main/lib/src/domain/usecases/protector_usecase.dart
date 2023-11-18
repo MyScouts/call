@@ -16,4 +16,6 @@ class ProtectorUseCase {
   Future<bool> replyRequest(Map<String, dynamic> json) {
     return repository.replyRequest(json);
   }
+
+  Future<ProtectorInfo> myProtector() => repository.myProtector();
 }

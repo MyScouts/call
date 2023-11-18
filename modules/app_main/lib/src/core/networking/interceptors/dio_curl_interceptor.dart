@@ -12,6 +12,7 @@ class DioCurlInterceptor extends InterceptorsWrapper {
     // TODO: implement onRequest
     try {
       log('------ BEGIN REQUEST ------');
+      log("curl --location --request ${options.method} '${options.uri}' \n--header 'authorization: ${options.headers['authorization']}' \n--header 'content-type: application/json' \n--data-raw '${jsonEncode(options.data)}'");
       log(options.toCurlCmd());
       log('------ END REQUEST ------');
     } catch (e) {

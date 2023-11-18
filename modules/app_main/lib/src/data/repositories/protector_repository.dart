@@ -8,4 +8,6 @@ abstract class ProtectorRepository {
   Future<List<ProtectorRequest>> requests();
 
   Future<bool> replyRequest(Map<String, dynamic> payload);
+
+  Future<ProtectorInfo> myProtector();
 }

@@ -31,7 +31,7 @@ abstract class UserRepository {
   Future<SearchUserResponse> searchUser(SearchUserPayload query);
 
   Future<OnboardingResponse> onboarding();
-  Future<UpdatePDoneProfileReponse> updatePDoneProfile(UpdatePDoneProfilePayload updatePDoneProfilePayload);
+  Future<UpdateNonePDoneProfileReponse> updatePDoneProfile(UpdateNonePDoneProfilePayload updatePDoneProfilePayload);
   Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload);
   Future<UpdateNonePDoneProfileReponse> getPDoneProfile();
 
