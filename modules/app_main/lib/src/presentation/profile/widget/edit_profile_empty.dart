@@ -88,22 +88,23 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
   late final placeInformationBloc2 = injector<PlaceInformationBloc2>()
     ..add(GetListProvincesEvent2(cuCountry!.iso2!));
   late final bankBloc = injector<GetListBanksBloc>()..add(GetListDataEvent());
-  late final upgradePDoneBloc = context.read<UpgradePDoneBloc>();
+  late final upgradePDoneBloc = context.read<UpgradePDoneBloc>()
+    ..add(GetListMasterEvent());
 
   void validate() {
-    if(!widget.isPDone) {
+    if (!widget.isPDone) {
       if (context.validateEmptyInfo(
-        fullNameController.text,
-        'Vui lòng nhập họ và tên',
-      ) !=
+            fullNameController.text,
+            'Vui lòng nhập họ và tên',
+          ) !=
           null) {
         context.showToastMessage('Vui lòng nhập tên', ToastMessageType.error);
         return;
       }
       if (context.validateNicknameInfo(
-        nickNameController.text,
-        'Vui lòng nhập nick name',
-      ) !=
+            nickNameController.text,
+            'Vui lòng nhập nick name',
+          ) !=
           null) {
         context.showToastMessage('Vui lòng nick name', ToastMessageType.error);
         return;
@@ -116,9 +117,9 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         return;
       }
       if (context.validateEmailInfo(
-        emailController.text,
-        'Địa chỉ email không hợp lệ',
-      ) !=
+            emailController.text,
+            'Địa chỉ email không hợp lệ',
+          ) !=
           null) {
         context.showToastMessage(
           'Địa chỉ email không hợp lệ',
@@ -127,13 +128,14 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         return;
       }
       if (realAddress.text.isEmpty) {
-        context.showToastMessage('Vui lòng nhập địa chỉ', ToastMessageType.error);
+        context.showToastMessage(
+            'Vui lòng nhập địa chỉ', ToastMessageType.error);
         return;
       }
       if (context.validateEmptyInfo(
-        idNumberController.text,
-        'Vui lòng nhập số ID/CCCD/HC',
-      ) !=
+            idNumberController.text,
+            'Vui lòng nhập số ID/CCCD/HC',
+          ) !=
           null) {
         context.showToastMessage(
           'Vui lòng nhập số ID/CCCD/HC',
@@ -142,9 +144,9 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         return;
       }
       if (context.validateEmptyInfo(
-        placeOfNumberController.text,
-        'Vui lòng nhập nơi cấp',
-      ) !=
+            placeOfNumberController.text,
+            'Vui lòng nhập nơi cấp',
+          ) !=
           null) {
         context.showToastMessage(
           'Vui lòng nhập nơi cấp',
@@ -153,9 +155,9 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         return;
       }
       if (context.validateEmptyInfo(
-        bankNumberController.text,
-        'Vui lòng nhập số tài khoản',
-      ) !=
+            bankNumberController.text,
+            'Vui lòng nhập số tài khoản',
+          ) !=
           null) {
         context.showToastMessage(
           'Vui lòng nhập số tài khoản',
@@ -164,9 +166,9 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         return;
       }
       if (context.validateEmptyInfo(
-        bankAccountHolderController.text,
-        'Vui lòng nhập tên chủ tài khoản',
-      ) !=
+            bankAccountHolderController.text,
+            'Vui lòng nhập tên chủ tài khoản',
+          ) !=
           null) {
         context.showToastMessage(
           'Vui lòng nhập tên chủ tài khoản',
@@ -235,63 +237,66 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
 
       final birthS = birthDayController.text.split('/');
 
-      final subS = supplyDateX.split('/');
+      List subS = supplyDateX.split('/');
+
+      if(subS.length != 3) {
+        subS = supplyDateX.split('-');
+        subS = subS.reversed.toList();
+      }
 
       context.read<UserProfileBloc>().add(SubmitDataNonePDone(
-        UpdateNonePDoneProfilePayload(
-          firstName: firstName,
-          middleName: middleName,
-          lastName: lastName,
-          nickName: nickNameController.text,
-          currentPlace: UpdatePlaceInformationPayload(
-            countryName: cuCountry?.name,
-            countryCode: cuCountry?.iso2,
-            provinceName: cuProvince?.name,
-            provinceCode: cuProvince?.stateCode.toString(),
-            districtName: cuDistrict?.name,
-            districtCode: cuDistrict?.code,
-            wardName: cuWard?.name,
-            wardCode: cuWard!.id.toString(),
-          ),
-          maritalStatus: martialStatus,
-          bloodGroup: bloodType,
-          academicLevel: edu,
-          job: jobName,
-          interest: hobbyName,
-          talent: talentName,
-          sex: gender,
-          birthPlace: UpdatePDoneBirthPlacePayload2(
-            countryName: permanentCountry?.name,
-            countryCode: permanentCountry?.iso2,
-            provinceName: permanentProvince?.name,
-            districtName: permanentDistrict?.name,
-            wardName: permanentWard?.name,
-          ),
-          birthday: '${birthS[2]}-${birthS[1]}-${birthS[0]}',
-          identityNumber: idNumberController.text,
-          supplyDate: '${subS[2]}-${subS[1]}-${subS[0]}',
-          supplyAddress: placeOfNumberController.text,
-        ),
-      ));
+            UpdateNonePDoneProfilePayload(
+              firstName: firstName,
+              middleName: middleName,
+              lastName: lastName,
+              nickName: nickNameController.text,
+              currentPlace: UpdatePlaceInformationPayload(
+                countryName: cuCountry?.name,
+                countryCode: cuCountry?.iso2,
+                provinceName: cuProvince?.name,
+                provinceCode: cuProvince?.stateCode.toString(),
+                districtName: cuDistrict?.name,
+                districtCode: cuDistrict?.code,
+                wardName: cuWard?.name,
+                wardCode: cuWard!.id.toString(),
+              ),
+              maritalStatus: martialStatus,
+              bloodGroup: bloodType,
+              academicLevel: edu,
+              job: jobName,
+              interest: hobbyName,
+              talent: talentName,
+              sex: gender,
+              birthPlace: UpdatePDoneBirthPlacePayload2(
+                countryName: permanentCountry?.name,
+                countryCode: permanentCountry?.iso2,
+                provinceName: permanentProvince?.name,
+                districtName: permanentDistrict?.name,
+                wardName: permanentWard?.name,
+              ),
+              birthday: '${birthS[2]}-${birthS[1]}-${birthS[0]}',
+              identityNumber: idNumberController.text,
+              supplyDate: '${subS[2]}-${subS[1]}-${subS[0]}',
+              supplyAddress: placeOfNumberController.text,
+            ),
+          ));
     } else {
       context.read<UserProfileBloc>().add(SubmitDataPDone(
-        UpdateNonePDoneProfilePayload(
-          nickName: nickNameController.text,
-          currentPlace: UpdatePlaceInformationPayload(
-            countryName: cuCountry?.name,
-            countryCode: cuCountry?.iso2,
-            provinceName: cuProvince?.name,
-            provinceCode: cuProvince?.stateCode.toString(),
-            districtName: cuDistrict?.name,
-            districtCode: cuDistrict?.code,
-            wardName: cuWard?.name,
-            wardCode: cuWard!.id.toString(),
-          ),
-        ),
-      ));
+            UpdateNonePDoneProfilePayload(
+              nickName: nickNameController.text,
+              currentPlace: UpdatePlaceInformationPayload(
+                countryName: cuCountry?.name,
+                countryCode: cuCountry?.iso2,
+                provinceName: cuProvince?.name,
+                provinceCode: cuProvince?.stateCode.toString(),
+                districtName: cuDistrict?.name,
+                districtCode: cuDistrict?.code,
+                wardName: cuWard?.name,
+                wardCode: cuWard!.id.toString(),
+              ),
+            ),
+          ));
     }
-
-
 
     widget.onBack();
   }
@@ -310,7 +315,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
     emailController.text = '';
     idNumberController.text = userBloc.state.pDoneProfile?.identityNumber ?? '';
     supplyDateX = userBloc.state.pDoneProfile?.supplyDate ??
-        DateFormat('yyyy-MM-dd').format(DateTime.now());
+        DateFormat('dd/MM/yyyy').format(DateTime.now());
     placeOfNumberController.text =
         userBloc.state.pDoneProfile?.supplyAddress ?? '';
     super.initState();
@@ -567,6 +572,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
           ),
           const SizedBox(height: 20),
           BlocBuilder<UpgradePDoneBloc, UpgradePDoneState>(
+            bloc: upgradePDoneBloc,
             buildWhen: (old, state) => state is GetListMasterSuccess,
             builder: (ctx, state) {
               if (state is GetListMasterSuccess) {
@@ -596,6 +602,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
           ),
           const SizedBox(height: 7),
           BlocBuilder<UpgradePDoneBloc, UpgradePDoneState>(
+            bloc: upgradePDoneBloc,
             buildWhen: (old, state) => state is GetListMasterSuccess,
             builder: (context, state) {
               if (state is GetListMasterSuccess) {
@@ -639,6 +646,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
             children: [
               Expanded(
                 child: BlocBuilder<UpgradePDoneBloc, UpgradePDoneState>(
+                  bloc: upgradePDoneBloc,
                   buildWhen: (old, state) => state is GetListMasterSuccess,
                   builder: (ctx, state) {
                     if (state is GetListMasterSuccess) {
