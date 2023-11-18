@@ -65,6 +65,8 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
 
   bool protectorApprove = false;
 
+  DateTime maxBirthDay = DateTime.now();
+
   void _onListenerBloc(BuildContext context, UpgradePDoneState state) {
     if (state is UpdatePDoneProfileLoading) {
       showLoading();
@@ -183,6 +185,8 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
               (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess)
                   .metaData[UpgradePDoneMeta.imageBirthCer]);
       pDoneAPICaller = PDoneAPICaller.children;
+      final now = DateTime.now();
+      maxBirthDay = DateTime(now.year - 14, now.month, now.day);
     }
   }
 
@@ -342,7 +346,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                             .formatDateDDmmYYYYhhMM(date, date)
                             .split('|')
                             .first,
-                        max: DateTime.now(),
+                        max: maxBirthDay,
                         onChange: (dateTime) {
                           birthDay = dateTime;
                         },
