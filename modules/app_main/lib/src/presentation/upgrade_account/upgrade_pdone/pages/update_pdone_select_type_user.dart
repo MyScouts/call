@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:developer';
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/extensions/string_extension.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -143,6 +144,10 @@ class _UpdatePdoneSelectTypeUserState extends State<UpdatePdoneSelectTypeUser> {
   Future<void> _startEKycByNameMethod({required String methodName}) async {
     final json = await _channel.invokeMethod(methodName, ekycInfo);
     log(json);
+    log(json.toString().toMap()['LIVENESS_FACE_RESULT']);
+    if (json.toString().toMap()['LIVENESS_FACE_RESULT'] == null) {
+      return;
+    }
     upgradePDoneBloc.add(
       ExtractingIdCardEvent(jsonDecode(json), const {}),
     );

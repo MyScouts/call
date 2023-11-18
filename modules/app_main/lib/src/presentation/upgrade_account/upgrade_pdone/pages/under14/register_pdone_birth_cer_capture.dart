@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/extensions/string_extension.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/upgrade_account/place_information_constant.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
@@ -232,6 +234,10 @@ class _RegisterPdoneBirthCerCaptureState
     final json = await _channel.invokeMethod(methodName, ekycInfo);
     final urlBirthCer = (upgradePDoneBloc.state as UploadedSuccessImageBirthCer)
         .imageBirthCerUrl;
+
+    if (json.toString().toMap()['LIVENESS_FACE_RESULT'] == null) {
+      return;
+    }
     upgradePDoneBloc.add(
       ExtractingIdCardEvent(
           jsonDecode(json), {UpgradePDoneMeta.imageBirthCer: urlBirthCer}),
