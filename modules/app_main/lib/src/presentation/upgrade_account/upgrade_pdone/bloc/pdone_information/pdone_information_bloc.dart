@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../../data/models/responses/pdone/pdone_information_response.dart';
+import '../../../../../data/models/responses/pdone/pdone_registering_profile.dart';
 import '../../../../../domain/usecases/upgrade_account_usecase.dart';
 
 part 'pdone_information_event.dart';
@@ -26,10 +27,13 @@ class PDoneInformationBloc
     emit(PDoneLoadingInformation());
     try {
       final res = await _upgradeAccountUsecase.pDoneProfile();
-      if (res.profile.type == 0) {
+      final registeringProfile =
+          await _upgradeAccountUsecase.getRegisteringProfile();
+      if (res.profile.type == 0 && registeringProfile == null) {
         emit(PDoneNotYetRegisterState());
       } else {
-        emit(PDoneLoadedSuccessInformation(data: res.profile));
+        emit(PDoneLoadedSuccessInformation(
+            data: res.profile, registeringProfile: registeringProfile));
       }
     } catch (e) {
       emit(PDoneLoadedFailureInformation(errorMessage: e.toString()));

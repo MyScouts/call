@@ -12,6 +12,7 @@ import '../../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.d
 import '../../data/models/responses/confirm_register_ja_response.dart';
 import '../../data/models/responses/pdone/pdone_information_response.dart';
 import '../../data/models/responses/pdone/pdone_my_protector_information_response.dart';
+import '../../data/models/responses/pdone/pdone_registering_profile.dart';
 import '../../data/models/responses/register_pdone_response.dart';
 import '../../data/models/responses/upgrade_account_response.dart';
 import '../entities/bank.dart';
@@ -145,5 +146,9 @@ class UpgradeAccountUsecase {
 
   Future upgradeEkyc(UpdateProfilePayload payload) {
     return _upgradeAccountRepository.upgradeEkyc(payload);
+  }
+
+  Future<PDoneRegisteringProfileData?> getRegisteringProfile() {
+    return _upgradeAccountRepository.getRegisteringProfile();
   }
 }
