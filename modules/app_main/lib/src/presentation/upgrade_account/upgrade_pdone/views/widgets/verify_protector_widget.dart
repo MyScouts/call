@@ -171,6 +171,7 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
       children: [
         SearchInputInformationWidget<Protector>(
           type: UpdateInformationType.protector,
+          required: true,
           initialValue: protector != null
               ? SuggestionsField<Protector>(
                   name: protector.name ?? '', data: protector)
@@ -187,7 +188,7 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
         ),
         InformationFieldGuardianWidget(
           type: UpdateInformationType.pDoneIDOfProtector,
-          required: false,
+          required: true,
           controller: _pDoneIDOfProtectorCtl,
           onChanged: (String? value) {
             protectorRequest.pDoneId = value;
@@ -220,7 +221,7 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
         InformationFieldGuardianWidget(
           type: UpdateInformationType.idNumberOfProtector,
           controller: _idNumberOfProtectorCtl,
-          required: false,
+          required: true,
           onChanged: (String? value) {
             protectorRequest.identityNumber = value;
             widget.onUpdatePlaceInformation(protectorRequest);

@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/extensions/string_extension.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import '../../../marshop/widgets/gradiant_button.dart';
@@ -30,10 +32,17 @@ class _UpdatePdoneFaceLiveNessConfirmState
   void initState() {
     // TODO: implement initState
     super.initState();
-    final faceLiveNessData =
+    var faceLiveNessData =
         (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).imageEKyc;
+
+    if (faceLiveNessData is String) {
+      faceLiveNessData = faceLiveNessData.toMap();
+    }
+
     faceLiveNessPath = faceLiveNessData['face_live_ness'];
   }
+
+
 
   @override
   Widget build(BuildContext context) {

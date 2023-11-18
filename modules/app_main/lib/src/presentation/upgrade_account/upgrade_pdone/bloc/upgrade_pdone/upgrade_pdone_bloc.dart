@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'package:app_core/app_core.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
@@ -57,12 +58,13 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
       ExtractingIdCardEvent event, Emitter<UpgradePDoneState> emit) async {
     emit(ExtractingEKycIdCard());
     var infoResult = event.eKycData['INFO_RESULT'];
-    final imageEKyc = event.eKycData["IMAGE_EKYC"];
+    var imageEKyc = event.eKycData["IMAGE_EKYC"];
 
     try {
-      if (infoResult == '') {
+      if (infoResult == null || infoResult == '') {
         // only verify face
         emit(
+
           ExtractedEKycIdCardSuccess(const {}, imageEKyc, event.meta),
         );
       } else {

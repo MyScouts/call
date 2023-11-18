@@ -56,15 +56,41 @@ class MainActivity : FlutterActivity(), MethodChannel.MethodCallHandler {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
                     val json = JSONObject().apply {
-                        putSafe(KeyResultConstants.INFO_RESULT, data.getStringExtra(KeyResultConstants.INFO_RESULT))
-                        putSafe(KeyResultConstants.LIVENESS_CARD_FRONT_RESULT, data.getStringExtra(KeyResultConstants.LIVENESS_CARD_FRONT_RESULT))
-                        putSafe(KeyResultConstants.LIVENESS_CARD_REAR_RESULT, data.getStringExtra(KeyResultConstants.LIVENESS_CARD_REAR_RESULT))
-                        putSafe(KeyResultConstants.COMPARE_RESULT, data.getStringExtra(KeyResultConstants.COMPARE_RESULT))
-                        putSafe(KeyResultConstants.LIVENESS_FACE_RESULT, data.getStringExtra(KeyResultConstants.LIVENESS_FACE_RESULT))
-                        putSafe(KeyResultConstants.MASKED_FACE_RESULT, data.getStringExtra(KeyResultConstants.MASKED_FACE_RESULT))
-                        put("IMAGE_EKYC", mutableMapOf("front_cmnd" to data.getStringExtra(KeyResultConstants.FRONT_IMAGE),
-                            "back_cmnd" to data.getStringExtra(KeyResultConstants.REAR_IMAGE),
-                            "face_live_ness" to data.getStringExtra(KeyResultConstants.PORTRAIT_NEAR_IMAGE)))
+                        putSafe(
+                            KeyResultConstants.INFO_RESULT,
+                            data.getStringExtra(KeyResultConstants.INFO_RESULT)
+                        )
+                        putSafe(
+                            KeyResultConstants.LIVENESS_CARD_FRONT_RESULT,
+                            data.getStringExtra(KeyResultConstants.LIVENESS_CARD_FRONT_RESULT)
+                        )
+                        putSafe(
+                            KeyResultConstants.LIVENESS_CARD_REAR_RESULT,
+                            data.getStringExtra(KeyResultConstants.LIVENESS_CARD_REAR_RESULT)
+                        )
+                        putSafe(
+                            KeyResultConstants.COMPARE_RESULT,
+                            data.getStringExtra(KeyResultConstants.COMPARE_RESULT)
+                        )
+                        putSafe(
+                            KeyResultConstants.LIVENESS_FACE_RESULT,
+                            data.getStringExtra(KeyResultConstants.LIVENESS_FACE_RESULT)
+                        )
+                        putSafe(
+                            KeyResultConstants.MASKED_FACE_RESULT,
+                            data.getStringExtra(KeyResultConstants.MASKED_FACE_RESULT)
+                        )
+                        put(
+                            "IMAGE_EKYC",
+                            mapOf(
+                                "front_cmnd" to
+                                data.getStringExtra(KeyResultConstants.FRONT_IMAGE),
+                                "back_cmnd" to
+                                data.getStringExtra(KeyResultConstants.REAR_IMAGE),
+                                "face_live_ness" to
+                                data.getStringExtra(KeyResultConstants.PORTRAIT_NEAR_IMAGE)
+                            )
+                        )
                     }
                     result.success(json.toString())
                 }

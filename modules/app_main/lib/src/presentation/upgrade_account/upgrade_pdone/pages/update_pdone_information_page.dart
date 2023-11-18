@@ -185,8 +185,8 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
               (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess)
                   .metaData[UpgradePDoneMeta.imageBirthCer]);
       pDoneAPICaller = PDoneAPICaller.children;
-      final now = DateTime.now();
-      maxBirthDay = DateTime(now.year - 14, now.month, now.day);
+      // final now = DateTime.now();
+      // maxBirthDay = DateTime(now.year - 14, now.month, now.day);
     }
   }
 
@@ -336,6 +336,12 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                       label: UpdateInformationType.birthDay.title(context),
                       child: InputDateTimeWidget(
                         hintText: 'Ngày sinh',
+                        // validator: (value) {
+                        //   return context.validateEmptyInfo(
+                        //     bpProvinceCtrl.text,
+                        //     'Vui lòng nhập ngày sinh',
+                        //   );
+                        // },
                         useHorizontalLayout: true,
                         enabled: pDoneOptionMethod !=
                             PDoneOptionMethod.userIdentityCard,
