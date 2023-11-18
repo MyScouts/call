@@ -274,10 +274,12 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
             const SizedBox(
               width: 8,
             ),
-            Text(
-              'Xác thực thông tin người bảo hộ thành công',
-              style: context.text.titleMedium!.copyWith(
-                color: Colors.green,
+            Expanded(
+              child: Text(
+                'Xác thực thông tin người bảo hộ thành công',
+                style: context.text.titleMedium!.copyWith(
+                  color: Colors.green,
+                ),
               ),
             ),
           ],

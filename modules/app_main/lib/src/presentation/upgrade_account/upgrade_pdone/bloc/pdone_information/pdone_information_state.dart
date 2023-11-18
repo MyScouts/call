@@ -12,8 +12,10 @@ class PDoneLoadingInformation extends PDoneInformationState {}
 @immutable
 class PDoneLoadedSuccessInformation extends PDoneInformationState {
   final PDoneInformationData data;
+  final PDoneRegisteringProfileData? registeringProfile;
 
-  PDoneLoadedSuccessInformation({required this.data});
+  PDoneLoadedSuccessInformation(
+      {required this.data, required this.registeringProfile});
 }
 
 @immutable

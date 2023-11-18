@@ -8,6 +8,7 @@ import 'package:app_main/src/data/models/responses/confirm_register_ja_response.
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:app_main/src/data/models/responses/pdone/pdone_information_response.dart';
 import 'package:app_main/src/data/models/responses/pdone/pdone_my_protector_information_response.dart';
+import 'package:app_main/src/data/models/responses/pdone/pdone_registering_profile.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
 import 'package:camera/camera.dart';
 import 'package:injectable/injectable.dart';
@@ -226,5 +227,12 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   Future<bool> upgradeEkyc(UpdateProfilePayload payload) async {
     final response = await _upgradeAccountApi.upgradeEkyc(payload.toJson());
     return response.result;
+  }
+
+  @override
+  Future<PDoneRegisteringProfileData?> getRegisteringProfile() async{
+    // TODO: implement getRegisteringProfile
+    final response = await _upgradeAccountApi.pDoneRegisteringProfile();
+    return response.data.registeringProfile;
   }
 }

@@ -747,6 +747,38 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
   }
 
   @override
+  Future<ApiResponse<PDoneRegisteringProfileResponse>>
+      pDoneRegisteringProfile() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<PDoneRegisteringProfileResponse>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/v1/p-done/registering-profile',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<PDoneRegisteringProfileResponse>.fromJson(
+      _result.data!,
+      (json) => PDoneRegisteringProfileResponse.fromJson(
+          json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
   Future<ApiResponse<PDoneMyProtectorInformationResponse>>
       protectorRequested() async {
     const _extra = <String, dynamic>{};
