@@ -1,0 +1,213 @@
+import 'package:design_system/design_system.dart';
+import 'package:flutter/material.dart';
+
+import '../../wallet.dart';
+import '../core/configuratons/configurations.dart';
+
+enum UserType { isDefault, isPDone, isJA }
+
+extension UserExt on BuildContext {
+  UserType get userType {
+    final user = WalletInjectedData.user;
+
+    if (user.isPDone == false) {
+      return UserType.isDefault;
+    }
+    if (user.isJA == false) {
+      return UserType.isPDone;
+    }
+    return UserType.isJA;
+  }
+}
+
+extension UserTypeExt on UserType {
+  List<WalletType> get walletCanShow {
+    switch (this) {
+      case UserType.isDefault:
+        return [WalletType.coin];
+      case UserType.isPDone:
+        return [WalletType.coin, WalletType.diamond];
+      case UserType.isJA:
+        return [WalletType.coin, WalletType.diamond, WalletType.coinVnd];
+    }
+  }
+}
+
+enum WalletType { coin, diamond, coinVnd, live, vshop }
+
+extension WalletTypeExt on WalletType {
+  String get walletNameInDialog {
+    switch (this) {
+      case WalletType.live:
+      case WalletType.vshop:
+      case WalletType.coinVnd:
+        return 'ví VNĐ';
+      case WalletType.coin:
+        return 'ví xu';
+      case WalletType.diamond:
+        return 'ví kim cương';
+    }
+  }
+
+  String get icon {
+    switch (this) {
+      case WalletType.coinVnd:
+        return IconAppConstants.camera2;
+      case WalletType.coin:
+        return IconAppConstants.camera2;
+      case WalletType.diamond:
+        return IconAppConstants.camera2;
+      case WalletType.live:
+        return IconAppConstants.camera2;
+      case WalletType.vshop:
+        return IconAppConstants.camera2;
+    }
+  }
+
+  String get walletTypeText {
+    switch (this) {
+      case WalletType.coinVnd:
+        return 'VNĐ';
+      case WalletType.coin:
+        return 'Xu';
+      case WalletType.diamond:
+        return 'Kim cương';
+      case WalletType.live:
+        return 'V-Live';
+      case WalletType.vshop:
+        return 'V-Shop';
+    }
+  }
+
+  String get name {
+    switch (this) {
+      case WalletType.coinVnd:
+      case WalletType.coin:
+      case WalletType.diamond:
+      case WalletType.live:
+        return 'v_live';
+      case WalletType.vshop:
+        return 'v_shop';
+    }
+  }
+
+  int get initialIndexTabBar {
+    switch (this) {
+      case WalletType.coin:
+        return 0;
+      case WalletType.diamond:
+        return 1;
+      case WalletType.live:
+      case WalletType.vshop:
+      case WalletType.coinVnd:
+        return 2;
+    }
+  }
+}
+
+enum WalletVNDActionType {
+  bankAccountInfo,
+  withdrawalOrder,
+  transactionHistory,
+}
+
+extension WalletVNDActionTypeExt on WalletVNDActionType {
+  String get text {
+    switch (this) {
+      case WalletVNDActionType.bankAccountInfo:
+        return 'Thông tin tài khoản ngân hàng';
+      case WalletVNDActionType.withdrawalOrder:
+        return 'Đặt lệnh rút tiền';
+      case WalletVNDActionType.transactionHistory:
+        return 'Lịch sử giao dịch';
+    }
+  }
+}
+
+enum WalletVNDStatus { waiting, available, withdraw }
+
+extension WalletVNDStatusExt on WalletVNDStatus {
+  String get text {
+    switch (this) {
+      case WalletVNDStatus.waiting:
+        return 'Chờ xác nhận';
+      case WalletVNDStatus.available:
+        return 'Số dư khả dụng';
+      case WalletVNDStatus.withdraw:
+        return 'Chờ rút';
+    }
+  }
+}
+
+extension VNDWalletExt on BuildContext {
+  double get vndWalletStatusWidth =>
+      (MediaQuery.of(this).size.width - 2 * horizontal - 10) / 3;
+
+  TextStyle? get vndWalletStatusTextStyle =>
+      text.bodyMedium?.copyWith(fontWeight: FontWeight.w500, fontSize: 12);
+}
+
+enum BankAccountField {
+  bankName,
+  bankAccountNumber,
+  bankAccountHolder,
+}
+
+extension BankAccountFieldExt on BankAccountField {
+  String get hintText {
+    switch (this) {
+      case BankAccountField.bankName:
+        return 'Chọn ngân hàng';
+      case BankAccountField.bankAccountNumber:
+        return 'Nhập số tài khoản';
+      case BankAccountField.bankAccountHolder:
+        return 'Nhập tên chủ tài khoản';
+    }
+  }
+
+  String get title {
+    switch (this) {
+      case BankAccountField.bankName:
+        return 'Tên ngân hàng:';
+      case BankAccountField.bankAccountNumber:
+        return 'Số tài khoản:';
+      case BankAccountField.bankAccountHolder:
+        return 'Tên chủ tài khoản:';
+    }
+  }
+}
+
+class WalletConstant {
+  static const qrCodeMessage =
+      // ignore: lines_longer_than_80_chars
+      'Tải ảnh mã QR ngân hàng của bạn,để các giao dịch nhanh chóng và chính xác';
+
+  // ignore: lines_longer_than_80_chars
+  static const registerJADialogText =
+      '''Để đổi kim cương sang vnđ bạn cần phải đăng ký mã JA\n(Đăng ký JA bạn cần trên 15 tuổi)''';
+
+  static const otpLength = 6;
+
+  static final borderRadius2 = BorderRadius.circular(2);
+
+  static final borderRadius5 = BorderRadius.circular(5);
+
+  static final borderRadius8 = BorderRadius.circular(8);
+
+  static final borderRadius10 = BorderRadius.circular(10);
+
+  static final borderRadius12 = BorderRadius.circular(12);
+
+  static final borderRadius15 = BorderRadius.circular(15);
+
+  static final borderRadius90 = BorderRadius.circular(90);
+
+  // 2018 -> 2023
+  static final yearFilter = List.generate(6, (index) => 2018 + index);
+
+  // 1 -> 12
+
+  static final monthFilter = List.generate(12, (index) => index + 1);
+
+  static const timeInputLimit = 60;
+}
