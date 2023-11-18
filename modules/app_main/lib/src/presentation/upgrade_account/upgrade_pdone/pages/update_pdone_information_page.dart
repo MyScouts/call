@@ -332,7 +332,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                       maxLength: 40,
                     ),
                     InformationLayoutFieldWidget(
-                      required: false,
+                      required: true,
                       label: UpdateInformationType.birthDay.title(context),
                       child: InputDateTimeWidget(
                         hintText: 'Ngày sinh',

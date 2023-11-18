@@ -6,6 +6,7 @@ import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/upgrade_pdone_payload.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
+import 'package:app_main/src/data/models/responses/pdone/pdone_registering_profile.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
@@ -65,6 +66,7 @@ class UpgradeAccountApiConstants {
       '/api/v1/protector/sent-request?page=1&pageSize=10&status=1';
   static const upgradePdone = "api/v1/p-done/upgrade";
   static const eKycUpgrade = "api/v1/p-done/e-kyc-upgrade";
+  static const pDoneRegisteringProfile = "api/v1/p-done/registering-profile";
 }
 
 @RestApi()
@@ -174,6 +176,8 @@ abstract class UpgradeAccountApi {
 
   @GET(UpgradeAccountApiConstants.pDoneProfile)
   Future<ApiResponse<PDoneInformationResponse>> pDoneProfile();
+  @GET(UpgradeAccountApiConstants.pDoneRegisteringProfile)
+  Future<ApiResponse<PDoneRegisteringProfileResponse>> pDoneRegisteringProfile();
 
   @GET(UpgradeAccountApiConstants.protectorRequested)
   Future<ApiResponse<PDoneMyProtectorInformationResponse>> protectorRequested();

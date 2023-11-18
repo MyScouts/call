@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/data/models/responses/pdone/pdone_registering_profile.dart';
 import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
@@ -25,39 +26,52 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
   PDoneInformationBloc get pDoneInformationBloc =>
       context.read<PDoneInformationBloc>();
 
-  PDoneInformationData? data;
+  PDoneInformationData? profileData;
+  PDoneRegisteringProfileData? registeringProfileData;
 
   String getMethod() {
-    if (data?.type == 4 || data?.type == 3) {
+    if (profileData?.type == 4 || profileData?.type == 3) {
       return 'Dùng căn cước';
     }
 
-    if (data?.type == 1 || data?.type == 2) {
-      return 'Dùng giấy khai sinh'
-          '';
+    if (profileData?.type == 1 || profileData?.type == 2) {
+      return 'Dùng giấy khai sinh';
+    }
+
+
+    if (registeringProfileData?.type == 1) {
+      return 'Dùng giấy khai sinh';
     }
 
     return '';
   }
 
   String getAge() {
-    if (data?.type == 4) {
+    if (profileData?.type == 4) {
       return 'Trên 15 tuổi';
     }
-    if (data?.type == 3) {
+    if (profileData?.type == 3) {
       return 'Dưới 15 tuổi';
     }
 
-    if (data?.type == 1 || data?.type == 2) {
+    if (profileData?.type == 1 || profileData?.type == 2) {
       return 'Trên 14 tuổi';
     }
+
+    if (registeringProfileData?.type == 1) {
+      return 'Trên 14 tuổi';
+    }
+
     return '';
   }
 
   String getStatus() {
-    print('data?.type : ${data?.type}');
-    if (data?.type == 0) {
+    if (profileData?.type == 0) {
       return 'Đang xác thực';
+    }
+
+    if (registeringProfileData?.type == 1) {
+      return 'Trên 14 tuổi';
     }
 
     return 'Đã xác thực';
@@ -71,7 +85,8 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
 
   void _onListenerBloc(BuildContext context, PDoneInformationState state) {
     if (state is PDoneLoadedSuccessInformation) {
-      data = state.data;
+      profileData = state.data;
+      registeringProfileData = state.registeringProfile;
     }
 
     if (state is PDoneNotYetRegisterState) {
@@ -96,7 +111,9 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
         leading: IconButton(
           padding: const EdgeInsets.all(2),
           icon: const Icon(Icons.arrow_back),
-          onPressed: Navigator.of(context).pop,
+          onPressed: Navigator
+              .of(context)
+              .pop,
         ),
       ),
       body: BlocListener<PDoneInformationBloc, PDoneInformationState>(
@@ -231,7 +248,8 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
             height: 23,
           ),
           Text(
-            'Bạn đang là tài khoản PDONE ${getAge().toLowerCase()}.\nNếu có thay đổi về độ tuổi của bạn\nVui lòng nâng cấp!',
+            'Bạn đang là tài khoản PDONE ${getAge()
+                .toLowerCase()}.\nNếu có thay đổi về độ tuổi của bạn\nVui lòng nâng cấp!',
             textAlign: TextAlign.center,
             style: context.textTheme.displaySmall!.copyWith(fontSize: 15),
           ),
@@ -241,38 +259,40 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
   }
 
   _buildButtons(BuildContext context) {
-    int? old = data?.birthday?.parseDateTime(pattern: 'yyyy-MM-dd').getOld;
+    int? old = profileData?.birthday
+        ?.parseDateTime(pattern: 'yyyy-MM-dd')
+        .getOld;
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       child: Row(
         children: [
           Expanded(
               child: IntrinsicHeight(
-            child: TextButton(
-              onPressed: () => context.pop(),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(AppColors.white),
-              ),
-              child: Text(
-                "Quay lại",
-                style: context.textTheme.bodyLarge!.copyWith(
-                  color: context.theme.primaryColor,
+                child: TextButton(
+                  onPressed: () => context.pop(),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(AppColors.white),
+                  ),
+                  child: Text(
+                    "Quay lại",
+                    style: context.textTheme.bodyLarge!.copyWith(
+                      color: context.theme.primaryColor,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          )),
+              )),
           const SizedBox(width: 10),
           Expanded(
             child: PrimarySolidButton(
               title: "Nâng cấp",
               onTap: () async {
-                if (data == null || data?.type == null) return;
+                if (profileData == null || profileData?.type == null) return;
                 dynamic result;
-                if (data!.type! == 1) {
+                if (profileData!.type! == 1) {
                   result = await context.startUpgradeEkyc();
-                } else if (data!.type == 2) {
+                } else if (profileData!.type == 2) {
                   result = await context.startUpgradePDoneOTP();
-                } else if (data!.type == 3) {
+                } else if (profileData!.type == 3) {
                   context.startConfirmUpgradePDone18(
                       onConfirm: () =>
                           context.startUpgradePDoneOTP().then((value) {
@@ -286,7 +306,7 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
                   pDoneInformationBloc.add(PDoneGetInformationEvent());
                 }
               },
-              disabled: _getStatusButton(old ?? 0, data?.type ?? 4),
+              disabled: _getStatusButton(old ?? 0, profileData?.type ?? 4),
               width: null,
             ),
           ),
