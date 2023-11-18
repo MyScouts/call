@@ -57,9 +57,6 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
   FutureOr<void> _mapExtractingIdCardEvent(
       ExtractingIdCardEvent event, Emitter<UpgradePDoneState> emit) async {
     emit(ExtractingEKycIdCard());
-    log('event.eKycData : ${event.eKycData}');
-    log('event.IMAGE_EKYC : ${event.eKycData['IMAGE_EKYC']}');
-    log('event.INFO_RESULT : ${event.eKycData['INFO_RESULT']}');
     var infoResult = event.eKycData['INFO_RESULT'];
     var imageEKyc = event.eKycData["IMAGE_EKYC"];
 
