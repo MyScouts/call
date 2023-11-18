@@ -1,3 +1,4 @@
+import 'package:app_main/app_main.dart';
 import 'package:app_main/src/core/services/notifications/notification_service.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
@@ -111,6 +112,7 @@ class AuthenticationUsecase {
   Future syncUser() async {
     final user = await _userRepository.getProfile();
     _userSharePreferencesUsecase.saveUserInfo(user!);
+    isAuthenticate.add(true);
     await _syncFCMToken();
   }
 

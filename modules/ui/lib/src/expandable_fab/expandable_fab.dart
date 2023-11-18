@@ -16,6 +16,7 @@ class ExpandableFab extends StatefulWidget {
     this.actionButtonElevation,
     this.fabMargin,
     this.controller,
+    this.onClick,
     required this.children,
   }) : super(key: key);
 
@@ -28,6 +29,7 @@ class ExpandableFab extends StatefulWidget {
   final double? actionButtonElevation;
   final double? fabMargin;
   final ExpandableFabController? controller;
+  final Function()? onClick;
 
   @override
   State<ExpandableFab> createState() => ExpandableFabState();
@@ -103,8 +105,8 @@ class ExpandableFabState extends State<ExpandableFab>
         curve: _isMenuClosed ? Curves.easeIn : Curves.easeIn,
         child: GestureDetector(
           onTap: () {
-                widget.children[i].onPressed?.call();
-                _toggleExpandableFab();
+            widget.children[i].onPressed?.call();
+            _toggleExpandableFab();
           },
           behavior: HitTestBehavior.opaque,
           child: AnimatedContainer(
@@ -112,7 +114,7 @@ class ExpandableFabState extends State<ExpandableFab>
             curve: _isMenuClosed ? Curves.easeIn : Curves.easeIn,
             height: _actionButtonSize,
             width: _actionButtonSize,
-            child:  widget.children[i].icon,
+            child: widget.children[i].icon,
             // child: FloatingActionButton(
             //   backgroundColor: widget.children[i].color ?? Colors.black87,
             //   elevation: _isMenuClosed ? 0 : _actionButtonElevation,
@@ -133,7 +135,7 @@ class ExpandableFabState extends State<ExpandableFab>
     return Align(
       alignment: Alignment.bottomCenter,
       child: GestureDetector(
-        onTap: _toggleExpandableFab,
+        onTap: widget.onClick ?? _toggleExpandableFab,
         behavior: HitTestBehavior.opaque,
         child: SizedBox.square(
           dimension: 114,

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/core/networking/api_response.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
 import 'package:app_main/src/data/models/responses/update_pdone_profile_response.dart';
@@ -75,13 +74,15 @@ class UserUsecase {
     return _userRepository.onboarding();
   }
 
-  Future<UpdatePDoneProfileReponse> updatePDoneProfile(UpdatePDoneProfilePayload updatePDoneProfilePayload) {
+  Future<UpdatePDoneProfileReponse> updatePDoneProfile(
+      UpdatePDoneProfilePayload updatePDoneProfilePayload) {
     return _userRepository.updatePDoneProfile(updatePDoneProfilePayload);
   }
 
   Future<UpdateNonePDoneProfileReponse> updateNonePNoneDoneProfile(
       UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload) {
-    return _userRepository.updateNonePDoneProfile(updateNonePDoneProfilePayload);
+    return _userRepository
+        .updateNonePDoneProfile(updateNonePDoneProfilePayload);
   }
 
   Future<UpdateNonePDoneProfileReponse> getPDoneProfile() {

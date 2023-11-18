@@ -1,4 +1,6 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/app_main.dart';
+import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
@@ -13,6 +15,8 @@ class StatusBarWidget extends StatelessWidget {
   final Function() openNotification;
   final Function()? onCanceled;
   final bool enableEditMode;
+
+  bool get authenticate => isAuthenticate.value;
 
   const StatusBarWidget(
       {super.key,
@@ -33,6 +37,10 @@ class StatusBarWidget extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () {
+                  if (!authenticate) {
+                    context.requiredLogin();
+                    return;
+                  }
                   context.showAppStore();
                 },
                 style: ElevatedButton.styleFrom(
@@ -69,7 +77,13 @@ class StatusBarWidget extends StatelessWidget {
       );
     }
     return GestureDetector(
-      onTap: () => context.startSearch(),
+      onTap: () {
+        if (!authenticate) {
+          context.requiredLogin();
+          return;
+        }
+        context.startSearch();
+      },
       child: Container(
         constraints: const BoxConstraints(maxHeight: 35),
         padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
@@ -79,7 +93,13 @@ class StatusBarWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               GestureDetector(
-                onTap: () => context.startSetting(),
+                onTap: () {
+                  if (!authenticate) {
+                    context.requiredLogin();
+                    return;
+                  }
+                  context.startSetting();
+                },
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: BlocBuilder<UserBloc, UserState>(
@@ -143,7 +163,13 @@ class StatusBarWidget extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: openAppStore,
+                onTap: () {
+                  if (!authenticate) {
+                    context.requiredLogin();
+                    return;
+                  }
+                  openAppStore();
+                },
                 behavior: HitTestBehavior.opaque,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),

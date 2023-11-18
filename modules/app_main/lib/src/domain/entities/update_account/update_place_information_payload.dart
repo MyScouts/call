@@ -23,4 +23,5 @@ class UpdatePlaceInformationPayload with _$UpdatePlaceInformationPayload {
 
   factory UpdatePlaceInformationPayload.fromJson(Map<String, dynamic> json) =>
       _$UpdatePlaceInformationPayloadFromJson(json);
+
 }

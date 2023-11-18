@@ -60,6 +60,7 @@ class ImageConstants {
   static String screenshot1 = ImageApp.screenshot1.path;
   static String screenshot2 = ImageApp.screenshot2.path;
   static String screenshot3 = ImageApp.screenshot3.path;
+  static String profileEmpty = ImageApp.profileEmpty.path;
 }
 
 enum ImageApp {
@@ -120,6 +121,7 @@ enum ImageApp {
   imageCamera('assets/images/img_camera.png'),
   imageEmpty('assets/images/img_empty.png'),
   imageType('assets/images/ic_type.png'),
+  profileEmpty('assets/images/profile_empty.png'),
   screenshot1('assets/images/screenshot_1.png'),
   screenshot2('assets/images/screenshot_2.png'),
   screenshot3('assets/images/screenshot_3.png');

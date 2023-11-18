@@ -1,3 +1,4 @@
+import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
@@ -106,6 +107,13 @@ class SystemSetting extends StatelessWidget {
                           BackgroundPicker.routerName,
                         ),
                       ),
+                      _ItemView(
+                          path: IconAppConstants.icSettingApp,
+                          title: 'Cài đặt ứng dụng nhanh',
+                          onClick: () {
+                            NotificationCenter.post(channel: showAppStore);
+                            Navigator.of(context).pop();
+                          }),
                       _ItemView(
                         path: IconAppConstants.icSecurity,
                         title: 'Cài đặt bảo mật',

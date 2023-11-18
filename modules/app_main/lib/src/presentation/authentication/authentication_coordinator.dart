@@ -4,6 +4,7 @@ import 'package:app_main/src/presentation/authentication/login/login_screen.dart
 import 'package:app_main/src/presentation/authentication/login/verify_otp_screen.dart';
 import 'package:app_main/src/presentation/authentication/widget/congratulation_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/ui.dart';
 
 import 'forgot_password/forgot_password_screen.dart';
 
@@ -79,6 +80,21 @@ extension AuthenticationCoordinator on BuildContext {
         "phoneNumber": phoneNumber,
         "phoneCode": phoneCode,
         "ott": ott,
+      },
+    );
+  }
+
+  Future<T?> requiredLogin<T>() {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: true,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return ActionDialog(
+          title: "Bạn có muốn đăng nhập để dùng ứng dụng?",
+          actionTitle: "Đăng nhập",
+          onAction: () => context.startLoginUtil(),
+        );
       },
     );
   }

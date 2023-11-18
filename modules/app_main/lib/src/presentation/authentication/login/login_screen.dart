@@ -1,6 +1,7 @@
 import 'package:app_main/src/presentation/authentication/login/pages/register_page.dart';
 import 'package:app_main/src/presentation/authentication/login/pages/login_page.dart';
 import 'package:app_main/src/presentation/authentication/login/widgets/auth_button_tab.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -68,7 +69,15 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                     )
                   ],
                 ),
-              )
+              ),
+              Positioned(
+                right: 25,
+                top: 50,
+                child: CustomCloseButton(
+                  color: Colors.white,
+                  onPressed: () => context.startDashboardUtil(),
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 24),

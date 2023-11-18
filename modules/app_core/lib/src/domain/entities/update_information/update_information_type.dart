@@ -65,7 +65,7 @@ extension UpdateInformationTypeExt on UpdateInformationType {
       case UpdateInformationType.gender:
         return 'Giới tính';
       case UpdateInformationType.birthDay:
-        return 'Ngày tháng năm sinh';
+        return 'Ngày sinh';
       case UpdateInformationType.protector:
         return 'Người bảo hộ';
       case UpdateInformationType.pDoneID:
@@ -166,7 +166,7 @@ extension UpdateInformationTypeExt on UpdateInformationType {
       case UpdateInformationType.gender:
         return 'Chọn giới tính';
       case UpdateInformationType.birthDay:
-        return 'Chọn ngày sinh';
+        return 'DD/MM/YY';
       case UpdateInformationType.protector:
         return 'Chọn người bảo hộ';
       case UpdateInformationType.pDoneID:
