@@ -1,11 +1,10 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/community/group_detail/group_request_list_screen.dart';
 import 'package:app_main/src/presentation/community/groups/group_listing_bloc.dart';
 import 'package:app_main/src/presentation/community/groups/groups_listing_widget.dart';
+import 'package:app_main/src/presentation/community/notification/community_notification_screen.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/ask_to_join_team_screen.dart';
-import 'package:app_main/src/presentation/community/team_detail/pages/remove_member_sheet.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/assign_boss_team_screen.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/update_team_options_screen.dart';
 import 'package:flutter/material.dart';
@@ -173,6 +172,9 @@ class CommunityRoutes extends RouteModule {
             create: (context) => injector.get(),
             child: AssignBossTeamScreen(team: args['team']),
           );
+        },
+        CommunityNotificationScreen.routeName: (context) {
+          return const CommunityNotificationScreen();
         },
       };
 }

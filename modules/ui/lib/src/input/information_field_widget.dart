@@ -11,6 +11,7 @@ class InformationFieldWidget extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextInputType textInputType;
   final String? suffixText;
+  final String? hintText;
   final ValueChanged<String?> onChanged;
   final ValueNotifier<bool>? focusController;
   final bool required;
@@ -35,6 +36,7 @@ class InformationFieldWidget extends StatelessWidget {
     this.shouldEnabled = true,
     this.inputFormatters,
     this.showCounterText = false,
+    this.hintText,
   });
 
   @override
@@ -46,7 +48,7 @@ class InformationFieldWidget extends StatelessWidget {
       child: TextInputUpdateInformationWidget(
           type: type,
           controller: controller,
-          hintText: type.hintText(),
+          hintText: hintText ?? type.hintText(),
           validator: validator,
           textInputType: textInputType,
           suffixText: suffixText,

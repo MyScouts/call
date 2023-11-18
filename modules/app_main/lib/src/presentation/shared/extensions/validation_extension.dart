@@ -77,6 +77,26 @@ extension BuildContextExtValidation on BuildContext {
     return null;
   }
 
+  String? validateNicknameInfo(String? value, String messageError) {
+    final isTooLong = value!.length > 25 || value.isEmpty;
+
+    if (isTooLong) {
+      return messageError;
+    }
+
+    return null;
+  }
+
+  String? validateEmailInfo(String? value, String messageError) {
+    RegExp emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
+
+    if (!emailRegex.hasMatch(value!)) {
+      return messageError;
+    }
+
+    return null;
+  }
+
   String? validateGender(String? value, String messageError) {
     print(value);
     if (value != 'Nam' && value != 'Nữ') {
@@ -86,8 +106,7 @@ extension BuildContextExtValidation on BuildContext {
     return null;
   }
 
-  String? validateRetypePassword(
-      String? value, String messageError, String password) {
+  String? validateRetypePassword(String? value, String messageError, String password) {
     final isNullOrEmpty = value?.isEmpty ?? true;
     if (isNullOrEmpty) {
       return messageError;
@@ -100,8 +119,7 @@ extension BuildContextExtValidation on BuildContext {
     return null;
   }
 
-  List<RequirementItem> requirementCheckListPassword(
-      String Function() onChangePassword) {
+  List<RequirementItem> requirementCheckListPassword(String Function() onChangePassword) {
     return [
       RequirementItem(
         title: 'Tối thiểu 8 ký tự',

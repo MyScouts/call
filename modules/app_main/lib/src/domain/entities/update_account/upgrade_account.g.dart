@@ -128,6 +128,20 @@ Map<String, dynamic> _$$InterestImplToJson(_$InterestImpl instance) =>
       'name': instance.name,
     };
 
+_$AutocompleteOptionImpl _$$AutocompleteOptionImplFromJson(
+        Map<String, dynamic> json) =>
+    _$AutocompleteOptionImpl(
+      displayText: json['displayText'] as String?,
+      key: json['key'] as String?,
+    );
+
+Map<String, dynamic> _$$AutocompleteOptionImplToJson(
+        _$AutocompleteOptionImpl instance) =>
+    <String, dynamic>{
+      'displayText': instance.displayText,
+      'key': instance.key,
+    };
+
 _$TalentImpl _$$TalentImplFromJson(Map<String, dynamic> json) => _$TalentImpl(
       key: json['key'] as String?,
       name: json['name'] as String?,

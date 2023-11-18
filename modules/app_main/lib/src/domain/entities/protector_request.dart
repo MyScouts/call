@@ -43,3 +43,29 @@ class ProtectorRequest {
     );
   }
 }
+
+class ProtectorInfo {
+  final int id;
+  final String fullName;
+  final String identityNumber;
+  final String phone;
+  final String pDoneId;
+
+  ProtectorInfo({
+    required this.id,
+    required this.fullName,
+    required this.identityNumber,
+    required this.phone,
+    required this.pDoneId
+  });
+
+  factory ProtectorInfo.fromJson(Map<String, dynamic> json) {
+    return ProtectorInfo(
+      id: json['id'],
+      fullName: json['fullName'],
+      identityNumber: json['identityNumber'],
+      phone: json['phone'],
+      pDoneId: json['pDoneId'],
+    );
+  }
+}

@@ -1,24 +1,16 @@
-import 'dart:convert';
-
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
-import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:design_system/design_system.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:localization/localization.dart';
 import 'package:ui/ui.dart';
 
 import '../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
-import '../../../../domain/entities/update_account/check_protector_payload.dart';
 import '../../../../domain/entities/update_account/update_pdone_birth_place_payload.dart';
-import '../../../../domain/entities/update_account/update_place_information_payload.dart';
 import '../../../../domain/entities/update_account/update_profile_payload.dart';
-import '../../../../domain/entities/update_account/upgrade_account.dart';
-import '../../../app_constants.dart';
 import '../../../shared/extensions/validation_extension.dart';
-import '../../../shared/mixins/user_info_mixin.dart';
 import '../../upgrade_account_constants.dart';
 import '../../upgrade_account_coordinator.dart';
 import '../../upgrade_ja/widgets/gradiant_button.dart';
@@ -26,7 +18,6 @@ import '../bloc/place_information/place_information_bloc.dart';
 import '../bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 import '../mixin/update_pdone_information_mixin.dart';
 import '../views/widgets/place_information_widget.dart';
-import '../views/widgets/select_information_widget.dart';
 import '../views/widgets/verify_protector_widget.dart';
 import 'update_pdone_otp.dart';
 
@@ -38,13 +29,8 @@ class UpdatePDoneInformationPage extends StatefulWidget {
   const UpdatePDoneInformationPage({
     super.key,
     this.onNextPage,
-    // this.pDoneProfile,
   });
-
   final VoidCallback? onNextPage;
-
-  // final PDoneProfile? pDoneProfile;
-
   @override
   State<UpdatePDoneInformationPage> createState() =>
       _UpdatePDoneInformationPageState();
@@ -53,10 +39,6 @@ class UpdatePDoneInformationPage extends StatefulWidget {
 class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
     with ValidationMixin, UpdatePDoneInformationMixin {
   UpgradePDoneBloc get upgradePDoneBloc => context.read();
-
-  // UserBloc get userBloc => context.read();
-
-  final _showProtectorCtrl = ValueNotifier<bool>(false);
 
   // validator protector PDoneId
   String? validatorPDoneId = 'Bạn phải nhập ID P-Done';
@@ -81,6 +63,10 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
         pDoneOptionMethod == PDoneOptionMethod.userBirthCer;
   }
 
+  bool protectorApprove = false;
+
+  DateTime maxBirthDay = DateTime.now();
+
   void _onListenerBloc(BuildContext context, UpgradePDoneState state) {
     if (state is UpdatePDoneProfileLoading) {
       showLoading();
@@ -101,6 +87,15 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
 
       showToastMessage(state.errorMessage, ToastMessageType.warning);
     }
+
+    if (state is RejectProtectorState) {
+      hideLoading();
+      Future.delayed(const Duration(milliseconds: 200)).then((value) {
+        setState(() {});
+      });
+      showToastMessage(
+          'Người bảo hộ đã từ chối yêu cầu của bạn!', ToastMessageType.error);
+    }
     if (state is GetMyProfileSuccess) {}
 
     if (state is UpdatePDoneSendOTPSuccessState) {
@@ -109,13 +104,14 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
           context: context,
           isScrollControlled: true,
           builder: (context) {
-            return StatefulBuilder(builder: (ctx, state) {
+            return StatefulBuilder(builder: (ctx, _) {
               return FractionallySizedBox(
                 heightFactor: 1,
                 child: UpdatePDoneOtp(
                   blocUpdate: upgradePDoneBloc,
                   payload: payload,
                   pDoneAPICaller: pDoneAPICaller,
+                  phoneNumber: state.currentPhoneNumber,
                 ),
               );
             });
@@ -123,43 +119,6 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
     }
 
     if (state is UpdatePDoneSendOTPFailureState) {
-      hideLoading();
-      showToastMessage(state.errorMessage, ToastMessageType.error);
-    }
-
-    if (state is RequestedSuccessProtectorState) {
-      showToastMessage(
-          'Đã gửi thông báo đến người bảo hộ!', ToastMessageType.success);
-      hideLoading();
-      Future.delayed(Duration(milliseconds: 200)).then((value) {
-        showLoading();
-      });
-      FirebaseMessaging.onMessage.listen((message) {
-        final data = message.data;
-        final dataRes = jsonDecode(data['data']);
-        if (data['type'] == 'PROTECTOR_REQUEST_REPLY') {
-          if (dataRes['isApproved']) {
-            upgradePDoneBloc.add(ProtectorApprovedEvent());
-          } else {
-            upgradePDoneBloc.add(ProtectorRejectedEvent());
-          }
-        }
-      });
-    }
-
-    if (state is ApproveProtectorState) {
-      hideLoading();
-      showToastMessage('Người bảo hộ đã đồng ý!', ToastMessageType.success);
-      upgradePDoneBloc.add(UpdatePDoneSendOTP());
-    }
-
-    if (state is RejectProtectorState) {
-      hideLoading();
-      showToastMessage(
-          'Người bảo hộ đã từ chối yêu cầu của bạn!', ToastMessageType.error);
-    }
-
-    if (state is RequestedFailureProtectorState) {
       hideLoading();
       showToastMessage(state.errorMessage, ToastMessageType.error);
     }
@@ -171,7 +130,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       lastName: lastNameCtrl.text,
       middleName: middleNameCtrl.text,
       nickname: nickNameCtrl.text,
-      sex: genderCtrl.text == 'Nam' ? 1 : 0,
+      sex: gender,
       birthday: birthDay?.toYYYYmmdd ?? '',
       identityNumber: identifyNumberCtrl.text,
       supplyDate: supplyDate?.toYYYYmmdd ?? '',
@@ -195,20 +154,11 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
             wardName: bpWardCtrl.text),
       );
     }
-    if (pDoneAPICaller == PDoneAPICaller.adult) {
-      _sendOTP();
-    } else {
-      _requestProtector();
-    }
-  }
-
-  void _requestProtector() {
-    upgradePDoneBloc.add(
-        RequestProtectorEvent(req: pDoneVerifyProtectorRequest, userId: 0));
+    _sendOTP();
   }
 
   void _sendOTP() {
-    upgradePDoneBloc.add(UpdatePDoneSendOTP());
+    upgradePDoneBloc.add(UpdatePDoneSendOTPEvent());
   }
 
   void onUpdatePayload(UpdateProfilePayload val) {
@@ -235,6 +185,8 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
               (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess)
                   .metaData[UpgradePDoneMeta.imageBirthCer]);
       pDoneAPICaller = PDoneAPICaller.children;
+      // final now = DateTime.now();
+      // maxBirthDay = DateTime(now.year - 14, now.month, now.day);
     }
   }
 
@@ -259,7 +211,13 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       }
       final postCode = eKycData['post_code'][0];
       nickNameCtrl.text = eKycData['name'] ?? '';
-      genderCtrl.text = eKycData['gender'] ?? 'Nam';
+      if (GenderType.female.getText() == eKycData['gender']) {
+        gender = GenderType.female.toValue();
+      }
+      if (GenderType.male.getText() == eKycData['gender']) {
+        gender = GenderType.male.toValue();
+      }
+
       supplyAddressCtrl.text = eKycData['issue_place'];
       birthPlaceAddressCtrl.text = eKycData['recent_location'];
       bpProvinceCtrl.text = postCode['city'][1];
@@ -269,7 +227,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       birthDay = eKycData['birth_day'].toString().parseDateTime();
       supplyDate = eKycData['issue_date'].toString().parseDateTime();
       expiryDate = eKycData['valid_date'].toString().parseDateTime();
-      if (DateTime.now().year - (birthDay?.year ?? 0) > 18) {
+      if (DateTime.now().year - (birthDay?.year ?? 0) >= 18) {
         pDoneAPICaller = PDoneAPICaller.adult;
         // pDoneAPICaller = PDoneAPICaller.teenager;
       } else {
@@ -279,13 +237,17 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
     } else {
       pDoneOptionMethod = PDoneOptionMethod.userBirthCer;
     }
+
+    if (pDoneAPICaller == PDoneAPICaller.adult) {
+      protectorApprove = true;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return validationFormBuilder(
       child: ScaffoldHideKeyboard(
-        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
           physics: const ClampingScrollPhysics(),
           scrollDirection: Axis.vertical,
@@ -370,10 +332,16 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                       maxLength: 40,
                     ),
                     InformationLayoutFieldWidget(
-                      required: false,
+                      required: true,
                       label: UpdateInformationType.birthDay.title(context),
                       child: InputDateTimeWidget(
                         hintText: 'Ngày sinh',
+                        // validator: (value) {
+                        //   return context.validateEmptyInfo(
+                        //     bpProvinceCtrl.text,
+                        //     'Vui lòng nhập ngày sinh',
+                        //   );
+                        // },
                         useHorizontalLayout: true,
                         enabled: pDoneOptionMethod !=
                             PDoneOptionMethod.userIdentityCard,
@@ -384,7 +352,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                             .formatDateDDmmYYYYhhMM(date, date)
                             .split('|')
                             .first,
-                        max: DateTime.now(),
+                        max: maxBirthDay,
                         onChange: (dateTime) {
                           birthDay = dateTime;
                         },
@@ -392,16 +360,11 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                     ),
 
                     /// Giới tính - Ngày sinh
-                    InformationFieldWidget(
-                      required: true,
-                      controller: genderCtrl,
-                      shouldEnabled: pDoneOptionMethod !=
-                          PDoneOptionMethod.userIdentityCard,
-                      onChanged: (value) => onUpdatePayload(
-                        payload.copyWith(sex: value == 'Nam' ? 1 : 0),
-                      ),
-                      type: UpdateInformationType.gender,
-                      maxLength: 4,
+                    GenderInput(
+                      onChange: (sex) {
+                        gender = sex;
+                        setState(() {});
+                      },
                     ),
 
                     pDoneOptionMethod == PDoneOptionMethod.userIdentityCard
@@ -436,6 +399,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                                           'Vui lòng nhập tỉnh thành',
                                         );
                                         onValidation();
+                                        return null;
                                       },
                                     ),
                                   ),
@@ -622,14 +586,20 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                           )
                         : Container(),
                     isShowProtector()
-                        ? BlocProvider<UpgradePDoneBloc>(
-                            create: (context) => injector.get(),
-                            child: VerifyProtectorWidget(
-                              onUpdatePlaceInformation:
-                                  (PDoneVerifyProtectorRequest value) {
-                                pDoneVerifyProtectorRequest = value;
-                              },
-                            ),
+                        ? VerifyProtectorWidget(
+                            onUpdatePlaceInformation:
+                                (PDoneVerifyProtectorRequest value) {
+                              pDoneVerifyProtectorRequest = value;
+                            },
+                            updateProtectorStatus: (bool value) {
+                              protectorApprove = value;
+                              Future.delayed(Duration(milliseconds: 200))
+                                  .then((value) {
+                                setState(() {
+                                  onValidation();
+                                });
+                              });
+                            },
                           )
                         : Container(),
 
@@ -638,7 +608,9 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 38),
                           child: GradiantButton(
-                            onPressed: isValid ? _onTapNext : null,
+                            onPressed: (isValid && protectorApprove)
+                                ? _onTapNext
+                                : null,
                             child: Text(
                               'TIẾP THEO',
                               style: Theme.of(context)
@@ -650,9 +622,10 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                         );
                       },
                     ),
-                    Padding(
-                        padding: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).viewInsets.bottom)),
+                    KeyboardVisibilityBuilder(
+                        builder: (context, isKeyboardVisible) {
+                      return SizedBox(height: isKeyboardVisible ? 250 : 0);
+                    }),
                   ],
                 ),
               );

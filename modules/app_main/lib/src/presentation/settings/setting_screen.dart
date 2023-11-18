@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
+import 'package:app_main/src/presentation/information_profile/screens/information_profile_screen.dart';
 import 'package:app_main/src/presentation/settings/setting_constants.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
@@ -37,6 +38,7 @@ class _SettingScreenState extends State<SettingScreen> {
     super.initState();
     _authInfo = userCubit.currentUser!;
     userCubit.onboarding();
+    userCubit.fetchUser();
   }
 
   @override
@@ -190,6 +192,9 @@ class _SettingScreenState extends State<SettingScreen> {
           children: Setting.session1Menus(
             context,
             user: userCubit.currentUser,
+            onUpdate: () {
+              userCubit.onboarding();
+            },
             onboarding: state is OnboardingSuccess ? state.onboarding : null,
           ).map((settings) => _buildMenus(settings)).toList(),
         );
@@ -297,6 +302,16 @@ class _SettingScreenState extends State<SettingScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const InformationProfileScreen(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return child;
+      },
     );
   }
 

@@ -528,45 +528,45 @@ class _LeaveRequestPage extends State<LeaveRequestPage> {
                               const SizedBox(height: 10),
                               Row(
                                 children: [
-                                  Expanded(
-                                      child: GestureDetector(
-                                    onTap: () => _bloc.replyLeaveRequest(
-                                      teamId: member.team.id!,
-                                      payload: ReplyJoinRequestPayload(
-                                        userId: member.user!.id!,
-                                        isApproved: false,
-                                      ),
-                                    ),
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 10,
-                                        vertical: 10,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Color(0XFFE8F0FE),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.close,
-                                            size: 20,
-                                            color: context.theme.primaryColor,
-                                          ),
-                                          Text(
-                                            "Từ chối",
-                                            style: context.textTheme.titleSmall!
-                                                .copyWith(
-                                              color: context.theme.primaryColor,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )),
-                                  const SizedBox(width: 10),
+                                  // Expanded(
+                                  //     child: GestureDetector(
+                                  //   onTap: () => _bloc.replyLeaveRequest(
+                                  //     teamId: member.team.id!,
+                                  //     payload: ReplyJoinRequestPayload(
+                                  //       userId: member.user!.id!,
+                                  //       isApproved: false,
+                                  //     ),
+                                  //   ),
+                                  //   child: Container(
+                                  //     padding: const EdgeInsets.symmetric(
+                                  //       horizontal: 10,
+                                  //       vertical: 10,
+                                  //     ),
+                                  //     decoration: BoxDecoration(
+                                  //       color: Color(0XFFE8F0FE),
+                                  //       borderRadius: BorderRadius.circular(10),
+                                  //     ),
+                                  //     child: Row(
+                                  //       mainAxisAlignment:
+                                  //           MainAxisAlignment.center,
+                                  //       children: [
+                                  //         Icon(
+                                  //           Icons.close,
+                                  //           size: 20,
+                                  //           color: context.theme.primaryColor,
+                                  //         ),
+                                  //         Text(
+                                  //           "Từ chối",
+                                  //           style: context.textTheme.titleSmall!
+                                  //               .copyWith(
+                                  //             color: context.theme.primaryColor,
+                                  //           ),
+                                  //         ),
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  // )),
+                                  // const SizedBox(width: 10),
                                   Expanded(
                                       child: GestureDetector(
                                     onTap: () => _bloc.replyLeaveRequest(

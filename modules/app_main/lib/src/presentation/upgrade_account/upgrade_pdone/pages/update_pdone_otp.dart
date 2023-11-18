@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:design_system/design_system.dart';
@@ -10,15 +12,17 @@ import '../../../authentication/authentication_constants.dart';
 import '../bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 
 class UpdatePDoneOtp extends StatefulWidget {
-  UpgradePDoneBloc blocUpdate;
+  final UpgradePDoneBloc blocUpdate;
   UpdateProfilePayload payload;
-  PDoneAPICaller pDoneAPICaller;
+  final PDoneAPICaller pDoneAPICaller;
+  final String phoneNumber;
 
   UpdatePDoneOtp({
     super.key,
     required this.blocUpdate,
     required this.payload,
     required this.pDoneAPICaller,
+    required this.phoneNumber,
   });
 
   @override
@@ -41,7 +45,6 @@ class _UpdatePDoneOtpState extends State<UpdatePDoneOtp> with TimerMixin {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return ScaffoldHideKeyboard(
       body: SafeArea(
         child: Container(
@@ -66,7 +69,8 @@ class _UpdatePDoneOtpState extends State<UpdatePDoneOtp> with TimerMixin {
                       text: S.current.confirmation_code_has_been_sent,
                       children: [
                         TextSpan(
-                          text: " (+84) ${383916526}",
+                          // text: " (+84) ${383916526}",
+                          text: widget.phoneNumber,
                           style: context.text.titleSmall!.copyWith(
                             fontWeight: FontWeight.w800,
                           ),
@@ -149,7 +153,6 @@ class _UpdatePDoneOtpState extends State<UpdatePDoneOtp> with TimerMixin {
     widget.blocUpdate
         .add(UpdatePDoneProfileEvent(widget.payload, widget.pDoneAPICaller));
 
-
     Navigator.of(context).pop();
     showLoading();
     // context.read<UserCubit>().phoneCompletedRegister(
@@ -162,7 +165,7 @@ class _UpdatePDoneOtpState extends State<UpdatePDoneOtp> with TimerMixin {
   }
 
   void _handleResendOTP() {
-    widget.blocUpdate.add(UpdatePDoneSendOTP());
+    widget.blocUpdate.add(UpdatePDoneSendOTPEvent());
     showLoading();
     // context.read<UserCubit>().resendOTP(
     //   AuthenticationPhonePayload(

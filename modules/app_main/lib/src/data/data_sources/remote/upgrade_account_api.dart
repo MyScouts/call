@@ -3,8 +3,10 @@ import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/con
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_request_protector_req.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/upgrade_pdone_payload.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
+import 'package:app_main/src/data/models/responses/pdone/pdone_registering_profile.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
@@ -20,6 +22,8 @@ import '../../models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
 import '../../models/responses/api_response.dart';
 import '../../models/responses/api_verify_response.dart';
 import '../../models/responses/check_protector_response.dart';
+import '../../models/responses/pdone/pdone_information_response.dart';
+import '../../models/responses/pdone/pdone_my_protector_information_response.dart';
 import '../../models/responses/register_pdone_response.dart';
 import '../../models/responses/upgrade_account_response.dart';
 
@@ -57,6 +61,12 @@ class UpgradeAccountApiConstants {
   static const requestProtector = 'api/v1/protector/request';
   static const updateBankAccount = '/api/bank-account';
   static const getDefaultBank = '/api/bank-account/default';
+  static const pDoneProfile = '/api/v1/p-done/profile';
+  static const protectorRequested =
+      '/api/v1/protector/sent-request?page=1&pageSize=10&status=1';
+  static const upgradePdone = "api/v1/p-done/upgrade";
+  static const eKycUpgrade = "api/v1/p-done/e-kyc-upgrade";
+  static const pDoneRegisteringProfile = "api/v1/p-done/registering-profile";
 }
 
 @RestApi()
@@ -98,8 +108,6 @@ abstract class UpgradeAccountApi {
     @Body() required dynamic payload,
   });
 
-
-
   @POST(UpgradeAccountApiConstants.registerPDone)
   Future<ApiResponse<RegisterPDoneResponse>> registerPDoneAccount({
     @Body() required RegisterPDoneAccountPayload payload,
@@ -122,20 +130,12 @@ abstract class UpgradeAccountApi {
   Future<UpgradeAccountResponse> registerJA();
 
   @POST(UpgradeAccountApiConstants.registerJAVerifyOtp)
-  Future<ApiResponse<bool>> registerJAVerifyOtp({
+  Future registerJAVerifyOtp({
     @Body() required VerifyPhoneOtpPayload payload,
   });
 
-  // @POST(UpgradeAccountApiConstants.registerVShopVerifyOtp)
-  // Future<ApiResponse<bool>> registerVShopVerifyOtp({
-  //   @Body() required VerifyPhoneOtpPayload payload,
-  // });
-
   @POST(UpgradeAccountApiConstants.resendOtpJA)
   Future<UpgradeAccountResponse> resendOtpJA();
-
-  // @POST(UpgradeAccountApiConstants.resendOtpVShop)
-  // Future<ApiResponse<UpgradeAccountResponse>> resendOtpVShop();
 
   @GET(UpgradeAccountApiConstants.checkIsPDone)
   Future<ApiResponse<bool>> checkIsPDone({@Path('id') required String id});
@@ -147,7 +147,6 @@ abstract class UpgradeAccountApi {
   Future<ApiResponse<RegisterPDoneResponse>> checkProtector({
     @Body() required CheckProtectorPayload payload,
   });
-
 
   @POST(UpgradeAccountApiConstants.updateBankAccount)
   Future<ApiResponse<BankAccount>> updateBankAccount({
@@ -174,4 +173,18 @@ abstract class UpgradeAccountApi {
   Future<ApiResponse<APIVerifyResponse>> requestProtector({
     @Body() required PDoneRequestProtectorReq payload,
   });
+
+  @GET(UpgradeAccountApiConstants.pDoneProfile)
+  Future<ApiResponse<PDoneInformationResponse>> pDoneProfile();
+  @GET(UpgradeAccountApiConstants.pDoneRegisteringProfile)
+  Future<ApiResponse<PDoneRegisteringProfileResponse>> pDoneRegisteringProfile();
+
+  @GET(UpgradeAccountApiConstants.protectorRequested)
+  Future<ApiResponse<PDoneMyProtectorInformationResponse>> protectorRequested();
+
+  @POST(UpgradeAccountApiConstants.upgradePdone)
+  Future upgradePDone(@Body() UpgradePDonePayload payload);
+
+  @POST(UpgradeAccountApiConstants.eKycUpgrade)
+  Future<APIVerifyResponse> upgradeEkyc(@Body() dynamic payload);
 }

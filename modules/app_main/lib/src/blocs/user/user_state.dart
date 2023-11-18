@@ -102,11 +102,14 @@ final class ResetPasswordFail extends UserState {
 final class GetOTPLoading extends UserState {}
 
 final class ResendUserOTPSuccess extends UserState {
-  ResendUserOTPSuccess();
+  final Otp otp;
+
+  ResendUserOTPSuccess({required this.otp});
 }
 
 final class GetOTPSuccess extends UserState {
-  GetOTPSuccess();
+  final Otp otp;
+  GetOTPSuccess({required this.otp});
 }
 
 final class GetOTPFail extends UserState {
@@ -154,6 +157,32 @@ final class DeleteUserSuccess extends UserState {}
 final class DeleteUserFail extends UserState {
   final String message;
   DeleteUserFail({required this.message});
+}
+
+//Update Pdone Profile
+final class UpdatePDoneProfileLoading extends UserState {}
+
+final class UpdatePDoneProfileSuccess extends UserState {
+  final UpdatePDoneProfileReponse user;
+  UpdatePDoneProfileSuccess({required this.user});
+}
+
+final class UpdatePDoneProfileFailed extends UserState {
+  final String message;
+  UpdatePDoneProfileFailed({required this.message});
+}
+
+//Update None Pdone Profile
+final class UpdateNonePDoneProfileLoading extends UserState {}
+
+final class UpdateNonePDoneProfileSuccess extends UserState {
+  final UpdateNonePDoneProfileReponse user;
+  UpdateNonePDoneProfileSuccess({required this.user});
+}
+
+final class UpdateNonePDoneProfileFailed extends UserState {
+  final String message;
+  UpdateNonePDoneProfileFailed({required this.message});
 }
 
 // Get Onboarding

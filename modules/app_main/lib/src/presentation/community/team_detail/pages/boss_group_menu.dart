@@ -6,6 +6,7 @@ import 'package:ui/ui.dart';
 
 class BossGroupMenu extends StatefulWidget {
   final Team team;
+
   const BossGroupMenu({
     super.key,
     required this.team,
@@ -73,16 +74,19 @@ class _BossGroupMenuState extends State<BossGroupMenu> {
       children: [
         GestureDetector(
           onTap: () {
-            context
-                .startRemoveBossModal(
-              member: widget.team.boss!,
-              team: widget.team,
-            )
-                .then((value) {
-              if (value != null) {
-                Navigator.pop(context, true);
-              }
-            });
+            if (widget.team.boss == null) {
+              Navigator.pop(context);
+              context.askAssignBoss(team: widget.team);
+            } else {
+              context
+                  .startRemoveBossModal(
+                  member: widget.team.boss!, team: widget.team)
+                  .then((value) {
+                if (value != null) {
+                  Navigator.pop(context, true);
+                }
+              });
+            }
           },
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 15),

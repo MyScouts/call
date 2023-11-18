@@ -1,6 +1,9 @@
+import 'package:app_main/app_main.dart';
+import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_group_widget.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_base_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard/widget/clock_widget.dart';
 import 'package:app_main/src/presentation/dashboard/widget/weather_banner_widget.dart';
 import 'package:app_main/src/presentation/dashboard/widget/weather_widget.dart';
@@ -13,6 +16,7 @@ import 'app_icon_animation.dart';
 
 class AppWidget extends StatelessWidget {
   final DashBoardItem app;
+  final bool fromAppStore;
 
   const AppWidget({
     super.key,
@@ -21,12 +25,17 @@ class AppWidget extends StatelessWidget {
     this.disablePress = false,
     this.enableRemoveIcon = false,
     this.onRemoved,
+    this.fromAppStore = false,
+    this.onAdd,
   });
 
   final Color? textColor;
   final bool disablePress;
   final bool enableRemoveIcon;
   final Function()? onRemoved;
+  final Function()? onAdd;
+
+  bool get authenticate => isAuthenticate.value;
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +50,12 @@ class AppWidget extends StatelessWidget {
               ignoring: disablePress,
               child: GestureDetector(
                 onTap: () {
-                  if (app.path != null) {
-                    Navigator.of(context).pushNamed(app.path!);
+                  if (authenticate) {
+                    context.handleStartAppWidget(id: app.id, path: app.path);
                     return;
                   }
+                  context.requiredLogin();
+                  return;
                 },
                 child: Builder(
                   builder: (_) {
@@ -59,7 +70,7 @@ class AppWidget extends StatelessWidget {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        if (enableRemoveIcon)
+                        if (enableRemoveIcon && !fromAppStore)
                           Positioned(
                             left: -10,
                             top: -10,
@@ -74,6 +85,52 @@ class AppWidget extends StatelessWidget {
                                     radius: 15,
                                     child: Icon(
                                       Icons.remove,
+                                      size: 20,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        if (enableRemoveIcon && fromAppStore && onAdd == null)
+                          Positioned(
+                            right: -15,
+                            top: -20,
+                            child: GestureDetector(
+                              onTap: onRemoved,
+                              behavior: HitTestBehavior.opaque,
+                              child: const SizedBox.square(
+                                dimension: 40,
+                                child: Center(
+                                  child: CircleAvatar(
+                                    backgroundColor: Color(0xffFF3B30),
+                                    radius: 10,
+                                    child: Icon(
+                                      Icons.remove,
+                                      size: 20,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        if (enableRemoveIcon && fromAppStore && onAdd != null)
+                          Positioned(
+                            right: -15,
+                            top: -20,
+                            child: GestureDetector(
+                              onTap: onAdd,
+                              behavior: HitTestBehavior.opaque,
+                              child: const SizedBox.square(
+                                dimension: 40,
+                                child: Center(
+                                  child: CircleAvatar(
+                                    backgroundColor: Color(0xff00D379),
+                                    radius: 10,
+                                    child: Icon(
+                                      Icons.add,
                                       size: 20,
                                       color: Colors.white,
                                     ),
@@ -231,6 +288,40 @@ class AppWidgetGroupBuilder extends AppWidget {
       app: app,
       enableRemoveIcon: enableEditMode,
       onRemoved: onRemoved,
+    );
+  }
+}
+
+class AppStoreWidgetBuilder extends AppWidget {
+  const AppStoreWidgetBuilder({
+    super.key,
+    required super.app,
+    required super.onRemoved,
+    this.enableEditMode = false,
+    super.onAdd,
+  });
+
+  final bool enableEditMode;
+
+  @override
+  Widget build(BuildContext context) {
+    if (enableEditMode) {
+      return AppIconAnimation(
+        child: AppWidget(
+          app: app,
+          enableRemoveIcon: enableEditMode,
+          onRemoved: onRemoved,
+          fromAppStore: true,
+          onAdd: onAdd,
+        ),
+      );
+    }
+    return AppWidget(
+      app: app,
+      enableRemoveIcon: enableEditMode,
+      onRemoved: onRemoved,
+      fromAppStore: true,
+      onAdd: onAdd,
     );
   }
 }

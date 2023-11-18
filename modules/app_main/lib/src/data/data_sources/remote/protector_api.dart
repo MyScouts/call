@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/responses/list_protector_response.dart';
+import 'package:app_main/src/domain/entities/protector_request.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/http.dart';
 
@@ -9,6 +10,7 @@ class ProtectorAPIConstant {
   static const String listProtector = 'api/v1/protector/list-protector';
   static const String listProtectorRequest = 'api/v1/protector/request';
   static const String replyRequest = 'api/v1/protector/reply-request';
+  static const String myProtector = 'api/v1/protector/my-protector';
 }
 
 @lazySingleton
@@ -27,4 +29,7 @@ abstract class ProtectorAPI {
   Future<ReplyRequestResponse> replyRequest(
     @Body() Map<String, dynamic> payload,
   );
+
+  @GET(ProtectorAPIConstant.myProtector)
+  Future<MyProtectorResponse> myProtector();
 }

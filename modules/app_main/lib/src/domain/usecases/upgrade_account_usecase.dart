@@ -2,6 +2,7 @@ import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/con
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_request_protector_req.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/upgrade_pdone_payload.dart';
 import 'package:app_main/src/data/models/responses/api_verify_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:camera/camera.dart';
@@ -9,6 +10,9 @@ import 'package:injectable/injectable.dart';
 
 import '../../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
 import '../../data/models/responses/confirm_register_ja_response.dart';
+import '../../data/models/responses/pdone/pdone_information_response.dart';
+import '../../data/models/responses/pdone/pdone_my_protector_information_response.dart';
+import '../../data/models/responses/pdone/pdone_registering_profile.dart';
 import '../../data/models/responses/register_pdone_response.dart';
 import '../../data/models/responses/upgrade_account_response.dart';
 import '../entities/bank.dart';
@@ -74,7 +78,7 @@ class UpgradeAccountUsecase {
     return _upgradeAccountRepository.registerJA();
   }
 
-  Future<bool> verifyOtpPhone(VerifyPhoneOtpPayload payload) {
+  Future<dynamic> verifyOtpPhone(VerifyPhoneOtpPayload payload) {
     return _upgradeAccountRepository.registerJAVerifyOtp(payload: payload);
   }
 
@@ -126,5 +130,25 @@ class UpgradeAccountUsecase {
   Future<APIVerifyResponse> requestProtector(
       {required PDoneRequestProtectorReq req}) {
     return _upgradeAccountRepository.requestProtector(req: req);
+  }
+
+  Future<PDoneInformationResponse> pDoneProfile() {
+    return _upgradeAccountRepository.pDoneProfile();
+  }
+
+  Future<PDoneMyProtectorInformationResponse> protectorRequested() {
+    return _upgradeAccountRepository.protectorRequested();
+  }
+
+  Future upgradePdone(UpgradePDonePayload payload) {
+    return _upgradeAccountRepository.upgradePDone(payload);
+  }
+
+  Future upgradeEkyc(UpdateProfilePayload payload) {
+    return _upgradeAccountRepository.upgradeEkyc(payload);
+  }
+
+  Future<PDoneRegisteringProfileData?> getRegisteringProfile() {
+    return _upgradeAccountRepository.getRegisteringProfile();
   }
 }

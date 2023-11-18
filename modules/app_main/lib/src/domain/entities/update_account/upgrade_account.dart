@@ -19,8 +19,7 @@ class UpgradeAccount with _$UpgradeAccount {
     List<Talent>? talents,
   }) = _UpgradeAccount;
 
-  factory UpgradeAccount.fromJson(Map<String, dynamic> json) =>
-      _$UpgradeAccountFromJson(json);
+  factory UpgradeAccount.fromJson(Map<String, dynamic> json) => _$UpgradeAccountFromJson(json);
 }
 
 @freezed
@@ -50,8 +49,7 @@ class Protector with _$Protector {
     String? name,
   }) = _Protector;
 
-  factory Protector.fromJson(Map<String, dynamic> json) =>
-      _$ProtectorFromJson(json);
+  factory Protector.fromJson(Map<String, dynamic> json) => _$ProtectorFromJson(json);
 }
 
 @freezed
@@ -61,8 +59,7 @@ class BloodGroup with _$BloodGroup {
     String? name,
   }) = _BloodGroup;
 
-  factory BloodGroup.fromJson(Map<String, dynamic> json) =>
-      _$BloodGroupFromJson(json);
+  factory BloodGroup.fromJson(Map<String, dynamic> json) => _$BloodGroupFromJson(json);
 }
 
 @freezed
@@ -72,8 +69,7 @@ class MaritalStatus with _$MaritalStatus {
     String? name,
   }) = _MaritalStatus;
 
-  factory MaritalStatus.fromJson(Map<String, dynamic> json) =>
-      _$MaritalStatusFromJson(json);
+  factory MaritalStatus.fromJson(Map<String, dynamic> json) => _$MaritalStatusFromJson(json);
 }
 
 @freezed
@@ -83,8 +79,7 @@ class AcademicLevel with _$AcademicLevel {
     String? name,
   }) = _AcademicLevel;
 
-  factory AcademicLevel.fromJson(Map<String, dynamic> json) =>
-      _$AcademicLevelFromJson(json);
+  factory AcademicLevel.fromJson(Map<String, dynamic> json) => _$AcademicLevelFromJson(json);
 }
 
 @freezed
@@ -94,8 +89,17 @@ class Interest with _$Interest {
     String? name,
   }) = _Interest;
 
-  factory Interest.fromJson(Map<String, dynamic> json) =>
-      _$InterestFromJson(json);
+  factory Interest.fromJson(Map<String, dynamic> json) => _$InterestFromJson(json);
+}
+
+@freezed
+class AutocompleteOption with _$AutocompleteOption {
+  const factory AutocompleteOption({
+    String? displayText,
+    String? key,
+  }) = _AutocompleteOption;
+
+  factory AutocompleteOption.fromJson(Map<String, dynamic> json) => _$AutocompleteOptionFromJson(json);
 }
 
 @freezed

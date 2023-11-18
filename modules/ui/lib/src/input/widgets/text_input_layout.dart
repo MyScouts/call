@@ -144,10 +144,9 @@ class _TextInputLayoutState extends State<TextInputLayout> {
 
   @override
   Widget build(BuildContext context) {
-    final paddingError =
-        (widget.prefixIcon != null && widget.paddingError == null)
-            ? const EdgeInsets.only(left: 65)
-            : widget.paddingError;
+    final paddingError = (widget.prefixIcon != null && widget.paddingError == null)
+        ? const EdgeInsets.only(left: 65)
+        : widget.paddingError;
     return Padding(
       padding: const EdgeInsets.only(bottom: 2.0),
       child: FormField<String>(
@@ -174,8 +173,7 @@ class _TextInputLayoutState extends State<TextInputLayout> {
                 enableSuggestions: widget.enableSuggestions,
                 textInputAction: widget.textInputAction,
                 keyboardType: widget.keyboardType,
-                scrollPadding:
-                    widget.scrollPadding ?? const EdgeInsets.all(20.0),
+                scrollPadding: widget.scrollPadding ?? const EdgeInsets.all(20.0),
                 obscureText: isShowPassword == false,
                 maxLength: widget.maxLength,
                 minLines: widget.minLines,
@@ -187,9 +185,7 @@ class _TextInputLayoutState extends State<TextInputLayout> {
                   widget.onChanged?.call(value);
                 },
                 focusNode: _focus,
-                style: state.hasError
-                    ? TextStyle(color: Theme.of(context).colorScheme.error)
-                    : null,
+                style: state.hasError ? TextStyle(color: Theme.of(context).colorScheme.error) : null,
                 enabled: widget.enabled,
                 decoration: InputDecoration(
                   errorText: widget.errorText ?? (state.hasError ? '' : null),
@@ -197,9 +193,7 @@ class _TextInputLayoutState extends State<TextInputLayout> {
                   labelText: widget.labelText,
                   hintText: widget.hintText,
                   hintStyle: widget.hintStyle,
-                  fillColor: widget.enabled == false
-                      ? widget.disableColor
-                      : widget.fillColor,
+                  fillColor: widget.enabled == false ? widget.disableColor : widget.fillColor,
                   filled: true,
                   errorMaxLines: 2,
                   contentPadding: widget.contentPadding,
@@ -208,14 +202,8 @@ class _TextInputLayoutState extends State<TextInputLayout> {
                   enabledBorder: widget.enabledBorder,
                   prefixIcon: widget.prefixIcon,
                   suffixText: widget.suffixText,
-                  suffixStyle: Theme.of(context)
-                      .textTheme
-                      .bodySmall!
-                      .copyWith(color: Colors.black),
-                  suffixIcon:
-                      widget.obscureText == false && widget.suffixIcon != null
-                          ? widget.suffixIcon
-                          : null,
+                  suffixStyle: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.black),
+                  suffixIcon: widget.obscureText == false && widget.suffixIcon != null ? widget.suffixIcon : null,
                 ),
                 onFieldSubmitted: widget.onFieldSubmitted,
                 obscuringCharacter: widget.obscuringCharacter ?? '*',
@@ -257,12 +245,9 @@ class _TextInputLayoutState extends State<TextInputLayout> {
                             width: 18,
                             height: 15,
                             child: Center(
-                              child: widget.builderIconPassword
-                                      ?.call(isShowPassword) ??
+                              child: widget.builderIconPassword?.call(isShowPassword) ??
                                   ImageWidget(
-                                    !isShowPassword
-                                        ? IconAppConstants.visibilityOff
-                                        : IconAppConstants.visibility,
+                                    !isShowPassword ? IconAppConstants.visibilityOff : IconAppConstants.visibility,
                                     color: AppColors.grey73,
                                   ),
                             ),

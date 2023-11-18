@@ -1,5 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
+import 'package:app_main/src/data/models/responses/update_none_pdone_profile_response.dart';
+import 'package:app_main/src/data/models/responses/update_pdone_profile_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 
@@ -29,6 +31,9 @@ abstract class UserRepository {
   Future<SearchUserResponse> searchUser(SearchUserPayload query);
 
   Future<OnboardingResponse> onboarding();
+  Future<UpdateNonePDoneProfileReponse> updatePDoneProfile(UpdateNonePDoneProfilePayload updatePDoneProfilePayload);
+  Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload);
+  Future<UpdateNonePDoneProfileReponse> getPDoneProfile();
 
   Future<List<User>> listFriends();
 

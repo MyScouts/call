@@ -1,3 +1,4 @@
+import 'package:app_main/app_main.dart';
 import 'package:app_main/src/core/services/notifications/notification_service.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
@@ -42,7 +43,7 @@ class AuthenticationUsecase {
       response.accessToken,
       response.refreshToken,
     );
-    await _syncUser();
+    await syncUser();
     return response;
   }
 
@@ -62,12 +63,17 @@ class AuthenticationUsecase {
       response.accessToken,
       response.refreshToken,
     );
-    await _syncUser();
+    await syncUser();
     return true;
   }
 
-  Future getOtp() async {
-    await _authRepository.getOtp();
+  Future<Otp> getOtp() async {
+    final response = await _authRepository.getOtp();
+    return response;
+  }
+
+  Future getOtpV1() {
+    return _authRepository.getOtp();
   }
 
   Future forgotPassword(ForgotPasswordPayload payload) async {
@@ -87,7 +93,7 @@ class AuthenticationUsecase {
       response.accessToken,
       response.refreshToken,
     );
-    await _syncUser();
+    await syncUser();
     return true;
   }
 
@@ -95,13 +101,18 @@ class AuthenticationUsecase {
     return _authRepository.getOtp();
   }
 
+  Future otpV1() async {
+    return _authRepository.getOtpV1();
+  }
+
   Future logout() async {
     await _userSharePreferencesUsecase.clearUserData();
   }
 
-  Future _syncUser() async {
+  Future syncUser() async {
     final user = await _userRepository.getProfile();
     _userSharePreferencesUsecase.saveUserInfo(user!);
+    isAuthenticate.add(true);
     await _syncFCMToken();
   }
 

@@ -33,6 +33,7 @@ extension DateTimeExt on DateTime {
 
     return actualDate;
   }
+
   String get toYYYYmmdd {
     final formatterDate = DateFormat('yyyy-MM-dd');
     final actualDate = formatterDate.format(this);
@@ -148,6 +149,7 @@ extension DateTimeExt on DateTime {
 
     return isAfter(fifthteenYearsAgo);
   }
+
   String text() {
     return '''${year.toString()}-${month.toString().padLeft(2, '0')}-${day.toString().padLeft(2, '0')}''';
   }
@@ -155,10 +157,20 @@ extension DateTimeExt on DateTime {
   String formatDate() {
     return '''${day.toString().padLeft(2, '0')}/${month.toString().padLeft(2, '0')}/${year.toString()}''';
   }
+
+  int get getOld {
+    final DateTime currentDate = DateTime.now();
+    int age = currentDate.year - year;
+    if (currentDate.month < month ||
+        (currentDate.month == month && currentDate.day < day)) {
+      age--;
+    }
+    return age;
+  }
 }
 
 extension DateOnlyCompare on DateTime {
-  int dayLeft () {
+  int dayLeft() {
     return difference(DateTime.now()).inDays;
   }
 

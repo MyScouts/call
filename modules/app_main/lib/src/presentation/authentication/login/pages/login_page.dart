@@ -9,6 +9,7 @@ import 'package:app_main/src/presentation/general_setting/general_coordinator.da
 import 'package:design_system/design_system.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:localization/localization.dart';
 import 'package:ui/ui.dart';
 
@@ -19,19 +20,22 @@ class LoginWidget extends StatefulWidget {
   State<LoginWidget> createState() => _LoginWidgetState();
 }
 
-class _LoginWidgetState extends State<LoginWidget> with ValidationMixin {
-  bool _buttonDisabled = true;
+class _LoginWidgetState extends State<LoginWidget> {
   String _phoneCode = "+84";
   final _phoneCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
+  final _phoneValidCtrl = ValueNotifier(false);
+  final _passwordValidCtrl = ValueNotifier(false);
+  final _formCtrl = ValueNotifier(false);
 
   @override
   void initState() {
     super.initState();
-
-    validationListener.addListener(() {
-      _buttonDisabled = !isValidForm;
-      setState(() {});
+    _passwordValidCtrl.addListener(() {
+      _formCtrl.value = _passwordValidCtrl.value && _phoneValidCtrl.value;
+    });
+    _phoneValidCtrl.addListener(() {
+      _formCtrl.value = _passwordValidCtrl.value && _phoneValidCtrl.value;
     });
   }
 
@@ -61,7 +65,7 @@ class _LoginWidgetState extends State<LoginWidget> with ValidationMixin {
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: Form(
-            key: formKey,
+            autovalidateMode: AutovalidateMode.disabled,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
@@ -79,7 +83,9 @@ class _LoginWidgetState extends State<LoginWidget> with ValidationMixin {
                   const SizedBox(height: 4),
                   AppPhoneInput(
                     controller: _phoneCtrl,
-                    onChange: (value) => onValidation(),
+                    onError: (error) {
+                      _phoneValidCtrl.value = error == null;
+                    },
                     onPhoneCodeChange: (value) {
                       if (value.dialCode != null) {
                         _phoneCode = value.dialCode!;
@@ -101,8 +107,10 @@ class _LoginWidgetState extends State<LoginWidget> with ValidationMixin {
                   CustomTextField(
                     controller: _passwordCtrl,
                     validator: ValidationHelper.password,
+                    onError: (error) {
+                      _passwordValidCtrl.value = error == null;
+                    },
                     hintText: "**************",
-                    onChange: (value) => onValidation(),
                     hintStyle: const TextStyle(
                       color: Color(0xFF8C8C8C),
                       fontSize: 14,
@@ -142,12 +150,17 @@ class _LoginWidgetState extends State<LoginWidget> with ValidationMixin {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  PrimaryButton(
-                    title: S.current.login,
-                    onTap: _onLogin,
-                    color: Colors.white,
-                    disabled: _buttonDisabled,
-                    width: MediaQuery.of(context).size.width,
+                  ValueListenableBuilder(
+                    valueListenable: _formCtrl,
+                    builder: (context, isValid, child) {
+                      return PrimaryButton(
+                        title: S.current.login,
+                        onTap: _onLogin,
+                        color: Colors.white,
+                        disabled: !isValid,
+                        width: MediaQuery.of(context).size.width,
+                      );
+                    },
                   ),
                   const SizedBox(height: 20),
                   Center(
@@ -161,7 +174,11 @@ class _LoginWidgetState extends State<LoginWidget> with ValidationMixin {
                         ),
                       ),
                     ),
-                  )
+                  ),
+                  KeyboardVisibilityBuilder(
+                      builder: (context, isKeyboardVisible) {
+                    return SizedBox(height: isKeyboardVisible ? 400 : 0);
+                  }),
                 ],
               ),
             ),
@@ -172,16 +189,14 @@ class _LoginWidgetState extends State<LoginWidget> with ValidationMixin {
   }
 
   _onLogin() {
-    if (formKey.currentState!.validate()) {
-      showLoading();
-      context.read<UserCubit>().phoneLogin(
-            AuthenticationPhonePayload(
-              phoneNumber: _phoneCtrl.text.trim(),
-              password: _passwordCtrl.text,
-              phoneCode: _phoneCode.replaceAll("+", ""),
-            ),
-          );
-      return;
-    }
+    showLoading();
+    context.read<UserCubit>().phoneLogin(
+          AuthenticationPhonePayload(
+            phoneNumber: _phoneCtrl.text.trim(),
+            password: _passwordCtrl.text,
+            phoneCode: _phoneCode.replaceAll("+", ""),
+          ),
+        );
+    return;
   }
 }

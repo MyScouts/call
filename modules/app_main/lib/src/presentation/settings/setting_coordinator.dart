@@ -1,13 +1,12 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/app_main.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:app_main/src/presentation/settings/setting_screen.dart';
 import 'package:app_main/src/presentation/settings/widget/confirm_delete_modal.dart';
-import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
-import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
 
 extension SettingCoordinator on BuildContext {
@@ -29,6 +28,7 @@ extension SettingCoordinator on BuildContext {
 
             if (state is LogoutSuccess) {
               hideLoading();
+              isAuthenticate.add(false);
               showToastMessage("Đăng xuất thành công");
               context.startLoginUtil();
             }
@@ -51,7 +51,6 @@ extension SettingCoordinator on BuildContext {
   Future<T?> confirmDeleteAccount<T>({required int userId}) {
     return showModalBottomSheet(
       context: this,
-      useRootNavigator: true,
       backgroundColor: Colors.transparent,
       isDismissible: false,
       isScrollControlled: true,

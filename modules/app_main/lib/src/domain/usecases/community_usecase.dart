@@ -166,4 +166,9 @@ class CommunityUsecase {
   Future kickMember(int userId, String teamId) {
     return _communityRepository.kickMember(userId, teamId);
   }
+
+  Future<List<Team>> myTeams() async {
+    final response = await _communityRepository.myTeams();
+    return response.teams ?? [];
+  }
 }

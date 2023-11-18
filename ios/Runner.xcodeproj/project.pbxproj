@@ -404,12 +404,12 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 34;
 				DEVELOPMENT_TEAM = 9N584357TB;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FLUTTER_BUILD_NAME = 1.2.0;
-				FLUTTER_BUILD_NUMBER = 22;
+				FLUTTER_BUILD_NUMBER = 34;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -628,6 +628,7 @@
 					"\"LinkPresentation\"",
 					"-weak_framework",
 					"\"UserNotifications\"",
+					"-ld64",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.vdone.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -754,12 +755,12 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 34;
 				DEVELOPMENT_TEAM = 9N584357TB;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FLUTTER_BUILD_NAME = 1.2.0;
-				FLUTTER_BUILD_NUMBER = 22;
+				FLUTTER_BUILD_NUMBER = 34;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -978,6 +979,7 @@
 					"\"LinkPresentation\"",
 					"-weak_framework",
 					"\"UserNotifications\"",
+					"-ld64",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.vdone.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -998,12 +1000,12 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 34;
 				DEVELOPMENT_TEAM = 9N584357TB;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FLUTTER_BUILD_NAME = 1.2.0;
-				FLUTTER_BUILD_NUMBER = 22;
+				FLUTTER_BUILD_NUMBER = 34;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

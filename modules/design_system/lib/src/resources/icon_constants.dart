@@ -88,6 +88,14 @@ class IconAppConstants {
   static String icCameraRound = IconApp.icCameraRound.path;
   static String icCare = IconApp.icCare.path;
   static String icTeamProfile = IconApp.icTeamProfile.path;
+  static String icRejectProtector = IconApp.icRejectProtector.path;
+  static String icSetting = IconApp.icSetting.path;
+  static String icVideoOc = IconApp.icVideoOc.path;
+  static String icVideo = IconApp.icVideo.path;
+  static String icEdit2 = IconApp.icEdit2.path;
+  static String appSetting = IconApp.appSetting.path;
+  static String icLiveArea = IconApp.icLiveArea.path;
+  static String icSettingApp = IconApp.icSettingApp.path;
 }
 
 enum IconApp {
@@ -181,6 +189,14 @@ enum IconApp {
   icCameraRound('assets/icons/ic_camera_round.png'),
   icCare('assets/icons/ic_care.svg'),
   icTeamProfile('assets/icons/ic_team.svg'),
+  icRejectProtector('assets/icons/ic_reject_protector.png'),
+  icSetting('assets/icons/ic_setting.svg'),
+  icEdit2('assets/icons/ic_edit_2.svg'),
+  icVideoOc('assets/icons/ic_video_oc.svg'),
+  icVideo('assets/icons/ic_video.svg'),
+  icLiveArea('assets/icons/ic_live_area.svg'),
+  icSettingApp('assets/icons/ic_setting_app.svg'),
+  appSetting('assets/icons/app_setting.png'),
   icLeaveTeam('assets/icons/ic_leave_team.svg');
 
   const IconApp(this.path);

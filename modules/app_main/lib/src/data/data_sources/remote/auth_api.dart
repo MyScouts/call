@@ -20,7 +20,7 @@ class AuthApiConstant {
   static const String resetPasswordToken =
       "api/v1/auth/sms/reset-password-token";
   static const String resetPassword = "api/v1/auth/sms/reset-password";
-  static const String otp = "api/v1/auth/otp";
+  static const String otpV1 = "api/v1/auth/otp";
 
   static const getOtp = '/api/sms/send-otp';
   static const authClaimV1 = '/api/v1/auth/code/claim';
@@ -61,8 +61,11 @@ abstract class AuthApi {
     @Body() ResetPasswordPayload payload,
   );
 
-  @POST(AuthApiConstant.otp)
-  Future getOtp();
+  @GET(AuthApiConstant.getOtp)
+  Future<ApiResponse<OtpResponse>> getOtp();
+
+  @POST(AuthApiConstant.otpV1)
+  Future getOtpV1();
 
   @POST(AuthApiConstant.authClaimV1)
   Future authClaimV1(@Body() AuthClaimPayload payload);

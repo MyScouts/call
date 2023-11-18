@@ -56,10 +56,9 @@ class _DockWidgetState extends State<DockWidget> {
                   child: AppWidget(app: item),
                 );
               }
-              return SizedBox(
-                width: 80,
-                height: 80,
-                child: AppWidget(app: item),
+              return const Opacity(
+                opacity: 0.0,
+                child: SizedBox.square(dimension: 80),
               );
             }).toList(),
           ),

@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_coordinator.dart';
+import 'package:app_main/src/presentation/qr_code/qr_code_constants.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,11 @@ import '../widgets/read_more_policy.dart';
 
 class RegisterMarshopScreen extends StatefulWidget {
   static const String routeName = "register-marshop";
-  const RegisterMarshopScreen({super.key});
+  final String? marshopId;
+  const RegisterMarshopScreen({
+    super.key,
+    this.marshopId,
+  });
 
   @override
   State<RegisterMarshopScreen> createState() => _RegisterMarshopScreenState();
@@ -37,6 +42,11 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
   void initState() {
     super.initState();
     _authInfo = userCubit.currentUser!;
+
+    if (widget.marshopId != null) {
+      _marshopIdCtrl.text = widget.marshopId!;
+    }
+
     _acceptTerm.addListener(() {
       onValidation();
     });
@@ -115,6 +125,8 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
                   label: "Mã marshop",
                   controller: _marshopIdCtrl,
                   onChange: (value) => onValidation(),
+                  validator: (value) =>
+                      ValidationHelper.requiredValid(value, "Mã Marshop"),
                   hintText: "",
                   textInputType: TextInputType.number,
                   prefixIcon: GestureDetector(
@@ -151,7 +163,12 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
   }
 
   void _startQrCodeScan() async {
-    context.startScanQrCode(showMyQr: false).then((results) {
+    context
+        .startScanQrCode(
+      showMyQr: false,
+      type: QrCodeScanType.registerMarshop,
+    )
+        .then((results) {
       if (results != null && results is String) {
         if (!results.isNumber()) {
           showToastMessage("Mã Marshop không hợp lệ!", ToastMessageType.error);

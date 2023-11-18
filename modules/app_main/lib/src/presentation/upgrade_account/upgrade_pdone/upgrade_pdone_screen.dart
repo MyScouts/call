@@ -61,7 +61,6 @@ class _UpgradePDoneScreenState extends State<UpgradePDoneScreen>
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         title: const Text('Đăng ký thành viên P-Done '),
@@ -96,9 +95,11 @@ class _UpgradePDoneScreenState extends State<UpgradePDoneScreen>
                 // RegisterPdoneBirthCerCapture(),
                 verifyPdoneMethod == PDoneOptionMethod.userIdentityCard
                     ? UpdatePdoneIdentityCardConfirm(
-                        onNextPage: () => nextPage(2))
+                        onNextPage: () => nextPage(2),
+                      )
                     : RegisterPdoneBirthCerCapture(
-                        onNextPage: () => nextPage(2)),
+                        onNextPage: () => nextPage(2),
+                      ),
                 UpdatePdoneFaceLiveNessConfirm(onNextPage: () => nextPage(3)),
                 const UpdatePDoneInformationPage(),
               ],

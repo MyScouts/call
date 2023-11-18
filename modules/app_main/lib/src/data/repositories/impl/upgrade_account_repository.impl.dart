@@ -2,9 +2,13 @@ import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/con
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_request_protector_req.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/upgrade_pdone_payload.dart';
 import 'package:app_main/src/data/models/responses/api_verify_response.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
+import 'package:app_main/src/data/models/responses/pdone/pdone_information_response.dart';
+import 'package:app_main/src/data/models/responses/pdone/pdone_my_protector_information_response.dart';
+import 'package:app_main/src/data/models/responses/pdone/pdone_registering_profile.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
 import 'package:camera/camera.dart';
 import 'package:injectable/injectable.dart';
@@ -47,8 +51,7 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   }
 
   @override
-  Future<bool> updatePDoneProfileBirthCer(UpdateProfilePayload payload) async{
-    // TODO: implement updatePDoneProfileBirthCer
+  Future<bool> updatePDoneProfileBirthCer(UpdateProfilePayload payload) async {
     final res = await _upgradeAccountApi.updatePDoneProfileBirthCer(
         payload: payload.toJson());
 
@@ -114,11 +117,8 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   }
 
   @override
-  Future<bool> registerJAVerifyOtp(
-      {required VerifyPhoneOtpPayload payload}) async {
-    final response =
-        await _upgradeAccountApi.registerJAVerifyOtp(payload: payload);
-    return response.success;
+  Future registerJAVerifyOtp({required VerifyPhoneOtpPayload payload}) async {
+    await _upgradeAccountApi.registerJAVerifyOtp(payload: payload);
   }
 
   @override
@@ -145,6 +145,7 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
     final response = await _upgradeAccountApi.checkProtector(payload: payload);
     return response.data;
   }
+
   @override
   Future<BankAccount> updateBankAccount(
       UpdateBankAccountPayload payload) async {
@@ -180,7 +181,6 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   @override
   Future<int> verifyProtector(
       {required PDoneVerifyProtectorRequest payload}) async {
-    // TODO: implement verifyProtector
     final response = await _upgradeAccountApi.verifyProtector(payload: payload);
     return response.data.userId;
   }
@@ -196,17 +196,43 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
 
   @override
   Future<String> uploadBirthCer(XFile xFile, String prefix) async {
-    // TODO: implement uploadBirthCer
     final res = await _resourceApi.storageUploadUrl(xFile, prefix);
     return res;
   }
 
   @override
-  Future<APIVerifyResponse> requestProtector({required PDoneRequestProtectorReq req}) async{
-    // TODO: implement requestProtector
+  Future<APIVerifyResponse> requestProtector(
+      {required PDoneRequestProtectorReq req}) async {
     final res = await _upgradeAccountApi.requestProtector(payload: req);
     return res.data;
   }
 
+  @override
+  Future<PDoneInformationResponse> pDoneProfile() async {
+    final res = await _upgradeAccountApi.pDoneProfile();
+    return res.data;
+  }
 
+  @override
+  Future<PDoneMyProtectorInformationResponse> protectorRequested() async {
+    final res = await _upgradeAccountApi.protectorRequested();
+    return res.data;
+  }
+
+  @override
+  Future upgradePDone(UpgradePDonePayload payload) =>
+      _upgradeAccountApi.upgradePDone(payload);
+
+  @override
+  Future<bool> upgradeEkyc(UpdateProfilePayload payload) async {
+    final response = await _upgradeAccountApi.upgradeEkyc(payload.toJson());
+    return response.result;
+  }
+
+  @override
+  Future<PDoneRegisteringProfileData?> getRegisteringProfile() async{
+    // TODO: implement getRegisteringProfile
+    final response = await _upgradeAccountApi.pDoneRegisteringProfile();
+    return response.data.registeringProfile;
+  }
 }

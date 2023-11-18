@@ -5,6 +5,7 @@ import 'package:app_main/src/presentation/authentication/login/verify_otp_screen
 import 'package:app_main/src/presentation/authentication/widget/congratulation_dialog.dart';
 import 'package:app_main/src/presentation/authentication/widget/upgrade_app_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/ui.dart';
 
 import 'forgot_password/forgot_password_screen.dart';
 
@@ -86,11 +87,25 @@ extension AuthenticationCoordinator on BuildContext {
 
   Future<T?> showForceUpgradeAppDialog<T>() {
     return showGeneralDialog<T>(
+        context: this,
+        barrierDismissible: false,
+        barrierLabel: '',
+        pageBuilder: (context, animation1, animation2) {
+          return const UpgradeAppDialog();
+        });
+  }
+
+  Future<T?> requiredLogin<T>() {
+    return showGeneralDialog<T>(
       context: this,
-      barrierDismissible: false,
+      barrierDismissible: true,
       barrierLabel: '',
       pageBuilder: (context, animation1, animation2) {
-        return const UpgradeAppDialog();
+        return ActionDialog(
+          title: "Bạn có muốn đăng nhập để dùng ứng dụng?",
+          actionTitle: "Đăng nhập",
+          onAction: () => context.startLoginUtil(),
+        );
       },
     );
   }

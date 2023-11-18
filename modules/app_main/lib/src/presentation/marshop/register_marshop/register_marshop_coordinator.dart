@@ -62,7 +62,7 @@ extension RegisterMarshopCoordinator on BuildContext {
       barrierLabel: '',
       pageBuilder: (context, animation1, animation2) {
         return CongratulationDialog(
-          title: "Chúc mừng bạn đã đăng ký V-Shop thành công!",
+          title: "Chúc mừng bạn đã đăng ký Marshop thành công!",
           summary:
               "Chúc bạn có những trải nghiệm tuyệt vời trên sản phẩm của chúng tôi",
           onPressed: () => context.startDashboardUtil(),

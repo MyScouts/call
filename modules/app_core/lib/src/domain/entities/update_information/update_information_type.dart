@@ -6,13 +6,14 @@ enum UpdateInformationType {
   firstName,
   middleName, // tên đệm
   lastName,
+  fullName,
   nickName,
   gender,
   birthDay,
   expiryDate,
   supplyDate,
   protector, // người bảo hộ
-  pDoneID,
+  pDoneID, // id Pdone.
   country, // quốc gia
   province, // tỉnh thành
   district,
@@ -57,12 +58,14 @@ extension UpdateInformationTypeExt on UpdateInformationType {
         return 'Tên đệm';
       case UpdateInformationType.lastName:
         return 'Tên';
+      case UpdateInformationType.fullName:
+        return 'Họ và tên';
       case UpdateInformationType.nickName:
         return 'Nickname';
       case UpdateInformationType.gender:
         return 'Giới tính';
       case UpdateInformationType.birthDay:
-        return 'Ngày tháng năm sinh';
+        return 'Ngày sinh';
       case UpdateInformationType.protector:
         return 'Người bảo hộ';
       case UpdateInformationType.pDoneID:
@@ -134,12 +137,11 @@ extension UpdateInformationTypeExt on UpdateInformationType {
       case UpdateInformationType.maritalStatus:
         return 'Tình trạng hôn nhân';
       case UpdateInformationType.expiryDate:
-       return 'Ngày hết hạn thẻ';
+        return 'Ngày hết hạn thẻ';
       case UpdateInformationType.supplyDate:
         return 'Ngày cấp thẻ';
-        case UpdateInformationType.ageRange:
+      case UpdateInformationType.ageRange:
        return 'Chọn độ tuổi của bạn';
-
       case UpdateInformationType.pDoneMethod:
         return 'Chọn phương thức';
     }
@@ -157,12 +159,14 @@ extension UpdateInformationTypeExt on UpdateInformationType {
         return 'Nhập tên đệm';
       case UpdateInformationType.lastName:
         return 'Nhập tên';
+      case UpdateInformationType.fullName:
+        return 'Nhập họ và tên';
       case UpdateInformationType.nickName:
         return 'Nhập nickname';
       case UpdateInformationType.gender:
         return 'Chọn giới tính';
       case UpdateInformationType.birthDay:
-        return 'Chọn ngày sinh';
+        return 'DD/MM/YY';
       case UpdateInformationType.protector:
         return 'Chọn người bảo hộ';
       case UpdateInformationType.pDoneID:

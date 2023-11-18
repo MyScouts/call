@@ -2,9 +2,13 @@ import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/con
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_request_protector_req.dart';
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
+import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/upgrade_pdone_payload.dart';
 import 'package:app_main/src/data/models/responses/api_verify_response.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
+import 'package:app_main/src/data/models/responses/pdone/pdone_information_response.dart';
+import 'package:app_main/src/data/models/responses/pdone/pdone_my_protector_information_response.dart';
+import 'package:app_main/src/data/models/responses/pdone/pdone_registering_profile.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
 import 'package:camera/camera.dart';
 
@@ -26,7 +30,9 @@ abstract class UpgradeAccountRepository {
   Future<UpgradeAccount> getListData();
 
   Future<bool> updatePDoneProfileOver18(UpdateProfilePayload payload);
+
   Future<bool> updatePDoneProfileRange15To18(UpdateProfilePayload payload);
+
   Future<bool> updatePDoneProfileBirthCer(UpdateProfilePayload payload);
 
   Future<bool> updateKyc(UpdatePDoneKYCPayload payload);
@@ -44,7 +50,7 @@ abstract class UpgradeAccountRepository {
 
   Future<UpgradeAccountResponse> registerJA();
 
-  Future<bool> registerJAVerifyOtp({required VerifyPhoneOtpPayload payload});
+  Future<dynamic> registerJAVerifyOtp({required VerifyPhoneOtpPayload payload});
 
   Future<UpgradeAccountResponse> resendOtpJA();
 
@@ -53,7 +59,6 @@ abstract class UpgradeAccountRepository {
   Future<List<Bank>> listBanks();
 
   Future<RegisterPDoneResponse> checkProtector(CheckProtectorPayload payload);
-
 
   Future<BankAccount> updateBankAccount(UpdateBankAccountPayload payload);
 
@@ -68,5 +73,16 @@ abstract class UpgradeAccountRepository {
 
   Future<String> uploadBirthCer(XFile xFile, String prefix);
 
-  Future<APIVerifyResponse> requestProtector({required PDoneRequestProtectorReq req});
+  Future<APIVerifyResponse> requestProtector(
+      {required PDoneRequestProtectorReq req});
+
+  Future<PDoneInformationResponse> pDoneProfile();
+
+  Future<PDoneMyProtectorInformationResponse> protectorRequested();
+
+  Future upgradePDone(UpgradePDonePayload payload);
+
+  Future<bool> upgradeEkyc(UpdateProfilePayload payload);
+
+  Future<PDoneRegisteringProfileData?> getRegisteringProfile();
 }

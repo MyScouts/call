@@ -90,6 +90,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
             if (state is UnFollowFail) {
               hideLoading();
               _friendStatus.value = false;
+              
               showToastMessage(
                 "Bỏ theo dõi người dùng thất bại.",
                 ToastMessageType.error,
@@ -209,7 +210,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
                   ],
                 );
               }
-              return SizedBox();
+              return const SizedBox();
             },
           ),
         ),

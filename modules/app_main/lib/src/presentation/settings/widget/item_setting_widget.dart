@@ -12,6 +12,7 @@ class ItemSettingWidget extends StatelessWidget {
   final BorderRadiusGeometry? border;
   final bool hasBorder;
   final Function()? onPressed;
+  final Function(bool)? onUpdate;
 
   const ItemSettingWidget({
     super.key,
@@ -23,6 +24,7 @@ class ItemSettingWidget extends StatelessWidget {
     this.onPressed,
     this.border,
     this.hasBorder = false,
+    this.onUpdate,
   });
 
   @override

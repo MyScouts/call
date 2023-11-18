@@ -385,34 +385,30 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
   }
 
   @override
-  Future<ApiResponse<bool>> registerJAVerifyOtp(
+  Future<dynamic> registerJAVerifyOtp(
       {required VerifyPhoneOtpPayload payload}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(payload.toJson());
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<bool>>(Options(
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              '/api/v1/ja/verify-otp',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = ApiResponse<bool>.fromJson(
-      _result.data!,
-      (json) => json as bool,
-    );
+        .compose(
+          _dio.options,
+          '/api/v1/ja/verify-otp',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = _result.data;
     return value;
   }
 
@@ -717,6 +713,155 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
       _result.data!,
       (json) => APIVerifyResponse.fromJson(json as Map<String, dynamic>),
     );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<PDoneInformationResponse>> pDoneProfile() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<PDoneInformationResponse>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/v1/p-done/profile',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<PDoneInformationResponse>.fromJson(
+      _result.data!,
+      (json) => PDoneInformationResponse.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<PDoneRegisteringProfileResponse>>
+      pDoneRegisteringProfile() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<PDoneRegisteringProfileResponse>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/v1/p-done/registering-profile',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<PDoneRegisteringProfileResponse>.fromJson(
+      _result.data!,
+      (json) => PDoneRegisteringProfileResponse.fromJson(
+          json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<PDoneMyProtectorInformationResponse>>
+      protectorRequested() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<PDoneMyProtectorInformationResponse>>(
+            Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+                .compose(
+                  _dio.options,
+                  '/api/v1/protector/sent-request?page=1&pageSize=10&status=1',
+                  queryParameters: queryParameters,
+                  data: _data,
+                )
+                .copyWith(
+                    baseUrl: _combineBaseUrls(
+                  _dio.options.baseUrl,
+                  baseUrl,
+                ))));
+    final value = ApiResponse<PDoneMyProtectorInformationResponse>.fromJson(
+      _result.data!,
+      (json) => PDoneMyProtectorInformationResponse.fromJson(
+          json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<dynamic> upgradePDone(UpgradePDonePayload payload) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(payload.toJson());
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'api/v1/p-done/upgrade',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<APIVerifyResponse> upgradeEkyc(dynamic payload) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = payload;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<APIVerifyResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/v1/p-done/e-kyc-upgrade',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = APIVerifyResponse.fromJson(_result.data!);
     return value;
   }
 
