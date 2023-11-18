@@ -307,14 +307,15 @@ class _UserApi implements UserApi {
   }
 
   @override
-  Future<UpdatePDoneProfileReponse> updatePDoneProfile(
-      UpdatePDoneProfilePayload updatePDoneProfilePayload) async {
+  Future<UpdateNonePDoneProfileReponse> updatePDoneProfile(
+      UpdateNonePDoneProfilePayload updatePDoneProfilePayload) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    final _data = <String, dynamic>{};
+    _data.addAll(updatePDoneProfilePayload.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<UpdatePDoneProfileReponse>(Options(
+        _setStreamType<UpdateNonePDoneProfileReponse>(Options(
       method: 'PATCH',
       headers: _headers,
       extra: _extra,
@@ -330,7 +331,7 @@ class _UserApi implements UserApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = UpdatePDoneProfileReponse.fromJson(_result.data!);
+    final value = UpdateNonePDoneProfileReponse.fromJson(_result.data!);
     return value;
   }
 
@@ -367,7 +368,8 @@ class _UserApi implements UserApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    final _data = <String, dynamic>{};
+    _data.addAll(updateNonePDoneProfilePayload.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<UpdateNonePDoneProfileReponse>(Options(
       method: 'PATCH',

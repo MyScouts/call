@@ -36,3 +36,15 @@ class ReplyRequestResponse {
     return ReplyRequestResponse(json['result']);
   }
 }
+
+class MyProtectorResponse {
+  final ProtectorInfo info;
+
+  MyProtectorResponse(this.info);
+
+  factory MyProtectorResponse.fromJson(Map<String, dynamic> json) {
+    return MyProtectorResponse(
+      ProtectorInfo.fromJson(json['protectors'][0]['protector']),
+    );
+  }
+}

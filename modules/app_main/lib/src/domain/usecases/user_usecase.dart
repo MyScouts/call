@@ -74,9 +74,8 @@ class UserUsecase {
     return _userRepository.onboarding();
   }
 
-  Future<UpdatePDoneProfileReponse> updatePDoneProfile(
-      UpdatePDoneProfilePayload updatePDoneProfilePayload) {
-    return _userRepository.updatePDoneProfile(updatePDoneProfilePayload);
+  Future<UpdateNonePDoneProfileReponse> updatePDoneProfile(UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload) {
+    return _userRepository.updatePDoneProfile(updateNonePDoneProfilePayload);
   }
 
   Future<UpdateNonePDoneProfileReponse> updateNonePNoneDoneProfile(

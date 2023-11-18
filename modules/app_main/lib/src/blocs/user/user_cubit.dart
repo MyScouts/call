@@ -412,14 +412,12 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-  Future<void> updatePDoneProfile(
-      {required UpdatePDoneProfilePayload updatePDoneProfilePayload}) async {
+  Future<void> updatePDoneProfile({required UpdatePDoneProfilePayload updatePDoneProfilePayload}) async {
     if (state is UpdatePDoneProfileLoading) return;
     try {
-      emit(UpdatePDoneProfileLoading());
-      final response =
-          await _userUsecase.updatePDoneProfile(updatePDoneProfilePayload);
-      emit(UpdatePDoneProfileSuccess(user: response));
+      // emit(UpdatePDoneProfileLoading());
+      // final response = await _userUsecase.updatePDoneProfile(updatePDoneProfilePayload);
+      // emit(UpdatePDoneProfileSuccess(user: response));
     } catch (error) {
       debugPrint("update pdone profile error: $error");
       emit(UpdatePDoneProfileFailed(message: error.toString()));

@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:app_main/src/domain/entities/update_account/place/ward.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -6,12 +7,14 @@ class WardDropDown extends StatefulWidget {
   final Function(Ward) onChange;
   final bool required;
   final List<Ward> wards;
+  final Ward? ward;
 
   const WardDropDown({
     super.key,
     required this.onChange,
     this.required = false,
     required this.wards,
+    this.ward,
   });
 
   @override
@@ -20,10 +23,13 @@ class WardDropDown extends StatefulWidget {
 
 class _WardDropDownState extends State<WardDropDown> {
   List<Ward> _wards = [];
+  Ward? _ward;
 
   @override
   void initState() {
     initWard();
+    _ward =
+        _wards.firstWhereOrNull((e) => e.id == widget.ward?.id) ?? _wards.first;
     super.initState();
   }
 
@@ -42,6 +48,11 @@ class _WardDropDownState extends State<WardDropDown> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.wards != widget.wards) {
       initWard();
+      setState(() {});
+    }
+    if (widget.ward != oldWidget.ward) {
+      _ward = _wards.firstWhereOrNull((e) => e.id == widget.ward?.id) ??
+          _wards.first;
       setState(() {});
     }
   }
@@ -85,7 +96,7 @@ class _WardDropDownState extends State<WardDropDown> {
             'Chọn phường xã.',
             style: TextStyle(fontSize: 14),
           ),
-          value: _wards.first,
+          value: _ward,
           items: _wards
               .map((item) => DropdownMenuItem<Ward>(
                     value: item,

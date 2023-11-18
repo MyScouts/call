@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/profile/state/user_profile_bloc.dart';
 import 'package:app_main/src/presentation/profile/widget/profile_none_pdone_view.dart';
+import 'package:app_main/src/presentation/profile/widget/use_header.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -54,57 +55,7 @@ class _InfoEmptyState extends State<InfoEmpty> {
                 body: SingleChildScrollView(
                   child: Column(
                     children: [
-                      Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          Column(
-                            children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: MediaQuery.of(context).size.width *
-                                    168 /
-                                    393,
-                                decoration: const BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Color(0xff225C9D),
-                                      Color(0xff38B3FA),
-                                    ],
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Positioned(
-                            bottom: -32,
-                            left: 0,
-                            right: 0,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  height: 120,
-                                  width: 120,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: const Color(0xffE9F3FF),
-                                    border: Border.all(
-                                      color: const Color(0xffF3F8FF),
-                                      width: 3,
-                                    ),
-                                  ),
-                                  alignment: Alignment.center,
-                                  child: ImageWidget(
-                                    IconAppConstants.icLiveArea,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                      const UserHeader(),
                       const SizedBox(height: 6),
                       const SizedBox(height: 40),
                       Text(

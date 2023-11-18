@@ -34,8 +34,13 @@ import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
 
 class EditProfileEmpty extends StatefulWidget {
-  const EditProfileEmpty({super.key, required this.onBack});
+  const EditProfileEmpty({
+    super.key,
+    required this.onBack,
+    this.isPDone = false,
+  });
 
+  final bool isPDone;
   final VoidCallback onBack;
 
   @override
@@ -66,7 +71,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
   final placeOfNumberController = TextEditingController();
   final bankNumberController = TextEditingController();
   final bankAccountHolderController = TextEditingController();
-  String supplyDateX = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  String supplyDateX = DateFormat('dd/MM/yyyy').format(DateTime.now());
 
   String? bank;
   String bloodType = "";
@@ -83,200 +88,231 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
   late final placeInformationBloc2 = injector<PlaceInformationBloc2>()
     ..add(GetListProvincesEvent2(cuCountry!.iso2!));
   late final bankBloc = injector<GetListBanksBloc>()..add(GetListDataEvent());
-  late final upgradePDoneBloc = injector<UpgradePDoneBloc>()
-    ..add(GetListMasterEvent());
+  late final upgradePDoneBloc = context.read<UpgradePDoneBloc>();
 
   void validate() {
-    if (context.validateEmptyInfo(
-          fullNameController.text,
-          'Vui lòng nhập họ và tên',
-        ) !=
-        null) {
-      context.showToastMessage('Vui lòng nhập tên', ToastMessageType.error);
-      return;
-    }
-    if (context.validateNicknameInfo(
-          nickNameController.text,
-          'Vui lòng nhập nick name',
-        ) !=
-        null) {
-      context.showToastMessage('Vui lòng nick name', ToastMessageType.error);
-      return;
-    }
-    if (birthDayController.text.trim().isEmpty) {
-      context.showToastMessage(
-        'Vui lòng chọn ngày sinh',
-        ToastMessageType.error,
-      );
-      return;
-    }
-    if (context.validateEmailInfo(
-          emailController.text,
-          'Địa chỉ email không hợp lệ',
-        ) !=
-        null) {
-      context.showToastMessage(
-        'Địa chỉ email không hợp lệ',
-        ToastMessageType.error,
-      );
-      return;
-    }
-    if (realAddress.text.isEmpty) {
-      context.showToastMessage('Vui lòng nhập địa chỉ', ToastMessageType.error);
-      return;
-    }
-    if (context.validateEmptyInfo(
-          idNumberController.text,
-          'Vui lòng nhập số ID/CCCD/HC',
-        ) !=
-        null) {
-      context.showToastMessage(
-        'Vui lòng nhập số ID/CCCD/HC',
-        ToastMessageType.error,
-      );
-      return;
-    }
-    if (context.validateEmptyInfo(
-          placeOfNumberController.text,
-          'Vui lòng nhập nơi cấp',
-        ) !=
-        null) {
-      context.showToastMessage(
-        'Vui lòng nhập nơi cấp',
-        ToastMessageType.error,
-      );
-      return;
-    }
-    if (context.validateEmptyInfo(
-          bankNumberController.text,
-          'Vui lòng nhập số tài khoản',
-        ) !=
-        null) {
-      context.showToastMessage(
-        'Vui lòng nhập số tài khoản',
-        ToastMessageType.error,
-      );
-      return;
-    }
-    if (context.validateEmptyInfo(
-          bankAccountHolderController.text,
-          'Vui lòng nhập tên chủ tài khoản',
-        ) !=
-        null) {
-      context.showToastMessage(
-        'Vui lòng nhập tên chủ tài khoản',
-        ToastMessageType.error,
-      );
-      return;
-    }
-    if (edu.trim().isEmpty) {
-      context.showToastMessage(
-        'Vui lòng chọn học vấn',
-        ToastMessageType.error,
-      );
-      return;
-    }
-    if (jobName.trim().isEmpty) {
-      context.showToastMessage(
-        'Vui lòng chọn nghề nghiệp',
-        ToastMessageType.error,
-      );
-      return;
-    }
-    if (bloodType.trim().isEmpty) {
-      context.showToastMessage(
-        'Vui lòng chọn nhóm máu',
-        ToastMessageType.error,
-      );
-      return;
-    }
-
-    if (martialStatus.trim().isEmpty) {
-      context.showToastMessage(
-        'Vui lòng chọn tình trạng hôn nhân',
-        ToastMessageType.error,
-      );
-      return;
-    }
-    if (talentName.trim().isEmpty) {
-      context.showToastMessage(
-        'Vui lòng chọn năng khiếu',
-        ToastMessageType.error,
-      );
-      return;
-    }
-    if (hobbyName.trim().isEmpty) {
-      context.showToastMessage(
-        'Vui lòng chọn sở thích',
-        ToastMessageType.error,
-      );
-      return;
-    }
-
-    String firstName = '';
-    String middleName = '';
-    String lastName = '';
-
-    final name = fullNameController.text.split(' ');
-
-    for (var i = 0; i < name.length; i++) {
-      if (i == 0) {
-        firstName = name[i];
-      } else if (i == 1) {
-        middleName = name[i];
-      } else {
-        lastName = name[i];
+    if(!widget.isPDone) {
+      if (context.validateEmptyInfo(
+        fullNameController.text,
+        'Vui lòng nhập họ và tên',
+      ) !=
+          null) {
+        context.showToastMessage('Vui lòng nhập tên', ToastMessageType.error);
+        return;
       }
+      if (context.validateNicknameInfo(
+        nickNameController.text,
+        'Vui lòng nhập nick name',
+      ) !=
+          null) {
+        context.showToastMessage('Vui lòng nick name', ToastMessageType.error);
+        return;
+      }
+      if (birthDayController.text.trim().isEmpty) {
+        context.showToastMessage(
+          'Vui lòng chọn ngày sinh',
+          ToastMessageType.error,
+        );
+        return;
+      }
+      if (context.validateEmailInfo(
+        emailController.text,
+        'Địa chỉ email không hợp lệ',
+      ) !=
+          null) {
+        context.showToastMessage(
+          'Địa chỉ email không hợp lệ',
+          ToastMessageType.error,
+        );
+        return;
+      }
+      if (realAddress.text.isEmpty) {
+        context.showToastMessage('Vui lòng nhập địa chỉ', ToastMessageType.error);
+        return;
+      }
+      if (context.validateEmptyInfo(
+        idNumberController.text,
+        'Vui lòng nhập số ID/CCCD/HC',
+      ) !=
+          null) {
+        context.showToastMessage(
+          'Vui lòng nhập số ID/CCCD/HC',
+          ToastMessageType.error,
+        );
+        return;
+      }
+      if (context.validateEmptyInfo(
+        placeOfNumberController.text,
+        'Vui lòng nhập nơi cấp',
+      ) !=
+          null) {
+        context.showToastMessage(
+          'Vui lòng nhập nơi cấp',
+          ToastMessageType.error,
+        );
+        return;
+      }
+      if (context.validateEmptyInfo(
+        bankNumberController.text,
+        'Vui lòng nhập số tài khoản',
+      ) !=
+          null) {
+        context.showToastMessage(
+          'Vui lòng nhập số tài khoản',
+          ToastMessageType.error,
+        );
+        return;
+      }
+      if (context.validateEmptyInfo(
+        bankAccountHolderController.text,
+        'Vui lòng nhập tên chủ tài khoản',
+      ) !=
+          null) {
+        context.showToastMessage(
+          'Vui lòng nhập tên chủ tài khoản',
+          ToastMessageType.error,
+        );
+        return;
+      }
+      if (edu.trim().isEmpty) {
+        context.showToastMessage(
+          'Vui lòng chọn học vấn',
+          ToastMessageType.error,
+        );
+        return;
+      }
+      if (jobName.trim().isEmpty) {
+        context.showToastMessage(
+          'Vui lòng chọn nghề nghiệp',
+          ToastMessageType.error,
+        );
+        return;
+      }
+      if (bloodType.trim().isEmpty) {
+        context.showToastMessage(
+          'Vui lòng chọn nhóm máu',
+          ToastMessageType.error,
+        );
+        return;
+      }
+
+      if (martialStatus.trim().isEmpty) {
+        context.showToastMessage(
+          'Vui lòng chọn tình trạng hôn nhân',
+          ToastMessageType.error,
+        );
+        return;
+      }
+      if (talentName.trim().isEmpty) {
+        context.showToastMessage(
+          'Vui lòng chọn năng khiếu',
+          ToastMessageType.error,
+        );
+        return;
+      }
+      if (hobbyName.trim().isEmpty) {
+        context.showToastMessage(
+          'Vui lòng chọn sở thích',
+          ToastMessageType.error,
+        );
+        return;
+      }
+      String firstName = '';
+      String middleName = '';
+      String lastName = '';
+
+      final name = fullNameController.text.split(' ');
+
+      for (var i = 0; i < name.length; i++) {
+        if (i == 0) {
+          firstName = name[i];
+        } else if (i == 1) {
+          middleName = name[i];
+        } else {
+          lastName = name[i];
+        }
+      }
+
+      final birthS = birthDayController.text.split('/');
+
+      final subS = supplyDateX.split('/');
+
+      context.read<UserProfileBloc>().add(SubmitDataNonePDone(
+        UpdateNonePDoneProfilePayload(
+          firstName: firstName,
+          middleName: middleName,
+          lastName: lastName,
+          nickName: nickNameController.text,
+          currentPlace: UpdatePlaceInformationPayload(
+            countryName: cuCountry?.name,
+            countryCode: cuCountry?.iso2,
+            provinceName: cuProvince?.name,
+            provinceCode: cuProvince?.stateCode.toString(),
+            districtName: cuDistrict?.name,
+            districtCode: cuDistrict?.code,
+            wardName: cuWard?.name,
+            wardCode: cuWard!.id.toString(),
+          ),
+          maritalStatus: martialStatus,
+          bloodGroup: bloodType,
+          academicLevel: edu,
+          job: jobName,
+          interest: hobbyName,
+          talent: talentName,
+          sex: gender,
+          birthPlace: UpdatePDoneBirthPlacePayload2(
+            countryName: permanentCountry?.name,
+            countryCode: permanentCountry?.iso2,
+            provinceName: permanentProvince?.name,
+            districtName: permanentDistrict?.name,
+            wardName: permanentWard?.name,
+          ),
+          birthday: '${birthS[2]}-${birthS[1]}-${birthS[0]}',
+          identityNumber: idNumberController.text,
+          supplyDate: '${subS[2]}-${subS[1]}-${subS[0]}',
+          supplyAddress: placeOfNumberController.text,
+        ),
+      ));
+    } else {
+      context.read<UserProfileBloc>().add(SubmitDataPDone(
+        UpdateNonePDoneProfilePayload(
+          nickName: nickNameController.text,
+          currentPlace: UpdatePlaceInformationPayload(
+            countryName: cuCountry?.name,
+            countryCode: cuCountry?.iso2,
+            provinceName: cuProvince?.name,
+            provinceCode: cuProvince?.stateCode.toString(),
+            districtName: cuDistrict?.name,
+            districtCode: cuDistrict?.code,
+            wardName: cuWard?.name,
+            wardCode: cuWard!.id.toString(),
+          ),
+        ),
+      ));
     }
 
-    context.read<UserProfileBloc>().add(SubmitDataNonePDone(
-          UpdateNonePDoneProfilePayload(
-            firstName: firstName,
-            middleName: middleName,
-            lastName: lastName,
-            nickName: nickNameController.text,
-            currentPlace: UpdatePlaceInformationPayload(
-              countryName: cuCountry?.name,
-              countryCode: cuCountry?.iso2,
-              provinceName: cuProvince?.name,
-              provinceCode: cuProvince?.stateCode.toString(),
-              districtName: cuDistrict?.name,
-              districtCode: cuDistrict?.code,
-              wardName: cuWard?.name,
-              wardCode: cuWard!.id.toString(),
-            ),
-            maritalStatus: martialStatus,
-            bloodGroup: bloodType,
-            academicLevel: edu,
-            job: jobName,
-            interest: hobbyName,
-            talent: talentName,
-            sex: gender,
-            birthPlace: UpdatePDoneBirthPlacePayload2(
-              countryName: permanentCountry?.name,
-              countryCode: permanentCountry?.iso2,
-              provinceName: permanentProvince?.name,
-              districtName: permanentDistrict?.name,
-              wardName: permanentWard?.name,
-            ),
-            birthday: birthDayController.text,
-            identityNumber: idNumberController.text,
-            supplyDate: supplyDateX,
-            supplyAddress: placeOfNumberController.text,
-          ),
-        ));
+
 
     widget.onBack();
   }
 
   @override
   void initState() {
-    fullNameController.text = userBloc.state.user?.name ?? '';
-    nickNameController.text = userBloc.state.user?.nickname ?? '';
-    birthDayController.text = DateFormat('yyyy-MM-dd')
-        .format(userBloc.state.user?.birthday ?? DateTime.now());
-    gender = userBloc.state.user?.sex == Sex.female ? 0 : 1;
-    emailController.text = userBloc.state.user?.email ?? '';
+    fullNameController.text = "${userBloc.state.pDoneProfile?.firstName ?? ''} "
+        "${userBloc.state.pDoneProfile?.middleName ?? ''} "
+        "${userBloc.state.pDoneProfile?.lastName ?? ''}";
+    nickNameController.text = userBloc.state.pDoneProfile?.nickName ?? '';
+    final bd = userBloc.state.pDoneProfile?.birthday ??
+        DateFormat('yyyy-MM-dd').format(DateTime.now());
+    final bds = bd.split('-');
+    birthDayController.text = '${bds[2]}/${bds[1]}/${bds[0]}';
+    gender = userBloc.state.pDoneProfile?.sex ?? 1;
+    emailController.text = '';
+    idNumberController.text = userBloc.state.pDoneProfile?.identityNumber ?? '';
+    supplyDateX = userBloc.state.pDoneProfile?.supplyDate ??
+        DateFormat('yyyy-MM-dd').format(DateTime.now());
+    placeOfNumberController.text =
+        userBloc.state.pDoneProfile?.supplyAddress ?? '';
     super.initState();
   }
 
@@ -312,19 +348,58 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  InformationFieldWidget(
-                    required: true,
-                    shouldEnabled: true,
-                    controller: fullNameController,
-                    type: UpdateInformationType.fullName,
-                    validator: (value) => context.validateEmptyInfo(
-                      fullNameController.text,
-                      'Vui lòng nhập họ và tên',
+                  if (widget.isPDone)
+                    Row(
+                      children: [
+                        Expanded(
+                          child: InformationFieldWidget(
+                            required: true,
+                            shouldEnabled: false,
+                            hintText:
+                                userBloc.state.pDoneProfile?.firstName ?? '',
+                            type: UpdateInformationType.firstName,
+                            onChanged: (value) {
+                              onValidation();
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: InformationFieldWidget(
+                            required: true,
+                            shouldEnabled: false,
+                            hintText:
+                                userBloc.state.pDoneProfile?.middleName ?? '',
+                            type: UpdateInformationType.middleName,
+                            onChanged: (value) {
+                              onValidation();
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    onChanged: (value) {
-                      onValidation();
-                    },
-                  ),
+                  if (widget.isPDone)
+                    InformationFieldWidget(
+                      required: true,
+                      shouldEnabled: false,
+                      hintText: userBloc.state.pDoneProfile?.lastName ?? '',
+                      type: UpdateInformationType.lastName,
+                      onChanged: (value) {},
+                    ),
+                  if (!widget.isPDone)
+                    InformationFieldWidget(
+                      required: true,
+                      shouldEnabled: true,
+                      controller: fullNameController,
+                      type: UpdateInformationType.fullName,
+                      validator: (value) => context.validateEmptyInfo(
+                        fullNameController.text,
+                        'Vui lòng nhập họ và tên',
+                      ),
+                      onChanged: (value) {
+                        onValidation();
+                      },
+                    ),
                   InformationFieldWidget(
                     required: true,
                     shouldEnabled: true,
@@ -349,6 +424,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                             if (state is GetListMasterSuccess) {
                               final data = state.upgradeAccount.genders ?? [];
                               return GenderDropdown(
+                                disable: widget.isPDone,
                                 required: true,
                                 genders: data,
                                 onChange: (sex) {
@@ -358,6 +434,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                             }
 
                             return GenderDropdown(
+                              disable: widget.isPDone,
                               required: true,
                               genders: genders,
                               onChange: (sex) {
@@ -371,29 +448,32 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                       Expanded(
                         child: ValueListenableBuilder(
                           builder: (_, dateTimeValue, __) {
-                            return InformationLayoutFieldWidget(
-                              required: true,
-                              label:
-                                  UpdateInformationType.birthDay.title(context),
-                              child: InputDateTimeWidget(
-                                controller: birthDayController,
-                                hintText: 'Ngày sinh',
-                                useHorizontalLayout: true,
-                                enabled: true,
-                                radius: 17,
-                                date: dateTimeValue,
-                                formatText: (date) => S
-                                    .of(context)
-                                    .formatDateDDmmYYYYhhMM(date, date)
-                                    .split('|')
-                                    .first,
-                                max: DateTime.now(),
-                                onChange: (dateTime) {
-                                  onValidation();
-                                  birthDayController.text =
-                                      DateFormat('yyyy-MM-dd')
-                                          .format(dateTime!);
-                                },
+                            return IgnorePointer(
+                              ignoring: widget.isPDone,
+                              child: InformationLayoutFieldWidget(
+                                required: true,
+                                label: UpdateInformationType.birthDay
+                                    .title(context),
+                                child: InputDateTimeWidget(
+                                  controller: birthDayController,
+                                  hintText: 'Ngày sinh',
+                                  useHorizontalLayout: true,
+                                  enabled: true,
+                                  radius: 17,
+                                  date: dateTimeValue,
+                                  formatText: (date) => S
+                                      .of(context)
+                                      .formatDateDDmmYYYYhhMM(date, date)
+                                      .split('|')
+                                      .first,
+                                  max: DateTime.now(),
+                                  onChange: (dateTime) {
+                                    onValidation();
+                                    birthDayController.text =
+                                        DateFormat('dd/MM/yyyy')
+                                            .format(dateTime!);
+                                  },
+                                ),
                               ),
                             );
                           },
@@ -429,13 +509,19 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
               width: double.infinity,
               color: const Color(0xffF3F8FF),
             ),
-            _buildBankInformation(),
+            IgnorePointer(
+              ignoring: widget.isPDone,
+              child: _buildBankInformation(),
+            ),
             Container(
               height: 12,
               width: double.infinity,
               color: const Color(0xffF3F8FF),
             ),
-            _buildMoreInformation(),
+            IgnorePointer(
+              ignoring: widget.isPDone,
+              child: _buildMoreInformation(),
+            ),
             _buildButtonUpdate(context),
           ],
         ),
@@ -785,9 +871,17 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
             padding: const EdgeInsets.only(top: 20.0),
             child: Row(
               children: [
-                const Expanded(child: CountryBuild()),
+                Expanded(
+                    child: IgnorePointer(
+                  ignoring: widget.isPDone,
+                  child: const CountryBuild(),
+                )),
                 const SizedBox(width: 20),
-                Expanded(child: buildProvince()),
+                Expanded(
+                    child: IgnorePointer(
+                  ignoring: widget.isPDone,
+                  child: buildProvince(),
+                )),
               ],
             ),
           ),
@@ -795,9 +889,17 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
             padding: const EdgeInsets.only(top: 20.0),
             child: Row(
               children: [
-                Expanded(child: buildDistrict()),
+                Expanded(
+                    child: IgnorePointer(
+                  ignoring: widget.isPDone,
+                  child: buildDistrict(),
+                )),
                 const SizedBox(width: 20),
-                Expanded(child: buildWard()),
+                Expanded(
+                    child: IgnorePointer(
+                  ignoring: widget.isPDone,
+                  child: buildWard(),
+                )),
               ],
             ),
           ),
@@ -852,45 +954,55 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
           Row(
             children: [
               Expanded(
-                child: InformationFieldWidget(
-                  required: true,
-                  shouldEnabled: true,
-                  hintText: 'Ex: 12345678909',
-                  controller: idNumberController,
-                  type: UpdateInformationType.idNumber,
-                  validator: (value) => context.validateEmptyInfo(
-                    idNumberController.text,
-                    'Vui lòng nhập số ID/CCCD/HC',
-                  ),
-                  onChanged: (String? value) {
-                    idNumber = value!;
-                  },
+                child: Stack(
+                  children: [
+                    IgnorePointer(
+                      ignoring: widget.isPDone,
+                      child: InformationFieldWidget(
+                        required: true,
+                        shouldEnabled: true,
+                        hintText: 'Ex: 12345678909',
+                        controller: idNumberController,
+                        type: UpdateInformationType.idNumber,
+                        validator: (value) => context.validateEmptyInfo(
+                          idNumberController.text,
+                          'Vui lòng nhập số ID/CCCD/HC',
+                        ),
+                        onChanged: (String? value) {
+                          idNumber = value!;
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(width: 20),
               Expanded(
                 child: ValueListenableBuilder(
                   builder: (_, dateTimeValue, __) {
-                    return InformationLayoutFieldWidget(
-                      required: true,
-                      label:
-                          UpdateInformationType.dateOfIdNumber.title(context),
-                      child: InputDateTimeWidget(
-                        hintText: 'Ngày cấp',
-                        useHorizontalLayout: true,
-                        enabled: true,
-                        radius: 17,
-                        date: dateTimeValue,
-                        formatText: (date) => S
-                            .of(context)
-                            .formatDateDDmmYYYYhhMM(date, date)
-                            .split('|')
-                            .first,
-                        max: DateTime.now(),
-                        onChange: (dateTime) {
-                          supplyDateX =
-                              DateFormat('yyyy-MM-dd').format(dateTime!);
-                        },
+                    return IgnorePointer(
+                      ignoring: widget.isPDone,
+                      child: InformationLayoutFieldWidget(
+                        required: true,
+                        label:
+                            UpdateInformationType.dateOfIdNumber.title(context),
+                        child: InputDateTimeWidget(
+                          hintText: 'Ngày cấp',
+                          useHorizontalLayout: true,
+                          enabled: true,
+                          radius: 17,
+                          date: dateTimeValue,
+                          formatText: (date) => S
+                              .of(context)
+                              .formatDateDDmmYYYYhhMM(date, date)
+                              .split('|')
+                              .first,
+                          max: DateTime.now(),
+                          onChange: (dateTime) {
+                            supplyDateX =
+                                DateFormat('dd/MM/yyyy').format(dateTime!);
+                          },
+                        ),
                       ),
                     );
                   },
@@ -948,7 +1060,14 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       listener: (_, state) {
         if (state is GetListProvincesSuccess) {
           final pros = state.provinces ?? provinces;
-          permanentProvince = pros.first;
+          final proName = userBloc.state.pDoneProfile?.birthPlace.provinceName;
+          if (proName != null) {
+            permanentProvince =
+                pros.firstWhereOrNull((e) => e.name!.contains(proName));
+            permanentProvince ??= pros.first;
+          } else {
+            permanentProvince = pros.first;
+          }
           placeInformationBloc.add(GetDistrictsByProvinceEvent(
               permanentCountry!.iso2!, permanentProvince!.stateCode!));
         }
@@ -957,6 +1076,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         if (state is GetListProvincesSuccess) {
           final pros = state.provinces ?? provinces;
           return ProvinceDropDown(
+            province: permanentProvince,
             required: true,
             provinces: pros,
             onChange: (province) {
@@ -980,7 +1100,14 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       listener: (ctx, state) {
         if (state is GetDistrictsSuccess) {
           final dis = state.districts ?? districts;
-          permanentDistrict = dis.first;
+          final district = userBloc.state.pDoneProfile?.birthPlace.districtName;
+          if (district != null) {
+            permanentDistrict = dis
+                .firstWhereOrNull((e) => e.name?.contains(district) ?? false);
+            permanentDistrict ??= dis.first;
+          } else {
+            permanentDistrict = dis.first;
+          }
           placeInformationBloc.add(GetWardsByDistrictEvent(
               permanentCountry!.iso2!,
               permanentProvince!.stateCode!,
@@ -991,6 +1118,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         if (state is GetDistrictsSuccess) {
           final dis = state.districts ?? districts;
           return DistrictDropDown(
+            district: permanentDistrict,
             required: true,
             districts: dis,
             onChange: (district) {
@@ -1013,12 +1141,20 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       listener: (ctx, state) {
         if (state is GetWardsSuccess) {
           final wa = state.wards ?? wards;
-          permanentWard = wa.first;
+          final warName = userBloc.state.pDoneProfile?.birthPlace.wardName;
+          if (warName != null) {
+            permanentWard =
+                wa.firstWhereOrNull((e) => e.name?.contains(warName) ?? false);
+            permanentWard ??= wa.first;
+          } else {
+            permanentWard = wa.first;
+          }
         }
       },
       builder: (ctx, state) {
         final wa = state.wards ?? wards;
         return WardDropDown(
+          ward: permanentWard,
           required: true,
           wards: wa,
           onChange: (ward) {
@@ -1061,7 +1197,14 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       listener: (_, state) {
         if (state is GetListProvincesSuccess2) {
           final pros = state.provinces ?? provinces;
-          cuProvince = pros.first;
+          final proName = userBloc.state.pDoneProfile?.birthPlace.provinceName;
+          if (proName != null) {
+            cuProvince =
+                pros.firstWhereOrNull((e) => e.name!.contains(proName));
+            cuProvince ??= pros.first;
+          } else {
+            cuProvince = pros.first;
+          }
           placeInformationBloc2.add(GetDistrictsByProvinceEvent2(
               cuCountry!.iso2!, cuProvince!.stateCode!));
         }
@@ -1071,6 +1214,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         if (state is GetListProvincesSuccess2) {
           final pros = state.provinces ?? provinces;
           return ProvinceDropDown(
+            province: cuProvince,
             required: true,
             provinces: pros,
             onChange: (province) {
@@ -1095,6 +1239,14 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       listener: (ctx, state) {
         if (state is GetDistrictsSuccess2) {
           final dis = state.districts ?? districts;
+          final district = userBloc.state.pDoneProfile?.birthPlace.districtName;
+          if (district != null) {
+            cuDistrict = dis
+                .firstWhereOrNull((e) => e.name?.contains(district) ?? false);
+            cuDistrict ??= dis.first;
+          } else {
+            cuDistrict = dis.first;
+          }
           cuDistrict = dis.first;
           placeInformationBloc2.add(GetWardsByDistrictEvent2(
               cuCountry!.iso2!, cuProvince!.stateCode!, cuDistrict!.code!));
@@ -1104,6 +1256,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         if (state is GetDistrictsSuccess2) {
           final dis = state.districts ?? districts;
           return DistrictDropDown(
+            district: cuDistrict,
             required: true,
             districts: dis,
             onChange: (district) {
@@ -1125,12 +1278,20 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       listener: (ctx, state) {
         if (state is GetWardsSuccess2) {
           final wa = state.wards ?? wards;
-          cuWard = wa.first;
+          final warName = userBloc.state.pDoneProfile?.birthPlace.wardName;
+          if (warName != null) {
+            cuWard =
+                wa.firstWhereOrNull((e) => e.name?.contains(warName) ?? false);
+            cuWard ??= wa.first;
+          } else {
+            cuWard = wa.first;
+          }
         }
       },
       builder: (ctx, state) {
         final wa = state.wards ?? wards;
         return WardDropDown(
+          ward: cuWard,
           required: true,
           wards: wa,
           onChange: (ward) {

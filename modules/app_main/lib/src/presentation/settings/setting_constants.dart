@@ -58,9 +58,8 @@ class Setting {
           Setting(
             text: "Team",
             icon: IconAppConstants.icTeamProfile,
-            onPressed: () => Navigator.pushNamed(
-                context, InformationProfileScreen.routeName),
-            // Navigator.pushNamed(context, CommunityWidget.routeName),
+            onPressed: () =>
+                Navigator.pushNamed(context, CommunityWidget.routeName),
           ),
           Setting(
             text: "PDone",
