@@ -21,7 +21,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _appCubit.appInitial(type: isIOS ? 'ios' : 'android');
+    _appCubit.appInitial(
+      type: isIOS ? 'ios' : 'android',
+      isProduction: Configurations.isProduction,
+    );
   }
 
   @override

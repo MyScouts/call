@@ -22,12 +22,12 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0.0,
       centerTitle: true,
       leading: CustomBackButton(
-        alignment: Alignment.centerRight,
+        alignment: Alignment.center,
         onPressed: onPressed,
       ),
       shape: Border.all(width: 0, color: Colors.transparent),
       actions: [
-        if (isClose) const CustomCloseButton(alignment: Alignment.centerLeft),
+        if (isClose) const CustomCloseButton(alignment: Alignment.center),
       ],
     );
   }

@@ -20,14 +20,17 @@ class AppCubit extends Cubit<AppState> {
     this._authUsecase,
   ) : super(AppInitial());
 
-  Future appInitial({required String type}) async {
+  Future appInitial({
+    required String type,
+    required bool isProduction,
+  }) async {
     try {
       emit(AppInitial());
       final appInfo = await DeviceService.getPackageInfo();
       final currentVersion = Version.parse(appInfo.version);
       final response = await _srcUsecase.getLatestVersion(type: type);
       // check app version
-      if (response != null && response.force) {
+      if (response != null && response.force && isProduction) {
         final newVersion = Version.parse(response.version);
         if (newVersion > currentVersion) {
           emit(UpgradeAppVersion(version: response));
