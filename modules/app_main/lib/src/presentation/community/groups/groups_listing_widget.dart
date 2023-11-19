@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/community/groups/community/community-tab-bar.dart';
 import 'package:app_main/src/presentation/community/groups/community/community_group_widget.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -100,10 +101,15 @@ class _GroupsListingWidgetState extends State<GroupsListingWidget>
               SliverToBoxAdapter(
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: ImageWidget(ImageConstants.communityBanner,
-                          width: width),
+                    GestureDetector(
+                      onTap: () => context.startPDoneInformation(),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: ImageWidget(
+                          ImageConstants.communityBanner,
+                          width: width,
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 20),
                     CommunityTabBar(controller: _tabController),
