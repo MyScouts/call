@@ -55,6 +55,8 @@ class ImageConstants {
   static String birthCerCapture = ImageApp.birthCerCapture.path;
   static String birthCerBackgroundConfirm =
       ImageApp.birthCerBackgroundConfirm.path;
+  static String bgAppLogo = ImageApp.bgAppLogo.path;
+  static String bgUpgradeApp = ImageApp.bgUpgradeApp.path;
   static String pDoneNotification = ImageApp.pDoneNotification.path;
   static String bgNotiEmpty = ImageApp.bgNotiEmpty.path;
   static String screenshot1 = ImageApp.screenshot1.path;
@@ -64,6 +66,8 @@ class ImageConstants {
 }
 
 enum ImageApp {
+  bgUpgradeApp('assets/images/bg_upgrade.png'),
+  bgAppLogo('assets/images/app_logo.png'),
   bgNotiEmpty('assets/images/noti_empty.png'),
   bgEmpty('assets/images/empty.png'),
   bgQrCode('assets/images/bg_qrcode.png'),

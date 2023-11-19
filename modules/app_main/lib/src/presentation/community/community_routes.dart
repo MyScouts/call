@@ -96,7 +96,6 @@ class CommunityRoutes extends RouteModule {
           );
         },
         EditGroupDetail.routeName: (context) {
-          final args = settings.arguments as Map<String, dynamic>;
           return MultiBlocProvider(
             providers: [
               BlocProvider<GetBossStatusBloc>(

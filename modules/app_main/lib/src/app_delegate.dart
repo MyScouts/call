@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:app_main/src/blocs/app/app_cubit.dart';
 import 'package:app_main/src/blocs/auth/auth_cubit.dart';
 import 'package:app_main/src/blocs/marshop/marshop_cubit.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
-import 'package:app_main/src/presentation/authentication/login/login_screen.dart';
-import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
+import 'package:app_main/src/presentation/authentication/splash/splash_screen.dart';
 import 'package:app_main/src/presentation/shared/user/bloc/user_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -42,7 +42,6 @@ class AppDelegate extends IAppDelegate {
     await Firebase.initializeApp();
     Configurations().setConfigurationValues(env);
     await configureDependencies(environment: Environment.prod);
-
     final savedThemeMode = await AdaptiveTheme.getThemeMode();
 
     if (isMobile) {
@@ -61,10 +60,10 @@ class AppDelegate extends IAppDelegate {
       unawaited(deviceService.updateNavigationBarColors(false));
     }
 
-    var initialRoute = AuthenticateScreen.routeName;
+    String initialRoute = SplashScreen.routeName;
     if (userSharePreferencesUsecase.isAuthenticated) {
       isAuthenticate.add(true);
-      initialRoute = DashBoardScreen.routeName;
+      // initialRoute = DashBoardScreen.routeName;
     }
 
     if (Configurations.isStudio) {
@@ -80,6 +79,7 @@ class AppDelegate extends IAppDelegate {
         BlocProvider<UserCubit>(create: (_) => injector.get()),
         BlocProvider<MarshopCubit>(create: (_) => injector.get()),
         BlocProvider<AuthCubit>(create: (_) => injector.get()),
+        BlocProvider<AppCubit>(create: (_) => injector.get()),
       ],
       savedThemeMode: savedThemeMode,
       initialRoute: initialRoute,

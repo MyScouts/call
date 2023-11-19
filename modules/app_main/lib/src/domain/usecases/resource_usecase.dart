@@ -1,9 +1,9 @@
 import 'dart:io';
 
+import 'package:app_main/src/data/models/responses/resource_response.dart';
 import 'package:injectable/injectable.dart';
 
-import '../repository/resource_responsitory.dart';
-
+import '../repository/resource_repository.dart';
 
 @injectable
 class ResourceUsecase {
@@ -22,14 +22,9 @@ class ResourceUsecase {
   Future<String> uploadFile(File file) {
     return _resourceRepository.uploadFile(file);
   }
-  //
-  // Future<List<MediaModel>> getBanners({
-  //   required GetResourceMediaParam param,
-  // }) {
-  //   return _resourceRepository.getMedias(
-  //     param.role.name,
-  //     param.resourceMedia.type.name,
-  //     param.resourceMedia.category,
-  //   );
-  // }
+
+  Future<VersionResponse?> getLatestVersion({required String type}) async {
+    final response = await _resourceRepository.latestVersion(type: type);
+    return response;
+  }
 }

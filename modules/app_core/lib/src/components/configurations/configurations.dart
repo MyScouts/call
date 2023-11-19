@@ -12,6 +12,8 @@ class Configurations {
   static int _userIdOffice = DefaultConfig.userIdOffice;
   static String _zaloSupport = '';
   static String _phoneSupport = '';
+  static String _androidPackageId = '';
+  static String _iosAppId = '';
 
   void setConfigurationValues(Map<String, dynamic> value) {
     _environment = value['environment'] ?? DefaultConfig.environment;
@@ -25,6 +27,8 @@ class Configurations {
     _userIdOffice = value['userIdOffice'] ?? DefaultConfig.userIdOffice;
     _zaloSupport = value['zaloSupport'] ?? '';
     _phoneSupport = value['phoneSupport'] ?? '';
+    _iosAppId = value['iosAppId'] ?? '';
+    _androidPackageId = value['androidPackageId'] ?? '';
   }
 
   static String get environment => _environment;
@@ -37,8 +41,10 @@ class Configurations {
   static int get userIdOffice => _userIdOffice;
   static String get zaloSupport => _zaloSupport;
   static String get phoneSupport => _phoneSupport;
+  static String get androidPackageId => _androidPackageId;
+  static String get iosAppId => _iosAppId;
 }
 
 extension StringExtAppConfig on String {
-  String get getlinkMedia => '${Configurations.ecommereBaseUrl}$this';
+  String get getLinkMedia => '${Configurations.ecommereBaseUrl}$this';
 }

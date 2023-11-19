@@ -1,11 +1,10 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/pdone_request_protector_req.dart';
+import 'package:app_main/src/data/models/responses/resource_response.dart';
 import 'package:app_main/src/data/models/responses/storage_upload_url_response.dart';
 import 'package:camera/camera.dart';
 import 'package:dio/dio.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -20,6 +19,7 @@ class ResourceApiConstant {
   static const String uploadFile = 'api/upload/file';
   static const String getUserMedia =
       'api/medias/{role}?category={category}&type={type}';
+  static const String latestVersion = 'api/v1/app-version/type/{type}/latest';
 }
 
 @RestApi()
@@ -48,4 +48,9 @@ abstract class ResourceApi {
   });
 
   Future<String> storageUploadUrl(XFile file, String prefix);
+
+  @GET(ResourceApiConstant.latestVersion)
+  Future<LatestVersionResponse> latestVersion({
+    @Path('type') required String type,
+  });
 }

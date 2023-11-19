@@ -12,8 +12,6 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 
-import '../information_profile/screens/information_profile_screen.dart';
-
 class Setting {
   final String text;
   final String? avatar;

@@ -14,10 +14,12 @@ class PrimarySolidButton extends StatelessWidget {
     this.height,
     this.prefix,
     this.isLoading = false,
+    this.textColor,
   });
   final String title;
   final Function()? onTap;
   final Color? color;
+  final Color? textColor;
   final Color? backgroundColor;
   final double? width;
   final double? height;
@@ -59,7 +61,9 @@ class PrimarySolidButton extends StatelessWidget {
                     Text(
                       title,
                       style: context.text.bodyLarge!.copyWith(
-                        color: disabled ? AppColors.grey72 : AppColors.white,
+                        color: disabled
+                            ? AppColors.grey72
+                            : (textColor ?? AppColors.white),
                       ),
                     ),
                   ],

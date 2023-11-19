@@ -9,7 +9,6 @@ import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
 
-import '../../../../app_main.dart';
 import '../community_coordinator.dart';
 import '../group_detail/group_detail_constants.dart';
 import '../widgets/dropdown_menu_option_widget.dart';

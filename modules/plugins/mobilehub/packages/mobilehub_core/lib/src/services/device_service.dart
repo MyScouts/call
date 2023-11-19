@@ -5,14 +5,13 @@ import 'package:easy_file/easy_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:injectable/injectable.dart';
-
-import '../helpers/platform_helper.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 @injectable
 class DeviceService {
-  PlatformUniversal get _platform => PlatformUniversal();
-
-  bool get isAndroid => _platform.isAndroid;
+  static Future<PackageInfo> getPackageInfo() {
+    return PackageInfo.fromPlatform();
+  }
 
   Future<void> copy(String text) => FlutterClipboard.copy(text);
 

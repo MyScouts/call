@@ -30,6 +30,7 @@ dependencies:
   path_provider: ^2.0.13
   shared_preferences: ^2.0.13
   easy_file: ^0.0.1
+  package_info_plus: ^4.2.0
 
 dev_dependencies:
   flutter_test:
