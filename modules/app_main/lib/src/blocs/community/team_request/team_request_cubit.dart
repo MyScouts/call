@@ -21,7 +21,7 @@ class TeamRequestCubit extends Cubit<TeamRequestState> {
   }) async {
     if (state is OnGetListRequest) return;
     try {
-      emit(const OnGetListRequest(requests: [], isFirst: true));
+      emit(OnGetListRequest(requests: _request, isFirst: true));
       if (isJoinRequest) {
         final response = await _usecase
             .memberJoinRequest(GetCommunityPayload(teamId: teamId));
@@ -44,7 +44,7 @@ class TeamRequestCubit extends Cubit<TeamRequestState> {
   }) async {
     if (state is OnReplyJoinRequest) return;
     try {
-      emit(const OnReplyJoinRequest(requests: []));
+      emit(OnReplyJoinRequest(requests: _request));
       await _usecase.replyJoinRequest(teamId, payload);
       _request.removeWhere((element) => element.user?.id == payload.userId);
       emit(ReplyJoinRequestSuccess(
@@ -65,7 +65,7 @@ class TeamRequestCubit extends Cubit<TeamRequestState> {
   }) async {
     if (state is OnReplyLeaveRequest) return;
     try {
-      emit(const OnReplyLeaveRequest(requests: []));
+      emit(OnReplyLeaveRequest(requests: _request));
       await _usecase.replyLeaveRequest(teamId, payload);
       _request.removeWhere((element) => element.user?.id == payload.userId);
       emit(ReplyLeaveRequestSuccess(
