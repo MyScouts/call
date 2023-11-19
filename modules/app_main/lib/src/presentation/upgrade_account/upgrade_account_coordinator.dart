@@ -5,6 +5,8 @@ import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/marshop/widgets/gradiant_button.dart';
 import 'package:app_main/src/presentation/settings/setting_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_constants.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/upgrade_ja_pdf_preview_screen.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/ui_model/ja_contract_content_ui_model.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/update_bank_account_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/widgets/verify_otp_bank_account_dialog_widget.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/views/widgets/upgrade_ekyc_screen.dart';
@@ -340,6 +342,10 @@ extension UpgradeAccountCoordinator on BuildContext {
         startDialogUpgradeJA();
       }
     }
+  }
+
+  void startExportJAPdfPreview() {
+    Navigator.pushNamed(this, UpgradeJAPdfPreviewScreen.routeName);
   }
 
   List<Widget> buildGuide() {

@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/views/widgets/upgrade_ekyc_screen.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/upgrade_ja_pdf_preview_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/update_bank_account_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/views/upgrade_pdone_otp_screen.dart';
@@ -99,6 +100,9 @@ class UpgradeAccountRoutes extends RouteModule {
             ],
             child: const UpgradeEkycScreen(),
           );
+        },
+        UpgradeJAPdfPreviewScreen.routeName: (context) {
+          return const UpgradeJAPdfPreviewScreen();
         }
       };
 }
