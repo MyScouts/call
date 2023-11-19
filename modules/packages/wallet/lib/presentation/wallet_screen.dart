@@ -30,6 +30,7 @@ class _WalletScreenState extends State<WalletScreen> {
 
   @override
   void initState() {
+    print('init wallet');
     bloc.add(const WalletEvent.getCoinWalletInfo());
     super.initState();
   }

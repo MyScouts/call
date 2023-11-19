@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../domain/specs/enums/diamond_transaction_history.dart';
+import '../../domain/specs/enums/point_transaction_history.dart';
+import '../../domain/specs/enums/transaction_history.dart';
 import '../core.dart';
 
 extension ColorStatusExt on TransactionHistoryStatus {
