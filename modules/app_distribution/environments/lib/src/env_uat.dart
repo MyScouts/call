@@ -7,4 +7,6 @@ final Map<String, dynamic> environmentUAT = {
   'userIdOffice': 1,
   'zaloSupport': 'https://zalo.me/0975739598',
   'phoneSupport': '0975739598',
+  'androidPackageId': 'com.app.vdone',
+  'iosAppId': '1673506553',
 };

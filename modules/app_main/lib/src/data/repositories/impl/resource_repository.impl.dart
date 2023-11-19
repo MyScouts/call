@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:app_main/src/data/models/responses/resource_response.dart';
+import 'package:app_main/src/domain/repository/resource_repository.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../domain/repository/resource_responsitory.dart';
 import '../../data_sources/remote/resource_api.dart';
 
 @Injectable(as: ResourceRepository)
@@ -36,8 +36,8 @@ class ResourceRepositoryImpl extends ResourceRepository {
   }
 
   @override
-  Future<VersionResponse?> latestVersion() async {
-    final response = await _resourceApi.latestVersion();
+  Future<VersionResponse?> latestVersion({required String type}) async {
+    final response = await _resourceApi.latestVersion(type: type);
     return response.appVersion;
   }
 

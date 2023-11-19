@@ -345,7 +345,6 @@ class _SettingScreenState extends State<SettingScreen> {
       future: DeviceService.getPackageInfo(),
       builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
         if (!snapshot.hasData || snapshot.hasError) {
-          print(snapshot.error);
           return const SizedBox.shrink();
         }
         final version = snapshot.data!;

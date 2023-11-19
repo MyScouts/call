@@ -6,7 +6,7 @@ import 'package:localization/localization.dart';
 
 part 'auth_state.dart';
 
-@Injectable()
+@injectable
 class AuthCubit extends Cubit<AuthState> {
   final AuthenticationUsecase _authenticationUsecase;
   AuthCubit(this._authenticationUsecase) : super(AuthInitial());

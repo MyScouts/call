@@ -172,7 +172,7 @@ class _ResourceApi implements ResourceApi {
   }
 
   @override
-  Future<LatestVersionResponse> latestVersion() async {
+  Future<LatestVersionResponse> latestVersion({required String type}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -185,7 +185,7 @@ class _ResourceApi implements ResourceApi {
     )
             .compose(
               _dio.options,
-              'api/v1/app-version/latest',
+              'api/v1/app-version/type/${type}/latest',
               queryParameters: queryParameters,
               data: _data,
             )

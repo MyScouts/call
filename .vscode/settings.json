@@ -9,6 +9,7 @@
         "eccommerce",
         "ecom",
         "ecommerce",
+        "ecommere",
         "Ekyc",
         "imagewidget",
         "Khác",
@@ -30,7 +31,8 @@
         "usecases",
         "vdone",
         "vstore",
-        "webp"
+        "webp",
+        "zalo"
     ],
     "cmake.sourceDirectory": "/Users/huy.tran/projects/vdone/vdone-mobile-v1/linux"
 }
