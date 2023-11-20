@@ -1,5 +1,7 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:imagewidget/imagewidget.dart';
+import 'package:wallet/core/core.dart';
 
 import '../../wallet.dart';
 import '../core/configuratons/configurations.dart';
@@ -177,6 +179,63 @@ extension BankAccountFieldExt on BankAccountField {
   }
 }
 
+enum ResourceType { ddone, coin, diamond, vnd }
+
+extension ResourceTypeExt on ResourceType {
+  Widget get icon {
+    switch (this) {
+      case ResourceType.ddone:
+        return ImageWidget(ImageConstants.icWalletDDone, width: 20, height: 20);
+      case ResourceType.coin:
+        return ImageWidget(ImageConstants.icWalletCoin, width: 20, height: 20);
+      case ResourceType.diamond:
+        return ImageWidget(ImageConstants.icWalletDiamond,
+            width: 20, height: 20);
+      case ResourceType.vnd:
+        return ImageWidget(ImageConstants.icWalletVnd, width: 20, height: 20);
+    }
+  }
+
+  Color get valueColor {
+    switch (this) {
+      case ResourceType.ddone:
+        return WalletTheme.ddoneColor;
+      case ResourceType.coin:
+        return WalletTheme.coinColor;
+      case ResourceType.diamond:
+        return WalletTheme.diamondColor;
+      case ResourceType.vnd:
+        return WalletTheme.vndColor;
+    }
+  }
+
+  Color get valueBgColor {
+    switch (this) {
+      case ResourceType.ddone:
+        return WalletTheme.ddoneBgColor;
+      case ResourceType.coin:
+        return WalletTheme.coinBgColor;
+      case ResourceType.diamond:
+        return WalletTheme.diamondBgColor;
+      case ResourceType.vnd:
+        return WalletTheme.vndBgColor;
+    }
+  }
+
+  String get resourceTabText {
+    switch (this) {
+      case ResourceType.ddone:
+        return 'D-One';
+      case ResourceType.coin:
+        return 'Xu';
+      case ResourceType.diamond:
+        return 'Kim cương';
+      case ResourceType.vnd:
+        return 'VNĐ';
+    }
+  }
+}
+
 class WalletConstant {
   static const qrCodeMessage =
       // ignore: lines_longer_than_80_chars
@@ -192,6 +251,8 @@ class WalletConstant {
 
   static final borderRadius5 = BorderRadius.circular(5);
 
+  static final borderRadius6 = BorderRadius.circular(6);
+
   static final borderRadius8 = BorderRadius.circular(8);
 
   static final borderRadius10 = BorderRadius.circular(10);
@@ -199,6 +260,8 @@ class WalletConstant {
   static final borderRadius12 = BorderRadius.circular(12);
 
   static final borderRadius15 = BorderRadius.circular(15);
+
+  static final borderRadius16 = BorderRadius.circular(16);
 
   static final borderRadius90 = BorderRadius.circular(90);
 

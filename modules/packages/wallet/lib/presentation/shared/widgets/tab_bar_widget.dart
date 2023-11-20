@@ -1,9 +1,5 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:wallet/presentation/shared/widgets/tab_indicator_decoration.dart';
-import 'package:wallet/presentation/shared/widgets/tabbar_indicator_center_widget.dart';
-
-import '../../../../wallet.dart';
 import '../../../core/theme/wallet_theme.dart';
 import '../../wallet_constant.dart';
 
@@ -14,12 +10,12 @@ class TabBarViewWidget extends StatefulWidget {
   final int initialIndex;
 
   const TabBarViewWidget({
-    Key? key,
+    super.key,
     required this.walletCoinComponent,
     required this.walletDiamondComponent,
     required this.walletVndComponent,
     this.initialIndex = 0,
-  }) : super(key: key);
+  });
 
   @override
   State<TabBarViewWidget> createState() => _TabBarViewWidgetState();
@@ -63,40 +59,97 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget>
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Column(
+      child: Stack(
         children: [
           Container(
-            padding: const EdgeInsets.only(top: 5),
+            height: double.infinity,
+            margin: const EdgeInsets.only(top: 30),
+            width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: WalletTheme.lightGrey, width: 1),
-              ),
-            ),
-            child: TabbarIndicatorCenterWidget<WalletType>(
-              controller: _tabController,
-              isScrollable: false,
-              tabItems: userType.walletCanShow,
-              labelPadding: const EdgeInsets.only(top: 20, bottom: 8),
-              indicator: TabIndicatorDecoration(
-                width: 25,
-                weight: 2,
-                color: AppColors.blue10,
-              ),
-              labelColor: AppColors.blue10,
-              builderItem: (wallet) {
-                return Text(wallet.walletTypeText);
-              },
+              color: AppColors.white,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(18))
             ),
           ),
-          const SizedBox(height: 22),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              physics: const NeverScrollableScrollPhysics(),
-              children: tabBuilder,
-            ),
+          Column(
+            children: [
+              _buildTab(),
+              const SizedBox(height: 22),
+              Expanded(
+                child: PageView(
+                  controller: _pageCtrl,
+                  children: [
+                    widget.walletCoinComponent,
+                    widget.walletDiamondComponent,
+                    widget.walletDiamondComponent,
+                    widget.walletDiamondComponent,
+                    // widget.walletVndComponent
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
+      ),
+    );
+  }
+
+  int _page = 0;
+  final PageController _pageCtrl = PageController(initialPage: 0);
+
+  _buildTab() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: WalletConstant.borderRadius90,
+          boxShadow: [
+            BoxShadow(
+              color: WalletTheme.shadowColor,
+              spreadRadius: 2,
+              blurRadius: 20.06,
+              offset: const Offset(0, 4), // changes position of shadow
+            ),
+          ]),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: ResourceType.values.map((type) => _tabButton(type)).toList(),
+      ),
+    );
+  }
+
+  Widget _tabButton(ResourceType resourceType) {
+    final index =
+        ResourceType.values.indexWhere((type) => type == resourceType);
+    return InkWell(
+      onTap: () {
+        _pageCtrl.animateToPage(
+          index,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.ease,
+        );
+        _page = index;
+        setState(() {});
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width / 5,
+        margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        decoration: BoxDecoration(
+          borderRadius: WalletConstant.borderRadius90,
+          color: _page == index ? const Color(0xFF4B84F7) : Colors.white,
+        ),
+        child: Center(
+          child: Text(
+            resourceType.resourceTabText,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
+              height: 20 / 14,
+              leadingDistribution: TextLeadingDistribution.even,
+              color: _page == index ? AppColors.white : const Color(0xFF6E6E6E),
+            ),
+          ),
+        ),
       ),
     );
   }

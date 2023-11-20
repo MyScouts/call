@@ -48,6 +48,22 @@ class WalletTheme {
   /// blue
   static const Color blueCheckedColor = Color(0xff1E90FF);
   static const Color lightBlue = Color(0xFFECF5FE);
+
+  static const Color textColor = Color(0xFF282828);
+  static const Color goldColor = Color(0xFFF9A233);
+
+  static const Color ddoneColor = Color(0xFFE47A2E);
+  static const Color ddoneBgColor = Color(0xFFFFFCD7);
+  static const Color coinColor = Color(0xFFC6650C);
+  static const Color coinBgColor = Color(0xFFFEF2D8);
+  static const Color diamondColor = Color(0xFF4B84F7);
+  static const Color diamondBgColor = Color(0xFFE9F4FF);
+  static const Color vndColor = Color(0xFF1E9737);
+  static const Color vndBgColor = Color(0xFFE0FEEC);
+
+  static const Color bgColor = Color(0xFFF2F3F4);
+
+  static final Color shadowColor = const Color(0xFF212121).withOpacity(0.08);
 }
 
 extension WalletThemeExt on BuildContext {

@@ -6,5 +6,5 @@ extension WalletCoordinatorExternalExt on BuildContext {
 
   Future<T?> startChat<T>(int userId) => shared.startChat(userId);
 
-  Future<T?>? startUpgradeJA<T>() => shared.startUpgradeJA();
+  // Future<T?>? startUpgradeJA<T>() => shared.startUpgradeJA();
 }

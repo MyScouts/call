@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:wallet/core/core.dart';
 import 'package:wallet/presentation/presentation.dart';
@@ -19,7 +20,7 @@ class WalletScreen extends StatefulWidget {
   static const String routeName = '/my-wallet';
   final VoidCallback? onBackLive;
 
-  const WalletScreen({Key? key, this.onBackLive}) : super(key: key);
+  const WalletScreen({super.key, this.onBackLive});
 
   @override
   State<WalletScreen> createState() => _WalletScreenState();
@@ -30,7 +31,6 @@ class _WalletScreenState extends State<WalletScreen> {
 
   @override
   void initState() {
-    print('init wallet');
     bloc.add(const WalletEvent.getCoinWalletInfo());
     super.initState();
   }
@@ -38,15 +38,8 @@ class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appbarBuilder(
-        context,
-        title: 'Ví của tôi',
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: WalletTheme.black),
-          //thêm nut back to live khi ở màn live thu nhỏ
-          onPressed: widget.onBackLive ?? () => handleBack(context),
-        ),
-      ),
+      backgroundColor: WalletTheme.bgColor,
+      extendBodyBehindAppBar: true,
       body: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: context.hideKeyboard,
@@ -82,20 +75,53 @@ class _WalletScreenState extends State<WalletScreen> {
                             getCoinWalletInfoLoaded: () => true,
                           ) ??
                           false,
-                      builder: (context, state) => Padding(
-                        padding: EdgeInsets.fromLTRB(
-                          context.horizontal,
-                          10,
-                          context.horizontal,
-                          24,
-                        ),
-                        child: UserInfoCard(
-                          user: WalletInjectedData.user,
-                          walletInfo: WalletInjectedData.coinWalletInfo,
-                        ),
-                      ),
+                      builder: (context, state) {
+                        return Stack(
+                          children: [
+                            ImageWidget(ImageConstants.imgWalletHeader),
+                            Positioned(
+                              top: MediaQuery.of(context).padding.top + 50,
+                              left: 20,
+                              child: Text(
+                                'Ví của tôi',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(
+                                      color: AppColors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                              ),
+                            ),
+                            Positioned(
+                              top: MediaQuery.of(context).padding.top + 50,
+                              right: 20,
+                              child: GestureDetector(
+                                onTap: widget.onBackLive ??
+                                    () => handleBack(context),
+                                child: const Icon(Icons.clear,
+                                    color: AppColors.white),
+                              ),
+                            ),
+                            Positioned(
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                  20,
+                                  MediaQuery.of(context).padding.top + 50 + 65,
+                                  20,
+                                  20,
+                                ),
+                                child: UserInfoCard(
+                                  user: WalletInjectedData.user,
+                                  walletInfo: WalletInjectedData.coinWalletInfo,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
-                    const Divider(thickness: 8, color: WalletTheme.lightGrey),
                     TabBarViewWidget(
                       walletCoinComponent: const WalletPointScreen(),
                       walletDiamondComponent: walletDiamondComponent(context),

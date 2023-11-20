@@ -67,8 +67,8 @@ class RegisterJADialog extends StatelessWidget {
                 ],
               ),
               onPressed: () {
-                context.popNavigator();
-                context.startUpgradeJA();
+                // context.popNavigator();
+                // context.startUpgradeJA();
               },
               child: const Text('Đăng ký ngay',
                   style: TextStyle(

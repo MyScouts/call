@@ -35,7 +35,7 @@ class UserAsset extends StatelessWidget {
                 context.text.titleMedium?.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: AppColors.white,
+                  color: AppColors.textBlackColor,
                 ),
           ),
         ],
