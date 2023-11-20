@@ -210,4 +210,6 @@ extension DateOnlyCompare on DateTime {
 //         .endDate,
 //   );
 // }
+
+  bool get isLeafYear => year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
 }

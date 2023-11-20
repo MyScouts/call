@@ -12,6 +12,8 @@ class PDoneInformationResponse {
 
   factory PDoneInformationResponse.fromJson(Map<String, dynamic> json) =>
       _$PDoneInformationResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PDoneInformationResponseToJson(this);
 }
 
 @JsonSerializable()
@@ -22,7 +24,10 @@ class PDoneInformationData {
   final int? sex;
   final String? birthday;
   final String? identityNumber;
+  final Place? birthPlace;
+  final Place? currentPlace;
   final String? supplyDate;
+  final String? supplyAddress;
   final int? type;
   final int? height;
   final int? weight;
@@ -45,7 +50,10 @@ class PDoneInformationData {
     required this.sex,
     required this.birthday,
     required this.identityNumber,
+    required this.birthPlace,
+    required this.currentPlace,
     required this.supplyDate,
+    required this.supplyAddress,
     required this.type,
     this.academicLevel,
     this.bloodGroup,
@@ -64,6 +72,52 @@ class PDoneInformationData {
 
   factory PDoneInformationData.fromJson(Map<String, dynamic> json) =>
       _$PDoneInformationDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PDoneInformationDataToJson(this);
+
+  String get fullName => '$firstName $middleName $lastName';
+}
+
+@JsonSerializable()
+class Place {
+  final String countryName;
+  final String provinceName;
+  final String districtName;
+  final String wardName;
+  final String street;
+  final String address;
+  final String countryCode;
+  final int countryId;
+  final int provinceId;
+  final int districtId;
+  final int wardId;
+
+  Place({
+    this.countryName = '',
+    this.provinceName = '',
+    this.districtName = '',
+    this.wardName = '',
+    this.street = '',
+    this.address = '',
+    this.countryCode = '',
+    this.countryId = 0,
+    this.provinceId = 0,
+    this.districtId = 0,
+    this.wardId = 0,
+  });
+
+  factory Place.fromJson(Map<String, dynamic> json) => _$PlaceFromJson(json);
+
+  String get fullAddress {
+    String res = '';
+    if (address.isNotEmpty) res += '$address, ';
+    if (street.isNotEmpty) res += '$street, ';
+    if (wardName.isNotEmpty) res += '$wardName, ';
+    if (districtName.isNotEmpty) res += '$districtName, ';
+    if (provinceName.isNotEmpty) res += '$provinceName, ';
+    if (countryName.isNotEmpty) res += countryName;
+    return res;
+  }
 }
 
 @JsonSerializable()

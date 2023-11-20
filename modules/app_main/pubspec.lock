@@ -18,7 +18,7 @@ packages:
     source: hosted
     version: "1.3.12"
   adaptive_theme:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: adaptive_theme
       sha256: "38b433c0761d9f15017a15c9ff3e15e8905d3e9bad54a489c7939da6bdf782dd"
@@ -34,19 +34,12 @@ packages:
     source: hosted
     version: "6.2.0"
   app_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
-      path: "modules/app_core"
+      path: "../app_core"
       relative: true
     source: path
     version: "0.0.1"
-  app_main:
-    dependency: "direct main"
-    description:
-      path: "modules/app_main"
-      relative: true
-    source: path
-    version: "1.0.0+1"
   archive:
     dependency: transitive
     description:
@@ -72,7 +65,7 @@ packages:
     source: hosted
     version: "2.11.0"
   auto_size_text:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: auto_size_text
       sha256: "3f5261cd3fb5f2a9ab4e2fc3fba84fd9fcaac8821f20a1d4e71f557521b22599"
@@ -96,7 +89,7 @@ packages:
     source: hosted
     version: "2.0.10"
   bloc:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: bloc
       sha256: "3820f15f502372d979121de1f6b97bfcf1630ebff8fe1d52fb2b0bfa49be5b49"
@@ -104,7 +97,7 @@ packages:
     source: hosted
     version: "8.1.2"
   bloc_concurrency:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: bloc_concurrency
       sha256: "44535c9f429cd7e91d548cf89fde1c23a8b4b3637decdb1865bb583091a00d4e"
@@ -120,7 +113,7 @@ packages:
     source: hosted
     version: "2.1.1"
   bot_toast:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: bot_toast
       sha256: "6b93030a99a98335b8827ecd83021e92e885ffc61d261d3825ffdecdd17f3bdf"
@@ -192,7 +185,7 @@ packages:
     source: hosted
     version: "8.7.0"
   cached_network_image:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: cached_network_image
       sha256: f98972704692ba679db144261172a8e20feb145636c617af0eb4022132a6797f
@@ -216,7 +209,7 @@ packages:
     source: hosted
     version: "1.1.0"
   camera:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: camera
       sha256: "1f9010f0689774380fbcd7d6b7820a5157e8e97685fa66d619e1d1f58b3fdf93"
@@ -352,7 +345,7 @@ packages:
     source: hosted
     version: "3.0.3"
   cupertino_icons:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: cupertino_icons
       sha256: d57953e10f9f8327ce64a508a355f0b1ec902193f66288e8cb5070e7c47eeb2d
@@ -376,14 +369,14 @@ packages:
     source: hosted
     version: "0.7.10"
   design_system:
-    dependency: transitive
+    dependency: "direct main"
     description:
-      path: "modules/design_system"
+      path: "../design_system"
       relative: true
     source: path
     version: "1.0.0+1"
   dio:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: dio
       sha256: "417e2a6f9d83ab396ec38ff4ea5da6c254da71e4db765ad737a42af6930140b7"
@@ -399,7 +392,7 @@ packages:
     source: hosted
     version: "3.0.0"
   dropdown_button2:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: dropdown_button2
       sha256: b0fe8d49a030315e9eef6c7ac84ca964250155a6224d491c1365061bc974a9e1
@@ -415,7 +408,7 @@ packages:
     source: hosted
     version: "2.0.3"
   easy_device_media:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: easy_device_media
       sha256: "8b0f14e8e5cdf6790801d9efa2594b273a5eafcd518c9ce2b9679492e272c84a"
@@ -430,15 +423,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.1"
-  environments:
-    dependency: "direct main"
-    description:
-      path: "modules/app_distribution/environments"
-      relative: true
-    source: path
-    version: "0.0.1"
   equatable:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: equatable
       sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
@@ -462,7 +448,7 @@ packages:
     source: hosted
     version: "3.6.0"
   extended_nested_scroll_view:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: extended_nested_scroll_view
       sha256: "444a6f883e6e07effc7639e69a309e1fb491b6c19b095e9281714a51ace2b384"
@@ -534,7 +520,7 @@ packages:
     source: hosted
     version: "0.9.3+1"
   firebase_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: firebase_core
       sha256: "45f3f9babfc6f56fb94c3cd11584cf3c9672868228373b699b94427010e01dc3"
@@ -558,7 +544,7 @@ packages:
     source: hosted
     version: "2.8.1"
   firebase_messaging:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: firebase_messaging
       sha256: "9922476db960b4044a6e65152f2695d9d6eaa6658db9aa9915c47bf38b572359"
@@ -595,7 +581,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_analog_clock:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_analog_clock
       sha256: "5bf40195f93ff366c73c628e83fc5b380b9639121db77d30a68a12b442e89487"
@@ -603,7 +589,7 @@ packages:
     source: hosted
     version: "1.0.3"
   flutter_app_badger:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_app_badger
       sha256: "64d4a279bab862ed28850431b9b446b9820aaae0bf363322d51077419f930fa8"
@@ -611,7 +597,7 @@ packages:
     source: hosted
     version: "1.5.0"
   flutter_bloc:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_bloc
       sha256: e74efb89ee6945bcbce74a5b3a5a3376b088e5f21f55c263fc38cbdc6237faae
@@ -675,7 +661,7 @@ packages:
     source: hosted
     version: "0.1.3+2"
   flutter_keyboard_visibility:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_keyboard_visibility
       sha256: "4983655c26ab5b959252ee204c2fffa4afeb4413cd030455194ec0caa3b8e7cb"
@@ -731,7 +717,7 @@ packages:
     source: hosted
     version: "3.0.1"
   flutter_local_notifications:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_local_notifications
       sha256: "6d11ea777496061e583623aaf31923f93a9409ef8fcaeeefdd6cd78bf4fe5bb3"
@@ -768,7 +754,7 @@ packages:
     source: hosted
     version: "2.0.17"
   flutter_staggered_grid_view:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_staggered_grid_view
       sha256: "19e7abb550c96fbfeb546b23f3ff356ee7c59a019a651f8f102a4ba9b7349395"
@@ -802,15 +788,23 @@ packages:
     source: sdk
     version: "0.0.0"
   focused_menu_custom:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: focused_menu_custom
       sha256: afbadad1405101f19f651581c569d969ad150df91fbac11d2b13b331bc0ed4ad
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  freezed:
+    dependency: "direct dev"
+    description:
+      name: freezed
+      sha256: "21bf2825311de65501d22e563e3d7605dff57fb5e6da982db785ae5372ff018a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.5"
   freezed_annotation:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: freezed_annotation
       sha256: c3fd9336eb55a38cc1bbd79ab17573113a8deccd0ecbbf926cca3c62803b5c2d
@@ -826,7 +820,7 @@ packages:
     source: hosted
     version: "3.2.0"
   geocoding:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: geocoding
       sha256: e1dc0ac56666d9ed1d5a9ae5543ce9eb5986db6209cc7600103487d09192059c
@@ -858,7 +852,7 @@ packages:
     source: hosted
     version: "2.0.1"
   geolocator:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: geolocator
       sha256: e946395fc608842bb2f6c914807e9183f86f3cb787f6b8f832753e5251036f02
@@ -906,7 +900,7 @@ packages:
     source: hosted
     version: "0.2.2"
   get_it:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: get_it
       sha256: f79870884de16d689cf9a7d15eedf31ed61d750e813c538a6efb92660fea83c3
@@ -922,7 +916,7 @@ packages:
     source: hosted
     version: "2.1.2"
   google_ml_kit:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: google_ml_kit
       sha256: "208c22edf0e6c6621f4e95881e8fd08f602728f5c60ef8d845a817a948555b3e"
@@ -938,7 +932,7 @@ packages:
     source: hosted
     version: "0.10.0"
   google_mlkit_commons:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: google_mlkit_commons
       sha256: "046586b381cdd139f7f6a05ad6998f7e339d061bd70158249907358394b5f496"
@@ -1026,7 +1020,7 @@ packages:
     source: hosted
     version: "0.9.0"
   google_mlkit_text_recognition:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: google_mlkit_text_recognition
       sha256: d484de2a10961a6f0ff8b54cc92b71bfbb0e65509be0903edca0e1f9256ca4c2
@@ -1074,7 +1068,7 @@ packages:
     source: hosted
     version: "3.2.1"
   http_parser:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http_parser
       sha256: "2aa08ce0341cc9b354a498388e30986515406668dbcc4f7c950c3e715496693b"
@@ -1114,7 +1108,7 @@ packages:
     source: hosted
     version: "5.0.0"
   image_gallery_saver:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: image_gallery_saver
       sha256: "0aba74216a4d9b0561510cb968015d56b701ba1bd94aace26aacdd8ae5761816"
@@ -1122,7 +1116,7 @@ packages:
     source: hosted
     version: "2.0.3"
   image_picker:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: image_picker
       sha256: "7d7f2768df2a8b0a3cefa5ef4f84636121987d403130e70b17ef7e2cf650ba84"
@@ -1186,7 +1180,7 @@ packages:
     source: hosted
     version: "0.2.1+1"
   imagewidget:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: imagewidget
       sha256: "3631a080d523887cce2f31d52d8c7cc93f0ea11501274d50012905bd22faa5e3"
@@ -1194,7 +1188,7 @@ packages:
     source: hosted
     version: "1.1.0"
   injectable:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: injectable
       sha256: cd3c422e13270c81f64ab73c80406b2b2ed563fe59d0ff2093eb7eee63d0bbeb
@@ -1210,7 +1204,7 @@ packages:
     source: hosted
     version: "2.4.1"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
@@ -1234,7 +1228,7 @@ packages:
     source: hosted
     version: "0.6.7"
   json_annotation:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: json_annotation
       sha256: b10a7b2ff83d83c777edba3c6a0f97045ddadd56c944e1a23a3fdf43a1bf4467
@@ -1258,9 +1252,9 @@ packages:
     source: hosted
     version: "3.0.0"
   localization:
-    dependency: transitive
+    dependency: "direct main"
     description:
-      path: "modules/localization"
+      path: "../localization"
       relative: true
     source: path
     version: "0.0.1"
@@ -1313,23 +1307,23 @@ packages:
     source: hosted
     version: "1.0.4"
   mobilehub_bloc:
-    dependency: transitive
+    dependency: "direct main"
     description:
-      path: "modules/plugins/mobilehub/packages/mobilehub_bloc"
+      path: "../plugins/mobilehub/packages/mobilehub_bloc"
       relative: true
     source: path
     version: "0.0.1"
   mobilehub_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
-      path: "modules/plugins/mobilehub/packages/mobilehub_core"
+      path: "../plugins/mobilehub/packages/mobilehub_core"
       relative: true
     source: path
     version: "0.0.2"
   mobilehub_ui_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
-      path: "modules/plugins/mobilehub/packages/mobilehub_ui_core"
+      path: "../plugins/mobilehub/packages/mobilehub_ui_core"
       relative: true
     source: path
     version: "0.0.1"
@@ -1357,22 +1351,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-  package_info_plus:
-    dependency: transitive
-    description:
-      name: package_info_plus
-      sha256: "7e76fad405b3e4016cd39d08f455a4eb5199723cf594cd1b8916d47140d93017"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2.0"
-  package_info_plus_platform_interface:
-    dependency: transitive
-    description:
-      name: package_info_plus_platform_interface
-      sha256: "9bc8ba46813a4cc42c66ab781470711781940780fd8beddd0c3da62506d3a6c6"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
   path:
     dependency: transitive
     description:
@@ -1390,7 +1368,7 @@ packages:
     source: hosted
     version: "1.0.1"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       sha256: a1aa8aaa2542a6bc57e381f132af822420216c80d4781f7aa085ca3229208aaa
@@ -1438,7 +1416,7 @@ packages:
     source: hosted
     version: "2.2.1"
   pdf:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: pdf
       sha256: aa8835fcb9cfaf57ab2f1970e8548ceed3d0cb53eda7da906648f8153eaf37c9
@@ -1446,7 +1424,7 @@ packages:
     source: hosted
     version: "3.10.6"
   permission_handler:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: permission_handler
       sha256: "284a66179cabdf942f838543e10413246f06424d960c92ba95c84439154fcac8"
@@ -1513,10 +1491,10 @@ packages:
     dependency: transitive
     description:
       name: plugin_platform_interface
-      sha256: f4f88d4a900933e7267e2b353594774fc0d07fb072b47eedcd5b54e1ea3269f8
+      sha256: da3fdfeccc4d4ff2da8f8c556704c08f912542c5fb3cf2233ed75372384a034d
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.7"
+    version: "2.1.6"
   pointycastle:
     dependency: transitive
     description:
@@ -1534,7 +1512,7 @@ packages:
     source: hosted
     version: "1.5.1"
   pretty_dio_logger:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: pretty_dio_logger
       sha256: "00b80053063935cf9a6190da344c5373b9d0e92da4c944c878ff2fbef0ef6dc2"
@@ -1542,7 +1520,7 @@ packages:
     source: hosted
     version: "1.3.1"
   printing:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: printing
       sha256: ad39a42a5f83125952457dfd94f395c8cf0eb1f7759583dadb769be5c7f99d24
@@ -1582,7 +1560,7 @@ packages:
     source: hosted
     version: "1.2.3"
   pull_to_refresh:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: pull_to_refresh
       sha256: bbadd5a931837b57739cf08736bea63167e284e71fb23b218c8c9a6e042aad12
@@ -1598,7 +1576,7 @@ packages:
     source: hosted
     version: "3.0.1"
   qr_code_dart_scan:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: qr_code_dart_scan
       sha256: ab40c5e8cf09e723fdd1c24ee23ae7187e44d958cc4b1554b4cd094845ae6989
@@ -1606,7 +1584,7 @@ packages:
     source: hosted
     version: "0.7.3"
   qr_code_scanner:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: qr_code_scanner
       sha256: f23b68d893505a424f0bd2e324ebea71ed88465d572d26bb8d2e78a4749591fd
@@ -1614,7 +1592,7 @@ packages:
     source: hosted
     version: "1.0.1"
   qr_flutter:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: qr_flutter
       sha256: "5095f0fc6e3f71d08adef8feccc8cea4f12eec18a2e31c2e8d82cb6019f4b097"
@@ -1638,14 +1616,14 @@ packages:
     source: hosted
     version: "4.1.0"
   reorderable:
-    dependency: transitive
+    dependency: "direct main"
     description:
-      path: "modules/reorderable"
+      path: "../reorderable"
       relative: true
     source: path
     version: "0.0.1"
   retrofit:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: retrofit
       sha256: "04ed77c82cadb655bb9357e8d0cb9da72ff704749a2d0cfe6540dd1f1f7ca4b9"
@@ -1661,7 +1639,7 @@ packages:
     source: hosted
     version: "8.0.4"
   rxdart:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: rxdart
       sha256: "0c7c0cedd93788d996e33041ffecda924cc54389199cde4e6a34b440f50044cb"
@@ -1669,7 +1647,7 @@ packages:
     source: hosted
     version: "0.27.7"
   screenshot:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: screenshot
       sha256: "455284ff1f5b911d94a43c25e1385485cf6b4f288293eba68f15dad711c7b81c"
@@ -1710,7 +1688,7 @@ packages:
     source: hosted
     version: "3.3.1"
   shared_preferences:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: shared_preferences
       sha256: "81429e4481e1ccfb51ede496e916348668fd0921627779233bd24cc3ff6abd02"
@@ -1859,9 +1837,9 @@ packages:
     source: hosted
     version: "1.11.0"
   staggered_reorderable:
-    dependency: transitive
+    dependency: "direct main"
     description:
-      path: "modules/staggered_reorderable"
+      path: "../staggered_reorderable"
       relative: true
     source: path
     version: "0.0.2"
@@ -1938,7 +1916,7 @@ packages:
     source: hosted
     version: "1.0.1"
   top_snackbar_flutter:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: top_snackbar_flutter
       sha256: "22d14664a13db6ac714934c3382bd8d4daa57fb888a672f922df71981c5a5cb2"
@@ -1962,9 +1940,9 @@ packages:
     source: hosted
     version: "1.3.2"
   ui:
-    dependency: transitive
+    dependency: "direct main"
     description:
-      path: "modules/ui"
+      path: "../ui"
       relative: true
     source: path
     version: "0.0.2"
@@ -1996,10 +1974,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_ios
-      sha256: bba3373219b7abb6b5e0d071b0fe66dfbe005d07517a68e38d4fc3638f35c6d3
+      sha256: "4ac97281cf60e2e8c5cc703b2b28528f9b50c8f7cebc71df6bdf0845f647268a"
       url: "https://pub.dev"
     source: hosted
-    version: "6.2.1"
+    version: "6.2.0"
   url_launcher_linux:
     dependency: transitive
     description:
@@ -2080,14 +2058,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
-  version:
-    dependency: transitive
-    description:
-      name: version
-      sha256: "3d4140128e6ea10d83da32fef2fa4003fccbf6852217bb854845802f04191f94"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.2"
   visibility_detector:
     dependency: transitive
     description:

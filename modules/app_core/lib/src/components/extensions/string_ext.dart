@@ -5,6 +5,8 @@ import 'dart:io';
 
 import 'package:intl/intl.dart';
 
+import '../../../app_core.dart';
+
 extension StringExt on String {
   bool get isNotEmptyData => isNotEmpty && toUpperCase() != 'NULL';
 
@@ -102,6 +104,12 @@ extension DatetimeFormat on String {
     final DateFormat format = DateFormat(pattern ?? 'dd/MM/yyyy');
     final DateTime dateTime = format.parse(this);
     return dateTime;
+  }
+
+  String getDisplayDate([String pattern = 'yyyy-MM-dd']) {
+    final format = DateFormat(pattern);
+    final dateTime = format.parse(this);
+    return dateTime.ddMMyyyy;
   }
 }
 

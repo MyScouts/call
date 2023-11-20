@@ -28,7 +28,14 @@ PDoneInformationData _$PDoneInformationDataFromJson(
       sex: json['sex'] as int?,
       birthday: json['birthday'] as String?,
       identityNumber: json['identityNumber'] as String?,
+      birthPlace: json['birthPlace'] == null
+          ? null
+          : Place.fromJson(json['birthPlace'] as Map<String, dynamic>),
+      currentPlace: json['currentPlace'] == null
+          ? null
+          : Place.fromJson(json['currentPlace'] as Map<String, dynamic>),
       supplyDate: json['supplyDate'] as String?,
+      supplyAddress: json['supplyAddress'] as String?,
       type: json['type'] as int?,
       academicLevel: json['academicLevel'] as String?,
       bloodGroup: json['bloodGroup'] as String?,
@@ -58,7 +65,10 @@ Map<String, dynamic> _$PDoneInformationDataToJson(
       'sex': instance.sex,
       'birthday': instance.birthday,
       'identityNumber': instance.identityNumber,
+      'birthPlace': instance.birthPlace,
+      'currentPlace': instance.currentPlace,
       'supplyDate': instance.supplyDate,
+      'supplyAddress': instance.supplyAddress,
       'type': instance.type,
       'height': instance.height,
       'weight': instance.weight,
@@ -108,4 +118,32 @@ Map<String, dynamic> _$LocationDataToJson(LocationData instance) =>
       'provinceCode': instance.provinceCode,
       'districtCode': instance.districtCode,
       'wardCode': instance.wardCode,
+    };
+
+Place _$PlaceFromJson(Map<String, dynamic> json) => Place(
+      countryName: json['countryName'] as String? ?? '',
+      provinceName: json['provinceName'] as String? ?? '',
+      districtName: json['districtName'] as String? ?? '',
+      wardName: json['wardName'] as String? ?? '',
+      street: json['street'] as String? ?? '',
+      address: json['address'] as String? ?? '',
+      countryCode: json['countryCode'] as String? ?? '',
+      countryId: json['countryId'] as int? ?? 0,
+      provinceId: json['provinceId'] as int? ?? 0,
+      districtId: json['districtId'] as int? ?? 0,
+      wardId: json['wardId'] as int? ?? 0,
+    );
+
+Map<String, dynamic> _$PlaceToJson(Place instance) => <String, dynamic>{
+      'countryName': instance.countryName,
+      'provinceName': instance.provinceName,
+      'districtName': instance.districtName,
+      'wardName': instance.wardName,
+      'street': instance.street,
+      'address': instance.address,
+      'countryCode': instance.countryCode,
+      'countryId': instance.countryId,
+      'provinceId': instance.provinceId,
+      'districtId': instance.districtId,
+      'wardId': instance.wardId,
     };
