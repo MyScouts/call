@@ -37,8 +37,8 @@ class PDoneInformationData {
   final String? job;
   final String? interest;
   final String? talent;
-  final LocationData? birthPlace;
-  final LocationData? currentPlace;
+  // final LocationData? birthPlace;
+  // final LocationData? currentPlace;
   final int? protector;
   final String? protectorPDoneId;
   final String? birthCertificateUrl;
@@ -63,8 +63,8 @@ class PDoneInformationData {
     this.maritalStatus,
     this.talent,
     this.weight,
-    this.birthPlace,
-    this.currentPlace,
+    // this.birthPlace,
+    // this.currentPlace,
     this.birthCertificateUrl,
     this.protector,
     this.protectorPDoneId,
@@ -91,6 +91,9 @@ class Place {
   final int provinceId;
   final int districtId;
   final int wardId;
+  final String provinceCode;
+  final String districtCode;
+  final String wardCode;
 
   Place({
     this.countryName = '',
@@ -104,6 +107,9 @@ class Place {
     this.provinceId = 0,
     this.districtId = 0,
     this.wardId = 0,
+    this.districtCode = '',
+    this.provinceCode = '',
+    this.wardCode = '',
   });
 
   factory Place.fromJson(Map<String, dynamic> json) => _$PlaceFromJson(json);

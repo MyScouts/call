@@ -37,16 +37,18 @@ class AppCubit extends Cubit<AppState> {
           return;
         }
       }
-
-      if (_userSharePreferencesUsecase.isAuthenticated) {
-        await _authUsecase.syncUser();
-        emit(AutoLogin());
-      } else {
-        emit(UnauthorizedApp());
-      }
     } catch (e) {
       debugPrint("appInitial: $e");
-      emit(AppInitialFailed());
+      try {
+        if (_userSharePreferencesUsecase.isAuthenticated) {
+          await _authUsecase.syncUser();
+          emit(AutoLogin());
+        } else {
+          emit(UnauthorizedApp());
+        }
+      } catch (e) {
+        emit(AppInitialFailed());
+      }
     }
   }
 }
