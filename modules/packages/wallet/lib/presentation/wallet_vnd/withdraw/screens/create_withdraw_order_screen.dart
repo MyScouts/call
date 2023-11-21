@@ -17,7 +17,6 @@ import '../../../shared/widgets/tab_bar_widget.dart';
 import '../../../wallet_constant.dart';
 import '../../../wallet_diamond/bloc/wallet_diamond_bloc.dart';
 import '../../../wallet_diamond/wallet_diamond_screen.dart';
-import '../../../wallet_point/wallet_point_screen.dart';
 import '../../bank_account/bloc/bank_account_bloc.dart';
 import '../../widgets/bank_account_detail_widget.dart';
 import 'confirm_withdraw_transaction_screen.dart';
@@ -78,7 +77,7 @@ class _CreateWithdrawOrderScreenState extends State<CreateWithdrawOrderScreen>
             const Divider(thickness: 8, color: WalletTheme.lightGrey),
             TabBarViewWidget(
               walletDOneComponent: const SizedBox(),
-              walletCoinComponent: const WalletPointScreen(),
+              walletCoinComponent: const SizedBox(),
               walletDiamondComponent: BlocProvider(
                 create: (context) => WalletDiamondBloc(injector()),
                 child: const WalletDiamondScreen(),

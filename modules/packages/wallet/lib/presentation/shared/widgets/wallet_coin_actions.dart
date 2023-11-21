@@ -1,10 +1,9 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:wallet/presentation/wallet_point/wallet_point_constant.dart';
+import 'package:wallet/presentation/wallet_point/wallet_point_coodinator.dart';
 
 import '../../../core/core.dart';
-import '../../presentation.dart';
-import '../../wallet_constant.dart';
-import '../../wallet_diamond/wallet_diamond_constant.dart';
 
 class WalletCoinActions extends StatefulWidget {
   const WalletCoinActions({super.key});
@@ -30,7 +29,7 @@ class _WalletCoinActionsState extends State<WalletCoinActions> {
             ),
           ),
         ),
-        ...WalletDiamondActionType.values.map(
+        ...WalletPointActionType.values.map(
           (type) {
             return ListTile(
               onTap: () => onTap(type),
@@ -61,20 +60,13 @@ class _WalletCoinActionsState extends State<WalletCoinActions> {
     );
   }
 
-  void onTap(WalletDiamondActionType type) {
+  void onTap(WalletPointActionType type) {
     switch (type) {
-      case WalletDiamondActionType.chargeDiamondToVnd:
-        if (context.userType == UserType.isPDone) {
-          context.showRegisterJaDialog(
-            walletType: WalletType.diamond,
-            content: WalletConstant.registerJADialogText,
-          );
-        } else {
-          //TODO: navigate to charge screen
-        }
+      case WalletPointActionType.pointAgency:
+        context.pointAllAgency();
         break;
-      case WalletDiamondActionType.transactionHistory:
-        //TODO: Navigate to transaction history
+      case WalletPointActionType.transactionHistory:
+        context.pointTransactionHistory();
         break;
     }
   }

@@ -175,10 +175,10 @@ class UserInfoCard extends StatelessWidget {
           const SizedBox(width: 5),
           Text(
             resourceValue,
-            style: Theme.of(context)
-                .textTheme
-                .titleMedium
-                ?.copyWith(color: resourceType.valueColor, fontSize: 14),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: resourceType.valueColor,
+                  fontSize: 14,
+                ),
           )
         ],
       ),
@@ -198,15 +198,17 @@ class UserInfoCard extends StatelessWidget {
                     width: double.infinity,
                     height: 8,
                     decoration: BoxDecoration(
-                        color: const Color(0xFFEAEDF0),
-                        borderRadius: WalletConstant.borderRadius8),
+                      color: const Color(0xFFEAEDF0),
+                      borderRadius: WalletConstant.borderRadius8,
+                    ),
                   ),
                   Container(
-                    width: 150,
+                    width: 15,
                     height: 8,
                     decoration: BoxDecoration(
-                        color: const Color(0xFF4B84F7),
-                        borderRadius: WalletConstant.borderRadius8),
+                      color: const Color(0xFF4B84F7),
+                      borderRadius: WalletConstant.borderRadius8,
+                    ),
                   ),
                 ],
               ),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobilehub_core/mobilehub_core.dart';
 
-import '../../../../../wallet.dart';
 import '../../../../core/configuratons/configurations.dart';
 import '../../../../core/theme/wallet_theme.dart';
 import '../../../shared/widgets/app_bar.dart';
@@ -13,7 +12,6 @@ import '../../../shared/widgets/user_info_card.dart';
 import '../../../wallet_constant.dart';
 import '../../../wallet_diamond/bloc/wallet_diamond_bloc.dart';
 import '../../../wallet_diamond/wallet_diamond_screen.dart';
-import '../../../wallet_point/wallet_point_screen.dart';
 import '../../widgets/vnd_asset_status.dart';
 import '../bloc/bank_account_bloc.dart';
 
@@ -57,7 +55,7 @@ class _BankAccountsScreenState extends State<BankAccountsScreen> {
           const Divider(thickness: 8, color: WalletTheme.lightGrey),
           TabBarViewWidget(
             walletDOneComponent: const SizedBox(),
-            walletCoinComponent: const WalletPointScreen(),
+            walletCoinComponent: const SizedBox(),
             walletDiamondComponent: BlocProvider(
               create: (context) => WalletDiamondBloc(injector()),
               child: const WalletDiamondScreen(),
