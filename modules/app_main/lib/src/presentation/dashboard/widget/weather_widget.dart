@@ -139,6 +139,7 @@ class WeatherWidget extends StatelessWidget {
                       ),
                     ),
                     padding: const EdgeInsets.all(16.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 12),
                     child: child,
                   ),
                   if (enableEditMode)

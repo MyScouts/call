@@ -98,7 +98,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       for (var i = 0; i < name.length; i++) {
         if (i == 0) {
           firstName = name[i];
-        } else if (i == 1) {
+        } else if (i == 1 && name.length == 3) {
           middleName = name[i];
         } else {
           lastName = name[i];
@@ -145,7 +145,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         if (talentController.text.trim().isNotEmpty)
           "talent": talentController.text,
         "sex": gender,
-        "birthday": '${birthS[2]}-${birthS[1]}-${birthS[0]}',
+        "birthday": '${birthS[2].trim()}-${birthS[1].trim()}-${birthS[0].trim()}',
         if (idNumberController.text.trim().isNotEmpty)
           "identityNumber": idNumberController.text,
         if (subS.length == 3) "supplyDate": '${subS[2]}-${subS[1]}-${subS[0]}',
@@ -457,17 +457,6 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
               return Container();
             },
           ),
-          const SizedBox(height: 20),
-          const Text(
-            "Nghề nghiệp",
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF212121),
-              height: 20 / 14,
-              leadingDistribution: TextLeadingDistribution.even,
-            ),
-          ),
-          const SizedBox(height: 7),
           InformationFieldWidget(
             required: widget.isPDone,
             shouldEnabled: true,
@@ -517,7 +506,6 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
           //     return Container();
           //   },
           // ),
-          const SizedBox(height: 12),
           Row(
             children: [
               Expanded(

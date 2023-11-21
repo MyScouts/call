@@ -64,7 +64,6 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
       if (infoResult == null || infoResult == '') {
         // only verify face
         emit(
-
           ExtractedEKycIdCardSuccess(const {}, imageEKyc, event.meta),
         );
       } else {
@@ -96,14 +95,16 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     emit(GetListMasterLoading());
     try {
       final res = await _upgradeAccountUsecase.getListData();
-      final protectorRequested =
-          await _upgradeAccountUsecase.protectorRequested();
+      PDoneMyProtectorInformationResponse? response;
+      try {
+        response = await _upgradeAccountUsecase.protectorRequested();
+      } catch (e) {}
 
       emit(GetListMasterSuccess(
           upgradeAccount: res,
-          protector: protectorRequested.requests.isEmpty
+          protector: (response?.requests ?? []).isEmpty
               ? null
-              : protectorRequested.requests[0]));
+              : response?.requests[0]));
     } catch (e) {
       emit(GetListMasterFailure(e.toString()));
     }

@@ -104,7 +104,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           fit: StackFit.expand,
           children: [
             DashBoardBackgroundBuilder(
-              key: const Key('bg_image'),
               page: _page,
               builder: (image) => ImageWidget(image, fit: BoxFit.fill),
             ),
