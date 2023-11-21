@@ -7,6 +7,7 @@ import 'package:app_main/src/domain/usecases/dashboard_share_preferences_usecase
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_store_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_background_builder.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_base_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_community_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_ecommerce_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_personal_tab.dart';
@@ -22,11 +23,12 @@ import 'package:ui/ui.dart';
 
 class DashBoardInheritedData extends InheritedWidget {
   final PageController pageController;
-
+  final DashBoardController dashBoardController;
   const DashBoardInheritedData({
     super.key,
     required super.child,
     required this.pageController,
+    required this.dashBoardController,
   });
 
   @override
@@ -52,10 +54,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   late int _page = widget.page ?? (controller.mainPage ?? 0);
 
-  bool _showEditMode = false;
-
   bool _showAppStore = false;
   bool get authenticate => isAuthenticate.value;
+
+  late final DashBoardController dashBoardController;
 
   Widget _buildDot(BuildContext context, int index) {
     final page = _page;
@@ -70,21 +72,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     );
   }
 
-  void enableEditMode() {
-    setState(() {
-      _showEditMode = true;
-    });
-  }
-
-  void disableEditMode() {
-    setState(() {
-      _showEditMode = false;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
+    dashBoardController = DashBoardController();
     NotificationCenter.subscribe(
       channel: showAppStore,
       observer: this,
@@ -100,11 +91,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   void dispose() {
     super.dispose();
     NotificationCenter.unsubscribe(channel: showAppStore, observer: this);
+    dashBoardController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return DashBoardInheritedData(
+      dashBoardController: dashBoardController,
       pageController: _pageController,
       child: Scaffold(
         body: Stack(
@@ -122,44 +115,37 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
-                    child: StatusBarWidget(
-                      enableEditMode: _showEditMode,
-                      openAppStore: () {
-                        setState(() {
-                          _showAppStore = true;
-                        });
-                      },
-                      openNotification: () {
-                        if (!authenticate) {
-                          context.requiredLogin();
-                          return;
-                        }
-                        notificationKey.currentState?.forward();
-                      },
-                      onCanceled: () {
-                        setState(() {
-                          _showEditMode = false;
-                        });
-                        NotificationCenter.post(channel: cancelEditMode);
+                    child: ListenableBuilder(
+                      listenable: dashBoardController,
+                      builder: (_, __) {
+                        return StatusBarWidget(
+                          enableEditMode: dashBoardController.enableEditMode,
+                          openAppStore: () {
+                            setState(() {
+                              _showAppStore = true;
+                            });
+                          },
+                          openNotification: () {
+                            if (!authenticate) {
+                              context.requiredLogin();
+                              return;
+                            }
+                            notificationKey.currentState?.forward();
+                          },
+                          onCanceled: () {
+                            dashBoardController.enableEditMode = false;
+                          },
+                        );
                       },
                     ),
                   ),
                   Expanded(
                     child: PageView(
                       controller: _pageController,
-                      children: [
-                        DashBoardCommunityTab(
-                          enableEditMode: enableEditMode,
-                          disableEditMode: disableEditMode,
-                        ),
-                        DashBoardPersonalTab(
-                          enableEditMode: enableEditMode,
-                          disableEditMode: disableEditMode,
-                        ),
-                        DashBoardEcommerceTab(
-                          enableEditMode: enableEditMode,
-                          disableEditMode: disableEditMode,
-                        ),
+                      children: const [
+                        DashBoardCommunityTab(),
+                        DashBoardPersonalTab(),
+                        DashBoardEcommerceTab(),
                       ],
                       onPageChanged: (page) {
                         setState(() {

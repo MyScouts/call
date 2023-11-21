@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
@@ -17,25 +18,13 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
         S extends StatefulWidget> extends State<S>
     with AutomaticKeepAliveClientMixin {
   late final T bloc;
-  late final DashBoardController dashBoardController;
   bool _isDragging = false;
-
-  void enableEditMode();
-
-  void disableEditMode();
+  late final DashBoardController dashBoardController;
 
   @override
   void initState() {
     bloc = getIt<T>();
-    dashBoardController = DashBoardController();
     super.initState();
-    dashBoardController.addListener(() {
-      if (dashBoardController.enableEditMode) {
-        enableEditMode();
-      } else {
-        disableEditMode();
-      }
-    });
   }
 
   @override
@@ -73,23 +62,9 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
       },
     );
 
-    NotificationCenter.subscribe(
-      channel: cancelEditMode,
-      observer: this,
-      onNotification: (data) {
-        if (!isPage) return;
-        dashBoardController.enableEditMode = false;
-      },
-    );
-
-    NotificationCenter.subscribe(
-      channel: showEditMode,
-      observer: this,
-      onNotification: (data) {
-        if (!isPage) return;
-        dashBoardController.enableEditMode = true;
-      },
-    );
+    final wi = context.findAncestorWidgetOfExactType<DashBoardInheritedData>();
+    if(wi == null) throw Exception('DashBoardInheritedData is not null');
+    dashBoardController = wi.dashBoardController;
   }
 
   bool get isPage {
@@ -113,15 +88,6 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
       channel: changeGroupEvent,
       observer: this,
     );
-    NotificationCenter.unsubscribe(
-      channel: cancelEditMode,
-      observer: this,
-    );
-    NotificationCenter.unsubscribe(
-      channel: showEditMode,
-      observer: this,
-    );
-    dashBoardController.dispose();
     super.dispose();
   }
 
@@ -153,7 +119,8 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
   Widget build(BuildContext context) {
     super.build(context);
     return BlocProvider(
-      create: (_) => bloc,
+      create: (_) =>
+          bloc..userId = context.read<UserCubit>().currentUser?.id ?? 0,
       child: BlocBuilder<T, DashboardBaseState>(
         buildWhen: (_, __) {
           if (_isDragging) return false;
@@ -170,14 +137,10 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
             builder: (context, constraints) {
               return GestureDetector(
                 onTap: () {
-                  setState(() {
-                    dashBoardController.enableEditMode = false;
-                  });
+                  dashBoardController.enableEditMode = false;
                 },
                 onLongPress: () {
-                  setState(() {
-                    dashBoardController.enableEditMode = true;
-                  });
+                  dashBoardController.enableEditMode = true;
                 },
                 child: SizedBox(
                   height: constraints.maxHeight,

@@ -32,6 +32,15 @@ abstract class DashboardBaseBloc
 
   String cacheKey = '';
 
+  int? _userId;
+
+  set userId(int value) {
+    _userId = value;
+  }
+
+  String get key => '$cacheKey $_userId';
+
+
   void onInsertItem(
     InsertItem event,
     Emitter<DashboardBaseState> emit,
@@ -52,7 +61,7 @@ abstract class DashboardBaseBloc
       list = list.where((e) => !gIds.contains(e.id)).toList();
     }
     dashboardSharePreferenceUseCase.saveDashboardItems(
-      cacheKey,
+      key,
       list.map((e) => e).toList(),
     );
     emit(DashboardBaseFetchDataSuccess(items: list));
@@ -70,7 +79,7 @@ abstract class DashboardBaseBloc
       return e;
     }).toList();
     dashboardSharePreferenceUseCase.saveDashboardItems(
-      cacheKey,
+      key,
       result.map((e) => e).toList(),
     );
     emit(DashboardBaseFetchDataSuccess(items: result));
@@ -90,7 +99,7 @@ abstract class DashboardBaseBloc
       return e;
     }).toList();
     dashboardSharePreferenceUseCase.saveDashboardItems(
-      cacheKey,
+      key,
       result.map((e) => e).toList(),
     );
     emit(DashboardBaseFetchDataSuccess(items: result));
@@ -100,7 +109,7 @@ abstract class DashboardBaseBloc
     _FetchDashBoardItems event,
     Emitter<DashboardBaseState> emit,
   ) {
-    final res = dashboardSharePreferenceUseCase.getDashBoardItems(cacheKey);
+    final res = dashboardSharePreferenceUseCase.getDashBoardItems(key);
     if (res.isEmpty) {
       setDashboardDefault();
       return;
@@ -123,7 +132,7 @@ abstract class DashboardBaseBloc
       list = list.where((e) => !gIds.contains(e.id)).toList();
     }
     dashboardSharePreferenceUseCase.saveDashboardItems(
-      cacheKey,
+      key,
       list.map((e) => e).toList(),
     );
     emit(DashboardBaseFetchDataSuccess(items: list));
@@ -137,7 +146,7 @@ abstract class DashboardBaseBloc
     final s = state as DashboardBaseFetchDataSuccess;
     final list = s.items.where((e) => e.id != event.item.id).toList();
     dashboardSharePreferenceUseCase.saveDashboardItems(
-      cacheKey,
+      key,
       list.map((e) => e).toList(),
     );
     emit(DashboardBaseFetchDataSuccess(items: list));
@@ -146,7 +155,7 @@ abstract class DashboardBaseBloc
   void onChangeItem(ChangeItem event, Emitter<DashboardBaseState> emit) {
     if (state is DashboardBaseInitial) return;
     final list = event.item.map((e) => e).toList();
-    dashboardSharePreferenceUseCase.saveDashboardItems(cacheKey, list);
+    dashboardSharePreferenceUseCase.saveDashboardItems(key, list);
     emit(DashboardBaseFetchDataSuccess(items: list));
   }
 
