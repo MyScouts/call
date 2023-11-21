@@ -7,7 +7,7 @@ import 'wallet_point_constant.dart';
 import 'wallet_point_coodinator.dart';
 
 class WalletPointScreen extends StatelessWidget {
-  const WalletPointScreen({Key? key}) : super(key: key);
+  const WalletPointScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

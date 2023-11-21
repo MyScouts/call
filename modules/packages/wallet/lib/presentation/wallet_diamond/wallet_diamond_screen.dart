@@ -10,7 +10,7 @@ import 'wallet_diamond_constant.dart';
 import 'wallet_diamond_coodinator.dart';
 
 class WalletDiamondScreen extends StatelessWidget {
-  const WalletDiamondScreen({Key? key, this.isPIP = false}) : super(key: key);
+  const WalletDiamondScreen({super.key, this.isPIP = false});
   final bool isPIP; //handle close popup register ja in PIP Live
 
   @override
@@ -21,13 +21,14 @@ class WalletDiamondScreen extends StatelessWidget {
           context.diamondTransactionHistory();
         }
       },
-      child: Navigator(
-        key: WalletDiamondNestedRoute.navigatorKey,
-        initialRoute: WalletDiamondNestedRoute.root,
-        //handle close popup register ja in PIP Live
-        onGenerateRoute: (settings) =>
-            WalletDiamondNestedRoute.generateMainRoute(settings, isPIP: isPIP),
-      ),
+      child: const WalletDiamondDefaultScreen(),
+      // child: Navigator(
+      //   key: WalletDiamondNestedRoute.navigatorKey,
+      //   initialRoute: WalletDiamondNestedRoute.root,
+      //   //handle close popup register ja in PIP Live
+      //   onGenerateRoute: (settings) =>
+      //       WalletDiamondNestedRoute.generateMainRoute(settings, isPIP: isPIP),
+      // ),
     );
   }
 }
@@ -35,8 +36,7 @@ class WalletDiamondScreen extends StatelessWidget {
 class WalletDiamondDefaultScreen extends StatelessWidget {
   final bool isPIP; //handle close popup register ja in PIP Live
 
-  const WalletDiamondDefaultScreen({Key? key, this.isPIP = false})
-      : super(key: key);
+  const WalletDiamondDefaultScreen({super.key, this.isPIP = false});
 
   @override
   Widget build(BuildContext context) {

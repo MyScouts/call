@@ -1,3 +1,7 @@
+import 'package:design_system/design_system.dart';
+import 'package:flutter/material.dart';
+import 'package:imagewidget/imagewidget.dart';
+
 enum WalletDiamondActionType {
   chargeDiamondToVnd,
   transactionHistory,
@@ -10,6 +14,24 @@ extension WalletDiamondActionTypeName on WalletDiamondActionType {
         return 'Đổi kim cương sang VNĐ';
       case WalletDiamondActionType.transactionHistory:
         return 'Lịch sử giao dịch';
+    }
+  }
+
+  Widget get icon {
+    switch (this) {
+      case WalletDiamondActionType.chargeDiamondToVnd:
+        return ImageWidget(ImageConstants.imgChargeDiamond, width: 40);
+      case WalletDiamondActionType.transactionHistory:
+        return ImageWidget(ImageConstants.imgTransactionHistory, width: 40);
+    }
+  }
+
+  String get desc {
+    switch (this) {
+      case WalletDiamondActionType.chargeDiamondToVnd:
+        return 'Quy đổi từ Kim Cương sang VNĐ';
+      case WalletDiamondActionType.transactionHistory:
+        return 'Xem chi tiết lịch sử các giao dịch';
     }
   }
 }

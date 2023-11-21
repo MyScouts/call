@@ -5,15 +5,13 @@ import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:wallet/core/core.dart';
 import 'package:wallet/presentation/presentation.dart';
-
-import '../../wallet.dart';
-import '../core/theme/wallet_theme.dart';
+import 'package:wallet/presentation/shared/widgets/wallet_diamond_actions.dart';
 import 'shared/bloc/wallet_bloc.dart';
-import 'shared/widgets/app_bar.dart';
 import 'shared/widgets/tab_bar_widget.dart';
+import 'shared/widgets/wallet_coin_actions.dart';
+import 'shared/widgets/wallet_diamond_resource_builder.dart';
+import 'shared/widgets/wallet_vnd_resource_builder.dart';
 import 'wallet_diamond/bloc/wallet_diamond_bloc.dart';
-import 'wallet_diamond/wallet_diamond_screen.dart';
-import 'wallet_point/wallet_point_screen.dart';
 import 'wallet_vnd/widgets/vnd_asset_status.dart';
 
 class WalletScreen extends StatefulWidget {
@@ -129,7 +127,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       walletDOneComponent: const Center(
                         child: Text('Tính năng này đang được phát triển'),
                       ),
-                      walletCoinComponent: const WalletPointScreen(),
+                      walletCoinComponent: walletCoinComponent(context),
                       walletDiamondComponent: walletDiamondComponent(context),
                       walletVndComponent: walletVndComponent(context),
                     )
@@ -143,22 +141,38 @@ class _WalletScreenState extends State<WalletScreen> {
     );
   }
 
+  Widget walletCoinComponent(BuildContext context) {
+    return const SingleChildScrollView(
+      child: Column(
+        children: [
+          SizedBox(height: 12),
+          WalletCoinActions(),
+        ],
+      ),
+    );
+  }
+
   Widget walletDiamondComponent(BuildContext context) {
-    return BlocProvider(
-      create: (context) => WalletDiamondBloc(injector()),
-      child: WalletDiamondScreen(
-        isPIP: widget.onBackLive != null,
-        //handle close popup register ja in PIP Live
+    return const SingleChildScrollView(
+      child: Column(
+        children: [
+          WalletDiamondResourceBuilder(),
+          SizedBox(height: 12),
+          WalletDiamondActions(),
+        ],
       ),
     );
   }
 
   Widget walletVndComponent(BuildContext context) {
-
-    return const Column(
-      children: [
-        Expanded(child: WalletVNDActions()),
-      ],
+    return const SingleChildScrollView(
+      child: Column(
+        children: [
+          WalletVNDResourceBuilder(),
+          SizedBox(height: 12),
+          WalletVNDActions(),
+        ],
+      ),
     );
 
     return Builder(

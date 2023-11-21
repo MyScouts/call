@@ -78,6 +78,7 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget>
               const SizedBox(height: 22),
               Expanded(
                 child: PageView(
+                  physics: const NeverScrollableScrollPhysics(),
                   controller: _pageCtrl,
                   children: [
                     widget.walletDOneComponent,

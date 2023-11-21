@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:wallet/core/core.dart';
 
-import '../../wallet.dart';
-import '../core/configuratons/configurations.dart';
-
 enum UserType { isDefault, isPDone, isJA }
 
 extension UserExt on BuildContext {

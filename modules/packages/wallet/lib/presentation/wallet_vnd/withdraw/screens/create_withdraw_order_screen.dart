@@ -8,12 +8,10 @@ import 'package:ui/ui.dart';
 import 'package:wallet/presentation/presentation.dart';
 import 'package:wallet/presentation/shared/widgets/toast_message/toast_message.dart';
 
-import '../../../../../wallet.dart';
 import '../../../../core/configuratons/configurations.dart';
 import '../../../../core/theme/wallet_theme.dart';
 import '../../../../core/utils/input_formatter.dart';
 import '../../../../domain/entities/wallet/bank_account.dart';
-import '../../../shared/widgets/app_bar.dart';
 import '../../../shared/widgets/gradiant_button.dart';
 import '../../../shared/widgets/tab_bar_widget.dart';
 import '../../../wallet_constant.dart';
@@ -182,18 +180,18 @@ class _CreateWithdrawOrderScreenState extends State<CreateWithdrawOrderScreen>
                                   color: WalletTheme.lightGrey, width: 1),
                             ),
                           ),
-                          child: UserAsset(
-                            spaceBetween: 10,
-                            type: WalletType.live,
-                            iconWidth: 30,
-                            amount: info.availableVLive
-                                .toAppCurrencyString(isWithSymbol: false),
-                            textStyle: context.text.titleMedium?.copyWith(
-                              color: WalletTheme.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                          // child: UserAsset(
+                          //   spaceBetween: 10,
+                          //   type: WalletType.live,
+                          //   iconWidth: 30,
+                          //   amount: info.availableVLive
+                          //       .toAppCurrencyString(isWithSymbol: false),
+                          //   textStyle: context.text.titleMedium?.copyWith(
+                          //     color: WalletTheme.black,
+                          //     fontSize: 16,
+                          //     fontWeight: FontWeight.w500,
+                          //   ),
+                          // ),
                         ),
                       ),
                       Expanded(
@@ -208,18 +206,18 @@ class _CreateWithdrawOrderScreenState extends State<CreateWithdrawOrderScreen>
                                   color: WalletTheme.lightGrey, width: 1),
                             ),
                           ),
-                          child: UserAsset(
-                            type: WalletType.vshop,
-                            spaceBetween: 10,
-                            iconHeight: 25,
-                            amount: info.availableVShop
-                                .toAppCurrencyString(isWithSymbol: false),
-                            textStyle: context.text.titleMedium?.copyWith(
-                              color: WalletTheme.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                          // child: UserAsset(
+                          //   type: WalletType.vshop,
+                          //   spaceBetween: 10,
+                          //   iconHeight: 25,
+                          //   amount: info.availableVShop
+                          //       .toAppCurrencyString(isWithSymbol: false),
+                          //   textStyle: context.text.titleMedium?.copyWith(
+                          //     color: WalletTheme.black,
+                          //     fontSize: 16,
+                          //     fontWeight: FontWeight.w500,
+                          //   ),
+                          // ),
                         ),
                       ),
                     ],
