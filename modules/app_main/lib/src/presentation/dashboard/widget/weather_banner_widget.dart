@@ -1,4 +1,3 @@
-import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/presentation/dashboard/widget/weather_bloc_builder.dart';
 import 'package:app_main/src/presentation/dashboard/widget/weather_location_builder.dart';
 import 'package:design_system/design_system.dart';
@@ -348,6 +347,7 @@ class WeatherBannerWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(22.0),
                       color: Colors.white,
                     ),
+                    margin: const EdgeInsets.symmetric(horizontal: 12),
                     padding: const EdgeInsets.all(16.0),
                     child: child,
                   ),
