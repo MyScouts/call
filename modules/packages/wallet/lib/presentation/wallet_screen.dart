@@ -47,10 +47,13 @@ class _WalletScreenState extends State<WalletScreen> {
           bloc: bloc,
           listener: (context, state) {
             state.whenOrNull(
-              needToRegisterJA: (walletType) => context.showRegisterJaDialog(
-                walletType: walletType,
-                isPipLive: widget.onBackLive != null,
-              ),
+              needToRegisterJA: (walletType) {
+                //TODO: check JA
+                // return context.showRegisterJaDialog(
+                //   walletType: walletType,
+                //   isPipLive: widget.onBackLive != null,
+                // );
+              },
               reloadDiamondWalletInfoSuccess: () {
                 bloc.add(const WalletEvent.getCoinWalletInfo());
               },
@@ -123,6 +126,9 @@ class _WalletScreenState extends State<WalletScreen> {
                       },
                     ),
                     TabBarViewWidget(
+                      walletDOneComponent: const Center(
+                        child: Text('Tính năng này đang được phát triển'),
+                      ),
                       walletCoinComponent: const WalletPointScreen(),
                       walletDiamondComponent: walletDiamondComponent(context),
                       walletVndComponent: walletVndComponent(context),
@@ -148,6 +154,13 @@ class _WalletScreenState extends State<WalletScreen> {
   }
 
   Widget walletVndComponent(BuildContext context) {
+
+    return const Column(
+      children: [
+        Expanded(child: WalletVNDActions()),
+      ],
+    );
+
     return Builder(
       builder: (context) {
         bloc.add(const WalletEvent.getVndWalletInfo());

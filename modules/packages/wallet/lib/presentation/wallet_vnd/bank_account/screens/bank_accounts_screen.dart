@@ -56,6 +56,7 @@ class _BankAccountsScreenState extends State<BankAccountsScreen> {
           ),
           const Divider(thickness: 8, color: WalletTheme.lightGrey),
           TabBarViewWidget(
+            walletDOneComponent: const SizedBox(),
             walletCoinComponent: const WalletPointScreen(),
             walletDiamondComponent: BlocProvider(
               create: (context) => WalletDiamondBloc(injector()),

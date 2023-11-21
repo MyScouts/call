@@ -79,6 +79,7 @@ class _CreateWithdrawOrderScreenState extends State<CreateWithdrawOrderScreen>
             ),
             const Divider(thickness: 8, color: WalletTheme.lightGrey),
             TabBarViewWidget(
+              walletDOneComponent: const SizedBox(),
               walletCoinComponent: const WalletPointScreen(),
               walletDiamondComponent: BlocProvider(
                 create: (context) => WalletDiamondBloc(injector()),

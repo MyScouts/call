@@ -64,6 +64,8 @@ class WalletTheme {
   static const Color bgColor = Color(0xFFF2F3F4);
 
   static final Color shadowColor = const Color(0xFF212121).withOpacity(0.08);
+  static const Color textBoldColor = Color(0xFF101B28);
+  static const Color subtitleColor = Color(0xFFA6A6A6);
 }
 
 extension WalletThemeExt on BuildContext {

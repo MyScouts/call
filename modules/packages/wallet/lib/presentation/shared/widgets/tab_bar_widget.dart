@@ -7,6 +7,7 @@ class TabBarViewWidget extends StatefulWidget {
   final Widget walletCoinComponent;
   final Widget walletVndComponent;
   final Widget walletDiamondComponent;
+  final Widget walletDOneComponent;
   final int initialIndex;
 
   const TabBarViewWidget({
@@ -14,6 +15,7 @@ class TabBarViewWidget extends StatefulWidget {
     required this.walletCoinComponent,
     required this.walletDiamondComponent,
     required this.walletVndComponent,
+    required this.walletDOneComponent,
     this.initialIndex = 0,
   });
 
@@ -78,11 +80,10 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget>
                 child: PageView(
                   controller: _pageCtrl,
                   children: [
+                    widget.walletDOneComponent,
                     widget.walletCoinComponent,
                     widget.walletDiamondComponent,
-                    widget.walletDiamondComponent,
-                    widget.walletDiamondComponent,
-                    // widget.walletVndComponent
+                    widget.walletVndComponent
                   ],
                 ),
               ),

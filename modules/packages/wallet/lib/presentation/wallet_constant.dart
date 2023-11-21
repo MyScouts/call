@@ -109,8 +109,8 @@ extension WalletTypeExt on WalletType {
 
 enum WalletVNDActionType {
   bankAccountInfo,
-  withdrawalOrder,
   transactionHistory,
+  withdrawalOrder,
 }
 
 extension WalletVNDActionTypeExt on WalletVNDActionType {
@@ -122,6 +122,28 @@ extension WalletVNDActionTypeExt on WalletVNDActionType {
         return 'Đặt lệnh rút tiền';
       case WalletVNDActionType.transactionHistory:
         return 'Lịch sử giao dịch';
+    }
+  }
+
+  String get desc {
+    switch (this) {
+      case WalletVNDActionType.bankAccountInfo:
+        return 'Bạn có thể liên kết thêm ngân hàng ở đây';
+      case WalletVNDActionType.withdrawalOrder:
+        return 'Bạn có thể đặt lệnh rút tiền tại đây';
+      case WalletVNDActionType.transactionHistory:
+        return 'Xem chi tiết lịch sử các giao dịch';
+    }
+  }
+
+  Widget get icon {
+    switch (this) {
+      case WalletVNDActionType.bankAccountInfo:
+        return ImageWidget(ImageConstants.imgBankInfo, width: 40);
+      case WalletVNDActionType.withdrawalOrder:
+        return ImageWidget(ImageConstants.imgWithDraw, width: 40);
+      case WalletVNDActionType.transactionHistory:
+        return ImageWidget(ImageConstants.imgTransactionHistory, width: 40);
     }
   }
 }

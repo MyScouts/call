@@ -72,6 +72,9 @@ class ImageConstants {
   static String icWalletDDone = ImageApp.icWalletDDone.path;
   static String icWalletDiamond = ImageApp.icWalletDiamond.path;
   static String icWalletVnd = ImageApp.icWalletVnd.path;
+  static String imgBankInfo = ImageApp.imgBankInfo.path;
+  static String imgTransactionHistory = ImageApp.imgTransactionHistory.path;
+  static String imgWithDraw = ImageApp.imgWithDraw.path;
 }
 
 enum ImageApp {
@@ -145,7 +148,10 @@ enum ImageApp {
   icWalletCoin('assets/images/icWalletCoin.png'),
   icWalletDDone('assets/images/icWalletDDone.png'),
   icWalletDiamond('assets/images/icWalletDiamond.png'),
-  icWalletVnd('assets/images/icWalletVnd.png');
+  icWalletVnd('assets/images/icWalletVnd.png'),
+  imgBankInfo('assets/images/imgBankInfo.png'),
+  imgTransactionHistory('assets/images/imgTransactionHistory.png'),
+  imgWithDraw('assets/images/imgWithDraw.png');
 
   const ImageApp(this.path);
 
