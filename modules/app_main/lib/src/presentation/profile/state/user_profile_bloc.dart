@@ -57,8 +57,6 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
     final uploadImage =
         await upgradeAccountUsecase.uploadBirthCer(XFile(file.path), 'bg');
 
-    print(uploadImage);
-
     emit(state.copyWith(
       user: state.user?.copyWith(
         defaultBackground: uploadImage,
@@ -94,7 +92,7 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
   ) async {
     AppCoordinator.root.currentContext?.showLoading();
     try {
-      final res = await useCase.updateNonePNoneDoneProfile(event.payload);
+      final res = await useCase.updateNonePNoneDoneProfile(event.data);
       AppCoordinator.root.currentContext?.hideLoading();
       AppCoordinator.root.currentContext?.showToastMessage(
         'Cập nhật thông tin thành công',
@@ -181,9 +179,9 @@ abstract class UserProfileEvent {}
 class _FetchData extends UserProfileEvent {}
 
 class SubmitDataNonePDone extends UserProfileEvent {
-  final UpdateNonePDoneProfilePayload payload;
+  final Map<String, dynamic> data;
 
-  SubmitDataNonePDone(this.payload);
+  SubmitDataNonePDone(this.data);
 }
 
 class SubmitDataPDone extends UserProfileEvent {

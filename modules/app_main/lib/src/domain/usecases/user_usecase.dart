@@ -74,14 +74,15 @@ class UserUsecase {
     return _userRepository.onboarding();
   }
 
-  Future<UpdateNonePDoneProfileReponse> updatePDoneProfile(UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload) {
+  Future<UpdateNonePDoneProfileReponse> updatePDoneProfile(
+      UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload) {
     return _userRepository.updatePDoneProfile(updateNonePDoneProfilePayload);
   }
 
   Future<UpdateNonePDoneProfileReponse> updateNonePNoneDoneProfile(
-      UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload) {
+      Map<String, dynamic> data) {
     return _userRepository
-        .updateNonePDoneProfile(updateNonePDoneProfilePayload);
+        .updateNonePDoneProfile(data);
   }
 
   Future<UpdateNonePDoneProfileReponse> getPDoneProfile() {
