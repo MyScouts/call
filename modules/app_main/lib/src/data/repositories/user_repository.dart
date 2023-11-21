@@ -9,30 +9,41 @@ import '../models/payloads/user/user_action_payload.dart';
 
 abstract class UserRepository {
   Future<User?> getProfile();
+
   Future<User?> getUserById({required int id});
+
   Future reportUser({
     required int id,
     required ReportUserPayload payload,
   });
+
   Future<FollowUserResponse> followUser({
     required FollowUserPayload payload,
   });
+
   Future unFollow({
     required UnFollowPayload payload,
   });
+
   Future blockUser({required int userId});
 
   Future deleteUser({
     required int userId,
     required DeleteUserPayload payload,
   });
+
   Future<bool> genOtp();
 
   Future<SearchUserResponse> searchUser(SearchUserPayload query);
 
   Future<OnboardingResponse> onboarding();
-  Future<UpdateNonePDoneProfileReponse> updatePDoneProfile(UpdateNonePDoneProfilePayload updatePDoneProfilePayload);
-  Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload);
+
+  Future<UpdateNonePDoneProfileReponse> updatePDoneProfile(
+      UpdateNonePDoneProfilePayload updatePDoneProfilePayload);
+
+  Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(
+      Map<String, dynamic> data);
+
   Future<UpdateNonePDoneProfileReponse> getPDoneProfile();
 
   Future<List<User>> listFriends();

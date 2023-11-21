@@ -81,8 +81,8 @@ class AuthRepositoryImpl extends UserRepository {
 
   @override
   Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(
-      UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload) {
-    return _userAPI.updateNonePDoneProfile(updateNonePDoneProfilePayload);
+      Map<String, dynamic> data) {
+    return _userAPI.updateNonePDoneProfile(data);
   }
 
   @override

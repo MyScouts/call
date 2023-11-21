@@ -86,7 +86,7 @@ abstract class UserApi {
 
   @PATCH(UserApiConstants.updateNonePDoneProfile)
   Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(
-      @Body() UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload);
+      @Body() Map<String, dynamic> data);
 
   @GET(UserApiConstants.listFriends)
   Future<ListFriendUserResponse> listFriends();

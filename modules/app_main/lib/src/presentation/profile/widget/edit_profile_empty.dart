@@ -1,14 +1,11 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/domain/entities/bank.dart';
 import 'package:app_main/src/domain/entities/update_account/place/country.dart';
 import 'package:app_main/src/domain/entities/update_account/place/district.dart';
 import 'package:app_main/src/domain/entities/update_account/place/province.dart';
 import 'package:app_main/src/domain/entities/update_account/place/ward.dart';
-import 'package:app_main/src/domain/entities/update_account/update_pdone_birth_place_payload_2.dart';
 import 'package:app_main/src/domain/entities/update_account/update_place_information_payload.dart';
-import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
 import 'package:app_main/src/presentation/information_profile/bloc/place_information_2/place_information_2_bloc.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/bank_dropdown.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/bloodtype_dropdown.dart';
@@ -21,7 +18,6 @@ import 'package:app_main/src/presentation/information_profile/widgets/provinces_
 import 'package:app_main/src/presentation/information_profile/widgets/update_information_profile_mixin.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/ward_dropdown.dart';
 import 'package:app_main/src/presentation/profile/state/user_profile_bloc.dart';
-import 'package:app_main/src/presentation/shared/extensions/validation_extension.dart';
 import 'package:app_main/src/presentation/upgrade_account/place_information_constant.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/bloc/place_information/place_information_bloc.dart';
@@ -77,9 +73,9 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
   String bloodType = "";
   String martialStatus = "";
   String edu = "";
-  String jobName = "";
-  String talentName = '';
-  String hobbyName = '';
+  final jobController = TextEditingController();
+  final talentController = TextEditingController();
+  final hobbyController = TextEditingController();
 
   late final userBloc = context.read<UserProfileBloc>();
 
@@ -93,137 +89,11 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
 
   void validate() {
     if (!widget.isPDone) {
-      if (context.validateEmptyInfo(
-            fullNameController.text,
-            'Vui lòng nhập họ và tên',
-          ) !=
-          null) {
-        context.showToastMessage('Vui lòng nhập tên', ToastMessageType.error);
-        return;
-      }
-      if (context.validateNicknameInfo(
-            nickNameController.text,
-            'Vui lòng nhập nick name',
-          ) !=
-          null) {
-        context.showToastMessage('Vui lòng nick name', ToastMessageType.error);
-        return;
-      }
-      if (birthDayController.text.trim().isEmpty) {
-        context.showToastMessage(
-          'Vui lòng chọn ngày sinh',
-          ToastMessageType.error,
-        );
-        return;
-      }
-      if (context.validateEmailInfo(
-            emailController.text,
-            'Địa chỉ email không hợp lệ',
-          ) !=
-          null) {
-        context.showToastMessage(
-          'Địa chỉ email không hợp lệ',
-          ToastMessageType.error,
-        );
-        return;
-      }
-      if (realAddress.text.isEmpty) {
-        context.showToastMessage(
-            'Vui lòng nhập địa chỉ', ToastMessageType.error);
-        return;
-      }
-      if (context.validateEmptyInfo(
-            idNumberController.text,
-            'Vui lòng nhập số ID/CCCD/HC',
-          ) !=
-          null) {
-        context.showToastMessage(
-          'Vui lòng nhập số ID/CCCD/HC',
-          ToastMessageType.error,
-        );
-        return;
-      }
-      if (context.validateEmptyInfo(
-            placeOfNumberController.text,
-            'Vui lòng nhập nơi cấp',
-          ) !=
-          null) {
-        context.showToastMessage(
-          'Vui lòng nhập nơi cấp',
-          ToastMessageType.error,
-        );
-        return;
-      }
-      if (context.validateEmptyInfo(
-            bankNumberController.text,
-            'Vui lòng nhập số tài khoản',
-          ) !=
-          null) {
-        context.showToastMessage(
-          'Vui lòng nhập số tài khoản',
-          ToastMessageType.error,
-        );
-        return;
-      }
-      if (context.validateEmptyInfo(
-            bankAccountHolderController.text,
-            'Vui lòng nhập tên chủ tài khoản',
-          ) !=
-          null) {
-        context.showToastMessage(
-          'Vui lòng nhập tên chủ tài khoản',
-          ToastMessageType.error,
-        );
-        return;
-      }
-      if (edu.trim().isEmpty) {
-        context.showToastMessage(
-          'Vui lòng chọn học vấn',
-          ToastMessageType.error,
-        );
-        return;
-      }
-      if (jobName.trim().isEmpty) {
-        context.showToastMessage(
-          'Vui lòng chọn nghề nghiệp',
-          ToastMessageType.error,
-        );
-        return;
-      }
-      if (bloodType.trim().isEmpty) {
-        context.showToastMessage(
-          'Vui lòng chọn nhóm máu',
-          ToastMessageType.error,
-        );
-        return;
-      }
-
-      if (martialStatus.trim().isEmpty) {
-        context.showToastMessage(
-          'Vui lòng chọn tình trạng hôn nhân',
-          ToastMessageType.error,
-        );
-        return;
-      }
-      if (talentName.trim().isEmpty) {
-        context.showToastMessage(
-          'Vui lòng chọn năng khiếu',
-          ToastMessageType.error,
-        );
-        return;
-      }
-      if (hobbyName.trim().isEmpty) {
-        context.showToastMessage(
-          'Vui lòng chọn sở thích',
-          ToastMessageType.error,
-        );
-        return;
-      }
       String firstName = '';
       String middleName = '';
       String lastName = '';
 
-      final name = fullNameController.text.split(' ');
+      final name = fullNameController.text.trim().split(' ');
 
       for (var i = 0; i < name.length; i++) {
         if (i == 0) {
@@ -239,47 +109,51 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
 
       List subS = supplyDateX.split('/');
 
-      if(subS.length != 3) {
+      if (subS.length != 3) {
         subS = supplyDateX.split('-');
         subS = subS.reversed.toList();
       }
 
-      context.read<UserProfileBloc>().add(SubmitDataNonePDone(
-            UpdateNonePDoneProfilePayload(
-              firstName: firstName,
-              middleName: middleName,
-              lastName: lastName,
-              nickName: nickNameController.text,
-              currentPlace: UpdatePlaceInformationPayload(
-                countryName: cuCountry?.name,
-                countryCode: cuCountry?.iso2,
-                provinceName: cuProvince?.name,
-                provinceCode: cuProvince?.stateCode.toString(),
-                districtName: cuDistrict?.name,
-                districtCode: cuDistrict?.code,
-                wardName: cuWard?.name,
-                wardCode: cuWard!.id.toString(),
-              ),
-              maritalStatus: martialStatus,
-              bloodGroup: bloodType,
-              academicLevel: edu,
-              job: jobName,
-              interest: hobbyName,
-              talent: talentName,
-              sex: gender,
-              birthPlace: UpdatePDoneBirthPlacePayload2(
-                countryName: permanentCountry?.name,
-                countryCode: permanentCountry?.iso2,
-                provinceName: permanentProvince?.name,
-                districtName: permanentDistrict?.name,
-                wardName: permanentWard?.name,
-              ),
-              birthday: '${birthS[2]}-${birthS[1]}-${birthS[0]}',
-              identityNumber: idNumberController.text,
-              supplyDate: '${subS[2]}-${subS[1]}-${subS[0]}',
-              supplyAddress: placeOfNumberController.text,
-            ),
-          ));
+      final data = <String, dynamic>{
+        if (firstName.trim().isNotEmpty) "firstName": firstName,
+        if (middleName.trim().isNotEmpty) "middleName": middleName,
+        if (lastName.trim().isNotEmpty) "lastName": lastName,
+        if (nickName.trim().isNotEmpty) "nickName": nickName,
+        "currentPlace": {
+          "countryName": cuCountry?.name,
+          "countryCode": cuCountry?.iso2,
+          "provinceName": cuProvince?.name,
+          "provinceCode": cuProvince?.stateCode.toString(),
+          "districtName": cuDistrict?.name,
+          "districtCode": cuDistrict?.code,
+          "wardName": cuWard?.name,
+          "wardCode": cuWard?.id.toString(),
+        },
+        "birthPlace": {
+          "countryName": permanentCountry?.name,
+          "countryCode": permanentCountry?.iso2,
+          "provinceName": permanentProvince?.name,
+          "districtName": permanentDistrict?.name,
+          "wardName": permanentWard?.name,
+        },
+        if (martialStatus.trim().isNotEmpty) "maritalStatus": martialStatus,
+        if (bloodType.trim().isNotEmpty) "bloodGroup": bloodType,
+        if (edu.trim().isNotEmpty) "academicLevel": edu,
+        if (jobController.text.trim().isNotEmpty) "job": jobController.text,
+        if (hobbyController.text.trim().isNotEmpty)
+          "interest": hobbyController.text,
+        if (talentController.text.trim().isNotEmpty)
+          "talent": talentController.text,
+        "sex": gender,
+        "birthday": '${birthS[2]}-${birthS[1]}-${birthS[0]}',
+        if (idNumberController.text.trim().isNotEmpty)
+          "identityNumber": idNumberController.text,
+        if (subS.length == 3) "supplyDate": '${subS[2]}-${subS[1]}-${subS[0]}',
+        if (placeOfNumberController.text.trim().isNotEmpty)
+          "supplyAddress": placeOfNumberController.text
+      };
+
+      context.read<UserProfileBloc>().add(SubmitDataNonePDone(data));
     } else {
       context.read<UserProfileBloc>().add(SubmitDataPDone(
             UpdateNonePDoneProfilePayload(
@@ -318,6 +192,9 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         DateFormat('dd/MM/yyyy').format(DateTime.now());
     placeOfNumberController.text =
         userBloc.state.pDoneProfile?.supplyAddress ?? '';
+    jobController.text = userBloc.state.pDoneProfile?.job ?? '';
+    talentController.text = userBloc.state.pDoneProfile?.talent ?? '';
+    hobbyController.text = userBloc.state.pDoneProfile?.interest ?? '';
     super.initState();
   }
 
@@ -340,8 +217,10 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         child: Column(
           children: [
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 25.0,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -358,7 +237,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                       children: [
                         Expanded(
                           child: InformationFieldWidget(
-                            required: true,
+                            required: widget.isPDone,
                             shouldEnabled: false,
                             hintText:
                                 userBloc.state.pDoneProfile?.firstName ?? '',
@@ -371,7 +250,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                         const SizedBox(width: 12),
                         Expanded(
                           child: InformationFieldWidget(
-                            required: true,
+                            required: widget.isPDone,
                             shouldEnabled: false,
                             hintText:
                                 userBloc.state.pDoneProfile?.middleName ?? '',
@@ -385,7 +264,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                     ),
                   if (widget.isPDone)
                     InformationFieldWidget(
-                      required: true,
+                      required: widget.isPDone,
                       shouldEnabled: false,
                       hintText: userBloc.state.pDoneProfile?.lastName ?? '',
                       type: UpdateInformationType.lastName,
@@ -393,20 +272,16 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                     ),
                   if (!widget.isPDone)
                     InformationFieldWidget(
-                      required: true,
+                      required: widget.isPDone,
                       shouldEnabled: true,
                       controller: fullNameController,
                       type: UpdateInformationType.fullName,
-                      validator: (value) => context.validateEmptyInfo(
-                        fullNameController.text,
-                        'Vui lòng nhập họ và tên',
-                      ),
                       onChanged: (value) {
                         onValidation();
                       },
                     ),
                   InformationFieldWidget(
-                    required: true,
+                    required: widget.isPDone,
                     shouldEnabled: true,
                     maxLength: 24,
                     controller: nickNameController,
@@ -414,10 +289,6 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                       onValidation();
                     },
                     type: UpdateInformationType.nickName,
-                    validator: (value) => context.validateNicknameInfo(
-                      nickNameController.text,
-                      'Vui lòng nhập nick name',
-                    ),
                   ),
                   Row(
                     children: [
@@ -495,10 +366,6 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                       onValidation();
                     },
                     type: UpdateInformationType.email,
-                    validator: (value) => context.validateEmailInfo(
-                      emailController.text,
-                      'Địa chỉ email không hợp lệ',
-                    ),
                   ),
                 ],
               ),
@@ -601,46 +468,55 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
             ),
           ),
           const SizedBox(height: 7),
-          BlocBuilder<UpgradePDoneBloc, UpgradePDoneState>(
-            bloc: upgradePDoneBloc,
-            buildWhen: (old, state) => state is GetListMasterSuccess,
-            builder: (context, state) {
-              if (state is GetListMasterSuccess) {
-                return Autocomplete<AutocompleteOption>(
-                  optionsBuilder: (TextEditingValue textEditingValue) {
-                    if (textEditingValue.text.isEmpty) {
-                      return const Iterable<AutocompleteOption>.empty();
-                    }
-
-                    final jobs = state.upgradeAccount.jobs ?? [];
-                    if (jobName.trim().isEmpty) {
-                      jobName = jobs.first.key!;
-                    }
-
-                    var filteredAndSortedJobs = jobs
-                        .where((element) => element.name!
-                            .contains(textEditingValue.text.toLowerCase()))
-                        .map((job) => AutocompleteOption(
-                              displayText: job.name!,
-                              key: job.key!,
-                            ))
-                        .toList();
-
-                    filteredAndSortedJobs.sort(
-                        (a, b) => a.displayText!.compareTo(b.displayText!));
-
-                    return filteredAndSortedJobs;
-                  },
-                  onSelected: (AutocompleteOption itemSelected) {
-                    jobName = itemSelected.key!;
-                  },
-                  displayStringForOption: (option) => option.displayText!,
-                );
-              }
-
-              return Container();
+          InformationFieldWidget(
+            required: widget.isPDone,
+            shouldEnabled: true,
+            controller: jobController,
+            onChanged: (String? value) {
+              onValidation();
             },
+            type: UpdateInformationType.career,
           ),
+          // BlocBuilder<UpgradePDoneBloc, UpgradePDoneState>(
+          //   bloc: upgradePDoneBloc,
+          //   buildWhen: (old, state) => state is GetListMasterSuccess,
+          //   builder: (context, state) {
+          //     if (state is GetListMasterSuccess) {
+          //       return Autocomplete<AutocompleteOption>(
+          //         optionsBuilder: (TextEditingValue textEditingValue) {
+          //           if (textEditingValue.text.isEmpty) {
+          //             return const Iterable<AutocompleteOption>.empty();
+          //           }
+          //
+          //           final jobs = state.upgradeAccount.jobs ?? [];
+          //           if (jobName.trim().isEmpty) {
+          //             jobName = jobs.first.key!;
+          //           }
+          //
+          //           var filteredAndSortedJobs = jobs
+          //               .where((element) => element.name!
+          //                   .contains(textEditingValue.text.toLowerCase()))
+          //               .map((job) => AutocompleteOption(
+          //                     displayText: job.name!,
+          //                     key: job.key!,
+          //                   ))
+          //               .toList();
+          //
+          //           filteredAndSortedJobs.sort(
+          //               (a, b) => a.displayText!.compareTo(b.displayText!));
+          //
+          //           return filteredAndSortedJobs;
+          //         },
+          //         onSelected: (AutocompleteOption itemSelected) {
+          //           jobName = itemSelected.key!;
+          //         },
+          //         displayStringForOption: (option) => option.displayText!,
+          //       );
+          //     }
+          //
+          //     return Container();
+          //   },
+          // ),
           const SizedBox(height: 12),
           Row(
             children: [
@@ -692,100 +568,118 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
               ),
             ],
           ),
-          const SizedBox(height: 15),
-          const Text(
-            "Năng khiếu",
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF212121),
-              height: 20 / 14,
-              leadingDistribution: TextLeadingDistribution.even,
-            ),
-          ),
+          // const SizedBox(height: 15),
+          // const Text(
+          //   "Năng khiếu",
+          //   style: TextStyle(
+          //     fontWeight: FontWeight.w500,
+          //     color: Color(0xFF212121),
+          //     height: 20 / 14,
+          //     leadingDistribution: TextLeadingDistribution.even,
+          //   ),
+          // ),
           const SizedBox(height: 7),
-          BlocBuilder<UpgradePDoneBloc, UpgradePDoneState>(
-            buildWhen: (old, state) => state is GetListMasterSuccess,
-            builder: (context, state) {
-              if (state is GetListMasterSuccess) {
-                return Autocomplete<AutocompleteOption>(
-                  optionsBuilder: (TextEditingValue textEditingValue) {
-                    if (textEditingValue.text.isEmpty) {
-                      return const Iterable<AutocompleteOption>.empty();
-                    }
-
-                    final tales = state.upgradeAccount.talents ?? [];
-
-                    var filteredAndSortedTalents = tales
-                        .where((element) => element.name!
-                            .contains(textEditingValue.text.toLowerCase()))
-                        .map((talent) => AutocompleteOption(
-                              displayText: talent.name!,
-                              key: talent.key!,
-                            ))
-                        .toList();
-
-                    filteredAndSortedTalents.sort(
-                        (a, b) => a.displayText!.compareTo(b.displayText!));
-
-                    return filteredAndSortedTalents;
-                  },
-                  onSelected: (AutocompleteOption itemSelected) {
-                    talentName = itemSelected.key!;
-                  },
-                  displayStringForOption: (option) => option.displayText!,
-                );
-              }
-
-              return Container();
+          InformationFieldWidget(
+            required: widget.isPDone,
+            shouldEnabled: true,
+            controller: talentController,
+            onChanged: (String? value) {
+              onValidation();
             },
+            type: UpdateInformationType.gifted,
           ),
-          const SizedBox(height: 15),
-          const Text(
-            "Sở thích",
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF212121),
-              height: 20 / 14,
-              leadingDistribution: TextLeadingDistribution.even,
-            ),
-          ),
+          // BlocBuilder<UpgradePDoneBloc, UpgradePDoneState>(
+          //   buildWhen: (old, state) => state is GetListMasterSuccess,
+          //   builder: (context, state) {
+          //     if (state is GetListMasterSuccess) {
+          //       return Autocomplete<AutocompleteOption>(
+          //         optionsBuilder: (TextEditingValue textEditingValue) {
+          //           if (textEditingValue.text.isEmpty) {
+          //             return const Iterable<AutocompleteOption>.empty();
+          //           }
+          //
+          //           final tales = state.upgradeAccount.talents ?? [];
+          //
+          //           var filteredAndSortedTalents = tales
+          //               .where((element) => element.name!
+          //                   .contains(textEditingValue.text.toLowerCase()))
+          //               .map((talent) => AutocompleteOption(
+          //                     displayText: talent.name!,
+          //                     key: talent.key!,
+          //                   ))
+          //               .toList();
+          //
+          //           filteredAndSortedTalents.sort(
+          //               (a, b) => a.displayText!.compareTo(b.displayText!));
+          //
+          //           return filteredAndSortedTalents;
+          //         },
+          //         onSelected: (AutocompleteOption itemSelected) {
+          //           talentName = itemSelected.key!;
+          //         },
+          //         displayStringForOption: (option) => option.displayText!,
+          //       );
+          //     }
+          //
+          //     return Container();
+          //   },
+          // ),
+          // const SizedBox(height: 15),
+          // const Text(
+          //   "Sở thích",
+          //   style: TextStyle(
+          //     fontWeight: FontWeight.w500,
+          //     color: Color(0xFF212121),
+          //     height: 20 / 14,
+          //     leadingDistribution: TextLeadingDistribution.even,
+          //   ),
+          // ),
           const SizedBox(height: 7),
-          BlocBuilder<UpgradePDoneBloc, UpgradePDoneState>(
-            buildWhen: (old, state) => state is GetListMasterSuccess,
-            builder: (context, state) {
-              if (state is GetListMasterSuccess) {
-                return Autocomplete<AutocompleteOption>(
-                  optionsBuilder: (TextEditingValue textEditingValue) {
-                    if (textEditingValue.text.isEmpty) {
-                      return const Iterable<AutocompleteOption>.empty();
-                    }
-
-                    final hobbies = state.upgradeAccount.interests ?? [];
-
-                    var filteredAndSortedInterests = hobbies
-                        .where((element) => element.name!
-                            .contains(textEditingValue.text.toLowerCase()))
-                        .map((hobbie) => AutocompleteOption(
-                              displayText: hobbie.name!,
-                              key: hobbie.key!,
-                            ))
-                        .toList();
-
-                    filteredAndSortedInterests.sort(
-                        (a, b) => a.displayText!.compareTo(b.displayText!));
-
-                    return filteredAndSortedInterests;
-                  },
-                  onSelected: (AutocompleteOption itemSelected) {
-                    hobbyName = itemSelected.key!;
-                  },
-                  displayStringForOption: (option) => option.displayText!,
-                );
-              }
-
-              return Container();
+          InformationFieldWidget(
+            required: widget.isPDone,
+            shouldEnabled: true,
+            controller: hobbyController,
+            onChanged: (String? value) {
+              onValidation();
             },
+            type: UpdateInformationType.hobby,
           ),
+          // BlocBuilder<UpgradePDoneBloc, UpgradePDoneState>(
+          //   buildWhen: (old, state) => state is GetListMasterSuccess,
+          //   builder: (context, state) {
+          //     if (state is GetListMasterSuccess) {
+          //       return Autocomplete<AutocompleteOption>(
+          //         optionsBuilder: (TextEditingValue textEditingValue) {
+          //           if (textEditingValue.text.isEmpty) {
+          //             return const Iterable<AutocompleteOption>.empty();
+          //           }
+          //
+          //           final hobbies = state.upgradeAccount.interests ?? [];
+          //
+          //           var filteredAndSortedInterests = hobbies
+          //               .where((element) => element.name!
+          //                   .contains(textEditingValue.text.toLowerCase()))
+          //               .map((hobbie) => AutocompleteOption(
+          //                     displayText: hobbie.name!,
+          //                     key: hobbie.key!,
+          //                   ))
+          //               .toList();
+          //
+          //           filteredAndSortedInterests.sort(
+          //               (a, b) => a.displayText!.compareTo(b.displayText!));
+          //
+          //           return filteredAndSortedInterests;
+          //         },
+          //         onSelected: (AutocompleteOption itemSelected) {
+          //           hobbyName = itemSelected.key!;
+          //         },
+          //         displayStringForOption: (option) => option.displayText!,
+          //       );
+          //     }
+          //
+          //     return Container();
+          //   },
+          // ),
         ],
       ),
     );
@@ -811,7 +705,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
             builder: (_, state) {
               if (state is GetListDataSuccess<Bank>) {
                 return BankDropdown(
-                  required: true,
+                  required: widget.isPDone,
                   banks: (state).data,
                   onChange: (bank) {
                     this.bank = bank;
@@ -822,30 +716,22 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
             },
           ),
           InformationFieldWidget(
-            required: true,
+            required: widget.isPDone,
             shouldEnabled: true,
             controller: bankNumberController,
             onChanged: (String? value) {
               onValidation();
             },
             type: UpdateInformationType.bankNumber,
-            validator: (value) => context.validateEmptyInfo(
-              bankNumberController.text,
-              'Vui lòng nhập số tài khoản',
-            ),
           ),
           InformationFieldWidget(
-            required: true,
+            required: widget.isPDone,
             shouldEnabled: true,
             controller: bankAccountHolderController,
             onChanged: (String? value) {
               onValidation();
             },
             type: UpdateInformationType.bankAccountHolder,
-            validator: (value) => context.validateEmptyInfo(
-              bankAccountHolderController.text,
-              'Vui lòng nhập tên chủ tài khoản',
-            ),
           ),
         ],
       ),
@@ -880,16 +766,18 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
             child: Row(
               children: [
                 Expanded(
-                    child: IgnorePointer(
-                  ignoring: widget.isPDone,
-                  child: const CountryBuild(),
-                )),
+                  child: IgnorePointer(
+                    ignoring: widget.isPDone,
+                    child: const CountryBuild(),
+                  ),
+                ),
                 const SizedBox(width: 20),
                 Expanded(
-                    child: IgnorePointer(
-                  ignoring: widget.isPDone,
-                  child: buildProvince(),
-                )),
+                  child: IgnorePointer(
+                    ignoring: widget.isPDone,
+                    child: buildProvince(),
+                  ),
+                ),
               ],
             ),
           ),
@@ -898,16 +786,18 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
             child: Row(
               children: [
                 Expanded(
-                    child: IgnorePointer(
-                  ignoring: widget.isPDone,
-                  child: buildDistrict(),
-                )),
+                  child: IgnorePointer(
+                    ignoring: widget.isPDone,
+                    child: buildDistrict(),
+                  ),
+                ),
                 const SizedBox(width: 20),
                 Expanded(
-                    child: IgnorePointer(
-                  ignoring: widget.isPDone,
-                  child: buildWard(),
-                )),
+                  child: IgnorePointer(
+                    ignoring: widget.isPDone,
+                    child: buildWard(),
+                  ),
+                ),
               ],
             ),
           ),
@@ -945,19 +835,18 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
               ],
             ),
           ),
-          InformationFieldWidget(
-            required: true,
-            shouldEnabled: true,
-            controller: realAddress,
-            type: UpdateInformationType.address,
-            validator: (value) => context.validateEmptyInfo(
-              realAddress.text,
-              'Vui lòng nhập địa chỉ cụ thể',
+          IgnorePointer(
+            ignoring: widget.isPDone,
+            child: InformationFieldWidget(
+              required: widget.isPDone,
+              shouldEnabled: true,
+              controller: realAddress,
+              type: UpdateInformationType.address,
+              onChanged: (String? value) {
+                address = value!;
+                onValidation();
+              },
             ),
-            onChanged: (String? value) {
-              address = value!;
-              onValidation();
-            },
           ),
           Row(
             children: [
@@ -967,15 +856,11 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                     IgnorePointer(
                       ignoring: widget.isPDone,
                       child: InformationFieldWidget(
-                        required: true,
+                        required: widget.isPDone,
                         shouldEnabled: true,
                         hintText: 'Ex: 12345678909',
                         controller: idNumberController,
                         type: UpdateInformationType.idNumber,
-                        validator: (value) => context.validateEmptyInfo(
-                          idNumberController.text,
-                          'Vui lòng nhập số ID/CCCD/HC',
-                        ),
                         onChanged: (String? value) {
                           idNumber = value!;
                         },
@@ -1021,20 +906,18 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
           ),
 
           //Nơi cấp
-          InformationFieldWidget(
-            required: true,
-            shouldEnabled: true,
-            hintText: 'Cục trưởng cục cảnh sát và quản lý hành chính',
-            controller: placeOfNumberController,
-            type: UpdateInformationType.placeofIdNumber,
-            validator: (value) => context.validateEmptyInfo(
-              placeOfNumberController.text,
-              'Vui lòng nhập nơi cấp',
+          IgnorePointer(
+            ignoring: widget.isPDone,
+            child: InformationFieldWidget(
+              required: widget.isPDone,
+              shouldEnabled: true,
+              hintText: 'Cục trưởng cục cảnh sát và quản lý hành chính',
+              controller: placeOfNumberController,
+              type: UpdateInformationType.placeofIdNumber,
+              onChanged: (String? value) {
+                onValidation();
+              },
             ),
-            onChanged: (String? value) {
-              placeOfNumber = value!;
-              onValidation();
-            },
           ),
         ],
       ),

@@ -364,12 +364,12 @@ class _UserApi implements UserApi {
 
   @override
   Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(
-      UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload) async {
+      Map<String, dynamic> data) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(updateNonePDoneProfilePayload.toJson());
+    _data.addAll(data);
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<UpdateNonePDoneProfileReponse>(Options(
       method: 'PATCH',
