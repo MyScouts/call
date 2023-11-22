@@ -1,5 +1,6 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:wallet/presentation/wallet_diamond/wallet_diamond_coodinator.dart';
 
 import '../../../core/core.dart';
 import '../../presentation.dart';
@@ -74,7 +75,7 @@ class _WalletDiamondActionsState extends State<WalletDiamondActions> {
         }
         break;
       case WalletDiamondActionType.transactionHistory:
-        //TODO: Navigate to transaction history
+        context.diamondTransactionHistory();
         break;
     }
   }

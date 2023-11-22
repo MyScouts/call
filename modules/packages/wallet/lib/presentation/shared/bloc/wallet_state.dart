@@ -31,4 +31,8 @@ class WalletState with _$WalletState {
 
   const factory WalletState.reloadDiamondWalletInfoSuccess() =
       _ReloadDiamondWalletInfoSuccess;
+
+  const factory WalletState.getWalletInfoSuccess() = _GetWalletInfoSuccess;
+
+  const factory WalletState.getWalletInfoLoading() = _GetWalletInfoLoading;
 }

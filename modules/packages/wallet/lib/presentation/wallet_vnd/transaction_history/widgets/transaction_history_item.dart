@@ -11,7 +11,7 @@ class TransactionHistoryItem extends StatelessWidget {
   final TransactionHistory transactionHistory;
 
   Future<void> handleOnTap(BuildContext context) {
-    return context.transactionHistoryDetail(transactionHistory.id);
+    return context.vndTransactionHistoryDetail(transactionHistory.id);
   }
 
   @override

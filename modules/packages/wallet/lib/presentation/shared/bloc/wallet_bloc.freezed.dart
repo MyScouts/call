@@ -23,6 +23,7 @@ mixin _$WalletEvent {
     required TResult Function() getCoinWalletInfo,
     required TResult Function() reloadVndWalletInfo,
     required TResult Function() reloadDiamondWalletInfo,
+    required TResult Function() getWalletInfo,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -32,6 +33,7 @@ mixin _$WalletEvent {
     TResult? Function()? getCoinWalletInfo,
     TResult? Function()? reloadVndWalletInfo,
     TResult? Function()? reloadDiamondWalletInfo,
+    TResult? Function()? getWalletInfo,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -41,6 +43,7 @@ mixin _$WalletEvent {
     TResult Function()? getCoinWalletInfo,
     TResult Function()? reloadVndWalletInfo,
     TResult Function()? reloadDiamondWalletInfo,
+    TResult Function()? getWalletInfo,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -52,6 +55,7 @@ mixin _$WalletEvent {
     required TResult Function(_ReloadVndWalletInfo value) reloadVndWalletInfo,
     required TResult Function(_ReloadDiamondWalletInfo value)
         reloadDiamondWalletInfo,
+    required TResult Function(_GetWalletInfoEvent value) getWalletInfo,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -61,6 +65,7 @@ mixin _$WalletEvent {
     TResult? Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
     TResult? Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
     TResult? Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
+    TResult? Function(_GetWalletInfoEvent value)? getWalletInfo,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -70,6 +75,7 @@ mixin _$WalletEvent {
     TResult Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
     TResult Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
     TResult Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
+    TResult Function(_GetWalletInfoEvent value)? getWalletInfo,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -146,6 +152,7 @@ class _$GetVndWalletInfoEventImpl
     required TResult Function() getCoinWalletInfo,
     required TResult Function() reloadVndWalletInfo,
     required TResult Function() reloadDiamondWalletInfo,
+    required TResult Function() getWalletInfo,
   }) {
     return getVndWalletInfo();
   }
@@ -158,6 +165,7 @@ class _$GetVndWalletInfoEventImpl
     TResult? Function()? getCoinWalletInfo,
     TResult? Function()? reloadVndWalletInfo,
     TResult? Function()? reloadDiamondWalletInfo,
+    TResult? Function()? getWalletInfo,
   }) {
     return getVndWalletInfo?.call();
   }
@@ -170,6 +178,7 @@ class _$GetVndWalletInfoEventImpl
     TResult Function()? getCoinWalletInfo,
     TResult Function()? reloadVndWalletInfo,
     TResult Function()? reloadDiamondWalletInfo,
+    TResult Function()? getWalletInfo,
     required TResult orElse(),
   }) {
     if (getVndWalletInfo != null) {
@@ -187,6 +196,7 @@ class _$GetVndWalletInfoEventImpl
     required TResult Function(_ReloadVndWalletInfo value) reloadVndWalletInfo,
     required TResult Function(_ReloadDiamondWalletInfo value)
         reloadDiamondWalletInfo,
+    required TResult Function(_GetWalletInfoEvent value) getWalletInfo,
   }) {
     return getVndWalletInfo(this);
   }
@@ -199,6 +209,7 @@ class _$GetVndWalletInfoEventImpl
     TResult? Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
     TResult? Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
     TResult? Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
+    TResult? Function(_GetWalletInfoEvent value)? getWalletInfo,
   }) {
     return getVndWalletInfo?.call(this);
   }
@@ -211,6 +222,7 @@ class _$GetVndWalletInfoEventImpl
     TResult Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
     TResult Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
     TResult Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
+    TResult Function(_GetWalletInfoEvent value)? getWalletInfo,
     required TResult orElse(),
   }) {
     if (getVndWalletInfo != null) {
@@ -277,6 +289,7 @@ class _$GetDiamondWalletInfoImpl
     required TResult Function() getCoinWalletInfo,
     required TResult Function() reloadVndWalletInfo,
     required TResult Function() reloadDiamondWalletInfo,
+    required TResult Function() getWalletInfo,
   }) {
     return getDiamondWalletInfo();
   }
@@ -289,6 +302,7 @@ class _$GetDiamondWalletInfoImpl
     TResult? Function()? getCoinWalletInfo,
     TResult? Function()? reloadVndWalletInfo,
     TResult? Function()? reloadDiamondWalletInfo,
+    TResult? Function()? getWalletInfo,
   }) {
     return getDiamondWalletInfo?.call();
   }
@@ -301,6 +315,7 @@ class _$GetDiamondWalletInfoImpl
     TResult Function()? getCoinWalletInfo,
     TResult Function()? reloadVndWalletInfo,
     TResult Function()? reloadDiamondWalletInfo,
+    TResult Function()? getWalletInfo,
     required TResult orElse(),
   }) {
     if (getDiamondWalletInfo != null) {
@@ -318,6 +333,7 @@ class _$GetDiamondWalletInfoImpl
     required TResult Function(_ReloadVndWalletInfo value) reloadVndWalletInfo,
     required TResult Function(_ReloadDiamondWalletInfo value)
         reloadDiamondWalletInfo,
+    required TResult Function(_GetWalletInfoEvent value) getWalletInfo,
   }) {
     return getDiamondWalletInfo(this);
   }
@@ -330,6 +346,7 @@ class _$GetDiamondWalletInfoImpl
     TResult? Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
     TResult? Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
     TResult? Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
+    TResult? Function(_GetWalletInfoEvent value)? getWalletInfo,
   }) {
     return getDiamondWalletInfo?.call(this);
   }
@@ -342,6 +359,7 @@ class _$GetDiamondWalletInfoImpl
     TResult Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
     TResult Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
     TResult Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
+    TResult Function(_GetWalletInfoEvent value)? getWalletInfo,
     required TResult orElse(),
   }) {
     if (getDiamondWalletInfo != null) {
@@ -407,6 +425,7 @@ class _$GetCoinWalletInfoImpl
     required TResult Function() getCoinWalletInfo,
     required TResult Function() reloadVndWalletInfo,
     required TResult Function() reloadDiamondWalletInfo,
+    required TResult Function() getWalletInfo,
   }) {
     return getCoinWalletInfo();
   }
@@ -419,6 +438,7 @@ class _$GetCoinWalletInfoImpl
     TResult? Function()? getCoinWalletInfo,
     TResult? Function()? reloadVndWalletInfo,
     TResult? Function()? reloadDiamondWalletInfo,
+    TResult? Function()? getWalletInfo,
   }) {
     return getCoinWalletInfo?.call();
   }
@@ -431,6 +451,7 @@ class _$GetCoinWalletInfoImpl
     TResult Function()? getCoinWalletInfo,
     TResult Function()? reloadVndWalletInfo,
     TResult Function()? reloadDiamondWalletInfo,
+    TResult Function()? getWalletInfo,
     required TResult orElse(),
   }) {
     if (getCoinWalletInfo != null) {
@@ -448,6 +469,7 @@ class _$GetCoinWalletInfoImpl
     required TResult Function(_ReloadVndWalletInfo value) reloadVndWalletInfo,
     required TResult Function(_ReloadDiamondWalletInfo value)
         reloadDiamondWalletInfo,
+    required TResult Function(_GetWalletInfoEvent value) getWalletInfo,
   }) {
     return getCoinWalletInfo(this);
   }
@@ -460,6 +482,7 @@ class _$GetCoinWalletInfoImpl
     TResult? Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
     TResult? Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
     TResult? Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
+    TResult? Function(_GetWalletInfoEvent value)? getWalletInfo,
   }) {
     return getCoinWalletInfo?.call(this);
   }
@@ -472,6 +495,7 @@ class _$GetCoinWalletInfoImpl
     TResult Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
     TResult Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
     TResult Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
+    TResult Function(_GetWalletInfoEvent value)? getWalletInfo,
     required TResult orElse(),
   }) {
     if (getCoinWalletInfo != null) {
@@ -538,6 +562,7 @@ class _$ReloadVndWalletInfoImpl
     required TResult Function() getCoinWalletInfo,
     required TResult Function() reloadVndWalletInfo,
     required TResult Function() reloadDiamondWalletInfo,
+    required TResult Function() getWalletInfo,
   }) {
     return reloadVndWalletInfo();
   }
@@ -550,6 +575,7 @@ class _$ReloadVndWalletInfoImpl
     TResult? Function()? getCoinWalletInfo,
     TResult? Function()? reloadVndWalletInfo,
     TResult? Function()? reloadDiamondWalletInfo,
+    TResult? Function()? getWalletInfo,
   }) {
     return reloadVndWalletInfo?.call();
   }
@@ -562,6 +588,7 @@ class _$ReloadVndWalletInfoImpl
     TResult Function()? getCoinWalletInfo,
     TResult Function()? reloadVndWalletInfo,
     TResult Function()? reloadDiamondWalletInfo,
+    TResult Function()? getWalletInfo,
     required TResult orElse(),
   }) {
     if (reloadVndWalletInfo != null) {
@@ -579,6 +606,7 @@ class _$ReloadVndWalletInfoImpl
     required TResult Function(_ReloadVndWalletInfo value) reloadVndWalletInfo,
     required TResult Function(_ReloadDiamondWalletInfo value)
         reloadDiamondWalletInfo,
+    required TResult Function(_GetWalletInfoEvent value) getWalletInfo,
   }) {
     return reloadVndWalletInfo(this);
   }
@@ -591,6 +619,7 @@ class _$ReloadVndWalletInfoImpl
     TResult? Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
     TResult? Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
     TResult? Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
+    TResult? Function(_GetWalletInfoEvent value)? getWalletInfo,
   }) {
     return reloadVndWalletInfo?.call(this);
   }
@@ -603,6 +632,7 @@ class _$ReloadVndWalletInfoImpl
     TResult Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
     TResult Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
     TResult Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
+    TResult Function(_GetWalletInfoEvent value)? getWalletInfo,
     required TResult orElse(),
   }) {
     if (reloadVndWalletInfo != null) {
@@ -671,6 +701,7 @@ class _$ReloadDiamondWalletInfoImpl
     required TResult Function() getCoinWalletInfo,
     required TResult Function() reloadVndWalletInfo,
     required TResult Function() reloadDiamondWalletInfo,
+    required TResult Function() getWalletInfo,
   }) {
     return reloadDiamondWalletInfo();
   }
@@ -683,6 +714,7 @@ class _$ReloadDiamondWalletInfoImpl
     TResult? Function()? getCoinWalletInfo,
     TResult? Function()? reloadVndWalletInfo,
     TResult? Function()? reloadDiamondWalletInfo,
+    TResult? Function()? getWalletInfo,
   }) {
     return reloadDiamondWalletInfo?.call();
   }
@@ -695,6 +727,7 @@ class _$ReloadDiamondWalletInfoImpl
     TResult Function()? getCoinWalletInfo,
     TResult Function()? reloadVndWalletInfo,
     TResult Function()? reloadDiamondWalletInfo,
+    TResult Function()? getWalletInfo,
     required TResult orElse(),
   }) {
     if (reloadDiamondWalletInfo != null) {
@@ -712,6 +745,7 @@ class _$ReloadDiamondWalletInfoImpl
     required TResult Function(_ReloadVndWalletInfo value) reloadVndWalletInfo,
     required TResult Function(_ReloadDiamondWalletInfo value)
         reloadDiamondWalletInfo,
+    required TResult Function(_GetWalletInfoEvent value) getWalletInfo,
   }) {
     return reloadDiamondWalletInfo(this);
   }
@@ -724,6 +758,7 @@ class _$ReloadDiamondWalletInfoImpl
     TResult? Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
     TResult? Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
     TResult? Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
+    TResult? Function(_GetWalletInfoEvent value)? getWalletInfo,
   }) {
     return reloadDiamondWalletInfo?.call(this);
   }
@@ -736,6 +771,7 @@ class _$ReloadDiamondWalletInfoImpl
     TResult Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
     TResult Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
     TResult Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
+    TResult Function(_GetWalletInfoEvent value)? getWalletInfo,
     required TResult orElse(),
   }) {
     if (reloadDiamondWalletInfo != null) {
@@ -747,6 +783,141 @@ class _$ReloadDiamondWalletInfoImpl
 
 abstract class _ReloadDiamondWalletInfo implements WalletEvent {
   const factory _ReloadDiamondWalletInfo() = _$ReloadDiamondWalletInfoImpl;
+}
+
+/// @nodoc
+abstract class _$$GetWalletInfoEventImplCopyWith<$Res> {
+  factory _$$GetWalletInfoEventImplCopyWith(_$GetWalletInfoEventImpl value,
+          $Res Function(_$GetWalletInfoEventImpl) then) =
+      __$$GetWalletInfoEventImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$GetWalletInfoEventImplCopyWithImpl<$Res>
+    extends _$WalletEventCopyWithImpl<$Res, _$GetWalletInfoEventImpl>
+    implements _$$GetWalletInfoEventImplCopyWith<$Res> {
+  __$$GetWalletInfoEventImplCopyWithImpl(_$GetWalletInfoEventImpl _value,
+      $Res Function(_$GetWalletInfoEventImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$GetWalletInfoEventImpl
+    with DiagnosticableTreeMixin
+    implements _GetWalletInfoEvent {
+  const _$GetWalletInfoEventImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WalletEvent.getWalletInfo()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'WalletEvent.getWalletInfo'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$GetWalletInfoEventImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getVndWalletInfo,
+    required TResult Function() getDiamondWalletInfo,
+    required TResult Function() getCoinWalletInfo,
+    required TResult Function() reloadVndWalletInfo,
+    required TResult Function() reloadDiamondWalletInfo,
+    required TResult Function() getWalletInfo,
+  }) {
+    return getWalletInfo();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getVndWalletInfo,
+    TResult? Function()? getDiamondWalletInfo,
+    TResult? Function()? getCoinWalletInfo,
+    TResult? Function()? reloadVndWalletInfo,
+    TResult? Function()? reloadDiamondWalletInfo,
+    TResult? Function()? getWalletInfo,
+  }) {
+    return getWalletInfo?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getVndWalletInfo,
+    TResult Function()? getDiamondWalletInfo,
+    TResult Function()? getCoinWalletInfo,
+    TResult Function()? reloadVndWalletInfo,
+    TResult Function()? reloadDiamondWalletInfo,
+    TResult Function()? getWalletInfo,
+    required TResult orElse(),
+  }) {
+    if (getWalletInfo != null) {
+      return getWalletInfo();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetVndWalletInfoEvent value) getVndWalletInfo,
+    required TResult Function(_GetDiamondWalletInfo value) getDiamondWalletInfo,
+    required TResult Function(_GetCoinWalletInfo value) getCoinWalletInfo,
+    required TResult Function(_ReloadVndWalletInfo value) reloadVndWalletInfo,
+    required TResult Function(_ReloadDiamondWalletInfo value)
+        reloadDiamondWalletInfo,
+    required TResult Function(_GetWalletInfoEvent value) getWalletInfo,
+  }) {
+    return getWalletInfo(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetVndWalletInfoEvent value)? getVndWalletInfo,
+    TResult? Function(_GetDiamondWalletInfo value)? getDiamondWalletInfo,
+    TResult? Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
+    TResult? Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
+    TResult? Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
+    TResult? Function(_GetWalletInfoEvent value)? getWalletInfo,
+  }) {
+    return getWalletInfo?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetVndWalletInfoEvent value)? getVndWalletInfo,
+    TResult Function(_GetDiamondWalletInfo value)? getDiamondWalletInfo,
+    TResult Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
+    TResult Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
+    TResult Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
+    TResult Function(_GetWalletInfoEvent value)? getWalletInfo,
+    required TResult orElse(),
+  }) {
+    if (getWalletInfo != null) {
+      return getWalletInfo(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetWalletInfoEvent implements WalletEvent {
+  const factory _GetWalletInfoEvent() = _$GetWalletInfoEventImpl;
 }
 
 /// @nodoc
@@ -764,6 +935,8 @@ mixin _$WalletState {
     required TResult Function() getCoinWalletInfoLoading,
     required TResult Function() reloadVndWalletInfoSuccess,
     required TResult Function() reloadDiamondWalletInfoSuccess,
+    required TResult Function() getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -779,6 +952,8 @@ mixin _$WalletState {
     TResult? Function()? getCoinWalletInfoLoading,
     TResult? Function()? reloadVndWalletInfoSuccess,
     TResult? Function()? reloadDiamondWalletInfoSuccess,
+    TResult? Function()? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -794,6 +969,8 @@ mixin _$WalletState {
     TResult Function()? getCoinWalletInfoLoading,
     TResult Function()? reloadVndWalletInfoSuccess,
     TResult Function()? reloadDiamondWalletInfoSuccess,
+    TResult Function()? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -816,6 +993,8 @@ mixin _$WalletState {
         reloadVndWalletInfoSuccess,
     required TResult Function(_ReloadDiamondWalletInfoSuccess value)
         reloadDiamondWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -836,6 +1015,8 @@ mixin _$WalletState {
         reloadVndWalletInfoSuccess,
     TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -855,6 +1036,8 @@ mixin _$WalletState {
         reloadVndWalletInfoSuccess,
     TResult Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -933,6 +1116,8 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     required TResult Function() getCoinWalletInfoLoading,
     required TResult Function() reloadVndWalletInfoSuccess,
     required TResult Function() reloadDiamondWalletInfoSuccess,
+    required TResult Function() getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
   }) {
     return initial();
   }
@@ -951,6 +1136,8 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult? Function()? getCoinWalletInfoLoading,
     TResult? Function()? reloadVndWalletInfoSuccess,
     TResult? Function()? reloadDiamondWalletInfoSuccess,
+    TResult? Function()? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
   }) {
     return initial?.call();
   }
@@ -969,6 +1156,8 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult Function()? getCoinWalletInfoLoading,
     TResult Function()? reloadVndWalletInfoSuccess,
     TResult Function()? reloadDiamondWalletInfoSuccess,
+    TResult Function()? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -997,6 +1186,8 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
         reloadVndWalletInfoSuccess,
     required TResult Function(_ReloadDiamondWalletInfoSuccess value)
         reloadDiamondWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
   }) {
     return initial(this);
   }
@@ -1020,6 +1211,8 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
         reloadVndWalletInfoSuccess,
     TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
   }) {
     return initial?.call(this);
   }
@@ -1042,6 +1235,8 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
         reloadVndWalletInfoSuccess,
     TResult Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -1138,6 +1333,8 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     required TResult Function() getCoinWalletInfoLoading,
     required TResult Function() reloadVndWalletInfoSuccess,
     required TResult Function() reloadDiamondWalletInfoSuccess,
+    required TResult Function() getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
   }) {
     return error(err);
   }
@@ -1156,6 +1353,8 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     TResult? Function()? getCoinWalletInfoLoading,
     TResult? Function()? reloadVndWalletInfoSuccess,
     TResult? Function()? reloadDiamondWalletInfoSuccess,
+    TResult? Function()? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
   }) {
     return error?.call(err);
   }
@@ -1174,6 +1373,8 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     TResult Function()? getCoinWalletInfoLoading,
     TResult Function()? reloadVndWalletInfoSuccess,
     TResult Function()? reloadDiamondWalletInfoSuccess,
+    TResult Function()? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1202,6 +1403,8 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
         reloadVndWalletInfoSuccess,
     required TResult Function(_ReloadDiamondWalletInfoSuccess value)
         reloadDiamondWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
   }) {
     return error(this);
   }
@@ -1225,6 +1428,8 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
         reloadVndWalletInfoSuccess,
     TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
   }) {
     return error?.call(this);
   }
@@ -1247,6 +1452,8 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
         reloadVndWalletInfoSuccess,
     TResult Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1324,6 +1531,8 @@ class _$VndWalletInfoLoadingImpl
     required TResult Function() getCoinWalletInfoLoading,
     required TResult Function() reloadVndWalletInfoSuccess,
     required TResult Function() reloadDiamondWalletInfoSuccess,
+    required TResult Function() getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
   }) {
     return vndWalletInfoLoading();
   }
@@ -1342,6 +1551,8 @@ class _$VndWalletInfoLoadingImpl
     TResult? Function()? getCoinWalletInfoLoading,
     TResult? Function()? reloadVndWalletInfoSuccess,
     TResult? Function()? reloadDiamondWalletInfoSuccess,
+    TResult? Function()? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
   }) {
     return vndWalletInfoLoading?.call();
   }
@@ -1360,6 +1571,8 @@ class _$VndWalletInfoLoadingImpl
     TResult Function()? getCoinWalletInfoLoading,
     TResult Function()? reloadVndWalletInfoSuccess,
     TResult Function()? reloadDiamondWalletInfoSuccess,
+    TResult Function()? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (vndWalletInfoLoading != null) {
@@ -1388,6 +1601,8 @@ class _$VndWalletInfoLoadingImpl
         reloadVndWalletInfoSuccess,
     required TResult Function(_ReloadDiamondWalletInfoSuccess value)
         reloadDiamondWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
   }) {
     return vndWalletInfoLoading(this);
   }
@@ -1411,6 +1626,8 @@ class _$VndWalletInfoLoadingImpl
         reloadVndWalletInfoSuccess,
     TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
   }) {
     return vndWalletInfoLoading?.call(this);
   }
@@ -1433,6 +1650,8 @@ class _$VndWalletInfoLoadingImpl
         reloadVndWalletInfoSuccess,
     TResult Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (vndWalletInfoLoading != null) {
@@ -1543,6 +1762,8 @@ class _$VndWalletInfoLoadedImpl
     required TResult Function() getCoinWalletInfoLoading,
     required TResult Function() reloadVndWalletInfoSuccess,
     required TResult Function() reloadDiamondWalletInfoSuccess,
+    required TResult Function() getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
   }) {
     return vndWalletInfoLoaded(vndWalletInfo);
   }
@@ -1561,6 +1782,8 @@ class _$VndWalletInfoLoadedImpl
     TResult? Function()? getCoinWalletInfoLoading,
     TResult? Function()? reloadVndWalletInfoSuccess,
     TResult? Function()? reloadDiamondWalletInfoSuccess,
+    TResult? Function()? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
   }) {
     return vndWalletInfoLoaded?.call(vndWalletInfo);
   }
@@ -1579,6 +1802,8 @@ class _$VndWalletInfoLoadedImpl
     TResult Function()? getCoinWalletInfoLoading,
     TResult Function()? reloadVndWalletInfoSuccess,
     TResult Function()? reloadDiamondWalletInfoSuccess,
+    TResult Function()? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (vndWalletInfoLoaded != null) {
@@ -1607,6 +1832,8 @@ class _$VndWalletInfoLoadedImpl
         reloadVndWalletInfoSuccess,
     required TResult Function(_ReloadDiamondWalletInfoSuccess value)
         reloadDiamondWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
   }) {
     return vndWalletInfoLoaded(this);
   }
@@ -1630,6 +1857,8 @@ class _$VndWalletInfoLoadedImpl
         reloadVndWalletInfoSuccess,
     TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
   }) {
     return vndWalletInfoLoaded?.call(this);
   }
@@ -1652,6 +1881,8 @@ class _$VndWalletInfoLoadedImpl
         reloadVndWalletInfoSuccess,
     TResult Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (vndWalletInfoLoaded != null) {
@@ -1758,6 +1989,8 @@ class _$NeedToRegisterJAImpl
     required TResult Function() getCoinWalletInfoLoading,
     required TResult Function() reloadVndWalletInfoSuccess,
     required TResult Function() reloadDiamondWalletInfoSuccess,
+    required TResult Function() getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
   }) {
     return needToRegisterJA(walletType);
   }
@@ -1776,6 +2009,8 @@ class _$NeedToRegisterJAImpl
     TResult? Function()? getCoinWalletInfoLoading,
     TResult? Function()? reloadVndWalletInfoSuccess,
     TResult? Function()? reloadDiamondWalletInfoSuccess,
+    TResult? Function()? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
   }) {
     return needToRegisterJA?.call(walletType);
   }
@@ -1794,6 +2029,8 @@ class _$NeedToRegisterJAImpl
     TResult Function()? getCoinWalletInfoLoading,
     TResult Function()? reloadVndWalletInfoSuccess,
     TResult Function()? reloadDiamondWalletInfoSuccess,
+    TResult Function()? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (needToRegisterJA != null) {
@@ -1822,6 +2059,8 @@ class _$NeedToRegisterJAImpl
         reloadVndWalletInfoSuccess,
     required TResult Function(_ReloadDiamondWalletInfoSuccess value)
         reloadDiamondWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
   }) {
     return needToRegisterJA(this);
   }
@@ -1845,6 +2084,8 @@ class _$NeedToRegisterJAImpl
         reloadVndWalletInfoSuccess,
     TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
   }) {
     return needToRegisterJA?.call(this);
   }
@@ -1867,6 +2108,8 @@ class _$NeedToRegisterJAImpl
         reloadVndWalletInfoSuccess,
     TResult Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (needToRegisterJA != null) {
@@ -1947,6 +2190,8 @@ class _$GetDiamondWalletInfoLoadingImpl
     required TResult Function() getCoinWalletInfoLoading,
     required TResult Function() reloadVndWalletInfoSuccess,
     required TResult Function() reloadDiamondWalletInfoSuccess,
+    required TResult Function() getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
   }) {
     return getDiamondWalletInfoLoading();
   }
@@ -1965,6 +2210,8 @@ class _$GetDiamondWalletInfoLoadingImpl
     TResult? Function()? getCoinWalletInfoLoading,
     TResult? Function()? reloadVndWalletInfoSuccess,
     TResult? Function()? reloadDiamondWalletInfoSuccess,
+    TResult? Function()? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
   }) {
     return getDiamondWalletInfoLoading?.call();
   }
@@ -1983,6 +2230,8 @@ class _$GetDiamondWalletInfoLoadingImpl
     TResult Function()? getCoinWalletInfoLoading,
     TResult Function()? reloadVndWalletInfoSuccess,
     TResult Function()? reloadDiamondWalletInfoSuccess,
+    TResult Function()? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (getDiamondWalletInfoLoading != null) {
@@ -2011,6 +2260,8 @@ class _$GetDiamondWalletInfoLoadingImpl
         reloadVndWalletInfoSuccess,
     required TResult Function(_ReloadDiamondWalletInfoSuccess value)
         reloadDiamondWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
   }) {
     return getDiamondWalletInfoLoading(this);
   }
@@ -2034,6 +2285,8 @@ class _$GetDiamondWalletInfoLoadingImpl
         reloadVndWalletInfoSuccess,
     TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
   }) {
     return getDiamondWalletInfoLoading?.call(this);
   }
@@ -2056,6 +2309,8 @@ class _$GetDiamondWalletInfoLoadingImpl
         reloadVndWalletInfoSuccess,
     TResult Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (getDiamondWalletInfoLoading != null) {
@@ -2131,6 +2386,8 @@ class _$GetDiamondWalletInfoLoadedImpl
     required TResult Function() getCoinWalletInfoLoading,
     required TResult Function() reloadVndWalletInfoSuccess,
     required TResult Function() reloadDiamondWalletInfoSuccess,
+    required TResult Function() getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
   }) {
     return getDiamondWalletInfoLoaded();
   }
@@ -2149,6 +2406,8 @@ class _$GetDiamondWalletInfoLoadedImpl
     TResult? Function()? getCoinWalletInfoLoading,
     TResult? Function()? reloadVndWalletInfoSuccess,
     TResult? Function()? reloadDiamondWalletInfoSuccess,
+    TResult? Function()? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
   }) {
     return getDiamondWalletInfoLoaded?.call();
   }
@@ -2167,6 +2426,8 @@ class _$GetDiamondWalletInfoLoadedImpl
     TResult Function()? getCoinWalletInfoLoading,
     TResult Function()? reloadVndWalletInfoSuccess,
     TResult Function()? reloadDiamondWalletInfoSuccess,
+    TResult Function()? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (getDiamondWalletInfoLoaded != null) {
@@ -2195,6 +2456,8 @@ class _$GetDiamondWalletInfoLoadedImpl
         reloadVndWalletInfoSuccess,
     required TResult Function(_ReloadDiamondWalletInfoSuccess value)
         reloadDiamondWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
   }) {
     return getDiamondWalletInfoLoaded(this);
   }
@@ -2218,6 +2481,8 @@ class _$GetDiamondWalletInfoLoadedImpl
         reloadVndWalletInfoSuccess,
     TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
   }) {
     return getDiamondWalletInfoLoaded?.call(this);
   }
@@ -2240,6 +2505,8 @@ class _$GetDiamondWalletInfoLoadedImpl
         reloadVndWalletInfoSuccess,
     TResult Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (getDiamondWalletInfoLoaded != null) {
@@ -2315,6 +2582,8 @@ class _$GetCoinWalletInfoLoadedImpl
     required TResult Function() getCoinWalletInfoLoading,
     required TResult Function() reloadVndWalletInfoSuccess,
     required TResult Function() reloadDiamondWalletInfoSuccess,
+    required TResult Function() getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
   }) {
     return getCoinWalletInfoLoaded();
   }
@@ -2333,6 +2602,8 @@ class _$GetCoinWalletInfoLoadedImpl
     TResult? Function()? getCoinWalletInfoLoading,
     TResult? Function()? reloadVndWalletInfoSuccess,
     TResult? Function()? reloadDiamondWalletInfoSuccess,
+    TResult? Function()? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
   }) {
     return getCoinWalletInfoLoaded?.call();
   }
@@ -2351,6 +2622,8 @@ class _$GetCoinWalletInfoLoadedImpl
     TResult Function()? getCoinWalletInfoLoading,
     TResult Function()? reloadVndWalletInfoSuccess,
     TResult Function()? reloadDiamondWalletInfoSuccess,
+    TResult Function()? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (getCoinWalletInfoLoaded != null) {
@@ -2379,6 +2652,8 @@ class _$GetCoinWalletInfoLoadedImpl
         reloadVndWalletInfoSuccess,
     required TResult Function(_ReloadDiamondWalletInfoSuccess value)
         reloadDiamondWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
   }) {
     return getCoinWalletInfoLoaded(this);
   }
@@ -2402,6 +2677,8 @@ class _$GetCoinWalletInfoLoadedImpl
         reloadVndWalletInfoSuccess,
     TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
   }) {
     return getCoinWalletInfoLoaded?.call(this);
   }
@@ -2424,6 +2701,8 @@ class _$GetCoinWalletInfoLoadedImpl
         reloadVndWalletInfoSuccess,
     TResult Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (getCoinWalletInfoLoaded != null) {
@@ -2498,6 +2777,8 @@ class _$GetCoinWalletInfoLoadingImpl
     required TResult Function() getCoinWalletInfoLoading,
     required TResult Function() reloadVndWalletInfoSuccess,
     required TResult Function() reloadDiamondWalletInfoSuccess,
+    required TResult Function() getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
   }) {
     return getCoinWalletInfoLoading();
   }
@@ -2516,6 +2797,8 @@ class _$GetCoinWalletInfoLoadingImpl
     TResult? Function()? getCoinWalletInfoLoading,
     TResult? Function()? reloadVndWalletInfoSuccess,
     TResult? Function()? reloadDiamondWalletInfoSuccess,
+    TResult? Function()? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
   }) {
     return getCoinWalletInfoLoading?.call();
   }
@@ -2534,6 +2817,8 @@ class _$GetCoinWalletInfoLoadingImpl
     TResult Function()? getCoinWalletInfoLoading,
     TResult Function()? reloadVndWalletInfoSuccess,
     TResult Function()? reloadDiamondWalletInfoSuccess,
+    TResult Function()? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (getCoinWalletInfoLoading != null) {
@@ -2562,6 +2847,8 @@ class _$GetCoinWalletInfoLoadingImpl
         reloadVndWalletInfoSuccess,
     required TResult Function(_ReloadDiamondWalletInfoSuccess value)
         reloadDiamondWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
   }) {
     return getCoinWalletInfoLoading(this);
   }
@@ -2585,6 +2872,8 @@ class _$GetCoinWalletInfoLoadingImpl
         reloadVndWalletInfoSuccess,
     TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
   }) {
     return getCoinWalletInfoLoading?.call(this);
   }
@@ -2607,6 +2896,8 @@ class _$GetCoinWalletInfoLoadingImpl
         reloadVndWalletInfoSuccess,
     TResult Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (getCoinWalletInfoLoading != null) {
@@ -2681,6 +2972,8 @@ class _$ReloadVndWalletInfoSuccessImpl
     required TResult Function() getCoinWalletInfoLoading,
     required TResult Function() reloadVndWalletInfoSuccess,
     required TResult Function() reloadDiamondWalletInfoSuccess,
+    required TResult Function() getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
   }) {
     return reloadVndWalletInfoSuccess();
   }
@@ -2699,6 +2992,8 @@ class _$ReloadVndWalletInfoSuccessImpl
     TResult? Function()? getCoinWalletInfoLoading,
     TResult? Function()? reloadVndWalletInfoSuccess,
     TResult? Function()? reloadDiamondWalletInfoSuccess,
+    TResult? Function()? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
   }) {
     return reloadVndWalletInfoSuccess?.call();
   }
@@ -2717,6 +3012,8 @@ class _$ReloadVndWalletInfoSuccessImpl
     TResult Function()? getCoinWalletInfoLoading,
     TResult Function()? reloadVndWalletInfoSuccess,
     TResult Function()? reloadDiamondWalletInfoSuccess,
+    TResult Function()? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (reloadVndWalletInfoSuccess != null) {
@@ -2745,6 +3042,8 @@ class _$ReloadVndWalletInfoSuccessImpl
         reloadVndWalletInfoSuccess,
     required TResult Function(_ReloadDiamondWalletInfoSuccess value)
         reloadDiamondWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
   }) {
     return reloadVndWalletInfoSuccess(this);
   }
@@ -2768,6 +3067,8 @@ class _$ReloadVndWalletInfoSuccessImpl
         reloadVndWalletInfoSuccess,
     TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
   }) {
     return reloadVndWalletInfoSuccess?.call(this);
   }
@@ -2790,6 +3091,8 @@ class _$ReloadVndWalletInfoSuccessImpl
         reloadVndWalletInfoSuccess,
     TResult Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (reloadVndWalletInfoSuccess != null) {
@@ -2866,6 +3169,8 @@ class _$ReloadDiamondWalletInfoSuccessImpl
     required TResult Function() getCoinWalletInfoLoading,
     required TResult Function() reloadVndWalletInfoSuccess,
     required TResult Function() reloadDiamondWalletInfoSuccess,
+    required TResult Function() getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
   }) {
     return reloadDiamondWalletInfoSuccess();
   }
@@ -2884,6 +3189,8 @@ class _$ReloadDiamondWalletInfoSuccessImpl
     TResult? Function()? getCoinWalletInfoLoading,
     TResult? Function()? reloadVndWalletInfoSuccess,
     TResult? Function()? reloadDiamondWalletInfoSuccess,
+    TResult? Function()? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
   }) {
     return reloadDiamondWalletInfoSuccess?.call();
   }
@@ -2902,6 +3209,8 @@ class _$ReloadDiamondWalletInfoSuccessImpl
     TResult Function()? getCoinWalletInfoLoading,
     TResult Function()? reloadVndWalletInfoSuccess,
     TResult Function()? reloadDiamondWalletInfoSuccess,
+    TResult Function()? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (reloadDiamondWalletInfoSuccess != null) {
@@ -2930,6 +3239,8 @@ class _$ReloadDiamondWalletInfoSuccessImpl
         reloadVndWalletInfoSuccess,
     required TResult Function(_ReloadDiamondWalletInfoSuccess value)
         reloadDiamondWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
   }) {
     return reloadDiamondWalletInfoSuccess(this);
   }
@@ -2953,6 +3264,8 @@ class _$ReloadDiamondWalletInfoSuccessImpl
         reloadVndWalletInfoSuccess,
     TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
   }) {
     return reloadDiamondWalletInfoSuccess?.call(this);
   }
@@ -2975,6 +3288,8 @@ class _$ReloadDiamondWalletInfoSuccessImpl
         reloadVndWalletInfoSuccess,
     TResult Function(_ReloadDiamondWalletInfoSuccess value)?
         reloadDiamondWalletInfoSuccess,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
     required TResult orElse(),
   }) {
     if (reloadDiamondWalletInfoSuccess != null) {
@@ -2987,4 +3302,390 @@ class _$ReloadDiamondWalletInfoSuccessImpl
 abstract class _ReloadDiamondWalletInfoSuccess implements WalletState {
   const factory _ReloadDiamondWalletInfoSuccess() =
       _$ReloadDiamondWalletInfoSuccessImpl;
+}
+
+/// @nodoc
+abstract class _$$GetWalletInfoSuccessImplCopyWith<$Res> {
+  factory _$$GetWalletInfoSuccessImplCopyWith(_$GetWalletInfoSuccessImpl value,
+          $Res Function(_$GetWalletInfoSuccessImpl) then) =
+      __$$GetWalletInfoSuccessImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$GetWalletInfoSuccessImplCopyWithImpl<$Res>
+    extends _$WalletStateCopyWithImpl<$Res, _$GetWalletInfoSuccessImpl>
+    implements _$$GetWalletInfoSuccessImplCopyWith<$Res> {
+  __$$GetWalletInfoSuccessImplCopyWithImpl(_$GetWalletInfoSuccessImpl _value,
+      $Res Function(_$GetWalletInfoSuccessImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$GetWalletInfoSuccessImpl
+    with DiagnosticableTreeMixin
+    implements _GetWalletInfoSuccess {
+  const _$GetWalletInfoSuccessImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WalletState.getWalletInfoSuccess()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('type', 'WalletState.getWalletInfoSuccess'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetWalletInfoSuccessImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String err) error,
+    required TResult Function() vndWalletInfoLoading,
+    required TResult Function(VndWalletInfo vndWalletInfo) vndWalletInfoLoaded,
+    required TResult Function(WalletType walletType) needToRegisterJA,
+    required TResult Function() getDiamondWalletInfoLoading,
+    required TResult Function() getDiamondWalletInfoLoaded,
+    required TResult Function() getCoinWalletInfoLoaded,
+    required TResult Function() getCoinWalletInfoLoading,
+    required TResult Function() reloadVndWalletInfoSuccess,
+    required TResult Function() reloadDiamondWalletInfoSuccess,
+    required TResult Function() getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
+  }) {
+    return getWalletInfoSuccess();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String err)? error,
+    TResult? Function()? vndWalletInfoLoading,
+    TResult? Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
+    TResult? Function(WalletType walletType)? needToRegisterJA,
+    TResult? Function()? getDiamondWalletInfoLoading,
+    TResult? Function()? getDiamondWalletInfoLoaded,
+    TResult? Function()? getCoinWalletInfoLoaded,
+    TResult? Function()? getCoinWalletInfoLoading,
+    TResult? Function()? reloadVndWalletInfoSuccess,
+    TResult? Function()? reloadDiamondWalletInfoSuccess,
+    TResult? Function()? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
+  }) {
+    return getWalletInfoSuccess?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String err)? error,
+    TResult Function()? vndWalletInfoLoading,
+    TResult Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
+    TResult Function(WalletType walletType)? needToRegisterJA,
+    TResult Function()? getDiamondWalletInfoLoading,
+    TResult Function()? getDiamondWalletInfoLoaded,
+    TResult Function()? getCoinWalletInfoLoaded,
+    TResult Function()? getCoinWalletInfoLoading,
+    TResult Function()? reloadVndWalletInfoSuccess,
+    TResult Function()? reloadDiamondWalletInfoSuccess,
+    TResult Function()? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
+    required TResult orElse(),
+  }) {
+    if (getWalletInfoSuccess != null) {
+      return getWalletInfoSuccess();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_VndWalletInfoLoading value) vndWalletInfoLoading,
+    required TResult Function(_VndWalletInfoLoaded value) vndWalletInfoLoaded,
+    required TResult Function(_NeedToRegisterJA value) needToRegisterJA,
+    required TResult Function(_GetDiamondWalletInfoLoading value)
+        getDiamondWalletInfoLoading,
+    required TResult Function(_GetDiamondWalletInfoLoaded value)
+        getDiamondWalletInfoLoaded,
+    required TResult Function(_GetCoinWalletInfoLoaded value)
+        getCoinWalletInfoLoaded,
+    required TResult Function(_GetCoinWalletInfoLoading value)
+        getCoinWalletInfoLoading,
+    required TResult Function(_ReloadVndWalletInfoSuccess value)
+        reloadVndWalletInfoSuccess,
+    required TResult Function(_ReloadDiamondWalletInfoSuccess value)
+        reloadDiamondWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
+  }) {
+    return getWalletInfoSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
+    TResult? Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
+    TResult? Function(_NeedToRegisterJA value)? needToRegisterJA,
+    TResult? Function(_GetDiamondWalletInfoLoading value)?
+        getDiamondWalletInfoLoading,
+    TResult? Function(_GetDiamondWalletInfoLoaded value)?
+        getDiamondWalletInfoLoaded,
+    TResult? Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
+    TResult? Function(_GetCoinWalletInfoLoading value)?
+        getCoinWalletInfoLoading,
+    TResult? Function(_ReloadVndWalletInfoSuccess value)?
+        reloadVndWalletInfoSuccess,
+    TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
+        reloadDiamondWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+  }) {
+    return getWalletInfoSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
+    TResult Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
+    TResult Function(_NeedToRegisterJA value)? needToRegisterJA,
+    TResult Function(_GetDiamondWalletInfoLoading value)?
+        getDiamondWalletInfoLoading,
+    TResult Function(_GetDiamondWalletInfoLoaded value)?
+        getDiamondWalletInfoLoaded,
+    TResult Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
+    TResult Function(_GetCoinWalletInfoLoading value)? getCoinWalletInfoLoading,
+    TResult Function(_ReloadVndWalletInfoSuccess value)?
+        reloadVndWalletInfoSuccess,
+    TResult Function(_ReloadDiamondWalletInfoSuccess value)?
+        reloadDiamondWalletInfoSuccess,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    required TResult orElse(),
+  }) {
+    if (getWalletInfoSuccess != null) {
+      return getWalletInfoSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetWalletInfoSuccess implements WalletState {
+  const factory _GetWalletInfoSuccess() = _$GetWalletInfoSuccessImpl;
+}
+
+/// @nodoc
+abstract class _$$GetWalletInfoLoadingImplCopyWith<$Res> {
+  factory _$$GetWalletInfoLoadingImplCopyWith(_$GetWalletInfoLoadingImpl value,
+          $Res Function(_$GetWalletInfoLoadingImpl) then) =
+      __$$GetWalletInfoLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$GetWalletInfoLoadingImplCopyWithImpl<$Res>
+    extends _$WalletStateCopyWithImpl<$Res, _$GetWalletInfoLoadingImpl>
+    implements _$$GetWalletInfoLoadingImplCopyWith<$Res> {
+  __$$GetWalletInfoLoadingImplCopyWithImpl(_$GetWalletInfoLoadingImpl _value,
+      $Res Function(_$GetWalletInfoLoadingImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$GetWalletInfoLoadingImpl
+    with DiagnosticableTreeMixin
+    implements _GetWalletInfoLoading {
+  const _$GetWalletInfoLoadingImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WalletState.getWalletInfoLoading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('type', 'WalletState.getWalletInfoLoading'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetWalletInfoLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String err) error,
+    required TResult Function() vndWalletInfoLoading,
+    required TResult Function(VndWalletInfo vndWalletInfo) vndWalletInfoLoaded,
+    required TResult Function(WalletType walletType) needToRegisterJA,
+    required TResult Function() getDiamondWalletInfoLoading,
+    required TResult Function() getDiamondWalletInfoLoaded,
+    required TResult Function() getCoinWalletInfoLoaded,
+    required TResult Function() getCoinWalletInfoLoading,
+    required TResult Function() reloadVndWalletInfoSuccess,
+    required TResult Function() reloadDiamondWalletInfoSuccess,
+    required TResult Function() getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
+  }) {
+    return getWalletInfoLoading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String err)? error,
+    TResult? Function()? vndWalletInfoLoading,
+    TResult? Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
+    TResult? Function(WalletType walletType)? needToRegisterJA,
+    TResult? Function()? getDiamondWalletInfoLoading,
+    TResult? Function()? getDiamondWalletInfoLoaded,
+    TResult? Function()? getCoinWalletInfoLoaded,
+    TResult? Function()? getCoinWalletInfoLoading,
+    TResult? Function()? reloadVndWalletInfoSuccess,
+    TResult? Function()? reloadDiamondWalletInfoSuccess,
+    TResult? Function()? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
+  }) {
+    return getWalletInfoLoading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String err)? error,
+    TResult Function()? vndWalletInfoLoading,
+    TResult Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
+    TResult Function(WalletType walletType)? needToRegisterJA,
+    TResult Function()? getDiamondWalletInfoLoading,
+    TResult Function()? getDiamondWalletInfoLoaded,
+    TResult Function()? getCoinWalletInfoLoaded,
+    TResult Function()? getCoinWalletInfoLoading,
+    TResult Function()? reloadVndWalletInfoSuccess,
+    TResult Function()? reloadDiamondWalletInfoSuccess,
+    TResult Function()? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
+    required TResult orElse(),
+  }) {
+    if (getWalletInfoLoading != null) {
+      return getWalletInfoLoading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_VndWalletInfoLoading value) vndWalletInfoLoading,
+    required TResult Function(_VndWalletInfoLoaded value) vndWalletInfoLoaded,
+    required TResult Function(_NeedToRegisterJA value) needToRegisterJA,
+    required TResult Function(_GetDiamondWalletInfoLoading value)
+        getDiamondWalletInfoLoading,
+    required TResult Function(_GetDiamondWalletInfoLoaded value)
+        getDiamondWalletInfoLoaded,
+    required TResult Function(_GetCoinWalletInfoLoaded value)
+        getCoinWalletInfoLoaded,
+    required TResult Function(_GetCoinWalletInfoLoading value)
+        getCoinWalletInfoLoading,
+    required TResult Function(_ReloadVndWalletInfoSuccess value)
+        reloadVndWalletInfoSuccess,
+    required TResult Function(_ReloadDiamondWalletInfoSuccess value)
+        reloadDiamondWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
+  }) {
+    return getWalletInfoLoading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
+    TResult? Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
+    TResult? Function(_NeedToRegisterJA value)? needToRegisterJA,
+    TResult? Function(_GetDiamondWalletInfoLoading value)?
+        getDiamondWalletInfoLoading,
+    TResult? Function(_GetDiamondWalletInfoLoaded value)?
+        getDiamondWalletInfoLoaded,
+    TResult? Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
+    TResult? Function(_GetCoinWalletInfoLoading value)?
+        getCoinWalletInfoLoading,
+    TResult? Function(_ReloadVndWalletInfoSuccess value)?
+        reloadVndWalletInfoSuccess,
+    TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
+        reloadDiamondWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+  }) {
+    return getWalletInfoLoading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
+    TResult Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
+    TResult Function(_NeedToRegisterJA value)? needToRegisterJA,
+    TResult Function(_GetDiamondWalletInfoLoading value)?
+        getDiamondWalletInfoLoading,
+    TResult Function(_GetDiamondWalletInfoLoaded value)?
+        getDiamondWalletInfoLoaded,
+    TResult Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
+    TResult Function(_GetCoinWalletInfoLoading value)? getCoinWalletInfoLoading,
+    TResult Function(_ReloadVndWalletInfoSuccess value)?
+        reloadVndWalletInfoSuccess,
+    TResult Function(_ReloadDiamondWalletInfoSuccess value)?
+        reloadDiamondWalletInfoSuccess,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    required TResult orElse(),
+  }) {
+    if (getWalletInfoLoading != null) {
+      return getWalletInfoLoading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetWalletInfoLoading implements WalletState {
+  const factory _GetWalletInfoLoading() = _$GetWalletInfoLoadingImpl;
 }

@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../wallet.dart';
 import '../../../core/configuratons/configurations.dart';
 import '../../../domain/entities/wallet/vnd_wallet_info/vnd_wallet_info.dart';
+import '../../../domain/repository/wallet_repository.dart';
 import '../../../domain/usecases/wallet_usecase.dart';
 import '../../wallet_constant.dart';
 
@@ -19,9 +19,10 @@ part 'wallet_state.dart';
 @singleton
 class WalletBloc extends Bloc<WalletEvent, WalletState> {
   final WalletUseCase _walletUseCase;
+  final WalletRepository _walletRepository;
   late VndWalletInfo vndWalletInfo = const VndWalletInfo();
 
-  WalletBloc(this._walletUseCase) : super(const _Initial()) {
+  WalletBloc(this._walletUseCase, this._walletRepository) : super(const _Initial()) {
     on<_ReloadVndWalletInfo>((event, emit) {
       emit(const WalletState.reloadVndWalletInfoSuccess());
     });
@@ -34,7 +35,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
         vndWalletInfo = await _walletUseCase.getVndWalletInfo();
         WalletInjectedData.setVndWalletInfo = vndWalletInfo;
         emit(_VndWalletInfoLoaded(vndWalletInfo));
-      } on DioError catch (e) {
+      } on DioException catch (e) {
         const errorMessage = 'Đã xảy ra lỗi';
         final String code = (e.response?.data?['code'] ?? '') as String;
         if (code.contains('NOT_JA')) {
@@ -50,7 +51,7 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
         final diamondWalletInfo = await _walletUseCase.getDiamondWalletInfo();
         WalletInjectedData.setDiamondWalletInfo = diamondWalletInfo;
         emit(const _GetDiamondWalletInfoLoaded());
-      } on DioError catch (e) {
+      } on DioException catch (e) {
         const errorMessage = 'Đã xảy ra lỗi';
         final String code = (e.response?.data?['code'] ?? '') as String;
         if (code.contains('NOT_JA')) {
@@ -66,13 +67,25 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
         final coinWalletInfo = await _walletUseCase.getCoinWalletInfo();
         WalletInjectedData.setCoinWalletInfo = coinWalletInfo;
         emit(const _GetCoinWalletInfoLoaded());
-      } on DioError catch (e) {
+      } on DioException catch (e) {
         const errorMessage = 'Đã xảy ra lỗi';
         final String code = (e.response?.data?['code'] ?? '') as String;
         if (code.contains('NOT_JA')) {
           emit(const _NeedToRegisterJA(walletType: WalletType.coin));
           return;
         }
+        emit(const _Error(errorMessage));
+      }
+    });
+
+    on<_GetWalletInfoEvent>((event, emit) async {
+      try {
+        emit(const _GetWalletInfoLoading());
+        await _walletRepository.getWalletInfo();
+        emit(const _GetWalletInfoSuccess());
+      } on DioException catch (e) {
+        const errorMessage = 'Đã xảy ra lỗi';
+
         emit(const _Error(errorMessage));
       }
     });

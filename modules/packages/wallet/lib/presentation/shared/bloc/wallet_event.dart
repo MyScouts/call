@@ -12,4 +12,7 @@ class WalletEvent with _$WalletEvent {
 
   const factory WalletEvent.reloadDiamondWalletInfo() =
       _ReloadDiamondWalletInfo;
+
+
+  const factory WalletEvent.getWalletInfo() = _GetWalletInfoEvent;
 }

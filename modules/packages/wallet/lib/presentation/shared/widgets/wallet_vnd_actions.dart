@@ -1,6 +1,7 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wallet/presentation/wallet_vnd/wallet_vnd_coodinator.dart';
 
 import '../../../core/core.dart';
 import '../../../di/wallet_micro.dart';
@@ -77,6 +78,7 @@ class _WalletVNDActionsState extends State<WalletVNDActions> {
         );
         break;
       case WalletVNDActionType.transactionHistory:
+        context.vndTransactionHistory();
         break;
     }
   }

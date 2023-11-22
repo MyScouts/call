@@ -12,9 +12,10 @@ class WalletVndRoutes extends RouteModule {
   @override
   Map<String, WidgetBuilder> getAll(RouteSettings settings) => {
         TransactionHistoryScreen.routeName: (context) {
-          final vendor = settings.arguments as TransactionHistoryVendor;
+          var vendor = settings.arguments as TransactionHistoryVendor?;
+          vendor ??= TransactionHistoryVendor.vShop;
           return BlocProvider(
-            create: (context) => TransactionHistoryBloc(vendor, injector())
+            create: (context) => TransactionHistoryBloc(vendor!, injector())
               ..add(GetTransactionHistoryEvent()),
             child: TransactionHistoryScreen(vendor: vendor),
           );
