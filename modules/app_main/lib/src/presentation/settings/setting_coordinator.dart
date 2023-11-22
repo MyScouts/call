@@ -92,4 +92,36 @@ extension SettingCoordinator on BuildContext {
       },
     );
   }
+
+  Future<T?> updateOptionalAppVersion<T>({
+    required String version,
+    required Function() onUpdateAppVersion,
+  }) {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: true,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return ActionDialog(
+          title: "Cập nhật phiên bản mới $version!\nBổ sung nhiều tính năng và tiện ích",
+          actionTitle: S.current.confirm.capitalize(),
+          onAction: onUpdateAppVersion,
+        );
+      },
+    );
+  }
+
+  Future<T?> confirmLatestAppVersion<T>() {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: true,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return const WarningDialog(
+          title: 'Cập nhật app',
+          content: 'App đang là phiên bản mới nhất',
+        );
+      },
+    );
+  }
 }

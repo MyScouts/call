@@ -96,6 +96,7 @@ class IconAppConstants {
   static String appSetting = IconApp.appSetting.path;
   static String icLiveArea = IconApp.icLiveArea.path;
   static String icSettingApp = IconApp.icSettingApp.path;
+  static String icVersion = IconApp.icVersion.path;
 }
 
 enum IconApp {
@@ -197,6 +198,7 @@ enum IconApp {
   icLiveArea('assets/icons/ic_live_area.svg'),
   icSettingApp('assets/icons/ic_setting_app.svg'),
   appSetting('assets/icons/app_setting.png'),
+  icVersion('assets/icons/ic_version.svg'),
   icLeaveTeam('assets/icons/ic_leave_team.svg');
 
   const IconApp(this.path);
