@@ -9,6 +9,7 @@ class GenderDropdown extends StatefulWidget {
   final bool required;
   final List<Gender> genders;
   final bool disable;
+  final Gender gender;
 
   const GenderDropdown({
     super.key,
@@ -16,6 +17,7 @@ class GenderDropdown extends StatefulWidget {
     this.required = false,
     this.genders = const [],
     this.disable = false,
+    required this.gender,
   });
 
   @override
@@ -27,6 +29,9 @@ class _GenderDropdownState extends State<GenderDropdown> {
   void didUpdateWidget(covariant GenderDropdown oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.disable != widget.disable) {
+      setState(() {});
+    }
+    if(widget.gender != oldWidget.gender) {
       setState(() {});
     }
   }
@@ -77,7 +82,7 @@ class _GenderDropdownState extends State<GenderDropdown> {
               'Chọn giới tính.',
               style: TextStyle(fontSize: 14),
             ),
-            value: widget.genders.first,
+            value: widget.gender,
             items: widget.genders.isNotEmpty
                 ? widget.genders
                     .map((item) => DropdownMenuItem<Gender>(
