@@ -6,6 +6,7 @@ import 'package:app_main/src/data/models/responses/update_none_pdone_profile_res
 import 'package:app_main/src/data/models/responses/update_pdone_profile_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
+import 'package:app_main/src/data/models/responses/user_verify_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -27,6 +28,8 @@ class UserApiConstants {
   static const updateNonePDoneProfile = "api/v1/p-done/non-p-done-profile";
   static const listFriends = "/api/v1/following/friend";
   static const invite = "api/v1/team/{id}/invite";
+  static const email = "api/v1/user/email";
+  static const genEmail = "api/v1/user/add-email-otp";
 }
 
 @RestApi()
@@ -96,4 +99,10 @@ abstract class UserApi {
     @Body() Map<String, dynamic> json,
     @Path('id') String teamID,
   );
+
+  @PATCH(UserApiConstants.email)
+  Future<UserVerifyResponse> updateEmail(@Body() Map<String, dynamic> json);
+
+  @POST(UserApiConstants.genEmail)
+  Future<Object> genOtpEmail(@Body() Map<String, dynamic> json);
 }

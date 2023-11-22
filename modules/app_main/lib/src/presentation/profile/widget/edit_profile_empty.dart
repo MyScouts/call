@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/domain/entities/bank.dart';
 import 'package:app_main/src/domain/entities/update_account/place/country.dart';
@@ -6,6 +7,7 @@ import 'package:app_main/src/domain/entities/update_account/place/district.dart'
 import 'package:app_main/src/domain/entities/update_account/place/province.dart';
 import 'package:app_main/src/domain/entities/update_account/place/ward.dart';
 import 'package:app_main/src/domain/entities/update_account/update_place_information_payload.dart';
+import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
 import 'package:app_main/src/presentation/information_profile/bloc/place_information_2/place_information_2_bloc.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/bank_dropdown.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/bloodtype_dropdown.dart';
@@ -17,7 +19,10 @@ import 'package:app_main/src/presentation/information_profile/widgets/marital_st
 import 'package:app_main/src/presentation/information_profile/widgets/provinces_dropdown.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/update_information_profile_mixin.dart';
 import 'package:app_main/src/presentation/information_profile/widgets/ward_dropdown.dart';
+import 'package:app_main/src/presentation/otp_verify/email_otp_verify.dart';
+import 'package:app_main/src/presentation/otp_verify/email_verify_confirm_dialog.dart';
 import 'package:app_main/src/presentation/profile/state/user_profile_bloc.dart';
+import 'package:app_main/src/presentation/shared/extensions/validation_extension.dart';
 import 'package:app_main/src/presentation/upgrade_account/place_information_constant.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/bloc/place_information/place_information_bloc.dart';
@@ -145,7 +150,9 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         if (talentController.text.trim().isNotEmpty)
           "talent": talentController.text,
         "sex": gender,
-        "birthday": '${birthS[2].trim()}-${birthS[1].trim()}-${birthS[0].trim()}',
+        if (birthS.length == 3)
+          "birthday":
+              '${birthS[2].trim()}-${birthS[1].trim()}-${birthS[0].trim()}',
         if (idNumberController.text.trim().isNotEmpty)
           "identityNumber": idNumberController.text,
         if (subS.length == 3) "supplyDate": '${subS[2]}-${subS[1]}-${subS[0]}',
@@ -155,6 +162,10 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
 
       context.read<UserProfileBloc>().add(SubmitDataNonePDone(data));
     } else {
+      if (nickNameController.text.trim().isEmpty) {
+        showToastMessage('Vui lòng nhập nickname', ToastMessageType.error);
+        return;
+      }
       context.read<UserProfileBloc>().add(SubmitDataPDone(
             UpdateNonePDoneProfilePayload(
               nickName: nickNameController.text,
@@ -168,11 +179,38 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                 wardName: cuWard?.name,
                 wardCode: cuWard!.id.toString(),
               ),
+              interest: hobbyController.text,
+              talent: talentController.text,
+              bloodGroup: bloodType,
+              maritalStatus: martialStatus,
             ),
           ));
     }
 
     widget.onBack();
+  }
+
+  bool _updateEmailSuccess = false;
+
+  void requestUpdateEmail() async {
+    if (emailController.text == (userBloc.state.user?.email ?? '')) return;
+    final ok = await showDialog(
+      context: context,
+      builder: (_) => const EmailVerifyConfirmDialog(),
+    );
+
+    if (ok) {
+      if (!mounted) return;
+      final success = await Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => EmailOtpVerify(email: emailController.text),
+      ));
+      if (success) {
+        setState(() {
+          _updateEmailSuccess = true;
+        });
+        userBloc.add(RefreshUser());
+      }
+    }
   }
 
   @override
@@ -188,14 +226,29 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
     gender = userBloc.state.pDoneProfile?.sex ?? 1;
     emailController.text = '';
     idNumberController.text = userBloc.state.pDoneProfile?.identityNumber ?? '';
-    supplyDateX = userBloc.state.pDoneProfile?.supplyDate ??
+    final subs = userBloc.state.pDoneProfile?.supplyDate ??
         DateFormat('dd/MM/yyyy').format(DateTime.now());
-    placeOfNumberController.text =
-        userBloc.state.pDoneProfile?.supplyAddress ?? '';
+    final subsX = subs.split('-');
+    supplyDateX = '${subsX[2]}/${subsX[1]}/${subsX[0]}';
+    placeOfNumberController.text = userBloc.state.pDoneProfile?.supplyAddress ??
+        'Cục trưởng cục cảnh sát và quản lý hành chính';
     jobController.text = userBloc.state.pDoneProfile?.job ?? '';
     talentController.text = userBloc.state.pDoneProfile?.talent ?? '';
     hobbyController.text = userBloc.state.pDoneProfile?.interest ?? '';
+    martialStatus = userBloc.state.pDoneProfile?.maritalStatus ?? '';
+    bloodType = userBloc.state.pDoneProfile?.bloodGroup ?? '';
+    emailController.text = userBloc.state.user?.email ?? '';
     super.initState();
+  }
+
+  DateTime get date {
+    final bds = birthDayController.text.split('/');
+    return DateTime(int.parse(bds[2]), int.parse(bds[1]), int.parse(bds[0]));
+  }
+
+  DateTime get subDate {
+    final bds = supplyDateX.split('/');
+    return DateTime(int.parse(bds[2]), int.parse(bds[1]), int.parse(bds[0]));
   }
 
   @override
@@ -322,51 +375,68 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                       ),
                       const SizedBox(width: 20),
                       Expanded(
-                        child: ValueListenableBuilder(
-                          builder: (_, dateTimeValue, __) {
-                            return IgnorePointer(
-                              ignoring: widget.isPDone,
-                              child: InformationLayoutFieldWidget(
-                                required: true,
-                                label: UpdateInformationType.birthDay
-                                    .title(context),
-                                child: InputDateTimeWidget(
-                                  controller: birthDayController,
-                                  hintText: 'Ngày sinh',
-                                  useHorizontalLayout: true,
-                                  enabled: true,
-                                  radius: 17,
-                                  date: dateTimeValue,
-                                  formatText: (date) => S
-                                      .of(context)
-                                      .formatDateDDmmYYYYhhMM(date, date)
-                                      .split('|')
-                                      .first,
-                                  max: DateTime.now(),
-                                  onChange: (dateTime) {
-                                    onValidation();
-                                    birthDayController.text =
-                                        DateFormat('dd/MM/yyyy')
-                                            .format(dateTime!);
-                                  },
-                                ),
-                              ),
-                            );
-                          },
-                          valueListenable: birthDayChanged,
+                        child: InformationLayoutFieldWidget(
+                          required: true,
+                          label: UpdateInformationType.birthDay.title(context),
+                          child: InputDateTimeWidget(
+                            controller: birthDayController,
+                            hintText: 'Ngày sinh',
+                            useHorizontalLayout: true,
+                            enabled: !widget.isPDone,
+                            radius: 17,
+                            date: date,
+                            formatText: (date) => S
+                                .of(context)
+                                .formatDateDDmmYYYYhhMM(date, date)
+                                .split('|')
+                                .first,
+                            max: DateTime.now(),
+                            onChange: (dateTime) {
+                              onValidation();
+                              birthDayController.text =
+                                  DateFormat('dd/MM/yyyy').format(dateTime!);
+                            },
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  InformationFieldWidget(
-                    required: true,
-                    shouldEnabled: true,
-                    controller: emailController,
-                    onChanged: (String? value) {
-                      onValidation();
+                  Focus(
+                    onFocusChange: (value) {
+                      if (!value &&
+                          context.validateEmailInfo(
+                                emailController.text,
+                                'Địa chỉ email không hợp lệ',
+                              ) ==
+                              null) {
+                        Future.delayed(const Duration(seconds: 1), () {
+                          if (!mounted) return;
+                          requestUpdateEmail();
+                        });
+                      }
                     },
-                    type: UpdateInformationType.email,
+                    child: InformationFieldWidget(
+                      required: true,
+                      shouldEnabled: true,
+                      controller: emailController,
+                      onChanged: (String? value) {
+                        onValidation();
+                      },
+                      type: UpdateInformationType.email,
+                      validator: (value) => context.validateEmailInfo(
+                        emailController.text,
+                        'Địa chỉ email không hợp lệ',
+                      ),
+                    ),
                   ),
+                  if (_updateEmailSuccess)
+                    const Padding(
+                      padding: EdgeInsets.only(top: 5),
+                      child: Text(
+                        'Cập nhật thành công',
+                        style: TextStyle(fontSize: 12, color: Colors.green),
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -390,10 +460,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
               width: double.infinity,
               color: const Color(0xffF3F8FF),
             ),
-            IgnorePointer(
-              ignoring: widget.isPDone,
-              child: _buildMoreInformation(),
-            ),
+            _buildMoreInformation(),
             _buildButtonUpdate(context),
           ],
         ),
@@ -466,46 +533,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
             },
             type: UpdateInformationType.career,
           ),
-          // BlocBuilder<UpgradePDoneBloc, UpgradePDoneState>(
-          //   bloc: upgradePDoneBloc,
-          //   buildWhen: (old, state) => state is GetListMasterSuccess,
-          //   builder: (context, state) {
-          //     if (state is GetListMasterSuccess) {
-          //       return Autocomplete<AutocompleteOption>(
-          //         optionsBuilder: (TextEditingValue textEditingValue) {
-          //           if (textEditingValue.text.isEmpty) {
-          //             return const Iterable<AutocompleteOption>.empty();
-          //           }
-          //
-          //           final jobs = state.upgradeAccount.jobs ?? [];
-          //           if (jobName.trim().isEmpty) {
-          //             jobName = jobs.first.key!;
-          //           }
-          //
-          //           var filteredAndSortedJobs = jobs
-          //               .where((element) => element.name!
-          //                   .contains(textEditingValue.text.toLowerCase()))
-          //               .map((job) => AutocompleteOption(
-          //                     displayText: job.name!,
-          //                     key: job.key!,
-          //                   ))
-          //               .toList();
-          //
-          //           filteredAndSortedJobs.sort(
-          //               (a, b) => a.displayText!.compareTo(b.displayText!));
-          //
-          //           return filteredAndSortedJobs;
-          //         },
-          //         onSelected: (AutocompleteOption itemSelected) {
-          //           jobName = itemSelected.key!;
-          //         },
-          //         displayStringForOption: (option) => option.displayText!,
-          //       );
-          //     }
-          //
-          //     return Container();
-          //   },
-          // ),
+          const SizedBox(height: 12),
           Row(
             children: [
               Expanded(
@@ -514,13 +542,17 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                   buildWhen: (old, state) => state is GetListMasterSuccess,
                   builder: (ctx, state) {
                     if (state is GetListMasterSuccess) {
-                      final data = state.upgradeAccount.bloodGroups ?? [];
-                      if (bloodType.trim().isEmpty) {
-                        bloodType = data.first.name ?? '';
+                      final list = state.upgradeAccount.bloodGroups ?? [];
+                      BloodGroup data = list.first;
+                      if (bloodType.trim().isNotEmpty) {
+                        data =
+                            list.firstWhereOrNull((e) => e.name == bloodType) ??
+                                data;
                       }
                       return BloodTypeDropDown(
+                        value: data,
                         required: false,
-                        bloodTypes: data,
+                        bloodTypes: list,
                         onChange: (bloodType) {
                           this.bloodType = bloodType;
                         },
@@ -537,13 +569,17 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                   buildWhen: (old, state) => state is GetListMasterSuccess,
                   builder: (ctx, state) {
                     if (state is GetListMasterSuccess) {
-                      final data = state.upgradeAccount.maritalStatus ?? [];
-                      if (martialStatus.trim().isEmpty) {
-                        martialStatus = data.first.key ?? '';
+                      final list = state.upgradeAccount.maritalStatus ?? [];
+                      MaritalStatus status = list.first;
+                      if (martialStatus.trim().isNotEmpty) {
+                        status = list.firstWhereOrNull(
+                                (e) => e.name == martialStatus) ??
+                            status;
                       }
                       return MaritalStatusDropDown(
+                        value: status,
                         required: false,
-                        maritals: data,
+                        maritals: list,
                         onChange: (marital) {
                           martialStatus = marital;
                         },
@@ -556,16 +592,6 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
               ),
             ],
           ),
-          // const SizedBox(height: 15),
-          // const Text(
-          //   "Năng khiếu",
-          //   style: TextStyle(
-          //     fontWeight: FontWeight.w500,
-          //     color: Color(0xFF212121),
-          //     height: 20 / 14,
-          //     leadingDistribution: TextLeadingDistribution.even,
-          //   ),
-          // ),
           const SizedBox(height: 7),
           InformationFieldWidget(
             required: widget.isPDone,
@@ -576,52 +602,6 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
             },
             type: UpdateInformationType.gifted,
           ),
-          // BlocBuilder<UpgradePDoneBloc, UpgradePDoneState>(
-          //   buildWhen: (old, state) => state is GetListMasterSuccess,
-          //   builder: (context, state) {
-          //     if (state is GetListMasterSuccess) {
-          //       return Autocomplete<AutocompleteOption>(
-          //         optionsBuilder: (TextEditingValue textEditingValue) {
-          //           if (textEditingValue.text.isEmpty) {
-          //             return const Iterable<AutocompleteOption>.empty();
-          //           }
-          //
-          //           final tales = state.upgradeAccount.talents ?? [];
-          //
-          //           var filteredAndSortedTalents = tales
-          //               .where((element) => element.name!
-          //                   .contains(textEditingValue.text.toLowerCase()))
-          //               .map((talent) => AutocompleteOption(
-          //                     displayText: talent.name!,
-          //                     key: talent.key!,
-          //                   ))
-          //               .toList();
-          //
-          //           filteredAndSortedTalents.sort(
-          //               (a, b) => a.displayText!.compareTo(b.displayText!));
-          //
-          //           return filteredAndSortedTalents;
-          //         },
-          //         onSelected: (AutocompleteOption itemSelected) {
-          //           talentName = itemSelected.key!;
-          //         },
-          //         displayStringForOption: (option) => option.displayText!,
-          //       );
-          //     }
-          //
-          //     return Container();
-          //   },
-          // ),
-          // const SizedBox(height: 15),
-          // const Text(
-          //   "Sở thích",
-          //   style: TextStyle(
-          //     fontWeight: FontWeight.w500,
-          //     color: Color(0xFF212121),
-          //     height: 20 / 14,
-          //     leadingDistribution: TextLeadingDistribution.even,
-          //   ),
-          // ),
           const SizedBox(height: 7),
           InformationFieldWidget(
             required: widget.isPDone,
@@ -632,42 +612,6 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
             },
             type: UpdateInformationType.hobby,
           ),
-          // BlocBuilder<UpgradePDoneBloc, UpgradePDoneState>(
-          //   buildWhen: (old, state) => state is GetListMasterSuccess,
-          //   builder: (context, state) {
-          //     if (state is GetListMasterSuccess) {
-          //       return Autocomplete<AutocompleteOption>(
-          //         optionsBuilder: (TextEditingValue textEditingValue) {
-          //           if (textEditingValue.text.isEmpty) {
-          //             return const Iterable<AutocompleteOption>.empty();
-          //           }
-          //
-          //           final hobbies = state.upgradeAccount.interests ?? [];
-          //
-          //           var filteredAndSortedInterests = hobbies
-          //               .where((element) => element.name!
-          //                   .contains(textEditingValue.text.toLowerCase()))
-          //               .map((hobbie) => AutocompleteOption(
-          //                     displayText: hobbie.name!,
-          //                     key: hobbie.key!,
-          //                   ))
-          //               .toList();
-          //
-          //           filteredAndSortedInterests.sort(
-          //               (a, b) => a.displayText!.compareTo(b.displayText!));
-          //
-          //           return filteredAndSortedInterests;
-          //         },
-          //         onSelected: (AutocompleteOption itemSelected) {
-          //           hobbyName = itemSelected.key!;
-          //         },
-          //         displayStringForOption: (option) => option.displayText!,
-          //       );
-          //     }
-          //
-          //     return Container();
-          //   },
-          // ),
         ],
       ),
     );
@@ -693,6 +637,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
             builder: (_, state) {
               if (state is GetListDataSuccess<Bank>) {
                 return BankDropdown(
+                  enable: !widget.isPDone,
                   required: widget.isPDone,
                   banks: (state).data,
                   onChange: (bank) {
@@ -705,7 +650,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
           ),
           InformationFieldWidget(
             required: widget.isPDone,
-            shouldEnabled: true,
+            shouldEnabled: !widget.isPDone,
             controller: bankNumberController,
             onChanged: (String? value) {
               onValidation();
@@ -714,7 +659,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
           ),
           InformationFieldWidget(
             required: widget.isPDone,
-            shouldEnabled: true,
+            shouldEnabled: !widget.isPDone,
             controller: bankAccountHolderController,
             onChanged: (String? value) {
               onValidation();
@@ -760,12 +705,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                   ),
                 ),
                 const SizedBox(width: 20),
-                Expanded(
-                  child: IgnorePointer(
-                    ignoring: widget.isPDone,
-                    child: buildProvince(),
-                  ),
-                ),
+                Expanded(child: buildProvince()),
               ],
             ),
           ),
@@ -806,7 +746,6 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                   child: buildCountry2(),
                 ),
                 const SizedBox(width: 20),
-                //Tỉnh thành
                 Expanded(
                   child: buildProvince2(),
                 ),
@@ -823,89 +762,66 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
               ],
             ),
           ),
-          IgnorePointer(
-            ignoring: widget.isPDone,
-            child: InformationFieldWidget(
-              required: widget.isPDone,
-              shouldEnabled: true,
-              controller: realAddress,
-              type: UpdateInformationType.address,
-              onChanged: (String? value) {
-                address = value!;
-                onValidation();
-              },
-            ),
+          InformationFieldWidget(
+            required: widget.isPDone,
+            shouldEnabled: !widget.isPDone,
+            controller: realAddress,
+            type: UpdateInformationType.address,
+            onChanged: (String? value) {
+              address = value!;
+              onValidation();
+            },
           ),
           Row(
             children: [
               Expanded(
-                child: Stack(
-                  children: [
-                    IgnorePointer(
-                      ignoring: widget.isPDone,
-                      child: InformationFieldWidget(
-                        required: widget.isPDone,
-                        shouldEnabled: true,
-                        hintText: 'Ex: 12345678909',
-                        controller: idNumberController,
-                        type: UpdateInformationType.idNumber,
-                        onChanged: (String? value) {
-                          idNumber = value!;
-                        },
-                      ),
-                    ),
-                  ],
+                child: InformationFieldWidget(
+                  required: widget.isPDone,
+                  shouldEnabled: !widget.isPDone,
+                  hintText: 'Ex: 12345678909',
+                  controller: idNumberController,
+                  type: UpdateInformationType.idNumber,
+                  onChanged: (String? value) {
+                    idNumber = value!;
+                  },
                 ),
               ),
               const SizedBox(width: 20),
               Expanded(
-                child: ValueListenableBuilder(
-                  builder: (_, dateTimeValue, __) {
-                    return IgnorePointer(
-                      ignoring: widget.isPDone,
-                      child: InformationLayoutFieldWidget(
-                        required: true,
-                        label:
-                            UpdateInformationType.dateOfIdNumber.title(context),
-                        child: InputDateTimeWidget(
-                          hintText: 'Ngày cấp',
-                          useHorizontalLayout: true,
-                          enabled: true,
-                          radius: 17,
-                          date: dateTimeValue,
-                          formatText: (date) => S
-                              .of(context)
-                              .formatDateDDmmYYYYhhMM(date, date)
-                              .split('|')
-                              .first,
-                          max: DateTime.now(),
-                          onChange: (dateTime) {
-                            supplyDateX =
-                                DateFormat('dd/MM/yyyy').format(dateTime!);
-                          },
-                        ),
-                      ),
-                    );
-                  },
-                  valueListenable: supplyDateChanged,
+                child: InformationLayoutFieldWidget(
+                  required: true,
+                  label: UpdateInformationType.dateOfIdNumber.title(context),
+                  child: InputDateTimeWidget(
+                    hintText: 'Ngày cấp',
+                    useHorizontalLayout: true,
+                    enabled: !widget.isPDone,
+                    radius: 17,
+                    date: subDate,
+                    formatText: (date) => S
+                        .of(context)
+                        .formatDateDDmmYYYYhhMM(date, date)
+                        .split('|')
+                        .first,
+                    max: DateTime.now(),
+                    onChange: (dateTime) {
+                      supplyDateX = DateFormat('dd/MM/yyyy').format(dateTime!);
+                    },
+                  ),
                 ),
               ),
             ],
           ),
 
           //Nơi cấp
-          IgnorePointer(
-            ignoring: widget.isPDone,
-            child: InformationFieldWidget(
-              required: widget.isPDone,
-              shouldEnabled: true,
-              hintText: 'Cục trưởng cục cảnh sát và quản lý hành chính',
-              controller: placeOfNumberController,
-              type: UpdateInformationType.placeofIdNumber,
-              onChanged: (String? value) {
-                onValidation();
-              },
-            ),
+          InformationFieldWidget(
+            required: widget.isPDone,
+            shouldEnabled: !widget.isPDone,
+            hintText: 'Cục trưởng cục cảnh sát và quản lý hành chính',
+            controller: placeOfNumberController,
+            type: UpdateInformationType.placeofIdNumber,
+            onChanged: (String? value) {
+              onValidation();
+            },
           ),
         ],
       ),
@@ -955,6 +871,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         if (state is GetListProvincesSuccess) {
           final pros = state.provinces ?? provinces;
           return ProvinceDropDown(
+            enable: !widget.isPDone,
             province: permanentProvince,
             required: true,
             provinces: pros,
@@ -997,6 +914,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         if (state is GetDistrictsSuccess) {
           final dis = state.districts ?? districts;
           return DistrictDropDown(
+            enable: !widget.isPDone,
             district: permanentDistrict,
             required: true,
             districts: dis,
@@ -1033,6 +951,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       builder: (ctx, state) {
         final wa = state.wards ?? wards;
         return WardDropDown(
+          enable: !widget.isPDone,
           ward: permanentWard,
           required: true,
           wards: wa,
@@ -1188,6 +1107,7 @@ class CountryBuild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final s = context.findAncestorStateOfType<_EditProfileEmptyState>();
+    final w = context.findAncestorWidgetOfExactType<EditProfileEmpty>();
     return BlocBuilder<PlaceInformationBloc, PlaceInformationState>(
       buildWhen: (old, state) {
         return state is PlaceInformationInitial;
@@ -1195,6 +1115,7 @@ class CountryBuild extends StatelessWidget {
       builder: (ctx, state) {
         final co = state.countries ?? countries;
         return CountriesDropdown(
+          enable: !(w?.isPDone ?? false),
           key: const Key('drop_down'),
           required: true,
           countries: co,

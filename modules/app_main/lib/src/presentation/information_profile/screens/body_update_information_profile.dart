@@ -685,38 +685,38 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
               Expanded(
                 child: ValueListenableBuilder(
                   builder: (_, bloodTypesValue, __) {
-                    if (bloodTypesValue.isNotEmpty) {
-                      return BloodTypeDropDown(
-                        required: false,
-                        bloodTypes: bloodTypesValue,
-                        onChange: (bloodType) {
-                          bloodTypeParam = bloodType;
-                        },
-                      );
-                    }
+                    // if (bloodTypesValue.isNotEmpty) {
+                    //   return BloodTypeDropDown(
+                    //     required: false,
+                    //     bloodTypes: bloodTypesValue,
+                    //     onChange: (bloodType) {
+                    //       bloodTypeParam = bloodType;
+                    //     },
+                    //   );
+                    // }
                     return Container();
                   },
                   valueListenable: bloodTypesChanged,
                 ),
               ),
               const SizedBox(width: 20),
-              Expanded(
-                child: ValueListenableBuilder(
-                  builder: (_, maritalsValue, __) {
-                    if (maritalsValue.isNotEmpty) {
-                      return MaritalStatusDropDown(
-                        required: false,
-                        maritals: maritalsValue,
-                        onChange: (marital) {
-                          martialStatusParam = marital;
-                        },
-                      );
-                    }
-                    return Container();
-                  },
-                  valueListenable: maritalsChanged,
-                ),
-              ),
+              // Expanded(
+              //   child: ValueListenableBuilder(
+              //     builder: (_, maritalsValue, __) {
+              //       if (maritalsValue.isNotEmpty) {
+              //         return MaritalStatusDropDown(
+              //           required: false,
+              //           maritals: maritalsValue,
+              //           onChange: (marital) {
+              //             martialStatusParam = marital;
+              //           },
+              //         );
+              //       }
+              //       return Container();
+              //     },
+              //     valueListenable: maritalsChanged,
+              //   ),
+              // ),
             ],
           ),
           const SizedBox(height: 15),

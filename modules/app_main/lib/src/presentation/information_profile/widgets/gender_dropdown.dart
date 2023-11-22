@@ -1,4 +1,5 @@
 import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
+import 'package:design_system/design_system.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,14 @@ class GenderDropdown extends StatefulWidget {
 
 class _GenderDropdownState extends State<GenderDropdown> {
   @override
+  void didUpdateWidget(covariant GenderDropdown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.disable != widget.disable) {
+      setState(() {});
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return IgnorePointer(
       ignoring: widget.disable,
@@ -43,11 +52,12 @@ class _GenderDropdownState extends State<GenderDropdown> {
               ),
               widget.required
                   ? Text(
-                ' *',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: Colors.red,
-                ),
-              )
+                      ' *',
+                      style:
+                          Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                color: Colors.red,
+                              ),
+                    )
                   : const SizedBox(),
             ],
           ),
@@ -55,10 +65,13 @@ class _GenderDropdownState extends State<GenderDropdown> {
           DropdownButtonFormField2<Gender>(
             isExpanded: true,
             decoration: InputDecoration(
+              fillColor: !widget.disable ? Colors.white : AppColors.grey70,
               contentPadding: const EdgeInsets.symmetric(vertical: 10),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: !widget.disable
+                      ? const BorderSide()
+                      : const BorderSide(color: AppColors.grey70)),
             ),
             hint: const Text(
               'Chọn giới tính.',
@@ -67,16 +80,16 @@ class _GenderDropdownState extends State<GenderDropdown> {
             value: widget.genders.first,
             items: widget.genders.isNotEmpty
                 ? widget.genders
-                .map((item) => DropdownMenuItem<Gender>(
-              value: item,
-              child: Text(
-                item.value!,
-                style: const TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-            ))
-                .toList()
+                    .map((item) => DropdownMenuItem<Gender>(
+                          value: item,
+                          child: Text(
+                            item.value!,
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                        ))
+                    .toList()
                 : [],
             validator: (value) {
               if (kDebugMode) {

@@ -6,11 +6,13 @@ class MaritalStatusDropDown extends StatefulWidget {
   final Function(String) onChange;
   final bool required;
   final List<MaritalStatus> maritals;
+  final MaritalStatus value;
   const MaritalStatusDropDown({
     super.key,
     required this.onChange,
     this.required = false,
     this.maritals = const [],
+    required this.value,
   });
 
   @override
@@ -18,6 +20,7 @@ class MaritalStatusDropDown extends StatefulWidget {
 }
 
 class _MaritalStatusDropDownState extends State<MaritalStatusDropDown> {
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -57,7 +60,7 @@ class _MaritalStatusDropDownState extends State<MaritalStatusDropDown> {
             'Chọn tình trạng hôn nhân.',
             style: TextStyle(fontSize: 14),
           ),
-          value: widget.maritals.first,
+          value: widget.value,
           items: widget.maritals
               .map((item) => DropdownMenuItem<MaritalStatus>(
                     value: item,
@@ -78,7 +81,7 @@ class _MaritalStatusDropDownState extends State<MaritalStatusDropDown> {
           },
           onChanged: (value) {
             if (value != null) {
-              widget.onChange(value.key!);
+              widget.onChange(value.name!);
               value = value;
               setState(() {});
             }

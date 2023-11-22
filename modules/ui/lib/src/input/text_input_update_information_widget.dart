@@ -40,10 +40,12 @@ class TextInputUpdateInformationWidget extends StatefulWidget {
   final bool showCounterText;
 
   @override
-  State<TextInputUpdateInformationWidget> createState() => _TextInputUpdateInformationWidgetState();
+  State<TextInputUpdateInformationWidget> createState() =>
+      _TextInputUpdateInformationWidgetState();
 }
 
-class _TextInputUpdateInformationWidgetState extends State<TextInputUpdateInformationWidget> {
+class _TextInputUpdateInformationWidgetState
+    extends State<TextInputUpdateInformationWidget> {
   @override
   Widget build(BuildContext context) {
     return TextInputLayout(
@@ -66,11 +68,12 @@ class _TextInputUpdateInformationWidgetState extends State<TextInputUpdateInform
           ),
       disableColor: AppColors.grey70,
       fillColor: Colors.white,
-      focusedBorder: Theme.of(context).themeDecoration.textInputBorderSocial.copyWith(
-            borderSide: const BorderSide(
-              color: AppColors.blue10,
-            ),
-          ),
+      focusedBorder:
+          Theme.of(context).themeDecoration.textInputBorderSocial.copyWith(
+                borderSide: const BorderSide(
+                  color: AppColors.blue10,
+                ),
+              ),
       paddingError: const EdgeInsets.only(left: 0),
       suffixText: widget.suffixText,
     );
