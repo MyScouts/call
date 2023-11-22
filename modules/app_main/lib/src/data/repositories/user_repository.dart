@@ -49,4 +49,8 @@ abstract class UserRepository {
   Future<List<User>> listFriends();
 
   Future invite(String teamID, Map<String, dynamic> json);
+
+  Future<User> updateEmail(Map<String, dynamic> json);
+
+  Future<bool> genOtpEmail(String email);
 }

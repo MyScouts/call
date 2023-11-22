@@ -610,41 +610,28 @@ class _Profile extends StatelessWidget {
                           ),
                         ],
                       ),
-                      BlocBuilder<UpgradePDoneBloc, UpgradePDoneState>(
-                        buildWhen: (old, s) => s is GetListMasterSuccess,
-                        builder: (_, s) {
-                          if (s is GetListMasterSuccess) {
-                            final interests = s.upgradeAccount.interests ?? [];
-                            final data = interests.firstWhereOrNull(
-                                (e) => e.key == state.pDoneProfile?.interest);
-
-                            return Row(
-                              children: [
-                                const Expanded(
-                                  child: Text(
-                                    'Sở thích',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    data?.name ?? '',
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          }
-
-                          return const SizedBox();
-                        },
+                      Row(
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              'Sở thích',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              state.pDoneProfile?.interest ?? '',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ].separated(const SizedBox(height: 20)),
                   ),

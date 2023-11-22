@@ -149,6 +149,7 @@ class _InputDateTimeWidgetState extends State<InputDateTimeWidget> {
 
 extension _InputDateTimeWidgetStateExt on _InputDateTimeWidgetState {
   DateTime get minimumDate => widget.min ?? DateTime.utc(1900);
+
   DateTime get maximumDate => widget.max ?? DateTime.now();
 
   DateTime get _initialDate {
