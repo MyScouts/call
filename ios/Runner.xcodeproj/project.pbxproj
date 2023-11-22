@@ -410,8 +410,9 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FLUTTER_BUILD_NAME = 2.0.0;
 				FLUTTER_BUILD_NUMBER = 2;
-				FLUTTER_TARGET = lib/main_dev.dart;
+				FLUTTER_TARGET = lib/main_pod.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VDONE;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -630,7 +631,7 @@
 					"-weak_framework",
 					"\"UserNotifications\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.app.vdone.staging;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.vdone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -761,8 +762,9 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FLUTTER_BUILD_NAME = 2.0.0;
 				FLUTTER_BUILD_NUMBER = 2;
-				FLUTTER_TARGET = lib/main_dev.dart;
+				FLUTTER_TARGET = lib/main_pod.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VDONE;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -981,7 +983,7 @@
 					"-weak_framework",
 					"\"UserNotifications\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.app.vdone.staging;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.vdone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -1006,8 +1008,9 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FLUTTER_BUILD_NAME = 2.0.0;
 				FLUTTER_BUILD_NUMBER = 2;
-				FLUTTER_TARGET = lib/main_dev.dart;
+				FLUTTER_TARGET = lib/main_pod.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VDONE;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1227,7 +1230,7 @@
 					"-weak_framework",
 					"\"UserNotifications\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.app.vdone.staging;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.vdone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

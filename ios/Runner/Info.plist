@@ -67,7 +67,7 @@
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
-		<string>armv7</string>
+		<string>VDONE</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
@@ -86,5 +86,11 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>your description.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>your description</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>your description.</string>
 </dict>
 </plist>
