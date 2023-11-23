@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>VDONE</string>
+	<string>VDONE-STG</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -43,8 +43,12 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs camera access to scan QR codes</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>your description.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>your description</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open</string>
+	<string>your description.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allow $(APP_NAME) access to your micro phone to make video call?</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
@@ -86,11 +90,5 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>your description.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>your description</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>your description.</string>
 </dict>
 </plist>
