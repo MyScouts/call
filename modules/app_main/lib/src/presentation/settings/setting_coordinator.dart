@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:ui/ui.dart';
 
+import '../upgrade_account/upgrade_ja/upgrade_ja_pdf_preview_screen.dart';
+
 extension SettingCoordinator on BuildContext {
   Future<T?> startSetting<T>() {
     return Navigator.of(this).pushNamed(SettingScreen.routeName);
@@ -91,5 +93,9 @@ extension SettingCoordinator on BuildContext {
         );
       },
     );
+  }
+
+  void startExportJAPdfPreview() {
+    Navigator.pushNamed(this, UpgradeJAPdfPreviewScreen.routeName);
   }
 }

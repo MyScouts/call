@@ -7,7 +7,7 @@ import 'contract_ui_model.dart';
 import 'default_textstyle.dart';
 
 List<ContactPointInformationUIModel> getContactPointInformation(JAContractContentUIModel model) {
-  log('PDoneData: ${model.pDoneInformationData}');
+  log('PDoneData: ${model.user}');
   return [
     ContactPointInformationUIModel(
       title: 'CÔNG TY CỔ PHẦN TẬP ĐOÀN CÔNG NGHỆ VIPTAM',
