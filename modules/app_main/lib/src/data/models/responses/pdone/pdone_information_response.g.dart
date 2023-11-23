@@ -89,6 +89,9 @@ Place _$PlaceFromJson(Map<String, dynamic> json) => Place(
       provinceId: json['provinceId'] as int? ?? 0,
       districtId: json['districtId'] as int? ?? 0,
       wardId: json['wardId'] as int? ?? 0,
+      districtCode: json['districtCode'] as String? ?? '',
+      provinceCode: json['provinceCode'] as String? ?? '',
+      wardCode: json['wardCode'] as String? ?? '',
     );
 
 Map<String, dynamic> _$PlaceToJson(Place instance) => <String, dynamic>{
@@ -103,6 +106,9 @@ Map<String, dynamic> _$PlaceToJson(Place instance) => <String, dynamic>{
       'provinceId': instance.provinceId,
       'districtId': instance.districtId,
       'wardId': instance.wardId,
+      'provinceCode': instance.provinceCode,
+      'districtCode': instance.districtCode,
+      'wardCode': instance.wardCode,
     };
 
 LocationData _$LocationDataFromJson(Map<String, dynamic> json) => LocationData(

@@ -1,5 +1,6 @@
 import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/dashboard/system_setting/system_setting.dart';
+import 'package:app_main/src/presentation/live/live_home/live_home_screen.dart';
 import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:equatable/equatable.dart';
@@ -143,9 +144,7 @@ class DashBoardGroupItem extends DashBoardItem {
       title: json['title'],
       backgroundImage: json['background_image'],
       path: json['path'],
-      items: List.from(json['items'] ?? [])
-          .map((e) => DashBoardIconItem.fromJson(e))
-          .toList(),
+      items: List.from(json['items'] ?? []).map((e) => DashBoardIconItem.fromJson(e)).toList(),
     );
   }
 
@@ -184,10 +183,7 @@ final Map<String, DashBoardItem> mapItems = {
     backgroundImage: IconAppConstants.icTv,
   ),
   'ic_live': DashBoardIconItem(
-    id: 'ic_live',
-    title: 'Live',
-    backgroundImage: IconAppConstants.icLive,
-  ),
+      id: 'ic_live', title: 'Live', backgroundImage: IconAppConstants.icLive, path: LiveHomeScreen.routeName),
   'ic_bird': DashBoardIconItem(
     id: 'ic_bird',
     title: 'Nữ thần hoà bình',
@@ -232,10 +228,7 @@ final communityDefault = {
     backgroundImage: IconAppConstants.icTv,
   ),
   'ic_live': DashBoardIconItem(
-    id: 'ic_live',
-    title: 'Live',
-    backgroundImage: IconAppConstants.icLive,
-  ),
+      id: 'ic_live', title: 'Live', backgroundImage: IconAppConstants.icLive, path: LiveHomeScreen.routeName),
   'ic_bird': DashBoardIconItem(
     id: 'ic_bird',
     title: 'Nữ thần hoà bình',
@@ -343,10 +336,7 @@ final eCommerceDefault = {
     backgroundImage: IconAppConstants.icBird,
   ),
   'ic_live': DashBoardIconItem(
-    id: 'ic_live',
-    title: 'Live',
-    backgroundImage: IconAppConstants.icLive,
-  ),
+      id: 'ic_live', title: 'Live', backgroundImage: IconAppConstants.icLive, path: LiveHomeScreen.routeName),
 };
 
 final mapData = {
