@@ -24,22 +24,8 @@ class AppCubit extends Cubit<AppState> {
     required String type,
     required bool isProduction,
   }) async {
-    try {
-      emit(AppInitial());
-      final appInfo = await DeviceService.getPackageInfo();
-      final currentVersion = Version.parse(appInfo.version);
-      final response = await _srcUsecase.getLatestVersion(type: type);
-      // check app version
-      if (response != null && response.force && isProduction) {
-        final newVersion = Version.parse(response.version);
-        if (newVersion > currentVersion) {
-          emit(UpgradeAppVersion(version: response));
-          return;
-        }
-      }
-    } catch (e) {
-      debugPrint("appInitial: $e");
-    }
+    emit(AppInitial());
+    await getAppVersion(type: type, isProduction: isProduction);
 
     try {
       if (_userSharePreferencesUsecase.isAuthenticated) {
@@ -50,6 +36,36 @@ class AppCubit extends Cubit<AppState> {
       }
     } catch (e) {
       emit(AppInitialFailed());
+    }
+  }
+
+  Future<void> getAppVersion({
+    required String type,
+    required bool isProduction,
+  }) async {
+    emit(LoadingAppVersion());
+    try {
+      final packageInfo = await DeviceService.getPackageInfo();
+      final currentVersion = Version.parse(packageInfo.version);
+      final response = await _srcUsecase.getLatestVersion(type: type);
+      // check app version
+      if (response != null && isProduction) {
+        final newVersion = Version.parse(response.version);
+        if (newVersion > currentVersion) {
+          if (response.force) {
+            emit(UpgradeAppVersion(version: response, currentPackageInfo: packageInfo));
+          } else {
+            emit(OptionalUpgradeAppVersion(version: response.version, currentPackageInfo: packageInfo));
+          }
+        } else {
+          emit(LatestAppVersion(currentPackageInfo: packageInfo));
+        }
+      } else {
+        emit(LatestAppVersion(currentPackageInfo: packageInfo));
+      }
+    } catch (e) {
+      debugPrint("getAppVersion: $e");
+      emit(GetAppVersionFailed(error: e.toString(), versions: (null, null)));
     }
   }
 }
