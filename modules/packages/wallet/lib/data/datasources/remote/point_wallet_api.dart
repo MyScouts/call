@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:wallet/data/datasources/models/est_coin_response.dart';
 
 import '../../../core/core.dart';
 import '../../../core/networking/api_response.dart';
@@ -18,6 +19,7 @@ class PointWalletApiConstants {
   static const agencyInfo = '/api/point/agency/{agencyId}/detail';
   static const exchange = '/api/point/agency/{agencyId}/exchange';
   static const getCoinWalletInfo = '/api/coin-wallet/info';
+  static const estCoin = 'api/v1/coin-agency/{agencyId}/price';
 }
 
 @RestApi()
@@ -52,4 +54,10 @@ abstract class PointWalletApi {
 
   @GET(PointWalletApiConstants.getCoinWalletInfo)
   Future<ApiResponse<CoinWalletInfo>> getCoinWalletInfo();
+
+  @GET(PointWalletApiConstants.getCoinWalletInfo)
+  Future<ApiResponse<EstCoinResponse>> estCoin(
+      {@Path('agencyId') required int agencyId,
+      @Query('vnd') required num vnd,
+      @Query('coin') required num coin});
 }

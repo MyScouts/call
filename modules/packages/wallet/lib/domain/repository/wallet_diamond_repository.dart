@@ -1,5 +1,5 @@
 import '../entities/entities.dart';
-import '../entities/wallet/diamond_wallet/exchange_diamond_response.dart';
+import '../../data/datasources/models/exchange_diamond_response.dart';
 
 abstract class WalletDiamondRepository {
   Future<List<DiamondTransactionHistory>> getTransactionHistories(

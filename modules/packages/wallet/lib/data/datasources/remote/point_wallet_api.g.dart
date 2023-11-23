@@ -181,6 +181,12 @@ class _PointWalletApi implements PointWalletApi {
   }
 
   @override
+  Future<ApiResponse<EstCoinResponse>> estCoin({required int agencyId, required num vnd, required num coin}) {
+    // TODO: implement estCoin
+    throw UnimplementedError();
+  }
+
+  @override
   Future<ApiResponse<CoinWalletInfo>> getCoinWalletInfo() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -239,4 +245,6 @@ class _PointWalletApi implements PointWalletApi {
 
     return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
+
+
 }

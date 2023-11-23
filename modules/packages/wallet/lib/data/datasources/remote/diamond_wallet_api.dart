@@ -5,7 +5,7 @@ import 'package:retrofit/retrofit.dart';
 import '../../../core/core.dart';
 import '../../../core/networking/api_response.dart';
 import '../../../domain/domain.dart';
-import '../../../domain/entities/wallet/diamond_wallet/exchange_diamond_response.dart';
+import '../models/exchange_diamond_response.dart';
 import '../models/models.dart';
 
 part 'diamond_wallet_api.g.dart';

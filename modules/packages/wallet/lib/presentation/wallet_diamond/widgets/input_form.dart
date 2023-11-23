@@ -73,16 +73,16 @@ class _WalletDiamondInputFormState extends State<WalletDiamondInputForm>
       );
 
   Future<void> handleTapExchangeButton(BuildContext context) async {
-    // if (!isValidForm) {
-    //   // showToastMessage('Số kim cương không hợp lệ', ToastMessageType.warning);
-    //   return;
-    // }
-    //
-    // if ((int.tryParse(_diamondController.text) ?? 0) >
-    //     (widget.vndWalletInfo.totalDiamond ?? 0)) {
-    //   // showToastMessage('Số kim cương quy đổi vượt quá số lượng bạn đang có', ToastMessageType.warning);
-    //   return;
-    // }
+    if (!isValidForm) {
+      // showToastMessage('Số kim cương không hợp lệ', ToastMessageType.warning);
+      return;
+    }
+
+    if ((int.tryParse(_diamondController.text) ?? 0) >
+        (widget.vndWalletInfo.totalDiamond ?? 0)) {
+      // showToastMessage('Số kim cương quy đổi vượt quá số lượng bạn đang có', ToastMessageType.warning);
+      return;
+    }
 
     final result = await showDialog<bool>(
       context: context,

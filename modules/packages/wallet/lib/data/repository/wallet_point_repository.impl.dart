@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:wallet/data/datasources/models/est_coin_response.dart';
 
 import '../../domain/domain.dart';
 import '../../domain/entities/agency/agency_info.dart';
@@ -53,6 +54,15 @@ class WalletPointRepositoryImpl implements WalletPointRepository {
   @override
   Future<CoinWalletInfo> getCoinWalletInfo() async {
     final response = await _pointWalletApi.getCoinWalletInfo();
+    return response.data;
+  }
+
+  @override
+  Future<EstCoinResponse> estCoin(
+      {required int agencyId, required num vnd, required num coin}) async {
+    // TODO: implement estCoin
+    final response =
+        await _pointWalletApi.estCoin(agencyId: agencyId, vnd: vnd, coin: coin);
     return response.data;
   }
 }
