@@ -97,8 +97,9 @@ class _CommunityGroupWidgetState extends State<CommunityGroupWidget> {
                                               errorWidget:
                                                   (context, url, error) {
                                                 return ImageWidget(
-                                                  ImageConstants.imgdefault,
                                                   borderRadius: 100,
+                                                  ImageConstants
+                                                      .imgDefaultTeamBanner,
                                                   fit: BoxFit.cover,
                                                 );
                                               },
