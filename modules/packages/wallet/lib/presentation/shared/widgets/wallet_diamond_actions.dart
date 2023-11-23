@@ -71,6 +71,7 @@ class _WalletDiamondActionsState extends State<WalletDiamondActions> {
           );
         } else {
           //TODO: navigate to charge screen
+          context.navigateCharDiamondToVND();
         }
         break;
       case WalletDiamondActionType.transactionHistory:

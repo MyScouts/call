@@ -8,7 +8,7 @@ class SearchInputInformationWidget<T> extends StatelessWidget {
   final List<T>? items;
   final SuggestionsField<T>? initialValue;
 
-  final UpdateInformationType type;
+  final UpdateInformationType? type;
   final ValueChanged<String?>? onChanged;
   final List<SuggestionsField<T>> suggestions;
   final void Function(T?)? onSelected;
@@ -24,7 +24,7 @@ class SearchInputInformationWidget<T> extends StatelessWidget {
     this.items,
     this.initialValue,
     this.onChanged,
-    required this.type,
+    this.type,
     required this.suggestions,
     this.onSelected,
     this.validator,
@@ -40,14 +40,14 @@ class SearchInputInformationWidget<T> extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        LabelFieldWidget(
-          text: type.title(context),
+        if(type != null)LabelFieldWidget(
+          text: type?.title(context) ?? '',
           required: required,
         ),
         TextFieldSearch<T>(
           radius: 8,
           enabled: enabled,
-          hintText: type.title(context),
+          hintText: type?.title(context),
           focusController: focusController,
           suggestions: suggestions,
           contentPadding: const EdgeInsets.fromLTRB(14, 14, 32, 14),

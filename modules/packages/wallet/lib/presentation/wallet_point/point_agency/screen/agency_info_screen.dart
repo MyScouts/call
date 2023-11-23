@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
+import 'package:wallet/presentation/wallet_point/wallet_point_coodinator.dart';
 
 import '../../../../../wallet.dart';
 import '../../../../core/theme/wallet_theme.dart';
@@ -17,6 +18,8 @@ import '../../../wallet_constant.dart';
 import '../../../wallet_coordinator_external.dart';
 import '../../wallet_point_constant.dart';
 import '../bloc/agency_bloc.dart';
+import '../widgets/agency_input.dart';
+import '../widgets/agency_tabbar.dart';
 
 class AgencyInfoScreen extends StatefulWidget {
   static const routeName = '/agency-info';
@@ -63,120 +66,299 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: context.hideKeyboard,
-      child: Scaffold(
-        appBar: appbarBuilder(context, title: 'Thông tin Đại lý'),
-        body: Padding(
-          padding: EdgeInsets.fromLTRB(
-            context.horizontal,
-            25,
-            context.horizontal,
-            MediaQuery.of(context).padding.bottom,
-          ),
-          child: BlocBuilder<AgencyBloc, AgencyState>(
-            buildWhen: (previous, current) =>
-                current.whenOrNull(
-                  getAgencyInfoSuccess: (info) => true,
-                  getAgencyInfoLoading: () => true,
-                ) ??
-                false,
-            builder: (context, state) {
-              return state.maybeWhen(
-                orElse: () => const LoadingWidget(),
-                getAgencyInfoSuccess: (agencyInfo) {
-                  final minAmount = agencyInfo.listPrice!.isNotEmpty
-                      ? agencyInfo.listPrice!.first.vndFrom!
-                      : 10000;
-                  return Stack(
-                    children: [
-                      SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'TỔNG ĐẠI LÝ ${agencyInfo.agency?.agencyName ?? agencyInfo.agency?.displayName}'
-                                  .toUpperCase(),
-                              style: context.text.titleLarge?.copyWith(
-                                color: AppColors.blue10,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20,
-                                height: 1.2,
+      child: Container(
+        color: ResourceTypeExt.blueBackgroundColor,
+        padding: const EdgeInsets.fromLTRB(
+          0,
+          44,
+          0,
+          0,
+        ),
+        margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+        child: BlocBuilder<AgencyBloc, AgencyState>(
+          buildWhen: (previous, current) =>
+              current.whenOrNull(
+                getAgencyInfoSuccess: (info) => true,
+                getAgencyInfoLoading: () => true,
+              ) ??
+              false,
+          builder: (context, state) {
+            return state.maybeWhen(
+              orElse: () => const LoadingWidget(),
+              getAgencyInfoSuccess: (agencyInfo) {
+                return Column(
+                  children: [
+                    _buildAgencyInformation(context),
+                    AgencyTabBarWidget(
+                      widgetByMoney: _buildEnterByMoney(context),
+                      widgetByCoin: _buildEnterNumberCoins(context),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      color: AppColors.white,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildCouponCoins(context),
+                          Visibility(
+                            visible: !isShowKeyboard,
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: GradiantButton(
+                                onPressed: () {
+                                  if (agencyInfo.agency?.id != null) {
+                                    context.pointTransactionHistoryDetail(21);
+                                  }
+                                },
+                                child: const Text('Xác nhận'),
                               ),
                             ),
-                            const SizedBox(height: 15),
-                            agencyInfoWidget(agencyInfo),
-                            chargeToCoinWidget(minAmount),
-                            const SizedBox(height: 5),
-                            Text(
-                              WalletPointConstant.chargeCoinMessage,
-                              style: context.text.bodySmall?.copyWith(
-                                  fontWeight: FontWeight.w400, fontSize: 10),
-                            ),
-                            const SizedBox(height: 25),
-                            if (agencyInfo.listPrice != null)
-                              Center(
-                                child: ImageWidget(IconAppConstants.camera2),
-                              ),
-                            if (agencyInfo.listPrice != null)
-                              priceTable(agencyInfo),
-                            const SizedBox(height: 60),
-                          ],
-                        ),
+                          )
+                        ],
                       ),
-                      Visibility(
-                        visible: !isShowKeyboard,
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: GradiantButton(
-                            onPressed: () {
-                              if (agencyInfo.agency?.id != null) {
-                                context.startChat(agencyInfo.agency!.id!);
-                              }
-                            },
-                            child: const Text('LIÊN HỆ'),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-          ),
+                    )
+                  ],
+                );
+              },
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget agencyInfoWidget(AgencyInfo agencyInfo) {
+  Widget _buildAgencyInformation(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            'ĐẠI LÝ THANH HẢI',
+            style:
+                context.textTheme.titleLarge!.copyWith(color: AppColors.blue33),
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ImageWidget(
+                ImageConstants.icWalletCoin,
+                width: 24,
+              ),
+              const SizedBox(
+                width: 6,
+              ),
+              Text(
+                '162.000.000.000',
+                style: context.textTheme.titleLarge!
+                    .copyWith(color: AppColors.blue33),
+              ),
+            ],
+          ),
+          _agencyInformationRow(context, 'ID P-DONE', 'ID142987'),
+          _agencyInformationRow(context, 'Số điện thoại', '0912345678'),
+          _agencyInformationRow(context, 'Email', 'thanhhaikhoxu@gmail.com'),
+        ],
+      ),
+    );
+  }
+
+  Widget _agencyInformationRow(
+      BuildContext context, String title, String content) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: context.textTheme.titleMedium!
+                .copyWith(fontWeight: FontWeight.normal, fontSize: 16),
+          ),
+          Text(
+            content,
+            style: context.textTheme.titleMedium!
+                .copyWith(color: AppColors.black, fontSize: 16),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEnterByMoney(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          _buildReceiveUser(context),
+          const SizedBox(
+            height: 24,
+          ),
+          _buildInputMoney(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEnterNumberCoins(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          _buildReceiveUser(context),
+          const SizedBox(
+            height: 24,
+          ),
+          _buildInputCoins(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCouponCoins(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        RichText(
-          text: TextSpan(
-            style: context.text.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600, fontSize: 14, height: 1.5),
-            children: [
-              const TextSpan(text: 'ID P-Done:\n'),
-              if (agencyInfo.agency?.phone != null)
-                const TextSpan(text: 'SĐT:\n'),
-              if (agencyInfo.agency?.email != null)
-                const TextSpan(text: 'Email:\n'),
-            ],
+        Row(
+          children: [
+            ImageWidget(
+              IconAppConstants.icWalletCoupon,
+              fit: BoxFit.fill,
+              width: 16,
+            ),
+            const SizedBox(
+              width: 6,
+            ),
+            Text(
+              'Mã ưu đãi',
+              style: context.textTheme.titleMedium!
+                  .copyWith(fontSize: 16, fontWeight: FontWeight.normal),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            Text(
+              'Chọn hoặc nhập mã',
+              style: context.textTheme.titleMedium!
+                  .copyWith(fontSize: 16, fontWeight: FontWeight.normal),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.arrow_forward_ios_outlined,
+                size: 18,
+              ),
+            )
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget _buildReceiveUser(BuildContext context) {
+    return AgencyInputTextField(
+      controller: TextEditingController(),
+      required: false,
+      shouldEnabled: true,
+      onChanged: (value) {
+        onValidation();
+      },
+      type: AgencyInputEnum.userId,
+      validator: (value) => null,
+    );
+  }
+
+  Widget _buildInputCoins(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Số xu muốn mua',
+          style: context.textTheme.titleLarge!.copyWith(
+            color: Colors.black,
           ),
         ),
-        const SizedBox(width: 20),
-        RichText(
-          text: TextSpan(
-            style: context.text.titleMedium?.copyWith(
-                fontWeight: FontWeight.w400, fontSize: 14, height: 1.5),
-            children: [
-              TextSpan(text: '${agencyInfo.agency?.pDoneId}\n'),
-              if (agencyInfo.agency?.phone != null)
-                TextSpan(text: '${agencyInfo.agency?.phone}\n'),
-              if (agencyInfo.agency?.email != null)
-                TextSpan(text: '${agencyInfo.agency?.email}\n'),
-            ],
+        const SizedBox(
+          height: 10,
+        ),
+        TextFormField(
+          style: context.textTheme.titleLarge!.copyWith(
+            color: AppColors.blue33,
+            fontSize: 24,
+          ),
+          decoration: InputDecoration(
+              border: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              errorBorder: InputBorder.none,
+              disabledBorder: InputBorder.none,
+              hintText: 'Nhập số xu muốn mua',
+              hintStyle: TextStyle(
+                  fontSize: 16,
+                  color: AppColors.black10.withOpacity(0.6),
+                  fontWeight: FontWeight.normal)),
+          inputFormatters: [
+            ThousandsFormatter(),
+          ],
+        ),
+        Container(
+          height: 0.5,
+          width: 400,
+          color: AppColors.black10.withOpacity(0.6),
+          margin: const EdgeInsets.symmetric(horizontal: 8),
+        )
+      ],
+    );
+  }
+
+  Widget _buildInputMoney(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Số tiền muốn mua xu',
+          style: context.textTheme.titleLarge!.copyWith(
+            color: Colors.black,
           ),
         ),
+        const SizedBox(
+          height: 10,
+        ),
+        TextFormField(
+          style: context.textTheme.titleLarge!.copyWith(
+            color: AppColors.blue33,
+            fontSize: 24,
+          ),
+          decoration: InputDecoration(
+              border: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              errorBorder: InputBorder.none,
+              disabledBorder: InputBorder.none,
+              hintText: 'Nhập số tiền',
+              hintStyle: TextStyle(
+                  fontSize: 16,
+                  color: AppColors.black10.withOpacity(0.6),
+                  fontWeight: FontWeight.normal)),
+          inputFormatters: [
+            ThousandsFormatter(),
+          ],
+        ),
+        Container(
+          height: 0.5,
+          width: 400,
+          color: AppColors.black10.withOpacity(0.6),
+          margin: const EdgeInsets.symmetric(horizontal: 8),
+        )
       ],
     );
   }
@@ -202,205 +384,5 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
     }
 
     return null;
-  }
-
-  Widget chargeToCoinWidget(int minAmount) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 3,
-          child: Column(
-            children: [
-              // money input
-              validationFormBuilder(
-                child: FormElement(
-                  name: 'money',
-                  hintText: 'Nhập số tiền',
-                  title: 'Số tiền',
-                  controller: _moneyController,
-                  validator: (value) => validateMoney(value, minAmount),
-                  borderRadius: WalletConstant.borderRadius5,
-                  filled: true,
-                  color: AppColors.white,
-                  enableBorderColor: AppColors.grey13,
-                  focusedBorderColor: WalletTheme.blueCheckedColor,
-                  onChanged: (value) => onValidation(),
-                  keyBoardType: TextInputType.number,
-                  valueTransformer: AppTextInputFormatter.reversedFromCurrency,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                    AppTextInputFormatter.currency,
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10),
-              // coin input
-              BlocListener<AgencyBloc, AgencyState>(
-                listener: (context, state) {
-                  state.whenOrNull(
-                      exchangeSuccess: (value) => _coinController.text =
-                          value.toAppCurrencyString(isWithSymbol: false),
-                      error: (err) => const Text('Error'));
-                },
-                child: Row(
-                  // mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(minWidth: 100),
-                      child: IntrinsicWidth(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            right: 14,
-                            bottom: 14,
-                            left: 14,
-                          ),
-                          child: TextFormField(
-                            controller: _coinController,
-                            keyboardAppearance: Brightness.light,
-                            textAlign: TextAlign.start,
-                            style:
-                                context.text.bodyMedium!.copyWith(fontSize: 16),
-                            decoration: const InputDecoration(
-                              disabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: AppColors.greyLightTextColor,
-                                  width: 1,
-                                ),
-                              ),
-                              enabled: false,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    ImageWidget(ImageConstants.imgdefault, width: 22),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 35),
-            child: GradiantButton(
-              onPressed: handleExchangeTap,
-              child: Text(
-                'Quy đổi',
-                style: context.text.bodyMedium?.copyWith(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14),
-              ),
-            ),
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget priceTable(AgencyInfo agencyInfo) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: AppColors.blue10),
-        borderRadius: WalletConstant.borderRadius10,
-      ),
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Row(
-        children: [
-          // Giá tiền column
-          Expanded(
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    color: WalletTheme.lightBlue,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                    ),
-                  ),
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Giá tiền',
-                          style: context.text.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 15,
-                          ),
-                        ),
-                        TextSpan(
-                          text: ' (VNĐ)',
-                          style: context.text.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                ...agencyInfo.listPrice!
-                    .map(
-                      (price) => Text(
-                        price.vndFrom!.toAppCurrencyString(isWithSymbol: false),
-                        style: context.text.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                          height: 1.5,
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ],
-            ),
-          ),
-          const SizedBox(width: 1),
-          // Số xu column
-          Expanded(
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  width: double.infinity,
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
-                    color: WalletTheme.lightBlue,
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(10),
-                    ),
-                  ),
-                  child: Text(
-                    'Số xu',
-                    style: context.text.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 15,
-                    ),
-                  ),
-                ),
-                ...agencyInfo.listPrice!
-                    .map(
-                      (price) => Text(
-                        num.parse(price.pointPrice ?? '0')
-                            .toAppCurrencyString(isWithSymbol: false),
-                        style: context.text.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                          height: 1.5,
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

@@ -1,4 +1,5 @@
 import '../entities/entities.dart';
+import '../entities/wallet/diamond_wallet/exchange_diamond_response.dart';
 
 abstract class WalletDiamondRepository {
   Future<List<DiamondTransactionHistory>> getTransactionHistories(
@@ -8,7 +9,7 @@ abstract class WalletDiamondRepository {
 
   Future<DiamondWalletInfo> getWalletInfo();
 
-  Future<DiamondTransactionHistory> exchangeDiamond(Map<String, dynamic> body);
+  Future<ExchangeDiamondResponse> exchangeDiamond(Map<String, dynamic> body);
 
   Future<int> estimateDiamond(int value);
 }

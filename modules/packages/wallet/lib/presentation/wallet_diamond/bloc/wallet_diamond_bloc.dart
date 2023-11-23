@@ -89,14 +89,14 @@ class WalletDiamondBloc extends Bloc<WalletDiamondEvent, WalletDiamondState> {
       ExchangeDiamond event, Emitter<WalletDiamondState> emit) async {
     try {
       final body = {
-        'value': event.exchangeDiamondVND,
+        'diamond': event.exchangeDiamondVND,
       };
 
       await _walletDiamondUseCase.exchangeDiamond(body);
 
       emit(ExchangeDiamondSuccess());
     } catch (e) {
-      emit(ExchangeDiamondFailure());
+      emit(ExchangeDiamondFailure('Có lỗi xảy ra, vui lòng thử lại'));
     }
   }
 }

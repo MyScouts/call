@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobilehub_core/mobilehub_core.dart';
+import 'package:wallet/presentation/wallet_diamond/screens/charge_diamond_to_vnd_screen.dart';
 
 import '../../wallet.dart';
 import '../domain/specs/enums/transaction_history.dart';
 import 'shared/bloc/wallet_bloc.dart';
 
 import 'shared/model/bank_account_and_bloc_params.dart';
+import 'wallet_diamond/bloc/wallet_diamond_bloc.dart';
 import 'wallet_diamond/wallet_diamond_routes.dart';
 import 'wallet_point/wallet_point_routes.dart';
 import 'wallet_screen.dart';
@@ -95,6 +97,12 @@ class AppWalletRoutes extends RouteModule {
         ConfirmWithdrawTransactionScreen.routeName: (context) {
           final args = settings.arguments as WithdrawParams;
           return ConfirmWithdrawTransactionScreen(withdrawParams: args);
+        },
+        WalletDiamondNestedRoute.chargeDiamondToVnd: (context) {
+          return BlocProvider.value(
+            value: injector<WalletDiamondBloc>()..add(LoadWalletDiamondInfo()),
+            child: const ChargeDiamondToVndScreen(),
+          );
         },
       };
 }

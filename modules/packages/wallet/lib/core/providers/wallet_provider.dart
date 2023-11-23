@@ -3,6 +3,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../networking/interceptors/api_token_interceptor.dart';
+import '../networking/interceptors/dio_curl_interceptor.dart';
 
 class WalletProvider {
   late Dio dio;
@@ -13,7 +14,8 @@ class WalletProvider {
   ) {
     dio = Dio(BaseOptions(baseUrl: baseUrl))
       ..interceptors
-          .add(ApiTokenInterceptor(sharedPreferences, onLogout: onLogout));
+          .add(ApiTokenInterceptor(sharedPreferences, onLogout: onLogout))
+      ..interceptors.add(DioCurlInterceptor());
   }
 
   final onLogout = BehaviorSubject();

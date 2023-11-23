@@ -5,19 +5,25 @@ part of 'api_response.dart';
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
-
 ApiResponse<T> _$ApiResponseFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
-) =>
-    ApiResponse<T>(
-      status: _readValueStatus(json, 'status') as int,
-      errorCode: json['errorCode'] as String?,
-      code: json['code'] as String?,
-      errorString: json['errorString'] as String?,
-      errors: json['errors'] as String?,
-      data: _$nullableGenericFromJson(json['data'], fromJsonT),
-    );
+) {
+  dynamic data;
+  if (json['data'] != null) {
+    data = _$nullableGenericFromJson(json['data'], fromJsonT);
+  } else {
+    data = _$nullableGenericFromJson(json, fromJsonT);
+  }
+  return ApiResponse<T>(
+    status: _readValueStatus(json, 'status') as int,
+    errorCode: json['errorCode'] as String?,
+    code: json['code'] as String?,
+    errorString: json['errorString'] as String?,
+    errors: json['errors'] as String?,
+    data: data,
+  );
+}
 
 Map<String, dynamic> _$ApiResponseToJson<T>(
   ApiResponse<T> instance,

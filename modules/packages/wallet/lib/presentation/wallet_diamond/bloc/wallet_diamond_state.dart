@@ -34,7 +34,11 @@ class ExchangeVNDValueUpdated extends WalletDiamondState {
 
 class ExchangeDiamondSuccess extends WalletDiamondState {}
 
-class ExchangeDiamondFailure extends WalletDiamondState {}
+class ExchangeDiamondFailure extends WalletDiamondState {
+  final String message;
+
+  ExchangeDiamondFailure(this.message);
+}
 
 class WalletDiamondError extends WalletDiamondState {
   final String error;

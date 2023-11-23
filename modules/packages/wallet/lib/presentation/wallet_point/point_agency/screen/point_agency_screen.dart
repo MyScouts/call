@@ -4,8 +4,10 @@ import 'package:app_core/app_core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
+import 'package:ui/ui.dart';
 import '../../../../../wallet.dart';
 import '../../../../core/theme/wallet_theme.dart';
+import '../../../../domain/entities/agency/agency.dart';
 import '../../../shared/widgets/app_bar.dart';
 import '../../../shared/widgets/gradiant_button.dart';
 import '../../wallet_point_coodinator.dart';
@@ -53,42 +55,22 @@ class PointAgencyScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 10),
-                              Expanded(
-                                child: ListView(
-                                  children: [
-                                    ...agencies
-                                        .map(
-                                          (agency) => DecoratedBox(
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  selectedAgencyId == agency.id
-                                                      ? WalletTheme.lightBlue
-                                                      : AppColors.white,
-                                            ),
-                                            child: ListTile(
-                                              onTap: () {
-                                                if (selectedAgencyId !=
-                                                    agency.id) {
-                                                  selectedAgencyId = agency.id;
-                                                } else {
-                                                  selectedAgencyId = null;
-                                                }
-                                                setState(() {});
-                                              },
-                                              title: Text(
-                                                'Tổng đại lý ${agency.agencyName ?? agency.displayName}',
-                                                style: context.text.bodyMedium
-                                                    ?.copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 14),
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                        .toList()
-                                  ],
-                                ),
+                              SearchInputInformationWidget<Agency>(
+                                required: true,
+                                suggestions: agencies
+                                    .map((e) => SuggestionsField(
+                                        name:
+                                            ' ${e.agencyName ?? e.displayName}',
+                                        data: e))
+                                    .toList(),
+                                initialValue: null,
+                                onSelected: (value) {
+                                  if (value != null) {
+                                    selectedAgencyId = value.id;
+                                    setState(() {});
+                                  }
+                                },
+                                onChanged: (val) {},
                               ),
                               const SizedBox(height: 50),
                             ],
