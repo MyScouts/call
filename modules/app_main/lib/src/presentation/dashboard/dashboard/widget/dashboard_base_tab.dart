@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
@@ -17,25 +18,13 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
         S extends StatefulWidget> extends State<S>
     with AutomaticKeepAliveClientMixin {
   late final T bloc;
-  late final DashBoardController dashBoardController;
   bool _isDragging = false;
-
-  void enableEditMode();
-
-  void disableEditMode();
+  late final DashBoardController dashBoardController;
 
   @override
   void initState() {
     bloc = getIt<T>();
-    dashBoardController = DashBoardController();
     super.initState();
-    dashBoardController.addListener(() {
-      if (dashBoardController.enableEditMode) {
-        enableEditMode();
-      } else {
-        disableEditMode();
-      }
-    });
   }
 
   @override
@@ -73,23 +62,9 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
       },
     );
 
-    NotificationCenter.subscribe(
-      channel: cancelEditMode,
-      observer: this,
-      onNotification: (data) {
-        if (!isPage) return;
-        dashBoardController.enableEditMode = false;
-      },
-    );
-
-    NotificationCenter.subscribe(
-      channel: showEditMode,
-      observer: this,
-      onNotification: (data) {
-        if (!isPage) return;
-        dashBoardController.enableEditMode = true;
-      },
-    );
+    final wi = context.findAncestorWidgetOfExactType<DashBoardInheritedData>();
+    if(wi == null) throw Exception('DashBoardInheritedData is not null');
+    dashBoardController = wi.dashBoardController;
   }
 
   bool get isPage {
@@ -113,15 +88,6 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
       channel: changeGroupEvent,
       observer: this,
     );
-    NotificationCenter.unsubscribe(
-      channel: cancelEditMode,
-      observer: this,
-    );
-    NotificationCenter.unsubscribe(
-      channel: showEditMode,
-      observer: this,
-    );
-    dashBoardController.dispose();
     super.dispose();
   }
 
@@ -153,7 +119,8 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
   Widget build(BuildContext context) {
     super.build(context);
     return BlocProvider(
-      create: (_) => bloc,
+      create: (_) =>
+          bloc..userId = context.read<UserCubit>().currentUser?.id ?? 0,
       child: BlocBuilder<T, DashboardBaseState>(
         buildWhen: (_, __) {
           if (_isDragging) return false;
@@ -170,14 +137,10 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
             builder: (context, constraints) {
               return GestureDetector(
                 onTap: () {
-                  setState(() {
-                    dashBoardController.enableEditMode = false;
-                  });
+                  dashBoardController.enableEditMode = false;
                 },
                 onLongPress: () {
-                  setState(() {
-                    dashBoardController.enableEditMode = true;
-                  });
+                  dashBoardController.enableEditMode = true;
                 },
                 child: SizedBox(
                   height: constraints.maxHeight,
@@ -186,87 +149,94 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
                       left: 16,
                       right: 5,
                     ),
-                    child: StaggeredReorderableView.customer(
-                      isDraggable: dashBoardController.enableEditMode,
-                      padding: 10,
-                      children: items
-                          .map(
-                            (e) => CustomerItem(
-                              type: e.type,
-                              id: e.id,
-                              mainAxisCellCount: e.height,
-                              crossAxisCellCount: e.width,
-                              child: AppWidgetBuilder(
-                                app: e,
-                                controller: dashBoardController,
-                                onRemoved: () {
-                                  context.removeConfirm(onRemoved: () {
-                                    bloc.add(RemoveItem(e));
-                                  });
+                    child: ListenableBuilder(
+                      listenable: dashBoardController,
+                      builder: (_, __) {
+                        return StaggeredReorderableView.customer(
+                          isDraggable: dashBoardController.enableEditMode,
+                          padding: 10,
+                          children: items
+                              .map(
+                                (e) => CustomerItem(
+                                  type: e.type,
+                                  id: e.id,
+                                  mainAxisCellCount: e.height,
+                                  crossAxisCellCount: e.width,
+                                  child: AppWidgetBuilder(
+                                    app: e,
+                                    controller: dashBoardController,
+                                    onRemoved: () {
+                                      context.removeConfirm(onRemoved: () {
+                                        bloc.add(RemoveItem(e));
+                                      });
+                                    },
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                          onGroup: (moveData, toData) {
+                            final item1 = moveData;
+                            final item2 = toData;
+
+                            final icon1 = (item1.child as AppWidget).app;
+                            final icon2 = (item2.child as AppWidget).app;
+
+                            if (!validateGroupItem(icon1, icon2)) return;
+
+                            final isGroup = icon2 is DashBoardGroupItem;
+                            DashBoardGroupItem groupItem;
+                            if (isGroup) {
+                              groupItem = icon2;
+                            } else {
+                              groupItem = DashBoardGroupItem(
+                                id: UniqueKey().toString(),
+                                items: [icon2 as DashBoardIconItem],
+                                title: 'Thư mục',
+                                backgroundImage: '',
+                              );
+                            }
+
+                            showDialog(
+                              useSafeArea: false,
+                              barrierColor: Colors.transparent,
+                              context: context,
+                              builder: (_) => DashBoardGroupScreen(
+                                enableRemoveIcon: true,
+                                group: groupItem,
+                                moveItem: icon1,
+                                onGroupCreated: (DashBoardGroupItem group) {
+                                  if (isGroup) {
+                                    ctx
+                                        .read<T>()
+                                        .add(AddItemToGroup(group, [icon1]));
+                                  } else {
+                                    final index = items
+                                        .indexWhere((e) => icon2.id == e.id);
+                                    if (index != -1) {
+                                      ctx
+                                          .read<T>()
+                                          .add(InsertItem(group, index));
+                                    }
+                                  }
                                 },
                               ),
-                            ),
-                          )
-                          .toList(),
-                      onGroup: (moveData, toData) {
-                        final item1 = moveData;
-                        final item2 = toData;
+                            );
+                          },
+                          onChildrenChanged: (list) {
+                            final items = (list ?? [])
+                                .map((e) => (e.child as AppWidget).app)
+                                .toList();
 
-                        final icon1 = (item1.child as AppWidget).app;
-                        final icon2 = (item2.child as AppWidget).app;
-
-                        if (!validateGroupItem(icon1, icon2)) return;
-
-                        final isGroup = icon2 is DashBoardGroupItem;
-                        DashBoardGroupItem groupItem;
-                        if (isGroup) {
-                          groupItem = icon2;
-                        } else {
-                          groupItem = DashBoardGroupItem(
-                            id: UniqueKey().toString(),
-                            items: [icon2 as DashBoardIconItem],
-                            title: 'Thư mục',
-                            backgroundImage: '',
-                          );
-                        }
-
-                        showDialog(
-                          useSafeArea: false,
-                          barrierColor: Colors.transparent,
-                          context: context,
-                          builder: (_) => DashBoardGroupScreen(
-                            enableRemoveIcon: true,
-                            group: groupItem,
-                            moveItem: icon1,
-                            onGroupCreated: (DashBoardGroupItem group) {
-                              if (isGroup) {
-                                ctx
-                                    .read<T>()
-                                    .add(AddItemToGroup(group, [icon1]));
-                              } else {
-                                final index =
-                                    items.indexWhere((e) => icon2.id == e.id);
-                                if (index != -1) {
-                                  ctx.read<T>().add(InsertItem(group, index));
-                                }
-                              }
-                            },
-                          ),
+                            ctx.read<T>().add(ChangeItem(
+                                items.where((e) => e.id != 'empty').toList()));
+                          },
+                          onDragStarted: () {
+                            _isDragging = true;
+                          },
+                          onDragEnd: () {
+                            _isDragging = false;
+                          },
                         );
-                      },
-                      onChildrenChanged: (list) {
-                        final items = (list ?? [])
-                            .map((e) => (e.child as AppWidget).app)
-                            .toList();
-
-                        ctx.read<T>().add(ChangeItem(
-                            items.where((e) => e.id != 'empty').toList()));
-                      },
-                      onDragStarted: () {
-                        _isDragging = true;
-                      },
-                      onDragEnd: () {
-                        _isDragging = false;
                       },
                     ),
                   ),

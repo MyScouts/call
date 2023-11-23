@@ -6,11 +6,13 @@ class BloodTypeDropDown extends StatefulWidget {
   final Function(String) onChange;
   final bool required;
   final List<BloodGroup> bloodTypes;
+  final BloodGroup value;
   const BloodTypeDropDown({
     super.key,
     required this.onChange,
     this.required = false,
     this.bloodTypes = const [],
+    required this.value,
   });
 
   @override
@@ -18,6 +20,15 @@ class BloodTypeDropDown extends StatefulWidget {
 }
 
 class _BloodTypeDropDownState extends State<BloodTypeDropDown> {
+
+  @override
+  void didUpdateWidget(covariant BloodTypeDropDown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if(oldWidget.value != widget.value) {
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -57,7 +68,7 @@ class _BloodTypeDropDownState extends State<BloodTypeDropDown> {
             'Chọn nhóm máu.',
             style: TextStyle(fontSize: 14),
           ),
-          value: widget.bloodTypes.first,
+          value: widget.value,
           items: widget.bloodTypes
               .map((item) => DropdownMenuItem<BloodGroup>(
                     value: item,
@@ -78,7 +89,7 @@ class _BloodTypeDropDownState extends State<BloodTypeDropDown> {
           },
           onChanged: (value) {
             if (value != null) {
-              widget.onChange(value.id!);
+              widget.onChange(value.name ?? '');
               value = value;
               setState(() {});
             }

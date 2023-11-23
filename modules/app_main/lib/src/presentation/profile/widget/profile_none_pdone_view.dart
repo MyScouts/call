@@ -1,8 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/extensions/list_extension.dart';
-import 'package:app_main/src/domain/entities/update_account/upgrade_account.dart';
 import 'package:app_main/src/presentation/profile/state/user_profile_bloc.dart';
-import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
@@ -151,9 +149,9 @@ class ProfileNonePDoneView extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const Row(
+                      Row(
                         children: [
-                          Expanded(
+                          const Expanded(
                             child: Text(
                               'Email',
                               style: TextStyle(
@@ -165,7 +163,7 @@ class ProfileNonePDoneView extends StatelessWidget {
                           ),
                           Expanded(
                             child: Text(
-                              '',
+                              state.user?.email ?? '',
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
@@ -346,41 +344,28 @@ class ProfileNonePDoneView extends StatelessWidget {
                           ),
                         ],
                       ),
-                      BlocBuilder<UpgradePDoneBloc, UpgradePDoneState>(
-                        buildWhen: (old, s) => s is GetListMasterSuccess,
-                        builder: (_, s) {
-                          if (s is GetListMasterSuccess) {
-                            final interests = s.upgradeAccount.interests ?? [];
-                            final data = interests.firstWhereOrNull(
-                                (e) => e.key == state.pDoneProfile?.interest);
-
-                            return Row(
-                              children: [
-                                const Expanded(
-                                  child: Text(
-                                    'Sở thích',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    data?.name ?? '',
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          }
-
-                          return const SizedBox();
-                        },
+                      Row(
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              'Sở thích',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              state.pDoneProfile?.interest ?? '',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ].separated(const SizedBox(height: 20)),
                   ),

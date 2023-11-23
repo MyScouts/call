@@ -430,9 +430,9 @@ class UserCubit extends Cubit<UserState> {
     if (state is UpdateNonePDoneProfileLoading) return;
     try {
       emit(UpdateNonePDoneProfileLoading());
-      final response = await _userUsecase
-          .updateNonePNoneDoneProfile(updateNonePDoneProfilePayload);
-      emit(UpdateNonePDoneProfileSuccess(user: response));
+      // final response = await _userUsecase
+      //     .updateNonePNoneDoneProfile(updateNonePDoneProfilePayload);
+      // emit(UpdateNonePDoneProfileSuccess(user: response));
     } catch (error) {
       debugPrint("update pdone profile error: $error");
       emit(UpdatePDoneProfileFailed(message: error.toString()));

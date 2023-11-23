@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/app/app_cubit.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
@@ -7,6 +8,7 @@ import 'package:app_main/src/presentation/settings/setting_constants.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
+import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
 import 'package:app_main/src/presentation/settings/widget/item_setting_widget.dart';
 import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
@@ -16,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
+import 'package:version/version.dart';
 
 import '../upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart';
 
@@ -32,6 +35,7 @@ class _SettingScreenState extends State<SettingScreen> {
   late final userCubit = context.read<UserCubit>();
   late User _authInfo;
   OnboardingResponse? _onboarding;
+  PackageInfo? currentPackageInfo;
 
   @override
   void initState() {
@@ -54,8 +58,7 @@ class _SettingScreenState extends State<SettingScreen> {
           BlocListener<UserCubit, UserState>(
             listener: (context, state) {
               if (state is OnboardingFail) {
-                showToastMessage("Lỗi hệ thống, vui lòng thử lại sau.",
-                    ToastMessageType.warning);
+                showToastMessage("Lỗi hệ thống, vui lòng thử lại sau.", ToastMessageType.warning);
                 context.startDashboardUtil();
                 return;
               }
@@ -64,26 +67,56 @@ class _SettingScreenState extends State<SettingScreen> {
               }
             },
           ),
+          BlocListener<AppCubit, AppState>(
+            listener: (context, state) {
+              if (state is LoadingAppVersion) {
+                showLoading();
+              } else {
+                hideLoading();
+              }
+
+              currentPackageInfo = switch (state) {
+                (UpgradeAppVersion s) => s.currentPackageInfo,
+                (OptionalUpgradeAppVersion s) => s.currentPackageInfo,
+                (LatestAppVersion s) => s.currentPackageInfo,
+                _ => null,
+              };
+
+              switch (state) {
+                case OptionalUpgradeAppVersion(version: final version):
+                  context.updateOptionalAppVersion(
+                    version: version,
+                    onUpdateAppVersion: () {},
+                  );
+                  break;
+                case LatestAppVersion():
+                  context.confirmLatestAppVersion();
+                  break;
+                default:
+                  break;
+              }
+            },
+          ),
+          BlocListener<ConfirmRegisterJABloc, GetDetailState>(
+            listener: _onListenerConfirmJABloc,
+          )
         ],
-        child: BlocListener<ConfirmRegisterJABloc, GetDetailState>(
-          listener: _onListenerConfirmJABloc,
-          child: SafeArea(
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: paddingHorizontal,
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildSession1(),
-                    const SizedBox(height: 10),
-                    _buildSearch(),
-                    const SizedBox(height: 10),
-                    _buildSessionMenus(),
-                    _buildVersion(),
-                  ],
-                ),
+        child: SafeArea(
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: paddingHorizontal,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildSession1(),
+                  const SizedBox(height: 10),
+                  _buildSearch(),
+                  const SizedBox(height: 10),
+                  _buildSessionMenus(),
+                  _buildVersion(),
+                ],
               ),
             ),
           ),
@@ -186,19 +219,17 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   _buildSessionMenus() {
-    return BlocBuilder<UserCubit, UserState>(
-      builder: (context, state) {
-        return Column(
-          children: Setting.session1Menus(
-            context,
-            user: userCubit.currentUser,
-            onUpdate: () {
-              userCubit.onboarding();
-            },
-            onboarding: state is OnboardingSuccess ? state.onboarding : null,
-          ).map((settings) => _buildMenus(settings)).toList(),
-        );
-      },
+    return Column(
+      children: Setting.session1Menus(
+        context,
+        user: userCubit.currentUser,
+        onUpdate: () {
+          userCubit.onboarding();
+        },
+        onboarding: _onboarding,
+        osType: currentPlatformName,
+        isProduction: Configurations.isProduction,
+      ).map((settings) => _buildMenus(settings)).toList(),
     );
   }
 
@@ -307,8 +338,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   Route _createRoute() {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          const InformationProfileScreen(),
+      pageBuilder: (context, animation, secondaryAnimation) => const InformationProfileScreen(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return child;
       },
@@ -329,10 +359,8 @@ class _SettingScreenState extends State<SettingScreen> {
             border: BorderRadius.only(
               topLeft: Radius.circular(index == 0 ? 10 : 0),
               topRight: Radius.circular(index == 0 ? 10 : 0),
-              bottomLeft:
-                  Radius.circular(index == settings.length - 1 ? 10 : 0),
-              bottomRight:
-                  Radius.circular(index == settings.length - 1 ? 10 : 0),
+              bottomLeft: Radius.circular(index == settings.length - 1 ? 10 : 0),
+              bottomRight: Radius.circular(index == settings.length - 1 ? 10 : 0),
             ),
           );
         }).toList(),
@@ -340,33 +368,53 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-  _buildVersion() {
-    return FutureBuilder<PackageInfo>(
-      future: DeviceService.getPackageInfo(),
-      builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
-        if (!snapshot.hasData || snapshot.hasError) {
-          return const SizedBox.shrink();
-        }
-        final version = snapshot.data!;
-        return Container(
-          margin: const EdgeInsets.only(top: 30),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Phiên bản: ${version.version}',
-                style: context.textTheme.titleSmall,
-              ),
-              if (!Configurations.isProduction) const SizedBox(width: 5),
-              if (!Configurations.isProduction)
+  Widget _buildVersion() {
+    return currentPackageInfo == null
+        ? const SizedBox.shrink()
+        : Container(
+            margin: const EdgeInsets.only(top: 30),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
                 Text(
-                  '(${version.buildNumber})',
+                  'Phiên bản: ${currentPackageInfo!.version}',
                   style: context.textTheme.titleSmall,
                 ),
-            ],
-          ),
-        );
-      },
-    );
+                if (!Configurations.isProduction) const SizedBox(width: 5),
+                if (!Configurations.isProduction)
+                  Text(
+                    '(${currentPackageInfo!.buildNumber})',
+                    style: context.textTheme.titleSmall,
+                  ),
+              ],
+            ),
+          );
+    // return FutureBuilder<PackageInfo>(
+    //   future: DeviceService.getPackageInfo(),
+    //   builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
+    //     if (!snapshot.hasData || snapshot.hasError) {
+    //       return const SizedBox.shrink();
+    //     }
+    //     final version = snapshot.data!;
+    //     return Container(
+    //       margin: const EdgeInsets.only(top: 30),
+    //       child: Row(
+    //         mainAxisAlignment: MainAxisAlignment.center,
+    //         children: [
+    //           Text(
+    //             'Phiên bản: ${version.version}',
+    //             style: context.textTheme.titleSmall,
+    //           ),
+    //           if (!Configurations.isProduction) const SizedBox(width: 5),
+    //           if (!Configurations.isProduction)
+    //             Text(
+    //               '(${version.buildNumber})',
+    //               style: context.textTheme.titleSmall,
+    //             ),
+    //         ],
+    //       ),
+    //     );
+    //   },
+    // );
   }
 }

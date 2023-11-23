@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/app/app_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/presentation/community/community.component.dart';
@@ -30,14 +31,15 @@ class Setting {
     User? user,
     OnboardingResponse? onboarding,
     Function()? onUpdate,
+    required String osType,
+    required bool isProduction,
   }) =>
       [
         [
           Setting(
             text: "Cài đặt tài khoản",
             icon: IconAppConstants.icSettingAccount,
-            onPressed: () =>
-                Navigator.of(context).pushNamed(UserProfileScreen.routerName),
+            onPressed: () => Navigator.of(context).pushNamed(UserProfileScreen.routerName),
           ),
           if ((user?.old ?? 0) >= 18)
             Setting(
@@ -56,14 +58,12 @@ class Setting {
           Setting(
             text: "Team",
             icon: IconAppConstants.icTeamProfile,
-            onPressed: () =>
-                Navigator.pushNamed(context, CommunityWidget.routeName),
+            onPressed: () => Navigator.pushNamed(context, CommunityWidget.routeName),
           ),
           Setting(
             text: "PDone",
             icon: IconAppConstants.icUpgrade,
-            onPressed: () =>
-                context.startPDoneInformation().then((value) => onUpdate!()),
+            onPressed: () => context.startPDoneInformation().then((value) => onUpdate!()),
           ),
           Setting(
             text: "JA",
@@ -111,6 +111,14 @@ class Setting {
             text: "Xoá tài khoản",
             icon: IconAppConstants.icDelete,
             onPressed: () => context.confirmDeleteAccount(userId: user!.id!),
+          ),
+          Setting(
+            text: "Cập nhật app",
+            icon: IconAppConstants.icVersion,
+            onPressed: () => context.read<AppCubit>().getAppVersion(
+                  type: osType,
+                  isProduction: isProduction,
+                ),
           ),
         ]
       ];

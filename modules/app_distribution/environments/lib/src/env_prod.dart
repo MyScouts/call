@@ -1,8 +1,8 @@
 final Map<String, dynamic> environmentProd = {
   'environment': 'prod',
   'isProduction': true,
-  'baseUrl': 'https://be-vdone.vdone.vn/',
-  'ecommereBaseUrl': 'https://de-vstore-api.vdone.vn/',
+  'baseUrl': 'https://cloud.vdone.vn/',
+  'ecommereBaseUrl': 'https://cloud.vdone.vn/',
   'userIdOffice': 479,
   'androidPackageId': 'com.app.vdone',
   'iosAppId': '1673506553',
