@@ -2090,6 +2090,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.0+2"
+  wallet:
+    dependency: "direct main"
+    description:
+      path: "../packages/wallet"
+      relative: true
+    source: path
+    version: "0.0.1"
   watcher:
     dependency: transitive
     description:
@@ -2155,5 +2162,5 @@ packages:
     source: hosted
     version: "0.9.0"
 sdks:
-  dart: ">=3.1.3 <4.0.0"
+  dart: ">=3.1.5 <4.0.0"
   flutter: ">=3.13.0"

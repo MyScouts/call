@@ -6,6 +6,7 @@ import 'package:app_main/src/presentation/social/social_routes.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_route.dart';
 import 'package:app_main/src/presentation/settings/setting_routes.dart';
 import 'package:injectable/injectable.dart';
+import 'package:wallet/presentation/wallet_routes.dart';
 import 'authentication/authentication_routes.dart';
 import 'dashboard/dashboard_routes.dart';
 import 'general_setting/general_routes.dart';
@@ -28,5 +29,7 @@ class Routes extends RouteModuleBuilder {
       ];
 
   @override
-  List<RouteModuleBuilder> get routerModules => [];
+  List<RouteModuleBuilder> get routerModules => [
+    get<WalletRoutes>(),
+  ];
 }

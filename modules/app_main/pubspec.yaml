@@ -28,6 +28,9 @@ dependencies:
     path: ../reorderable
   staggered_reorderable:
     path: ../staggered_reorderable
+    
+  wallet:
+    path: ../packages/wallet
 
   intl: ^0.18.1
   http_parser: ^4.0.2
