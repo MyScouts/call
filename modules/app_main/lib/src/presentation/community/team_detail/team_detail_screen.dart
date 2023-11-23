@@ -74,7 +74,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
 
           var banner = ImageConstants.imgDefaultTeamBanner;
           if (team?.banner != null) {
-            banner = team!.banner!.optimizeSize600;
+            banner = team!.banner!;
           }
 
           final isBossGroup = myId == team?.group?.boss?.id;
@@ -128,9 +128,12 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                             _actionButtons(showInvite: !isBossTeam),
                           _introductionWidget(team),
                           if (!canUpdateMembers && !isMember)
-                            _askToJoinBtn(
-                              canAskToJoin: members.length < 500,
-                              teamId: '${team?.id}',
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15),
+                              child: _askToJoinBtn(
+                                canAskToJoin: members.length < 500,
+                                teamId: '${team?.id}',
+                              ),
                             ),
                           if (!canUpdateMembers && isMember)
                             _askToLeaveBtn(teamId: '${team?.id}'),
