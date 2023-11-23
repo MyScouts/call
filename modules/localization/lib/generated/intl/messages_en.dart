@@ -63,7 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Password Confirm"),
         "least_one_uppercase_character": MessageLookupByLibrary.simpleMessage(
             "Contains at least one uppercase character"),
-        "live": MessageLookupByLibrary.simpleMessage("Live"),
+        "live_tab": MessageLookupByLibrary.simpleMessage("Live"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "marShop": MessageLookupByLibrary.simpleMessage("MarShop"),
         "message_otp_not_match":

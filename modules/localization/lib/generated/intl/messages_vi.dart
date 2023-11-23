@@ -63,7 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Nhập lại mật khẩu"),
         "least_one_uppercase_character": MessageLookupByLibrary.simpleMessage(
             "Có ít nhất một ký tự viết hoa"),
-        "live": MessageLookupByLibrary.simpleMessage("Live"),
+        "live_tab": MessageLookupByLibrary.simpleMessage("Live"),
         "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
         "marShop": MessageLookupByLibrary.simpleMessage("MarShop"),
         "message_otp_not_match":

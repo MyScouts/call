@@ -99,6 +99,8 @@ class IconAppConstants {
   static String icRadar = IconApp.icRadar.path;
   static String icMonitor = IconApp.icMonitor.path;
   static String icBag2 = IconApp.icBag2.path;
+  static String icUser3 = IconApp.icUser3.path;
+
 }
 
 enum IconApp {
@@ -203,6 +205,7 @@ enum IconApp {
   icRadar('assets/icons/ic_radar.svg'),
   icMonitor('assets/icons/ic_monitor.svg'),
   icBag2('assets/icons/ic_bag-2.svg'),
+  icUser3('assets/icons/user3.svg'),
   icLeaveTeam('assets/icons/ic_leave_team.svg');
   const IconApp(this.path);
 

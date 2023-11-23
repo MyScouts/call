@@ -464,7 +464,7 @@ class S {
   String get live {
     return Intl.message(
       'Live',
-      name: 'live',
+      name: 'live_tab',
       desc: '',
       args: [],
     );
