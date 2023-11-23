@@ -223,7 +223,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         DateFormat('yyyy-MM-dd').format(DateTime.now());
     final bds = bd.split('-');
     birthDayController.text = '${bds[2]}/${bds[1]}/${bds[0]}';
-    gender = userBloc.state.pDoneProfile?.sex ?? 1;
+    gender = userBloc.state.pDoneProfile?.sex ?? 0;
     emailController.text = '';
     idNumberController.text = userBloc.state.pDoneProfile?.identityNumber ?? '';
     final subs = userBloc.state.pDoneProfile?.supplyDate ??
@@ -351,18 +351,26 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                               state is GetListMasterSuccess,
                           builder: (ctx, state) {
                             if (state is GetListMasterSuccess) {
-                              final data = state.upgradeAccount.genders ?? [];
+                              final list = state.upgradeAccount.genders ?? [];
+                              final data =
+                                  list.firstWhereOrNull((e) => e.key == gender);
                               return GenderDropdown(
+                                gender: data ?? list.first,
                                 disable: widget.isPDone,
                                 required: true,
-                                genders: data,
+                                genders: list,
                                 onChange: (sex) {
                                   gender = sex;
                                 },
                               );
                             }
 
+                            final list = genders;
+                            final data =
+                                list.firstWhereOrNull((e) => e.key == gender);
+
                             return GenderDropdown(
+                              gender: data ?? list.first,
                               disable: widget.isPDone,
                               required: true,
                               genders: genders,
@@ -510,10 +518,16 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
             buildWhen: (old, state) => state is GetListMasterSuccess,
             builder: (ctx, state) {
               if (state is GetListMasterSuccess) {
-                final data = state.upgradeAccount.academicLevels ?? [];
-                edu = data.first.name ?? '';
+                final list = state.upgradeAccount.academicLevels ?? [];
+                AcademicLevel data = list.first;
+                if (edu.trim().isNotEmpty) {
+                  data =
+                      list.firstWhereOrNull((e) => e.name == edu) ??
+                          data;
+                }
                 return EducationDropdown(
-                  educations: data,
+                  level: data,
+                  educations: list,
                   required: false,
                   onChange: (edu) {
                     this.edu = edu;

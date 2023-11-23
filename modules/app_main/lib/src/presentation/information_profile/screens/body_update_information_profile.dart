@@ -400,28 +400,28 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                 )
               : Row(
                   children: [
-                    Expanded(
-                        child: ValueListenableBuilder(
-                      builder: (_, genderValue, __) {
-                        if (genderValue.isNotEmpty) {
-                          return GenderDropdown(
-                            required: true,
-                            genders: genderValue,
-                            onChange: (sex) {
-                              genderParam = sex;
-                            },
-                          );
-                        }
-                        return GenderDropdown(
-                          required: true,
-                          genders: genders,
-                          onChange: (sex) {
-                            genderParam = sex;
-                          },
-                        );
-                      },
-                      valueListenable: gendersChanged,
-                    )),
+                    // Expanded(
+                    //     child: ValueListenableBuilder(
+                    //   builder: (_, genderValue, __) {
+                    //     if (genderValue.isNotEmpty) {
+                    //       return GenderDropdown(
+                    //         required: true,
+                    //         genders: genderValue,
+                    //         onChange: (sex) {
+                    //           genderParam = sex;
+                    //         },
+                    //       );
+                    //     }
+                    //     return GenderDropdown(
+                    //       required: true,
+                    //       genders: genders,
+                    //       onChange: (sex) {
+                    //         genderParam = sex;
+                    //       },
+                    //     );
+                    //   },
+                    //   valueListenable: gendersChanged,
+                    // )),
                     const SizedBox(width: 20),
                     Expanded(
                       child: ValueListenableBuilder(
@@ -630,21 +630,21 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             ),
           ),
           const SizedBox(height: 20),
-          ValueListenableBuilder(
-            builder: (_, educationsValue, __) {
-              if (educationsValue.isNotEmpty) {
-                return EducationDropdown(
-                  educations: educationsValue,
-                  required: false,
-                  onChange: (edu) {
-                    eduParam = edu;
-                  },
-                );
-              }
-              return Container();
-            },
-            valueListenable: educationsChanged,
-          ),
+          // ValueListenableBuilder(
+          //   builder: (_, educationsValue, __) {
+          //     if (educationsValue.isNotEmpty) {
+          //       return EducationDropdown(
+          //         educations: educationsValue,
+          //         required: false,
+          //         onChange: (edu) {
+          //           eduParam = edu;
+          //         },
+          //       );
+          //     }
+          //     return Container();
+          //   },
+          //   valueListenable: educationsChanged,
+          // ),
           const SizedBox(height: 20),
           const Text(
             "Nghề nghiệp",
