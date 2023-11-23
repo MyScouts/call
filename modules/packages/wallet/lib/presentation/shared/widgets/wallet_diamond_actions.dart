@@ -1,5 +1,6 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:wallet/presentation/shared/widgets/toast_message/toast_message.dart';
 import 'package:wallet/presentation/wallet_diamond/wallet_diamond_coodinator.dart';
 
 import '../../../core/core.dart';
@@ -65,17 +66,26 @@ class _WalletDiamondActionsState extends State<WalletDiamondActions> {
   void onTap(WalletDiamondActionType type) {
     switch (type) {
       case WalletDiamondActionType.chargeDiamondToVnd:
-        if (context.userType == UserType.isPDone) {
-          context.showRegisterJaDialog(
-            walletType: WalletType.diamond,
-            content: WalletConstant.registerJADialogText,
-          );
-        } else {
-          //TODO: navigate to charge screen
-        }
+        // if (context.userType == UserType.isPDone) {
+        //   context.showRegisterJaDialog(
+        //     walletType: WalletType.diamond,
+        //     content: WalletConstant.registerJADialogText,
+        //   );
+        // } else {
+        //   //TODO: navigate to charge screen
+        // }
+
+        showToastMessage(
+          'Tính năng này đang được phát triển',
+          ToastMessageType.warning,
+        );
         break;
       case WalletDiamondActionType.transactionHistory:
-        context.diamondTransactionHistory();
+        showToastMessage(
+          'Tính năng này đang được phát triển',
+          ToastMessageType.warning,
+        );
+        // context.diamondTransactionHistory();
         break;
     }
   }

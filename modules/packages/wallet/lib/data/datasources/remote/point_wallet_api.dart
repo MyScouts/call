@@ -49,7 +49,4 @@ abstract class PointWalletApi {
   Future<ApiResponse<num>> exchange(
       {@Path('agencyId') required int agencyId,
       @Query('value') required num val});
-
-  @GET(PointWalletApiConstants.getCoinWalletInfo)
-  Future<ApiResponse<CoinWalletInfo>> getCoinWalletInfo();
 }

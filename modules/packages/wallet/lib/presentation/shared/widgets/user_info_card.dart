@@ -3,14 +3,14 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:ui/ui.dart';
+import 'package:wallet/data/datasources/models/response/wallet_info_response.dart';
 
 import '../../../core/core.dart';
-import '../../../domain/domain.dart' hide User;
 import '../../wallet_constant.dart';
 
 class UserInfoCard extends StatelessWidget {
   final User user;
-  final CoinWalletInfo walletInfo;
+  final UserWallet walletInfo;
 
   const UserInfoCard({
     super.key,
@@ -90,7 +90,7 @@ class UserInfoCard extends StatelessWidget {
                 child: _resourceWidget(
                   context,
                   resourceType: ResourceType.ddone,
-                  resourceValue: '254.281.212',
+                  resourceValue: '254',
                 ),
               ),
               const SizedBox(width: 20),
@@ -98,7 +98,9 @@ class UserInfoCard extends StatelessWidget {
                 child: _resourceWidget(
                   context,
                   resourceType: ResourceType.coin,
-                  resourceValue: '254.281.212',
+                  resourceValue: walletInfo.availableCoin.toAppCurrencyString(
+                    isWithSymbol: false,
+                  ),
                 ),
               ),
             ],
@@ -110,7 +112,10 @@ class UserInfoCard extends StatelessWidget {
                 child: _resourceWidget(
                   context,
                   resourceType: ResourceType.diamond,
-                  resourceValue: '254.281.212',
+                  resourceValue:
+                      walletInfo.availableDiamond.toAppCurrencyString(
+                    isWithSymbol: false,
+                  ),
                 ),
               ),
               const SizedBox(width: 20),
@@ -118,7 +123,9 @@ class UserInfoCard extends StatelessWidget {
                 child: _resourceWidget(
                   context,
                   resourceType: ResourceType.vnd,
-                  resourceValue: '254.281.212',
+                  resourceValue: walletInfo.availableVnd.toAppCurrencyString(
+                    isWithSymbol: false,
+                  ),
                 ),
               ),
             ],

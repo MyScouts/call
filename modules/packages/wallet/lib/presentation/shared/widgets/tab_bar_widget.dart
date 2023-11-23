@@ -25,36 +25,14 @@ class TabBarViewWidget extends StatefulWidget {
 
 class _TabBarViewWidgetState extends State<TabBarViewWidget>
     with TickerProviderStateMixin {
-  late TabController _tabController;
-  late final userType = context.userType;
 
-  List<Widget> get tabBuilder {
-    if (userType == UserType.isDefault) {
-      return [widget.walletCoinComponent];
-    } else if (userType == UserType.isPDone) {
-      return [widget.walletCoinComponent, widget.walletDiamondComponent];
-    } else {
-      return [
-        widget.walletCoinComponent,
-        widget.walletDiamondComponent,
-        widget.walletVndComponent
-      ];
-    }
-  }
-
-  @override
-  void initState() {
-    _tabController = TabController(
-      length: userType.walletCanShow.length,
-      vsync: this,
-      initialIndex: widget.initialIndex,
-    );
-    super.initState();
-  }
+  late final PageController _pageCtrl = PageController(
+    initialPage: widget.initialIndex,
+  );
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _pageCtrl.dispose();
     super.dispose();
   }
 
@@ -68,9 +46,8 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget>
             margin: const EdgeInsets.only(top: 30),
             width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(18))
-            ),
+                color: AppColors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(18))),
           ),
           Column(
             children: [
@@ -95,8 +72,7 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget>
     );
   }
 
-  int _page = 0;
-  final PageController _pageCtrl = PageController(initialPage: 0);
+  late int _page = widget.initialIndex;
 
   _buildTab() {
     return Container(

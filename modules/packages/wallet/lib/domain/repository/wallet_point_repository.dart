@@ -12,6 +12,4 @@ abstract class WalletPointRepository {
   Future<AgencyInfo> getAgencyInfo(int id);
 
   Future<num> exchangeCoin({required int agencyId, required num value});
-
-  Future<CoinWalletInfo> getCoinWalletInfo();
 }

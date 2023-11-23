@@ -11,6 +11,5 @@ export 'transaction_history/transaction_history.dart';
 export 'transaction_history/transaction_history_detail.dart';
 export 'user/user.dart';
 export 'wallet/bank_account.dart';
-export 'wallet/coin_wallet_info/coin_wallet_info.dart';
 export 'wallet/diamond_wallet/diamond_wallet_info.dart';
 export 'wallet/vnd_wallet_info/vnd_wallet_info.dart';

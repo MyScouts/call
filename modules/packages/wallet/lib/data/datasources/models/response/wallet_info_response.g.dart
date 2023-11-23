@@ -27,20 +27,20 @@ Map<String, dynamic> _$WalletInfoResponseToJson(WalletInfoResponse instance) {
 }
 
 UserWallet _$UserWalletFromJson(Map<String, dynamic> json) => UserWallet(
-      pendingCoin: (json['pendingCoin'] as num?)?.toDouble(),
+      availableCoin: (json['availableCoin'] as num?)?.toDouble(),
       availableDiamond: (json['availableDiamond'] as num?)?.toDouble(),
       pendingDiamond: (json['pendingDiamond'] as num?)?.toDouble(),
       availableVnd: (json['availableVnd'] as num?)?.toDouble(),
       pendingVnd: (json['pendingVnd'] as num?)?.toDouble(),
-      availableCoin: (json['availableCoin'] as num?)?.toDouble(),
+      withdrawingVnd: (json['withdrawingVnd'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$UserWalletToJson(UserWallet instance) =>
     <String, dynamic>{
       'availableCoin': instance.availableCoin,
-      'pendingCoin': instance.pendingCoin,
       'availableDiamond': instance.availableDiamond,
       'pendingDiamond': instance.pendingDiamond,
       'availableVnd': instance.availableVnd,
       'pendingVnd': instance.pendingVnd,
+      'withdrawingVnd': instance.withdrawingVnd,
     };

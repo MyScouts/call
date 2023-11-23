@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:wallet/data/datasources/models/wallet_info_response.dart';
+import 'package:wallet/data/datasources/models/response/wallet_info_response.dart';
 
 import '../../domain/repository/wallet_repository.dart';
 import '../datasources/remote/wallet_api.dart';

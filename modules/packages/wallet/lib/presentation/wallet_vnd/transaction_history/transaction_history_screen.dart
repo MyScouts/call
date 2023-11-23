@@ -15,9 +15,9 @@ class TransactionHistoryScreen extends StatefulWidget {
   static const routeName = '/transaction-history';
 
   const TransactionHistoryScreen({
-    Key? key,
+    super.key,
     required this.vendor,
-  }) : super(key: key);
+  });
 
   @override
   State<TransactionHistoryScreen> createState() =>
@@ -48,7 +48,7 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
     return Scaffold(
       appBar: appbarBuilder(
         context,
-        title: 'Lich su giao dich',
+        title: 'Lịch sử giao dịch',
         actions: [
           IconButton(
             onPressed: handleShowFilter,

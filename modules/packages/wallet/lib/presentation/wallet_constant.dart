@@ -255,6 +255,19 @@ extension ResourceTypeExt on ResourceType {
   }
 }
 
+enum TransactionCategory { marshop, vlive }
+
+extension TransactionCategoryExt on TransactionCategory {
+  String get text {
+    switch (this) {
+      case TransactionCategory.marshop:
+        return 'Marshop';
+      case TransactionCategory.vlive:
+        return 'V-Live';
+    }
+  }
+}
+
 class WalletConstant {
   static const qrCodeMessage =
       // ignore: lines_longer_than_80_chars

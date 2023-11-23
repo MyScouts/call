@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobilehub_core/mobilehub_core.dart';
+import 'package:wallet/presentation/wallet_transaction_history_screen.dart';
 
 import '../../wallet.dart';
 import '../domain/specs/enums/transaction_history.dart';
@@ -95,6 +96,9 @@ class AppWalletRoutes extends RouteModule {
         ConfirmWithdrawTransactionScreen.routeName: (context) {
           final args = settings.arguments as WithdrawParams;
           return ConfirmWithdrawTransactionScreen(withdrawParams: args);
+        },
+        WalletTransactionHistoryScreen.routeName: (context) {
+          return const WalletTransactionHistoryScreen();
         },
       };
 }

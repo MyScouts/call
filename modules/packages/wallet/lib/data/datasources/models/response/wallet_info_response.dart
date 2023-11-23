@@ -18,19 +18,19 @@ class WalletInfoResponse {
 @JsonSerializable()
 class UserWallet {
   final double? availableCoin;
-  final double? pendingCoin;
   final double? availableDiamond;
   final double? pendingDiamond;
   final double? availableVnd;
   final double? pendingVnd;
+  final double? withdrawingVnd;
 
   UserWallet({
-    this.pendingCoin,
+    this.availableCoin,
     this.availableDiamond,
     this.pendingDiamond,
     this.availableVnd,
     this.pendingVnd,
-    this.availableCoin,
+    this.withdrawingVnd,
   });
 
   factory UserWallet.fromJson(Map<String, dynamic> json) =>

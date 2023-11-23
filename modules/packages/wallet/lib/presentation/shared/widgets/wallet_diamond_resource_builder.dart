@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
 import 'package:wallet/core/core.dart';
 
@@ -8,6 +9,8 @@ class WalletDiamondResourceBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userWallet = WalletInjectedData.userWallet;
+
     return Column(
       children: [
         Padding(
@@ -24,16 +27,16 @@ class WalletDiamondResourceBuilder extends StatelessWidget {
                       ),
                     ),
                   ),
-                  child: const ResourceWidget(
+                  child: ResourceWidget(
                     title: 'Khả dụng',
-                    amount: '854.281.212',
+                    amount: userWallet.availableDiamond.toAppCurrencyString(isWithSymbol: false),
                   ),
                 ),
               ),
-              const Expanded(
+              Expanded(
                 child: ResourceWidget(
                   title: 'Chờ xác nhận',
-                  amount: '854.281.212',
+                  amount: userWallet.pendingDiamond.toAppCurrencyString(isWithSymbol: false),
                 ),
               ),
             ],

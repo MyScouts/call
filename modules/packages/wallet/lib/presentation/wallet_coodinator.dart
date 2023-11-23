@@ -7,6 +7,7 @@ import '../domain/domain.dart' hide User;
 import 'shared/model/bank_account_and_bloc_params.dart';
 import 'wallet_constant.dart';
 import 'wallet_screen.dart';
+import 'wallet_transaction_history_screen.dart';
 import 'wallet_vnd/bank_account/bloc/bank_account_bloc.dart';
 import 'wallet_vnd/bank_account/screens/add_bank_account_screen.dart';
 import 'wallet_vnd/bank_account/screens/bank_account_details_screen.dart';
@@ -161,6 +162,12 @@ extension WalletCoordinator on BuildContext {
         value: bloc,
         child: DeleteBankAccountDialog(bankAccountId: id),
       ),
+    );
+  }
+
+  Future<T?> startTransactionHistory<T>() {
+    return Navigator.of(this).pushNamed(
+      WalletTransactionHistoryScreen.routeName,
     );
   }
 }

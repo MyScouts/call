@@ -24,17 +24,15 @@ import 'package:wallet/data/repository/wallet_vnd_repository.impl.dart' as _i22;
 import 'package:wallet/domain/domain.dart' as _i13;
 import 'package:wallet/domain/repository/wallet_diamond_repository.dart'
     as _i17;
-import 'package:wallet/domain/repository/wallet_point_repository.dart' as _i27;
 import 'package:wallet/domain/repository/wallet_repository.dart' as _i20;
 import 'package:wallet/domain/repository/wallet_vnd_repository.dart' as _i25;
 import 'package:wallet/domain/usecases/wallet_diamond_usecase.dart' as _i16;
 import 'package:wallet/domain/usecases/wallet_point_usecase.dart' as _i19;
-import 'package:wallet/domain/usecases/wallet_usecase.dart' as _i26;
 import 'package:wallet/domain/usecases/wallet_vnd_usecase.dart' as _i24;
-import 'package:wallet/presentation/shared/bloc/wallet_bloc.dart' as _i28;
+import 'package:wallet/presentation/shared/bloc/wallet_bloc.dart' as _i26;
 import 'package:wallet/presentation/wallet_diamond/wallet_diamond_routes.dart'
     as _i4;
-import 'package:wallet/presentation/wallet_module.dart' as _i29;
+import 'package:wallet/presentation/wallet_module.dart' as _i27;
 import 'package:wallet/presentation/wallet_point/wallet_point_routes.dart'
     as _i5;
 import 'package:wallet/presentation/wallet_routes.dart' as _i3;
@@ -75,16 +73,8 @@ class WalletPackageModule extends _i1.MicroPackageModule {
         () => _i22.WalletVndRepositoryImpl(gh<_i23.VndWalletApi>()));
     gh.factory<_i24.WalletVndUseCase>(
         () => _i24.WalletVndUseCase(gh<_i25.WalletVndRepository>()));
-    gh.factory<_i26.WalletUseCase>(() => _i26.WalletUseCase(
-          gh<_i25.WalletVndRepository>(),
-          gh<_i17.WalletDiamondRepository>(),
-          gh<_i27.WalletPointRepository>(),
-        ));
-    gh.singleton<_i28.WalletBloc>(_i28.WalletBloc(
-      gh<_i26.WalletUseCase>(),
-      gh<_i20.WalletRepository>(),
-    ));
+    gh.singleton<_i26.WalletBloc>(_i26.WalletBloc(gh<_i20.WalletRepository>()));
   }
 }
 
-class _$WalletModule extends _i29.WalletModule {}
+class _$WalletModule extends _i27.WalletModule {}

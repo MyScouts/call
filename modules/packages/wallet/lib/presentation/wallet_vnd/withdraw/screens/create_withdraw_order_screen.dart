@@ -71,7 +71,7 @@ class _CreateWithdrawOrderScreenState extends State<CreateWithdrawOrderScreen>
               ),
               child: UserInfoCard(
                 user: WalletInjectedData.user,
-                walletInfo: WalletInjectedData.coinWalletInfo,
+                walletInfo: WalletInjectedData.userWallet,
               ),
             ),
             const Divider(thickness: 8, color: WalletTheme.lightGrey),

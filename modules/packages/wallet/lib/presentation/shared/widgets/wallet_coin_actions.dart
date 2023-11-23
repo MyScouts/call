@@ -1,5 +1,6 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:wallet/presentation/shared/widgets/toast_message/toast_message.dart';
 import 'package:wallet/presentation/wallet_point/wallet_point_constant.dart';
 import 'package:wallet/presentation/wallet_point/wallet_point_coodinator.dart';
 
@@ -63,10 +64,18 @@ class _WalletCoinActionsState extends State<WalletCoinActions> {
   void onTap(WalletPointActionType type) {
     switch (type) {
       case WalletPointActionType.pointAgency:
-        context.pointAllAgency();
+        // context.pointAllAgency();
+        showToastMessage(
+          'Tính năng này đang được phát triển',
+          ToastMessageType.warning,
+        );
         break;
       case WalletPointActionType.transactionHistory:
-        context.pointTransactionHistory();
+        // context.pointTransactionHistory();
+        showToastMessage(
+          'Tính năng này đang được phát triển',
+          ToastMessageType.warning,
+        );
         break;
     }
   }
