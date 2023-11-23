@@ -6,6 +6,7 @@ import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/
 import 'package:app_main/src/data/models/responses/api_verify_response.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
+import 'package:app_main/src/data/models/responses/pdone/pdone_check_exist_by_id_number_response.dart';
 import 'package:app_main/src/data/models/responses/pdone/pdone_information_response.dart';
 import 'package:app_main/src/data/models/responses/pdone/pdone_my_protector_information_response.dart';
 import 'package:app_main/src/data/models/responses/pdone/pdone_registering_profile.dart';
@@ -234,5 +235,12 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
     // TODO: implement getRegisteringProfile
     final response = await _upgradeAccountApi.pDoneRegisteringProfile();
     return response.data.registeringProfile;
+  }
+
+  @override
+  Future<CheckExistIdentityNumber?> checkExistIdentityNumber(String identityNumber) async{
+    // TODO: implement checkExistIdentityNumber
+    final response = await _upgradeAccountApi.checkExistIdentityNumber(identityNumber);
+    return response;
   }
 }
