@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:wallet/data/datasources/models/est_coin_response.dart';
 
 import '../../../../domain/domain.dart';
 import '../../../../domain/entities/agency/agency_info.dart';
@@ -45,6 +46,18 @@ class AgencyBloc extends Bloc<AgencyEvent, AgencyState> {
           value: event.value,
         );
         emit(_ExchangeSuccess(valueExchanged: response));
+      } catch (e) {
+        const errMessage = 'Đã xảy ra lỗi';
+        emit(const _Error(errMessage));
+      }
+    });
+
+    on<_EstCoinEvent>((event, emit) async {
+      try {
+        emit(const _ExchangeLoading());
+        final response = await _walletPointUseCase.estCoint(
+            agencyId: event.id, vnd: event.vnd, coin: event.coin);
+        emit(_EstCoinSuccess(response: response));
       } catch (e) {
         const errMessage = 'Đã xảy ra lỗi';
         emit(const _Error(errMessage));

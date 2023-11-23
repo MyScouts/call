@@ -20,6 +20,7 @@ mixin _$AgencyEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() getAllAgency,
     required TResult Function(int id) getAgencyInfo,
+    required TResult Function(int id, num vnd, num coin) est,
     required TResult Function(int agencyId, num value) exchange,
   }) =>
       throw _privateConstructorUsedError;
@@ -27,6 +28,7 @@ mixin _$AgencyEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getAllAgency,
     TResult? Function(int id)? getAgencyInfo,
+    TResult? Function(int id, num vnd, num coin)? est,
     TResult? Function(int agencyId, num value)? exchange,
   }) =>
       throw _privateConstructorUsedError;
@@ -34,6 +36,7 @@ mixin _$AgencyEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getAllAgency,
     TResult Function(int id)? getAgencyInfo,
+    TResult Function(int id, num vnd, num coin)? est,
     TResult Function(int agencyId, num value)? exchange,
     required TResult orElse(),
   }) =>
@@ -42,6 +45,7 @@ mixin _$AgencyEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetAllAgency value) getAllAgency,
     required TResult Function(_GetAgencyInfo value) getAgencyInfo,
+    required TResult Function(_EstCoinEvent value) est,
     required TResult Function(_Exchange value) exchange,
   }) =>
       throw _privateConstructorUsedError;
@@ -49,6 +53,7 @@ mixin _$AgencyEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetAllAgency value)? getAllAgency,
     TResult? Function(_GetAgencyInfo value)? getAgencyInfo,
+    TResult? Function(_EstCoinEvent value)? est,
     TResult? Function(_Exchange value)? exchange,
   }) =>
       throw _privateConstructorUsedError;
@@ -56,6 +61,7 @@ mixin _$AgencyEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetAllAgency value)? getAllAgency,
     TResult Function(_GetAgencyInfo value)? getAgencyInfo,
+    TResult Function(_EstCoinEvent value)? est,
     TResult Function(_Exchange value)? exchange,
     required TResult orElse(),
   }) =>
@@ -120,6 +126,7 @@ class _$GetAllAgencyImpl implements _GetAllAgency {
   TResult when<TResult extends Object?>({
     required TResult Function() getAllAgency,
     required TResult Function(int id) getAgencyInfo,
+    required TResult Function(int id, num vnd, num coin) est,
     required TResult Function(int agencyId, num value) exchange,
   }) {
     return getAllAgency();
@@ -130,6 +137,7 @@ class _$GetAllAgencyImpl implements _GetAllAgency {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getAllAgency,
     TResult? Function(int id)? getAgencyInfo,
+    TResult? Function(int id, num vnd, num coin)? est,
     TResult? Function(int agencyId, num value)? exchange,
   }) {
     return getAllAgency?.call();
@@ -140,6 +148,7 @@ class _$GetAllAgencyImpl implements _GetAllAgency {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getAllAgency,
     TResult Function(int id)? getAgencyInfo,
+    TResult Function(int id, num vnd, num coin)? est,
     TResult Function(int agencyId, num value)? exchange,
     required TResult orElse(),
   }) {
@@ -154,6 +163,7 @@ class _$GetAllAgencyImpl implements _GetAllAgency {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetAllAgency value) getAllAgency,
     required TResult Function(_GetAgencyInfo value) getAgencyInfo,
+    required TResult Function(_EstCoinEvent value) est,
     required TResult Function(_Exchange value) exchange,
   }) {
     return getAllAgency(this);
@@ -164,6 +174,7 @@ class _$GetAllAgencyImpl implements _GetAllAgency {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetAllAgency value)? getAllAgency,
     TResult? Function(_GetAgencyInfo value)? getAgencyInfo,
+    TResult? Function(_EstCoinEvent value)? est,
     TResult? Function(_Exchange value)? exchange,
   }) {
     return getAllAgency?.call(this);
@@ -174,6 +185,7 @@ class _$GetAllAgencyImpl implements _GetAllAgency {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetAllAgency value)? getAllAgency,
     TResult Function(_GetAgencyInfo value)? getAgencyInfo,
+    TResult Function(_EstCoinEvent value)? est,
     TResult Function(_Exchange value)? exchange,
     required TResult orElse(),
   }) {
@@ -254,6 +266,7 @@ class _$GetAgencyInfoImpl implements _GetAgencyInfo {
   TResult when<TResult extends Object?>({
     required TResult Function() getAllAgency,
     required TResult Function(int id) getAgencyInfo,
+    required TResult Function(int id, num vnd, num coin) est,
     required TResult Function(int agencyId, num value) exchange,
   }) {
     return getAgencyInfo(id);
@@ -264,6 +277,7 @@ class _$GetAgencyInfoImpl implements _GetAgencyInfo {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getAllAgency,
     TResult? Function(int id)? getAgencyInfo,
+    TResult? Function(int id, num vnd, num coin)? est,
     TResult? Function(int agencyId, num value)? exchange,
   }) {
     return getAgencyInfo?.call(id);
@@ -274,6 +288,7 @@ class _$GetAgencyInfoImpl implements _GetAgencyInfo {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getAllAgency,
     TResult Function(int id)? getAgencyInfo,
+    TResult Function(int id, num vnd, num coin)? est,
     TResult Function(int agencyId, num value)? exchange,
     required TResult orElse(),
   }) {
@@ -288,6 +303,7 @@ class _$GetAgencyInfoImpl implements _GetAgencyInfo {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetAllAgency value) getAllAgency,
     required TResult Function(_GetAgencyInfo value) getAgencyInfo,
+    required TResult Function(_EstCoinEvent value) est,
     required TResult Function(_Exchange value) exchange,
   }) {
     return getAgencyInfo(this);
@@ -298,6 +314,7 @@ class _$GetAgencyInfoImpl implements _GetAgencyInfo {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetAllAgency value)? getAllAgency,
     TResult? Function(_GetAgencyInfo value)? getAgencyInfo,
+    TResult? Function(_EstCoinEvent value)? est,
     TResult? Function(_Exchange value)? exchange,
   }) {
     return getAgencyInfo?.call(this);
@@ -308,6 +325,7 @@ class _$GetAgencyInfoImpl implements _GetAgencyInfo {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetAllAgency value)? getAllAgency,
     TResult Function(_GetAgencyInfo value)? getAgencyInfo,
+    TResult Function(_EstCoinEvent value)? est,
     TResult Function(_Exchange value)? exchange,
     required TResult orElse(),
   }) {
@@ -324,6 +342,170 @@ abstract class _GetAgencyInfo implements AgencyEvent {
   int get id;
   @JsonKey(ignore: true)
   _$$GetAgencyInfoImplCopyWith<_$GetAgencyInfoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$EstCoinEventImplCopyWith<$Res> {
+  factory _$$EstCoinEventImplCopyWith(
+          _$EstCoinEventImpl value, $Res Function(_$EstCoinEventImpl) then) =
+      __$$EstCoinEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int id, num vnd, num coin});
+}
+
+/// @nodoc
+class __$$EstCoinEventImplCopyWithImpl<$Res>
+    extends _$AgencyEventCopyWithImpl<$Res, _$EstCoinEventImpl>
+    implements _$$EstCoinEventImplCopyWith<$Res> {
+  __$$EstCoinEventImplCopyWithImpl(
+      _$EstCoinEventImpl _value, $Res Function(_$EstCoinEventImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? vnd = null,
+    Object? coin = null,
+  }) {
+    return _then(_$EstCoinEventImpl(
+      null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == vnd
+          ? _value.vnd
+          : vnd // ignore: cast_nullable_to_non_nullable
+              as num,
+      null == coin
+          ? _value.coin
+          : coin // ignore: cast_nullable_to_non_nullable
+              as num,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EstCoinEventImpl implements _EstCoinEvent {
+  const _$EstCoinEventImpl(this.id, this.vnd, this.coin);
+
+  @override
+  final int id;
+  @override
+  final num vnd;
+  @override
+  final num coin;
+
+  @override
+  String toString() {
+    return 'AgencyEvent.est(id: $id, vnd: $vnd, coin: $coin)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EstCoinEventImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.vnd, vnd) || other.vnd == vnd) &&
+            (identical(other.coin, coin) || other.coin == coin));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id, vnd, coin);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EstCoinEventImplCopyWith<_$EstCoinEventImpl> get copyWith =>
+      __$$EstCoinEventImplCopyWithImpl<_$EstCoinEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getAllAgency,
+    required TResult Function(int id) getAgencyInfo,
+    required TResult Function(int id, num vnd, num coin) est,
+    required TResult Function(int agencyId, num value) exchange,
+  }) {
+    return est(id, vnd, coin);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getAllAgency,
+    TResult? Function(int id)? getAgencyInfo,
+    TResult? Function(int id, num vnd, num coin)? est,
+    TResult? Function(int agencyId, num value)? exchange,
+  }) {
+    return est?.call(id, vnd, coin);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getAllAgency,
+    TResult Function(int id)? getAgencyInfo,
+    TResult Function(int id, num vnd, num coin)? est,
+    TResult Function(int agencyId, num value)? exchange,
+    required TResult orElse(),
+  }) {
+    if (est != null) {
+      return est(id, vnd, coin);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetAllAgency value) getAllAgency,
+    required TResult Function(_GetAgencyInfo value) getAgencyInfo,
+    required TResult Function(_EstCoinEvent value) est,
+    required TResult Function(_Exchange value) exchange,
+  }) {
+    return est(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetAllAgency value)? getAllAgency,
+    TResult? Function(_GetAgencyInfo value)? getAgencyInfo,
+    TResult? Function(_EstCoinEvent value)? est,
+    TResult? Function(_Exchange value)? exchange,
+  }) {
+    return est?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetAllAgency value)? getAllAgency,
+    TResult Function(_GetAgencyInfo value)? getAgencyInfo,
+    TResult Function(_EstCoinEvent value)? est,
+    TResult Function(_Exchange value)? exchange,
+    required TResult orElse(),
+  }) {
+    if (est != null) {
+      return est(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EstCoinEvent implements AgencyEvent {
+  const factory _EstCoinEvent(final int id, final num vnd, final num coin) =
+      _$EstCoinEventImpl;
+
+  int get id;
+  num get vnd;
+  num get coin;
+  @JsonKey(ignore: true)
+  _$$EstCoinEventImplCopyWith<_$EstCoinEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -402,6 +584,7 @@ class _$ExchangeImpl implements _Exchange {
   TResult when<TResult extends Object?>({
     required TResult Function() getAllAgency,
     required TResult Function(int id) getAgencyInfo,
+    required TResult Function(int id, num vnd, num coin) est,
     required TResult Function(int agencyId, num value) exchange,
   }) {
     return exchange(agencyId, value);
@@ -412,6 +595,7 @@ class _$ExchangeImpl implements _Exchange {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getAllAgency,
     TResult? Function(int id)? getAgencyInfo,
+    TResult? Function(int id, num vnd, num coin)? est,
     TResult? Function(int agencyId, num value)? exchange,
   }) {
     return exchange?.call(agencyId, value);
@@ -422,6 +606,7 @@ class _$ExchangeImpl implements _Exchange {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getAllAgency,
     TResult Function(int id)? getAgencyInfo,
+    TResult Function(int id, num vnd, num coin)? est,
     TResult Function(int agencyId, num value)? exchange,
     required TResult orElse(),
   }) {
@@ -436,6 +621,7 @@ class _$ExchangeImpl implements _Exchange {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetAllAgency value) getAllAgency,
     required TResult Function(_GetAgencyInfo value) getAgencyInfo,
+    required TResult Function(_EstCoinEvent value) est,
     required TResult Function(_Exchange value) exchange,
   }) {
     return exchange(this);
@@ -446,6 +632,7 @@ class _$ExchangeImpl implements _Exchange {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetAllAgency value)? getAllAgency,
     TResult? Function(_GetAgencyInfo value)? getAgencyInfo,
+    TResult? Function(_EstCoinEvent value)? est,
     TResult? Function(_Exchange value)? exchange,
   }) {
     return exchange?.call(this);
@@ -456,6 +643,7 @@ class _$ExchangeImpl implements _Exchange {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetAllAgency value)? getAllAgency,
     TResult Function(_GetAgencyInfo value)? getAgencyInfo,
+    TResult Function(_EstCoinEvent value)? est,
     TResult Function(_Exchange value)? exchange,
     required TResult orElse(),
   }) {
@@ -489,6 +677,7 @@ mixin _$AgencyState {
     required TResult Function(num valueExchanged) exchangeSuccess,
     required TResult Function() getAllAgencyLoading,
     required TResult Function(List<Agency> agency) getAllAgencyLoaded,
+    required TResult Function(EstCoinResponse response) estCoin,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -501,6 +690,7 @@ mixin _$AgencyState {
     TResult? Function(num valueExchanged)? exchangeSuccess,
     TResult? Function()? getAllAgencyLoading,
     TResult? Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult? Function(EstCoinResponse response)? estCoin,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -513,6 +703,7 @@ mixin _$AgencyState {
     TResult Function(num valueExchanged)? exchangeSuccess,
     TResult Function()? getAllAgencyLoading,
     TResult Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult Function(EstCoinResponse response)? estCoin,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -526,6 +717,7 @@ mixin _$AgencyState {
     required TResult Function(_ExchangeSuccess value) exchangeSuccess,
     required TResult Function(_GetAllAgencyLoading value) getAllAgencyLoading,
     required TResult Function(_GetAllAgencyLoaded value) getAllAgencyLoaded,
+    required TResult Function(_EstCoinSuccess value) estCoin,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -538,6 +730,7 @@ mixin _$AgencyState {
     TResult? Function(_ExchangeSuccess value)? exchangeSuccess,
     TResult? Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
     TResult? Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult? Function(_EstCoinSuccess value)? estCoin,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -550,6 +743,7 @@ mixin _$AgencyState {
     TResult Function(_ExchangeSuccess value)? exchangeSuccess,
     TResult Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
     TResult Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult Function(_EstCoinSuccess value)? estCoin,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -619,6 +813,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(num valueExchanged) exchangeSuccess,
     required TResult Function() getAllAgencyLoading,
     required TResult Function(List<Agency> agency) getAllAgencyLoaded,
+    required TResult Function(EstCoinResponse response) estCoin,
   }) {
     return initial();
   }
@@ -634,6 +829,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(num valueExchanged)? exchangeSuccess,
     TResult? Function()? getAllAgencyLoading,
     TResult? Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult? Function(EstCoinResponse response)? estCoin,
   }) {
     return initial?.call();
   }
@@ -649,6 +845,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(num valueExchanged)? exchangeSuccess,
     TResult Function()? getAllAgencyLoading,
     TResult Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult Function(EstCoinResponse response)? estCoin,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -668,6 +865,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_ExchangeSuccess value) exchangeSuccess,
     required TResult Function(_GetAllAgencyLoading value) getAllAgencyLoading,
     required TResult Function(_GetAllAgencyLoaded value) getAllAgencyLoaded,
+    required TResult Function(_EstCoinSuccess value) estCoin,
   }) {
     return initial(this);
   }
@@ -683,6 +881,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_ExchangeSuccess value)? exchangeSuccess,
     TResult? Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
     TResult? Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult? Function(_EstCoinSuccess value)? estCoin,
   }) {
     return initial?.call(this);
   }
@@ -698,6 +897,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(_ExchangeSuccess value)? exchangeSuccess,
     TResult Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
     TResult Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult Function(_EstCoinSuccess value)? estCoin,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -783,6 +983,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function(num valueExchanged) exchangeSuccess,
     required TResult Function() getAllAgencyLoading,
     required TResult Function(List<Agency> agency) getAllAgencyLoaded,
+    required TResult Function(EstCoinResponse response) estCoin,
   }) {
     return error(err);
   }
@@ -798,6 +999,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function(num valueExchanged)? exchangeSuccess,
     TResult? Function()? getAllAgencyLoading,
     TResult? Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult? Function(EstCoinResponse response)? estCoin,
   }) {
     return error?.call(err);
   }
@@ -813,6 +1015,7 @@ class _$ErrorImpl implements _Error {
     TResult Function(num valueExchanged)? exchangeSuccess,
     TResult Function()? getAllAgencyLoading,
     TResult Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult Function(EstCoinResponse response)? estCoin,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -832,6 +1035,7 @@ class _$ErrorImpl implements _Error {
     required TResult Function(_ExchangeSuccess value) exchangeSuccess,
     required TResult Function(_GetAllAgencyLoading value) getAllAgencyLoading,
     required TResult Function(_GetAllAgencyLoaded value) getAllAgencyLoaded,
+    required TResult Function(_EstCoinSuccess value) estCoin,
   }) {
     return error(this);
   }
@@ -847,6 +1051,7 @@ class _$ErrorImpl implements _Error {
     TResult? Function(_ExchangeSuccess value)? exchangeSuccess,
     TResult? Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
     TResult? Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult? Function(_EstCoinSuccess value)? estCoin,
   }) {
     return error?.call(this);
   }
@@ -862,6 +1067,7 @@ class _$ErrorImpl implements _Error {
     TResult Function(_ExchangeSuccess value)? exchangeSuccess,
     TResult Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
     TResult Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult Function(_EstCoinSuccess value)? estCoin,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -965,6 +1171,7 @@ class _$GetAgencyInfoSuccessImpl implements _GetAgencyInfoSuccess {
     required TResult Function(num valueExchanged) exchangeSuccess,
     required TResult Function() getAllAgencyLoading,
     required TResult Function(List<Agency> agency) getAllAgencyLoaded,
+    required TResult Function(EstCoinResponse response) estCoin,
   }) {
     return getAgencyInfoSuccess(agencyInfo);
   }
@@ -980,6 +1187,7 @@ class _$GetAgencyInfoSuccessImpl implements _GetAgencyInfoSuccess {
     TResult? Function(num valueExchanged)? exchangeSuccess,
     TResult? Function()? getAllAgencyLoading,
     TResult? Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult? Function(EstCoinResponse response)? estCoin,
   }) {
     return getAgencyInfoSuccess?.call(agencyInfo);
   }
@@ -995,6 +1203,7 @@ class _$GetAgencyInfoSuccessImpl implements _GetAgencyInfoSuccess {
     TResult Function(num valueExchanged)? exchangeSuccess,
     TResult Function()? getAllAgencyLoading,
     TResult Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult Function(EstCoinResponse response)? estCoin,
     required TResult orElse(),
   }) {
     if (getAgencyInfoSuccess != null) {
@@ -1014,6 +1223,7 @@ class _$GetAgencyInfoSuccessImpl implements _GetAgencyInfoSuccess {
     required TResult Function(_ExchangeSuccess value) exchangeSuccess,
     required TResult Function(_GetAllAgencyLoading value) getAllAgencyLoading,
     required TResult Function(_GetAllAgencyLoaded value) getAllAgencyLoaded,
+    required TResult Function(_EstCoinSuccess value) estCoin,
   }) {
     return getAgencyInfoSuccess(this);
   }
@@ -1029,6 +1239,7 @@ class _$GetAgencyInfoSuccessImpl implements _GetAgencyInfoSuccess {
     TResult? Function(_ExchangeSuccess value)? exchangeSuccess,
     TResult? Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
     TResult? Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult? Function(_EstCoinSuccess value)? estCoin,
   }) {
     return getAgencyInfoSuccess?.call(this);
   }
@@ -1044,6 +1255,7 @@ class _$GetAgencyInfoSuccessImpl implements _GetAgencyInfoSuccess {
     TResult Function(_ExchangeSuccess value)? exchangeSuccess,
     TResult Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
     TResult Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult Function(_EstCoinSuccess value)? estCoin,
     required TResult orElse(),
   }) {
     if (getAgencyInfoSuccess != null) {
@@ -1110,6 +1322,7 @@ class _$GetAgencyInfoLoadingImpl implements _GetAgencyInfoLoading {
     required TResult Function(num valueExchanged) exchangeSuccess,
     required TResult Function() getAllAgencyLoading,
     required TResult Function(List<Agency> agency) getAllAgencyLoaded,
+    required TResult Function(EstCoinResponse response) estCoin,
   }) {
     return getAgencyInfoLoading();
   }
@@ -1125,6 +1338,7 @@ class _$GetAgencyInfoLoadingImpl implements _GetAgencyInfoLoading {
     TResult? Function(num valueExchanged)? exchangeSuccess,
     TResult? Function()? getAllAgencyLoading,
     TResult? Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult? Function(EstCoinResponse response)? estCoin,
   }) {
     return getAgencyInfoLoading?.call();
   }
@@ -1140,6 +1354,7 @@ class _$GetAgencyInfoLoadingImpl implements _GetAgencyInfoLoading {
     TResult Function(num valueExchanged)? exchangeSuccess,
     TResult Function()? getAllAgencyLoading,
     TResult Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult Function(EstCoinResponse response)? estCoin,
     required TResult orElse(),
   }) {
     if (getAgencyInfoLoading != null) {
@@ -1159,6 +1374,7 @@ class _$GetAgencyInfoLoadingImpl implements _GetAgencyInfoLoading {
     required TResult Function(_ExchangeSuccess value) exchangeSuccess,
     required TResult Function(_GetAllAgencyLoading value) getAllAgencyLoading,
     required TResult Function(_GetAllAgencyLoaded value) getAllAgencyLoaded,
+    required TResult Function(_EstCoinSuccess value) estCoin,
   }) {
     return getAgencyInfoLoading(this);
   }
@@ -1174,6 +1390,7 @@ class _$GetAgencyInfoLoadingImpl implements _GetAgencyInfoLoading {
     TResult? Function(_ExchangeSuccess value)? exchangeSuccess,
     TResult? Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
     TResult? Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult? Function(_EstCoinSuccess value)? estCoin,
   }) {
     return getAgencyInfoLoading?.call(this);
   }
@@ -1189,6 +1406,7 @@ class _$GetAgencyInfoLoadingImpl implements _GetAgencyInfoLoading {
     TResult Function(_ExchangeSuccess value)? exchangeSuccess,
     TResult Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
     TResult Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult Function(_EstCoinSuccess value)? estCoin,
     required TResult orElse(),
   }) {
     if (getAgencyInfoLoading != null) {
@@ -1248,6 +1466,7 @@ class _$ExchangeLoadingImpl implements _ExchangeLoading {
     required TResult Function(num valueExchanged) exchangeSuccess,
     required TResult Function() getAllAgencyLoading,
     required TResult Function(List<Agency> agency) getAllAgencyLoaded,
+    required TResult Function(EstCoinResponse response) estCoin,
   }) {
     return exchangeLoading();
   }
@@ -1263,6 +1482,7 @@ class _$ExchangeLoadingImpl implements _ExchangeLoading {
     TResult? Function(num valueExchanged)? exchangeSuccess,
     TResult? Function()? getAllAgencyLoading,
     TResult? Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult? Function(EstCoinResponse response)? estCoin,
   }) {
     return exchangeLoading?.call();
   }
@@ -1278,6 +1498,7 @@ class _$ExchangeLoadingImpl implements _ExchangeLoading {
     TResult Function(num valueExchanged)? exchangeSuccess,
     TResult Function()? getAllAgencyLoading,
     TResult Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult Function(EstCoinResponse response)? estCoin,
     required TResult orElse(),
   }) {
     if (exchangeLoading != null) {
@@ -1297,6 +1518,7 @@ class _$ExchangeLoadingImpl implements _ExchangeLoading {
     required TResult Function(_ExchangeSuccess value) exchangeSuccess,
     required TResult Function(_GetAllAgencyLoading value) getAllAgencyLoading,
     required TResult Function(_GetAllAgencyLoaded value) getAllAgencyLoaded,
+    required TResult Function(_EstCoinSuccess value) estCoin,
   }) {
     return exchangeLoading(this);
   }
@@ -1312,6 +1534,7 @@ class _$ExchangeLoadingImpl implements _ExchangeLoading {
     TResult? Function(_ExchangeSuccess value)? exchangeSuccess,
     TResult? Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
     TResult? Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult? Function(_EstCoinSuccess value)? estCoin,
   }) {
     return exchangeLoading?.call(this);
   }
@@ -1327,6 +1550,7 @@ class _$ExchangeLoadingImpl implements _ExchangeLoading {
     TResult Function(_ExchangeSuccess value)? exchangeSuccess,
     TResult Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
     TResult Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult Function(_EstCoinSuccess value)? estCoin,
     required TResult orElse(),
   }) {
     if (exchangeLoading != null) {
@@ -1414,6 +1638,7 @@ class _$ExchangeSuccessImpl implements _ExchangeSuccess {
     required TResult Function(num valueExchanged) exchangeSuccess,
     required TResult Function() getAllAgencyLoading,
     required TResult Function(List<Agency> agency) getAllAgencyLoaded,
+    required TResult Function(EstCoinResponse response) estCoin,
   }) {
     return exchangeSuccess(valueExchanged);
   }
@@ -1429,6 +1654,7 @@ class _$ExchangeSuccessImpl implements _ExchangeSuccess {
     TResult? Function(num valueExchanged)? exchangeSuccess,
     TResult? Function()? getAllAgencyLoading,
     TResult? Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult? Function(EstCoinResponse response)? estCoin,
   }) {
     return exchangeSuccess?.call(valueExchanged);
   }
@@ -1444,6 +1670,7 @@ class _$ExchangeSuccessImpl implements _ExchangeSuccess {
     TResult Function(num valueExchanged)? exchangeSuccess,
     TResult Function()? getAllAgencyLoading,
     TResult Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult Function(EstCoinResponse response)? estCoin,
     required TResult orElse(),
   }) {
     if (exchangeSuccess != null) {
@@ -1463,6 +1690,7 @@ class _$ExchangeSuccessImpl implements _ExchangeSuccess {
     required TResult Function(_ExchangeSuccess value) exchangeSuccess,
     required TResult Function(_GetAllAgencyLoading value) getAllAgencyLoading,
     required TResult Function(_GetAllAgencyLoaded value) getAllAgencyLoaded,
+    required TResult Function(_EstCoinSuccess value) estCoin,
   }) {
     return exchangeSuccess(this);
   }
@@ -1478,6 +1706,7 @@ class _$ExchangeSuccessImpl implements _ExchangeSuccess {
     TResult? Function(_ExchangeSuccess value)? exchangeSuccess,
     TResult? Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
     TResult? Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult? Function(_EstCoinSuccess value)? estCoin,
   }) {
     return exchangeSuccess?.call(this);
   }
@@ -1493,6 +1722,7 @@ class _$ExchangeSuccessImpl implements _ExchangeSuccess {
     TResult Function(_ExchangeSuccess value)? exchangeSuccess,
     TResult Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
     TResult Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult Function(_EstCoinSuccess value)? estCoin,
     required TResult orElse(),
   }) {
     if (exchangeSuccess != null) {
@@ -1559,6 +1789,7 @@ class _$GetAllAgencyLoadingImpl implements _GetAllAgencyLoading {
     required TResult Function(num valueExchanged) exchangeSuccess,
     required TResult Function() getAllAgencyLoading,
     required TResult Function(List<Agency> agency) getAllAgencyLoaded,
+    required TResult Function(EstCoinResponse response) estCoin,
   }) {
     return getAllAgencyLoading();
   }
@@ -1574,6 +1805,7 @@ class _$GetAllAgencyLoadingImpl implements _GetAllAgencyLoading {
     TResult? Function(num valueExchanged)? exchangeSuccess,
     TResult? Function()? getAllAgencyLoading,
     TResult? Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult? Function(EstCoinResponse response)? estCoin,
   }) {
     return getAllAgencyLoading?.call();
   }
@@ -1589,6 +1821,7 @@ class _$GetAllAgencyLoadingImpl implements _GetAllAgencyLoading {
     TResult Function(num valueExchanged)? exchangeSuccess,
     TResult Function()? getAllAgencyLoading,
     TResult Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult Function(EstCoinResponse response)? estCoin,
     required TResult orElse(),
   }) {
     if (getAllAgencyLoading != null) {
@@ -1608,6 +1841,7 @@ class _$GetAllAgencyLoadingImpl implements _GetAllAgencyLoading {
     required TResult Function(_ExchangeSuccess value) exchangeSuccess,
     required TResult Function(_GetAllAgencyLoading value) getAllAgencyLoading,
     required TResult Function(_GetAllAgencyLoaded value) getAllAgencyLoaded,
+    required TResult Function(_EstCoinSuccess value) estCoin,
   }) {
     return getAllAgencyLoading(this);
   }
@@ -1623,6 +1857,7 @@ class _$GetAllAgencyLoadingImpl implements _GetAllAgencyLoading {
     TResult? Function(_ExchangeSuccess value)? exchangeSuccess,
     TResult? Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
     TResult? Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult? Function(_EstCoinSuccess value)? estCoin,
   }) {
     return getAllAgencyLoading?.call(this);
   }
@@ -1638,6 +1873,7 @@ class _$GetAllAgencyLoadingImpl implements _GetAllAgencyLoading {
     TResult Function(_ExchangeSuccess value)? exchangeSuccess,
     TResult Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
     TResult Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult Function(_EstCoinSuccess value)? estCoin,
     required TResult orElse(),
   }) {
     if (getAllAgencyLoading != null) {
@@ -1730,6 +1966,7 @@ class _$GetAllAgencyLoadedImpl implements _GetAllAgencyLoaded {
     required TResult Function(num valueExchanged) exchangeSuccess,
     required TResult Function() getAllAgencyLoading,
     required TResult Function(List<Agency> agency) getAllAgencyLoaded,
+    required TResult Function(EstCoinResponse response) estCoin,
   }) {
     return getAllAgencyLoaded(agency);
   }
@@ -1745,6 +1982,7 @@ class _$GetAllAgencyLoadedImpl implements _GetAllAgencyLoaded {
     TResult? Function(num valueExchanged)? exchangeSuccess,
     TResult? Function()? getAllAgencyLoading,
     TResult? Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult? Function(EstCoinResponse response)? estCoin,
   }) {
     return getAllAgencyLoaded?.call(agency);
   }
@@ -1760,6 +1998,7 @@ class _$GetAllAgencyLoadedImpl implements _GetAllAgencyLoaded {
     TResult Function(num valueExchanged)? exchangeSuccess,
     TResult Function()? getAllAgencyLoading,
     TResult Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult Function(EstCoinResponse response)? estCoin,
     required TResult orElse(),
   }) {
     if (getAllAgencyLoaded != null) {
@@ -1779,6 +2018,7 @@ class _$GetAllAgencyLoadedImpl implements _GetAllAgencyLoaded {
     required TResult Function(_ExchangeSuccess value) exchangeSuccess,
     required TResult Function(_GetAllAgencyLoading value) getAllAgencyLoading,
     required TResult Function(_GetAllAgencyLoaded value) getAllAgencyLoaded,
+    required TResult Function(_EstCoinSuccess value) estCoin,
   }) {
     return getAllAgencyLoaded(this);
   }
@@ -1794,6 +2034,7 @@ class _$GetAllAgencyLoadedImpl implements _GetAllAgencyLoaded {
     TResult? Function(_ExchangeSuccess value)? exchangeSuccess,
     TResult? Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
     TResult? Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult? Function(_EstCoinSuccess value)? estCoin,
   }) {
     return getAllAgencyLoaded?.call(this);
   }
@@ -1809,6 +2050,7 @@ class _$GetAllAgencyLoadedImpl implements _GetAllAgencyLoaded {
     TResult Function(_ExchangeSuccess value)? exchangeSuccess,
     TResult Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
     TResult Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult Function(_EstCoinSuccess value)? estCoin,
     required TResult orElse(),
   }) {
     if (getAllAgencyLoaded != null) {
@@ -1825,5 +2067,183 @@ abstract class _GetAllAgencyLoaded implements AgencyState {
   List<Agency> get agency;
   @JsonKey(ignore: true)
   _$$GetAllAgencyLoadedImplCopyWith<_$GetAllAgencyLoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$EstCoinSuccessImplCopyWith<$Res> {
+  factory _$$EstCoinSuccessImplCopyWith(_$EstCoinSuccessImpl value,
+          $Res Function(_$EstCoinSuccessImpl) then) =
+      __$$EstCoinSuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({EstCoinResponse response});
+}
+
+/// @nodoc
+class __$$EstCoinSuccessImplCopyWithImpl<$Res>
+    extends _$AgencyStateCopyWithImpl<$Res, _$EstCoinSuccessImpl>
+    implements _$$EstCoinSuccessImplCopyWith<$Res> {
+  __$$EstCoinSuccessImplCopyWithImpl(
+      _$EstCoinSuccessImpl _value, $Res Function(_$EstCoinSuccessImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? response = null,
+  }) {
+    return _then(_$EstCoinSuccessImpl(
+      response: null == response
+          ? _value.response
+          : response // ignore: cast_nullable_to_non_nullable
+              as EstCoinResponse,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EstCoinSuccessImpl implements _EstCoinSuccess {
+  const _$EstCoinSuccessImpl({required this.response});
+
+  @override
+  final EstCoinResponse response;
+
+  @override
+  String toString() {
+    return 'AgencyState.estCoin(response: $response)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EstCoinSuccessImpl &&
+            (identical(other.response, response) ||
+                other.response == response));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, response);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EstCoinSuccessImplCopyWith<_$EstCoinSuccessImpl> get copyWith =>
+      __$$EstCoinSuccessImplCopyWithImpl<_$EstCoinSuccessImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String err) error,
+    required TResult Function(AgencyInfo agencyInfo) getAgencyInfoSuccess,
+    required TResult Function() getAgencyInfoLoading,
+    required TResult Function() exchangeLoading,
+    required TResult Function(num valueExchanged) exchangeSuccess,
+    required TResult Function() getAllAgencyLoading,
+    required TResult Function(List<Agency> agency) getAllAgencyLoaded,
+    required TResult Function(EstCoinResponse response) estCoin,
+  }) {
+    return estCoin(response);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String err)? error,
+    TResult? Function(AgencyInfo agencyInfo)? getAgencyInfoSuccess,
+    TResult? Function()? getAgencyInfoLoading,
+    TResult? Function()? exchangeLoading,
+    TResult? Function(num valueExchanged)? exchangeSuccess,
+    TResult? Function()? getAllAgencyLoading,
+    TResult? Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult? Function(EstCoinResponse response)? estCoin,
+  }) {
+    return estCoin?.call(response);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String err)? error,
+    TResult Function(AgencyInfo agencyInfo)? getAgencyInfoSuccess,
+    TResult Function()? getAgencyInfoLoading,
+    TResult Function()? exchangeLoading,
+    TResult Function(num valueExchanged)? exchangeSuccess,
+    TResult Function()? getAllAgencyLoading,
+    TResult Function(List<Agency> agency)? getAllAgencyLoaded,
+    TResult Function(EstCoinResponse response)? estCoin,
+    required TResult orElse(),
+  }) {
+    if (estCoin != null) {
+      return estCoin(response);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_GetAgencyInfoSuccess value) getAgencyInfoSuccess,
+    required TResult Function(_GetAgencyInfoLoading value) getAgencyInfoLoading,
+    required TResult Function(_ExchangeLoading value) exchangeLoading,
+    required TResult Function(_ExchangeSuccess value) exchangeSuccess,
+    required TResult Function(_GetAllAgencyLoading value) getAllAgencyLoading,
+    required TResult Function(_GetAllAgencyLoaded value) getAllAgencyLoaded,
+    required TResult Function(_EstCoinSuccess value) estCoin,
+  }) {
+    return estCoin(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_GetAgencyInfoSuccess value)? getAgencyInfoSuccess,
+    TResult? Function(_GetAgencyInfoLoading value)? getAgencyInfoLoading,
+    TResult? Function(_ExchangeLoading value)? exchangeLoading,
+    TResult? Function(_ExchangeSuccess value)? exchangeSuccess,
+    TResult? Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
+    TResult? Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult? Function(_EstCoinSuccess value)? estCoin,
+  }) {
+    return estCoin?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_GetAgencyInfoSuccess value)? getAgencyInfoSuccess,
+    TResult Function(_GetAgencyInfoLoading value)? getAgencyInfoLoading,
+    TResult Function(_ExchangeLoading value)? exchangeLoading,
+    TResult Function(_ExchangeSuccess value)? exchangeSuccess,
+    TResult Function(_GetAllAgencyLoading value)? getAllAgencyLoading,
+    TResult Function(_GetAllAgencyLoaded value)? getAllAgencyLoaded,
+    TResult Function(_EstCoinSuccess value)? estCoin,
+    required TResult orElse(),
+  }) {
+    if (estCoin != null) {
+      return estCoin(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EstCoinSuccess implements AgencyState {
+  const factory _EstCoinSuccess({required final EstCoinResponse response}) =
+      _$EstCoinSuccessImpl;
+
+  EstCoinResponse get response;
+  @JsonKey(ignore: true)
+  _$$EstCoinSuccessImplCopyWith<_$EstCoinSuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

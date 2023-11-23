@@ -231,7 +231,7 @@ class _PointWalletApi implements PointWalletApi {
     )
             .compose(
               _dio.options,
-              '/api/coin-wallet/info',
+              'api/v1/coin-agency/${agencyId}/price',
               queryParameters: queryParameters,
               data: _data,
             )

@@ -5,10 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
+import 'package:wallet/presentation/shared/bloc/wallet_bloc.dart';
 import 'package:wallet/presentation/wallet_point/wallet_point_coodinator.dart';
 
 import '../../../../../wallet.dart';
 import '../../../../core/theme/wallet_theme.dart';
+import '../../../../core/utils/deboun_callback.dart';
 import '../../../../core/utils/input_formatter.dart';
 import '../../../../domain/entities/agency/agency_info.dart';
 import '../../../shared/widgets/app_bar.dart';
@@ -33,13 +35,14 @@ class AgencyInfoScreen extends StatefulWidget {
 
 class _AgencyInfoScreenState extends State<AgencyInfoScreen>
     with ValidationMixin {
-  late final _bloc = context.read<AgencyBloc>();
+  late final _agencyBloc = context.read<AgencyBloc>();
   final _moneyController = TextEditingController();
   final _coinController = TextEditingController();
+  final _userIDController = TextEditingController();
 
   @override
   void initState() {
-    _bloc.add(AgencyEvent.getAgencyInfo(widget.agencyId));
+    _agencyBloc.add(AgencyEvent.getAgencyInfo(widget.agencyId));
     super.initState();
   }
 
@@ -54,7 +57,8 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
   void handleExchangeTap() {
     final money = num.tryParse(_moneyController.text.replaceAll('.', ''));
     if (money != null) {
-      _bloc.add(AgencyEvent.exchange(agencyId: widget.agencyId, value: money));
+      _agencyBloc
+          .add(AgencyEvent.exchange(agencyId: widget.agencyId, value: money));
     }
     onValidation();
   }
@@ -174,7 +178,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
   Widget _agencyInformationRow(
       BuildContext context, String title, String content) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -266,7 +270,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
 
   Widget _buildReceiveUser(BuildContext context) {
     return AgencyInputTextField(
-      controller: TextEditingController(),
+      controller: _userIDController,
       required: false,
       shouldEnabled: true,
       onChanged: (value) {
@@ -291,6 +295,11 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
           height: 10,
         ),
         TextFormField(
+          controller: _coinController,
+          onChanged: (val) {
+            _moneyController.clear();
+            _onEstCoin();
+          },
           style: context.textTheme.titleLarge!.copyWith(
             color: AppColors.blue33,
             fontSize: 24,
@@ -315,7 +324,33 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
           width: 400,
           color: AppColors.black10.withOpacity(0.6),
           margin: const EdgeInsets.symmetric(horizontal: 8),
-        )
+        ),
+        BlocBuilder<AgencyBloc, AgencyState>(builder: (context, state) {
+          return state.maybeWhen(
+            orElse: () => Container(),
+            estCoin: (estCoin) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 8, left: 16),
+                child: Row(
+                  children: [
+                    ImageWidget(
+                      ImageConstants.icWalletVnd,
+                      width: 24,
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      estCoin.vnd.toAppCurrencyString(isWithSymbol: true),
+                      style:
+                          context.textTheme.titleMedium!.copyWith(fontSize: 16),
+                    )
+                  ],
+                ),
+              );
+            },
+          );
+        })
       ],
     );
   }
@@ -334,21 +369,27 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
           height: 10,
         ),
         TextFormField(
+          controller: _moneyController,
+          onChanged: (value) {
+            _coinController.clear();
+            _onEstCoin();
+          },
           style: context.textTheme.titleLarge!.copyWith(
             color: AppColors.blue33,
             fontSize: 24,
           ),
           decoration: InputDecoration(
-              border: InputBorder.none,
-              focusedBorder: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              errorBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-              hintText: 'Nhập số tiền',
-              hintStyle: TextStyle(
-                  fontSize: 16,
-                  color: AppColors.black10.withOpacity(0.6),
-                  fontWeight: FontWeight.normal)),
+            border: InputBorder.none,
+            focusedBorder: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            errorBorder: InputBorder.none,
+            disabledBorder: InputBorder.none,
+            hintText: 'Nhập số tiền',
+            hintStyle: TextStyle(
+                fontSize: 16,
+                color: AppColors.black10.withOpacity(0.6),
+                fontWeight: FontWeight.normal),
+          ),
           inputFormatters: [
             ThousandsFormatter(),
           ],
@@ -358,7 +399,33 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
           width: 400,
           color: AppColors.black10.withOpacity(0.6),
           margin: const EdgeInsets.symmetric(horizontal: 8),
-        )
+        ),
+        BlocBuilder<AgencyBloc, AgencyState>(builder: (context, state) {
+          return state.maybeWhen(
+            orElse: () => Container(),
+            estCoin: (estCoin) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 8, left: 16),
+                child: Row(
+                  children: [
+                    ImageWidget(
+                      ImageConstants.icWalletCoin,
+                      width: 24,
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      estCoin.coin.toAppCurrencyString(isWithSymbol: false),
+                      style:
+                          context.textTheme.titleMedium!.copyWith(fontSize: 16),
+                    )
+                  ],
+                ),
+              );
+            },
+          );
+        })
       ],
     );
   }
@@ -384,5 +451,14 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
     }
 
     return null;
+  }
+
+  void _onEstCoin() {
+    Debouncer(milliseconds: 1200).run(() {
+      _agencyBloc.add(AgencyEvent.est(
+          widget.agencyId,
+          int.tryParse(_moneyController.text.replaceAll('.', '')) ?? 0,
+          int.tryParse(_coinController.text.replaceAll('.', '')) ?? 0));
+    });
   }
 }

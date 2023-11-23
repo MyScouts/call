@@ -20,4 +20,7 @@ class AgencyState with _$AgencyState {
 
   const factory AgencyState.getAllAgencyLoaded(List<Agency> agency) =
       _GetAllAgencyLoaded;
+
+  const factory AgencyState.estCoin({required EstCoinResponse response}) =
+  _EstCoinSuccess;
 }

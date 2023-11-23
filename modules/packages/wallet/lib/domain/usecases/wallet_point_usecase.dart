@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 
+import '../../data/datasources/models/est_coin_response.dart';
 import '../domain.dart';
 import '../entities/agency/agency_info.dart';
 
@@ -39,5 +40,11 @@ class WalletPointUseCase {
       agencyId: agencyId,
       value: value,
     );
+  }
+
+  Future<EstCoinResponse> estCoint(
+      {required int agencyId, required num vnd, required num coin}) async {
+    return _walletPointRepository.estCoin(
+        agencyId: agencyId, vnd: vnd, coin: coin);
   }
 }

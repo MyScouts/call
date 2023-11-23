@@ -22,6 +22,7 @@ class AgencyTabBarWidget extends StatefulWidget {
 
 class _AgencyTabBarWidgetState extends State<AgencyTabBarWidget>
     with TickerProviderStateMixin {
+
   late TabController _tabController;
   late final userType = context.userType;
 
