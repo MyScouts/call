@@ -355,7 +355,7 @@ List<RuleInformationUIModel> getRuleInformation() {
           content: TextSpan(
             style: defaultTextStyle,
             text:
-                'Hợp Đồng này gồm ..... trang bằng tiếng Việt, được lập thành 03 (ba) bản gốc, Bên A giữ 02 (hai) bản, Bên B giữ 01 (một) bản và có hiệu lực pháp lý như nhau.',
+                'Hợp Đồng này gồm 4 trang bằng tiếng Việt, được lập thành 03 (ba) bản gốc, Bên A giữ 02 (hai) bản, Bên B giữ 01 (một) bản và có hiệu lực pháp lý như nhau.',
           ),
         ),
       ],
