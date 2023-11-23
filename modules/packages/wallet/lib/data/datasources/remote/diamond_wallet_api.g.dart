@@ -144,8 +144,7 @@ class _DiamondWalletApi implements DiamondWalletApi {
             ))));
     final value = ApiResponse<ExchangeDiamondResponse>.fromJson(
       _result.data!,
-      (json) =>
-          ExchangeDiamondResponse.fromJson(json as Map<String, dynamic>),
+      (json) => ExchangeDiamondResponse.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

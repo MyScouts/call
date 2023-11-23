@@ -36,7 +36,6 @@ import 'package:wallet/presentation/wallet_point/wallet_point_routes.dart'
     as _i5;
 import 'package:wallet/presentation/wallet_routes.dart' as _i3;
 import 'package:wallet/presentation/wallet_vnd/wallet_vnd_routes.dart' as _i8;
-
 import '../presentation/wallet_diamond/bloc/wallet_diamond_bloc.dart' as _i26;
 
 class WalletPackageModule extends _i1.MicroPackageModule {

@@ -181,12 +181,6 @@ class _PointWalletApi implements PointWalletApi {
   }
 
   @override
-  Future<ApiResponse<EstCoinResponse>> estCoin({required int agencyId, required num vnd, required num coin}) {
-    // TODO: implement estCoin
-    throw UnimplementedError();
-  }
-
-  @override
   Future<ApiResponse<CoinWalletInfo>> getCoinWalletInfo() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -212,6 +206,43 @@ class _PointWalletApi implements PointWalletApi {
     final value = ApiResponse<CoinWalletInfo>.fromJson(
       _result.data!,
       (json) => CoinWalletInfo.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<EstCoinResponse>> estCoin({
+    required int agencyId,
+    required num vnd,
+    required num coin,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'vnd': vnd,
+      r'coin': coin,
+    };
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<EstCoinResponse>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/coin-wallet/info',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<EstCoinResponse>.fromJson(
+      _result.data!,
+      (json) => EstCoinResponse.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
@@ -245,6 +276,4 @@ class _PointWalletApi implements PointWalletApi {
 
     return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
-
-
 }
