@@ -1,5 +1,5 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/domain/entities/live/live_data.dart';
+import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'join_live_response.g.dart';

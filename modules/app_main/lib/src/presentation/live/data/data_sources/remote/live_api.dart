@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../../../core/networking/api_response.dart';
+import '../../model/response/join_live_response.dart';
 import '../../model/response/live.dart';
 
 part 'live_api.g.dart';
@@ -50,6 +51,16 @@ abstract class LiveApi {
     @Query('types') required List<String> types,
     @Query('categoryIds') int? categoryId,
   });
+
+  @POST(LiveApiConstant.joinLive)
+  Future<ApiResponse<JoinLiveResponse>> joinLive({
+    @Path('id') required int id,
+    @Field() String? password,
+  });
+
+  @GET(LiveApiConstant.getListLiveMember)
+  Future<ApiResponse<LiveListMemberResponse>> getListMemberLive(
+      {@Path('id') required int id});
 
 // @POST(LiveApiConstant.createNewLive)
 // Future<ApiResponse<CreateNewLiveResponse>> createNewLive(

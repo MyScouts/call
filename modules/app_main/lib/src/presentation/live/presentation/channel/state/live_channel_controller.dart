@@ -5,10 +5,9 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/services/live_service/impl/live_socket_service_impl.dart';
 import 'package:app_main/src/core/services/live_service/live_service.dart';
 import 'package:app_main/src/core/services/live_service/live_socket_service.dart';
-import 'package:app_main/src/data/models/responses/live/join_live_response.dart';
-import 'package:app_main/src/data/repositories/live_repository.dart';
-import 'package:app_main/src/domain/entities/live/live_data.dart';
-import 'package:app_main/src/domain/entities/live/live_member.dart';
+import 'package:app_main/src/presentation/live/data/model/response/join_live_response.dart';
+import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
+import 'package:app_main/src/presentation/live/domain/entities/live_member.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/domain/usecases/user_usecase.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,6 +16,8 @@ import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
+
+import '../../../data/repository/live_repository.dart';
 
 enum LiveStreamState {
   loading,
