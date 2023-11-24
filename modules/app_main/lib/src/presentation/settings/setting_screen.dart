@@ -58,7 +58,8 @@ class _SettingScreenState extends State<SettingScreen> {
           BlocListener<UserCubit, UserState>(
             listener: (context, state) {
               if (state is OnboardingFail) {
-                showToastMessage("Lỗi hệ thống, vui lòng thử lại sau.", ToastMessageType.warning);
+                showToastMessage("Lỗi hệ thống, vui lòng thử lại sau.",
+                    ToastMessageType.warning);
                 context.startDashboardUtil();
                 return;
               }
@@ -338,7 +339,8 @@ class _SettingScreenState extends State<SettingScreen> {
 
   Route _createRoute() {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => const InformationProfileScreen(),
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const InformationProfileScreen(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return child;
       },
@@ -359,8 +361,10 @@ class _SettingScreenState extends State<SettingScreen> {
             border: BorderRadius.only(
               topLeft: Radius.circular(index == 0 ? 10 : 0),
               topRight: Radius.circular(index == 0 ? 10 : 0),
-              bottomLeft: Radius.circular(index == settings.length - 1 ? 10 : 0),
-              bottomRight: Radius.circular(index == settings.length - 1 ? 10 : 0),
+              bottomLeft:
+                  Radius.circular(index == settings.length - 1 ? 10 : 0),
+              bottomRight:
+                  Radius.circular(index == settings.length - 1 ? 10 : 0),
             ),
           );
         }).toList(),
@@ -369,52 +373,52 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   Widget _buildVersion() {
-    return currentPackageInfo == null
-        ? const SizedBox.shrink()
-        : Container(
-            margin: const EdgeInsets.only(top: 30),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Phiên bản: ${currentPackageInfo!.version}',
-                  style: context.textTheme.titleSmall,
-                ),
-                if (!Configurations.isProduction) const SizedBox(width: 5),
-                if (!Configurations.isProduction)
-                  Text(
-                    '(${currentPackageInfo!.buildNumber})',
-                    style: context.textTheme.titleSmall,
-                  ),
-              ],
-            ),
-          );
-    // return FutureBuilder<PackageInfo>(
-    //   future: DeviceService.getPackageInfo(),
-    //   builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
-    //     if (!snapshot.hasData || snapshot.hasError) {
-    //       return const SizedBox.shrink();
-    //     }
-    //     final version = snapshot.data!;
-    //     return Container(
-    //       margin: const EdgeInsets.only(top: 30),
-    //       child: Row(
-    //         mainAxisAlignment: MainAxisAlignment.center,
-    //         children: [
-    //           Text(
-    //             'Phiên bản: ${version.version}',
-    //             style: context.textTheme.titleSmall,
-    //           ),
-    //           if (!Configurations.isProduction) const SizedBox(width: 5),
-    //           if (!Configurations.isProduction)
+    // return currentPackageInfo == null
+    //     ? const SizedBox.shrink()
+    //     : Container(
+    //         margin: const EdgeInsets.only(top: 30),
+    //         child: Row(
+    //           mainAxisAlignment: MainAxisAlignment.center,
+    //           children: [
     //             Text(
-    //               '(${version.buildNumber})',
+    //               'Phiên bản: ${currentPackageInfo!.version}',
     //               style: context.textTheme.titleSmall,
     //             ),
-    //         ],
-    //       ),
-    //     );
-    //   },
-    // );
+    //             if (!Configurations.isProduction) const SizedBox(width: 5),
+    //             if (!Configurations.isProduction)
+    //               Text(
+    //                 '(${currentPackageInfo!.buildNumber})',
+    //                 style: context.textTheme.titleSmall,
+    //               ),
+    //           ],
+    //         ),
+    //       );
+    return FutureBuilder<PackageInfo>(
+      future: DeviceService.getPackageInfo(),
+      builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
+        if (!snapshot.hasData || snapshot.hasError) {
+          return const SizedBox.shrink();
+        }
+        final version = snapshot.data!;
+        return Container(
+          margin: const EdgeInsets.only(top: 30),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Phiên bản: ${version.version}',
+                style: context.textTheme.titleSmall,
+              ),
+              if (!Configurations.isProduction) const SizedBox(width: 5),
+              if (!Configurations.isProduction)
+                Text(
+                  '(${version.buildNumber})',
+                  style: context.textTheme.titleSmall,
+                ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
