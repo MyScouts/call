@@ -84,6 +84,7 @@ class UpdateTeamOptionsScreen extends StatelessWidget {
         context.startDialogRelinquishBoss(
           '${team.id}',
           CommunityType.team,
+          context.read<RelinquishBossRoleBloc>(),
         );
       } else {
         final dayLeft = state.data.giveUpRequest!.first.createdAt!

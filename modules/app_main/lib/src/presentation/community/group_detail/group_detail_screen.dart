@@ -453,7 +453,23 @@ class _Avatar extends StatelessWidget {
           ),
         ],
       ),
-      child: CircleNetworkImage(url: group.avatar ?? '', size: 136),
+      child: SizedBox(
+        width: 136,
+        height: 136,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(100),
+          child: CachedNetworkImage(
+            imageUrl: group.avatar ?? "",
+            fit: BoxFit.cover,
+            errorWidget: (context, url, error) {
+              return ImageWidget(
+                IconAppConstants.icDefaultTeamAvt,
+                borderRadius: 100,
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 }
@@ -535,9 +551,22 @@ class _CollapsedTopBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircleNetworkImage(
-                url: group.avatar ?? '',
-                size: 30,
+              SizedBox(
+                width: 30,
+                height: 30,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: CachedNetworkImage(
+                    imageUrl: group.avatar ?? "",
+                    fit: BoxFit.cover,
+                    errorWidget: (context, url, error) {
+                      return ImageWidget(
+                        IconAppConstants.icDefaultTeamAvt,
+                        borderRadius: 100,
+                      );
+                    },
+                  ),
+                ),
               ),
               const SizedBox(width: 8),
               Flexible(

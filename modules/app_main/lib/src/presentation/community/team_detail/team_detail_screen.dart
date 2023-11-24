@@ -474,7 +474,11 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
   void _onTeamDetailBlocListen(BuildContext context, TeamDetailState state) {
     if (state is FetchTeamsMemberSuccess) {
       if (state.team.boss == null && state.team.group?.boss?.id == myId) {
-        context.askAssignBoss(team: state.team);
+        context.askAssignBoss(team: state.team).then((value) {
+          if (value != null && value == true) {
+            teamDetailBloc.add(FetchTeamDetailEvent(widget.id));
+          }
+        });
       }
     }
     if (state is GetLeaveTeamStatusLoading) {
