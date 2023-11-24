@@ -5,7 +5,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../../wallet.dart';
 import 'agency.dart';
 
-
 part 'agency_info.g.dart';
 
 @JsonSerializable()

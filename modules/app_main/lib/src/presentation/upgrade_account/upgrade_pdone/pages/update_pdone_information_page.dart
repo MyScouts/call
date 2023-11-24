@@ -158,7 +158,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
   }
 
   void _sendOTP() {
-    upgradePDoneBloc.add(UpdatePDoneSendOTPEvent());
+    upgradePDoneBloc.add(UpdatePDoneSendOTPEvent(identifyNumberCtrl.text));
   }
 
   void onUpdatePayload(UpdateProfilePayload val) {
