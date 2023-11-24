@@ -71,20 +71,45 @@ class UserHeader extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    height: 120,
-                    width: 120,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: const Color(0xffE9F3FF),
-                      border: Border.all(
-                        color: const Color(0xffF3F8FF),
-                        width: 3,
+                  GestureDetector(
+                    onTap: () {
+                      context.read<UserProfileBloc>().add(PickAvatarImage());
+                    },
+                    behavior: HitTestBehavior.opaque,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(60),
+                      child: Container(
+                        height: 120,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: const Color(0xffE9F3FF),
+                          border: Border.all(
+                            color: const Color(0xffF3F8FF),
+                            width: 3,
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: ImageWidget(
+                                IconAppConstants.icLiveArea,
+                              ),
+                            ),
+                            if(user.avatar != null)
+                              CachedNetworkImage(
+                                imageUrl: user.avatar ?? '',
+                                errorWidget: (_, __, ___) {
+                                  return const SizedBox.shrink();
+                                },
+                                fit: BoxFit.cover,
+                              )
+                          ],
+                        ),
                       ),
-                    ),
-                    alignment: Alignment.center,
-                    child: ImageWidget(
-                      IconAppConstants.icLiveArea,
                     ),
                   ),
                 ],

@@ -53,4 +53,6 @@ abstract class UserRepository {
   Future<User> updateEmail(Map<String, dynamic> json);
 
   Future<bool> genOtpEmail(String email);
+
+  Future updateAvatar(String url);
 }

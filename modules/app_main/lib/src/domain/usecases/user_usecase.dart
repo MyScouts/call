@@ -103,4 +103,8 @@ class UserUsecase {
   Future<bool> genOtpEmail(String email) {
     return _userRepository.genOtpEmail(email);
   }
+
+  Future updateAvatar(String url) {
+    return _userRepository.updateAvatar(url);
+  }
 }

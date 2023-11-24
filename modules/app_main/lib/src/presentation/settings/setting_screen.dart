@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/app/app_cubit.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
+import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/information_profile/screens/information_profile_screen.dart';
 import 'package:app_main/src/presentation/settings/setting_constants.dart';
@@ -248,22 +249,37 @@ class _SettingScreenState extends State<SettingScreen> {
         ),
         child: Row(
           children: [
-            Container(
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: context.theme.primaryColor,
-                  width: 2,
-                ),
-                borderRadius: BorderRadius.circular(90),
-              ),
-              child: ClipRRect(
-                child: ImageWidget(
-                  ImageConstants.defaultUserAvatar,
-                  borderRadius: 100,
-                ),
-              ),
+            BlocBuilder<UserCubit, UserState>(
+              builder: (_, state) {
+                if(userCubit.currentUser?.avatar?.trim().isEmpty ?? false) {
+                  return  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: context.theme.primaryColor,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(90),
+                    ),
+                    child: ClipRRect(
+                      child: ImageWidget(
+                        ImageConstants.defaultUserAvatar,
+                        borderRadius: 100,
+                      ),
+                    ),
+                  );
+                }
+                return CircleNetworkImage(
+                  url: userCubit.currentUser?.avatar ?? '',
+                  size: 50,
+                  defaultImage: ImageWidget(
+                    ImageConstants.defaultUserAvatar,
+                    borderRadius: 100,
+                    fit: BoxFit.cover,
+                  ),
+                );
+              },
             ),
             const SizedBox(width: 10),
             Column(

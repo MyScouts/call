@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
@@ -29,7 +30,15 @@ class UserCubit extends Cubit<UserState> {
     this._authenticationUsecase,
     this._userSharePreferencesUsecase,
     this._userUsecase,
-  ) : super(UserInitial());
+  ) : super(UserInitial()) {
+    NotificationCenter.subscribe(
+      channel: refreshUser,
+      observer: this,
+      onNotification: (_) {
+        fetchUser();
+      }
+    );
+  }
 
   Future phoneRegister({
     required String phone,
@@ -412,7 +421,8 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-  Future<void> updatePDoneProfile({required UpdatePDoneProfilePayload updatePDoneProfilePayload}) async {
+  Future<void> updatePDoneProfile(
+      {required UpdatePDoneProfilePayload updatePDoneProfilePayload}) async {
     if (state is UpdatePDoneProfileLoading) return;
     try {
       // emit(UpdatePDoneProfileLoading());
@@ -438,6 +448,7 @@ class UserCubit extends Cubit<UserState> {
       emit(UpdatePDoneProfileFailed(message: error.toString()));
     }
   }
+
 }
 
 enum AuthClaimType { v1, v2 }

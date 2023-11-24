@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/bloc/core_bloc.dart';
 import 'package:app_main/src/core/bloc/core_state.dart';
+import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
@@ -33,7 +34,33 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
         transformer: (event, mapper) => event.exhaustMap(mapper));
     on<PickBgImage>(onPickBgImage);
     on<RefreshUser>(onRefreshUser);
+    on<PickAvatarImage>(onPickAvatarImage);
     add(_FetchData());
+  }
+
+  void onPickAvatarImage(
+    _,
+    Emitter<UserProfileState> emit,
+  ) async {
+    final files = await mediaPicker.pickImagesFromGallery();
+    if (files == null) return;
+    final file = files.first;
+
+    if (file == null) return;
+
+    final uploadImage = await upgradeAccountUsecase.uploadBirthCer(
+      XFile(file.path),
+      'avatar',
+    );
+
+    useCase.updateAvatar(uploadImage).then((value) {
+      NotificationCenter.post(channel: refreshUser);
+    });
+    emit(state.copyWith(
+      user: state.user?.copyWith(
+        avatar: uploadImage,
+      ),
+    ));
   }
 
   void onRefreshUser(
@@ -191,5 +218,7 @@ class SubmitDataPDone extends UserProfileEvent {
 }
 
 class PickBgImage extends UserProfileEvent {}
+
+class PickAvatarImage extends UserProfileEvent {}
 
 class RefreshUser extends UserProfileEvent {}

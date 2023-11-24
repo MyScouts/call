@@ -117,4 +117,11 @@ class AuthRepositoryImpl extends UserRepository {
 
     return false;
   }
+
+  @override
+  Future updateAvatar(String url) {
+    return _userAPI.updateAvatar({
+      'avatar': url,
+    });
+  }
 }

@@ -30,6 +30,7 @@ class UserApiConstants {
   static const invite = "api/v1/team/{id}/invite";
   static const email = "api/v1/user/email";
   static const genEmail = "api/v1/user/add-email-otp";
+  static const updateAvatar = "api/v1/user";
 }
 
 @RestApi()
@@ -105,4 +106,7 @@ abstract class UserApi {
 
   @POST(UserApiConstants.genEmail)
   Future<Object> genOtpEmail(@Body() Map<String, dynamic> json);
+
+  @PATCH(UserApiConstants.updateAvatar)
+  Future updateAvatar(@Body() Map<String, dynamic> json);
 }
