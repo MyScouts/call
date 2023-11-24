@@ -227,7 +227,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
     emailController.text = '';
     idNumberController.text = userBloc.state.pDoneProfile?.identityNumber ?? '';
     final subs = userBloc.state.pDoneProfile?.supplyDate ??
-        DateFormat('dd/MM/yyyy').format(DateTime.now());
+        DateFormat('yyyy-MM-dd').format(DateTime.now());
     final subsX = subs.split('-');
     supplyDateX = '${subsX[2]}/${subsX[1]}/${subsX[0]}';
     placeOfNumberController.text = userBloc.state.pDoneProfile?.supplyAddress ??
