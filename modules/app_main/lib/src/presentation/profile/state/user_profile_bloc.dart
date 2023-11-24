@@ -13,7 +13,6 @@ import 'package:app_main/src/domain/usecases/user_usecase.dart';
 import 'package:camera/camera.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:ui/ui.dart';
 
 @injectable
 class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
@@ -33,7 +32,16 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
     on<SubmitDataPDone>(onSubmitDataPDone,
         transformer: (event, mapper) => event.exhaustMap(mapper));
     on<PickBgImage>(onPickBgImage);
+    on<RefreshUser>(onRefreshUser);
     add(_FetchData());
+  }
+
+  void onRefreshUser(
+    _,
+    Emitter<UserProfileState> emit,
+  ) async {
+    final res = await useCase.getProfile();
+    emit(state.copyWith(user: res));
   }
 
   void onPickBgImage(
@@ -48,8 +56,6 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
 
     final uploadImage =
         await upgradeAccountUsecase.uploadBirthCer(XFile(file.path), 'bg');
-
-    print(uploadImage);
 
     emit(state.copyWith(
       user: state.user?.copyWith(
@@ -70,6 +76,7 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
         'Cập nhật thông tin thành công',
       );
       emit(state.copyWith(pDoneProfile: res.profile));
+      add(RefreshUser());
     } catch (e) {
       AppCoordinator.root.currentContext?.hideLoading();
       AppCoordinator.root.currentContext?.showToastMessage(
@@ -85,12 +92,13 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
   ) async {
     AppCoordinator.root.currentContext?.showLoading();
     try {
-      final res = await useCase.updateNonePNoneDoneProfile(event.payload);
+      final res = await useCase.updateNonePNoneDoneProfile(event.data);
       AppCoordinator.root.currentContext?.hideLoading();
       AppCoordinator.root.currentContext?.showToastMessage(
         'Cập nhật thông tin thành công',
       );
       emit(state.copyWith(pDoneProfile: res.profile));
+      add(RefreshUser());
     } catch (e) {
       AppCoordinator.root.currentContext?.hideLoading();
       AppCoordinator.root.currentContext?.showToastMessage(
@@ -121,8 +129,10 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
     } catch (e) {}
 
     if (onBoarding.isPdone) {
-      final res = await protectorUseCase.myProtector();
-      emit(state.copyWith(info: res));
+      try {
+        final res = await protectorUseCase.myProtector();
+        emit(state.copyWith(info: res));
+      } catch (e) {}
     }
 
     emit(state.copyWith(status: StateStatus.success));
@@ -169,9 +179,9 @@ abstract class UserProfileEvent {}
 class _FetchData extends UserProfileEvent {}
 
 class SubmitDataNonePDone extends UserProfileEvent {
-  final UpdateNonePDoneProfilePayload payload;
+  final Map<String, dynamic> data;
 
-  SubmitDataNonePDone(this.payload);
+  SubmitDataNonePDone(this.data);
 }
 
 class SubmitDataPDone extends UserProfileEvent {
@@ -181,3 +191,5 @@ class SubmitDataPDone extends UserProfileEvent {
 }
 
 class PickBgImage extends UserProfileEvent {}
+
+class RefreshUser extends UserProfileEvent {}

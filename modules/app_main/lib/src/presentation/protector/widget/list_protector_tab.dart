@@ -31,7 +31,7 @@ class _ListProtectorTabState extends State<ListProtectorTab>
             ListenableBuilder(
               listenable: controller,
               builder: (_, __) {
-                if (controller.users.isEmpty) {
+                if (controller.isLoading) {
                   return const Center(
                       child: PlatformLoadingIndicator(size: 20));
                 }

@@ -25,7 +25,7 @@ class ConfirmDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return DialogContainerWidget(
       marginContent: const EdgeInsets.symmetric(horizontal: 30),
-      paddingContent: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
+      paddingContent: const EdgeInsets.symmetric(horizontal: 14, vertical: 18),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +45,7 @@ class ConfirmDialog extends StatelessWidget {
           if (content != null)
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               child: Text(
                 content!,
                 textAlign: TextAlign.start,
@@ -57,8 +57,9 @@ class ConfirmDialog extends StatelessWidget {
                         ),
               ),
             ),
+          const SizedBox(height: 12),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 12),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
             child: Row(
               children: [
                 const Spacer(),
@@ -73,7 +74,7 @@ class ConfirmDialog extends StatelessWidget {
                         fontSize: 16),
                   ),
                 ),
-                const SizedBox(width: 50),
+                const SizedBox(width: 40),
                 GestureDetector(
                   onTap: () {
                     Navigator.pop(context);

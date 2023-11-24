@@ -110,7 +110,7 @@ extension CommunityCoordinator on BuildContext {
       barrierLabel: '',
       pageBuilder: (context, animation1, animation2) {
         return ConfirmDialog(
-          title: 'Từ chức Boss ${communityType.text}?',
+          title: 'Từ chức Boss ${communityType.text}',
           actionTitle: 'Từ chức',
           content: communityType.relinquishContent,
           onAction: () {
@@ -268,6 +268,22 @@ extension CommunityCoordinator on BuildContext {
       barrierDismissible: true,
       pageBuilder: (context, animation1, animation2) {
         return AssignBossModal(member: member, onAction: onAction, team: team);
+      },
+    );
+  }
+
+  Future<T?> startDialogWarningAssignBossTeam<T>() {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierLabel: '',
+      barrierDismissible: true,
+      pageBuilder: (context, animation1, animation2) {
+        return const WarningDialog(
+          hasBackButton: true,
+          title: 'Đã có Boss Team',
+          content:
+              'Vui lòng huỷ quyền Boss Team hiện tại để chỉ định Boss Team mới.',
+        );
       },
     );
   }

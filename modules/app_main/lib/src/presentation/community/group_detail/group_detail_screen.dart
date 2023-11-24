@@ -572,6 +572,14 @@ class _GroupBanner extends StatelessWidget {
             .group;
     final imageWidth = (screenWidth * pixelRatio).round();
 
+    if (group.banner == null || group.banner!.isEmpty) {
+      return ImageWidget(
+        ImageConstants.imgDefaultTeamBanner,
+        height: screenWidth / cmBannerRatio,
+        width: screenWidth,
+      );
+    }
+
     return CachedNetworkImage(
       fit: BoxFit.cover,
       imageUrl: group.banner ?? '',
@@ -579,8 +587,10 @@ class _GroupBanner extends StatelessWidget {
       height: screenWidth / cmBannerRatio,
       width: screenWidth,
       maxWidthDiskCache: imageWidth,
-      errorWidget: (context, url, error) => const ColoredBox(
-        color: Color(0x1A2F6BFF),
+      errorWidget: (context, url, error) => ImageWidget(
+        ImageConstants.imgDefaultTeamBanner,
+        height: screenWidth / cmBannerRatio,
+        width: screenWidth,
       ),
     );
   }

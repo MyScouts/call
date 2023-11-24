@@ -3,24 +3,11 @@ import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_b
 import 'package:flutter/material.dart';
 
 class DashBoardCommunityTab extends StatefulWidget {
-  const DashBoardCommunityTab({
-    super.key,
-    required this.enableEditMode,
-    required this.disableEditMode,
-  });
-
-  final Function() enableEditMode;
-  final Function() disableEditMode;
+  const DashBoardCommunityTab({super.key});
 
   @override
   State<DashBoardCommunityTab> createState() => _DashBoardCommunityTabState();
 }
 
 class _DashBoardCommunityTabState
-    extends DashBoardBaseState<DashboardCommunityBloc, DashBoardCommunityTab> {
-  @override
-  void disableEditMode() => widget.disableEditMode();
-
-  @override
-  void enableEditMode() => widget.enableEditMode();
-}
+    extends DashBoardBaseState<DashboardCommunityBloc, DashBoardCommunityTab> {}

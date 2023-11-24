@@ -13,6 +13,7 @@ import 'package:ui/ui.dart';
 class AssignBossTeamScreen extends StatefulWidget {
   final Team team;
   static const String routeName = "assign-boss-team";
+
   const AssignBossTeamScreen({
     super.key,
     required this.team,
@@ -27,6 +28,7 @@ class _AssignBossTeamScreenState extends State<AssignBossTeamScreen> {
   final List<User> members = [];
   int? _bossId;
   bool _result = false;
+
   TeamDetailBloc get teamDetailBloc => context.read();
 
   @override
@@ -60,7 +62,12 @@ class _AssignBossTeamScreenState extends State<AssignBossTeamScreen> {
 
         if (state is AssignBossFail) {
           hideLoading();
-          showToastMessage(state.message, ToastMessageType.error);
+          Navigator.pop(context);
+          if (state.message.contains('JA')) {
+            showToastMessage(state.message, ToastMessageType.error);
+          } else {
+            context.startDialogWarningAssignBossTeam();
+          }
         }
       },
       child: ScaffoldHideKeyboard(
