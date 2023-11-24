@@ -2,8 +2,10 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/live/data/data_sources/remote/live_api.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../domain/entities/gift_card_list.dart';
 import '../../model/response/join_live_response.dart';
 import '../../model/response/live.dart';
+import '../../model/response/user_point_response.dart';
 import '../live_repository.dart';
 
 @Injectable(as: LiveRepository)
@@ -41,5 +43,17 @@ class LiveRepositoryImpl extends LiveRepository {
   Future<List<User>> listMembers(int id) async {
     final res = await _liveApi.getListMemberLive(id: id);
     return res.data.members;
+  }
+
+  @override
+  Future<GiftCardList> getGiftCardList(int type) async {
+    final result = await _liveApi.getGiftCardList(type);
+    return result.data;
+  }
+
+  @override
+  Future<UserPointResponse> getUserPoint() async {
+    final result = await _liveApi.getUserPoint();
+    return result.data;
   }
 }

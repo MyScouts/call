@@ -52,5 +52,11 @@
   "lbl_File": "File",
   "community": "Cộng đồng",
   "tv_live": "TV Live",
-  "marShop" : "MarShop"
+  "marShop": "MarShop",
+  "gift_hint": "Cổ vũ cho chủ phòng để tăng exp",
+  "gift" : "Gift",
+  "vote" : "Vote",
+  "popular" : "Phổ biến",
+  "latest" : "Mới nhất",
+  "vip" : "VIP"
 }

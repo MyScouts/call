@@ -100,6 +100,9 @@ class IconAppConstants {
   static String icMonitor = IconApp.icMonitor.path;
   static String icBag2 = IconApp.icBag2.path;
   static String icUser3 = IconApp.icUser3.path;
+  static String icCoin = IconApp.icCoin.path;
+  static String icChevronRight = IconApp.icChevronRight.path;
+
 
 }
 
@@ -206,6 +209,8 @@ enum IconApp {
   icMonitor('assets/icons/ic_monitor.svg'),
   icBag2('assets/icons/ic_bag-2.svg'),
   icUser3('assets/icons/user3.svg'),
+  icCoin('assets/icons/ic_coin.png'),
+  icChevronRight('assets/icons/ic_chevron-right.svg'),
   icLeaveTeam('assets/icons/ic_leave_team.svg');
   const IconApp(this.path);
 

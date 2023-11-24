@@ -3,8 +3,10 @@ import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../../../core/networking/api_response.dart';
+import '../../../domain/entities/gift_card_list.dart';
 import '../../model/response/join_live_response.dart';
 import '../../model/response/live.dart';
+import '../../model/response/user_point_response.dart';
 
 part 'live_api.g.dart';
 
@@ -36,6 +38,11 @@ class LiveApiConstant {
   static const String voteForUser = '/api/gift-card/user/{userId}/report?contestId={contestId}';
 
   static const String defaultConfig = '/api/live/default-config';
+
+  static const String giftCardList = 'api/gift-card/list';
+
+  static const String userPoint = 'api/point/info';
+
 }
 
 @RestApi()
@@ -59,8 +66,13 @@ abstract class LiveApi {
   });
 
   @GET(LiveApiConstant.getListLiveMember)
-  Future<ApiResponse<LiveListMemberResponse>> getListMemberLive(
-      {@Path('id') required int id});
+  Future<ApiResponse<LiveListMemberResponse>> getListMemberLive({@Path('id') required int id});
+
+  @GET(LiveApiConstant.giftCardList)
+  Future<ApiResponse<GiftCardList>> getGiftCardList(@Query('type') int type);
+
+  @GET(LiveApiConstant.userPoint)
+  Future<ApiResponse<UserPointResponse>> getUserPoint();
 
 // @POST(LiveApiConstant.createNewLive)
 // Future<ApiResponse<CreateNewLiveResponse>> createNewLive(
