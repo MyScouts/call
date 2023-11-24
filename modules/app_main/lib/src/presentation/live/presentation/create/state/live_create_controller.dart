@@ -1,8 +1,9 @@
 import 'package:app_main/src/core/services/live_service/live_service.dart';
-import 'package:app_main/src/data/repositories/live_repository.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../../../data/repository/live_repository.dart';
 
 enum LiveCreateState {
   loading,
