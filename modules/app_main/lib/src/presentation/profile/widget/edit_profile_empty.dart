@@ -227,7 +227,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
     emailController.text = '';
     idNumberController.text = userBloc.state.pDoneProfile?.identityNumber ?? '';
     final subs = userBloc.state.pDoneProfile?.supplyDate ??
-        DateFormat('dd/MM/yyyy').format(DateTime.now());
+        DateFormat('yyyy-MM-dd').format(DateTime.now());
     final subsX = subs.split('-');
     supplyDateX = '${subsX[2]}/${subsX[1]}/${subsX[0]}';
     placeOfNumberController.text = userBloc.state.pDoneProfile?.supplyAddress ??
@@ -1009,7 +1009,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       listener: (_, state) {
         if (state is GetListProvincesSuccess2) {
           final pros = state.provinces ?? provinces;
-          final proName = userBloc.state.pDoneProfile?.birthPlace.provinceName;
+          final proName = userBloc.state.pDoneProfile?.currentPlace.provinceName;
           if (proName != null) {
             cuProvince =
                 pros.firstWhereOrNull((e) => e.name!.contains(proName));
@@ -1051,7 +1051,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       listener: (ctx, state) {
         if (state is GetDistrictsSuccess2) {
           final dis = state.districts ?? districts;
-          final district = userBloc.state.pDoneProfile?.birthPlace.districtName;
+          final district = userBloc.state.pDoneProfile?.currentPlace.districtName;
           if (district != null) {
             cuDistrict = dis
                 .firstWhereOrNull((e) => e.name?.contains(district) ?? false);
@@ -1090,7 +1090,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       listener: (ctx, state) {
         if (state is GetWardsSuccess2) {
           final wa = state.wards ?? wards;
-          final warName = userBloc.state.pDoneProfile?.birthPlace.wardName;
+          final warName = userBloc.state.pDoneProfile?.currentPlace.wardName;
           if (warName != null) {
             cuWard =
                 wa.firstWhereOrNull((e) => e.name?.contains(warName) ?? false);
