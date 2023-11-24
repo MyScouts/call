@@ -1,4 +1,7 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/live/data/model/response/live_list_member_response.dart';
+import 'package:app_main/src/presentation/live/data/model/response/live_stream_category_response.dart';
+import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -24,7 +27,8 @@ class LiveApiConstant {
   static const String getListLiveMember = 'api/live/{id}/members';
   static const String kickMember = '/api/live/{id}/kick';
   static const String banMember = '/api/live/{id}/ban';
-  static const String getListLivefollowing = 'api/live/following?page={page}&pageSize={pageSize}';
+  static const String getListLivefollowing =
+      'api/live/following?page={page}&pageSize={pageSize}';
   static const String getListTopLive = 'api/top-live/list';
 
   static const String rbContest = '/api/rb-contest/active';
@@ -35,7 +39,8 @@ class LiveApiConstant {
 
   static const String festivalsID = '/api/festivals/register-festival/{userId}';
 
-  static const String voteForUser = '/api/gift-card/user/{userId}/report?contestId={contestId}';
+  static const String voteForUser =
+      '/api/gift-card/user/{userId}/report?contestId={contestId}';
 
   static const String defaultConfig = '/api/live/default-config';
 
@@ -66,7 +71,9 @@ abstract class LiveApi {
   });
 
   @GET(LiveApiConstant.getListLiveMember)
-  Future<ApiResponse<LiveListMemberResponse>> getListMemberLive({@Path('id') required int id});
+  Future<ApiResponse<LiveListMemberResponse>> getListMemberLive({
+    @Path('id') required int id,
+  });
 
   @GET(LiveApiConstant.giftCardList)
   Future<ApiResponse<GiftCardList>> getGiftCardList(@Query('type') int type);
@@ -74,10 +81,11 @@ abstract class LiveApi {
   @GET(LiveApiConstant.userPoint)
   Future<ApiResponse<UserPointResponse>> getUserPoint();
 
-// @POST(LiveApiConstant.createNewLive)
-// Future<ApiResponse<CreateNewLiveResponse>> createNewLive(
-//     @Body() CreateNewLivePayload body,
-//     );
+  @POST(LiveApiConstant.createNewLive)
+  Future<ApiResponse<LiveData>> createNewLive(
+    @Body() Map<String, dynamic> json,
+  );
+
 //
 // @POST(LiveApiConstant.joinLive)
 // Future<ApiResponse<LiveResponse>> joinLive({
@@ -122,8 +130,8 @@ abstract class LiveApi {
 // Future<ApiResponse<SupervisorOfMe>> supervisorOfMe();
 //
 //
-// @GET(LiveApiConstant.getAllCateGory)
-// Future<ApiResponse<LiveStreamCategoryResponse>> getAllCateGory();
+  @GET(LiveApiConstant.getAllCateGory)
+  Future<ApiResponse<LiveStreamCategoryResponse>> getAllCateGory();
 //
 // @PATCH(LiveApiConstant.livePathId)
 // Future<ApiResponse<bool>> updateLive(

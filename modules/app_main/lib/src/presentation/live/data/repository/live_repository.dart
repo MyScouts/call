@@ -1,4 +1,6 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/live/domain/entities/live_category_detail.dart';
+import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 
 import '../../domain/entities/gift_card_list.dart';
 import '../model/response/join_live_response.dart';
@@ -21,4 +23,7 @@ abstract class LiveRepository {
 
   Future<UserPointResponse> getUserPoint();
 
+  Future<List<LiveCategoryDetail>> listCategory();
+
+  Future<LiveData?> createNewLive(Map<String, dynamic> json);
 }

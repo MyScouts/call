@@ -5,6 +5,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/services/live_service/impl/live_socket_service_impl.dart';
 import 'package:app_main/src/core/services/live_service/live_service.dart';
 import 'package:app_main/src/core/services/live_service/live_socket_service.dart';
+import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/presentation/live/data/model/response/join_live_response.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_member.dart';
@@ -70,9 +71,13 @@ class LiveChannelController {
     return host != null;
   }
 
-  void join(int id, [String? password]) async {
+  int get hostID {
+    if (_me.value.isOwner) return _me.value.info.userID;
+    final host = _members.firstWhereOrNull((e) => e.isOwner);
+    return host!.info.userID;
+  }
 
-    ///get thông tin live
+  void join(int id, [String? password]) async {
     final res = await Future.wait([
       repository.joinLive(id: id, password: password),
       userUseCase.getProfile(),
@@ -92,6 +97,7 @@ class LiveChannelController {
     if (_me.value.isOwner) {
       await [Permission.microphone, Permission.camera].request();
       await service.initEngine(enableMic: true, enableWebCam: true);
+      NotificationCenter.post(channel: disposeCameraPreview);
     } else {
       await service.initEngine(enableMic: false, enableWebCam: false);
     }

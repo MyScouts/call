@@ -1,4 +1,5 @@
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
+import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -119,6 +120,16 @@ class _LiveHomeScreenState extends State<LiveHomeScreen> with SingleTickerProvid
               ],
             ),
           ),
+        ),
+      ),
+      floatingActionButton: GestureDetector(
+        onTap: () {
+          Navigator.of(context).pushNamed(LiveWrapperScreen.routerName);
+        },
+        behavior: HitTestBehavior.opaque,
+        child: SizedBox.square(
+          dimension: 70,
+          child: ImageWidget(IconAppConstants.icCreateLive),
         ),
       ),
     );

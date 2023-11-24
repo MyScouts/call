@@ -1,5 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/live/data/data_sources/remote/live_api.dart';
+import 'package:app_main/src/presentation/live/domain/entities/live_category_detail.dart';
+import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/entities/gift_card_list.dart';
@@ -55,5 +57,17 @@ class LiveRepositoryImpl extends LiveRepository {
   Future<UserPointResponse> getUserPoint() async {
     final result = await _liveApi.getUserPoint();
     return result.data;
+  }
+    @override
+    Future<List<LiveCategoryDetail>> listCategory() async {
+    final res = await _liveApi.getAllCateGory();
+    return res.data.categories ?? [];
+  }
+
+  @override
+  Future<LiveData?> createNewLive(Map<String, dynamic> json) async {
+    final res = await _liveApi.createNewLive(json);
+    if(!res.success) return null;
+    return res.data;
   }
 }
