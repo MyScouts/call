@@ -39,7 +39,8 @@ class Setting {
           Setting(
             text: "Cài đặt tài khoản",
             icon: IconAppConstants.icSettingAccount,
-            onPressed: () => Navigator.of(context).pushNamed(UserProfileScreen.routerName),
+            onPressed: () =>
+                Navigator.of(context).pushNamed(UserProfileScreen.routerName),
           ),
           if ((user?.old ?? 0) >= 18)
             Setting(
@@ -58,12 +59,14 @@ class Setting {
           Setting(
             text: "Team",
             icon: IconAppConstants.icTeamProfile,
-            onPressed: () => Navigator.pushNamed(context, CommunityWidget.routeName),
+            onPressed: () =>
+                Navigator.pushNamed(context, CommunityWidget.routeName),
           ),
           Setting(
-            text: "PDone",
+            text: "P-Done",
             icon: IconAppConstants.icUpgrade,
-            onPressed: () => context.startPDoneInformation().then((value) => onUpdate!()),
+            onPressed: () =>
+                context.startPDoneInformation().then((value) => onUpdate!()),
           ),
           Setting(
             text: "JA",
@@ -85,7 +88,7 @@ class Setting {
             },
           ),
           Setting(
-            text: "Tài khoản Marshop",
+            text: "Tài khoản MarShop",
             icon: IconAppConstants.icMarshop,
             onPressed: () {
               if (onboarding != null && !onboarding.isJA) {
