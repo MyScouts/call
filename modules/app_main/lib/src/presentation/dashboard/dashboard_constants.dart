@@ -5,6 +5,8 @@ import 'package:design_system/design_system.dart';
 import 'package:equatable/equatable.dart';
 import 'package:staggered_reorderable/staggered_reorderable.dart';
 
+import '../live/presentation/live_home/live_home_screen.dart';
+
 enum DashboardType { community, personal, ecommerce }
 
 enum AppId { team }
@@ -143,9 +145,7 @@ class DashBoardGroupItem extends DashBoardItem {
       title: json['title'],
       backgroundImage: json['background_image'],
       path: json['path'],
-      items: List.from(json['items'] ?? [])
-          .map((e) => DashBoardIconItem.fromJson(e))
-          .toList(),
+      items: List.from(json['items'] ?? []).map((e) => DashBoardIconItem.fromJson(e)).toList(),
     );
   }
 
@@ -184,10 +184,7 @@ final Map<String, DashBoardItem> mapItems = {
     backgroundImage: IconAppConstants.icTv,
   ),
   'ic_live': DashBoardIconItem(
-    id: 'ic_live',
-    title: 'Live',
-    backgroundImage: IconAppConstants.icLive,
-  ),
+      id: 'ic_live', title: 'Live', backgroundImage: IconAppConstants.icLive, path: LiveHomeScreen.routeName),
   'ic_bird': DashBoardIconItem(
     id: 'ic_bird',
     title: 'Nữ thần hoà bình',
@@ -232,10 +229,7 @@ final communityDefault = {
     backgroundImage: IconAppConstants.icTv,
   ),
   'ic_live': DashBoardIconItem(
-    id: 'ic_live',
-    title: 'Live',
-    backgroundImage: IconAppConstants.icLive,
-  ),
+      id: 'ic_live', title: 'Live', backgroundImage: IconAppConstants.icLive, path: LiveHomeScreen.routeName),
   'ic_bird': DashBoardIconItem(
     id: 'ic_bird',
     title: 'Nữ thần hoà bình',
@@ -343,10 +337,7 @@ final eCommerceDefault = {
     backgroundImage: IconAppConstants.icBird,
   ),
   'ic_live': DashBoardIconItem(
-    id: 'ic_live',
-    title: 'Live',
-    backgroundImage: IconAppConstants.icLive,
-  ),
+      id: 'ic_live', title: 'Live', backgroundImage: IconAppConstants.icLive, path: LiveHomeScreen.routeName),
 };
 
 final mapData = {
