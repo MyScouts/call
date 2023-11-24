@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'live_type.dart';
+
 part 'live_data.g.dart';
 
 @JsonSerializable()
@@ -7,7 +9,7 @@ class LiveData {
   @JsonKey(name: 'userId')
   final int userID;
   final int id;
-  final String type;
+  final LiveType type;
   final String title;
   final DateTime createdAt;
   final String? agoraChannel;

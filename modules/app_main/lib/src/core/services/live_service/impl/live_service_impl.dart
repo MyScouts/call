@@ -36,7 +36,12 @@ class LiveServiceImpl extends LiveService {
 
   @override
   Future dispose() async {
-    if (_engine != null) await _engine!.leaveChannel();
+    if (_engine != null) {
+      await Future.wait([
+        _engine!.leaveChannel(),
+        _engine!.release(),
+      ]);
+    }
     _engine = null;
   }
 
@@ -79,8 +84,8 @@ class LiveServiceImpl extends LiveService {
   }) async {
     try {
       _engine = createAgoraRtcEngine();
-      await _engine!.initialize(RtcEngineContext(
-        appId: '',
+      await _engine!.initialize(const RtcEngineContext(
+        appId: '9b59830124f54de6b93f0140e88188d9',
         channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
       ));
       _enableMic = enableMic;

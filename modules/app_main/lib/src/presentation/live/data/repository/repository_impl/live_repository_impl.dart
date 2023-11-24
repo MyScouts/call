@@ -1,5 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/live/data/data_sources/remote/live_api.dart';
+import 'package:app_main/src/presentation/live/domain/entities/live_category_detail.dart';
+import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../model/response/join_live_response.dart';
@@ -41,5 +43,18 @@ class LiveRepositoryImpl extends LiveRepository {
   Future<List<User>> listMembers(int id) async {
     final res = await _liveApi.getListMemberLive(id: id);
     return res.data.members;
+  }
+
+  @override
+  Future<List<LiveCategoryDetail>> listCategory() async {
+    final res = await _liveApi.getAllCateGory();
+    return res.data.categories ?? [];
+  }
+
+  @override
+  Future<LiveData?> createNewLive(Map<String, dynamic> json) async {
+    final res = await _liveApi.createNewLive(json);
+    if(!res.success) return null;
+    return res.data;
   }
 }
