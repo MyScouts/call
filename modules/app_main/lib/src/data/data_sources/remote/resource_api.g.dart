@@ -31,23 +31,24 @@ class _ResourceApi implements ResourceApi {
         filename: file.path.split(Platform.pathSeparator).last,
       ),
     ));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<dynamic>>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<dynamic>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
       contentType: 'multipart/form-data',
     )
-        .compose(
-          _dio.options,
-          'api/upload/image',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
+            .compose(
+              _dio.options,
+              'api/upload/image',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = ApiResponse<dynamic>.fromJson(
       _result.data!,
       (json) => json as dynamic,
@@ -68,23 +69,24 @@ class _ResourceApi implements ResourceApi {
         filename: file.path.split(Platform.pathSeparator).last,
       ),
     ));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<dynamic>>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<dynamic>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
       contentType: 'multipart/form-data',
     )
-        .compose(
-          _dio.options,
-          'api/upload/video',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
+            .compose(
+              _dio.options,
+              'api/upload/video',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = ApiResponse<dynamic>.fromJson(
       _result.data!,
       (json) => json as dynamic,
@@ -105,23 +107,24 @@ class _ResourceApi implements ResourceApi {
         filename: file.path.split(Platform.pathSeparator).last,
       ),
     ));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<dynamic>>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<dynamic>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
       contentType: 'multipart/form-data',
     )
-        .compose(
-          _dio.options,
-          'api/upload/file',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
+            .compose(
+              _dio.options,
+              'api/upload/file',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = ApiResponse<dynamic>.fromJson(
       _result.data!,
       (json) => json as dynamic,
@@ -139,26 +142,30 @@ class _ResourceApi implements ResourceApi {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<List<MediaModel>>>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<List<MediaModel>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          'api/medias/${role}?category=${category}&type=${type}',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
+            .compose(
+              _dio.options,
+              'api/medias/${role}?category=${category}&type=${type}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = ApiResponse<List<MediaModel>>.fromJson(
       _result.data!,
       (json) => json is List<dynamic>
-          ? json.map<MediaModel>((i) => MediaModel.fromJson(i as Map<String, dynamic>)).toList()
+          ? json
+              .map<MediaModel>(
+                  (i) => MediaModel.fromJson(i as Map<String, dynamic>))
+              .toList()
           : List.empty(),
     );
     return value;
@@ -170,29 +177,31 @@ class _ResourceApi implements ResourceApi {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<LatestVersionResponse>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<LatestVersionResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          'api/v1/app-version/type/${type}/latest',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
+            .compose(
+              _dio.options,
+              'api/v1/app-version/type/${type}/latest',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
     final value = LatestVersionResponse.fromJson(_result.data!);
     return value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
-        !(requestOptions.responseType == ResponseType.bytes || requestOptions.responseType == ResponseType.stream)) {
+        !(requestOptions.responseType == ResponseType.bytes ||
+            requestOptions.responseType == ResponseType.stream)) {
       if (T == String) {
         requestOptions.responseType = ResponseType.plain;
       } else {
@@ -222,8 +231,9 @@ class _ResourceApi implements ResourceApi {
   @override
   Future<String> storageUploadUrl(XFile file, String prefix) async {
     final resource = '$prefix${file.name}';
-    final _responseGetUrlUpload =
-        StorageUploadUrlResponse.fromJson((await _dio.get('api/v1/storage/upload-url?filepath=${resource}')).data);
+    final _responseGetUrlUpload = StorageUploadUrlResponse.fromJson(
+        (await _dio.get('api/v1/storage/upload-url?filepath=${resource}'))
+            .data);
     Uint8List imageData = await File(file.path).readAsBytes();
     await Dio().request(
       _responseGetUrlUpload.uploadUrl,

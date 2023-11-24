@@ -6,6 +6,8 @@ import 'package:injectable/injectable.dart';
 class LiveServiceImpl extends LiveService {
   RtcEngine? _engine;
 
+
+
   bool _enableMic = false;
 
   bool _enableWebCam = false;
@@ -83,13 +85,17 @@ class LiveServiceImpl extends LiveService {
       ));
       _enableMic = enableMic;
       _enableWebCam = enableWebCam;
-      await _engine!.enableAudio();
-      await _engine!.enableVideo();
-      await _engine!.enableAudioVolumeIndication(
-        interval: 400,
-        smooth: 3,
-        reportVad: true,
-      );
+      if(_enableMic) {
+        await _engine!.enableAudio();
+        await _engine!.enableAudioVolumeIndication(
+          interval: 400,
+          smooth: 3,
+          reportVad: true,
+        );
+      }
+      if(_enableWebCam) {
+        await _engine!.enableVideo();
+      }
       final muteLocalAudioStream = _engine!.muteLocalAudioStream(!_enableMic);
       final muteLocalVideoStream =
           _engine!.muteLocalVideoStream(!_enableWebCam);
@@ -102,20 +108,21 @@ class LiveServiceImpl extends LiveService {
     String token,
     String channelName,
     int uid, {
-    ClientRoleType role = ClientRoleType.clientRoleBroadcaster,
+    ClientRoleType role = ClientRoleType.clientRoleAudience,
   }) async {
     try {
+      final bool isBroadcaster = role == ClientRoleType.clientRoleBroadcaster;
       await _engine?.joinChannel(
         token: token,
         channelId: channelName,
         uid: uid,
         options: ChannelMediaOptions(
           clientRoleType: role,
-          audienceLatencyLevel: role == ClientRoleType.clientRoleBroadcaster
+          audienceLatencyLevel: isBroadcaster
               ? null
               : AudienceLatencyLevelType.audienceLatencyLevelUltraLowLatency,
-          publishCameraTrack: true,
-          publishMicrophoneTrack: true,
+          publishCameraTrack: isBroadcaster,
+          publishMicrophoneTrack: isBroadcaster,
           defaultVideoStreamType: VideoStreamType.videoStreamHigh,
         ),
       );
@@ -149,4 +156,7 @@ class LiveServiceImpl extends LiveService {
   Future switchCamera() async {
     await _engine!.switchCamera();
   }
+
+  @override
+  bool get isInitial => _engine != null;
 }

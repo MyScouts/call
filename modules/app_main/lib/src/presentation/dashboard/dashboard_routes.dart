@@ -5,6 +5,7 @@ import 'package:app_main/src/presentation/dashboard/search/search_screen.dart';
 import 'package:app_main/src/presentation/dashboard/system_setting/background_picker.dart';
 import 'package:app_main/src/presentation/dashboard/system_setting/change_password_screen.dart';
 import 'package:app_main/src/presentation/dashboard/system_setting/system_setting.dart';
+import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
@@ -44,5 +45,8 @@ class DashboardRoutes extends RouteModule {
           final args = settings.arguments as Map<String, dynamic>;
           return CameraResultScreen(file: args['file'] as XFile);
         },
+        LiveWrapperScreen.routerName: (context) {
+          return const LiveWrapperScreen(isCreated: true);
+        }
       };
 }

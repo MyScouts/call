@@ -3,6 +3,8 @@ import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 abstract class LiveService {
   RtcEngine get engine;
 
+  bool get isInitial;
+
   bool get enableMic;
 
   bool get enableWebCam;

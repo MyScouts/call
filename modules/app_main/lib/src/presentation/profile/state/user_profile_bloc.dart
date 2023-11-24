@@ -13,7 +13,6 @@ import 'package:app_main/src/domain/usecases/user_usecase.dart';
 import 'package:camera/camera.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:ui/ui.dart';
 
 @injectable
 class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
