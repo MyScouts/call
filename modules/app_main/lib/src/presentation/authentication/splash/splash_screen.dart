@@ -52,7 +52,8 @@ class _SplashScreenState extends State<SplashScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ImageWidget(ImageConstants.bgAppLogo),
-                if (state is AppInitial) _buildLoading(),
+                if (state is AppInitial || state is LoadingAppVersion)
+                  _buildLoading(),
               ],
             ),
           );
