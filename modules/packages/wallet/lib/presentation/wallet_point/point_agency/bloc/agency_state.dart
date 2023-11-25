@@ -13,7 +13,7 @@ class AgencyState with _$AgencyState {
 
   const factory AgencyState.exchangeLoading() = _ExchangeLoading;
 
-  const factory AgencyState.exchangeSuccess({required EstCoinResponse response}) =
+  const factory AgencyState.exchangeSuccess({required ExchangeCoinResponse response}) =
       _ExchangeSuccess;
 
   const factory AgencyState.getAllAgencyLoading() = _GetAllAgencyLoading;
@@ -23,4 +23,7 @@ class AgencyState with _$AgencyState {
 
   const factory AgencyState.estCoin({required EstCoinResponse response}) =
       _EstCoinSuccess;
+
+  const factory AgencyState.paymentInformation({required WalletCoinPaymentInformation response}) =
+  _GetPaymentInformationSuccess;
 }

@@ -12,9 +12,9 @@ class DiamondTransactionHistoryDetailScreen extends StatelessWidget {
   final int id;
 
   const DiamondTransactionHistoryDetailScreen({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   Future<DiamondTransactionHistoryDetail> getTransactionHistoryDetail(
       int id) async {

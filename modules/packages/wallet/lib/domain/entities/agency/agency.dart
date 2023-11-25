@@ -5,6 +5,18 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'agency.g.dart';
 
 @JsonSerializable()
+class AgencyDetailResponse {
+  final AgencyResponse coinAgency;
+
+  AgencyDetailResponse({required this.coinAgency});
+
+  factory AgencyDetailResponse.fromJson(Map<String, dynamic> json) =>
+      _$AgencyDetailResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AgencyDetailResponseToJson(this);
+}
+
+@JsonSerializable()
 class AgencyResponse {
   final int? id;
   final String? name;
@@ -29,14 +41,16 @@ class AgencyUser {
   final String? displayName;
   final String? pDoneId;
   final String? email;
-  final String? phoneNumber;
+  final String? phoneCode;
+  final String? phone;
   final String? fullName;
   final String? birthday;
 
   AgencyUser(
       {required this.id,
       required this.displayName,
-      required this.phoneNumber,
+      required this.phone,
+      required this.phoneCode,
       required this.email,
       required this.pDoneId,
       required this.fullName,

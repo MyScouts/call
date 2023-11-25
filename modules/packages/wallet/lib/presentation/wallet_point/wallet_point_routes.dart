@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobilehub_core/mobilehub_core.dart';
+import 'package:wallet/presentation/wallet_point/point_agency/screen/payment_information_screen.dart';
 
 import 'point_agency/bloc/agency_bloc.dart';
 import 'point_agency/screen/agency_info_screen.dart';
@@ -25,6 +26,13 @@ class WalletPointRoutes extends RouteModule {
       TransactionHistoryDetailScreen.routeName: (context) {
         final id = settings.arguments as int;
         return TransactionHistoryDetailScreen(id: id);
+      },
+      PaymentInformationScreen.routeName: (context) {
+        final data = settings.arguments as Map<String, dynamic>;
+        return PaymentInformationScreen(
+          paymentInfo: data['paymentInfo'],
+          agency: data['agency'], rPDoneUserId: data['pDoneId'],
+        );
       },
       PointAgencyScreen.routeName: (context) {
         // return const PointAgencyScreen();

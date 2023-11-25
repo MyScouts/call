@@ -5,14 +5,17 @@ import 'package:flutter/services.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
+import 'package:wallet/data/datasources/models/request/agency_get_payment_information_request.dart';
 import 'package:wallet/presentation/shared/bloc/wallet_bloc.dart';
 import 'package:wallet/presentation/shared/widgets/toast_message/toast_message.dart';
 import 'package:wallet/presentation/wallet_point/wallet_point_coodinator.dart';
-
+import 'package:wallet/presentation/wallet_point/point_agency/bloc/agency_bloc.dart';
 import '../../../../../wallet.dart';
 import '../../../../core/theme/wallet_theme.dart';
 import '../../../../core/utils/deboun_callback.dart';
 import '../../../../core/utils/input_formatter.dart';
+import '../../../../data/datasources/models/exchange_coin_response.dart';
+import '../../../../data/datasources/models/wallet_coin_payment_information_response.dart';
 import '../../../../domain/entities/agency/agency.dart';
 import '../../../../domain/entities/agency/agency_info.dart';
 import '../../../shared/widgets/app_bar.dart';
@@ -64,14 +67,13 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
       showToastMessage('Số quy đổi không hợp lệ', ToastMessageType.warning);
     } else {
       _agencyBloc.add(
-        AgencyEvent.exchange(
-          widget.agencyId,
-          money.toInt(),
-          coin.toInt(),
-        ),
+        AgencyEvent.exchange(widget.agencyId, money.toInt(), coin.toInt(),
+            _userIDController.text),
       );
     }
   }
+
+  late AgencyResponse agency;
 
   @override
   Widget build(BuildContext context) {
@@ -80,59 +82,101 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: context.hideKeyboard,
-      child: Container(
-        color: ResourceTypeExt.blueBackgroundColor,
-        padding: const EdgeInsets.fromLTRB(
-          0,
-          44,
-          0,
-          0,
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: ResourceTypeExt.blueBackgroundColor,
+          title: Text(
+            'Thông tin Đại lý',
+            style:
+                context.textTheme.titleLarge!.copyWith(color: AppColors.white),
+          ),
+          leading: IconButton(
+            onPressed: Navigator.of(context).pop,
+            icon: const Icon(
+              Icons.arrow_back,
+              color: AppColors.white,
+            ),
+          ),
         ),
-        margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-        child: BlocBuilder<AgencyBloc, AgencyState>(
-          buildWhen: (previous, current) =>
-              current.whenOrNull(
-                getAgencyInfoSuccess: (info) => true,
-                getAgencyInfoLoading: () => true,
-              ) ??
-              false,
-          builder: (context, state) {
-            return state.maybeWhen(
-              orElse: () => const LoadingWidget(),
-              getAgencyInfoSuccess: (agencyInfo) {
-                print('agencyInfo : ${agencyInfo.id}');
-                return Column(
-                  children: [
-                    _buildAgencyInformation(context, agencyInfo),
-                    AgencyTabBarWidget(
-                      widgetByMoney: _buildEnterByMoney(context),
-                      widgetByCoin: _buildEnterNumberCoins(context),
+        body: BlocListener<AgencyBloc, AgencyState>(
+          listener: (BuildContext context, AgencyState state) {
+            state.whenOrNull(
+                initial: () {},
+                error: (msg) {
+                  showToastMessage(msg, ToastMessageType.error);
+                },
+                exchangeSuccess: (ExchangeCoinResponse response) {
+                  _agencyBloc.add(
+                    AgencyEvent.getPaymentInformation(
+                      widget.agencyId,
+                      AgencyPaymentInformation(
+                          vnd: 0, pDoneId: _userIDController.text),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      color: AppColors.white,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildCouponCoins(context),
-                          Visibility(
-                            visible: !isShowKeyboard,
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: GradiantButton(
-                                onPressed: handleExchangeTap,
-                                child: const Text('Xác nhận'),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
+                  );
+                },
+                paymentInformation: (WalletCoinPaymentInformation paymentInfo) {
+                  // context.pointTransactionHistoryDetail(userId);
+                  context.coinPaymentInformation(
+                      paymentInfo, agency, _userIDController.text);
+                });
+          },
+          child: Container(
+            color: ResourceTypeExt.blueBackgroundColor,
+            padding: const EdgeInsets.fromLTRB(
+              0,
+              44,
+              0,
+              0,
+            ),
+            margin:
+                EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+            child: BlocBuilder<AgencyBloc, AgencyState>(
+              buildWhen: (previous, current) =>
+                  current.whenOrNull(
+                    getAgencyInfoSuccess: (info) => true,
+                    getAgencyInfoLoading: () => true,
+                  ) ??
+                  false,
+              builder: (context, state) {
+                return state.maybeWhen(
+                  orElse: () => const LoadingWidget(),
+                  getAgencyInfoSuccess: (agencyInfo) {
+                    agency = agencyInfo;
+                    return Column(
+                      children: [
+                        _buildAgencyInformation(context, agencyInfo),
+                        AgencyTabBarWidget(
+                          widgetByMoney: _buildEnterByMoney(context),
+                          widgetByCoin: _buildEnterNumberCoins(context),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          color: AppColors.white,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildCouponCoins(context),
+                              Visibility(
+                                visible: !isShowKeyboard,
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: GradiantButton(
+                                    onPressed: handleExchangeTap,
+                                    child: const Text('Xác nhận'),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    );
+                  },
                 );
               },
-            );
-          },
+            ),
+          ),
         ),
       ),
     );
@@ -180,8 +224,8 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
           ),
           _agencyInformationRow(
               context, 'ID P-DONE', agencyInfo.user?.pDoneId ?? ''),
-          _agencyInformationRow(
-              context, 'Số điện thoại', agencyInfo.user?.phoneNumber ?? ''),
+          _agencyInformationRow(context, 'Số điện thoại',
+              '${agencyInfo.user?.phoneCode} ${agencyInfo.user?.phone}'),
           _agencyInformationRow(context, 'Email', agencyInfo.user?.email ?? ''),
         ],
       ),

@@ -6,6 +6,19 @@ part of 'agency.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+AgencyDetailResponse _$AgencyDetailResponseFromJson(
+        Map<String, dynamic> json) =>
+    AgencyDetailResponse(
+      coinAgency:
+          AgencyResponse.fromJson(json['coinAgency'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$AgencyDetailResponseToJson(
+        AgencyDetailResponse instance) =>
+    <String, dynamic>{
+      'coinAgency': instance.coinAgency,
+    };
+
 AgencyResponse _$AgencyResponseFromJson(Map<String, dynamic> json) =>
     AgencyResponse(
       id: json['id'] as int?,
@@ -27,7 +40,8 @@ Map<String, dynamic> _$AgencyResponseToJson(AgencyResponse instance) =>
 AgencyUser _$AgencyUserFromJson(Map<String, dynamic> json) => AgencyUser(
       id: json['id'] as int?,
       displayName: json['displayName'] as String?,
-      phoneNumber: json['phoneNumber'] as String?,
+      phone: json['phone'] as String?,
+      phoneCode: json['phoneCode'] as String?,
       email: json['email'] as String?,
       pDoneId: json['pDoneId'] as String?,
       fullName: json['fullName'] as String?,
@@ -40,7 +54,8 @@ Map<String, dynamic> _$AgencyUserToJson(AgencyUser instance) =>
       'displayName': instance.displayName,
       'pDoneId': instance.pDoneId,
       'email': instance.email,
-      'phoneNumber': instance.phoneNumber,
+      'phoneCode': instance.phoneCode,
+      'phone': instance.phone,
       'fullName': instance.fullName,
       'birthday': instance.birthday,
     };
