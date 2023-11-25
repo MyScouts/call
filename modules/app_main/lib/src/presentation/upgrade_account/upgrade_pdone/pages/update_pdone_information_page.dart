@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/extensions/string_extension.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,9 @@ class UpdatePDoneInformationPage extends StatefulWidget {
     super.key,
     this.onNextPage,
   });
+
   final VoidCallback? onNextPage;
+
   @override
   State<UpdatePDoneInformationPage> createState() =>
       _UpdatePDoneInformationPageState();
@@ -191,11 +194,13 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
   }
 
   void _initTextFormField() {
-    if (((upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).dataEKyc
-            as Map<dynamic, dynamic>)
-        .isNotEmpty) {
-      final eKycData = (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess)
-          .dataEKyc['object'];
+    dynamic dataEKyc =
+        (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).dataEKyc;
+    if (dataEKyc is String && dataEKyc.isNotEmpty) {
+      dataEKyc = dataEKyc.toMap();
+    }
+    if (dataEKyc.isNotEmpty) {
+      final eKycData = dataEKyc['object'];
       identifyNumberCtrl.text = eKycData['id'] ?? '';
       final nameArr = eKycData['name'].toString().split(" ");
 

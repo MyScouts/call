@@ -59,7 +59,6 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     emit(ExtractingEKycIdCard());
     var infoResult = event.eKycData['INFO_RESULT'];
     var imageEKyc = event.eKycData["IMAGE_EKYC"];
-
     try {
       if (infoResult == null || infoResult == '') {
         // only verify face
