@@ -89,7 +89,7 @@ class _EducationDropdownState extends State<EducationDropdown> {
           },
           onChanged: (value) {
             if (value != null) {
-              widget.onChange(value.key!);
+              widget.onChange(value.name!);
               value = value;
               setState(() {});
             }

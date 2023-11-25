@@ -44,7 +44,7 @@ class _AppStoreScreenState extends State<AppStoreScreen> {
   }
 
   void init() {
-    final userID = userBloc.state.currentUser?.id;
+    final userID = userBloc.currentUser?.id;
     final communityKey = 'community $userID';
     final personalKey = 'personal $userID';
     final ecommerceKey = 'ecommerce $userID';

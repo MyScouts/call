@@ -123,7 +123,8 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         if (firstName.trim().isNotEmpty) "firstName": firstName,
         if (middleName.trim().isNotEmpty) "middleName": middleName,
         if (lastName.trim().isNotEmpty) "lastName": lastName,
-        if (nickName.trim().isNotEmpty) "nickName": nickName,
+        if (nickNameController.text.trim().isNotEmpty)
+          "nickName": nickNameController.text,
         "currentPlace": {
           "countryName": cuCountry?.name,
           "countryCode": cuCountry?.iso2,
