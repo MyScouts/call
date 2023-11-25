@@ -104,7 +104,7 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(243, 248, 255, 1),
       appBar: AppBar(
-        title: const Text('Cập nhật P-done'),
+        title: const Text('Cập nhật P-DONE'),
         centerTitle: true,
         backgroundColor: const Color.fromRGBO(243, 248, 255, 1),
         titleSpacing: 0,
@@ -146,7 +146,7 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
 
   Widget _buildTitle(BuildContext context) {
     return Text(
-      'Thông tin PDONE',
+      'Thông tin P-DONE',
       style: context.textTheme.labelLarge!.copyWith(),
     );
   }

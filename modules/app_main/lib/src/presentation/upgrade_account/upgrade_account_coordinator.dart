@@ -474,7 +474,7 @@ extension UpgradeAccountCoordinator on BuildContext {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    "Nâng cấp P-done",
+                    "Nâng cấp P-Done",
                     style: context.textTheme.titleMedium!
                         .copyWith(fontWeight: FontWeight.bold, fontSize: 15),
                   ),
