@@ -2,15 +2,15 @@ part of 'user_action_cubit.dart';
 
 @immutable
 sealed class UserActionState {
-  final String friendCount;
-  final String followerCount;
-  final String followeeCount;
+  // final String friendCount = this.;
+  // final String followerCount;
+  // final String followeeCount;
 
-  const UserActionState({
-    this.followeeCount = "0",
-    this.followerCount = "0",
-    this.friendCount = "0",
-  });
+  // const UserActionState({
+  //   // this.followeeCount = "0",
+  //   // this.followerCount = "0",
+  //   // this.friendCount = "0",
+  // });
 }
 
 final class UserActionInitial extends UserActionState {}

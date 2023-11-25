@@ -11,6 +11,9 @@ part 'user_action_state.dart';
 @Injectable()
 class UserActionCubit extends Cubit<UserActionState> {
   final UserUsecase _userUsecase;
+  String followeeCount = "0";
+  String followerCount = "0";
+  String friendCount = "0";
   UserActionCubit(this._userUsecase) : super(UserActionInitial());
 
   Future reportUser({
@@ -99,11 +102,9 @@ class UserActionCubit extends Cubit<UserActionState> {
     try {
       emit(OnGetFollowUser());
       final response = await _userUsecase.getFollowUser(userId);
-      final stats = response.stats;
-      followeeCount = stats.followeeCount.toString();
-      followerCount = stats.followerCount.toString();
-      friendCount = stats.friendCount.toString();
-      print("getFollowUser $stats");
+      // followeeCount = stats.followeeCount.toString();
+      // followerCount = stats.followerCount.toString();
+      // friendCount = stats.friendCount.toString();
       emit(GetFollowUserSuccess(followDetail: response));
     } catch (e) {
       emit(

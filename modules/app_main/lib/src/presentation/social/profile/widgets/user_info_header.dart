@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user_action/user_action_cubit.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
+import 'package:app_main/src/data/models/responses/follow_response.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
 import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:app_main/src/presentation/social/social_constants.dart';
@@ -20,13 +21,13 @@ class UserInfoHeader extends StatelessWidget {
   final User userInfo;
   final ValueNotifier<bool> friendStatusCtrl;
   final bool isMe;
-  final UserActionCubit actionCubit;
+  final ValueNotifier<GetUserFollowDetailResponse?> followInfoCtrl;
   const UserInfoHeader({
     super.key,
     required this.userInfo,
     required this.friendStatusCtrl,
-    required this.actionCubit,
     this.isMe = false,
+    required this.followInfoCtrl,
   });
 
   @override
@@ -248,77 +249,86 @@ class UserInfoHeader extends StatelessWidget {
   }
 
   _buildFriendInfo(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Column(
-            children: [
-              ValueListenableBuilder(
-                valueListenable: friendStatusCtrl,
-                builder: (context, value, child) {
-                  return Text(
-                    actionCubit.followerCount,
+    return ValueListenableBuilder(
+      valueListenable: followInfoCtrl,
+      builder: (context, value, child) {
+        if (value == null) {
+          return const SizedBox.shrink();
+        }
+        final stats = value.stats;
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  ValueListenableBuilder(
+                    valueListenable: friendStatusCtrl,
+                    builder: (context, value, child) {
+                      return Text(
+                        stats.followerCount.toString(),
+                        style: context.text.titleMedium!.copyWith(
+                          fontWeight: FontWeight.w800,
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    "Người hâm mộ",
+                    style: context.text.titleMedium,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 20,
+              width: 1,
+              color: Colors.grey,
+            ),
+            Expanded(
+              child: Column(
+                children: [
+                  Text(
+                    stats.followerCount.toString(),
                     style: context.text.titleMedium!.copyWith(
                       fontWeight: FontWeight.w800,
                     ),
-                  );
-                },
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    "Đang theo dõi",
+                    style: context.text.titleMedium,
+                  ),
+                ],
               ),
-              const SizedBox(height: 5),
-              Text(
-                "Người hâm mộ",
-                style: context.text.titleMedium,
+            ),
+            Container(
+              height: 20,
+              width: 1,
+              color: Colors.grey,
+            ),
+            Expanded(
+              child: Column(
+                children: [
+                  Text(
+                    stats.friendCount.toString(),
+                    style: context.text.titleMedium!.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    "Bạn bè",
+                    style: context.text.titleMedium,
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        Container(
-          height: 20,
-          width: 1,
-          color: Colors.grey,
-        ),
-        Expanded(
-          child: Column(
-            children: [
-              Text(
-                actionCubit.followerCount,
-                style: context.text.titleMedium!.copyWith(
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                "Đang theo dõi",
-                style: context.text.titleMedium,
-              ),
-            ],
-          ),
-        ),
-        Container(
-          height: 20,
-          width: 1,
-          color: Colors.grey,
-        ),
-        Expanded(
-          child: Column(
-            children: [
-              Text(
-                actionCubit.friendCount,
-                style: context.text.titleMedium!.copyWith(
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                "Bạn bè",
-                style: context.text.titleMedium,
-              ),
-            ],
-          ),
-        )
-      ],
+            )
+          ],
+        );
+      },
     );
   }
 

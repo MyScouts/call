@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/blocs/user_action/user_action_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/data/models/responses/follow_response.dart';
 import 'package:app_main/src/presentation/social/profile/profile_bloc.dart';
 import 'package:app_main/src/presentation/social/profile/widgets/user_info_header.dart';
 import 'package:design_system/design_system.dart';
@@ -43,6 +44,8 @@ class _DiaryScreenState extends State<DiaryScreen> {
   final ValueNotifier<DiaryCategory> _categoryCtrl = ValueNotifier(
     DiaryCategory.personal,
   );
+  final ValueNotifier<GetUserFollowDetailResponse?> _followInfo =
+      ValueNotifier(null);
   late final _userCubit = context.read<UserCubit>();
   late User _authInfo;
 
@@ -97,6 +100,11 @@ class _DiaryScreenState extends State<DiaryScreen> {
                 ToastMessageType.error,
               );
             }
+
+            print("listener: $state");
+            if (state is GetFollowUserSuccess) {
+              _followInfo.value = state.followDetail;
+            }
           },
           child: BlocBuilder<GetUserByIdBloc, GetDetailState>(
             builder: (context, state) {
@@ -113,14 +121,12 @@ class _DiaryScreenState extends State<DiaryScreen> {
 
                 return Column(
                   children: [
-                    BlocProvider.value(
-                        value: _actionBloc,
-                        child: UserInfoHeader(
-                          userInfo: userInfo,
-                          friendStatusCtrl: _friendStatus,
-                          isMe: isMe,
-                          actionCubit: _actionBloc,
-                        )),
+                    UserInfoHeader(
+                      userInfo: userInfo,
+                      friendStatusCtrl: _friendStatus,
+                      isMe: isMe,
+                      followInfoCtrl: _followInfo,
+                    ),
                     const SizedBox(height: 10),
                     Expanded(
                       child: Container(
