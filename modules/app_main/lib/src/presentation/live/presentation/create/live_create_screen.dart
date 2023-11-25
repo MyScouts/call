@@ -6,11 +6,13 @@ import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/repositories/media_picker.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/entities/media/media_file.dart';
+import 'package:app_main/src/domain/usecases/upgrade_account_usecase.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_category_detail.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_type.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/create/state/live_create_controller.dart';
+import 'package:camera/camera.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,11 +43,17 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
 
   void createLive() async {
     context.showLoading();
+    final update = await getIt<UpgradeAccountUsecase>().uploadBirthCer(
+      XFile(_file!.path),
+      'live',
+    );
+
     final data = await controller.createLive({
       'title': _title,
       'type': _type.name,
       if (_type.isPasswordLocked) 'password': "haha",
       'categoryIds': _cates.map((e) => e.id).toList(),
+      'medias': [update],
     });
     if (mounted) {
       context.hideLoading();
@@ -59,7 +67,9 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
     final files = await getIt<MediaPicker>().pickImagesFromGallery();
     if (files == null) return;
     if (files.isEmpty) return;
-    _file = files.first;
+    setState(() {
+      _file = files.first;
+    });
   }
 
   @override
@@ -133,9 +143,15 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
                                             behavior: HitTestBehavior.opaque,
                                             child: ClipRRect(
                                               borderRadius:
-                                                  BorderRadius.circular(4),
-                                              child: Image.file(
-                                                File(_file!.path),
+                                                  BorderRadius.circular(
+                                                4,
+                                              ),
+                                              child: SizedBox.square(
+                                                dimension: 56,
+                                                child: Image.file(
+                                                  File(_file!.path),
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -292,6 +308,14 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
                     if (_title.trim().isEmpty) {
                       showToastMessage(
                         'Vui lòng nhập tiêu đề',
+                        ToastMessageType.error,
+                      );
+                      return;
+                    }
+
+                    if (_file == null) {
+                      showToastMessage(
+                        'Vui lòng chọn hình ảnh cho live',
                         ToastMessageType.error,
                       );
                       return;

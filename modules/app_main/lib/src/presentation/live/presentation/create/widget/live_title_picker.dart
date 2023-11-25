@@ -33,79 +33,82 @@ class _LiveTitlePickerState extends State<LiveTitlePicker> {
       backgroundColor: Colors.white,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AppBar(
-              leading: const SizedBox.shrink(),
-              title: const Text(
-                'Tiêu đề',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
+        child: ColoredBox(
+          color: Colors.white,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AppBar(
+                leading: const SizedBox.shrink(),
+                title: const Text(
+                  'Tiêu đề',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
+                centerTitle: true,
+                actions: const [
+                  Center(child: CloseButton(color: Colors.black)),
+                ],
               ),
-              centerTitle: true,
-              actions: const [
-                Center(child: CloseButton(color: Colors.black)),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextFormField(
-                controller: controller,
-                maxLines: 3,
-                maxLength: 40,
-                decoration: InputDecoration(
-                  counter: ListenableBuilder(
-                    listenable: controller,
-                    builder: (_, __) =>
-                        Text(
-                          '${controller.text.length}/40',
-                          style: const TextStyle(
-                              fontSize: 14, color: Color(0xffACACAC)),
-                        ),
-                  ),
-                  hintText: 'Nhập tiêu đề phát trực tiếp',
-                  hintStyle: const TextStyle(
-                    fontSize: 14,
-                    color: Color(0xffACACAC),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Color(0xffEAEDF0)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: Theme
-                          .of(context)
-                          .primaryColor,
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextFormField(
+                  controller: controller,
+                  maxLines: 3,
+                  maxLength: 40,
+                  decoration: InputDecoration(
+                    counter: ListenableBuilder(
+                      listenable: controller,
+                      builder: (_, __) =>
+                          Text(
+                            '${controller.text.length}/40',
+                            style: const TextStyle(
+                                fontSize: 14, color: Color(0xffACACAC)),
+                          ),
+                    ),
+                    hintText: 'Nhập tiêu đề phát trực tiếp',
+                    hintStyle: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xffACACAC),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Color(0xffEAEDF0)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(
+                        color: Theme
+                            .of(context)
+                            .primaryColor,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: ElevatedButton(
-                onPressed: () {
-                  widget.onChanged(controller.text);
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(
-                  fixedSize: const Size.fromHeight(48),
-                  backgroundColor: Theme.of(context).primaryColor
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ElevatedButton(
+                  onPressed: () {
+                    widget.onChanged(controller.text);
+                    Navigator.of(context).pop();
+                  },
+                  style: ElevatedButton.styleFrom(
+                      fixedSize: const Size.fromHeight(48),
+                      backgroundColor: Theme.of(context).primaryColor
+                  ),
+                  child: const Text('Đặt', style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  ),),
                 ),
-                child: const Text('Đặt', style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                ),),
               ),
-            ),
-            const SizedBox(height: 16),
-          ],
+              const SizedBox(height: 16),
+            ],
+          ),
         ),
       ),
     );

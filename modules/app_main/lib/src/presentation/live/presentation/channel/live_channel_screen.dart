@@ -1,4 +1,5 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:app_main/src/core/utils/loading_indicator/platform_loading.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
@@ -54,8 +55,8 @@ class _RtcRenderState extends State<_RtcRender> {
   LiveDataProvider? provider;
 
   @override
-  void didUpdateWidget(covariant _RtcRender oldWidget) {
-    super.didUpdateWidget(oldWidget);
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     provider = context.findAncestorWidgetOfExactType<LiveDataProvider>();
   }
 
@@ -100,15 +101,7 @@ class _RtcRenderState extends State<_RtcRender> {
         );
       }
 
-      return AgoraVideoView(
-        controller: VideoViewController(
-          rtcEngine: controller.service.engine,
-          canvas: VideoCanvas(
-            uid: controller.hostID,
-            renderMode: RenderModeType.renderModeHidden,
-          ),
-        ),
-      );
+      return const Center(child: PlatformLoadingIndicator());
     });
   }
 }

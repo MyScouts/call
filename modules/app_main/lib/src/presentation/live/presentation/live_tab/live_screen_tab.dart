@@ -30,7 +30,7 @@ class _LiveScreenTabState extends State<LiveScreenTab> with AutomaticKeepAliveCl
         crossAxisCount: 2,
         mainAxisSpacing: 10,
         crossAxisSpacing: 7,
-        children: List.generate(liveController.live.value.total ?? 0, (index) {
+        children: List.generate(liveController.live.value.lives?.length ?? 0, (index) {
           return LiveWidget(liveDetail: liveController.live.value.lives![index]);
         }),
       );

@@ -78,74 +78,80 @@ class LiveChannelController {
   }
 
   void join(int id, [String? password]) async {
-    final res = await Future.wait([
-      repository.joinLive(id: id, password: password),
-      userUseCase.getProfile(),
-    ]);
-    _info = (res.first as JoinLiveResponse).data.obs;
-    final user = res.last as User?;
-    if (user == null) return;
-    _me = LiveMember(
-      info: LiveMemberInfo(
-        userID: user.id ?? 0,
-        name: user.name ?? '',
-        avatar: user.avatar ?? '',
-      ),
-      isOwner: (res.first as JoinLiveResponse).isModerator,
-    ) as Rx<LiveMember>;
+    try {
+      final res = await Future.wait([
+        repository.joinLive(id: id, password: password),
+        userUseCase.getProfile(),
+      ]);
+      _info = (res.first as JoinLiveResponse).data.obs;
+      final user = res.last as User?;
+      if (user == null) return;
 
-    if (_me.value.isOwner) {
-      await [Permission.microphone, Permission.camera].request();
-      await service.initEngine(enableMic: true, enableWebCam: true);
-    } else {
-      await service.initEngine(enableMic: false, enableWebCam: false);
-    }
-
-    _onSocketEvent();
-
-    socketService.connect(
-      '${Configurations.baseUrl}live?id=${_info.value.id}',
-      token: userSharePreferencesUseCase.getToken() ?? '',
-    );
-
-    _listenRtcEvent();
-
-    await service.joinChannel(
-      _info.value.agoraToken ?? '',
-      _info.value.agoraChannel ?? '',
-      _me.value.info.userID,
-      role: _me.value.isOwner
-          ? ClientRoleType.clientRoleBroadcaster
-          : ClientRoleType.clientRoleAudience,
-    );
-
-    ///get members
-    final users = await repository.listMembers(_info.value.id);
-    final result = <LiveMember>[];
-    for (final i in users) {
-      if (i.id == _me.value.info.userID) continue;
-      result.add(LiveMember(
+      _me = LiveMember(
         info: LiveMemberInfo(
-          userID: i.id!,
-          avatar: i.avatar ?? '',
-          name: i.displayName ?? '',
+          userID: user.id ?? 0,
+          name: user.name ?? '',
+          avatar: user.avatar ?? '',
         ),
-        isOwner: _info.value.userID == i.id,
-      ));
+        isOwner: (res.first as JoinLiveResponse).data.userID == user.id,
+      ) as Rx<LiveMember>;
+
+      if (_me.value.isOwner) {
+        await [Permission.microphone, Permission.camera].request();
+        await service.initEngine(enableMic: true, enableWebCam: true);
+      } else {
+        await service.initEngine(enableMic: false, enableWebCam: false);
+      }
+
+      _onSocketEvent();
+
+      socketService.connect(
+        '${Configurations.baseUrl}live?id=${_info.value.id}',
+        token: userSharePreferencesUseCase.getToken() ?? '',
+      );
+
+      _listenRtcEvent();
+
+      await service.joinChannel(
+        _info.value.agoraToken ?? '',
+        _info.value.agoraChannel ?? '',
+        _me.value.info.userID,
+        role: _me.value.isOwner
+            ? ClientRoleType.clientRoleBroadcaster
+            : ClientRoleType.clientRoleAudience,
+      );
+
+      ///get members
+      final users = await repository.listMembers(_info.value.id);
+      final result = <LiveMember>[];
+      for (final i in users) {
+        if (i.id == _me.value.info.userID) continue;
+        result.add(LiveMember(
+          info: LiveMemberInfo(
+            userID: i.id!,
+            avatar: i.avatar ?? '',
+            name: i.displayName ?? '',
+          ),
+          isOwner: _info.value.userID == i.id,
+        ));
+      }
+      _members = result.obs;
+
+      _hostOffline.value = !hostInLive;
+
+      _state.value = LiveStreamState.watching;
+
+      if(_me.value.isOwner) {
+        NotificationCenter.post(channel: disposeCameraPreview);
+      }
+
+      WakelockPlus.enable();
+
+      if (Platform.isAndroid) _initForegroundTask();
+
+    } catch(e) {
+      print(e);
     }
-    _members = result.obs;
-
-    _hostOffline.value = !hostInLive;
-
-    _state.value = LiveStreamState.watching;
-
-    if(_me.value.isOwner) {
-      NotificationCenter.post(channel: disposeCameraPreview);
-    }
-
-    WakelockPlus.enable();
-
-    if (Platform.isAndroid) _initForegroundTask();
   }
 
   Future previewQuit() async {
