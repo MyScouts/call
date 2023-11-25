@@ -148,6 +148,7 @@ class AppWidget extends StatelessWidget {
                         child: child,
                       );
                     }
+
                     return AspectRatio(
                       aspectRatio: (app.width) / app.height,
                       child: child,
@@ -219,6 +220,17 @@ class AppWidgetBuilder extends AppWidget {
             );
           }
           return AppGroupWidget(app: app);
+        }
+
+        if (app.id == "wg_banner") {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: AppWidget(
+              app: app,
+              enableRemoveIcon: controller.enableEditMode,
+              onRemoved: onRemoved,
+            ),
+          );
         }
 
         if (controller.enableEditMode) {
