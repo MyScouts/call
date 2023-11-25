@@ -51,8 +51,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "forgot_password":
             MessageLookupByLibrary.simpleMessage("Forgot password?"),
         "formatDateDDmmYYYYhhMM": m0,
+        "gift": MessageLookupByLibrary.simpleMessage("Gift"),
+        "gift_hint": MessageLookupByLibrary.simpleMessage(
+            "Cổ vũ cho chủ phòng để tăng exp"),
         "has_one_1_digit":
             MessageLookupByLibrary.simpleMessage("Has at least 1 digit"),
+        "latest": MessageLookupByLibrary.simpleMessage("Mới nhất"),
         "lbl_Camera": MessageLookupByLibrary.simpleMessage("Camera"),
         "lbl_File": MessageLookupByLibrary.simpleMessage("File"),
         "lbl_Gallery": MessageLookupByLibrary.simpleMessage("Gallery"),
@@ -63,7 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Password Confirm"),
         "least_one_uppercase_character": MessageLookupByLibrary.simpleMessage(
             "Contains at least one uppercase character"),
-        "live_tab": MessageLookupByLibrary.simpleMessage("Live"),
+        "live": MessageLookupByLibrary.simpleMessage("Live"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "marShop": MessageLookupByLibrary.simpleMessage("MarShop"),
         "message_otp_not_match":
@@ -98,6 +102,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Đăng ký V-Shop"),
         "phone_placeholder":
             MessageLookupByLibrary.simpleMessage("enter phone number"),
+        "popular": MessageLookupByLibrary.simpleMessage("Phổ biến"),
         "register": MessageLookupByLibrary.simpleMessage("Register"),
         "registration_is_consent_to":
             MessageLookupByLibrary.simpleMessage("Registration is consent to"),
@@ -115,6 +120,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "validation_password_match":
             MessageLookupByLibrary.simpleMessage("Password confirm not match"),
         "validation_required": m2,
+        "vip": MessageLookupByLibrary.simpleMessage("VIP"),
+        "vote": MessageLookupByLibrary.simpleMessage("Vote"),
         "wish_you_have_great_experiences_on_our_products":
             MessageLookupByLibrary.simpleMessage(
                 "Wish you have great experiences on our products")

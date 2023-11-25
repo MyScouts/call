@@ -1,7 +1,9 @@
 import 'package:injectable/injectable.dart';
 
 import '../../data/model/response/live.dart';
+import '../../data/model/response/user_point_response.dart';
 import '../../data/repository/live_repository.dart';
+import '../entities/gift_card_list.dart';
 
 @injectable
 class LiveUseCase {
@@ -21,5 +23,13 @@ class LiveUseCase {
       types: types,
       categoryId: categoryId,
     );
+  }
+
+  Future<GiftCardList> getGiftCardList(int type) {
+    return _liveRepository.getGiftCardList(type);
+  }
+
+  Future<UserPointResponse> getUserPoint() {
+    return _liveRepository.getUserPoint();
   }
 }

@@ -4,8 +4,10 @@ import 'package:app_main/src/presentation/live/domain/entities/live_category_det
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../domain/entities/gift_card_list.dart';
 import '../../model/response/join_live_response.dart';
 import '../../model/response/live.dart';
+import '../../model/response/user_point_response.dart';
 import '../live_repository.dart';
 
 @Injectable(as: LiveRepository)
@@ -46,7 +48,18 @@ class LiveRepositoryImpl extends LiveRepository {
   }
 
   @override
-  Future<List<LiveCategoryDetail>> listCategory() async {
+  Future<GiftCardList> getGiftCardList(int type) async {
+    final result = await _liveApi.getGiftCardList(type);
+    return result.data;
+  }
+
+  @override
+  Future<UserPointResponse> getUserPoint() async {
+    final result = await _liveApi.getUserPoint();
+    return result.data;
+  }
+    @override
+    Future<List<LiveCategoryDetail>> listCategory() async {
     final res = await _liveApi.getAllCateGory();
     return res.data.categories ?? [];
   }

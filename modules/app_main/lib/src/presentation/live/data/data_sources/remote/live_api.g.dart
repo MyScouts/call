@@ -126,6 +126,66 @@ class _LiveApi implements LiveApi {
   }
 
   @override
+  Future<ApiResponse<GiftCardList>> getGiftCardList(int type) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'type': type};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<GiftCardList>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/gift-card/list',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<GiftCardList>.fromJson(
+      _result.data!,
+      (json) => GiftCardList.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<UserPointResponse>> getUserPoint() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<UserPointResponse>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/point/info',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<UserPointResponse>.fromJson(
+      _result.data!,
+      (json) => UserPointResponse.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
   Future<ApiResponse<LiveData>> createNewLive(Map<String, dynamic> json) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

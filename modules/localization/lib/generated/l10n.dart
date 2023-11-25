@@ -464,7 +464,7 @@ class S {
   String get live {
     return Intl.message(
       'Live',
-      name: 'live_tab',
+      name: 'live',
       desc: '',
       args: [],
     );
@@ -585,6 +585,66 @@ class S {
     return Intl.message(
       'MarShop',
       name: 'marShop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cổ vũ cho chủ phòng để tăng exp`
+  String get gift_hint {
+    return Intl.message(
+      'Cổ vũ cho chủ phòng để tăng exp',
+      name: 'gift_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gift`
+  String get gift {
+    return Intl.message(
+      'Gift',
+      name: 'gift',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Vote`
+  String get vote {
+    return Intl.message(
+      'Vote',
+      name: 'vote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phổ biến`
+  String get popular {
+    return Intl.message(
+      'Phổ biến',
+      name: 'popular',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mới nhất`
+  String get latest {
+    return Intl.message(
+      'Mới nhất',
+      name: 'latest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `VIP`
+  String get vip {
+    return Intl.message(
+      'VIP',
+      name: 'vip',
       desc: '',
       args: [],
     );
