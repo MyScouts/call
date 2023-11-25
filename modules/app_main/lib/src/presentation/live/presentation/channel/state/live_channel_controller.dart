@@ -97,17 +97,16 @@ class LiveChannelController {
     if (_me.value.isOwner) {
       await [Permission.microphone, Permission.camera].request();
       await service.initEngine(enableMic: true, enableWebCam: true);
-      NotificationCenter.post(channel: disposeCameraPreview);
     } else {
       await service.initEngine(enableMic: false, enableWebCam: false);
     }
+
+    _onSocketEvent();
 
     socketService.connect(
       '${Configurations.baseUrl}live?id=${_info.value.id}',
       token: userSharePreferencesUseCase.getToken() ?? '',
     );
-
-    _onSocketEvent();
 
     _listenRtcEvent();
 
@@ -139,6 +138,10 @@ class LiveChannelController {
     _hostOffline.value = !hostInLive;
 
     _state.value = LiveStreamState.watching;
+
+    if(_me.value.isOwner) {
+      NotificationCenter.post(channel: disposeCameraPreview);
+    }
 
     WakelockPlus.enable();
 

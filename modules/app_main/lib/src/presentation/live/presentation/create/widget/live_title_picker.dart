@@ -95,6 +95,7 @@ class _LiveTitlePickerState extends State<LiveTitlePicker> {
                 },
                 style: ElevatedButton.styleFrom(
                   fixedSize: const Size.fromHeight(48),
+                  backgroundColor: Theme.of(context).primaryColor
                 ),
                 child: const Text('Đặt', style: TextStyle(
                   fontSize: 16,
