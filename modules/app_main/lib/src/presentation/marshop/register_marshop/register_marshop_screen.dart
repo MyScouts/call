@@ -127,8 +127,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
                   onChange: (value) => onValidation(),
                   validator: (value) =>
                       ValidationHelper.requiredValid(value, "Mã Marshop"),
-                  hintText: "",
-                  textInputType: TextInputType.number,
+                hintText: "",
                   prefixIcon: GestureDetector(
                     onTap: _startQrCodeScan,
                     child: const Icon(Icons.qr_code),
@@ -170,10 +169,6 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
     )
         .then((results) {
       if (results != null && results is String) {
-        if (!results.isNumber()) {
-          showToastMessage("Mã Marshop không hợp lệ!", ToastMessageType.error);
-          return;
-        }
         _marshopIdCtrl.text = results;
         setState(() {});
         onValidation();

@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:localization/localization.dart';
 
 import '../../ui.dart';
 
@@ -133,12 +132,15 @@ class _InputDateTimeWidgetState extends State<InputDateTimeWidget> {
         if (widget.displayValueIsLabel == false)
           Align(
             alignment: Alignment.centerRight,
-            child: Container(
-              margin: const EdgeInsets.only(top: 10, right: 10),
-              child: const Icon(
-                Icons.calendar_month,
-                color: AppColors.grey10,
-                size: 20,
+            child: GestureDetector(
+              onTap: _onPickingDate,
+              child: Container(
+                margin: const EdgeInsets.only(top: 10, right: 10),
+                child: const Icon(
+                  Icons.calendar_month,
+                  color: AppColors.grey10,
+                  size: 20,
+                ),
               ),
             ),
           )

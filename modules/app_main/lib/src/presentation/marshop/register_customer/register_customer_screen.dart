@@ -101,7 +101,6 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
                   controller: _marshopIdCtrl,
                   onChange: (value) => onValidation(),
                   hintText: "",
-                  textInputType: TextInputType.number,
                   validator: (value) =>
                       ValidationHelper.requiredValid(value, "MarshopId"),
                   prefixIcon: GestureDetector(
@@ -145,10 +144,6 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
     )
         .then((results) {
       if (results != null && results is String) {
-        if (!results.isNumber()) {
-          showToastMessage("Mã Marshop không hợp lệ!", ToastMessageType.error);
-          return;
-        }
         _marshopIdCtrl.text = results;
         setState(() {});
         onValidation();
