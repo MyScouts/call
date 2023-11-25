@@ -2,9 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/app/app_cubit.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
-import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
-import 'package:app_main/src/presentation/information_profile/screens/information_profile_screen.dart';
 import 'package:app_main/src/presentation/settings/setting_constants.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
@@ -19,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
-import 'package:version/version.dart';
 
 import '../upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart';
 
@@ -251,33 +248,12 @@ class _SettingScreenState extends State<SettingScreen> {
           children: [
             BlocBuilder<UserCubit, UserState>(
               builder: (_, state) {
-                if(userCubit.currentUser?.avatar?.trim().isEmpty ?? false) {
-                  return  Container(
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: context.theme.primaryColor,
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(90),
-                    ),
-                    child: ClipRRect(
-                      child: ImageWidget(
-                        ImageConstants.defaultUserAvatar,
-                        borderRadius: 100,
-                      ),
-                    ),
-                  );
-                }
-                return CircleNetworkImage(
-                  url: userCubit.currentUser?.avatar ?? '',
-                  size: 50,
-                  defaultImage: ImageWidget(
-                    ImageConstants.defaultUserAvatar,
-                    borderRadius: 100,
-                    fit: BoxFit.cover,
-                  ),
+                return AppAvatarWidget(
+                  avatar: userCubit.currentUser?.avatar,
+                  width: 50,
+                  height: 50,
+                  defaultAvatar: ImageConstants.defaultUserAvatar,
+                  isPDone: _onboarding?.isPdone ?? false,
                 );
               },
             ),
@@ -285,59 +261,6 @@ class _SettingScreenState extends State<SettingScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      _authInfo.getdisplayName,
-                      style: context.textTheme.titleMedium!.copyWith(
-                        fontSize: 15,
-                        color: AppColors.black,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    if (_authInfo.isPDone!)
-                      Container(
-                        width: 18,
-                        height: 18,
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.only(left: 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(90),
-                          color: context.theme.primaryColor,
-                        ),
-                        child: Text(
-                          "P",
-                          textAlign: TextAlign.center,
-                          style: context.textTheme.titleSmall!.copyWith(
-                            color: AppColors.white,
-                            height: 0,
-                            fontSize: 11,
-                          ),
-                        ),
-                      ),
-                    if (_authInfo.isJA ?? false)
-                      Container(
-                        height: 18,
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.only(left: 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(90),
-                          color: context.theme.colorScheme.secondary,
-                        ),
-                        child: Text(
-                          "JA",
-                          textAlign: TextAlign.center,
-                          style: context.textTheme.titleSmall!.copyWith(
-                            color: AppColors.white,
-                            height: 0,
-                            fontSize: 11,
-                          ),
-                        ),
-                      ),
-                  ],
-                ),
-                const SizedBox(height: 2),
                 Text(
                   "ID: ${_authInfo.pDoneId}",
                   style: context.textTheme.titleMedium!.copyWith(
@@ -350,16 +273,6 @@ class _SettingScreenState extends State<SettingScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  Route _createRoute() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          const InformationProfileScreen(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return child;
-      },
     );
   }
 
@@ -389,26 +302,6 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   Widget _buildVersion() {
-    // return currentPackageInfo == null
-    //     ? const SizedBox.shrink()
-    //     : Container(
-    //         margin: const EdgeInsets.only(top: 30),
-    //         child: Row(
-    //           mainAxisAlignment: MainAxisAlignment.center,
-    //           children: [
-    //             Text(
-    //               'Phiên bản: ${currentPackageInfo!.version}',
-    //               style: context.textTheme.titleSmall,
-    //             ),
-    //             if (!Configurations.isProduction) const SizedBox(width: 5),
-    //             if (!Configurations.isProduction)
-    //               Text(
-    //                 '(${currentPackageInfo!.buildNumber})',
-    //                 style: context.textTheme.titleSmall,
-    //               ),
-    //           ],
-    //         ),
-    //       );
     return FutureBuilder<PackageInfo>(
       future: DeviceService.getPackageInfo(),
       builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
