@@ -42,7 +42,6 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
   void initState() {
     super.initState();
     _authInfo = userCubit.currentUser!;
-
     if (widget.marshopId != null) {
       _marshopIdCtrl.text = widget.marshopId!;
     }
@@ -79,6 +78,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
                     ? _marshopIdCtrl.text.trim()
                     : null,
                 name: _marshopName.text.trim(),
+                phone: _authInfo.phone ?? '',
               );
               return;
             }

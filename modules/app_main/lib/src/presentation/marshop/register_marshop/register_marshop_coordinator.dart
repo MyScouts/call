@@ -12,6 +12,7 @@ extension RegisterMarshopCoordinator on BuildContext {
     String? marshopId,
     required String name,
     required int userId,
+    required String phone,
   }) {
     return showGeneralDialog<T>(
       context: this,
@@ -22,16 +23,18 @@ extension RegisterMarshopCoordinator on BuildContext {
           listener: (context, state) {},
           child: AutoHideKeyboard(
             child: DialogContainerWidget(
-              child: VerifyPhoneOTPDialogWidget(onVerify: (otpCode) {
-                context.read<MarshopCubit>().registerMarshop(
-                      userId,
-                      RegisterMarshopPayload(
-                        name: name,
-                        referralId: marshopId,
-                        otp: otpCode,
-                      ),
-                    );
-              }),
+              child: VerifyPhoneOTPDialogWidget(
+                  phone: phone,
+                  onVerify: (otpCode) {
+                    context.read<MarshopCubit>().registerMarshop(
+                          userId,
+                          RegisterMarshopPayload(
+                            name: name,
+                            referralId: marshopId,
+                            otp: otpCode,
+                          ),
+                        );
+                  }),
             ),
           ),
         );

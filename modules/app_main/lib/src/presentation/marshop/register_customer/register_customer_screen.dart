@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/auth/auth_cubit.dart';
 import 'package:app_main/src/blocs/marshop/marshop_cubit.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/authentication/widget/custom_text_field.dart';
 import 'package:app_main/src/presentation/marshop/register_customer/register_customer_coordinator.dart';
@@ -30,13 +31,16 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
     with ValidationMixin {
   final TextEditingController _marshopIdCtrl = TextEditingController();
   final _acceptTerm = ValueNotifier(false);
+  late final userCubit = context.read<UserCubit>();
 
   @override
   bool get conditionValidator => _acceptTerm.value;
+  late User _authInfo;
 
   @override
   void initState() {
     super.initState();
+    _authInfo = userCubit.currentUser!;
     if (widget.marshopId != null) {
       _marshopIdCtrl.text = widget.marshopId!;
     }
@@ -68,6 +72,7 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
               hideLoading();
               context.startDialogVerifyPhoneOTP(
                 marshopId: _marshopIdCtrl.text.trim(),
+                phone: _authInfo.phone ?? '',
               );
             }
 
