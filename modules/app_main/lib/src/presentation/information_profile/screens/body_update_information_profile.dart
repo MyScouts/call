@@ -512,7 +512,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             type: UpdateInformationType.pDoneID,
             validator: (value) => context.validateEmptyInfo(
               idPDoneProtectorTxtController.text,
-              'Vui lòng nhập ID Pdone',
+              'Vui lòng nhập ID P-done',
             ),
           ),
           const SizedBox(height: 16),

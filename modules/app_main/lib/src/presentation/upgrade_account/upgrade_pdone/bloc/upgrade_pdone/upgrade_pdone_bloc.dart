@@ -242,7 +242,7 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     } catch (e) {
       if (e is DioException) {
         if (e.response?.statusCode == 409) {
-          emit(UpdatePDoneProfileFailure('Tài khoản của bạn đã là PDone'));
+          emit(UpdatePDoneProfileFailure('Tài khoản của bạn đã là P-done'));
         }
         if (e.response?.data['code'] == 'OTP_NOT_MATCH') {
           emit(UpdatePDoneProfileFailure('Bạn nhập mã OTP không chính xác!'));
