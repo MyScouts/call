@@ -4,6 +4,7 @@ import 'package:app_main/src/domain/usecases/authentication_usecase.dart';
 import 'package:app_main/src/domain/usecases/resource_usecase.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:version/version.dart';
 
@@ -34,6 +35,12 @@ class AppCubit extends Cubit<AppState> {
       } else {
         emit(UnauthorizedApp());
       }
+    } on DioException catch (err) {
+      if (err.response?.statusCode == 401) {
+        logout();
+      } else {
+        rethrow;
+      }
     } catch (e) {
       emit(AppInitialFailed());
     }
@@ -53,9 +60,11 @@ class AppCubit extends Cubit<AppState> {
         final newVersion = Version.parse(response.version);
         if (newVersion > currentVersion) {
           if (response.force) {
-            emit(UpgradeAppVersion(version: response, currentPackageInfo: packageInfo));
+            emit(UpgradeAppVersion(
+                version: response, currentPackageInfo: packageInfo));
           } else {
-            emit(OptionalUpgradeAppVersion(version: response.version, currentPackageInfo: packageInfo));
+            emit(OptionalUpgradeAppVersion(
+                version: response.version, currentPackageInfo: packageInfo));
           }
         } else {
           emit(LatestAppVersion(currentPackageInfo: packageInfo));
@@ -63,9 +72,26 @@ class AppCubit extends Cubit<AppState> {
       } else {
         emit(LatestAppVersion(currentPackageInfo: packageInfo));
       }
+    } on DioException catch (err) {
+      if (err.response?.statusCode == 401) {
+        logout();
+      } else {
+        rethrow;
+      }
     } catch (e) {
       debugPrint("getAppVersion: $e");
       emit(GetAppVersionFailed(error: e.toString(), versions: (null, null)));
+    }
+  }
+
+  Future logout() async {
+    try {
+      await _authUsecase.logout();
+      emit(ForceLogoutSuccess());
+    } catch (e) {
+      if (kDebugMode) {
+        throw Exception(e);
+      }
     }
   }
 }

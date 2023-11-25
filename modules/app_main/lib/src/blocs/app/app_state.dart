@@ -15,7 +15,8 @@ final class UpgradeAppVersion extends AppState {
 }
 
 final class OptionalUpgradeAppVersion extends AppState {
-  OptionalUpgradeAppVersion({required this.version, required this.currentPackageInfo});
+  OptionalUpgradeAppVersion(
+      {required this.version, required this.currentPackageInfo});
 
   final String version;
   final PackageInfo currentPackageInfo;
@@ -40,3 +41,5 @@ final class AutoLogin extends AppState {}
 final class UnauthorizedApp extends AppState {}
 
 final class AppInitialFailed extends AppState {}
+
+final class ForceLogoutSuccess extends AppState {}

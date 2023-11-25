@@ -10,7 +10,8 @@ class AppAvatarWidget extends StatelessWidget {
   final double radius;
   final double height;
   final double width;
-  final bool isPDone;
+  final bool? isPDone;
+  final BoxBorder? border;
   const AppAvatarWidget({
     super.key,
     this.avatar,
@@ -19,6 +20,7 @@ class AppAvatarWidget extends StatelessWidget {
     this.width = 35,
     this.radius = 100,
     this.isPDone = false,
+    this.border,
   });
 
   @override
@@ -29,7 +31,8 @@ class AppAvatarWidget extends StatelessWidget {
           height: height,
           width: width,
           decoration: BoxDecoration(
-            border: Border.all(color: context.theme.primaryColor, width: 2),
+            border: border ??
+                Border.all(color: context.theme.primaryColor, width: 2),
             borderRadius: BorderRadius.circular(radius),
           ),
           child: ClipRRect(
@@ -46,7 +49,7 @@ class AppAvatarWidget extends StatelessWidget {
             ),
           ),
         ),
-        if (isPDone)
+        if (isPDone ?? false)
           Positioned(
             bottom: 0,
             right: 0,

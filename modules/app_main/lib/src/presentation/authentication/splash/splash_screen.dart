@@ -32,6 +32,10 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: BlocConsumer<AppCubit, AppState>(
         listener: (context, state) {
+          if (state is ForceLogoutSuccess) {
+            context.startLoginUtil();
+          }
+
           if (state is UpgradeAppVersion) {
             context.showForceUpgradeAppDialog();
           }

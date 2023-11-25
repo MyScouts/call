@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 
+import 'package:app_core/app_core.dart';
 import 'package:app_main/app_main.dart';
+import 'package:app_main/src/blocs/app/app_cubit.dart';
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/usecases/dashboard_share_preferences_usecase.dart';
@@ -96,175 +98,183 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return DashBoardInheritedData(
-      dashBoardController: dashBoardController,
-      pageController: _pageController,
-      child: Scaffold(
-        body: Stack(
-          fit: StackFit.expand,
-          children: [
-            DashBoardBackgroundBuilder(
-              page: _page,
-              builder: (image) => ImageWidget(image, fit: BoxFit.fill),
-            ),
-            SafeArea(
-              bottom: false,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: ListenableBuilder(
-                      listenable: dashBoardController,
-                      builder: (_, __) {
-                        return StatusBarWidget(
-                          enableEditMode: dashBoardController.enableEditMode,
-                          openAppStore: () {
-                            setState(() {
-                              _showAppStore = true;
-                            });
-                          },
-                          openNotification: () {
-                            if (!authenticate) {
-                              context.requiredLogin();
-                              return;
-                            }
-                            notificationKey.currentState?.forward();
-                          },
-                          onCanceled: () {
-                            dashBoardController.enableEditMode = false;
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: PageView(
-                      controller: _pageController,
-                      children: const [
-                        DashBoardCommunityTab(),
-                        DashBoardPersonalTab(),
-                        DashBoardEcommerceTab(),
-                      ],
-                      onPageChanged: (page) {
-                        setState(() {
-                          _page = page;
-                        });
-                      },
-                    ),
-                  ),
-                  Builder(
-                    builder: (ctx) => Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        3,
-                        (index) => _buildDot(ctx, index),
+    return BlocListener<AppCubit, AppState>(
+      listener: (context, state) {
+        if (state is ForceLogoutSuccess) {
+          context.startLoginUtil();
+        }
+      },
+      child: DashBoardInheritedData(
+        dashBoardController: dashBoardController,
+        pageController: _pageController,
+        child: Scaffold(
+          body: Stack(
+            fit: StackFit.expand,
+            children: [
+              DashBoardBackgroundBuilder(
+                page: _page,
+                builder: (image) => ImageWidget(image, fit: BoxFit.fill),
+              ),
+              SafeArea(
+                bottom: false,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: ListenableBuilder(
+                        listenable: dashBoardController,
+                        builder: (_, __) {
+                          return StatusBarWidget(
+                            enableEditMode: dashBoardController.enableEditMode,
+                            openAppStore: () {
+                              setState(() {
+                                _showAppStore = true;
+                              });
+                            },
+                            openNotification: () {
+                              if (!authenticate) {
+                                context.requiredLogin();
+                                return;
+                              }
+                              notificationKey.currentState?.forward();
+                            },
+                            onCanceled: () {
+                              dashBoardController.enableEditMode = false;
+                            },
+                          );
+                        },
                       ),
                     ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: DockWidget(),
-                  ),
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: ExpandableFab(
-                  onClick: authenticate ? null : () => context.requiredLogin(),
-                  fabMargin: 8,
-                  children: [
-                    ActionButton(
-                        icon: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: const Color(0xffBFE0FF),
-                              width: 3,
-                            ),
-                            shape: BoxShape.circle,
-                            gradient: const LinearGradient(
-                              colors: [
-                                Color(0xff66B2FF),
-                                Color(0xff0080FF),
-                              ],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                            ),
-                          ),
-                          padding: const EdgeInsets.all(15),
-                          child: ImageWidget(IconAppConstants.icEdit2),
+                    Expanded(
+                      child: PageView(
+                        controller: _pageController,
+                        children: const [
+                          DashBoardCommunityTab(),
+                          DashBoardPersonalTab(),
+                          DashBoardEcommerceTab(),
+                        ],
+                        onPageChanged: (page) {
+                          setState(() {
+                            _page = page;
+                          });
+                        },
+                      ),
+                    ),
+                    Builder(
+                      builder: (ctx) => Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          3,
+                          (index) => _buildDot(ctx, index),
                         ),
-                        onPressed: () {
-                          print("===M1");
-                        }),
-                    ActionButton(
-                        icon: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: const Color(0xffBFE0FF),
-                              width: 3,
-                            ),
-                            shape: BoxShape.circle,
-                            gradient: const LinearGradient(
-                              colors: [
-                                Color(0xff66B2FF),
-                                Color(0xff0080FF),
-                              ],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                            ),
-                          ),
-                          padding: const EdgeInsets.all(15),
-                          child: ImageWidget(IconAppConstants.icVideoOc),
-                        ),
-                        onPressed: () {
-                          print("===M1");
-                        }),
-                    ActionButton(
-                        icon: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: const Color(0xffBFE0FF),
-                              width: 3,
-                            ),
-                            shape: BoxShape.circle,
-                            gradient: const LinearGradient(
-                              colors: [
-                                Color(0xff66B2FF),
-                                Color(0xff0080FF),
-                              ],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                            ),
-                          ),
-                          padding: const EdgeInsets.all(15),
-                          child: ImageWidget(IconAppConstants.icVideo),
-                        ),
-                        onPressed: () {
-                          print("===M1");
-                        }),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: DockWidget(),
+                    ),
                   ],
                 ),
               ),
-            ),
-            NotificationScreen(
-              key: notificationKey,
-              onClose: () {
-                notificationKey.currentState?.revert();
-              },
-            ),
-            if (_showAppStore)
-              AppStoreScreen(
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: ExpandableFab(
+                    onClick:
+                        authenticate ? null : () => context.requiredLogin(),
+                    fabMargin: 8,
+                    children: [
+                      ActionButton(
+                          icon: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: const Color(0xffBFE0FF),
+                                width: 3,
+                              ),
+                              shape: BoxShape.circle,
+                              gradient: const LinearGradient(
+                                colors: [
+                                  Color(0xff66B2FF),
+                                  Color(0xff0080FF),
+                                ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ),
+                            ),
+                            padding: const EdgeInsets.all(15),
+                            child: ImageWidget(IconAppConstants.icEdit2),
+                          ),
+                          onPressed: () {
+                            print("===M1");
+                          }),
+                      ActionButton(
+                          icon: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: const Color(0xffBFE0FF),
+                                width: 3,
+                              ),
+                              shape: BoxShape.circle,
+                              gradient: const LinearGradient(
+                                colors: [
+                                  Color(0xff66B2FF),
+                                  Color(0xff0080FF),
+                                ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ),
+                            ),
+                            padding: const EdgeInsets.all(15),
+                            child: ImageWidget(IconAppConstants.icVideoOc),
+                          ),
+                          onPressed: () {
+                            print("===M1");
+                          }),
+                      ActionButton(
+                          icon: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: const Color(0xffBFE0FF),
+                                width: 3,
+                              ),
+                              shape: BoxShape.circle,
+                              gradient: const LinearGradient(
+                                colors: [
+                                  Color(0xff66B2FF),
+                                  Color(0xff0080FF),
+                                ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ),
+                            ),
+                            padding: const EdgeInsets.all(15),
+                            child: ImageWidget(IconAppConstants.icVideo),
+                          ),
+                          onPressed: () {
+                            print("===M1");
+                          }),
+                    ],
+                  ),
+                ),
+              ),
+              NotificationScreen(
+                key: notificationKey,
                 onClose: () {
-                  setState(() {
-                    _showAppStore = false;
-                  });
+                  notificationKey.currentState?.revert();
                 },
               ),
-          ],
+              if (_showAppStore)
+                AppStoreScreen(
+                  onClose: () {
+                    setState(() {
+                      _showAppStore = false;
+                    });
+                  },
+                ),
+            ],
+          ),
         ),
       ),
     );
