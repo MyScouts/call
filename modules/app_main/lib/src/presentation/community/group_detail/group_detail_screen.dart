@@ -147,10 +147,19 @@ class _TeamCard extends StatelessWidget {
             IntrinsicHeight(
               child: Row(
                 children: [
-                  AppAvatarWidget(
-                    avatar: team.avatar ?? team.boss?.avatar,
-                    width: 38,
-                    height: 38,
+                  SizedBox(
+                    height: 40,
+                    width: 40,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(90),
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        imageUrl: team.avatar ?? "",
+                        errorWidget: (context, url, error) => ImageWidget(
+                          IconAppConstants.icDefaultTeamAvt,
+                        ),
+                      ),
+                    ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
@@ -609,14 +618,12 @@ class _GroupBanner extends StatelessWidget {
       );
     }
 
-    return CachedNetworkImage(
+    return ImageWidget(
+      group.banner!.replaceAll('///', '//'),
       fit: BoxFit.cover,
-      imageUrl: group.banner ?? '',
-      // cacheKey: '${group.banner}-$imageWidth',
       height: screenWidth / cmBannerRatio,
       width: screenWidth,
-      maxWidthDiskCache: imageWidth,
-      errorWidget: (context, url, error) => ImageWidget(
+      errorWidget: ImageWidget(
         ImageConstants.imgDefaultTeamBanner,
         height: screenWidth / cmBannerRatio,
         width: screenWidth,
