@@ -2,8 +2,10 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/domain/entities/notification/notification_data.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/notification/state/notification_bloc.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:imagewidget/imagewidget.dart';
 import 'package:intl/intl.dart';
 
 class NotificationCard extends StatelessWidget {
@@ -32,10 +34,21 @@ class NotificationCard extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleNetworkImage(
-                  url: data.metadata?['user']?['avatar'] ?? '',
-                  size: 19 * 2,
-                ),
+                if ((data.metadata?['user']?['avatar'] ?? '').trim().isEmpty)
+                  SizedBox.square(
+                    dimension: 19 * 2,
+                    child: ClipRRect(
+                      child: ImageWidget(
+                        ImageConstants.defaultUserAvatar,
+                        borderRadius: 100,
+                      ),
+                    ),
+                  ),
+                if ((data.metadata?['user']?['avatar'] ?? '').trim().isNotEmpty)
+                  CircleNetworkImage(
+                    url: data.metadata?['user']?['avatar'] ?? '',
+                    size: 19 * 2,
+                  ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Align(
