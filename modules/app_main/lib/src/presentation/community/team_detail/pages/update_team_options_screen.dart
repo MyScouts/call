@@ -9,12 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
 
+import '../../../../data/models/responses/confirm_response.dart';
 import '../../community_constants.dart';
 
 class UpdateTeamOptionsScreen extends StatelessWidget {
   final Team team;
   static const String routeName = '/update-team-options';
+
   UpdateTeamOptionsScreen({super.key, required this.team});
+
   final ValueNotifier _updateCtrl = ValueNotifier(false);
 
   @override
@@ -31,42 +34,54 @@ class UpdateTeamOptionsScreen extends StatelessWidget {
           title: team.name ?? "",
           isClose: false,
         ),
-        body: BlocListener<GetBossTeamRelinquishStatusBloc, GetDetailState>(
-          listener: _onGetBossTeamRelinquishStatusBlocListen,
-          child: Column(
-            children: menus
-                .map(
-                  (option) => Container(
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(color: AppColors.borderColor),
-                      ),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    child: ListTile(
-                      title: Text(
-                        option.title,
-                        style:
-                            Theme.of(context).textTheme.titleMedium?.copyWith(
+        body: WillPopScope(
+          onWillPop: () async {
+            Navigator.maybePop(context, _updateCtrl.value);
+            return true;
+          },
+          child: BlocListener<GetBossTeamRelinquishStatusBloc, GetDetailState>(
+            listener: _onGetBossTeamRelinquishStatusBlocListen,
+            child: BlocListener<RelinquishBossRoleBloc, GetDetailState>(
+              listener: _onRelinquishBossTeam,
+              child: Column(
+                children: menus
+                    .map(
+                      (option) => Container(
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(color: AppColors.borderColor),
+                          ),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                        child: ListTile(
+                          title: Text(
+                            option.title,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400,
                                   color: option.textColor,
                                 ),
+                          ),
+                          trailing:
+                              const Icon(Icons.keyboard_arrow_right_sharp),
+                          onTap: () =>
+                              option.onTap(context, team: team).then((value) {
+                            if (value != null) {
+                              _updateCtrl.value = true;
+                            }
+                          }),
+                        ),
                       ),
-                      trailing: const Icon(Icons.keyboard_arrow_right_sharp),
-                      onTap: () =>
-                          option.onTap(context, team: team).then((value) {
-                        if (value != null) {
-                          _updateCtrl.value = true;
-                        }
-                      }),
-                    ),
-                  ),
-                )
-                .toList(),
+                    )
+                    .toList(),
+              ),
+            ),
           ),
         ));
   }
@@ -96,6 +111,24 @@ class UpdateTeamOptionsScreen extends StatelessWidget {
       }
     } else if (state is GetDetailError) {
       context.hideLoading();
+      final e = state.error;
+      if (e is DioError) {
+        final message = e.toMessage(context);
+        context.showToastMessage(message, ToastMessageType.warning);
+      } else {
+        final message = 'Đã có lỗi xảy ra, vui lòng thử lại.'
+            ' ${kDebugMode ? state.error.toString() : ''}';
+        context.showToastMessage(message, ToastMessageType.error);
+      }
+    }
+  }
+
+  void _onRelinquishBossTeam(BuildContext context, GetDetailState state) {
+    if (state is GetDetailDataSuccess<ConfirmResponse>) {
+      context.startDialogBossStatus(
+        CommunityConstant.dayForRelinquishBossTeamRequest,
+      );
+    } else if (state is GetDetailError) {
       final e = state.error;
       if (e is DioError) {
         final message = e.toMessage(context);

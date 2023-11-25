@@ -76,26 +76,32 @@ class _AssignBossTeamScreenState extends State<AssignBossTeamScreen> {
           onPressed: () => Navigator.pop(context, _result),
           isClose: false,
         ),
-        body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Danh sách thành viên - (${members.length})",
-                style: context.textTheme.titleMedium,
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: _searchCtrl,
-                decoration: const InputDecoration(
-                  hintText: "Tìm kiếm thành viên",
-                  prefixIcon: Icon(Icons.search),
+        body: WillPopScope(
+          onWillPop: () async {
+            Navigator.maybePop(context, _result);
+            return true;
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Danh sách thành viên - (${members.length})",
+                  style: context.textTheme.titleMedium,
                 ),
-              ),
-              const SizedBox(height: 10),
-              Expanded(child: _buildMember()),
-            ],
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _searchCtrl,
+                  decoration: const InputDecoration(
+                    hintText: "Tìm kiếm thành viên",
+                    prefixIcon: Icon(Icons.search),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Expanded(child: _buildMember()),
+              ],
+            ),
           ),
         ),
       ),
@@ -130,6 +136,7 @@ class _AssignBossTeamScreenState extends State<AssignBossTeamScreen> {
                                 child: CachedNetworkImage(
                                   width: 50,
                                   height: 50,
+                                  fit: BoxFit.cover,
                                   imageUrl: member.avatar ?? "",
                                   errorWidget: (context, url, error) =>
                                       ImageWidget(

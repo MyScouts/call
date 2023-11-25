@@ -32,7 +32,7 @@ class GroupCardWidget extends StatelessWidget {
                         const BorderRadius.vertical(top: Radius.circular(10)),
                     child: CachedNetworkImage(
                       width: double.infinity,
-                      imageUrl: group.banner ?? "",
+                      imageUrl: (group.banner ?? '').replaceAll('///', '//'),
                       fit: BoxFit.cover,
                       errorWidget: (context, url, error) {
                         return ImageWidget(

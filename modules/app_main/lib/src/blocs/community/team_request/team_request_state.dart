@@ -15,8 +15,12 @@ final class OnGetListRequest extends TeamRequestState {
   const OnGetListRequest({required super.requests, required this.isFirst});
 }
 
-final class GetListRequestSuccess extends TeamRequestState {
-  const GetListRequestSuccess({required super.requests});
+final class GetListJoinRequestSuccess extends TeamRequestState {
+  const GetListJoinRequestSuccess({required super.requests});
+}
+
+final class GetListLeaveRequestSuccess extends TeamRequestState {
+  const GetListLeaveRequestSuccess({required super.requests});
 }
 
 final class GetListRequestFail extends TeamRequestState {

@@ -85,7 +85,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
 
           return SliverLayoutNestedScrollView(
             cover: ImageWidget(
-              banner,
+              banner.replaceAll('///', '//'),
               width: MediaQuery.of(context).size.width,
             ),
             actionAppBar: canUpdateMembers
