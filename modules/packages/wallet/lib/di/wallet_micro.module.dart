@@ -40,6 +40,8 @@ import 'package:wallet/presentation/wallet_point/wallet_point_routes.dart'
 import 'package:wallet/presentation/wallet_routes.dart' as _i3;
 import 'package:wallet/presentation/wallet_vnd/wallet_vnd_routes.dart' as _i8;
 
+import '../presentation/wallet_diamond/bloc/wallet_diamond_bloc.dart' as _i30;
+
 class WalletPackageModule extends _i1.MicroPackageModule {
 // initializes the registration of main-scope dependencies inside of GetIt
   @override
@@ -81,6 +83,8 @@ class WalletPackageModule extends _i1.MicroPackageModule {
           gh<_i17.WalletDiamondRepository>(),
           gh<_i28.WalletPointRepository>(),
         ));
+    gh.singleton<_i30.WalletDiamondBloc>(
+        _i30.WalletDiamondBloc(gh<_i16.WalletDiamondUseCase>()));
   }
 }
 

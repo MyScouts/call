@@ -64,11 +64,11 @@ class _WalletCoinActionsState extends State<WalletCoinActions> {
   void onTap(WalletPointActionType type) {
     switch (type) {
       case WalletPointActionType.pointAgency:
-        // context.pointAllAgency();
-        showToastMessage(
-          'Tính năng này đang được phát triển',
-          ToastMessageType.warning,
-        );
+        context.pointAllAgency();
+        // showToastMessage(
+        //   'Tính năng này đang được phát triển',
+        //   ToastMessageType.warning,
+        // );
         break;
       case WalletPointActionType.transactionHistory:
         // context.pointTransactionHistory();
