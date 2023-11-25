@@ -50,7 +50,8 @@ class AppWidget extends StatelessWidget {
               ignoring: disablePress,
               child: GestureDetector(
                 onTap: () {
-                  if (authenticate && !enableRemoveIcon) {
+                  if (authenticate) {
+                    if(enableRemoveIcon) return;
                     context.handleStartAppWidget(id: app.id, path: app.path);
                     return;
                   }
