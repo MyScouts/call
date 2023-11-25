@@ -75,6 +75,7 @@ class UpdateGroupOptionScreen extends StatelessWidget {
         context.startDialogRelinquishBoss(
           '${community.id}',
           CommunityType.group,
+          context.read<RelinquishBossRoleBloc>(),
         );
       } else {
         final dayLeft = state.data.giveUpBossRoleRequest!.createdAt!

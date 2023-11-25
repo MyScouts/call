@@ -4,7 +4,7 @@ bool get isMobile => UniversalPlatform.isIOS || UniversalPlatform.isAndroid;
 bool get isAndroid => UniversalPlatform.isAndroid;
 bool get isIOS => UniversalPlatform.isIOS;
 
-String get nameOSPlarform {
+String get currentPlatformName {
   if (UniversalPlatform.isIOS) {
     return 'ios';
   } else if (UniversalPlatform.isAndroid) {
@@ -23,5 +23,5 @@ class PlatformUniversal {
   bool get isAndroid => UniversalPlatform.isAndroid;
   bool get isIOS => UniversalPlatform.isIOS;
 
-  String get platform => nameOSPlarform;
+  String get platform => currentPlatformName;
 }

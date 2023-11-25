@@ -2,23 +2,13 @@ import 'package:app_main/src/presentation/dashboard/dashboard/state/dashboard_ba
 import 'package:flutter/material.dart';
 
 import 'dashboard_base_tab.dart';
-class DashBoardPersonalTab extends StatefulWidget {
-  const DashBoardPersonalTab({
-    super.key,
-    required this.enableEditMode,
-    required this.disableEditMode,
-  });
 
-  final Function() enableEditMode;
-  final Function() disableEditMode;
+class DashBoardPersonalTab extends StatefulWidget {
+  const DashBoardPersonalTab({super.key});
+
   @override
   State<DashBoardPersonalTab> createState() => _DashBoardPersonalTabState();
 }
 
-class _DashBoardPersonalTabState extends DashBoardBaseState<DashboardPersonalBloc, DashBoardPersonalTab> {
-  @override
-  void disableEditMode() => widget.disableEditMode();
-
-  @override
-  void enableEditMode() => widget.enableEditMode();
-}
+class _DashBoardPersonalTabState
+    extends DashBoardBaseState<DashboardPersonalBloc, DashBoardPersonalTab> {}

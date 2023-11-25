@@ -29,7 +29,7 @@ class ProtectorRepositoryImpl extends ProtectorRepository {
   }
 
   @override
-  Future<ProtectorInfo> myProtector() async {
+  Future<ProtectorInfo?> myProtector() async {
     final res = await protectorAPI.myProtector();
     return res.info;
   }

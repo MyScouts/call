@@ -6,34 +6,20 @@ part 'notification_data.g.dart';
 
 class NotificationData {
   final int id;
-  final int userId;
-  final int? fromUserId;
-  final int? postId;
-  final int? commentId;
-  final NotificationType type;
-  final String message;
-  final int? productId;
-  final int? orderId;
-  final bool read;
+  final String title;
+  final bool isRead;
+  final String type;
   @Default({})
   final Map<String, dynamic>? metadata;
-  final DateTime createdAt;
-  final NotificationUserModel? fromUser;
+  final DateTime? createdAt;
 
   NotificationData({
+    required this.title,
     required this.id,
-    required this.userId,
     required this.type,
-    required this.read,
+    required this.isRead,
     required this.createdAt,
-    this.fromUserId,
-    this.postId,
     this.metadata,
-    required this.message,
-    this.fromUser,
-    this.commentId,
-    this.orderId,
-    this.productId,
   });
 }
 

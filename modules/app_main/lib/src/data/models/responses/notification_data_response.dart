@@ -6,6 +6,7 @@ part 'notification_data_response.g.dart';
 
 @JsonSerializable()
 class ListNotificationDataResponse {
+  @JsonKey(name: 'notifications')
   final List<NotificationDataResponse> rows;
 
   ListNotificationDataResponse(this.rows);
@@ -17,19 +18,12 @@ class ListNotificationDataResponse {
 @JsonSerializable()
 class NotificationDataResponse extends NotificationData {
   NotificationDataResponse({
+    required super.title,
     required super.id,
-    required super.userId,
-    required super.fromUserId,
     required super.type,
-    required super.read,
+    required super.isRead,
     required super.createdAt,
-    required super.message,
-    required super.commentId,
-    required super.fromUser,
-    required super.metadata,
-    required super.orderId,
-    required super.postId,
-    required super.productId,
+    super.metadata,
   });
 
   factory NotificationDataResponse.fromJson(Map<String, dynamic> json) =>

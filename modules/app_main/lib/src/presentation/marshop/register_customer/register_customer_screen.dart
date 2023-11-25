@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/auth/auth_cubit.dart';
 import 'package:app_main/src/blocs/marshop/marshop_cubit.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/authentication/widget/custom_text_field.dart';
 import 'package:app_main/src/presentation/marshop/register_customer/register_customer_coordinator.dart';
@@ -30,13 +31,16 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
     with ValidationMixin {
   final TextEditingController _marshopIdCtrl = TextEditingController();
   final _acceptTerm = ValueNotifier(false);
+  late final userCubit = context.read<UserCubit>();
 
   @override
   bool get conditionValidator => _acceptTerm.value;
+  late User _authInfo;
 
   @override
   void initState() {
     super.initState();
+    _authInfo = userCubit.currentUser!;
     if (widget.marshopId != null) {
       _marshopIdCtrl.text = widget.marshopId!;
     }
@@ -67,7 +71,8 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
             if (state is SendOTPSuccess) {
               hideLoading();
               context.startDialogVerifyPhoneOTP(
-                marshopId: int.parse(_marshopIdCtrl.text.trim()),
+                marshopId: _marshopIdCtrl.text.trim(),
+                phone: _authInfo.phone ?? '',
               );
             }
 
@@ -101,7 +106,6 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
                   controller: _marshopIdCtrl,
                   onChange: (value) => onValidation(),
                   hintText: "",
-                  textInputType: TextInputType.number,
                   validator: (value) =>
                       ValidationHelper.requiredValid(value, "MarshopId"),
                   prefixIcon: GestureDetector(
@@ -145,10 +149,6 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
     )
         .then((results) {
       if (results != null && results is String) {
-        if (!results.isNumber()) {
-          showToastMessage("Mã Marshop không hợp lệ!", ToastMessageType.error);
-          return;
-        }
         _marshopIdCtrl.text = results;
         setState(() {});
         onValidation();

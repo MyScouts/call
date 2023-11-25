@@ -1,4 +1,5 @@
 import 'package:app_main/src/domain/entities/update_account/place/country.dart';
+import 'package:design_system/design_system.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
@@ -6,12 +7,14 @@ class CountriesDropdown extends StatefulWidget {
   final Function(Country) onChange;
   final bool required;
   final List<Country> countries;
+  final bool enable;
 
   const CountriesDropdown({
     super.key,
     required this.onChange,
     this.required = false,
     required this.countries,
+    this.enable = true,
   });
 
   @override
@@ -25,6 +28,14 @@ class _CountriesDropdownState extends State<CountriesDropdown> {
   void initState() {
     _countries = widget.countries.map((e) => e).toList();
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant CountriesDropdown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.enable != widget.enable) {
+      setState(() {});
+    }
   }
 
   @override
@@ -54,67 +65,71 @@ class _CountriesDropdownState extends State<CountriesDropdown> {
           ],
         ),
         const SizedBox(height: 7),
-        DropdownButtonFormField2<Country>(
-          isExpanded: true,
-          decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(vertical: 12),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
+        IgnorePointer(
+          ignoring: !widget.enable,
+          child: DropdownButtonFormField2<Country>(
+            isExpanded: true,
+            decoration: InputDecoration(
+              fillColor: widget.enable ? Colors.white : AppColors.grey70,
+              contentPadding: const EdgeInsets.symmetric(vertical: 12),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
             ),
-          ),
-          hint: const Text(
-            'Chọn quốc gia.',
-            style: TextStyle(fontSize: 14),
-          ),
-          value: _countries.first,
-          items: _countries
-              .map(
-                (item) => DropdownMenuItem<Country>(
-                  value: item,
-                  child: Text(
-                    item.name!,
-                    style: const TextStyle(
-                      fontSize: 14,
+            hint: const Text(
+              'Chọn quốc gia.',
+              style: TextStyle(fontSize: 14),
+            ),
+            value: _countries.first,
+            items: _countries
+                .map(
+                  (item) => DropdownMenuItem<Country>(
+                    value: item,
+                    child: Text(
+                      item.name!,
+                      style: const TextStyle(
+                        fontSize: 14,
+                      ),
+                      maxLines: 1,
                     ),
-                    maxLines: 1,
                   ),
-                ),
-              )
-              .toList(),
-          validator: (value) {
-            if (value == null) {
-              return 'Chọn quốc gia.';
-            }
-            return null;
-          },
-          onChanged: (value) {
-            if (value != null) {
-              widget.onChange(value);
+                )
+                .toList(),
+            validator: (value) {
+              if (value == null) {
+                return 'Chọn quốc gia.';
+              }
+              return null;
+            },
+            onChanged: (value) {
+              if (value != null) {
+                widget.onChange(value);
+                value = value;
+                setState(() {});
+              }
+            },
+            onSaved: (value) {
               value = value;
               setState(() {});
-            }
-          },
-          onSaved: (value) {
-            value = value;
-            setState(() {});
-          },
-          buttonStyleData: const ButtonStyleData(
-            padding: EdgeInsets.only(right: 8),
-          ),
-          iconStyleData: const IconStyleData(
-            icon: Icon(
-              Icons.arrow_drop_down,
-              color: Colors.black45,
+            },
+            buttonStyleData: const ButtonStyleData(
+              padding: EdgeInsets.only(right: 8),
             ),
-            iconSize: 24,
-          ),
-          dropdownStyleData: DropdownStyleData(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
+            iconStyleData: const IconStyleData(
+              icon: Icon(
+                Icons.arrow_drop_down,
+                color: Colors.black45,
+              ),
+              iconSize: 24,
             ),
-          ),
-          menuItemStyleData: const MenuItemStyleData(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            dropdownStyleData: DropdownStyleData(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            menuItemStyleData: const MenuItemStyleData(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+            ),
           ),
         ),
       ],

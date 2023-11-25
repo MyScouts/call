@@ -31,8 +31,10 @@ class ManageProtectController extends ChangeNotifier {
   }
 
   void _initData() async {
-    final res = await useCase.list();
-    users = res;
+    try {
+      final res = await useCase.list();
+      users = res;
+    } catch (e) {}
     isLoading = false;
   }
 }
@@ -50,12 +52,14 @@ class ListProtectorRequestController extends ChangeNotifier {
   List<ProtectorRequest> get requests => _requests;
 
   void _initData() async {
-    final res = await useCase.requests();
-    _requests = res
-        .where(
-          (e) => e.status == ProtectorRequestStatus.pending,
-        )
-        .toList();
+    try {
+      final res = await useCase.requests();
+      _requests = res
+          .where(
+            (e) => e.status == ProtectorRequestStatus.pending,
+          )
+          .toList();
+    } catch (e) {}
     _isLoading = false;
     notifyListeners();
   }

@@ -300,6 +300,7 @@ class _CustomerMultiChildViewState extends State<CustomerMultiChildView>
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: const NeverScrollableScrollPhysics(),
       child: Padding(
         padding: const EdgeInsets.only(top: 16, bottom: 16),
         child: SizedBox(

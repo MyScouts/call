@@ -8,7 +8,10 @@ import 'package:ui/ui.dart';
 import 'widget/verify_phone_otp_dialog_widget.dart';
 
 extension UpgradeAccountCoordinator on BuildContext {
-  Future<T?> startDialogVerifyPhoneOTP<T>({required int marshopId}) {
+  Future<T?> startDialogVerifyPhoneOTP<T>({
+    required String marshopId,
+    required String phone,
+  }) {
     return showGeneralDialog<T>(
       context: this,
       barrierDismissible: true,
@@ -18,14 +21,16 @@ extension UpgradeAccountCoordinator on BuildContext {
           listener: (context, state) {},
           child: AutoHideKeyboard(
             child: DialogContainerWidget(
-              child: VerifyPhoneOTPDialogWidget(onVerify: (otpCode) {
-                context.read<MarshopCubit>().registerCustomer(
-                      RegisterCustomerPayload(
-                        marshopId: marshopId,
-                        otp: otpCode,
-                      ),
-                    );
-              }),
+              child: VerifyPhoneOTPDialogWidget(
+                  phone: phone,
+                  onVerify: (otpCode) {
+                    context.read<MarshopCubit>().registerCustomer(
+                          RegisterCustomerPayload(
+                            marshopId: marshopId,
+                            otp: otpCode,
+                          ),
+                        );
+                  }),
             ),
           ),
         );

@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:wallet/di/wallet_micro.module.dart';
 
 import 'di.config.dart';
 
@@ -14,6 +15,7 @@ final getIt = GetIt.instance;
     ExternalModule(AppCorePackageModule),
   ],
   externalPackageModulesAfter: [
+    ExternalModule(WalletPackageModule),
   ],
 )
 Future<void> configureDependencies({
