@@ -9,7 +9,7 @@ part of 'marshop_payload.dart';
 RegisterCustomerPayload _$RegisterCustomerPayloadFromJson(
         Map<String, dynamic> json) =>
     RegisterCustomerPayload(
-      marshopId: json['marshopId'] as int,
+      marshopId: json['marshopId'] as String,
       otp: json['otp'] as String,
     );
 
@@ -24,7 +24,7 @@ RegisterMarshopPayload _$RegisterMarshopPayloadFromJson(
         Map<String, dynamic> json) =>
     RegisterMarshopPayload(
       name: json['name'] as String,
-      referralId: json['referralId'] as int?,
+      referralId: json['referralId'] as String?,
       otp: json['otp'] as String,
     );
 

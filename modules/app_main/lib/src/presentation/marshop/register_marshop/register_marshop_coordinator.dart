@@ -9,7 +9,7 @@ import '../register_customer/widget/verify_phone_otp_dialog_widget.dart';
 
 extension RegisterMarshopCoordinator on BuildContext {
   Future<T?> startDialogVerifyRegisterMarshop<T>({
-    int? marshopId,
+    String? marshopId,
     required String name,
     required int userId,
   }) {
@@ -27,7 +27,7 @@ extension RegisterMarshopCoordinator on BuildContext {
                       userId,
                       RegisterMarshopPayload(
                         name: name,
-                        referralId: marshopId ?? 0,
+                        referralId: marshopId,
                         otp: otpCode,
                       ),
                     );

@@ -8,7 +8,7 @@ import 'package:ui/ui.dart';
 import 'widget/verify_phone_otp_dialog_widget.dart';
 
 extension UpgradeAccountCoordinator on BuildContext {
-  Future<T?> startDialogVerifyPhoneOTP<T>({required int marshopId}) {
+  Future<T?> startDialogVerifyPhoneOTP<T>({required String marshopId}) {
     return showGeneralDialog<T>(
       context: this,
       barrierDismissible: true,

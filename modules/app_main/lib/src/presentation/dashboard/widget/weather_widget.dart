@@ -144,7 +144,7 @@ class WeatherWidget extends StatelessWidget {
                   ),
                   if (enableEditMode)
                     Positioned(
-                      left: -5,
+                      left: 0,
                       top: -10,
                       child: GestureDetector(
                         onTap: onRemoved,

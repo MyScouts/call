@@ -100,12 +100,14 @@ class UserHeader extends StatelessWidget {
                               ),
                             ),
                             if(user.avatar != null)
-                              CachedNetworkImage(
-                                imageUrl: user.avatar ?? '',
-                                errorWidget: (_, __, ___) {
-                                  return const SizedBox.shrink();
-                                },
-                                fit: BoxFit.cover,
+                              ClipOval(
+                                child: CachedNetworkImage(
+                                  imageUrl: user.avatar ?? '',
+                                  errorWidget: (_, __, ___) {
+                                    return const SizedBox.shrink();
+                                  },
+                                  fit: BoxFit.cover,
+                                ),
                               )
                           ],
                         ),

@@ -459,15 +459,17 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
               width: double.infinity,
               color: const Color(0xffF3F8FF),
             ),
-            IgnorePointer(
-              ignoring: widget.isPDone,
-              child: _buildBankInformation(),
-            ),
-            Container(
-              height: 12,
-              width: double.infinity,
-              color: const Color(0xffF3F8FF),
-            ),
+            if (!widget.isPDone) ...[
+              IgnorePointer(
+                ignoring: widget.isPDone,
+                child: _buildBankInformation(),
+              ),
+              Container(
+                height: 12,
+                width: double.infinity,
+                color: const Color(0xffF3F8FF),
+              ),
+            ],
             _buildMoreInformation(),
             _buildButtonUpdate(context),
           ],
@@ -521,9 +523,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                 final list = state.upgradeAccount.academicLevels ?? [];
                 AcademicLevel data = list.first;
                 if (edu.trim().isNotEmpty) {
-                  data =
-                      list.firstWhereOrNull((e) => e.name == edu) ??
-                          data;
+                  data = list.firstWhereOrNull((e) => e.name == edu) ?? data;
                 }
                 return EducationDropdown(
                   level: data,
@@ -1009,7 +1009,8 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       listener: (_, state) {
         if (state is GetListProvincesSuccess2) {
           final pros = state.provinces ?? provinces;
-          final proName = userBloc.state.pDoneProfile?.currentPlace.provinceName;
+          final proName =
+              userBloc.state.pDoneProfile?.currentPlace.provinceName;
           if (proName != null) {
             cuProvince =
                 pros.firstWhereOrNull((e) => e.name!.contains(proName));
@@ -1051,7 +1052,8 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       listener: (ctx, state) {
         if (state is GetDistrictsSuccess2) {
           final dis = state.districts ?? districts;
-          final district = userBloc.state.pDoneProfile?.currentPlace.districtName;
+          final district =
+              userBloc.state.pDoneProfile?.currentPlace.districtName;
           if (district != null) {
             cuDistrict = dis
                 .firstWhereOrNull((e) => e.name?.contains(district) ?? false);

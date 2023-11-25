@@ -67,7 +67,7 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
             if (state is SendOTPSuccess) {
               hideLoading();
               context.startDialogVerifyPhoneOTP(
-                marshopId: int.parse(_marshopIdCtrl.text.trim()),
+                marshopId: _marshopIdCtrl.text.trim(),
               );
             }
 

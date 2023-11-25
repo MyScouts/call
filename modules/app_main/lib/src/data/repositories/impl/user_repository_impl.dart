@@ -124,4 +124,15 @@ class AuthRepositoryImpl extends UserRepository {
       'avatar': url,
     });
   }
+
+  @override
+  Future setConfig(String key, Map<String, dynamic> json) {
+    return _userAPI.setConfig(key, json);
+  }
+
+  @override
+  Future<Map<String, dynamic>> getConfig(String key) async {
+    final res = await _userAPI.getConfig(key);
+    return Map<String, dynamic>.from(res);
+  }
 }

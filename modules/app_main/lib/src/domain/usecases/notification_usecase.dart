@@ -19,4 +19,8 @@ class NotificationUsecase {
   Future<List<NotificationData>> list(int page) async {
     return _notificationRepository.list(page);
   }
+
+  Future delete(int id) {
+    return _notificationRepository.delete(id);
+  }
 }

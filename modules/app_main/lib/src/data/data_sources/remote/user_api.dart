@@ -31,6 +31,7 @@ class UserApiConstants {
   static const email = "api/v1/user/email";
   static const genEmail = "api/v1/user/add-email-otp";
   static const updateAvatar = "api/v1/user";
+  static const setConfig = "api/v1/setting/personal/{key}";
 }
 
 @RestApi()
@@ -109,4 +110,13 @@ abstract class UserApi {
 
   @PATCH(UserApiConstants.updateAvatar)
   Future updateAvatar(@Body() Map<String, dynamic> json);
+
+  @PUT(UserApiConstants.setConfig)
+  Future setConfig(
+    @Path('key') String key,
+    @Body() Map<String, dynamic> json,
+  );
+
+  @GET(UserApiConstants.setConfig)
+  Future<dynamic> getConfig(@Path('key') String key);
 }
