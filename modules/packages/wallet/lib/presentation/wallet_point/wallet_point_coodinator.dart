@@ -27,7 +27,7 @@ extension WalletVndCoordinator on BuildContext {
 
   Future<T?> coinPaymentInformation<T>(WalletCoinPaymentInformation paymentInfo,
           AgencyResponse agency, String pDoneId) =>
-      Navigator.of(this).pushNamed(
+      Navigator.of(this).pushReplacementNamed(
         PaymentInformationScreen.routeName,
         arguments: {
           'paymentInfo': paymentInfo,
