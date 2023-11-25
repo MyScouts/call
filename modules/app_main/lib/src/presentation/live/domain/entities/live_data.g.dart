@@ -8,7 +8,10 @@ part of 'live_data.dart';
 
 LiveData _$LiveDataFromJson(Map<String, dynamic> json) => LiveData(
       id: json['id'] as int,
-      user: User.fromJson(json['user'] as Map<String, dynamic>),
+      userID: json['userId'] as int?,
+      user: json['user'] == null
+          ? null
+          : User.fromJson(json['user'] as Map<String, dynamic>),
       title: json['title'] as String,
       type: $enumDecode(_$LiveTypeEnumMap, json['type']),
       createdAt: DateTime.parse(json['createdAt'] as String),
@@ -17,6 +20,7 @@ LiveData _$LiveDataFromJson(Map<String, dynamic> json) => LiveData(
     );
 
 Map<String, dynamic> _$LiveDataToJson(LiveData instance) => <String, dynamic>{
+      'userId': instance.userID,
       'user': instance.user,
       'id': instance.id,
       'type': _$LiveTypeEnumMap[instance.type]!,

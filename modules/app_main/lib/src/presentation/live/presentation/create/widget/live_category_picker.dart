@@ -39,95 +39,99 @@ class _LiveCategoryPickerState extends State<LiveCategoryPicker> {
           color: Colors.white,
           borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: AppBar(
-                leading: const CloseButton(),
-                title: const Text(
-                  'Chọn chủ đề livestream',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                centerTitle: true,
-                actions: [
-                  Center(
-                    child: TextButton(
-                      onPressed: () {
-                        widget.onChanged(_categories);
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(
-                        'Xong',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
+        child: SafeArea(
+          top: false,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: AppBar(
+                  leading: const CloseButton(),
+                  title: const Text(
+                    'Chọn chủ đề livestream',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
-                ],
-              ),
-            ),
-            Obx(() {
-              if (controller.isLoading.value) {
-                return const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: PlatformLoadingIndicator(size: 30),
-                  ),
-                );
-              }
-
-              return Padding(
-                padding: const EdgeInsets.all(16),
-                child: Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: controller.category.map<Widget>((e) {
-                    return GestureDetector(
-                      onTap: () {
-                        if(_categories.contains(e)) {
-                          setState(() {
-                            _categories.remove(e);
-                          });
-                        } else {
-                          setState(() {
-                            _categories.add(e);
-                          });
-                        }
-                      },
-                      behavior: HitTestBehavior.opaque,
-                      child: Container(
-                        padding: const EdgeInsets.all(6.0),
-                        decoration: BoxDecoration(
-                          color: _categories.contains(e)
-                              ? Theme.of(context).primaryColor
-                              : const Color(0xffF1F1F1),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
+                  centerTitle: true,
+                  actions: [
+                    Center(
+                      child: TextButton(
+                        onPressed: () {
+                          widget.onChanged(_categories);
+                          Navigator.of(context).pop();
+                        },
                         child: Text(
-                          e.name ?? '',
+                          'Xong',
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: _categories.contains(e)
-                                ? Colors.white
-                                : const Color(0xffACACAC),
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                       ),
-                    );
-                  }).toList(),
+                    ),
+                  ],
                 ),
-              );
-            }),
-          ],
+              ),
+              Obx(() {
+                if (controller.isLoading.value) {
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: PlatformLoadingIndicator(size: 30),
+                    ),
+                  );
+                }
+
+                return Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: controller.category.map<Widget>((e) {
+                      return GestureDetector(
+                        onTap: () {
+                          if(_categories.contains(e)) {
+                            setState(() {
+                              _categories.remove(e);
+                            });
+                          } else {
+                            setState(() {
+                              _categories.add(e);
+                            });
+                          }
+                        },
+                        behavior: HitTestBehavior.opaque,
+                        child: Container(
+                          padding: const EdgeInsets.all(6.0),
+                          decoration: BoxDecoration(
+                            color: _categories.contains(e)
+                                ? Theme.of(context).primaryColor
+                                : const Color(0xffF1F1F1),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Text(
+                            e.name ?? '',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: _categories.contains(e)
+                                  ? Colors.white
+                                  : const Color(0xffACACAC),
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                );
+              }),
+            ],
+          ),
         ),
       ),
     );

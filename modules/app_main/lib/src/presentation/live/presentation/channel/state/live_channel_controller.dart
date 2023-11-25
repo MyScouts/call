@@ -57,7 +57,7 @@ class LiveChannelController {
 
   late Rx<LiveData> _info;
   late Rx<LiveMember> _me;
-  late RxList<LiveMember> _members;
+  late final RxList<LiveMember> _members = <LiveMember>[].obs;
 
   final RxBool _enableChat = true.obs;
 
@@ -93,8 +93,8 @@ class LiveChannelController {
           name: user.name ?? '',
           avatar: user.avatar ?? '',
         ),
-        isOwner: (res.first as JoinLiveResponse).data.user.id == user.id,
-      ) as Rx<LiveMember>;
+        isOwner: _info.value.user?.id == user.id,
+      ).obs;
 
       if (_me.value.isOwner) {
         await [Permission.microphone, Permission.camera].request();
@@ -132,10 +132,10 @@ class LiveChannelController {
             avatar: i.avatar ?? '',
             name: i.displayName ?? '',
           ),
-          isOwner: _info.value.user.id == i.id,
+          isOwner: _info.value.user?.id == i.id,
         ));
       }
-      _members = result.obs;
+      _members.value = result;
 
       _hostOffline.value = !hostInLive;
 
@@ -272,7 +272,7 @@ class LiveChannelController {
           name: user.displayName ?? '',
           avatar: user.avatar ?? '',
         ),
-        isOwner: user.id == _info.value.user.id,
+        isOwner: user.id == _info.value.user?.id,
       );
       _members.value = [..._members, member];
     });

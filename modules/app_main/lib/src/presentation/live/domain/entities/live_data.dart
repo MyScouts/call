@@ -7,7 +7,9 @@ part 'live_data.g.dart';
 
 @JsonSerializable()
 class LiveData {
-  final User user;
+  @JsonKey(name: 'userId')
+  final int? userID;
+  final User? user;
   final int id;
   final LiveType type;
   final String title;
@@ -17,7 +19,8 @@ class LiveData {
 
   LiveData({
     required this.id,
-    required this.user,
+    this.userID,
+    this.user,
     required this.title,
     required this.type,
     required this.createdAt,
