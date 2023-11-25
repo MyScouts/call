@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -40,7 +41,7 @@ class AskToKickMember extends StatelessWidget {
                       ),
                     ),
                     const TextSpan(
-                      text: ' Không ?',
+                      text: ' không?',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
@@ -114,11 +115,15 @@ class KickMemberForce extends StatelessWidget {
           children: [
             Row(
               children: [
-                SizedBox.square(
-                  dimension: 60,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: ImageWidget(user.avatar ?? ''),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: CachedNetworkImage(
+                    height: 60,
+                    width: 60,
+                    imageUrl: user.avatar ?? "",
+                    errorWidget: (context, url, error) => ImageWidget(
+                      ImageConstants.defaultUserAvatar,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -173,7 +178,7 @@ class KickMemberForce extends StatelessWidget {
                       ),
                     ),
                     const TextSpan(
-                      text: ' Không ?',
+                      text: ' không?',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
