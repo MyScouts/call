@@ -45,11 +45,11 @@ class WalletPointRepositoryImpl implements WalletPointRepository {
     return response.data;
   }
 
-  @override
-  Future<CoinWalletInfo> getCoinWalletInfo() async {
-    final response = await _pointWalletApi.getCoinWalletInfo();
-    return response.data;
-  }
+  // @override
+  // Future<CoinWalletInfo> getCoinWalletInfo() async {
+  //   final response = await _pointWalletApi.getCoinWalletInfo();
+  //   return response.data;
+  // }
 
   @override
   Future<EstCoinResponse> estCoin(

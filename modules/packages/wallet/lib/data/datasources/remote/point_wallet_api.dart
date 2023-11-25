@@ -48,9 +48,9 @@ abstract class PointWalletApi {
   @GET(PointWalletApiConstants.agencyInfo)
   Future<ApiResponse<AgencyDetailResponse>> getAgencyInfo(
       {@Path('agencyId') required int id});
-
-  @GET(PointWalletApiConstants.getCoinWalletInfo)
-  Future<ApiResponse<CoinWalletInfo>> getCoinWalletInfo();
+  //
+  // @GET(PointWalletApiConstants.getCoinWalletInfo)
+  // Future<ApiResponse<CoinWalletInfo>> getCoinWalletInfo();
 
   @GET(PointWalletApiConstants.estCoin)
   Future<ApiResponse<EstCoinResponse>> estCoin(

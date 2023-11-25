@@ -24,20 +24,21 @@ import 'package:wallet/data/repository/wallet_vnd_repository.impl.dart' as _i22;
 import 'package:wallet/domain/domain.dart' as _i13;
 import 'package:wallet/domain/repository/wallet_diamond_repository.dart'
     as _i17;
+import 'package:wallet/domain/repository/wallet_point_repository.dart' as _i28;
 import 'package:wallet/domain/repository/wallet_repository.dart' as _i20;
 import 'package:wallet/domain/repository/wallet_vnd_repository.dart' as _i25;
 import 'package:wallet/domain/usecases/wallet_diamond_usecase.dart' as _i16;
 import 'package:wallet/domain/usecases/wallet_point_usecase.dart' as _i19;
+import 'package:wallet/domain/usecases/wallet_usecase.dart' as _i27;
 import 'package:wallet/domain/usecases/wallet_vnd_usecase.dart' as _i24;
 import 'package:wallet/presentation/shared/bloc/wallet_bloc.dart' as _i26;
 import 'package:wallet/presentation/wallet_diamond/wallet_diamond_routes.dart'
     as _i4;
-import 'package:wallet/presentation/wallet_module.dart' as _i27;
+import 'package:wallet/presentation/wallet_module.dart' as _i29;
 import 'package:wallet/presentation/wallet_point/wallet_point_routes.dart'
     as _i5;
 import 'package:wallet/presentation/wallet_routes.dart' as _i3;
 import 'package:wallet/presentation/wallet_vnd/wallet_vnd_routes.dart' as _i8;
-import '../presentation/wallet_diamond/bloc/wallet_diamond_bloc.dart' as _i26;
 
 class WalletPackageModule extends _i1.MicroPackageModule {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -59,28 +60,28 @@ class WalletPackageModule extends _i1.MicroPackageModule {
         () => _i10.PointWalletApi(gh<_i6.WalletProvider>()));
     gh.factory<_i11.VndWalletApi>(
         () => _i11.VndWalletApi(gh<_i6.WalletProvider>()));
-    gh.factory<_i12.WalletDiamondRepository>(
-        () => _i13.WalletDiamondRepositoryImpl(gh<_i14.DiamondWalletApi>()));
-    gh.factory<_i15.WalletDiamondUseCase>(
-        () => _i15.WalletDiamondUseCase(gh<_i16.WalletDiamondRepository>()));
-    gh.factory<_i12.WalletPointRepository>(
-        () => _i17.WalletPointRepositoryImpl(gh<_i14.PointWalletApi>()));
-    gh.factory<_i18.WalletPointUseCase>(
-        () => _i18.WalletPointUseCase(gh<_i12.WalletPointRepository>()));
-    gh.factory<_i12.WalletVndRepository>(
-        () => _i19.WalletVndRepositoryImpl(gh<_i20.VndWalletApi>()));
-    gh.factory<_i21.WalletVndUseCase>(
-        () => _i21.WalletVndUseCase(gh<_i22.WalletVndRepository>()));
-    gh.factory<_i23.WalletUseCase>(() => _i23.WalletUseCase(
-          gh<_i22.WalletVndRepository>(),
-          gh<_i16.WalletDiamondRepository>(),
-          gh<_i24.WalletPointRepository>(),
+    gh.factory<_i12.WalletApi>(() => _i12.WalletApi(gh<_i6.WalletProvider>()));
+    gh.factory<_i13.WalletDiamondRepository>(
+        () => _i14.WalletDiamondRepositoryImpl(gh<_i15.DiamondWalletApi>()));
+    gh.factory<_i16.WalletDiamondUseCase>(
+        () => _i16.WalletDiamondUseCase(gh<_i17.WalletDiamondRepository>()));
+    gh.factory<_i13.WalletPointRepository>(
+        () => _i18.WalletPointRepositoryImpl(gh<_i15.PointWalletApi>()));
+    gh.factory<_i19.WalletPointUseCase>(
+        () => _i19.WalletPointUseCase(gh<_i13.WalletPointRepository>()));
+    gh.factory<_i20.WalletRepository>(
+        () => _i21.WalletRepositoryImpl(gh<_i12.WalletApi>()));
+    gh.factory<_i13.WalletVndRepository>(
+        () => _i22.WalletVndRepositoryImpl(gh<_i23.VndWalletApi>()));
+    gh.factory<_i24.WalletVndUseCase>(
+        () => _i24.WalletVndUseCase(gh<_i25.WalletVndRepository>()));
+    gh.singleton<_i26.WalletBloc>(_i26.WalletBloc(gh<_i20.WalletRepository>()));
+    gh.factory<_i27.WalletUseCase>(() => _i27.WalletUseCase(
+          gh<_i25.WalletVndRepository>(),
+          gh<_i17.WalletDiamondRepository>(),
+          gh<_i28.WalletPointRepository>(),
         ));
-    gh.singleton<_i25.WalletBloc>(_i25.WalletBloc(gh<_i23.WalletUseCase>()));
-    gh.factory<_i26.WalletDiamondBloc>(
-        () => _i26.WalletDiamondBloc(gh<_i15.WalletDiamondUseCase>()));
->>>>>>> phuc/wallet_2511
   }
 }
 
-class _$WalletModule extends _i27.WalletModule {}
+class _$WalletModule extends _i29.WalletModule {}
