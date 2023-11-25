@@ -38,11 +38,9 @@ class _UpdatePdoneIdentityCardConfirmState
     super.initState();
     dynamic faceLiveNessData =
         (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).imageEKyc;
-
     if (faceLiveNessData is String) {
       faceLiveNessData = faceLiveNessData.toMap();
     }
-
     frontImagePath = faceLiveNessData['front_cmnd'];
     backImagePath = faceLiveNessData['back_cmnd'];
   }

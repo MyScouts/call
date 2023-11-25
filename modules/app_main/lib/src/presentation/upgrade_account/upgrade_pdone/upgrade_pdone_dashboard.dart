@@ -146,7 +146,7 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
 
   Widget _buildTitle(BuildContext context) {
     return Text(
-      'Thông tin P-done',
+      'Thông tin PDONE',
       style: context.textTheme.labelLarge!.copyWith(),
     );
   }

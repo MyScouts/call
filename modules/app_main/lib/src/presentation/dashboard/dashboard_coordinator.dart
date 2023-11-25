@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/presentation/camera/camera_result_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_module.dart';
@@ -82,6 +83,9 @@ extension DashBoardCoordinator on BuildContext {
     switch (id) {
       case "ic_team":
         return _startTeam();
+
+      case 'ic_wallet':
+        break;
       default:
         if (path != null) {
           Navigator.of(this).pushNamed(path);

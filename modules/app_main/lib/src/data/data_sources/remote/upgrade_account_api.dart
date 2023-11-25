@@ -22,6 +22,7 @@ import '../../models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
 import '../../models/responses/api_response.dart';
 import '../../models/responses/api_verify_response.dart';
 import '../../models/responses/check_protector_response.dart';
+import '../../models/responses/pdone/pdone_check_exist_by_id_number_response.dart';
 import '../../models/responses/pdone/pdone_information_response.dart';
 import '../../models/responses/pdone/pdone_my_protector_information_response.dart';
 import '../../models/responses/register_pdone_response.dart';
@@ -67,6 +68,8 @@ class UpgradeAccountApiConstants {
   static const upgradePdone = "api/v1/p-done/upgrade";
   static const eKycUpgrade = "api/v1/p-done/e-kyc-upgrade";
   static const pDoneRegisteringProfile = "api/v1/p-done/registering-profile";
+  static const checkExistByIdentityNumber =
+      "api/v1/p-done/identity-number-exist";
 }
 
 @RestApi()
@@ -176,8 +179,10 @@ abstract class UpgradeAccountApi {
 
   @GET(UpgradeAccountApiConstants.pDoneProfile)
   Future<ApiResponse<PDoneInformationResponse>> pDoneProfile();
+
   @GET(UpgradeAccountApiConstants.pDoneRegisteringProfile)
-  Future<ApiResponse<PDoneRegisteringProfileResponse>> pDoneRegisteringProfile();
+  Future<ApiResponse<PDoneRegisteringProfileResponse>>
+      pDoneRegisteringProfile();
 
   @GET(UpgradeAccountApiConstants.protectorRequested)
   Future<ApiResponse<PDoneMyProtectorInformationResponse>> protectorRequested();
@@ -187,4 +192,8 @@ abstract class UpgradeAccountApi {
 
   @POST(UpgradeAccountApiConstants.eKycUpgrade)
   Future<APIVerifyResponse> upgradeEkyc(@Body() dynamic payload);
+
+  @GET(UpgradeAccountApiConstants.checkExistByIdentityNumber)
+  Future<CheckExistIdentityNumber> checkExistIdentityNumber(
+      @Query('identityNumber') String identityNumber);
 }

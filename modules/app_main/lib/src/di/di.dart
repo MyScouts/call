@@ -13,6 +13,8 @@ final getIt = GetIt.instance;
   externalPackageModulesBefore: [
     ExternalModule(AppCorePackageModule),
   ],
+  externalPackageModulesAfter: [
+  ],
 )
 Future<void> configureDependencies({
   String? environment,

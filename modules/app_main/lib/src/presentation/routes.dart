@@ -28,5 +28,6 @@ class Routes extends RouteModuleBuilder {
       ];
 
   @override
-  List<RouteModuleBuilder> get routerModules => [];
+  List<RouteModuleBuilder> get routerModules => [
+  ];
 }
