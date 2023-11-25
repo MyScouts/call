@@ -6,6 +6,11 @@ class AgencyEvent with _$AgencyEvent {
 
   const factory AgencyEvent.getAgencyInfo(int id) = _GetAgencyInfo;
 
+  const factory AgencyEvent.est(int id, num vnd, num coin) = _EstCoinEvent;
+
   const factory AgencyEvent.exchange(
-      {required int agencyId, required num value}) = _Exchange;
+      int id, num vnd, num coin, String pDoneId) = _Exchange;
+
+  const factory AgencyEvent.getPaymentInformation(
+      int agencyId, AgencyPaymentInformation request) = _GetPaymentInformation;
 }

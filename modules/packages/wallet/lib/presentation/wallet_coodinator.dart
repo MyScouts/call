@@ -6,6 +6,7 @@ import '../core/utils/extension.dart';
 import '../domain/domain.dart' hide User;
 import 'shared/model/bank_account_and_bloc_params.dart';
 import 'wallet_constant.dart';
+import 'wallet_diamond/bloc/wallet_diamond_bloc.dart';
 import 'wallet_screen.dart';
 import 'wallet_transaction_history_screen.dart';
 import 'wallet_vnd/bank_account/bloc/bank_account_bloc.dart';
@@ -59,6 +60,12 @@ extension WalletCoordinator on BuildContext {
     return Navigator.of(this).pushNamed(
       VerifyBankAccountOTPScreen.routeName,
       arguments: bankAccountBloc,
+    );
+  }
+
+  Future<T?> navigateCharDiamondToVND<T>() {
+    return Navigator.of(this).pushNamed(
+      WalletDiamondNestedRoute.chargeDiamondToVnd,
     );
   }
 

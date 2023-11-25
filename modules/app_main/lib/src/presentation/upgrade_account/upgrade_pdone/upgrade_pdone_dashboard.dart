@@ -104,7 +104,7 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(243, 248, 255, 1),
       appBar: AppBar(
-        title: const Text('Cập nhật PDONE'),
+        title: const Text('Cập nhật P-done'),
         centerTitle: true,
         backgroundColor: const Color.fromRGBO(243, 248, 255, 1),
         titleSpacing: 0,

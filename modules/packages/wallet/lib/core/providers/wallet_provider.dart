@@ -15,21 +15,27 @@ class WalletProvider {
     SharedPreferences sharedPreferences,
   ) {
     dio = Dio(BaseOptions(baseUrl: baseUrl))
-      ..interceptors.add(
-        ApiTokenInterceptor(sharedPreferences, onLogout: onLogout),
-      );
-
-    dio.interceptors.add(DioCurlInterceptor());
-
-    if (kDebugMode) {
-      dio.interceptors.add(
-        PrettyDioLogger(
-          requestHeader: true,
-          requestBody: true,
-          responseHeader: true,
-        ),
-      );
-    }
+// <<<<<<< HEAD
+//       ..interceptors.add(
+//         ApiTokenInterceptor(sharedPreferences, onLogout: onLogout),
+//       );
+//
+//     dio.interceptors.add(DioCurlInterceptor());
+//
+//     if (kDebugMode) {
+//       dio.interceptors.add(
+//         PrettyDioLogger(
+//           requestHeader: true,
+//           requestBody: true,
+//           responseHeader: true,
+//         ),
+//       );
+//     }
+// =======
+      ..interceptors
+          .add(ApiTokenInterceptor(sharedPreferences, onLogout: onLogout))
+      ..interceptors.add(DioCurlInterceptor());
+// >>>>>>> phuc/wallet_2511
   }
 
   final onLogout = BehaviorSubject();

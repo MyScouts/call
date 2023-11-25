@@ -63,6 +63,7 @@ class ImageConstants {
   static String screenshot2 = ImageApp.screenshot2.path;
   static String screenshot3 = ImageApp.screenshot3.path;
   static String profileEmpty = ImageApp.profileEmpty.path;
+  static String walletTotalDiamond = ImageApp.walletTotalDiamond.path;
 
 
   /// wallet
@@ -155,6 +156,7 @@ enum ImageApp {
   imgTransactionHistory('assets/images/imgTransactionHistory.png'),
   imgWithDraw('assets/images/imgWithDraw.png'),
   imgFindAgency('assets/images/imgFindAgency.png'),
+  walletTotalDiamond('assets/images/wallet_total_diamond.jpg'),
   imgChargeDiamond('assets/images/imgChargeDiamond.png');
 
   const ImageApp(this.path);

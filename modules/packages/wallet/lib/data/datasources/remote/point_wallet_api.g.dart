@@ -88,20 +88,20 @@ class _PointWalletApi implements PointWalletApi {
   }
 
   @override
-  Future<ApiResponse<AgencyResponse>> getAllAgency() async {
+  Future<ApiResponse<AgencyListResponse>> getAllAgency() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<AgencyResponse>>(Options(
+        _setStreamType<ApiResponse<AgencyListResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/api/point/all-agency',
+              'api/v1/coin-agency/list?page=1&pageSize=10',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -110,28 +110,29 @@ class _PointWalletApi implements PointWalletApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<AgencyResponse>.fromJson(
+    final value = ApiResponse<AgencyListResponse>.fromJson(
       _result.data!,
-      (json) => AgencyResponse.fromJson(json as Map<String, dynamic>),
+      (json) => AgencyListResponse.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
 
   @override
-  Future<ApiResponse<AgencyInfo>> getAgencyInfo({required int id}) async {
+  Future<ApiResponse<AgencyDetailResponse>> getAgencyInfo(
+      {required int id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<AgencyInfo>>(Options(
+        _setStreamType<ApiResponse<AgencyDetailResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/api/point/agency/${id}/detail',
+              'api/v1/coin-agency/${id}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -140,31 +141,66 @@ class _PointWalletApi implements PointWalletApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<AgencyInfo>.fromJson(
+    final value = ApiResponse<AgencyDetailResponse>.fromJson(
       _result.data!,
-      (json) => AgencyInfo.fromJson(json as Map<String, dynamic>),
+      (json) => AgencyDetailResponse.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+
+  @override
+  Future<ApiResponse<CoinWalletInfo>> getCoinWalletInfo() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<CoinWalletInfo>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/coin-wallet/info',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<CoinWalletInfo>.fromJson(
+      _result.data!,
+      (json) => CoinWalletInfo.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
 
   @override
-  Future<ApiResponse<num>> exchange({
+  Future<ApiResponse<EstCoinResponse>> estCoin({
     required int agencyId,
-    required num val,
+    required num vnd,
+    required num coin,
   }) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'value': val};
+    final queryParameters = <String, dynamic>{
+      r'vnd': vnd,
+      r'coin': coin,
+    };
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<num>>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<EstCoinResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/api/point/agency/${agencyId}/exchange',
+              'api/v1/coin-agency/${agencyId}/price',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -173,9 +209,78 @@ class _PointWalletApi implements PointWalletApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<num>.fromJson(
+    final value = ApiResponse<EstCoinResponse>.fromJson(
       _result.data!,
-      (json) => json as num,
+      (json) => EstCoinResponse.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<ExchangeCoinResponse>> exchangeCoin({
+    required int agencyId,
+    required Map<String, dynamic> body,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<ExchangeCoinResponse>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/v1/coin-agency/${agencyId}/buy',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<ExchangeCoinResponse>.fromJson(
+      _result.data!,
+      (json) => ExchangeCoinResponse.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<WalletCoinPaymentInformation>> paymentInformation({
+    required int agencyId,
+    required Map<String, dynamic> body,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<WalletCoinPaymentInformation>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/v1/coin-agency/${agencyId}/payment-info',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<WalletCoinPaymentInformation>.fromJson(
+      _result.data!,
+      (json) =>
+          WalletCoinPaymentInformation.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

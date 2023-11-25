@@ -3,6 +3,8 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:wallet/presentation/shared/widgets/toast_message/toast_message.dart';
+import 'package:wallet/presentation/wallet_coodinator.dart';
 
 import '../../../core/core.dart';
 import '../../../domain/domain.dart';
@@ -28,8 +30,7 @@ class WalletDiamondInputForm extends StatefulWidget {
 
 class _WalletDiamondInputFormState extends State<WalletDiamondInputForm>
     with ValidationMixin {
-  final _diamondController = TextEditingController(),
-      _vndController = TextEditingController(text: '0');
+  final _diamondController = TextEditingController();
 
   String? _validateDiamond(String? value) {
     if (value == null || value.isEmpty) {
@@ -71,8 +72,15 @@ class _WalletDiamondInputFormState extends State<WalletDiamondInputForm>
         () => context.read<WalletDiamondBloc>().add(SetExchangeDiamondVND(i)),
       );
 
-  Future<void> handleTapExchangeButton() async {
+  Future<void> handleTapExchangeButton(BuildContext context) async {
     if (!isValidForm) {
+      // showToastMessage('Số kim cương không hợp lệ', ToastMessageType.warning);
+      return;
+    }
+
+    if ((int.tryParse(_diamondController.text) ?? 0) >
+        (widget.vndWalletInfo.totalDiamond ?? 0)) {
+      // showToastMessage('Số kim cương quy đổi vượt quá số lượng bạn đang có', ToastMessageType.warning);
       return;
     }
 
@@ -109,183 +117,108 @@ class _WalletDiamondInputFormState extends State<WalletDiamondInputForm>
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: 15,
-        horizontal: context.horizontal,
-      ),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    diamondForm(),
-                    vndForm(),
-                  ],
+    return BlocListener<WalletDiamondBloc, WalletDiamondState>(
+      listener: (context, state) {
+        if (state is ExchangeDiamondFailure) {
+          hideLoading();
+          showToastMessage(state.message, ToastMessageType.error);
+        }
+
+        if (state is ExchangeDiamondSuccess) {
+          hideLoading();
+          showToastMessage('Quy đổi thành công, vui lòng xem lịch sử',
+              ToastMessageType.success);
+        }
+      },
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: 15,
+          horizontal: context.horizontal,
+        ),
+        child: Column(
+          children: [
+            diamondForm(),
+            const SizedBox(height: 24),
+            GradiantButton(
+              borderRadius: WalletConstant.borderRadius10,
+              gradient: const LinearGradient(
+                colors: [AppColors.blue30, AppColors.blue20],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+              onPressed: () {
+                handleTapExchangeButton(context);
+              },
+              child: Text(
+                'Đổi'.toUpperCase(),
+                style: context.text.bodyMedium!.copyWith(
+                  color: AppColors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 35).copyWith(left: 12),
-                child: GradiantButton(
-                  width: 70,
-                  borderRadius: WalletConstant.borderRadius10,
-                  gradient: const LinearGradient(
-                    colors: [AppColors.blue30, AppColors.blue20],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  ),
-                  onPressed: handleTapMaxButton,
-                  child: Text(
-                    'Tất cả'.toUpperCase(),
-                    style: context.text.bodyMedium!.copyWith(
-                      color: AppColors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 24),
-          GradiantButton(
-            borderRadius: WalletConstant.borderRadius10,
-            gradient: const LinearGradient(
-              colors: [AppColors.blue30, AppColors.blue20],
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
             ),
-            onPressed: handleTapExchangeButton,
-            child: Text(
-              'Đổi sang VNĐ'.toUpperCase(),
-              style: context.text.bodyMedium!.copyWith(
-                color: AppColors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   Widget diamondForm() => validationFormBuilder(
-        child: FormElement(
-          name: WalletDiamondField.diamond.name,
-          hintText: 'Nhập số kim cương muốn đổi',
-          title: 'Số kim cương',
-          controller: _diamondController,
-          borderRadius: WalletConstant.borderRadius5,
-          filled: true,
-          color: AppColors.white,
-          enableBorderColor: AppColors.grey13,
-          focusedBorderColor: WalletTheme.blueCheckedColor,
-          suffixIcon: Padding(
-            padding: const EdgeInsets.all(12),
-            child: ImageWidget(IconAppConstants.camera2, width: 18),
-          ),
-          validator: _validateDiamond,
-          onChanged: (value) {
-            if (!conditionValidator) {
-              return;
-            }
-            onValidation();
-            if (!isValidForm) {
-              setExchangeVNDValue(0);
-            }
-          },
-          keyBoardType: TextInputType.number,
-          valueTransformer: AppTextInputFormatter.reversedFromCurrency,
-          inputFormatters: [
-            FilteringTextInputFormatter.digitsOnly,
-            AppTextInputFormatter.currency,
-          ],
-        ),
-      );
-
-  Widget vndForm() => BlocListener<WalletDiamondBloc, WalletDiamondState>(
-        listener: (context, state) {
-          if (state is ExchangeVNDValueUpdated) {
-            _vndController.text = state.exchangeDiamondVND
-                .toAppCurrencyString(isWithSymbol: false);
-          }
-
-          if (state is ExchangeDiamondSuccess) {
-            setConditionValidator = false;
-            _diamondController.clear();
-            setConditionValidator = true;
-            _vndController.clear();
-            showDialog(
-              context: context,
-              builder: (context) => const ExchangeStatusDialog(isSuccess: true),
-            ).whenComplete(() {
-              context.read<WalletDiamondBloc>().add(LoadWalletDiamondInfo());
-              injector<WalletBloc>()
-                  .add(const WalletEvent.reloadDiamondWalletInfo());
-            });
-          }
-
-          if (state is ExchangeDiamondFailure) {
-            showDialog(
-              context: context,
-              builder: (context) =>
-                  const ExchangeStatusDialog(isSuccess: false),
-            );
-          }
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: Text(
-                  'Số tiền quy đổi',
-                  style: context.text.titleMedium?.copyWith(
-                    color: WalletTheme.greyTextColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Row(
                 children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 14),
-                      child: TextFormField(
-                        controller: _vndController,
-                        keyboardAppearance: Brightness.light,
-                        textAlign: TextAlign.start,
-                        style: context.text.bodyMedium!.copyWith(fontSize: 16),
-                        decoration: const InputDecoration(
-                          disabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: AppColors.greyLightTextColor,
-                              width: 1,
-                            ),
-                          ),
-                          enabled: false,
-                        ),
-                      ),
-                    ),
+                  ImageWidget(
+                    ImageConstants.icWalletDiamond,
+                    width: 20,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(14),
-                    child: ImageWidget(IconAppConstants.group, width: 18),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    'Số kim cương cần đổi',
+                    style: context.text.titleMedium?.copyWith(
+                      color: WalletTheme.greyTextColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+            TextFormField(
+              style: context.textTheme.titleLarge!.copyWith(
+                color: AppColors.blue33,
+                fontSize: 24,
+              ),
+              controller: _diamondController,
+              validator: _validateDiamond,
+              decoration: InputDecoration(
+                  // border: InputBorder.none,
+                  // focusedBorder: InputBorder.none,
+                  // enabledBorder: InputBorder.none,
+                  // errorBorder: InputBorder.none,
+                  // disabledBorder: InputBorder.none,
+                  hintText: 'Nhập số kim cương muốn đổi sang VNĐ',
+                  hintStyle: TextStyle(
+                      fontSize: 16,
+                      color: AppColors.black10.withOpacity(0.6),
+                      fontWeight: FontWeight.normal)),
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                AppTextInputFormatter.currency,
+              ],
+            ),
+            // Container(
+            //   height: 0.5,
+            //   width: 400,
+            //   color: AppColors.black10.withOpacity(0.6),
+            //   margin: const EdgeInsets.symmetric(horizontal: 8),
+            // )
+          ],
         ),
       );
 }

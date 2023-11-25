@@ -60,7 +60,7 @@ class Setting {
                 Navigator.pushNamed(context, CommunityWidget.routeName),
           ),
           Setting(
-            text: "PDone",
+            text: "P-done",
             icon: IconAppConstants.icUpgrade,
             onPressed: () =>
                 context.startPDoneInformation().then((value) => onUpdate!()),

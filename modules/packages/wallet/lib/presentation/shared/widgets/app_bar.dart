@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/wallet_theme.dart';
 
-
 PreferredSizeWidget appbarBuilder(
   BuildContext context, {
   required String title,
   List<Widget>? actions,
   bool hasBottom = false,
+  Color? backgroundColor,
   Widget? leading,
 }) {
   return AppBar(
-    backgroundColor: Colors.white,
+    backgroundColor: backgroundColor ?? Colors.white,
     centerTitle: true,
     bottom: hasBottom
         ? PreferredSize(

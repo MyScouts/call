@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 
 import '../../domain/domain.dart';
+import '../datasources/models/exchange_diamond_response.dart';
 import '../datasources/remote/remote.dart';
 
 @Injectable(as: WalletDiamondRepository)
@@ -33,7 +34,7 @@ class WalletDiamondRepositoryImpl implements WalletDiamondRepository {
   }
 
   @override
-  Future<DiamondTransactionHistory> exchangeDiamond(
+  Future<ExchangeDiamondResponse> exchangeDiamond(
       Map<String, dynamic> body) async {
     final response = await _diamondWalletApi.exchangeDiamond(body: body);
 

@@ -118,7 +118,7 @@ class _DiamondWalletApi implements DiamondWalletApi {
   }
 
   @override
-  Future<ApiResponse<DiamondTransactionHistory>> exchangeDiamond(
+  Future<ApiResponse<ExchangeDiamondResponse>> exchangeDiamond(
       {required Map<String, dynamic> body}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -126,14 +126,14 @@ class _DiamondWalletApi implements DiamondWalletApi {
     final _data = <String, dynamic>{};
     _data.addAll(body);
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<DiamondTransactionHistory>>(Options(
+        _setStreamType<ApiResponse<ExchangeDiamondResponse>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/api/diamond-wallet/exchange-vnd',
+              'api/v1/wallet/exchange/diamond-to-vnd',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -142,10 +142,9 @@ class _DiamondWalletApi implements DiamondWalletApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<DiamondTransactionHistory>.fromJson(
+    final value = ApiResponse<ExchangeDiamondResponse>.fromJson(
       _result.data!,
-      (json) =>
-          DiamondTransactionHistory.fromJson(json as Map<String, dynamic>),
+      (json) => ExchangeDiamondResponse.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

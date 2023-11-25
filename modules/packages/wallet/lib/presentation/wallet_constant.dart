@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:intl/intl.dart';
 import 'package:wallet/core/core.dart';
 
 enum UserType { isDefault, isPDone, isJA }
@@ -253,6 +257,37 @@ extension ResourceTypeExt on ResourceType {
         return 'VNĐ';
     }
   }
+
+  static Color get blueBackgroundColor{
+    return const Color.fromRGBO(75, 132, 247, 1);
+  }
+}
+
+enum RechargeType { byMoney, byCoin}
+
+extension RechargeTypeExt on RechargeType {
+  Color get valueColor {
+    switch (this) {
+      case RechargeType.byMoney:
+        return WalletTheme.ddoneColor;
+      case RechargeType.byCoin:
+        return WalletTheme.coinColor;
+    }
+  }
+
+
+  String get resourceTabText {
+    switch (this) {
+      case RechargeType.byMoney:
+        return 'Nhập theo số tiền';
+      case RechargeType.byCoin:
+        return 'Nhập theo số xu';
+    }
+  }
+
+  static Color get blueBackgroundColor{
+    return const Color.fromRGBO(75, 132, 247, 1);
+  }
 }
 
 enum TransactionCategory { marshop, vlive }
@@ -306,3 +341,4 @@ class WalletConstant {
 
   static const timeInputLimit = 60;
 }
+
