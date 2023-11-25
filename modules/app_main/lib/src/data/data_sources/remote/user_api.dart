@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
+import 'package:app_main/src/data/models/responses/follow_response.dart';
 import 'package:app_main/src/data/models/responses/list_friends_user_response.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
 import 'package:app_main/src/data/models/responses/update_none_pdone_profile_response.dart';
@@ -17,8 +18,9 @@ class UserApiConstants {
   static const pDoneProfile = 'api/account-p-done/profile';
   static const userById = 'api/users/{id}';
   static const reportUser = 'api/users/report-user/{id}';
-  static const followUser = 'api/users/follow';
-  static const unFollow = 'api/users/unfollow';
+  static const followUserById = 'api/v1/following/user/{userId}';
+  static const followUser = 'api/v1/following/follow';
+  static const unFollow = 'api/v1/following/unfollow';
   static const blockUser = 'api/users/block-user/{userId}';
   static const authOTP = 'api/v1/auth/otp';
   static const search = "api/v1/user/search";
@@ -58,6 +60,11 @@ abstract class UserApi {
     @Path('id') required int id,
     @Body() required ReportUserPayload body,
   });
+
+  @GET(UserApiConstants.followUserById)
+  Future<GetUserFollowDetailResponse> getFollowUser(
+    @Path('userId') int userId,
+  );
 
   @POST(UserApiConstants.followUser)
   Future<ApiResponse<FollowUserResponse>> followUser({

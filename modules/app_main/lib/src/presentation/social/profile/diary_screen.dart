@@ -36,6 +36,7 @@ class DiaryScreen extends StatefulWidget {
 }
 
 class _DiaryScreenState extends State<DiaryScreen> {
+  late int _userId;
   final ValueNotifier<bool> _friendStatus = ValueNotifier(false);
   UserActionCubit get _actionBloc => injector.get<UserActionCubit>();
   GetUserByIdBloc get _userByIdBloc => context.read<GetUserByIdBloc>();
@@ -51,9 +52,9 @@ class _DiaryScreenState extends State<DiaryScreen> {
   void initState() {
     super.initState();
     _authInfo = _userCubit.currentUser!;
-    _userByIdBloc.add(GetDetailDataParam1Event(int.parse(
-      widget.userId ?? _authInfo.id.toString(),
-    )));
+    _userId = int.parse(widget.userId ?? _authInfo.id.toString());
+    _actionBloc.getFollowUser(userId: _userId);
+    _userByIdBloc.add(GetDetailDataParam1Event(_userId));
   }
 
   @override
@@ -90,7 +91,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
             if (state is UnFollowFail) {
               hideLoading();
               _friendStatus.value = false;
-              
+
               showToastMessage(
                 "Bỏ theo dõi người dùng thất bại.",
                 ToastMessageType.error,
@@ -99,6 +100,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
           },
           child: BlocBuilder<GetUserByIdBloc, GetDetailState>(
             builder: (context, state) {
+              print(_actionBloc.followerCount);
               debugPrint("$state");
               if (state is GetDetailDataLoading) {
                 return const Center(
@@ -111,11 +113,14 @@ class _DiaryScreenState extends State<DiaryScreen> {
 
                 return Column(
                   children: [
-                    UserInfoHeader(
-                      userInfo: userInfo,
-                      friendStatusCtrl: _friendStatus,
-                      isMe: isMe,
-                    ),
+                    BlocProvider.value(
+                        value: _actionBloc,
+                        child: UserInfoHeader(
+                          userInfo: userInfo,
+                          friendStatusCtrl: _friendStatus,
+                          isMe: isMe,
+                          actionCubit: _actionBloc,
+                        )),
                     const SizedBox(height: 10),
                     Expanded(
                       child: Container(

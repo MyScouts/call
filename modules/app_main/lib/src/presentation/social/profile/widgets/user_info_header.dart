@@ -10,29 +10,24 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:ui/ui.dart';
 
-class UserInfoHeader extends StatefulWidget {
+// class UserInfoHeader extends StatefulWidget {
+
+//   @override
+//   State<UserInfoHeader> createState() => _UserInfoHeaderState();
+// }
+
+class UserInfoHeader extends StatelessWidget {
   final User userInfo;
   final ValueNotifier<bool> friendStatusCtrl;
   final bool isMe;
+  final UserActionCubit actionCubit;
   const UserInfoHeader({
     super.key,
     required this.userInfo,
     required this.friendStatusCtrl,
+    required this.actionCubit,
     this.isMe = false,
   });
-
-  @override
-  State<UserInfoHeader> createState() => _UserInfoHeaderState();
-}
-
-class _UserInfoHeaderState extends State<UserInfoHeader> {
-  late User _userInfo;
-  @override
-  void initState() {
-    super.initState();
-    _userInfo = widget.userInfo;
-    widget.friendStatusCtrl.value = widget.userInfo.isFollowed ?? false;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,16 +41,16 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
         ),
       ),
       child: Column(children: [
-        _buildBgAvatar(),
+        _buildBgAvatar(context),
         const SizedBox(height: 60),
-        _buildUserName(),
+        _buildUserName(context),
         const SizedBox(height: 10),
-        _buildUserInfo(),
+        _buildUserInfo(context),
       ]),
     );
   }
 
-  _buildBgAvatar() {
+  _buildBgAvatar(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -63,7 +58,7 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
           height: 180,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.cover,
-          imageUrl: _userInfo.defaultBackground ?? "",
+          imageUrl: userInfo.defaultBackground ?? "",
           errorWidget: (context, url, error) {
             return ImageWidget(
               ImageConstants.defaultUserBackground,
@@ -79,11 +74,11 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
           right: 0,
           child: Center(
               child: AppAvatarWidget(
-            avatar: _userInfo.avatar,
+            avatar: userInfo.avatar,
             defaultAvatar: ImageConstants.defaultUserAvatar,
             width: 100,
             height: 100,
-            isPDone: _userInfo.isPDone,
+            isPDone: userInfo.isPDone,
             border: Border.all(color: AppColors.white, width: 4),
           )),
         ),
@@ -103,7 +98,7 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
     );
   }
 
-  _buildUserName() {
+  _buildUserName(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -111,7 +106,7 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
           clipBehavior: Clip.none,
           children: [
             Text(
-              widget.userInfo.getdisplayName,
+              userInfo.getdisplayName,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: context.text.titleMedium!.copyWith(
@@ -120,7 +115,7 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
                 height: 1,
               ),
             ),
-            if (widget.userInfo.getIsPDone)
+            if (userInfo.getIsPDone)
               Positioned(
                 right: -25,
                 bottom: 0,
@@ -137,48 +132,46 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
               )
           ],
         ),
-        if (widget.userInfo.username != null &&
-            widget.userInfo.username!.isNotEmpty)
+        if (userInfo.username != null && userInfo.username!.isNotEmpty)
           const SizedBox(height: 3),
-        if (widget.userInfo.username != null &&
-            widget.userInfo.username!.isNotEmpty)
+        if (userInfo.username != null && userInfo.username!.isNotEmpty)
           Text(
-            "(${widget.userInfo.username})",
+            "(${userInfo.username})",
             style: context.text.titleSmall!.copyWith(
               color: AppColors.grey14,
             ),
           ),
         const SizedBox(height: 3),
         Text(
-          "ID: ${widget.userInfo.pDoneId}",
+          "ID: ${userInfo.pDoneId}",
           style: context.text.titleSmall!.copyWith(),
         )
       ],
     );
   }
 
-  _buildUserInfo() {
+  _buildUserInfo(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
-          _buildInfomation(),
+          _buildInfomation(context),
           const SizedBox(height: 10),
-          _buildFriendInfo(),
-          if (!widget.isMe) const SizedBox(height: 20),
-          if (!widget.isMe) _buildProfileAction(),
+          _buildFriendInfo(context),
+          if (!isMe) const SizedBox(height: 20),
+          if (!isMe) _buildProfileAction(context),
         ],
       ),
     );
   }
 
-  _buildInfomation() {
+  _buildInfomation(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (widget.userInfo.sex != null)
+          if (userInfo.sex != null)
             Container(
               height: 25,
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -188,9 +181,9 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
               ),
               child: Row(
                 children: [
-                  ImageWidget(widget.userInfo.sex!.getIcon()),
+                  ImageWidget(userInfo.sex!.getIcon()),
                   Text(
-                    widget.userInfo.old.toString(),
+                    userInfo.old.toString(),
                     style: context.text.titleMedium,
                   ),
                 ],
@@ -214,8 +207,8 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
               ],
             ),
           ),
-          if (widget.userInfo.joinedTeam != null) const SizedBox(width: 5),
-          if (widget.userInfo.joinedTeam != null)
+          if (userInfo.joinedTeam != null) const SizedBox(width: 5),
+          if (userInfo.joinedTeam != null)
             Flexible(
               child: Container(
                 height: 25,
@@ -234,7 +227,7 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
                     ),
                     Flexible(
                       child: Text(
-                        widget.userInfo.joinedTeam!.name!,
+                        userInfo.joinedTeam!.name!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: context.text.titleMedium,
@@ -254,8 +247,7 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
     );
   }
 
-  _buildFriendInfo() {
-    final isFollowed = widget.userInfo.isFollowed;
+  _buildFriendInfo(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -264,18 +256,10 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
           child: Column(
             children: [
               ValueListenableBuilder(
-                valueListenable: widget.friendStatusCtrl,
+                valueListenable: friendStatusCtrl,
                 builder: (context, value, child) {
-                  int totalFollower = widget.userInfo.totalFollower;
-                  if (isFollowed == !value && !widget.userInfo.isFriend!) {
-                    if (value) {
-                      totalFollower += 1;
-                    } else {
-                      totalFollower -= 1;
-                    }
-                  }
                   return Text(
-                    totalFollower.toString(),
+                    actionCubit.followerCount,
                     style: context.text.titleMedium!.copyWith(
                       fontWeight: FontWeight.w800,
                     ),
@@ -299,7 +283,7 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
           child: Column(
             children: [
               Text(
-                widget.userInfo.totalFollowing.toString(),
+                actionCubit.followerCount,
                 style: context.text.titleMedium!.copyWith(
                   fontWeight: FontWeight.w800,
                 ),
@@ -321,7 +305,7 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
           child: Column(
             children: [
               Text(
-                widget.userInfo.totalFriend.toString(),
+                actionCubit.friendCount,
                 style: context.text.titleMedium!.copyWith(
                   fontWeight: FontWeight.w800,
                 ),
@@ -338,14 +322,13 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
     );
   }
 
-  _buildProfileAction() {
-    final userInfo = widget.userInfo;
+  _buildProfileAction(BuildContext context) {
     final isFriend = userInfo.isFriend ?? false;
     final isFollowing = userInfo.isFollowing ?? false;
     return Row(
       children: [
         ValueListenableBuilder(
-          valueListenable: widget.friendStatusCtrl,
+          valueListenable: friendStatusCtrl,
           builder: (context, value, child) {
             return Expanded(
               flex: 2,
@@ -355,9 +338,9 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
                   isFriend: isFriend,
                   isFollowed: value,
                   isFollowing: isFollowing,
-                  isBlocked: _userInfo.isBlock,
+                  isBlocked: userInfo.isBlock,
                 ),
-                onTap: _onFriendAction,
+                onTap: () => _onFriendAction(context),
                 disabled: false,
                 width: null,
               ),
@@ -389,15 +372,14 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
         const SizedBox(width: 10),
         GestureDetector(
           onTap: () async {
-            final result =
-                await context.showDiaryActions(userInfo: widget.userInfo);
+            final result = await context.showDiaryActions(userInfo: userInfo);
             if (result != null) {
-              widget.friendStatusCtrl.value = result.isFollowed ?? false;
-              _userInfo = _userInfo.copyWith(
-                isBlock: true,
-                isFollowed: false,
-                isFollowing: false,
-              );
+              friendStatusCtrl.value = result.isFollowed ?? false;
+              // userInfo = userInfo.copyWith(
+              //   isBlock: true,
+              //   isFollowed: false,
+              //   isFollowing: false,
+              // );
             }
           },
           child: Container(
@@ -418,20 +400,20 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
     );
   }
 
-  _onFriendAction() async {
-    if (widget.friendStatusCtrl.value) {
+  _onFriendAction(BuildContext context) async {
+    if (friendStatusCtrl.value) {
       final result = await context.showFriendActions(
-        userInfo: widget.userInfo.copyWith(
-          isFollowed: widget.friendStatusCtrl.value,
+        userInfo: userInfo.copyWith(
+          isFollowed: friendStatusCtrl.value,
         ),
       );
       if (result != null && result is User) {
-        widget.friendStatusCtrl.value = result.isFollowed ?? false;
+        friendStatusCtrl.value = result.isFollowed ?? false;
       }
     } else {
       context
           .read<UserActionCubit>()
-          .followUser(payload: FollowUserPayload(id: widget.userInfo.id!));
+          .followUser(payload: FollowUserPayload(followeeId: userInfo.id!));
     }
   }
 }

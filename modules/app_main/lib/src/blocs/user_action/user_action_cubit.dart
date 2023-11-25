@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
+import 'package:app_main/src/data/models/responses/follow_response.dart';
 import 'package:app_main/src/domain/usecases/user_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -85,6 +86,28 @@ class UserActionCubit extends Cubit<UserActionState> {
     } catch (e) {
       emit(
         BlockUserFail(
+          message: S.current.messages_server_internal_error.capitalize(),
+        ),
+      );
+    }
+  }
+
+  Future getFollowUser({
+    required int userId,
+  }) async {
+    if (state is OnGetFollowUser) return;
+    try {
+      emit(OnGetFollowUser());
+      final response = await _userUsecase.getFollowUser(userId);
+      final stats = response.stats;
+      followeeCount = stats.followeeCount.toString();
+      followerCount = stats.followerCount.toString();
+      friendCount = stats.friendCount.toString();
+      print("getFollowUser $stats");
+      emit(GetFollowUserSuccess(followDetail: response));
+    } catch (e) {
+      emit(
+        GetFollowUserFail(
           message: S.current.messages_server_internal_error.capitalize(),
         ),
       );

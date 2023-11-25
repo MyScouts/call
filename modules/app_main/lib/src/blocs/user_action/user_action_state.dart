@@ -1,7 +1,17 @@
 part of 'user_action_cubit.dart';
 
 @immutable
-sealed class UserActionState {}
+sealed class UserActionState {
+  final String friendCount;
+  final String followerCount;
+  final String followeeCount;
+
+  const UserActionState({
+    this.followeeCount = "0",
+    this.followerCount = "0",
+    this.friendCount = "0",
+  });
+}
 
 final class UserActionInitial extends UserActionState {}
 
@@ -45,4 +55,17 @@ final class BlockUserSuccess extends UserActionState {}
 final class BlockUserFail extends UserActionState {
   final String message;
   BlockUserFail({required this.message});
+}
+
+// Block user
+final class OnGetFollowUser extends UserActionState {}
+
+final class GetFollowUserSuccess extends UserActionState {
+  final GetUserFollowDetailResponse followDetail;
+  GetFollowUserSuccess({required this.followDetail});
+}
+
+final class GetFollowUserFail extends UserActionState {
+  final String message;
+  GetFollowUserFail({required this.message});
 }

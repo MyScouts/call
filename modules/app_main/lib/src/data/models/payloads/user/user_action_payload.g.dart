@@ -18,22 +18,22 @@ Map<String, dynamic> _$ReportUserPayloadToJson(ReportUserPayload instance) =>
 
 FollowUserPayload _$FollowUserPayloadFromJson(Map<String, dynamic> json) =>
     FollowUserPayload(
-      id: json['id'] as int,
+      followeeId: json['followeeId'] as int,
     );
 
 Map<String, dynamic> _$FollowUserPayloadToJson(FollowUserPayload instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'followeeId': instance.followeeId,
     };
 
 UnFollowPayload _$UnFollowPayloadFromJson(Map<String, dynamic> json) =>
     UnFollowPayload(
-      id: json['id'] as int,
+      followeeId: json['followeeId'] as int,
     );
 
 Map<String, dynamic> _$UnFollowPayloadToJson(UnFollowPayload instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'followeeId': instance.followeeId,
     };
 
 DeleteUserPayload _$DeleteUserPayloadFromJson(Map<String, dynamic> json) =>
