@@ -84,6 +84,11 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
     final uploadImage =
         await upgradeAccountUsecase.uploadBirthCer(XFile(file.path), 'bg');
 
+    useCase.setConfig('user_bg', {
+      "value": uploadImage,
+      "isPublic": true,
+    });
+
     emit(state.copyWith(
       user: state.user?.copyWith(
         defaultBackground: uploadImage,
@@ -149,6 +154,14 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
     final profile = res.last as User?;
 
     emit(state.copyWith(user: profile, isPDone: onBoarding.isPdone));
+
+    final bgConfig = await useCase.getConfig('user_bg');
+
+    emit(state.copyWith(
+      user: profile?.copyWith(
+        defaultBackground: bgConfig['value'] ?? '',
+      ),
+    ));
 
     try {
       final res = await useCase.getPDoneProfile();

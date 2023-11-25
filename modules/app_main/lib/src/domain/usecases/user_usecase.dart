@@ -107,4 +107,12 @@ class UserUsecase {
   Future updateAvatar(String url) {
     return _userRepository.updateAvatar(url);
   }
+
+  Future setConfig(String key, Map<String, dynamic> json) {
+    return _userRepository.setConfig(key, json);
+  }
+
+  Future<Map<String, dynamic>> getConfig(String key) {
+    return _userRepository.getConfig(key);
+  }
 }

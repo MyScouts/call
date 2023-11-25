@@ -1,3 +1,5 @@
+import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/usecases/dashboard_share_preferences_usecase.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_widget.dart';
@@ -7,6 +9,7 @@ import 'dart:ui' as ui;
 
 class AppStoreScreen extends StatefulWidget {
   const AppStoreScreen({super.key, required this.onClose});
+
   final Function() onClose;
 
   @override
@@ -14,17 +17,50 @@ class AppStoreScreen extends StatefulWidget {
 }
 
 class _AppStoreScreenState extends State<AppStoreScreen> {
+  late final userBloc = context.read<UserCubit>();
+
   bool enableEditMode = false;
 
   final List<DashBoardItem> _items =
       mapData.values.where((e) => !e.id.contains('wg')).toList();
 
+  List<DashBoardItem> get items {
+    return _items.where((e) => !ids.contains(e.id)).toList();
+  }
+
+  List<DashBoardItem> get favorites {
+    return _favorites.where((e) => !ids.contains(e.id)).toList();
+  }
+
   List<DashBoardItem> _favorites = [];
+
+  List<String> ids = [];
 
   @override
   void initState() {
     _favorites = getIt<DashboardSharePreferenceUseCase>().getDashBoardFav();
+    init();
     super.initState();
+  }
+
+  void init() {
+    final userID = userBloc.state.currentUser?.id;
+    final communityKey = 'community $userID';
+    final personalKey = 'personal $userID';
+    final ecommerceKey = 'ecommerce $userID';
+
+    final communityI = getIt<DashboardSharePreferenceUseCase>()
+        .getDashBoardItems(communityKey);
+
+    final perI = getIt<DashboardSharePreferenceUseCase>()
+        .getDashBoardItems(personalKey);
+
+    final eI = getIt<DashboardSharePreferenceUseCase>()
+        .getDashBoardItems(ecommerceKey);
+
+    final list = [...communityI, ...perI, ...eI];
+
+    ids = list.map((e) => e.id).toList();
   }
 
   @override
@@ -49,7 +85,6 @@ class _AppStoreScreenState extends State<AppStoreScreen> {
                       setState(() {
                         enableEditMode = true;
                       });
-
                     },
                     onTap: () {
                       setState(() {
@@ -99,7 +134,8 @@ class _AppStoreScreenState extends State<AppStoreScreen> {
                                       onTap: () {
                                         if (enableEditMode) {
                                           getIt<DashboardSharePreferenceUseCase>()
-                                              .saveDashboardItemsFav(_favorites);
+                                              .saveDashboardItemsFav(
+                                                  _favorites);
                                         }
                                         setState(() {
                                           enableEditMode = !enableEditMode;
@@ -125,19 +161,19 @@ class _AppStoreScreenState extends State<AppStoreScreen> {
                                   crossAxisCount: 4,
                                   crossAxisSpacing: 10,
                                   mainAxisSpacing: 10,
-                                  children: _favorites
+                                  children: favorites
                                       .map(
                                         (e) => AppStoreWidgetBuilder(
-                                      app: e,
-                                      enableEditMode: enableEditMode,
-                                      onRemoved: () {
-                                        setState(() {
-                                          _favorites.remove(e);
-                                          _items.add(e);
-                                        });
-                                      },
-                                    ),
-                                  )
+                                          app: e,
+                                          enableEditMode: enableEditMode,
+                                          onRemoved: () {
+                                            setState(() {
+                                              _favorites.remove(e);
+                                              _items.add(e);
+                                            });
+                                          },
+                                        ),
+                                      )
                                       .toList(),
                                 ),
                                 const Text(
@@ -154,20 +190,20 @@ class _AppStoreScreenState extends State<AppStoreScreen> {
                                   crossAxisCount: 4,
                                   crossAxisSpacing: 10,
                                   mainAxisSpacing: 10,
-                                  children: _items
+                                  children: items
                                       .map(
                                         (e) => AppStoreWidgetBuilder(
-                                      app: e,
-                                      enableEditMode: enableEditMode,
-                                      onRemoved: () {},
-                                      onAdd: () {
-                                        setState(() {
-                                          _items.remove(e);
-                                          _favorites.add(e);
-                                        });
-                                      },
-                                    ),
-                                  )
+                                          app: e,
+                                          enableEditMode: enableEditMode,
+                                          onRemoved: () {},
+                                          onAdd: () {
+                                            setState(() {
+                                              _items.remove(e);
+                                              _favorites.add(e);
+                                            });
+                                          },
+                                        ),
+                                      )
                                       .toList(),
                                 ),
                               ],

@@ -76,6 +76,11 @@ class NotificationScreenState extends State<NotificationScreen>
                       builder: (ctx, state) {
                         final bloc = ctx.read<NotificationBloc>();
 
+                        List<NotificationData> items = state.items;
+                        if (state.isSearching) {
+                          items = state.search;
+                        }
+
                         return SafeArea(
                           bottom: false,
                           child: SmartRefresher.builder(
@@ -159,23 +164,24 @@ class NotificationScreenState extends State<NotificationScreen>
                                     ),
                                   ),
                                   if (!state.status.isSuccess)
-                                    SliverPadding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      sliver: SliverList.separated(
-                                        itemBuilder: (context, index) =>
-                                            const _CardSkeleton(),
-                                        separatorBuilder: (_, __) =>
-                                            const SizedBox(height: 8),
+                                    const SliverPadding(
+                                      padding: EdgeInsets.all(16.0),
+                                      sliver: SliverToBoxAdapter(
+                                        child: Center(
+                                          child: PlatformLoadingIndicator(),
+                                        ),
                                       ),
                                     ),
                                   if (state.status.isSuccess)
                                     SliverPadding(
                                       padding: const EdgeInsets.all(16.0),
                                       sliver: SliverList.separated(
-                                        itemCount: state.items.length,
+                                        itemCount: items.length,
                                         itemBuilder: (context, index) =>
                                             NotificationCard(
-                                                data: state.items[index]),
+                                          data: items[index],
+                                          isSearching: state.isSearching,
+                                        ),
                                         separatorBuilder: (_, __) =>
                                             const SizedBox(height: 8),
                                       ),
@@ -193,68 +199,6 @@ class NotificationScreenState extends State<NotificationScreen>
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class _CardSkeleton extends StatelessWidget {
-  const _CardSkeleton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: const Color.fromRGBO(247, 247, 247, 0.70),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      padding: const EdgeInsets.all(11),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                BoxSkeleton(
-                  height: 19 * 2,
-                  width: 19 * 2,
-                  borderRadius: BorderRadius.circular(19),
-                ),
-                const SizedBox(width: 8),
-                const Expanded(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: BoxSkeleton(
-                      height: 14,
-                      width: 100,
-                    ),
-                  ),
-                ),
-                const BoxSkeleton(
-                  height: 14,
-                  width: 100,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 12),
-          const BoxSkeleton(
-            borderRadius: BorderRadius.zero,
-            height: 10,
-          ),
-          const SizedBox(height: 4),
-          const BoxSkeleton(
-            borderRadius: BorderRadius.zero,
-            height: 10,
-          ),
-          const SizedBox(height: 4),
-          const BoxSkeleton(
-            borderRadius: BorderRadius.zero,
-            height: 10,
-          ),
-        ],
       ),
     );
   }
