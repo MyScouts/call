@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'live_type.dart';
@@ -6,8 +7,7 @@ part 'live_data.g.dart';
 
 @JsonSerializable()
 class LiveData {
-  @JsonKey(name: 'userId')
-  final int userID;
+  final User user;
   final int id;
   final LiveType type;
   final String title;
@@ -17,7 +17,7 @@ class LiveData {
 
   LiveData({
     required this.id,
-    required this.userID,
+    required this.user,
     required this.title,
     required this.type,
     required this.createdAt,

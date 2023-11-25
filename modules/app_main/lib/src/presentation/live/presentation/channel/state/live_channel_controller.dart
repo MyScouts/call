@@ -93,7 +93,7 @@ class LiveChannelController {
           name: user.name ?? '',
           avatar: user.avatar ?? '',
         ),
-        isOwner: (res.first as JoinLiveResponse).data.userID == user.id,
+        isOwner: (res.first as JoinLiveResponse).data.user.id == user.id,
       ) as Rx<LiveMember>;
 
       if (_me.value.isOwner) {
@@ -132,7 +132,7 @@ class LiveChannelController {
             avatar: i.avatar ?? '',
             name: i.displayName ?? '',
           ),
-          isOwner: _info.value.userID == i.id,
+          isOwner: _info.value.user.id == i.id,
         ));
       }
       _members = result.obs;
@@ -272,7 +272,7 @@ class LiveChannelController {
           name: user.displayName ?? '',
           avatar: user.avatar ?? '',
         ),
-        isOwner: user.id == _info.value.userID,
+        isOwner: user.id == _info.value.user.id,
       );
       _members.value = [..._members, member];
     });
