@@ -291,7 +291,7 @@ class UserInfoHeader extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    stats.followerCount.toString(),
+                    stats.followeeCount.toString(),
                     style: context.text.titleMedium!.copyWith(
                       fontWeight: FontWeight.w800,
                     ),
@@ -333,24 +333,24 @@ class UserInfoHeader extends StatelessWidget {
   }
 
   _buildProfileAction(BuildContext context) {
-    final isFriend = userInfo.isFriend ?? false;
-    final isFollowing = userInfo.isFollowing ?? false;
     return Row(
       children: [
         ValueListenableBuilder(
-          valueListenable: friendStatusCtrl,
+          valueListenable: followInfoCtrl,
           builder: (context, value, child) {
+            if (value == null) return const SizedBox.shrink();
+            final relation = value.relation;
             return Expanded(
               flex: 2,
               child: PrimarySolidButton(
                 height: 40,
                 title: friendStatusStr(
-                  isFriend: isFriend,
-                  isFollowed: value,
-                  isFollowing: isFollowing,
+                  isFriend: relation.isFriend,
+                  isFollowed: relation.isFollower,
+                  isFollowing: relation.isFollowee,
                   isBlocked: userInfo.isBlock,
                 ),
-                onTap: () => _onFriendAction(context),
+                onTap: () => _onFriendAction(context, relation),
                 disabled: false,
                 width: null,
               ),
@@ -382,15 +382,13 @@ class UserInfoHeader extends StatelessWidget {
         const SizedBox(width: 10),
         GestureDetector(
           onTap: () async {
-            final result = await context.showDiaryActions(userInfo: userInfo);
-            if (result != null) {
-              friendStatusCtrl.value = result.isFollowed ?? false;
-              // userInfo = userInfo.copyWith(
-              //   isBlock: true,
-              //   isFollowed: false,
-              //   isFollowing: false,
-              // );
-            }
+            context.showDiaryActions(userInfo: userInfo).then((result) {
+              if (result != null) {
+                context
+                    .read<UserActionCubit>()
+                    .getFollowUser(userId: userInfo.id!);
+              }
+            });
           },
           child: Container(
             height: 40,
@@ -410,20 +408,25 @@ class UserInfoHeader extends StatelessWidget {
     );
   }
 
-  _onFriendAction(BuildContext context) async {
-    if (friendStatusCtrl.value) {
-      final result = await context.showFriendActions(
-        userInfo: userInfo.copyWith(
-          isFollowed: friendStatusCtrl.value,
-        ),
-      );
-      if (result != null && result is User) {
-        friendStatusCtrl.value = result.isFollowed ?? false;
-      }
+  _onFriendAction(
+      BuildContext context, GetUserFollowRelationResponse relation) async {
+    if (!relation.isFollower) {
+      context.read<UserActionCubit>().followUser(
+            payload: FollowUserPayload(followeeId: userInfo.id!),
+          );
     } else {
       context
-          .read<UserActionCubit>()
-          .followUser(payload: FollowUserPayload(followeeId: userInfo.id!));
+          .showFriendActions(
+        userInfo: userInfo.copyWith(
+          isFollowed: relation.isFollower,
+          isFriend: relation.isFriend,
+        ),
+      )
+          .then((value) {
+        if (value != null && value is User) {
+          context.read<UserActionCubit>().getFollowUser(userId: userInfo.id!);
+        }
+      });
     }
   }
 }

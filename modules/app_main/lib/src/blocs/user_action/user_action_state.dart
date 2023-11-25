@@ -1,17 +1,7 @@
 part of 'user_action_cubit.dart';
 
 @immutable
-sealed class UserActionState {
-  // final String friendCount = this.;
-  // final String followerCount;
-  // final String followeeCount;
-
-  // const UserActionState({
-  //   // this.followeeCount = "0",
-  //   // this.followerCount = "0",
-  //   // this.friendCount = "0",
-  // });
-}
+sealed class UserActionState {}
 
 final class UserActionInitial extends UserActionState {}
 
@@ -27,9 +17,7 @@ final class ReportUserFail extends UserActionState {
 final class OnFollowUser extends UserActionState {}
 
 final class FollowUserSuccess extends UserActionState {
-  final bool isFriend;
-  final bool isFollowed;
-  FollowUserSuccess({required this.isFollowed, required this.isFriend});
+  FollowUserSuccess();
 }
 
 final class FollowUserFail extends UserActionState {

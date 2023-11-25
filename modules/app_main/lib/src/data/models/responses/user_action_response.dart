@@ -7,7 +7,7 @@ part 'user_action_response.g.dart';
 class FollowUserResponse with _$FollowUserResponse {
   const factory FollowUserResponse({
     required bool isFriend,
-    required bool isFollowed,
+    required bool approvalRequired,
   }) = _FollowUserResponse;
 
   factory FollowUserResponse.fromJson(Map<String, dynamic> json) =>

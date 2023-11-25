@@ -11,9 +11,6 @@ part 'user_action_state.dart';
 @Injectable()
 class UserActionCubit extends Cubit<UserActionState> {
   final UserUsecase _userUsecase;
-  String followeeCount = "0";
-  String followerCount = "0";
-  String friendCount = "0";
   UserActionCubit(this._userUsecase) : super(UserActionInitial());
 
   Future reportUser({
@@ -28,6 +25,7 @@ class UserActionCubit extends Cubit<UserActionState> {
         payload: payload,
       );
       emit(ReportUserSuccess());
+      getFollowUser(userId: int.parse(userId));
     } catch (e) {
       emit(
         ReportUserFail(
@@ -43,13 +41,9 @@ class UserActionCubit extends Cubit<UserActionState> {
     if (state is OnFollowUser) return;
     try {
       emit(OnFollowUser());
-      final response = await _userUsecase.followUser(
-        payload: payload,
-      );
-      emit(FollowUserSuccess(
-        isFollowed: response.isFollowed,
-        isFriend: response.isFriend,
-      ));
+      await _userUsecase.followUser(payload: payload);
+      emit(FollowUserSuccess());
+      getFollowUser(userId: payload.followeeId);
     } catch (e) {
       emit(
         FollowUserFail(
@@ -69,6 +63,7 @@ class UserActionCubit extends Cubit<UserActionState> {
         payload: payload,
       );
       emit(UnFollowSuccess());
+      getFollowUser(userId: payload.followeeId);
     } catch (e) {
       emit(
         UnFollowFail(
@@ -86,6 +81,7 @@ class UserActionCubit extends Cubit<UserActionState> {
       emit(OnBlockUser());
       await _userUsecase.blockUser(userId: userId);
       emit(BlockUserSuccess());
+      getFollowUser(userId: userId);
     } catch (e) {
       emit(
         BlockUserFail(
@@ -102,9 +98,6 @@ class UserActionCubit extends Cubit<UserActionState> {
     try {
       emit(OnGetFollowUser());
       final response = await _userUsecase.getFollowUser(userId);
-      // followeeCount = stats.followeeCount.toString();
-      // followerCount = stats.followerCount.toString();
-      // friendCount = stats.friendCount.toString();
       emit(GetFollowUserSuccess(followDetail: response));
     } catch (e) {
       emit(

@@ -39,7 +39,7 @@ class DiaryScreen extends StatefulWidget {
 class _DiaryScreenState extends State<DiaryScreen> {
   late int _userId;
   final ValueNotifier<bool> _friendStatus = ValueNotifier(false);
-  UserActionCubit get _actionBloc => injector.get<UserActionCubit>();
+  final UserActionCubit _actionBloc = injector.get<UserActionCubit>();
   GetUserByIdBloc get _userByIdBloc => context.read<GetUserByIdBloc>();
   final ValueNotifier<DiaryCategory> _categoryCtrl = ValueNotifier(
     DiaryCategory.personal,
@@ -56,60 +56,58 @@ class _DiaryScreenState extends State<DiaryScreen> {
     super.initState();
     _authInfo = _userCubit.currentUser!;
     _userId = int.parse(widget.userId ?? _authInfo.id.toString());
-    _actionBloc.getFollowUser(userId: _userId);
     _userByIdBloc.add(GetDetailDataParam1Event(_userId));
+    _actionBloc.getFollowUser(userId: _userId);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0XFFF3F8FF),
-      body: BlocProvider(
-        create: (context) => _actionBloc,
-        child: BlocListener<UserActionCubit, UserActionState>(
-          listener: (context, state) {
-            if (state is OnFollowUser || state is OnUnFollow) {
-              showLoading();
-            }
-            if (state is FollowUserSuccess) {
-              hideLoading();
-              _friendStatus.value = true;
-              showToastMessage("Theo dõi người dùng thành công.");
-            }
+    return BlocProvider(
+      create: (context) => _actionBloc,
+      child: BlocListener<UserActionCubit, UserActionState>(
+        listener: (context, state) {
+          print(state);
+          if (state is GetFollowUserSuccess) {
+            _followInfo.value = state.followDetail;
+          }
 
-            if (state is FollowUserFail) {
-              hideLoading();
-              showToastMessage(
-                "Theo dõi người dùng thất bại.",
-                ToastMessageType.error,
-              );
-            }
+          if (state is OnFollowUser || state is OnUnFollow) {
+            showLoading();
+          }
+          if (state is FollowUserSuccess) {
+            hideLoading();
+            _friendStatus.value = true;
+            showToastMessage("Theo dõi người dùng thành công.");
+          }
 
-            if (state is UnFollowSuccess) {
-              hideLoading();
-              _friendStatus.value = false;
-              showToastMessage("Bỏ theo dõi người dùng thành công.");
-            }
+          if (state is FollowUserFail) {
+            hideLoading();
+            showToastMessage(
+              "Theo dõi người dùng thất bại.",
+              ToastMessageType.error,
+            );
+          }
 
-            if (state is UnFollowFail) {
-              hideLoading();
-              _friendStatus.value = false;
+          if (state is UnFollowSuccess) {
+            hideLoading();
+            _friendStatus.value = false;
+            showToastMessage("Bỏ theo dõi người dùng thành công.");
+          }
 
-              showToastMessage(
-                "Bỏ theo dõi người dùng thất bại.",
-                ToastMessageType.error,
-              );
-            }
+          if (state is UnFollowFail) {
+            hideLoading();
+            _friendStatus.value = false;
 
-            print("listener: $state");
-            if (state is GetFollowUserSuccess) {
-              _followInfo.value = state.followDetail;
-            }
-          },
-          child: BlocBuilder<GetUserByIdBloc, GetDetailState>(
+            showToastMessage(
+              "Bỏ theo dõi người dùng thất bại.",
+              ToastMessageType.error,
+            );
+          }
+        },
+        child: Scaffold(
+          backgroundColor: const Color(0XFFF3F8FF),
+          body: BlocBuilder<GetUserByIdBloc, GetDetailState>(
             builder: (context, state) {
-              print(_actionBloc.followerCount);
-              debugPrint("$state");
               if (state is GetDetailDataLoading) {
                 return const Center(
                   child: CircularProgressIndicator(),

@@ -58,7 +58,9 @@ class _FriendMenuActionsState extends State<FriendMenuActions> {
           ),
           GestureDetector(
             onTap: () => context.read<UserActionCubit>().unFollow(
-                  payload: UnFollowPayload(followeeId: widget.userInfo.id!),
+                  payload: UnFollowPayload(
+                    followeeId: widget.userInfo.id!,
+                  ),
                 ),
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 20),
