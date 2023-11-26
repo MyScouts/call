@@ -589,3 +589,644 @@ abstract class _GetUserFollowRelationResponse
           _$GetUserFollowRelationResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+ApprovedRequestResponse _$ApprovedRequestResponseFromJson(
+    Map<String, dynamic> json) {
+  return _ApprovedRequestResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ApprovedRequestResponse {
+  List<ApprovedRequestDetail> get approvals =>
+      throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ApprovedRequestResponseCopyWith<ApprovedRequestResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ApprovedRequestResponseCopyWith<$Res> {
+  factory $ApprovedRequestResponseCopyWith(ApprovedRequestResponse value,
+          $Res Function(ApprovedRequestResponse) then) =
+      _$ApprovedRequestResponseCopyWithImpl<$Res, ApprovedRequestResponse>;
+  @useResult
+  $Res call({List<ApprovedRequestDetail> approvals});
+}
+
+/// @nodoc
+class _$ApprovedRequestResponseCopyWithImpl<$Res,
+        $Val extends ApprovedRequestResponse>
+    implements $ApprovedRequestResponseCopyWith<$Res> {
+  _$ApprovedRequestResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? approvals = null,
+  }) {
+    return _then(_value.copyWith(
+      approvals: null == approvals
+          ? _value.approvals
+          : approvals // ignore: cast_nullable_to_non_nullable
+              as List<ApprovedRequestDetail>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ApprovedRequestResponseImplCopyWith<$Res>
+    implements $ApprovedRequestResponseCopyWith<$Res> {
+  factory _$$ApprovedRequestResponseImplCopyWith(
+          _$ApprovedRequestResponseImpl value,
+          $Res Function(_$ApprovedRequestResponseImpl) then) =
+      __$$ApprovedRequestResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({List<ApprovedRequestDetail> approvals});
+}
+
+/// @nodoc
+class __$$ApprovedRequestResponseImplCopyWithImpl<$Res>
+    extends _$ApprovedRequestResponseCopyWithImpl<$Res,
+        _$ApprovedRequestResponseImpl>
+    implements _$$ApprovedRequestResponseImplCopyWith<$Res> {
+  __$$ApprovedRequestResponseImplCopyWithImpl(
+      _$ApprovedRequestResponseImpl _value,
+      $Res Function(_$ApprovedRequestResponseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? approvals = null,
+  }) {
+    return _then(_$ApprovedRequestResponseImpl(
+      approvals: null == approvals
+          ? _value._approvals
+          : approvals // ignore: cast_nullable_to_non_nullable
+              as List<ApprovedRequestDetail>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ApprovedRequestResponseImpl implements _ApprovedRequestResponse {
+  const _$ApprovedRequestResponseImpl(
+      {required final List<ApprovedRequestDetail> approvals})
+      : _approvals = approvals;
+
+  factory _$ApprovedRequestResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ApprovedRequestResponseImplFromJson(json);
+
+  final List<ApprovedRequestDetail> _approvals;
+  @override
+  List<ApprovedRequestDetail> get approvals {
+    if (_approvals is EqualUnmodifiableListView) return _approvals;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_approvals);
+  }
+
+  @override
+  String toString() {
+    return 'ApprovedRequestResponse(approvals: $approvals)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ApprovedRequestResponseImpl &&
+            const DeepCollectionEquality()
+                .equals(other._approvals, _approvals));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_approvals));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ApprovedRequestResponseImplCopyWith<_$ApprovedRequestResponseImpl>
+      get copyWith => __$$ApprovedRequestResponseImplCopyWithImpl<
+          _$ApprovedRequestResponseImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ApprovedRequestResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ApprovedRequestResponse implements ApprovedRequestResponse {
+  const factory _ApprovedRequestResponse(
+          {required final List<ApprovedRequestDetail> approvals}) =
+      _$ApprovedRequestResponseImpl;
+
+  factory _ApprovedRequestResponse.fromJson(Map<String, dynamic> json) =
+      _$ApprovedRequestResponseImpl.fromJson;
+
+  @override
+  List<ApprovedRequestDetail> get approvals;
+  @override
+  @JsonKey(ignore: true)
+  _$$ApprovedRequestResponseImplCopyWith<_$ApprovedRequestResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+ApprovedRequestDetail _$ApprovedRequestDetailFromJson(
+    Map<String, dynamic> json) {
+  return _ApprovedRequestDetail.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ApprovedRequestDetail {
+  int get id => throw _privateConstructorUsedError;
+  String get createdAt => throw _privateConstructorUsedError;
+  ApprovedRequestUser? get followee => throw _privateConstructorUsedError;
+  ApprovedRequestUser? get follower => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ApprovedRequestDetailCopyWith<ApprovedRequestDetail> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ApprovedRequestDetailCopyWith<$Res> {
+  factory $ApprovedRequestDetailCopyWith(ApprovedRequestDetail value,
+          $Res Function(ApprovedRequestDetail) then) =
+      _$ApprovedRequestDetailCopyWithImpl<$Res, ApprovedRequestDetail>;
+  @useResult
+  $Res call(
+      {int id,
+      String createdAt,
+      ApprovedRequestUser? followee,
+      ApprovedRequestUser? follower});
+
+  $ApprovedRequestUserCopyWith<$Res>? get followee;
+  $ApprovedRequestUserCopyWith<$Res>? get follower;
+}
+
+/// @nodoc
+class _$ApprovedRequestDetailCopyWithImpl<$Res,
+        $Val extends ApprovedRequestDetail>
+    implements $ApprovedRequestDetailCopyWith<$Res> {
+  _$ApprovedRequestDetailCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? createdAt = null,
+    Object? followee = freezed,
+    Object? follower = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      followee: freezed == followee
+          ? _value.followee
+          : followee // ignore: cast_nullable_to_non_nullable
+              as ApprovedRequestUser?,
+      follower: freezed == follower
+          ? _value.follower
+          : follower // ignore: cast_nullable_to_non_nullable
+              as ApprovedRequestUser?,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedRequestUserCopyWith<$Res>? get followee {
+    if (_value.followee == null) {
+      return null;
+    }
+
+    return $ApprovedRequestUserCopyWith<$Res>(_value.followee!, (value) {
+      return _then(_value.copyWith(followee: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ApprovedRequestUserCopyWith<$Res>? get follower {
+    if (_value.follower == null) {
+      return null;
+    }
+
+    return $ApprovedRequestUserCopyWith<$Res>(_value.follower!, (value) {
+      return _then(_value.copyWith(follower: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$ApprovedRequestDetailImplCopyWith<$Res>
+    implements $ApprovedRequestDetailCopyWith<$Res> {
+  factory _$$ApprovedRequestDetailImplCopyWith(
+          _$ApprovedRequestDetailImpl value,
+          $Res Function(_$ApprovedRequestDetailImpl) then) =
+      __$$ApprovedRequestDetailImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int id,
+      String createdAt,
+      ApprovedRequestUser? followee,
+      ApprovedRequestUser? follower});
+
+  @override
+  $ApprovedRequestUserCopyWith<$Res>? get followee;
+  @override
+  $ApprovedRequestUserCopyWith<$Res>? get follower;
+}
+
+/// @nodoc
+class __$$ApprovedRequestDetailImplCopyWithImpl<$Res>
+    extends _$ApprovedRequestDetailCopyWithImpl<$Res,
+        _$ApprovedRequestDetailImpl>
+    implements _$$ApprovedRequestDetailImplCopyWith<$Res> {
+  __$$ApprovedRequestDetailImplCopyWithImpl(_$ApprovedRequestDetailImpl _value,
+      $Res Function(_$ApprovedRequestDetailImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? createdAt = null,
+    Object? followee = freezed,
+    Object? follower = freezed,
+  }) {
+    return _then(_$ApprovedRequestDetailImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      followee: freezed == followee
+          ? _value.followee
+          : followee // ignore: cast_nullable_to_non_nullable
+              as ApprovedRequestUser?,
+      follower: freezed == follower
+          ? _value.follower
+          : follower // ignore: cast_nullable_to_non_nullable
+              as ApprovedRequestUser?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ApprovedRequestDetailImpl implements _ApprovedRequestDetail {
+  const _$ApprovedRequestDetailImpl(
+      {required this.id,
+      required this.createdAt,
+      required this.followee,
+      required this.follower});
+
+  factory _$ApprovedRequestDetailImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ApprovedRequestDetailImplFromJson(json);
+
+  @override
+  final int id;
+  @override
+  final String createdAt;
+  @override
+  final ApprovedRequestUser? followee;
+  @override
+  final ApprovedRequestUser? follower;
+
+  @override
+  String toString() {
+    return 'ApprovedRequestDetail(id: $id, createdAt: $createdAt, followee: $followee, follower: $follower)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ApprovedRequestDetailImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.followee, followee) ||
+                other.followee == followee) &&
+            (identical(other.follower, follower) ||
+                other.follower == follower));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, id, createdAt, followee, follower);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ApprovedRequestDetailImplCopyWith<_$ApprovedRequestDetailImpl>
+      get copyWith => __$$ApprovedRequestDetailImplCopyWithImpl<
+          _$ApprovedRequestDetailImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ApprovedRequestDetailImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ApprovedRequestDetail implements ApprovedRequestDetail {
+  const factory _ApprovedRequestDetail(
+          {required final int id,
+          required final String createdAt,
+          required final ApprovedRequestUser? followee,
+          required final ApprovedRequestUser? follower}) =
+      _$ApprovedRequestDetailImpl;
+
+  factory _ApprovedRequestDetail.fromJson(Map<String, dynamic> json) =
+      _$ApprovedRequestDetailImpl.fromJson;
+
+  @override
+  int get id;
+  @override
+  String get createdAt;
+  @override
+  ApprovedRequestUser? get followee;
+  @override
+  ApprovedRequestUser? get follower;
+  @override
+  @JsonKey(ignore: true)
+  _$$ApprovedRequestDetailImplCopyWith<_$ApprovedRequestDetailImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+ApprovedRequestUser _$ApprovedRequestUserFromJson(Map<String, dynamic> json) {
+  return _ApprovedRequestUser.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ApprovedRequestUser {
+  int get id => throw _privateConstructorUsedError;
+  String get displayName => throw _privateConstructorUsedError;
+  String get pDoneId => throw _privateConstructorUsedError;
+  String get fullName => throw _privateConstructorUsedError;
+  String get birthday => throw _privateConstructorUsedError;
+  int get sexCode => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ApprovedRequestUserCopyWith<ApprovedRequestUser> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ApprovedRequestUserCopyWith<$Res> {
+  factory $ApprovedRequestUserCopyWith(
+          ApprovedRequestUser value, $Res Function(ApprovedRequestUser) then) =
+      _$ApprovedRequestUserCopyWithImpl<$Res, ApprovedRequestUser>;
+  @useResult
+  $Res call(
+      {int id,
+      String displayName,
+      String pDoneId,
+      String fullName,
+      String birthday,
+      int sexCode});
+}
+
+/// @nodoc
+class _$ApprovedRequestUserCopyWithImpl<$Res, $Val extends ApprovedRequestUser>
+    implements $ApprovedRequestUserCopyWith<$Res> {
+  _$ApprovedRequestUserCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? displayName = null,
+    Object? pDoneId = null,
+    Object? fullName = null,
+    Object? birthday = null,
+    Object? sexCode = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      displayName: null == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
+              as String,
+      pDoneId: null == pDoneId
+          ? _value.pDoneId
+          : pDoneId // ignore: cast_nullable_to_non_nullable
+              as String,
+      fullName: null == fullName
+          ? _value.fullName
+          : fullName // ignore: cast_nullable_to_non_nullable
+              as String,
+      birthday: null == birthday
+          ? _value.birthday
+          : birthday // ignore: cast_nullable_to_non_nullable
+              as String,
+      sexCode: null == sexCode
+          ? _value.sexCode
+          : sexCode // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ApprovedRequestUserImplCopyWith<$Res>
+    implements $ApprovedRequestUserCopyWith<$Res> {
+  factory _$$ApprovedRequestUserImplCopyWith(_$ApprovedRequestUserImpl value,
+          $Res Function(_$ApprovedRequestUserImpl) then) =
+      __$$ApprovedRequestUserImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int id,
+      String displayName,
+      String pDoneId,
+      String fullName,
+      String birthday,
+      int sexCode});
+}
+
+/// @nodoc
+class __$$ApprovedRequestUserImplCopyWithImpl<$Res>
+    extends _$ApprovedRequestUserCopyWithImpl<$Res, _$ApprovedRequestUserImpl>
+    implements _$$ApprovedRequestUserImplCopyWith<$Res> {
+  __$$ApprovedRequestUserImplCopyWithImpl(_$ApprovedRequestUserImpl _value,
+      $Res Function(_$ApprovedRequestUserImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? displayName = null,
+    Object? pDoneId = null,
+    Object? fullName = null,
+    Object? birthday = null,
+    Object? sexCode = null,
+  }) {
+    return _then(_$ApprovedRequestUserImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      displayName: null == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
+              as String,
+      pDoneId: null == pDoneId
+          ? _value.pDoneId
+          : pDoneId // ignore: cast_nullable_to_non_nullable
+              as String,
+      fullName: null == fullName
+          ? _value.fullName
+          : fullName // ignore: cast_nullable_to_non_nullable
+              as String,
+      birthday: null == birthday
+          ? _value.birthday
+          : birthday // ignore: cast_nullable_to_non_nullable
+              as String,
+      sexCode: null == sexCode
+          ? _value.sexCode
+          : sexCode // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ApprovedRequestUserImpl implements _ApprovedRequestUser {
+  const _$ApprovedRequestUserImpl(
+      {required this.id,
+      required this.displayName,
+      required this.pDoneId,
+      required this.fullName,
+      required this.birthday,
+      required this.sexCode});
+
+  factory _$ApprovedRequestUserImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ApprovedRequestUserImplFromJson(json);
+
+  @override
+  final int id;
+  @override
+  final String displayName;
+  @override
+  final String pDoneId;
+  @override
+  final String fullName;
+  @override
+  final String birthday;
+  @override
+  final int sexCode;
+
+  @override
+  String toString() {
+    return 'ApprovedRequestUser(id: $id, displayName: $displayName, pDoneId: $pDoneId, fullName: $fullName, birthday: $birthday, sexCode: $sexCode)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ApprovedRequestUserImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.displayName, displayName) ||
+                other.displayName == displayName) &&
+            (identical(other.pDoneId, pDoneId) || other.pDoneId == pDoneId) &&
+            (identical(other.fullName, fullName) ||
+                other.fullName == fullName) &&
+            (identical(other.birthday, birthday) ||
+                other.birthday == birthday) &&
+            (identical(other.sexCode, sexCode) || other.sexCode == sexCode));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, id, displayName, pDoneId, fullName, birthday, sexCode);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ApprovedRequestUserImplCopyWith<_$ApprovedRequestUserImpl> get copyWith =>
+      __$$ApprovedRequestUserImplCopyWithImpl<_$ApprovedRequestUserImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ApprovedRequestUserImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ApprovedRequestUser implements ApprovedRequestUser {
+  const factory _ApprovedRequestUser(
+      {required final int id,
+      required final String displayName,
+      required final String pDoneId,
+      required final String fullName,
+      required final String birthday,
+      required final int sexCode}) = _$ApprovedRequestUserImpl;
+
+  factory _ApprovedRequestUser.fromJson(Map<String, dynamic> json) =
+      _$ApprovedRequestUserImpl.fromJson;
+
+  @override
+  int get id;
+  @override
+  String get displayName;
+  @override
+  String get pDoneId;
+  @override
+  String get fullName;
+  @override
+  String get birthday;
+  @override
+  int get sexCode;
+  @override
+  @JsonKey(ignore: true)
+  _$$ApprovedRequestUserImplCopyWith<_$ApprovedRequestUserImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

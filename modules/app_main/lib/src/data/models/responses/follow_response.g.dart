@@ -53,3 +53,63 @@ Map<String, dynamic> _$$GetUserFollowRelationResponseImplToJson(
       'isFollower': instance.isFollower,
       'isFollowee': instance.isFollowee,
     };
+
+_$ApprovedRequestResponseImpl _$$ApprovedRequestResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ApprovedRequestResponseImpl(
+      approvals: (json['approvals'] as List<dynamic>)
+          .map((e) => ApprovedRequestDetail.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$ApprovedRequestResponseImplToJson(
+        _$ApprovedRequestResponseImpl instance) =>
+    <String, dynamic>{
+      'approvals': instance.approvals,
+    };
+
+_$ApprovedRequestDetailImpl _$$ApprovedRequestDetailImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ApprovedRequestDetailImpl(
+      id: json['id'] as int,
+      createdAt: json['createdAt'] as String,
+      followee: json['followee'] == null
+          ? null
+          : ApprovedRequestUser.fromJson(
+              json['followee'] as Map<String, dynamic>),
+      follower: json['follower'] == null
+          ? null
+          : ApprovedRequestUser.fromJson(
+              json['follower'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$ApprovedRequestDetailImplToJson(
+        _$ApprovedRequestDetailImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'createdAt': instance.createdAt,
+      'followee': instance.followee,
+      'follower': instance.follower,
+    };
+
+_$ApprovedRequestUserImpl _$$ApprovedRequestUserImplFromJson(
+        Map<String, dynamic> json) =>
+    _$ApprovedRequestUserImpl(
+      id: json['id'] as int,
+      displayName: json['displayName'] as String,
+      pDoneId: json['pDoneId'] as String,
+      fullName: json['fullName'] as String,
+      birthday: json['birthday'] as String,
+      sexCode: json['sexCode'] as int,
+    );
+
+Map<String, dynamic> _$$ApprovedRequestUserImplToJson(
+        _$ApprovedRequestUserImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'displayName': instance.displayName,
+      'pDoneId': instance.pDoneId,
+      'fullName': instance.fullName,
+      'birthday': instance.birthday,
+      'sexCode': instance.sexCode,
+    };

@@ -125,4 +125,9 @@ class UserUsecase {
   Future<GetUserFollowDetailResponse> getFollowUser(int userId) {
     return _userRepository.getFollowUser(userId);
   }
+
+  Future<List<ApprovedRequestDetail>> approvedRequests() async {
+    final response = await _userRepository.approvedRequests();
+    return response.approvals;
+  }
 }

@@ -140,4 +140,9 @@ class AuthRepositoryImpl extends UserRepository {
   Future<GetUserFollowDetailResponse> getFollowUser(int userId) {
     return _userAPI.getFollowUser(userId);
   }
+
+  @override
+  Future<ApprovedRequestResponse> approvedRequests() {
+    return _userAPI.approvedRequest();
+  }
 }

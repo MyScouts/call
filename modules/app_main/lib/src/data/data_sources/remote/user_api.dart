@@ -21,7 +21,7 @@ class UserApiConstants {
   static const followUserById = 'api/v1/following/user/{userId}';
   static const followUser = 'api/v1/following/follow';
   static const unFollow = 'api/v1/following/unfollow';
-  static const followRequest = "api/v1/following/approval-requests";
+  static const approvedRequests = "api/v1/following/approval-requests";
   static const blockUser = 'api/users/block-user/{userId}';
   static const authOTP = 'api/v1/auth/otp';
   static const search = "api/v1/user/search";
@@ -76,6 +76,9 @@ abstract class UserApi {
   Future unFollow({
     @Body() required UnFollowPayload body,
   });
+
+  @GET(UserApiConstants.approvedRequests)
+  Future<ApprovedRequestResponse> approvedRequest();
 
   @POST(UserApiConstants.blockUser)
   Future blockUser(@Path() int userId);

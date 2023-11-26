@@ -37,3 +37,41 @@ class GetUserFollowRelationResponse with _$GetUserFollowRelationResponse {
   factory GetUserFollowRelationResponse.fromJson(Map<String, dynamic> json) =>
       _$GetUserFollowRelationResponseFromJson(json);
 }
+
+@freezed
+class ApprovedRequestResponse with _$ApprovedRequestResponse {
+  const factory ApprovedRequestResponse({
+    required List<ApprovedRequestDetail> approvals,
+  }) = _ApprovedRequestResponse;
+
+  factory ApprovedRequestResponse.fromJson(Map<String, dynamic> json) =>
+      _$ApprovedRequestResponseFromJson(json);
+}
+
+@freezed
+class ApprovedRequestDetail with _$ApprovedRequestDetail {
+  const factory ApprovedRequestDetail({
+    required int id,
+    required String createdAt,
+    required ApprovedRequestUser? followee,
+    required ApprovedRequestUser? follower,
+  }) = _ApprovedRequestDetail;
+
+  factory ApprovedRequestDetail.fromJson(Map<String, dynamic> json) =>
+      _$ApprovedRequestDetailFromJson(json);
+}
+
+@freezed
+class ApprovedRequestUser with _$ApprovedRequestUser {
+  const factory ApprovedRequestUser({
+    required int id,
+    required String displayName,
+    required String pDoneId,
+    required String fullName,
+    required String birthday,
+    required int sexCode,
+  }) = _ApprovedRequestUser;
+
+  factory ApprovedRequestUser.fromJson(Map<String, dynamic> json) =>
+      _$ApprovedRequestUserFromJson(json);
+}

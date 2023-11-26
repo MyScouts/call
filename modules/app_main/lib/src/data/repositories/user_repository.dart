@@ -61,4 +61,5 @@ abstract class UserRepository {
   Future<Map<String, dynamic>> getConfig(String key);
 
   Future<GetUserFollowDetailResponse> getFollowUser(int userId);
+  Future<ApprovedRequestResponse> approvedRequests();
 }
