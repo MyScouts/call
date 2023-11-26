@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 
 import '../../data/model/request/send_gift_payload.dart';
+import '../../data/model/response/gift_card_live.dart';
 import '../../data/model/response/live.dart';
 import '../../data/model/response/user_point_response.dart';
 import '../../data/repository/live_repository.dart';
@@ -36,5 +37,9 @@ class LiveUseCase {
 
   Future<UserPointResponse> getUserPoint() {
     return _liveRepository.getUserPoint();
+  }
+
+  Future<GiftCardLive> getInfoGiftCard(int liveId) async {
+    return _liveRepository.getInfoGiftCard(liveId);
   }
 }

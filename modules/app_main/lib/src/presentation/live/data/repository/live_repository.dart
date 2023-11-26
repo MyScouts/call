@@ -4,6 +4,7 @@ import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 
 import '../../domain/entities/gift_card_list.dart';
 import '../model/request/send_gift_payload.dart';
+import '../model/response/gift_card_live.dart';
 import '../model/response/join_live_response.dart';
 import '../model/response/live.dart';
 import '../model/response/user_point_response.dart';
@@ -23,6 +24,8 @@ abstract class LiveRepository {
   Future<GiftCardList> getGiftCardList(int type);
 
   Future sendGift(SendGiftPayload payload);
+
+  Future<GiftCardLive> getInfoGiftCard(int liveID);
 
   Future<UserPointResponse> getUserPoint();
 

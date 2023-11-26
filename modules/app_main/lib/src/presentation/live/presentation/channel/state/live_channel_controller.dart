@@ -77,6 +77,8 @@ class LiveChannelController {
     return host!.info.userID;
   }
 
+  LiveData get info => _info.value;
+
   void join(int id, [String? password]) async {
     try {
       final res = await Future.wait([
@@ -116,9 +118,7 @@ class LiveChannelController {
         _info.value.agoraToken ?? '',
         _info.value.agoraChannel ?? '',
         _me.value.info.userID,
-        role: _me.value.isOwner
-            ? ClientRoleType.clientRoleBroadcaster
-            : ClientRoleType.clientRoleAudience,
+        role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
       );
 
       ///get members
@@ -144,8 +144,7 @@ class LiveChannelController {
       WakelockPlus.enable();
 
       if (Platform.isAndroid) _initForegroundTask();
-
-    } catch(e) {
+    } catch (e) {
       print(e);
     }
   }
@@ -212,8 +211,7 @@ class LiveChannelController {
       androidNotificationOptions: AndroidNotificationOptions(
         channelId: 'notification_channel_id',
         channelName: 'Foreground Notification',
-        channelDescription:
-            'This notification appears when the foreground service is running.',
+        channelDescription: 'This notification appears when the foreground service is running.',
         channelImportance: NotificationChannelImportance.LOW,
         priority: NotificationPriority.LOW,
         iconData: const NotificationIconData(
@@ -271,6 +269,7 @@ class LiveChannelController {
         isOwner: user.id == _info.value.user?.id,
       );
       _members.value = [..._members, member];
+      print('length ===> ${_members.length}');
     });
 
     socketService.on(socketUserLeaveEvent, (Map data) {
@@ -298,18 +297,13 @@ class LiveChannelController {
 }
 
 extension RemoteVideoStateReasonX on RemoteVideoStateReason {
-  bool get isNetworkCongestion =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
+  bool get isNetworkCongestion => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
 
-  bool get isNetworkRecovery =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
+  bool get isNetworkRecovery => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
 
-  bool get isRemoteOffline =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
+  bool get isRemoteOffline => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
 
-  bool get isRemoteUnmuted =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
+  bool get isRemoteUnmuted => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
 
-  bool get isRemoteInBackground =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
+  bool get isRemoteInBackground => this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
 }

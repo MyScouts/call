@@ -13,6 +13,5 @@ class SendGiftPayload with _$SendGiftPayload {
     int? total,
   }) = _SendGiftPayload;
 
-  factory SendGiftPayload.fromJson(Map<String, Object?> json) =>
-      _$SendGiftPayloadFromJson(json);
+  factory SendGiftPayload.fromJson(Map<String, Object?> json) => _$SendGiftPayloadFromJson(json);
 }

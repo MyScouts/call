@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 
 import 'domain/entities/live_category_detail.dart';
 import 'domain/entities/live_type.dart';
+import 'presentation/channel/state/live_channel_controller.dart';
 import 'presentation/list_gift/gift_bottom_sheet.dart';
+import 'presentation/live_bottom/live_bottom_sheet.dart';
 
 extension LiveCoordinator on BuildContext {
   void showLiveTypePicker({
@@ -55,7 +57,11 @@ extension LiveCoordinator on BuildContext {
     );
   }
 
-  void showBottomGift() {
-    showModalBottomSheet(context: this, builder: (context) => const GiftCardBottomSheet());
+  void showBottomGift(LiveChannelController controller) {
+    showModalBottomSheet(context: this, builder: (context) => GiftCardBottomSheet(controller: controller));
+  }
+
+  void showBottomSheetLive(LiveChannelController controller) {
+    showModalBottomSheet(context: this, builder: (context) => LiveBottomSheet(controller: controller));
   }
 }

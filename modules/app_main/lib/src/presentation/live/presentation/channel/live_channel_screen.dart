@@ -1,6 +1,7 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:app_main/src/core/utils/loading_indicator/platform_loading.dart';
 import 'package:app_main/src/di/di.dart';
+import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:flutter/material.dart';
@@ -64,9 +65,7 @@ class _RtcRenderState extends State<_RtcRender> {
 
   @override
   Widget build(BuildContext context) {
-    final controller =
-        context.findAncestorStateOfType<_LiveChannelScreenState>()!.controller;
-
+    final controller = context.findAncestorStateOfType<_LiveChannelScreenState>()!.controller;
     if (provider != null) {
       return AgoraVideoView(
         key: const Key('render preview'),
@@ -107,13 +106,19 @@ class _RtcRenderState extends State<_RtcRender> {
           );
         }
 
-        return const Center(
-          child: Text(
-            'Đợi chủ phòng xíu nhé',
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
+        return Center(
+          child: GestureDetector(
+            onTap: () {
+              context.showBottomGift(controller);
+              //context.showBottomSheetLive(controller);
+            },
+            child: const Text(
+              'Đợi chủ phòng xíu nhé',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
             ),
           ),
         );
