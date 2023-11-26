@@ -31,8 +31,8 @@ class LiveUseCase {
     return _liveRepository.getGiftCardList(type);
   }
 
-  Future sendGift(SendGiftPayload payload) {
-    return _liveRepository.sendGift(payload);
+  Future sendGift({required int userId, required int liveId, required int giftId, required int total}) {
+    return _liveRepository.sendGift(userId: userId, liveId: liveId, giftId: giftId, total: total);
   }
 
   Future<UserPointResponse> getUserPoint() {

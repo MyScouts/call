@@ -186,11 +186,21 @@ class _LiveApi implements LiveApi {
   }
 
   @override
-  Future<dynamic> sendGift(SendGiftPayload payload) async {
+  Future<dynamic> sendGift(
+    int userId,
+    int liveId,
+    int giftId,
+    int total,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = payload;
+    final _data = {
+      'userId': userId,
+      'liveId': liveId,
+      'giftId': giftId,
+      'total': total,
+    };
     final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
       method: 'POST',
       headers: _headers,

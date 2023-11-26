@@ -1,4 +1,3 @@
-import 'package:app_main/src/presentation/live/data/model/request/send_gift_payload.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
 import 'package:localization/generated/l10n.dart';
@@ -41,7 +40,7 @@ class GiftController {
     required int giftId,
   }) async {
     try {
-      await _useCase.sendGift(SendGiftPayload(userId: userId, liveId: liveId, giftId: giftId, total: amount.value));
+      await _useCase.sendGift(userId: userId, liveId: liveId, giftId: giftId, total: amount.value);
     } catch (e) {}
   }
 }

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../di/di.dart';
-import '../../domain/usecases/live_usecases.dart';
 import '../channel/state/live_channel_controller.dart';
+import 'leader_board_tab.dart';
+import 'live_bottom_controller.dart';
 
 class LiveBottomSheet extends StatefulWidget {
   final LiveChannelController controller;
@@ -32,15 +33,20 @@ extension TabLiveBottomExt on TabLiveBottom {
 }
 
 class _LiveBottomSheetState extends State<LiveBottomSheet> {
-  final tabIndex = 0.obs;
-
-  final liveUseCase = getIt<LiveUseCase>();
+  final liveBottomController = getIt<LiveBottomController>();
 
   @override
   void initState() {
-    liveUseCase.getInfoGiftCard(widget.controller.info.id);
+    liveBottomController.getLeaderBoard(widget.controller.info.id);
     super.initState();
   }
+
+  List<Widget> get listTab => [
+        Container(),
+        Container(),
+        LeaderBoardTab(controller: liveBottomController),
+        Container(),
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +65,7 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
               color: Color(0xffE3E3E3),
             ),
             const SizedBox(height: 16),
+            Expanded(child: Obx(() => listTab[liveBottomController.tabIndex.value]))
           ],
         ),
       ),
@@ -74,7 +81,7 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
               TabLiveBottom.values.length,
               (index) => GestureDetector(
                     onTap: () {
-                      tabIndex.value = index;
+                      liveBottomController.tabIndex.value = index;
                     },
                     child: Container(
                       padding: const EdgeInsets.all(10),
@@ -93,7 +100,9 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
                               height: 4,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(3.5),
-                                  color: tabIndex.value == index ? const Color(0xff9627df) : Colors.transparent))
+                                  color: liveBottomController.tabIndex.value == index
+                                      ? const Color(0xff9627df)
+                                      : Colors.transparent))
                         ],
                       ),
                     ),

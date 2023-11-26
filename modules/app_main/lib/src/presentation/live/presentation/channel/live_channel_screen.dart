@@ -1,13 +1,14 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:app_main/src/core/utils/loading_indicator/platform_loading.dart';
 import 'package:app_main/src/di/di.dart';
-import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_bottom_action.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_channel_header.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'widget/sent_gift_page.dart';
 
 class LiveChannelScreen extends StatefulWidget {
   const LiveChannelScreen({super.key, required this.liveID});
@@ -21,7 +22,7 @@ class LiveChannelScreen extends StatefulWidget {
 }
 
 class LiveChannelScreenState extends State<LiveChannelScreen> {
-  late final controller = getIt<LiveChannelController>();
+  final controller = getIt<LiveChannelController>();
 
   @override
   void initState() {
@@ -37,21 +38,27 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Material(
+    return Material(
       color: Colors.white,
       child: Stack(
         fit: StackFit.expand,
         children: [
-          _RtcRender(),
-          Align(
+          const _RtcRender(),
+          const Align(
             alignment: Alignment.topCenter,
             child: SafeArea(
               child: LiveChannelHeader(),
             ),
           ),
-          Align(
+          const Align(
             alignment: Alignment.bottomCenter,
             child: LiveBottomAction(),
+          ),
+          Positioned.fill(
+            child: IgnorePointer(
+              ignoring: true,
+              child: SentGiftPage(provider: controller.floatingGiftsProvider),
+            ),
           ),
         ],
       ),
@@ -132,19 +139,13 @@ class _RtcRenderState extends State<_RtcRender> {
           );
         }
 
-        return Center(
-          child: GestureDetector(
-            onTap: () {
-              context.showBottomGift(controller);
-              //context.showBottomSheetLive(controller);
-            },
-            child: const Text(
-              'Đợi chủ phòng xíu nhé',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
+        return const Center(
+          child: Text(
+            'Đợi chủ phòng xíu nhé',
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
             ),
           ),
         );

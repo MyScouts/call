@@ -6,7 +6,6 @@ import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/entities/gift_card_list.dart';
-import '../../model/request/send_gift_payload.dart';
 import '../../model/response/join_live_response.dart';
 import '../../model/response/live.dart';
 import '../../model/response/user_point_response.dart';
@@ -56,8 +55,8 @@ class LiveRepositoryImpl extends LiveRepository {
   }
 
   @override
-  Future sendGift(SendGiftPayload payload) async {
-    return _liveApi.sendGift(payload);
+  Future sendGift({required int userId, required int liveId, required int giftId, required int total}) async {
+    return _liveApi.sendGift(userId,liveId,giftId,total);
   }
 
   @override
@@ -84,6 +83,7 @@ class LiveRepositoryImpl extends LiveRepository {
     final result = await _liveApi.getInfoGiftCard(liveId: liveID);
     return result.data;
   }
+
   Future<bool> endLive({required int liveId}) async {
     final res = await _liveApi.endLive(liveId: liveId);
     return res.data;

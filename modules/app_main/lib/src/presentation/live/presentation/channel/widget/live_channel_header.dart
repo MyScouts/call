@@ -1,4 +1,5 @@
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
+import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/live_channel_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -122,36 +123,41 @@ class LiveChannelHeader extends StatelessWidget {
               ),
             ),
           ),
-          Row(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(13),
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 6,
-                  vertical: 4,
-                ),
-                child: Row(
-                  children: [
-                    ImageWidget(IconAppConstants.icLiveMember),
-                    const SizedBox(width: 2),
-                    Obx(
-                      () => Text(
-                        controller.members.value.length.toString(),
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
+          GestureDetector(
+            onTap: (){
+              context.showBottomSheetLive(controller);
+            },
+            child: Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(13),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 4,
+                  ),
+                  child: Row(
+                    children: [
+                      ImageWidget(IconAppConstants.icLiveMember),
+                      const SizedBox(width: 2),
+                      Obx(
+                        () => Text(
+                          controller.members.value.length.toString(),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const CloseButton(color: Colors.white),
-            ],
+                const CloseButton(color: Colors.white),
+              ],
+            ),
           ),
         ],
       ),

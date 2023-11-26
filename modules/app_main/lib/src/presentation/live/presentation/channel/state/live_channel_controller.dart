@@ -17,7 +17,9 @@ import 'package:injectable/injectable.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
+import '../../../data/model/response/sent_gift_response.dart';
 import '../../../data/repository/live_repository.dart';
+import '../widget/sent_gift_page.dart';
 
 enum LiveStreamState {
   loading,
@@ -41,6 +43,7 @@ class LiveChannelController {
   final UserUsecase userUseCase;
   final LiveService service;
   final LiveSocketService socketService;
+  final FloatingGiftsProvider floatingGiftsProvider;
 
   LiveChannelController(
     this.repository,
@@ -48,6 +51,7 @@ class LiveChannelController {
     this.userUseCase,
     this.service,
     this.socketService,
+    this.floatingGiftsProvider,
   );
 
   final Rx<LiveStreamState> _state = LiveStreamState.loading.obs;
@@ -262,6 +266,24 @@ class LiveChannelController {
 
     socketService.on(socketReConnectEvent, (data) {
       debugPrint('Đang kết nối lại ${socketService.socket.id}');
+    });
+
+    socketService.on(socketGiftGiven, (data) {
+      debugPrint('$socketGiftGiven ===> $data');
+      final gift = SentGiftResponse.fromJson(data as Map<String, Object?>);
+      if (gift.giftCard?.metadata?.isStaticGif == true) {
+        floatingGiftsProvider.addGift(
+          gift: gift,
+          giftNumber: gift.total ?? 1,
+        );
+      } else {
+        for (int j = 1; j <= (gift.total! > 3 ? 3 : gift.total!); j++) {
+          floatingGiftsProvider.addGiftAnimation(
+            gift: gift,
+            giftNumber: gift.total ?? 1,
+          );
+        }
+      }
     });
 
     socketService.on(socketUserJoinEvent, (Map data) {

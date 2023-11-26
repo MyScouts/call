@@ -7,7 +7,6 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../../../../core/networking/api_response.dart';
 import '../../../domain/entities/gift_card_list.dart';
-import '../../model/request/send_gift_payload.dart';
 import '../../model/response/gift_card_live.dart';
 import '../../model/response/join_live_response.dart';
 import '../../model/response/live.dart';
@@ -83,7 +82,12 @@ abstract class LiveApi {
   Future<ApiResponse<UserPointResponse>> getUserPoint();
 
   @POST(LiveApiConstant.sendGift)
-  Future sendGift(@Body() SendGiftPayload payload);
+  Future sendGift(
+    @Field('userId') int userId,
+    @Field('liveId') int liveId,
+    @Field('giftId') int giftId,
+    @Field('total') int total,
+  );
 
   @GET(LiveApiConstant.giftCard)
   Future<ApiResponse<GiftCardLive>> getInfoGiftCard({@Path('liveId') required int liveId});
