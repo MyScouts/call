@@ -13,7 +13,7 @@ part 'diamond_wallet_api.g.dart';
 class DiamondWalletApiConstants {
   static const transactionList = '/api/diamond-wallet/transaction/list';
   static const transactionDetail = '/api/diamond-wallet/transaction/{id}';
-  static const getDiamondWalletInfo = '/api/diamond-wallet/info';
+  static const getDiamondWalletInfo = 'api/v1/wallet';
   static const exchangeDiamond = 'api/v1/wallet/exchange/diamond-to-vnd';
   static const estimateDiamond = '/api/diamond-wallet/exchange-vnd/estimate';
 }

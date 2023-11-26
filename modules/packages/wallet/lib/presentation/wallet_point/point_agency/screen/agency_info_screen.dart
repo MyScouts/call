@@ -14,6 +14,7 @@ import '../../../../../wallet.dart';
 import '../../../../core/theme/wallet_theme.dart';
 import '../../../../core/utils/deboun_callback.dart';
 import '../../../../core/utils/input_formatter.dart';
+import '../../../../data/datasources/models/est_coin_response.dart';
 import '../../../../data/datasources/models/exchange_coin_response.dart';
 import '../../../../data/datasources/models/wallet_coin_payment_information_response.dart';
 import '../../../../domain/entities/agency/agency.dart';
@@ -74,6 +75,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
   }
 
   late AgencyResponse agency;
+  num exchangeVND = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +107,9 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                 initial: () {},
                 error: (msg) {
                   showToastMessage(msg, ToastMessageType.error);
+                },
+                estCoin: (EstCoinResponse response) {
+                  exchangeVND = response.vnd;
                 },
                 exchangeSuccess: (ExchangeCoinResponse response) {
                   _agencyBloc.add(
@@ -473,7 +478,8 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                       width: 8,
                     ),
                     Text(
-                      estCoin.coin.toAppCurrencyString(isWithSymbol: false),
+                      (estCoin.coin + estCoin.bonusCoin)
+                          .toAppCurrencyString(isWithSymbol: false),
                       style:
                           context.textTheme.titleMedium!.copyWith(fontSize: 16),
                     )

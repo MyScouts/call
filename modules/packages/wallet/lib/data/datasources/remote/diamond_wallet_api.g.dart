@@ -101,7 +101,7 @@ class _DiamondWalletApi implements DiamondWalletApi {
     )
             .compose(
               _dio.options,
-              '/api/diamond-wallet/info',
+              'api/v1/wallet',
               queryParameters: queryParameters,
               data: _data,
             )
