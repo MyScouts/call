@@ -3,10 +3,10 @@ import 'package:app_main/src/presentation/live/presentation/create/widget/live_c
 import 'package:app_main/src/presentation/live/presentation/create/widget/live_title_picker.dart';
 import 'package:app_main/src/presentation/live/presentation/create/widget/live_type_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'domain/entities/live_category_detail.dart';
 import 'domain/entities/live_type.dart';
+import 'presentation/list_gift/gift_bottom_sheet.dart';
 
 extension LiveCoordinator on BuildContext {
   void showLiveTypePicker({
@@ -53,5 +53,9 @@ extension LiveCoordinator on BuildContext {
       LiveChannelScreen.routerName,
       arguments: liveID,
     );
+  }
+
+  void showBottomGift() {
+    showModalBottomSheet(context: this, builder: (context) => const GiftCardBottomSheet());
   }
 }

@@ -15,9 +15,8 @@ class LiveWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if(liveDetail.id == null) return;
+        if (liveDetail.id == null) return;
         context.joinLive(liveDetail.id!);
-        // showModalBottomSheet(context: context, builder: (context) => const GiftCardBottomSheet());
       },
       child: Container(
         decoration: BoxDecoration(
