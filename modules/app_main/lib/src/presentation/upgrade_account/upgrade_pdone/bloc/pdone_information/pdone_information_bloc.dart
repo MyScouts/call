@@ -1,6 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/extensions/string_extension.dart';
+import 'package:app_main/src/presentation/upgrade_account/place_information_constant.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -27,6 +31,9 @@ class PDoneInformationBloc
     emit(PDoneLoadingInformation());
     try {
       final res = await _upgradeAccountUsecase.pDoneProfile();
+      final eKycBase64 = await _upgradeAccountUsecase.getEKycKey();
+      final decoded = utf8.decode(base64Url.decode(eKycBase64));
+      ekycInfo = jsonDecode(jsonEncode(decoded));
       final registeringProfile =
           await _upgradeAccountUsecase.getRegisteringProfile();
       if (res.profile.type == 0 && registeringProfile == null) {
