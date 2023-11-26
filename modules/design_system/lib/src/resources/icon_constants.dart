@@ -111,6 +111,16 @@ class IconAppConstants {
   static String icLiveUser = IconApp.icLiveUser.path;
   static String icLiveUser3 = IconApp.icLiveUser3.path;
   static String icVersion = IconApp.icVersion.path;
+  static String icDiamond = IconApp.icDiamond.path;
+  static String icLiveMember = IconApp.icLiveMember.path;
+  static String icLiveMarshop = IconApp.icLiveMarshop.path;
+  static String icLiveComment = IconApp.icLiveComment.path;
+  static String icLiveShare = IconApp.icLiveShare.path;
+  static String icLiveSetting = IconApp.icLiveSetting.path;
+  static String icLiveQr = IconApp.icLiveQr.path;
+  static String icLiveRose = IconApp.icLiveRose.path;
+  static String icLiveGift = IconApp.icLiveGift.path;
+  static String icLiveHeart = IconApp.icLiveHeart.path;
 }
 
 enum IconApp {
@@ -227,6 +237,16 @@ enum IconApp {
   icLiveUser('assets/icons/ic_live_user.svg'),
   icLiveUser3('assets/icons/ic_user_3.svg'),
   icVersion('assets/icons/ic_version.svg'),
+  icDiamond('assets/icons/diamond.png'),
+  icLiveMember('assets/icons/live_member.svg'),
+  icLiveMarshop('assets/icons/live_marshop.svg'),
+  icLiveComment('assets/icons/live_comment.svg'),
+  icLiveShare('assets/icons/live_share.svg'),
+  icLiveSetting('assets/icons/live_setting.svg'),
+  icLiveQr('assets/icons/live_qr.svg'),
+  icLiveRose('assets/icons/live_rose.png'),
+  icLiveGift('assets/icons/live_gift.png'),
+  icLiveHeart('assets/icons/live_heart.png'),
   icLeaveTeam('assets/icons/ic_leave_team.svg');
   const IconApp(this.path);
 

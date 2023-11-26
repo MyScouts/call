@@ -5,7 +5,6 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/services/live_service/impl/live_socket_service_impl.dart';
 import 'package:app_main/src/core/services/live_service/live_service.dart';
 import 'package:app_main/src/core/services/live_service/live_socket_service.dart';
-import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/presentation/live/data/model/response/join_live_response.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_member.dart';
@@ -59,6 +58,10 @@ class LiveChannelController {
   late Rx<LiveMember> _me;
   late final RxList<LiveMember> _members = <LiveMember>[].obs;
 
+  RxList<LiveMember> get members => _members;
+
+  Rx<LiveMember> get me => _me;
+
   final RxBool _enableChat = true.obs;
 
   final RxBool _hostOffline = true.obs;
@@ -67,8 +70,13 @@ class LiveChannelController {
 
   bool get hostInLive {
     if (_me.value.isOwner) return true;
-    final host = _members.firstWhereOrNull((e) => e.isOwner);
     return host != null;
+  }
+
+  LiveMember? get host {
+    if (!hostInLive) return null;
+    final host = _members.firstWhereOrNull((e) => e.isOwner);
+    return host;
   }
 
   int get hostID {
@@ -290,9 +298,17 @@ class LiveChannelController {
     });
   }
 
-  void leaveLive() {
+  void leaveLive() async {
     socketService.disconnect();
     service.leaveChannel();
+
+    if (_me.value.isOwner) repository.endLive(liveId: _info.value.id);
+
+    if (Platform.isAndroid && await FlutterForegroundTask.isRunningService) {
+      FlutterForegroundTask.stopService();
+    }
+
+    WakelockPlus.disable();
   }
 }
 

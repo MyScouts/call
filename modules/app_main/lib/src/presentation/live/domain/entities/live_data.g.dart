@@ -34,7 +34,5 @@ const _$LiveTypeEnumMap = {
   LiveType.public: 'public',
   LiveType.password_locked: 'password_locked',
   LiveType.friend_only: 'friend_only',
-  LiveType.follower_only: 'follower_only',
-  LiveType.contest: 'contest',
   LiveType.only_me: 'only_me',
 };

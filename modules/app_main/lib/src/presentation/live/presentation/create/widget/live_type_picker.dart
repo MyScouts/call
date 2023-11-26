@@ -38,90 +38,93 @@ class _LiveTypePickerState extends State<LiveTypePicker> {
             top: Radius.circular(8.0),
           ),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AppBar(
-              leading: const CloseButton(),
-              centerTitle: true,
-              title: const Text(
-                'Quyền riêng tư',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+        child: SafeArea(
+          top: false,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AppBar(
+                leading: const CloseButton(),
+                centerTitle: true,
+                title: const Text(
+                  'Quyền riêng tư',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              actions: [
-                Center(
-                  child: TextButton(
-                    onPressed: () {
-                      widget.onChanged(_type);
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      'Xong',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Theme.of(context).primaryColor,
+                actions: [
+                  Center(
+                    child: TextButton(
+                      onPressed: () {
+                        widget.onChanged(_type);
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        'Xong',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            ...LiveType.values.map((e) {
-              return ListTile(
-                onTap: () {
-                  setState(() {
-                    _type = e;
-                  });
-                },
-                title: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ImageWidget(e.pathImage),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            e.text,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xff6E6E6E),
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Flexible(
-                            child: Text(
-                              e.description,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Color(0xff8C8C8C),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                trailing: Radio<LiveType>(
-                  value: _type,
-                  groupValue: e,
-                  onChanged: (Object? value) {
+                ],
+              ),
+              ...LiveType.values.map((e) {
+                return ListTile(
+                  onTap: () {
                     setState(() {
                       _type = e;
                     });
                   },
-                ),
-              );
-            }),
-          ],
+                  title: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ImageWidget(e.pathImage),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              e.text,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xff6E6E6E),
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Flexible(
+                              child: Text(
+                                e.description,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0xff8C8C8C),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  trailing: Radio<LiveType>(
+                    value: _type,
+                    groupValue: e,
+                    onChanged: (Object? value) {
+                      setState(() {
+                        _type = e;
+                      });
+                    },
+                  ),
+                );
+              }),
+            ],
+          ),
         ),
       ),
     );

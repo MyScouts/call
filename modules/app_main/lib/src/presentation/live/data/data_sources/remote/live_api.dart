@@ -93,6 +93,9 @@ abstract class LiveApi {
     @Body() Map<String, dynamic> json,
   );
 
+  @DELETE(LiveApiConstant.livePathId)
+  Future<ApiResponse<bool>> endLive({@Path('id') required int liveId});
+
 //
 // @POST(LiveApiConstant.joinLive)
 // Future<ApiResponse<LiveResponse>> joinLive({

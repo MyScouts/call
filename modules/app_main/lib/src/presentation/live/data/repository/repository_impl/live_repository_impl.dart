@@ -84,4 +84,8 @@ class LiveRepositoryImpl extends LiveRepository {
     final result = await _liveApi.getInfoGiftCard(liveId: liveID);
     return result.data;
   }
+  Future<bool> endLive({required int liveId}) async {
+    final res = await _liveApi.endLive(liveId: liveId);
+    return res.data;
+  }
 }
