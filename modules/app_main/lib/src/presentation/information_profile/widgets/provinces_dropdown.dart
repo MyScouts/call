@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/domain/entities/update_account/place/province.dart';
+import 'package:design_system/design_system.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,7 @@ class ProvinceDropDown extends StatefulWidget {
   final bool required;
   final List<Province> provinces;
   final Province? province;
+  final bool enable;
 
   const ProvinceDropDown({
     super.key,
@@ -15,6 +17,7 @@ class ProvinceDropDown extends StatefulWidget {
     this.required = false,
     required this.provinces,
     this.province,
+    this.enable = true,
   });
 
   @override
@@ -46,6 +49,9 @@ class _ProvinceDropDownState extends State<ProvinceDropDown> {
     if (oldWidget.province != widget.province) {
       setState(() {});
     }
+    if(oldWidget.enable != widget.enable) {
+      setState(() {});
+    }
   }
 
   @override
@@ -75,64 +81,68 @@ class _ProvinceDropDownState extends State<ProvinceDropDown> {
           ],
         ),
         const SizedBox(height: 7),
-        DropdownButtonFormField2<Province>(
-          isExpanded: true,
-          decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(vertical: 12),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
+        IgnorePointer(
+          ignoring: !widget.enable,
+          child: DropdownButtonFormField2<Province>(
+            isExpanded: true,
+            decoration: InputDecoration(
+              fillColor: widget.enable ? Colors.white : AppColors.grey70,
+              contentPadding: const EdgeInsets.symmetric(vertical: 12),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
             ),
-          ),
-          hint: const Text(
-            'Chọn tỉnh thành.',
-            style: TextStyle(fontSize: 14),
-          ),
-          value: _province,
-          items: _provinces
-              .map((item) => DropdownMenuItem<Province>(
-                    value: item,
-                    child: Text(
-                      item.name!,
-                      style: const TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                  ))
-              .toList(),
-          validator: (value) {
-            if (value == null) {
-              return 'Chọn tình thành.';
-            }
-            return null;
-          },
-          onChanged: (value) {
-            if (value != null) {
-              widget.onChange(value);
+            hint: const Text(
+              'Chọn tỉnh thành.',
+              style: TextStyle(fontSize: 14),
+            ),
+            value: _province,
+            items: _provinces
+                .map((item) => DropdownMenuItem<Province>(
+              value: item,
+              child: Text(
+                item.name!,
+                style: const TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+            ))
+                .toList(),
+            validator: (value) {
+              if (value == null) {
+                return 'Chọn tình thành.';
+              }
+              return null;
+            },
+            onChanged: (value) {
+              if (value != null) {
+                widget.onChange(value);
+                value = value;
+                setState(() {});
+              }
+            },
+            onSaved: (value) {
               value = value;
               setState(() {});
-            }
-          },
-          onSaved: (value) {
-            value = value;
-            setState(() {});
-          },
-          buttonStyleData: const ButtonStyleData(
-            padding: EdgeInsets.only(right: 8),
-          ),
-          iconStyleData: const IconStyleData(
-            icon: Icon(
-              Icons.arrow_drop_down,
-              color: Colors.black45,
+            },
+            buttonStyleData: const ButtonStyleData(
+              padding: EdgeInsets.only(right: 8),
             ),
-            iconSize: 24,
-          ),
-          dropdownStyleData: DropdownStyleData(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
+            iconStyleData: const IconStyleData(
+              icon: Icon(
+                Icons.arrow_drop_down,
+                color: Colors.black45,
+              ),
+              iconSize: 24,
             ),
-          ),
-          menuItemStyleData: const MenuItemStyleData(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            dropdownStyleData: DropdownStyleData(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            menuItemStyleData: const MenuItemStyleData(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+            ),
           ),
         ),
       ],

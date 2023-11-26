@@ -6,11 +6,13 @@ class EducationDropdown extends StatefulWidget {
   final Function(String) onChange;
   final bool required;
   final List<AcademicLevel> educations;
+  final AcademicLevel level;
   const EducationDropdown({
     super.key,
     required this.onChange,
     this.required = false,
     this.educations = const [],
+    required this.level,
   });
 
   @override
@@ -18,6 +20,15 @@ class EducationDropdown extends StatefulWidget {
 }
 
 class _EducationDropdownState extends State<EducationDropdown> {
+
+  @override
+  void didUpdateWidget(covariant EducationDropdown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if(oldWidget.level != widget.level) {
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -57,7 +68,7 @@ class _EducationDropdownState extends State<EducationDropdown> {
             'Chọn học vấn.',
             style: TextStyle(fontSize: 14),
           ),
-          value: widget.educations.first,
+          value: widget.level,
           items: widget.educations
               .map((item) => DropdownMenuItem<AcademicLevel>(
                     value: item,
@@ -78,7 +89,7 @@ class _EducationDropdownState extends State<EducationDropdown> {
           },
           onChanged: (value) {
             if (value != null) {
-              widget.onChange(value.key!);
+              widget.onChange(value.name!);
               value = value;
               setState(() {});
             }

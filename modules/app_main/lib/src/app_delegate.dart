@@ -24,6 +24,7 @@ abstract class IAppDelegate {
   Future<void> run(Map<String, dynamic> env);
   UserSharePreferencesUsecase get userSharePreferencesUsecase => injector.get();
   DeviceService get deviceService => injector.get();
+  GlobalKey<NavigatorState> get root => AppCoordinator.root;
   void reset() {
     injector.reset();
   }
@@ -34,7 +35,14 @@ final isAuthenticate = BehaviorSubject()..add(false);
 
 @singleton
 class AppDelegate extends IAppDelegate {
-  AppDelegate();
+  AppDelegate() {
+    onLogout.listen((value) {
+      LoggerService.print('[AppDelegate] force logout');
+      if (value != null && value) {
+        root.currentContext?.read<AppCubit>().logout();
+      }
+    });
+  }
 
   @override
   Future<Widget> build(Map<String, dynamic> env) async {

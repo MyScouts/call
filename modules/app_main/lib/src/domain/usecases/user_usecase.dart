@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
-import 'package:app_main/src/data/models/responses/update_pdone_profile_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:injectable/injectable.dart';
@@ -74,14 +73,15 @@ class UserUsecase {
     return _userRepository.onboarding();
   }
 
-  Future<UpdateNonePDoneProfileReponse> updatePDoneProfile(UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload) {
+  Future<UpdateNonePDoneProfileReponse> updatePDoneProfile(
+      UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload) {
     return _userRepository.updatePDoneProfile(updateNonePDoneProfilePayload);
   }
 
   Future<UpdateNonePDoneProfileReponse> updateNonePNoneDoneProfile(
-      UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload) {
+      Map<String, dynamic> data) {
     return _userRepository
-        .updateNonePDoneProfile(updateNonePDoneProfilePayload);
+        .updateNonePDoneProfile(data);
   }
 
   Future<UpdateNonePDoneProfileReponse> getPDoneProfile() {
@@ -94,5 +94,25 @@ class UserUsecase {
 
   Future invite(String teamID, Map<String, dynamic> json) {
     return _userRepository.invite(teamID, json);
+  }
+
+  Future<User> updateEmail(Map<String, dynamic> json) {
+    return _userRepository.updateEmail(json);
+  }
+
+  Future<bool> genOtpEmail(String email) {
+    return _userRepository.genOtpEmail(email);
+  }
+
+  Future updateAvatar(String url) {
+    return _userRepository.updateAvatar(url);
+  }
+
+  Future setConfig(String key, Map<String, dynamic> json) {
+    return _userRepository.setConfig(key, json);
+  }
+
+  Future<Map<String, dynamic>> getConfig(String key) {
+    return _userRepository.getConfig(key);
   }
 }

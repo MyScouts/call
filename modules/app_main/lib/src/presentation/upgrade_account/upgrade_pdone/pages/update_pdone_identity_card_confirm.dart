@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/extensions/string_extension.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -35,9 +36,11 @@ class _UpdatePdoneIdentityCardConfirmState
   void initState() {
     // TODO: implement initState
     super.initState();
-    final faceLiveNessData =
+    dynamic faceLiveNessData =
         (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).imageEKyc;
-
+    if (faceLiveNessData is String) {
+      faceLiveNessData = faceLiveNessData.toMap();
+    }
     frontImagePath = faceLiveNessData['front_cmnd'];
     backImagePath = faceLiveNessData['back_cmnd'];
   }
@@ -50,7 +53,8 @@ class _UpdatePdoneIdentityCardConfirmState
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(child: SingleChildScrollView(
+          Expanded(
+              child: SingleChildScrollView(
             child: Column(
               children: [
                 Column(
@@ -88,8 +92,6 @@ class _UpdatePdoneIdentityCardConfirmState
       ),
     );
   }
-
-
 
   Widget _buildFontIdentityCard() {
     return Column(

@@ -3,11 +3,8 @@ import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/presentation/profile/state/user_profile_bloc.dart';
 import 'package:app_main/src/presentation/profile/widget/use_header.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:imagewidget/imagewidget.dart';
 
 import 'edit_profile_empty.dart';
 
@@ -311,9 +308,9 @@ class _Profile extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const Row(
+                      Row(
                         children: [
-                          Expanded(
+                          const Expanded(
                             child: Text(
                               'Email',
                               style: TextStyle(
@@ -325,8 +322,8 @@ class _Profile extends StatelessWidget {
                           ),
                           Expanded(
                             child: Text(
-                              '',
-                              style: TextStyle(
+                              state.user?.email ?? '',
+                              style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
                               ),
@@ -471,113 +468,114 @@ class _Profile extends StatelessWidget {
                     ].separated(const SizedBox(height: 20)),
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
+                if (state.info != null)
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 12,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Row(
+                          children: [
+                            const Expanded(
+                              child: Text(
+                                'Người bảo hộ',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                state.info?.fullName ?? '',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            const Expanded(
+                              child: Text(
+                                'ID P-DONE',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                state.info?.pDoneId.toString() ?? '',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            const Expanded(
+                              child: Text(
+                                'Số CCCD',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                state.info?.identityNumber ?? '',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            const Expanded(
+                              child: Text(
+                                'Số điện thoại',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                state.info?.phone ?? '',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ].separated(const SizedBox(height: 20)),
+                    ),
                   ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 12,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Row(
-                        children: [
-                          const Expanded(
-                            child: Text(
-                              'Người bảo hộ',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              state.info?.fullName ?? '',
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Expanded(
-                            child: Text(
-                              'ID P-DONE',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              state.info?.pDoneId.toString() ?? '',
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Expanded(
-                            child: Text(
-                              'Số CCCD',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              state.info?.identityNumber ?? '',
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Expanded(
-                            child: Text(
-                              'Số điện thoại',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              state.info?.phone ?? '',
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ].separated(const SizedBox(height: 20)),
-                  ),
-                ),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -613,41 +611,28 @@ class _Profile extends StatelessWidget {
                           ),
                         ],
                       ),
-                      BlocBuilder<UpgradePDoneBloc, UpgradePDoneState>(
-                        buildWhen: (old, s) => s is GetListMasterSuccess,
-                        builder: (_, s) {
-                          if (s is GetListMasterSuccess) {
-                            final interests = s.upgradeAccount.interests ?? [];
-                            final data = interests.firstWhereOrNull(
-                                (e) => e.key == state.pDoneProfile?.interest);
-
-                            return Row(
-                              children: [
-                                const Expanded(
-                                  child: Text(
-                                    'Sở thích',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    data?.name ?? '',
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          }
-
-                          return const SizedBox();
-                        },
+                      Row(
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              'Sở thích',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              state.pDoneProfile?.interest ?? '',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ].separated(const SizedBox(height: 20)),
                   ),

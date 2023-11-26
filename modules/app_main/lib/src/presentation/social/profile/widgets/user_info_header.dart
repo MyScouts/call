@@ -78,29 +78,14 @@ class _UserInfoHeaderState extends State<UserInfoHeader> {
           left: 0,
           right: 0,
           child: Center(
-            child: Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                border: Border.all(color: AppColors.white, width: 5),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(100),
-                child: CachedNetworkImage(
-                  imageUrl: _userInfo.avatar ?? "",
-                  errorWidget: (context, url, error) {
-                    return ImageWidget(
-                      ImageConstants.defaultUserAvatar,
-                      width: double.infinity,
-                      height: double.infinity,
-                      fit: BoxFit.cover,
-                    );
-                  },
-                ),
-              ),
-            ),
-          ),
+              child: AppAvatarWidget(
+            avatar: _userInfo.avatar,
+            defaultAvatar: ImageConstants.defaultUserAvatar,
+            width: 100,
+            height: 100,
+            isPDone: _userInfo.isPDone,
+            border: Border.all(color: AppColors.white, width: 4),
+          )),
         ),
         Positioned(
           top: MediaQuery.of(context).padding.top,

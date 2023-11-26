@@ -17,5 +17,5 @@ class ProtectorUseCase {
     return repository.replyRequest(json);
   }
 
-  Future<ProtectorInfo> myProtector() => repository.myProtector();
+  Future<ProtectorInfo?> myProtector() => repository.myProtector();
 }

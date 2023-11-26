@@ -9,6 +9,7 @@ class RevokeBossModal extends StatelessWidget {
   final VoidCallback onAction;
   final User member;
   final Team team;
+
   const RevokeBossModal({
     super.key,
     required this.member,
@@ -36,40 +37,54 @@ class RevokeBossModal extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 5),
+            const SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   member.getdisplayName,
                   style: context.textTheme.titleMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 18,
+                    height: 1.4,
                   ),
                 ),
+                const SizedBox(height: 2),
                 Text(
                   "ID: ${member.pDoneId}",
                   style: context.textTheme.titleSmall!.copyWith(
-                    color: Colors.grey[500],
-                    fontSize: 12,
+                    color: const Color(0xFFACACAC),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    height: 1.4,
                   ),
                 ),
               ],
             )
           ]),
-          const SizedBox(height: 5),
+          const SizedBox(height: 10),
           RichText(
             text: TextSpan(
-                text: "Bạn có muốn huỷ quyền làm Boss Team của Team ",
-                style: context.textTheme.bodyMedium,
-                children: [
-                  TextSpan(
-                    text: team.name,
-                    style: context.textTheme.titleMedium!.copyWith(
-                      color: Colors.black,
-                    ),
+              text: "Bạn có muốn huỷ quyền làm Boss Team của Team ",
+              style: context.textTheme.titleMedium!.copyWith(
+                color: const Color(0xFF667385),
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                height: 24 / 16,
+              ),
+              children: [
+                TextSpan(
+                  text: team.name,
+                  style: context.textTheme.titleMedium!.copyWith(
+                    color: const Color(0xFF667385),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    height: 24 / 16,
                   ),
-                  const TextSpan(text: " không?"),
-                ]),
+                ),
+                const TextSpan(text: " không?"),
+              ],
+            ),
           ),
           const SizedBox(height: 5),
           Row(
@@ -77,7 +92,14 @@ class RevokeBossModal extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text("Huỷ"),
+                child: Text(
+                  "Huỷ",
+                  style: context.textTheme.titleMedium!.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
               ),
               TextButton(
                 onPressed: () => onAction.call(),
@@ -86,6 +108,7 @@ class RevokeBossModal extends StatelessWidget {
                   style: context.textTheme.titleMedium!.copyWith(
                     color: Colors.red,
                     fontWeight: FontWeight.bold,
+                    fontSize: 16,
                   ),
                 ),
               ),

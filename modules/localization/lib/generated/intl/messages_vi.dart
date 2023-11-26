@@ -20,15 +20,26 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'vi';
 
-  static String m0(field) => "${field} không hợp lệ.";
+  static String m0(date, time) => "${date} | ${time} ";
 
-  static String m1(field) => "vui lòng nhập ${field}.";
+  static String m1(field) => "${field} không hợp lệ.";
+
+  static String m2(field) => "vui lòng nhập ${field}.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "account_profile":
             MessageLookupByLibrary.simpleMessage("Hồ sơ tài khoản"),
         "by_vdone": MessageLookupByLibrary.simpleMessage("của VDONE"),
+        "community": MessageLookupByLibrary.simpleMessage("Cộng đồng"),
+        "community_charity":
+            MessageLookupByLibrary.simpleMessage("Từ thiện cộng đồng"),
+        "community_group":
+            MessageLookupByLibrary.simpleMessage("Nhóm cộng đồng"),
+        "community_survey":
+            MessageLookupByLibrary.simpleMessage("Khảo sát cộng đồng"),
+        "community_training":
+            MessageLookupByLibrary.simpleMessage("Đào tạo cộng đồng"),
         "confirm": MessageLookupByLibrary.simpleMessage("Xác nhận"),
         "confirmation_code_has_been_sent":
             MessageLookupByLibrary.simpleMessage("Mã xác nhận đã được gửi "),
@@ -39,8 +50,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Nhập mã xác minh"),
         "forgot_password":
             MessageLookupByLibrary.simpleMessage("Quên mật khẩu?"),
+        "formatDateDDmmYYYYhhMM": m0,
+        "gift": MessageLookupByLibrary.simpleMessage("Quà tặng"),
+        "gift_hint": MessageLookupByLibrary.simpleMessage(
+            "Cổ vũ cho chủ phòng để tăng exp"),
         "has_one_1_digit":
             MessageLookupByLibrary.simpleMessage("Có ít nhất 1 chữ số"),
+        "latest": MessageLookupByLibrary.simpleMessage("Mới nhất"),
+        "lbl_Camera": MessageLookupByLibrary.simpleMessage("Camera"),
+        "lbl_File": MessageLookupByLibrary.simpleMessage("File"),
+        "lbl_Gallery": MessageLookupByLibrary.simpleMessage("Gallery"),
         "lbl_Phone": MessageLookupByLibrary.simpleMessage("số điện thoại"),
         "lbl_continue": MessageLookupByLibrary.simpleMessage("Tiếp tục"),
         "lbl_password": MessageLookupByLibrary.simpleMessage("Mật khẩu"),
@@ -48,7 +67,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Nhập lại mật khẩu"),
         "least_one_uppercase_character": MessageLookupByLibrary.simpleMessage(
             "Có ít nhất một ký tự viết hoa"),
+        "live": MessageLookupByLibrary.simpleMessage("Live"),
         "login": MessageLookupByLibrary.simpleMessage("Đăng nhập"),
+        "marShop": MessageLookupByLibrary.simpleMessage("MarShop"),
         "message_otp_not_match":
             MessageLookupByLibrary.simpleMessage("Mã OTP không hợp lệ."),
         "message_password_invalid":
@@ -78,8 +99,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Đăng ký JA"),
         "pdoneAction_registerPDone":
             MessageLookupByLibrary.simpleMessage("Đăng ký P-Done"),
+        "pdoneAction_registerVShop":
+            MessageLookupByLibrary.simpleMessage("Đăng ký V-Shop"),
         "phone_placeholder":
             MessageLookupByLibrary.simpleMessage("nhập số điện thoại"),
+        "popular": MessageLookupByLibrary.simpleMessage("Phổ biến"),
         "register": MessageLookupByLibrary.simpleMessage("Đăng ký"),
         "registration_is_consent_to": MessageLookupByLibrary.simpleMessage(
             "Bằng việc đăng ký là đồng ý với"),
@@ -90,12 +114,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "setting": MessageLookupByLibrary.simpleMessage("cài đặt"),
         "terms_of_service_and_policies": MessageLookupByLibrary.simpleMessage(
             "Điều khoản dịch vụ và Chính sách"),
+        "tv_live": MessageLookupByLibrary.simpleMessage("TV Live"),
         "validate_PleaseEnterInfo":
             MessageLookupByLibrary.simpleMessage("Vui lòng nhập thông tin"),
-        "validation_invalid": m0,
+        "validation_invalid": m1,
         "validation_password_match": MessageLookupByLibrary.simpleMessage(
             "Mật khẩu xác nhận không khớp"),
-        "validation_required": m1,
+        "validation_required": m2,
+        "vip": MessageLookupByLibrary.simpleMessage("VIP"),
+        "vote": MessageLookupByLibrary.simpleMessage("Vote"),
         "wish_you_have_great_experiences_on_our_products":
             MessageLookupByLibrary.simpleMessage(
                 "Chúc bạn có những trải nghiệm tuyệt vời trên sản phẩm của chúng tôi")
