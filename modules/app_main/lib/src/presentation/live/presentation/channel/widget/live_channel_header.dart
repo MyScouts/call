@@ -16,6 +16,7 @@ class LiveChannelHeader extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           DecoratedBox(
             decoration: BoxDecoration(
@@ -121,27 +122,37 @@ class LiveChannelHeader extends StatelessWidget {
               ),
             ),
           ),
-          Obx(() {
-            return Row(
-              children: [
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(.5),
-                  ),
-                  child: Row(
-                    children: [
-                      ImageWidget(IconAppConstants.icLiveMember),
-                      Obx(
-                        () => Text(
-                          controller.members.value.length.toString(),
+          Row(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(13),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 6,
+                  vertical: 4,
+                ),
+                child: Row(
+                  children: [
+                    ImageWidget(IconAppConstants.icLiveMember),
+                    const SizedBox(width: 2),
+                    Obx(
+                      () => Text(
+                        controller.members.value.length.toString(),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            );
-          }),
+              ),
+              const CloseButton(color: Colors.white),
+            ],
+          ),
         ],
       ),
     );

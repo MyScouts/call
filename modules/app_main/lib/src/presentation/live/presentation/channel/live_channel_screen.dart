@@ -3,6 +3,7 @@ import 'package:app_main/src/core/utils/loading_indicator/platform_loading.dart'
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
+import 'package:app_main/src/presentation/live/presentation/channel/widget/live_bottom_action.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_channel_header.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,6 +47,10 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
             child: SafeArea(
               child: LiveChannelHeader(),
             ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: LiveBottomAction(),
           ),
         ],
       ),
