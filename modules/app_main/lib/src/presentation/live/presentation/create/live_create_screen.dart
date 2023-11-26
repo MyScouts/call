@@ -48,18 +48,25 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
       'live',
     );
 
-    final data = await controller.createLive({
-      'title': _title,
-      'type': _type.name,
-      if (_type.isPasswordLocked) 'password': "haha",
-      'categoryIds': _cates.map((e) => e.id).toList(),
-      'medias': [update],
-    });
-    if (mounted) {
-      context.hideLoading();
-    }
-    if (data != null) {
-      controller.startStream();
+    try {
+      final data = await controller.createLive({
+        'title': _title,
+        'type': _type.name,
+        if (_type.isPasswordLocked) 'password': "haha",
+        'categoryIds': _cates.map((e) => e.id).toList(),
+        'medias': [update],
+      });
+      if (mounted) {
+        context.hideLoading();
+      }
+      if (data != null) {
+        controller.startStream();
+      }
+    } catch(e) {
+      if (mounted) {
+        context.hideLoading();
+        showToastMessage('Bạn chưa phải là P-Done', ToastMessageType.error);
+      }
     }
   }
 

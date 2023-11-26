@@ -70,4 +70,10 @@ class LiveRepositoryImpl extends LiveRepository {
     if(!res.success) return null;
     return res.data;
   }
+
+  @override
+  Future<bool> endLive({required int liveId}) async {
+    final res = await _liveApi.endLive(liveId: liveId);
+    return res.data;
+  }
 }

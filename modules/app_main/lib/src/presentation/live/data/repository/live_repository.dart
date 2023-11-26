@@ -26,4 +26,6 @@ abstract class LiveRepository {
   Future<List<LiveCategoryDetail>> listCategory();
 
   Future<LiveData?> createNewLive(Map<String, dynamic> json);
+
+  Future<bool> endLive({required int liveId});
 }

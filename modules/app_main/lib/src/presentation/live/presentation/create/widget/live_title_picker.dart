@@ -55,15 +55,16 @@ class _LiveTitlePickerState extends State<LiveTitlePicker> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TextFormField(
+                  autofocus: true,
                   controller: controller,
                   maxLines: 3,
-                  maxLength: 40,
+                  maxLength: 30,
                   decoration: InputDecoration(
                     counter: ListenableBuilder(
                       listenable: controller,
                       builder: (_, __) =>
                           Text(
-                            '${controller.text.length}/40',
+                            '${controller.text.length}/30',
                             style: const TextStyle(
                                 fontSize: 14, color: Color(0xffACACAC)),
                           ),

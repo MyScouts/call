@@ -1,6 +1,5 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/responses/list_protector_response.dart';
-import 'package:app_main/src/domain/entities/protector_request.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/http.dart';
 

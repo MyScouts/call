@@ -3,6 +3,7 @@ import 'package:app_main/src/core/utils/loading_indicator/platform_loading.dart'
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
+import 'package:app_main/src/presentation/live/presentation/channel/widget/live_channel_header.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,10 +15,10 @@ class LiveChannelScreen extends StatefulWidget {
   static const String routerName = '/live_channel';
 
   @override
-  State<LiveChannelScreen> createState() => _LiveChannelScreenState();
+  State<LiveChannelScreen> createState() => LiveChannelScreenState();
 }
 
-class _LiveChannelScreenState extends State<LiveChannelScreen> {
+class LiveChannelScreenState extends State<LiveChannelScreen> {
   late final controller = getIt<LiveChannelController>();
 
   @override
@@ -40,6 +41,12 @@ class _LiveChannelScreenState extends State<LiveChannelScreen> {
         fit: StackFit.expand,
         children: [
           _RtcRender(),
+          Align(
+            alignment: Alignment.topCenter,
+            child: SafeArea(
+              child: LiveChannelHeader(),
+            ),
+          ),
         ],
       ),
     );
@@ -65,7 +72,7 @@ class _RtcRenderState extends State<_RtcRender> {
   @override
   Widget build(BuildContext context) {
     final controller =
-        context.findAncestorStateOfType<_LiveChannelScreenState>()!.controller;
+        context.findAncestorStateOfType<LiveChannelScreenState>()!.controller;
 
     if (provider != null) {
       return AgoraVideoView(
@@ -95,13 +102,26 @@ class _RtcRenderState extends State<_RtcRender> {
       }
       if (controller.state.value == LiveStreamState.watching) {
         if (controller.hostInLive) {
+          if (controller.me.value.isOwner) {
+            return AgoraVideoView(
+              controller: VideoViewController(
+                rtcEngine: controller.service.engine,
+                canvas: const VideoCanvas(
+                  uid: 0,
+                  renderMode: RenderModeType.renderModeHidden,
+                ),
+              ),
+            );
+          }
+
           return AgoraVideoView(
-            key: Key('render ${controller.hostID}'),
             controller: VideoViewController(
               rtcEngine: controller.service.engine,
               canvas: VideoCanvas(
                 uid: controller.hostID,
                 renderMode: RenderModeType.renderModeHidden,
+                mirrorMode: VideoMirrorModeType.videoMirrorModeEnabled,
+                sourceType: VideoSourceType.videoSourceCamera,
               ),
             ),
           );

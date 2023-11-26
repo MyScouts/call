@@ -90,17 +90,15 @@ class LiveServiceImpl extends LiveService {
       ));
       _enableMic = enableMic;
       _enableWebCam = enableWebCam;
+      await _engine!.enableAudio();
       if(_enableMic) {
-        await _engine!.enableAudio();
         await _engine!.enableAudioVolumeIndication(
           interval: 400,
           smooth: 3,
           reportVad: true,
         );
       }
-      if(_enableWebCam) {
-        await _engine!.enableVideo();
-      }
+      await _engine!.enableVideo();
       final muteLocalAudioStream = _engine!.muteLocalAudioStream(!_enableMic);
       final muteLocalVideoStream =
           _engine!.muteLocalVideoStream(!_enableWebCam);

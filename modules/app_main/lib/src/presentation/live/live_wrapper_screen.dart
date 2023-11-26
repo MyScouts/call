@@ -117,13 +117,27 @@ class _StartLiveState extends State<_StartLive> {
         child: ColoredBox(
           color: Colors.black.withOpacity(0.2),
           child: Center(
-            child: Text(
-              end.toString(),
-              style: const TextStyle(
-                fontSize: 20,
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Livestream sẽ bắt đầu trong',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  end.toString(),
+                  style: const TextStyle(
+                    fontSize: 64,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
