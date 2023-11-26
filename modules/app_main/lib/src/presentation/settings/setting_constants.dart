@@ -29,7 +29,7 @@ class Setting {
     BuildContext context, {
     User? user,
     OnBoarding? onboarding,
-    Function()? onUpdate,
+    required Function() onUpdate,
     required String osType,
     required bool isProduction,
   }) =>
@@ -65,7 +65,7 @@ class Setting {
             text: "P-Done",
             icon: IconAppConstants.icUpgrade,
             onPressed: () =>
-                context.startPDoneInformation().then((value) => onUpdate!()),
+                context.startPDoneInformation().then((value) => onUpdate()),
           ),
           Setting(
             text: "JA",

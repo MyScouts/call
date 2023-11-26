@@ -91,7 +91,7 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
     }
 
     if (state is PDoneNotYetRegisterState) {
-      context.startReplaceUpgradePDone();
+      context.startUpgradePDone().then((value) => context.pop(data: true));
     }
 
     if (state is PDoneLoadedFailureInformation) {
