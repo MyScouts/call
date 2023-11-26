@@ -90,7 +90,7 @@ class _StartLiveState extends State<_StartLive> {
   void start() {
     if (_timer != null) _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (end < 0) {
+      if (end <= 0) {
         _timer?.cancel();
         widget.onEnd();
         return;

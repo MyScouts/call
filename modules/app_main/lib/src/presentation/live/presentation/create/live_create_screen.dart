@@ -89,10 +89,12 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
             Positioned(
               top: 0,
               left: 0,
+              right: 0,
               child: SafeArea(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IntrinsicWidth(
@@ -122,7 +124,7 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
                                             onTap: mediaPicker,
                                             behavior: HitTestBehavior.opaque,
                                             child: Container(
-                                              width: 56,
+                                              width: 60,
                                               decoration: BoxDecoration(
                                                 color: Colors.grey,
                                                 borderRadius:
@@ -191,7 +193,7 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
                                                 ),
                                               ),
                                             ),
-                                            const SizedBox(height: 8),
+                                            const SizedBox(height: 12),
                                             GestureDetector(
                                               onTap: () {
                                                 context.showLiveTypePicker(
@@ -368,7 +370,10 @@ class _LiveType extends StatelessWidget {
         padding: const EdgeInsets.all(4.5),
         child: Row(
           children: [
-            ImageWidget(type.pathImage, color: Colors.white),
+            SizedBox.square(
+              dimension: 15,
+              child: ImageWidget(type.pathImage, color: Colors.white),
+            ),
             const SizedBox(width: 4.5),
             Text(
               type.text,
