@@ -9,6 +9,7 @@ import 'package:ui/ui.dart';
 
 import '../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
 import '../../../../domain/entities/update_account/update_pdone_birth_place_payload.dart';
+import '../../../../domain/entities/update_account/update_place_information_payload.dart';
 import '../../../../domain/entities/update_account/update_profile_payload.dart';
 import '../../../shared/extensions/validation_extension.dart';
 import '../../upgrade_account_constants.dart';
@@ -30,7 +31,9 @@ class UpdatePDoneInformationPage extends StatefulWidget {
     super.key,
     this.onNextPage,
   });
+
   final VoidCallback? onNextPage;
+
   @override
   State<UpdatePDoneInformationPage> createState() =>
       _UpdatePDoneInformationPageState();
@@ -228,11 +231,11 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       supplyDate = eKycData['issue_date'].toString().parseDateTime();
       expiryDate = eKycData['valid_date'].toString().parseDateTime();
       if (DateTime.now().year - (birthDay?.year ?? 0) >= 18) {
-        pDoneAPICaller = PDoneAPICaller.adult;
-        // pDoneAPICaller = PDoneAPICaller.teenager;
-      } else {
-        pDoneAPICaller = PDoneAPICaller.teenager;
         // pDoneAPICaller = PDoneAPICaller.adult;
+        pDoneAPICaller = PDoneAPICaller.teenager;
+      } else {
+        // pDoneAPICaller = PDoneAPICaller.teenager;
+        pDoneAPICaller = PDoneAPICaller.adult;
       }
     } else {
       pDoneOptionMethod = PDoneOptionMethod.userBirthCer;
