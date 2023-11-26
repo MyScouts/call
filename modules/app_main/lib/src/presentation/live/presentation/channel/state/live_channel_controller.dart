@@ -17,7 +17,9 @@ import 'package:injectable/injectable.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
+import '../../../data/model/response/sent_gift_response.dart';
 import '../../../data/repository/live_repository.dart';
+import '../widget/sent_gift_page.dart';
 
 enum LiveStreamState {
   loading,
@@ -41,6 +43,7 @@ class LiveChannelController {
   final UserUsecase userUseCase;
   final LiveService service;
   final LiveSocketService socketService;
+  final FloatingGiftsProvider floatingGiftsProvider;
 
   LiveChannelController(
     this.repository,
@@ -48,6 +51,7 @@ class LiveChannelController {
     this.userUseCase,
     this.service,
     this.socketService,
+    this.floatingGiftsProvider,
   );
 
   final Rx<LiveStreamState> _state = LiveStreamState.loading.obs;
@@ -84,6 +88,8 @@ class LiveChannelController {
     final host = _members.firstWhereOrNull((e) => e.isOwner);
     return host!.info.userID;
   }
+
+  LiveData get info => _info.value;
 
   void join(int id, [String? password]) async {
     try {
@@ -124,9 +130,7 @@ class LiveChannelController {
         _info.value.agoraToken ?? '',
         _info.value.agoraChannel ?? '',
         _me.value.info.userID,
-        role: _me.value.isOwner
-            ? ClientRoleType.clientRoleBroadcaster
-            : ClientRoleType.clientRoleAudience,
+        role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
       );
 
       ///get members
@@ -219,8 +223,7 @@ class LiveChannelController {
       androidNotificationOptions: AndroidNotificationOptions(
         channelId: 'notification_channel_id',
         channelName: 'Foreground Notification',
-        channelDescription:
-            'This notification appears when the foreground service is running.',
+        channelDescription: 'This notification appears when the foreground service is running.',
         channelImportance: NotificationChannelImportance.LOW,
         priority: NotificationPriority.LOW,
         iconData: const NotificationIconData(
@@ -265,6 +268,24 @@ class LiveChannelController {
       debugPrint('Đang kết nối lại ${socketService.socket.id}');
     });
 
+    socketService.on(socketGiftGiven, (data) {
+      debugPrint('$socketGiftGiven ===> $data');
+      final gift = SentGiftResponse.fromJson(data as Map<String, Object?>);
+      if (gift.giftCard?.metadata?.isStaticGif == true) {
+        floatingGiftsProvider.addGift(
+          gift: gift,
+          giftNumber: gift.total ?? 1,
+        );
+      } else {
+        for (int j = 1; j <= (gift.total! > 3 ? 3 : gift.total!); j++) {
+          floatingGiftsProvider.addGiftAnimation(
+            gift: gift,
+            giftNumber: gift.total ?? 1,
+          );
+        }
+      }
+    });
+
     socketService.on(socketUserJoinEvent, (Map data) {
       debugPrint('$socketUserJoinEvent ===> ${data['user']}');
       final user = User.fromJson(data['user']);
@@ -278,6 +299,7 @@ class LiveChannelController {
         isOwner: user.id == _info.value.user?.id,
       );
       _members.value = [..._members, member];
+      print('length ===> ${_members.length}');
     });
 
     socketService.on(socketUserLeaveEvent, (Map data) {
@@ -313,18 +335,13 @@ class LiveChannelController {
 }
 
 extension RemoteVideoStateReasonX on RemoteVideoStateReason {
-  bool get isNetworkCongestion =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
+  bool get isNetworkCongestion => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
 
-  bool get isNetworkRecovery =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
+  bool get isNetworkRecovery => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
 
-  bool get isRemoteOffline =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
+  bool get isRemoteOffline => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
 
-  bool get isRemoteUnmuted =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
+  bool get isRemoteUnmuted => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
 
-  bool get isRemoteInBackground =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
+  bool get isRemoteInBackground => this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
 }

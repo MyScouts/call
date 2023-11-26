@@ -38,6 +38,8 @@ class IconAppConstants {
   static String icDoc = IconApp.icDoc.path;
   static String icFemale = IconApp.icFemale.path;
   static String icMale = IconApp.icMale.path;
+  static String icMaleSVG = IconApp.icMaleSVG.path;
+  static String icFeMaleSVG = IconApp.icFeMaleSVG.path;
   static String icUserGroup = IconApp.icUserGroup.path;
   static String icUserAddSolid = IconApp.icUserAddSolid.path;
   static String icUserAddOutline = IconApp.icUserAddOutline.path;
@@ -121,6 +123,9 @@ class IconAppConstants {
   static String icLiveRose = IconApp.icLiveRose.path;
   static String icLiveGift = IconApp.icLiveGift.path;
   static String icLiveHeart = IconApp.icLiveHeart.path;
+  static String icTop1Awards = IconApp.icTop1Awards.path;
+  static String icTop2Awards = IconApp.icTop2Awards.path;
+  static String icTop3Awards = IconApp.icTop3Awards.path;
 }
 
 enum IconApp {
@@ -144,6 +149,8 @@ enum IconApp {
   icUserGroup('assets/icons/ic_user_group.svg'),
   icFemale('assets/icons/ic_female.png'),
   icMale('assets/icons/ic_male.png'),
+  icMaleSVG('assets/icons/ic_male.svg'),
+  icFeMaleSVG('assets/icons/ic_female.svg'),
   icWheelOfFortune('assets/icons/wheel_of_fortune.png'),
   icChanel('assets/icons/ic_chanel.png'),
   icBToB('assets/icons/ic_b_to_b.png'),
@@ -247,7 +254,11 @@ enum IconApp {
   icLiveRose('assets/icons/live_rose.png'),
   icLiveGift('assets/icons/live_gift.png'),
   icLiveHeart('assets/icons/live_heart.png'),
+  icTop1Awards('assets/icons/ic_top_1_awards.png'),
+  icTop2Awards('assets/icons/ic_top_2_awards.png'),
+  icTop3Awards('assets/icons/ic_top_3_awards.png'),
   icLeaveTeam('assets/icons/ic_leave_team.svg');
+
   const IconApp(this.path);
 
   final String path;

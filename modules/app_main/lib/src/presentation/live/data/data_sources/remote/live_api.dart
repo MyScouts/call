@@ -7,6 +7,7 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../../../../core/networking/api_response.dart';
 import '../../../domain/entities/gift_card_list.dart';
+import '../../model/response/gift_card_live.dart';
 import '../../model/response/join_live_response.dart';
 import '../../model/response/live.dart';
 import '../../model/response/user_point_response.dart';
@@ -27,8 +28,7 @@ class LiveApiConstant {
   static const String getListLiveMember = 'api/live/{id}/members';
   static const String kickMember = '/api/live/{id}/kick';
   static const String banMember = '/api/live/{id}/ban';
-  static const String getListLivefollowing =
-      'api/live/following?page={page}&pageSize={pageSize}';
+  static const String getListLivefollowing = 'api/live/following?page={page}&pageSize={pageSize}';
   static const String getListTopLive = 'api/top-live/list';
 
   static const String rbContest = '/api/rb-contest/active';
@@ -39,15 +39,15 @@ class LiveApiConstant {
 
   static const String festivalsID = '/api/festivals/register-festival/{userId}';
 
-  static const String voteForUser =
-      '/api/gift-card/user/{userId}/report?contestId={contestId}';
+  static const String voteForUser = '/api/gift-card/user/{userId}/report?contestId={contestId}';
 
   static const String defaultConfig = '/api/live/default-config';
 
   static const String giftCardList = 'api/gift-card/list';
 
-  static const String userPoint = 'api/point/info';
+  static const String sendGift = 'api/gift-card/give-gift';
 
+  static const String userPoint = 'api/point/info';
 }
 
 @RestApi()
@@ -80,6 +80,17 @@ abstract class LiveApi {
 
   @GET(LiveApiConstant.userPoint)
   Future<ApiResponse<UserPointResponse>> getUserPoint();
+
+  @POST(LiveApiConstant.sendGift)
+  Future sendGift(
+    @Field('userId') int userId,
+    @Field('liveId') int liveId,
+    @Field('giftId') int giftId,
+    @Field('total') int total,
+  );
+
+  @GET(LiveApiConstant.giftCard)
+  Future<ApiResponse<GiftCardLive>> getInfoGiftCard({@Path('liveId') required int liveId});
 
   @POST(LiveApiConstant.createNewLive)
   Future<ApiResponse<LiveData>> createNewLive(

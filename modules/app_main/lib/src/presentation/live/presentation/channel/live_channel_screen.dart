@@ -8,6 +8,8 @@ import 'package:app_main/src/presentation/live/presentation/channel/widget/live_
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'widget/sent_gift_page.dart';
+
 class LiveChannelScreen extends StatefulWidget {
   const LiveChannelScreen({super.key, required this.liveID});
 
@@ -20,7 +22,7 @@ class LiveChannelScreen extends StatefulWidget {
 }
 
 class LiveChannelScreenState extends State<LiveChannelScreen> {
-  late final controller = getIt<LiveChannelController>();
+  final controller = getIt<LiveChannelController>();
 
   @override
   void initState() {
@@ -36,21 +38,27 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Material(
+    return Material(
       color: Colors.white,
       child: Stack(
         fit: StackFit.expand,
         children: [
-          _RtcRender(),
-          Align(
+          const _RtcRender(),
+          const Align(
             alignment: Alignment.topCenter,
             child: SafeArea(
               child: LiveChannelHeader(),
             ),
           ),
-          Align(
+          const Align(
             alignment: Alignment.bottomCenter,
             child: LiveBottomAction(),
+          ),
+          Positioned.fill(
+            child: IgnorePointer(
+              ignoring: true,
+              child: SentGiftPage(provider: controller.floatingGiftsProvider),
+            ),
           ),
         ],
       ),
@@ -76,8 +84,7 @@ class _RtcRenderState extends State<_RtcRender> {
 
   @override
   Widget build(BuildContext context) {
-    final controller =
-        context.findAncestorStateOfType<LiveChannelScreenState>()!.controller;
+    final controller = context.findAncestorStateOfType<LiveChannelScreenState>()!.controller;
 
     if (provider != null) {
       return AgoraVideoView(

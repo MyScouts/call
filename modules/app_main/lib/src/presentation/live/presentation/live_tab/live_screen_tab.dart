@@ -25,14 +25,20 @@ class _LiveScreenTabState extends State<LiveScreenTab> with AutomaticKeepAliveCl
   Widget build(BuildContext context) {
     super.build(context);
     return Obx(() {
-      return GridView.count(
-        padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 16),
-        crossAxisCount: 2,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 7,
-        children: List.generate(liveController.live.value.lives?.length ?? 0, (index) {
-          return LiveWidget(liveDetail: liveController.live.value.lives![index]);
-        }),
+      return RefreshIndicator(
+        onRefresh: () async {
+          liveController.getListLive();
+        },
+        child: GridView.count(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          crossAxisCount: 2,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 7,
+          children: List.generate(liveController.live.value.lives?.length ?? 0, (index) {
+            return LiveWidget(liveDetail: liveController.live.value.lives![index]);
+          }),
+        ),
       );
     });
   }

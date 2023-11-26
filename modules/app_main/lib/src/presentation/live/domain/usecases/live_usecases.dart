@@ -1,5 +1,7 @@
 import 'package:injectable/injectable.dart';
 
+import '../../data/model/request/send_gift_payload.dart';
+import '../../data/model/response/gift_card_live.dart';
 import '../../data/model/response/live.dart';
 import '../../data/model/response/user_point_response.dart';
 import '../../data/repository/live_repository.dart';
@@ -29,7 +31,15 @@ class LiveUseCase {
     return _liveRepository.getGiftCardList(type);
   }
 
+  Future sendGift({required int userId, required int liveId, required int giftId, required int total}) {
+    return _liveRepository.sendGift(userId: userId, liveId: liveId, giftId: giftId, total: total);
+  }
+
   Future<UserPointResponse> getUserPoint() {
     return _liveRepository.getUserPoint();
+  }
+
+  Future<GiftCardLive> getInfoGiftCard(int liveId) async {
+    return _liveRepository.getInfoGiftCard(liveId);
   }
 }

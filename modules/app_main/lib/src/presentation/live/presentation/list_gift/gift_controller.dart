@@ -33,6 +33,16 @@ class GiftController {
       userPointResponse.value = await _useCase.getUserPoint();
     } catch (e) {}
   }
+
+  Future<void> sentGift({
+    required int userId,
+    required int liveId,
+    required int giftId,
+  }) async {
+    try {
+      await _useCase.sendGift(userId: userId, liveId: liveId, giftId: giftId, total: amount.value);
+    } catch (e) {}
+  }
 }
 
 final List<int> listAmount = [1, 10, 99, 100, 999];

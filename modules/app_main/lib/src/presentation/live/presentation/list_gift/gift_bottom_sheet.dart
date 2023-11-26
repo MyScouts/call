@@ -10,12 +10,14 @@ import '../../../../blocs/user/user_cubit.dart';
 import '../../../../di/di.dart';
 import '../../../community/widgets/circle_image.dart';
 import '../../domain/entities/gift_card_list.dart';
+import '../channel/state/live_channel_controller.dart';
 import 'gift_page.dart';
 
 class GiftCardBottomSheet extends StatefulWidget {
   static bool isShowBottom = false;
+  final LiveChannelController controller;
 
-  const GiftCardBottomSheet({super.key});
+  const GiftCardBottomSheet({super.key, required this.controller});
 
   @override
   State<GiftCardBottomSheet> createState() => _GiftCardBottomSheetState();
@@ -110,22 +112,22 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                         ));
                   }),
                   Expanded(child: giftAmount()),
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 9.5,horizontal: 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      gradient: const LinearGradient(colors: [
-                        Color(0xff971FF5),
-                        Color(0xffDE38EC)
-                      ]),
-                    ),
-                    child: const Text(
-                        "Ủng hộ",
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white
-                        )
+                  GestureDetector(
+                    onTap: () {
+                      if (selectedGift.value == null) return;
+                      giftController.sentGift(
+                          userId: widget.controller.info.user!.id!,
+                          liveId: widget.controller.info.id,
+                          giftId: selectedGift.value!.id!);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 9.5, horizontal: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        gradient: const LinearGradient(colors: [Color(0xff971FF5), Color(0xffDE38EC)]),
+                      ),
+                      child: const Text("Ủng hộ",
+                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white)),
                     ),
                   )
                 ],
