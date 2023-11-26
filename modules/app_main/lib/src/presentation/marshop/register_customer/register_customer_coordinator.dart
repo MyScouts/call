@@ -26,7 +26,7 @@ extension UpgradeAccountCoordinator on BuildContext {
                   onVerify: (otpCode) {
                     context.read<MarshopCubit>().registerCustomer(
                           RegisterCustomerPayload(
-                            marshopId: marshopId,
+                            marshopId: int.parse(marshopId),
                             otp: otpCode,
                           ),
                         );
