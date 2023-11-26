@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/blocs/user_action/user_action_cubit.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/follow_response.dart';
@@ -19,35 +20,58 @@ import 'package:ui/ui.dart';
 
 class UserInfoHeader extends StatelessWidget {
   final User userInfo;
+  final User authInfo;
   final ValueNotifier<bool> friendStatusCtrl;
   final bool isMe;
   final ValueNotifier<GetUserFollowDetailResponse?> followInfoCtrl;
+  final OnBoarding? onBoarding;
   const UserInfoHeader({
     super.key,
     required this.userInfo,
     required this.friendStatusCtrl,
     this.isMe = false,
     required this.followInfoCtrl,
+    required this.authInfo,
+    required this.onBoarding,
   });
+
+  bool _getButtonStatus() {
+    if (followInfoCtrl.value == null) return true;
+    final followInfo = followInfoCtrl.value!.relation;
+
+    if (followInfo.isFollowee || followInfo.isFriend) return false;
+
+    if (onBoarding != null) {
+      if (onBoarding!.isPdone && authInfo.old > 15) return false;
+      if (onBoarding!.isPdone && authInfo.old <= 15) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(bottom: 20),
-      decoration: const BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(30),
-          bottomRight: Radius.circular(30),
+    return BlocListener<UserCubit, UserState>(
+      listener: (context, state) {},
+      child: Container(
+        padding: const EdgeInsets.only(bottom: 20),
+        decoration: const BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(30),
+            bottomRight: Radius.circular(30),
+          ),
         ),
+        child: Column(children: [
+          _buildBgAvatar(context),
+          const SizedBox(height: 60),
+          _buildUserName(context),
+          const SizedBox(height: 10),
+          _buildUserInfo(context),
+        ]),
       ),
-      child: Column(children: [
-        _buildBgAvatar(context),
-        const SizedBox(height: 60),
-        _buildUserName(context),
-        const SizedBox(height: 10),
-        _buildUserInfo(context),
-      ]),
     );
   }
 
@@ -347,11 +371,11 @@ class UserInfoHeader extends StatelessWidget {
                 title: friendStatusStr(
                   isFriend: relation.isFriend,
                   isFollowed: relation.isFollower,
-                  isFollowing: relation.isFollowee,
+                  isFollowing: false,
                   isBlocked: userInfo.isBlock,
                 ),
                 onTap: () => _onFriendAction(context, relation),
-                disabled: false,
+                disabled: _getButtonStatus(),
                 width: null,
               ),
             );

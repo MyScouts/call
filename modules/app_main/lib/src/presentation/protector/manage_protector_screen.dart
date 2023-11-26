@@ -1,3 +1,4 @@
+import 'package:app_main/src/presentation/protector/widget/list_follow_request_tab.dart';
 import 'package:app_main/src/presentation/protector/widget/list_protector_request_tab.dart';
 import 'package:app_main/src/presentation/protector/widget/list_protector_tab.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
@@ -17,7 +18,7 @@ class ManageProtectorScreenState extends State<ManageProtectorScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           leading: const BackButton(),
@@ -40,7 +41,7 @@ class ManageProtectorScreenState extends State<ManageProtectorScreen> {
               floating: true,
               pinned: true,
               title: SegmentPicker(
-                tabs: ["Danh sách", "Phê duyệt"],
+                tabs: ["Danh sách", "Phê duyệt", 'Theo dõi'],
                 selectedTextColor: Color(0xff4B84F7),
               ),
               leadingWidth: 0,
@@ -54,6 +55,7 @@ class ManageProtectorScreenState extends State<ManageProtectorScreen> {
             children: [
               ListProtectorTab(),
               ListProtectorRequestTab(),
+              ListFollowRequestTab(),
             ],
           ),
         ),

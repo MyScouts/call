@@ -44,6 +44,20 @@ class UserActionCubit extends Cubit<UserActionState> {
       await _userUsecase.followUser(payload: payload);
       emit(FollowUserSuccess());
       getFollowUser(userId: payload.followeeId);
+    } on DioException catch (error) {
+      final data = error.response!.data;
+      debugPrint("phoneRegister: $error");
+      String err = S.current.messages_server_internal_error.capitalize();
+      switch (data['code']) {
+        case "REQUEST_ALREADY_SENT":
+          err =
+              "Bạn đã gởi yêu cầu theo dõi đến người bảo hộ, vui lòng chờ xác nhận.";
+        default:
+          err = S.current.message_otp_not_match;
+          break;
+      }
+      emit(FollowUserFail(message: err));
+      // REQUEST_ALREADY_SENT
     } catch (e) {
       emit(
         FollowUserFail(

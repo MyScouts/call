@@ -5,7 +5,6 @@ import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart'
 import 'package:app_main/src/data/models/responses/follow_response.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
-import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/models/responses/update_none_pdone_profile_response.dart';
@@ -70,8 +69,15 @@ class UserUsecase {
     return response.searchUsers;
   }
 
-  Future<OnboardingResponse> onboarding() {
-    return _userRepository.onboarding();
+  Future<OnBoarding> onboarding() async {
+    final response = await _userRepository.onboarding();
+    return OnBoarding(
+      isJA: response.isJA,
+      isPdone: response.isPdone,
+      isMarshopOwner: response.isMarshopOwner,
+      isMarshopCustomer: response.isMarshopCustomer,
+      hasDefaultBankAccount: response.hasDefaultBankAccount,
+    );
   }
 
   Future<UpdateNonePDoneProfileReponse> updatePDoneProfile(

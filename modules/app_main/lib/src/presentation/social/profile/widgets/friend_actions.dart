@@ -70,9 +70,7 @@ class _FriendMenuActionsState extends State<FriendMenuActions> {
                   Row(
                     children: [
                       Text(
-                        widget.userInfo.isFriend!
-                            ? "Huỷ bạn bè"
-                            : "Bỏ theo dõi",
+                        widget.userInfo.isFriend ? "Huỷ bạn bè" : "Bỏ theo dõi",
                         style: context.textTheme.titleMedium!.copyWith(
                           fontSize: 15,
                           color: AppColors.red500,

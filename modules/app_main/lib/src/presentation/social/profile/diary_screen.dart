@@ -55,6 +55,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
   void initState() {
     super.initState();
     _authInfo = _userCubit.currentUser!;
+    _userCubit.onboarding();
     _userId = int.parse(widget.userId ?? _authInfo.id.toString());
     _userByIdBloc.add(GetDetailDataParam1Event(_userId));
     _actionBloc.getFollowUser(userId: _userId);
@@ -66,7 +67,6 @@ class _DiaryScreenState extends State<DiaryScreen> {
       create: (context) => _actionBloc,
       child: BlocListener<UserActionCubit, UserActionState>(
         listener: (context, state) {
-          print(state);
           if (state is GetFollowUserSuccess) {
             _followInfo.value = state.followDetail;
           }
@@ -82,10 +82,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
 
           if (state is FollowUserFail) {
             hideLoading();
-            showToastMessage(
-              "Theo dõi người dùng thất bại.",
-              ToastMessageType.error,
-            );
+            showToastMessage(state.message, ToastMessageType.error);
           }
 
           if (state is UnFollowSuccess) {
@@ -98,24 +95,23 @@ class _DiaryScreenState extends State<DiaryScreen> {
             hideLoading();
             _friendStatus.value = false;
 
-            showToastMessage(
-              "Bỏ theo dõi người dùng thất bại.",
-              ToastMessageType.error,
-            );
+            showToastMessage(state.message, ToastMessageType.error);
           }
         },
         child: Scaffold(
           backgroundColor: const Color(0XFFF3F8FF),
-          body: BlocBuilder<GetUserByIdBloc, GetDetailState>(
-            builder: (context, state) {
-              if (state is GetDetailDataLoading) {
+          body: Builder(
+            builder: (context) {
+              final useByIdrBloc = context.watch<GetUserByIdBloc>().state;
+              final userBloc = context.watch<UserCubit>().state;
+              if (useByIdrBloc is GetDetailDataLoading) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
 
-              if (state is GetDetailDataSuccess) {
-                final userInfo = state.data;
+              if (useByIdrBloc is GetDetailDataSuccess) {
+                final userInfo = useByIdrBloc.data;
 
                 return Column(
                   children: [
@@ -124,6 +120,10 @@ class _DiaryScreenState extends State<DiaryScreen> {
                       friendStatusCtrl: _friendStatus,
                       isMe: isMe,
                       followInfoCtrl: _followInfo,
+                      authInfo: _authInfo,
+                      onBoarding: userBloc is OnboardingSuccess
+                          ? userBloc.onboarding
+                          : null,
                     ),
                     const SizedBox(height: 10),
                     Expanded(
