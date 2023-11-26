@@ -13,7 +13,14 @@ mixin ValidationMixin<T extends StatefulWidget> on State<T> {
 
   ValueNotifier<bool> get validationListener => _validationListener;
 
-  bool get conditionValidator => true;
+
+  bool get conditionValidator => _conditionValidator;
+
+  bool _conditionValidator = true;
+
+  /// check điều kiện để gọi onChanged
+  set setConditionValidator(bool conditionValidator) =>
+      this._conditionValidator = conditionValidator;
 
   bool get isValidForm => checkValidation();
 

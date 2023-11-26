@@ -33,13 +33,13 @@ mixin _$InformationNonePdoneProfile {
       throw _privateConstructorUsedError;
   int? get height => throw _privateConstructorUsedError;
   int? get weight => throw _privateConstructorUsedError;
-  String get maritalStatus => throw _privateConstructorUsedError;
-  String get bloodGroup => throw _privateConstructorUsedError;
-  String get academicLevel => throw _privateConstructorUsedError;
-  String get job => throw _privateConstructorUsedError;
-  String get interest => throw _privateConstructorUsedError;
-  String get talent => throw _privateConstructorUsedError;
-  String get identityNumber => throw _privateConstructorUsedError;
+  String? get maritalStatus => throw _privateConstructorUsedError;
+  String? get bloodGroup => throw _privateConstructorUsedError;
+  String? get academicLevel => throw _privateConstructorUsedError;
+  String? get job => throw _privateConstructorUsedError;
+  String? get interest => throw _privateConstructorUsedError;
+  String? get talent => throw _privateConstructorUsedError;
+  String? get identityNumber => throw _privateConstructorUsedError;
   String? get supplyDate => throw _privateConstructorUsedError;
   String? get supplyAddress => throw _privateConstructorUsedError;
   int? get protector => throw _privateConstructorUsedError;
@@ -74,13 +74,13 @@ abstract class $InformationNonePdoneProfileCopyWith<$Res> {
       InformationDPoneCurrentPlace currentPlace,
       int? height,
       int? weight,
-      String maritalStatus,
-      String bloodGroup,
-      String academicLevel,
-      String job,
-      String interest,
-      String talent,
-      String identityNumber,
+      String? maritalStatus,
+      String? bloodGroup,
+      String? academicLevel,
+      String? job,
+      String? interest,
+      String? talent,
+      String? identityNumber,
       String? supplyDate,
       String? supplyAddress,
       int? protector,
@@ -118,13 +118,13 @@ class _$InformationNonePdoneProfileCopyWithImpl<$Res,
     Object? currentPlace = null,
     Object? height = freezed,
     Object? weight = freezed,
-    Object? maritalStatus = null,
-    Object? bloodGroup = null,
-    Object? academicLevel = null,
-    Object? job = null,
-    Object? interest = null,
-    Object? talent = null,
-    Object? identityNumber = null,
+    Object? maritalStatus = freezed,
+    Object? bloodGroup = freezed,
+    Object? academicLevel = freezed,
+    Object? job = freezed,
+    Object? interest = freezed,
+    Object? talent = freezed,
+    Object? identityNumber = freezed,
     Object? supplyDate = freezed,
     Object? supplyAddress = freezed,
     Object? protector = freezed,
@@ -175,34 +175,34 @@ class _$InformationNonePdoneProfileCopyWithImpl<$Res,
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
               as int?,
-      maritalStatus: null == maritalStatus
+      maritalStatus: freezed == maritalStatus
           ? _value.maritalStatus
           : maritalStatus // ignore: cast_nullable_to_non_nullable
-              as String,
-      bloodGroup: null == bloodGroup
+              as String?,
+      bloodGroup: freezed == bloodGroup
           ? _value.bloodGroup
           : bloodGroup // ignore: cast_nullable_to_non_nullable
-              as String,
-      academicLevel: null == academicLevel
+              as String?,
+      academicLevel: freezed == academicLevel
           ? _value.academicLevel
           : academicLevel // ignore: cast_nullable_to_non_nullable
-              as String,
-      job: null == job
+              as String?,
+      job: freezed == job
           ? _value.job
           : job // ignore: cast_nullable_to_non_nullable
-              as String,
-      interest: null == interest
+              as String?,
+      interest: freezed == interest
           ? _value.interest
           : interest // ignore: cast_nullable_to_non_nullable
-              as String,
-      talent: null == talent
+              as String?,
+      talent: freezed == talent
           ? _value.talent
           : talent // ignore: cast_nullable_to_non_nullable
-              as String,
-      identityNumber: null == identityNumber
+              as String?,
+      identityNumber: freezed == identityNumber
           ? _value.identityNumber
           : identityNumber // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       supplyDate: freezed == supplyDate
           ? _value.supplyDate
           : supplyDate // ignore: cast_nullable_to_non_nullable
@@ -277,13 +277,13 @@ abstract class _$$InformationNonePdoneProfileImplCopyWith<$Res>
       InformationDPoneCurrentPlace currentPlace,
       int? height,
       int? weight,
-      String maritalStatus,
-      String bloodGroup,
-      String academicLevel,
-      String job,
-      String interest,
-      String talent,
-      String identityNumber,
+      String? maritalStatus,
+      String? bloodGroup,
+      String? academicLevel,
+      String? job,
+      String? interest,
+      String? talent,
+      String? identityNumber,
       String? supplyDate,
       String? supplyAddress,
       int? protector,
@@ -322,13 +322,13 @@ class __$$InformationNonePdoneProfileImplCopyWithImpl<$Res>
     Object? currentPlace = null,
     Object? height = freezed,
     Object? weight = freezed,
-    Object? maritalStatus = null,
-    Object? bloodGroup = null,
-    Object? academicLevel = null,
-    Object? job = null,
-    Object? interest = null,
-    Object? talent = null,
-    Object? identityNumber = null,
+    Object? maritalStatus = freezed,
+    Object? bloodGroup = freezed,
+    Object? academicLevel = freezed,
+    Object? job = freezed,
+    Object? interest = freezed,
+    Object? talent = freezed,
+    Object? identityNumber = freezed,
     Object? supplyDate = freezed,
     Object? supplyAddress = freezed,
     Object? protector = freezed,
@@ -379,34 +379,34 @@ class __$$InformationNonePdoneProfileImplCopyWithImpl<$Res>
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
               as int?,
-      maritalStatus: null == maritalStatus
+      maritalStatus: freezed == maritalStatus
           ? _value.maritalStatus
           : maritalStatus // ignore: cast_nullable_to_non_nullable
-              as String,
-      bloodGroup: null == bloodGroup
+              as String?,
+      bloodGroup: freezed == bloodGroup
           ? _value.bloodGroup
           : bloodGroup // ignore: cast_nullable_to_non_nullable
-              as String,
-      academicLevel: null == academicLevel
+              as String?,
+      academicLevel: freezed == academicLevel
           ? _value.academicLevel
           : academicLevel // ignore: cast_nullable_to_non_nullable
-              as String,
-      job: null == job
+              as String?,
+      job: freezed == job
           ? _value.job
           : job // ignore: cast_nullable_to_non_nullable
-              as String,
-      interest: null == interest
+              as String?,
+      interest: freezed == interest
           ? _value.interest
           : interest // ignore: cast_nullable_to_non_nullable
-              as String,
-      talent: null == talent
+              as String?,
+      talent: freezed == talent
           ? _value.talent
           : talent // ignore: cast_nullable_to_non_nullable
-              as String,
-      identityNumber: null == identityNumber
+              as String?,
+      identityNumber: freezed == identityNumber
           ? _value.identityNumber
           : identityNumber // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       supplyDate: freezed == supplyDate
           ? _value.supplyDate
           : supplyDate // ignore: cast_nullable_to_non_nullable
@@ -458,13 +458,13 @@ class _$InformationNonePdoneProfileImpl
       required this.currentPlace,
       this.height,
       this.weight,
-      required this.maritalStatus,
-      required this.bloodGroup,
-      required this.academicLevel,
-      required this.job,
-      required this.interest,
-      required this.talent,
-      required this.identityNumber,
+      this.maritalStatus,
+      this.bloodGroup,
+      this.academicLevel,
+      this.job,
+      this.interest,
+      this.talent,
+      this.identityNumber,
       this.supplyDate,
       this.supplyAddress,
       this.protector,
@@ -500,19 +500,19 @@ class _$InformationNonePdoneProfileImpl
   @override
   final int? weight;
   @override
-  final String maritalStatus;
+  final String? maritalStatus;
   @override
-  final String bloodGroup;
+  final String? bloodGroup;
   @override
-  final String academicLevel;
+  final String? academicLevel;
   @override
-  final String job;
+  final String? job;
   @override
-  final String interest;
+  final String? interest;
   @override
-  final String talent;
+  final String? talent;
   @override
-  final String identityNumber;
+  final String? identityNumber;
   @override
   final String? supplyDate;
   @override
@@ -655,13 +655,13 @@ abstract class _InformationNonePdoneProfile
       required final InformationDPoneCurrentPlace currentPlace,
       final int? height,
       final int? weight,
-      required final String maritalStatus,
-      required final String bloodGroup,
-      required final String academicLevel,
-      required final String job,
-      required final String interest,
-      required final String talent,
-      required final String identityNumber,
+      final String? maritalStatus,
+      final String? bloodGroup,
+      final String? academicLevel,
+      final String? job,
+      final String? interest,
+      final String? talent,
+      final String? identityNumber,
       final String? supplyDate,
       final String? supplyAddress,
       final int? protector,
@@ -695,19 +695,19 @@ abstract class _InformationNonePdoneProfile
   @override
   int? get weight;
   @override
-  String get maritalStatus;
+  String? get maritalStatus;
   @override
-  String get bloodGroup;
+  String? get bloodGroup;
   @override
-  String get academicLevel;
+  String? get academicLevel;
   @override
-  String get job;
+  String? get job;
   @override
-  String get interest;
+  String? get interest;
   @override
-  String get talent;
+  String? get talent;
   @override
-  String get identityNumber;
+  String? get identityNumber;
   @override
   String? get supplyDate;
   @override

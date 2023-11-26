@@ -33,9 +33,7 @@ class NetworkingFactory {
     dio.interceptors.add(
       ApiTokenInterceptor(sharedPreferences, onLogout: onLogout),
     );
-    dio.interceptors.add(
-        DioCurlInterceptor()
-    );
+    dio.interceptors.add(DioCurlInterceptor(onLogout: onLogout));
     if (isDebug) {
       dio.interceptors.add(
         PrettyDioLogger(

@@ -24,6 +24,7 @@ class NotificationBloc extends CoreBloc<NotificationEvent, NotificationState> {
           .debounceTime(const Duration(milliseconds: 150))
           .switchMap(mapper),
     );
+    on<Delete>(onDelete);
     add(Fetch());
   }
 
@@ -32,6 +33,13 @@ class NotificationBloc extends CoreBloc<NotificationEvent, NotificationState> {
   final RefreshController _controller = RefreshController();
 
   RefreshController get controller => _controller;
+
+  void onDelete(Delete event, Emitter<NotificationState> emit) {
+    if(state.isSearching) return;
+    final items = state.items.where((e) => e.id != event.id).toList();
+    useCase.delete(event.id);
+    emit(state.copyWith(items: items));
+  }
 
   void onFetch(_, Emitter<NotificationState> emit) async {
     _page = 1;
@@ -67,7 +75,7 @@ class NotificationBloc extends CoreBloc<NotificationEvent, NotificationState> {
       ));
     }
     final search =
-        state.items.where((e) => e.message.contains(event.keyword)).toList();
+        state.items.where((e) => e.title.contains(event.keyword)).toList();
     emit(state.copyWith(
       isSearching: true,
       search: search,
@@ -85,6 +93,12 @@ class Search extends NotificationEvent {
   final String keyword;
 
   Search(this.keyword);
+}
+
+class Delete extends NotificationEvent {
+  final int id;
+
+  Delete(this.id);
 }
 
 class NotificationState extends CoreState with EquatableMixin {

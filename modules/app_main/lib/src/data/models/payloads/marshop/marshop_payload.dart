@@ -5,7 +5,7 @@ part 'marshop_payload.g.dart';
 @JsonSerializable()
 class RegisterCustomerPayload {
   final String otp;
-  final int marshopId;
+  final String marshopId;
 
   const RegisterCustomerPayload({
     required this.marshopId,
@@ -23,7 +23,7 @@ class RegisterMarshopPayload {
   final String otp;
   final String name;
   @JsonKey(includeIfNull: false)
-  int? referralId;
+  String? referralId;
 
   RegisterMarshopPayload({
     required this.name,

@@ -42,7 +42,6 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
   void initState() {
     super.initState();
     _authInfo = userCubit.currentUser!;
-
     if (widget.marshopId != null) {
       _marshopIdCtrl.text = widget.marshopId!;
     }
@@ -76,9 +75,10 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
               context.startDialogVerifyRegisterMarshop(
                 userId: _authInfo.id!,
                 marshopId: _marshopIdCtrl.text.trim().isNotEmpty
-                    ? int.parse(_marshopIdCtrl.text.trim())
+                    ? _marshopIdCtrl.text.trim()
                     : null,
                 name: _marshopName.text.trim(),
+                phone: _authInfo.phone ?? '',
               );
               return;
             }
@@ -128,7 +128,6 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
                   validator: (value) =>
                       ValidationHelper.requiredValid(value, "Mã Marshop"),
                   hintText: "",
-                  textInputType: TextInputType.number,
                   prefixIcon: GestureDetector(
                     onTap: _startQrCodeScan,
                     child: const Icon(Icons.qr_code),
@@ -170,10 +169,6 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
     )
         .then((results) {
       if (results != null && results is String) {
-        if (!results.isNumber()) {
-          showToastMessage("Mã Marshop không hợp lệ!", ToastMessageType.error);
-          return;
-        }
         _marshopIdCtrl.text = results;
         setState(() {});
         onValidation();

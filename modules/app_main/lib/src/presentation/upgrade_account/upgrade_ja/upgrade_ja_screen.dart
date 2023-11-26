@@ -205,7 +205,7 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
               builder: (_, __, ___) {
                 return Padding(
                   padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).padding.bottom, right: 20, left: 20, top: 10),
+                      bottom: MediaQuery.of(context).padding.bottom + 20, right: 20, left: 20, top: 10),
                   child: PrimaryButton(
                     width: MediaQuery.of(context).size.width,
                     title: S.current.register,

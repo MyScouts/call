@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:ui/ui.dart';
 
+import '../upgrade_account/upgrade_ja/upgrade_ja_pdf_preview_screen.dart';
+
 extension SettingCoordinator on BuildContext {
   Future<T?> startSetting<T>() {
     return Navigator.of(this).pushNamed(SettingScreen.routeName);
@@ -88,6 +90,43 @@ extension SettingCoordinator on BuildContext {
           title: "Bạn cần phải nâng cấp JA?",
           actionTitle: S.current.confirm.capitalize(),
           onAction: onConfirm,
+        );
+      },
+    );
+  }
+
+  void startExportJAPdfPreview() {
+    Navigator.pushNamed(this, UpgradeJAPdfPreviewScreen.routeName);
+  }
+
+  Future<T?> updateOptionalAppVersion<T>({
+    required String version,
+    required Function() onUpdateAppVersion,
+  }) {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: true,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return ActionDialog(
+          title:
+              "Cập nhật phiên bản mới $version!\nBổ sung nhiều tính năng và tiện ích",
+          actionTitle: S.current.confirm.capitalize(),
+          onAction: onUpdateAppVersion,
+        );
+      },
+    );
+  }
+
+  Future<T?> confirmLatestAppVersion<T>() {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: true,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return const WarningDialog(
+          title: 'Cập nhật app',
+          content: 'App đang là phiên bản mới nhất',
         );
       },
     );

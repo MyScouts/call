@@ -25,14 +25,17 @@ class TeamRequestCubit extends Cubit<TeamRequestState> {
       if (isJoinRequest) {
         final response = await _usecase
             .memberJoinRequest(GetCommunityPayload(teamId: teamId));
+        _request.clear();
         _request.addAll(response.requests);
+        emit(GetListJoinRequestSuccess(requests: _request));
       } else {
         final response = await _usecase.memberLeaveRequest(
           GetCommunityPayload(teamId: teamId),
         );
+        _request.clear();
         _request.addAll(response.requests);
+        emit(GetListLeaveRequestSuccess(requests: _request));
       }
-      emit(GetListRequestSuccess(requests: _request));
     } catch (e) {
       emit(GetListRequestFail(requests: _request));
     }
