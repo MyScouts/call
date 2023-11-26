@@ -58,7 +58,6 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
     final code = currentDistrict?.code;
 
     if (state is GetListProvincesSuccess && currentDistrict != null) {
-      print('state : ${state.provinces!.length}');
       if (stateCode != null && iso2 != null) {
         bloc.add(GetDistrictsByProvinceEvent(iso2, stateCode));
       }
@@ -143,6 +142,7 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
                           : null,
                       onSelected: (value) {
                         if (value != null) {
+                          payload = payload.copyWith(countryCode: value.iso2, countryName: value.name);
                           currentCountry = value;
                           currentProvince = null;
                           currentDistrict = null;
@@ -207,6 +207,8 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
                           : null,
                       onSelected: (val) {
                         if (val != null) {
+                          payload = payload.copyWith(provinceCode: val.id.toString(), provinceName: val.name);
+
                           currentProvince = val;
                           currentDistrict = null;
                           currentWard = null;
@@ -285,6 +287,8 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
                                 : null,
                             onSelected: (val) {
                               if (val != null) {
+                                payload = payload.copyWith(districtCode: val.id.toString(), districtName: val.name);
+
                                 currentDistrict = val;
                                 currentWard = null;
                                 wards = [];
@@ -348,6 +352,8 @@ class _PlaceInformationWidgetState extends State<PlaceInformationWidget>
                                 : null,
                             onSelected: (val) {
                               if (val != null) {
+                                payload = payload.copyWith(wardCode: val.id.toString(), wardName: val.name);
+
                                 setState(() {
                                   currentWard = val;
                                 });
