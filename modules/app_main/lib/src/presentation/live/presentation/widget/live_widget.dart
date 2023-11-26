@@ -1,4 +1,5 @@
 import 'package:app_main/src/presentation/live/domain/entities/live_detail.dart';
+import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:app_main/src/presentation/live/presentation/list_gift/gift_bottom_sheet.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,9 @@ class LiveWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        showModalBottomSheet(context: context, builder: (context) => const GiftCardBottomSheet());
+        if(liveDetail.id == null) return;
+        context.joinLive(liveDetail.id!);
+        // showModalBottomSheet(context: context, builder: (context) => const GiftCardBottomSheet());
       },
       child: Container(
         decoration: BoxDecoration(

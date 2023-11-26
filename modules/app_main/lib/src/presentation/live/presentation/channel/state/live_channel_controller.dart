@@ -141,10 +141,6 @@ class LiveChannelController {
 
       _state.value = LiveStreamState.watching;
 
-      if(_me.value.isOwner) {
-        NotificationCenter.post(channel: disposeCameraPreview);
-      }
-
       WakelockPlus.enable();
 
       if (Platform.isAndroid) _initForegroundTask();

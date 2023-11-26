@@ -11,6 +11,8 @@ class LiveChannelScreen extends StatefulWidget {
 
   final int liveID;
 
+  static const String routerName = '/live_channel';
+
   @override
   State<LiveChannelScreen> createState() => _LiveChannelScreenState();
 }
@@ -64,6 +66,20 @@ class _RtcRenderState extends State<_RtcRender> {
   Widget build(BuildContext context) {
     final controller =
         context.findAncestorStateOfType<_LiveChannelScreenState>()!.controller;
+
+    if (provider != null) {
+      return AgoraVideoView(
+        key: const Key('render preview'),
+        controller: VideoViewController(
+          rtcEngine: provider!.controller.service.engine,
+          canvas: const VideoCanvas(
+            uid: 0,
+            renderMode: RenderModeType.renderModeHidden,
+          ),
+        ),
+      );
+    }
+
     return Obx(() {
       if (controller.state.value == LiveStreamState.stop) {
         return const Center(
@@ -78,24 +94,26 @@ class _RtcRenderState extends State<_RtcRender> {
         );
       }
       if (controller.state.value == LiveStreamState.watching) {
-        return AgoraVideoView(
-          controller: VideoViewController(
-            rtcEngine: controller.service.engine,
-            canvas: VideoCanvas(
-              uid: controller.hostID,
-              renderMode: RenderModeType.renderModeHidden,
+        if (controller.hostInLive) {
+          return AgoraVideoView(
+            key: Key('render ${controller.hostID}'),
+            controller: VideoViewController(
+              rtcEngine: controller.service.engine,
+              canvas: VideoCanvas(
+                uid: controller.hostID,
+                renderMode: RenderModeType.renderModeHidden,
+              ),
             ),
-          ),
-        );
-      }
+          );
+        }
 
-      if (provider != null) {
-        return AgoraVideoView(
-          controller: VideoViewController(
-            rtcEngine: provider!.controller.service.engine,
-            canvas: const VideoCanvas(
-              uid: 0,
-              renderMode: RenderModeType.renderModeHidden,
+        return const Center(
+          child: Text(
+            'Đợi chủ phòng xíu nhé',
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
             ),
           ),
         );

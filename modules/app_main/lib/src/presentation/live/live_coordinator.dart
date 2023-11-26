@@ -1,7 +1,9 @@
+import 'package:app_main/src/presentation/live/presentation/channel/live_channel_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/create/widget/live_category_picker.dart';
 import 'package:app_main/src/presentation/live/presentation/create/widget/live_title_picker.dart';
 import 'package:app_main/src/presentation/live/presentation/create/widget/live_type_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'domain/entities/live_category_detail.dart';
 import 'domain/entities/live_type.dart';
@@ -43,6 +45,13 @@ extension LiveCoordinator on BuildContext {
     showDialog(
       context: this,
       builder: (_) => LiveTitlePicker(title: title, onChanged: onChanged),
+    );
+  }
+
+  void joinLive(int liveID) {
+    Navigator.of(this).pushNamed(
+      LiveChannelScreen.routerName,
+      arguments: liveID,
     );
   }
 }

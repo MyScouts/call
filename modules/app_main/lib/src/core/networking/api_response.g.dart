@@ -20,20 +20,20 @@ ApiResponse<T> _$ApiResponseFromJson<T>(
     );
 
 Map<String, dynamic> _$ApiResponseToJson<T>(
-    ApiResponse<T> instance,
-    Object? Function(T value) toJsonT,
-    ) =>
+  ApiResponse<T> instance,
+  Object? Function(T value) toJsonT,
+) =>
     <String, dynamic>{
-          'status': instance.status,
-          'errorCode': instance.errorCode,
-          'code': instance.code,
-          'errorString': instance.errorString,
-          'errors': instance.errors,
-          'data': toJsonT(instance.data),
+      'status': instance.status,
+      'errorCode': instance.errorCode,
+      'code': instance.code,
+      'errorString': instance.errorString,
+      'errors': instance.errors,
+      'data': toJsonT(instance.data),
     };
 
 T? _$nullableGenericFromJson<T>(
-    Object? input,
-    T Function(Object? json) fromJson,
-    ) =>
+  Object? input,
+  T Function(Object? json) fromJson,
+) =>
     input == null ? null : fromJson(input);
