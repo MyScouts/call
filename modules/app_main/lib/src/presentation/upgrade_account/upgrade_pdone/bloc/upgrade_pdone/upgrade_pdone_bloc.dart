@@ -59,12 +59,10 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     emit(ExtractingEKycIdCard());
     var infoResult = event.eKycData['INFO_RESULT'];
     var imageEKyc = event.eKycData["IMAGE_EKYC"];
-
     try {
       if (infoResult == null || infoResult == '') {
         // only verify face
         emit(
-
           ExtractedEKycIdCardSuccess(const {}, imageEKyc, event.meta),
         );
       } else {
@@ -96,14 +94,16 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
     emit(GetListMasterLoading());
     try {
       final res = await _upgradeAccountUsecase.getListData();
-      final protectorRequested =
-          await _upgradeAccountUsecase.protectorRequested();
+      PDoneMyProtectorInformationResponse? response;
+      try {
+        response = await _upgradeAccountUsecase.protectorRequested();
+      } catch (e) {}
 
       emit(GetListMasterSuccess(
           upgradeAccount: res,
-          protector: protectorRequested.requests.isEmpty
+          protector: (response?.requests ?? []).isEmpty
               ? null
-              : protectorRequested.requests[0]));
+              : response?.requests[0]));
     } catch (e) {
       emit(GetListMasterFailure(e.toString()));
     }
@@ -111,16 +111,30 @@ class UpgradePDoneBloc extends Bloc<UpgradePDoneEvent, UpgradePDoneState> {
 
   FutureOr<void> _mapSendOTPVerifyUpdatePdoneEvent(
       UpdatePDoneSendOTPEvent event, Emitter<UpgradePDoneState> emit) async {
+    bool canSendOtp = true;
     try {
-      final res = await _userUsecase.genOtp();
+      if ((event.identityNumber ?? '').isNotEmpty) {
+        final resCheckExistIdNumber = await _upgradeAccountUsecase
+            .checkExistIdentityNumber(event.identityNumber!);
+        if ((resCheckExistIdNumber?.isExist ?? false)) {
+          canSendOtp = false;
+          emit(UpdatePDoneSendOTPFailureState(
+              errorMessage:
+                  'Căn cước người dùng đã được đăng ký, vui lòng sử dụng số căn cước khác!'));
+        }
+      }
 
-      if (res) {
-        emit(UpdatePDoneSendOTPSuccessState(
-            currentPhoneNumber:
-                '(+${_userSharePreferencesUsecase.getUserInfo()!.phoneCode})${_userSharePreferencesUsecase.getUserInfo()!.phone}'));
-      } else {
-        emit(UpdatePDoneSendOTPFailureState(
-            errorMessage: 'Có lỗi xảy ra, vui lòng thử lại!'));
+      if (canSendOtp) {
+        final res = await _userUsecase.genOtp();
+
+        if (res) {
+          emit(UpdatePDoneSendOTPSuccessState(
+              currentPhoneNumber:
+                  '(+${_userSharePreferencesUsecase.getUserInfo()!.phoneCode})${_userSharePreferencesUsecase.getUserInfo()!.phone}'));
+        } else {
+          emit(UpdatePDoneSendOTPFailureState(
+              errorMessage: 'Có lỗi xảy ra, vui lòng thử lại!'));
+        }
       }
     } catch (e) {
       emit(UpdatePDoneSendOTPFailureState(errorMessage: e.toString()));

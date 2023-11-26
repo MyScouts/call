@@ -179,15 +179,16 @@ class _BirthCerCameraScreenState extends State<BirthCerCameraScreen>
   Widget _buildResult(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 80,
         ),
         Image.file(
           File(captureFile!.path),
-          height: 520,
+          height: MediaQuery.of(context).size.height*0.6,
         ),
+        const Spacer(),
         Padding(
-          padding: const EdgeInsets.only(top: 25),
+          padding: const EdgeInsets.only(top: 25, bottom: 25),
           child: Row(
             children: [
               Expanded(

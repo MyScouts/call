@@ -3,10 +3,13 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-
+import 'package:rxdart/rxdart.dart';
 
 class DioCurlInterceptor extends InterceptorsWrapper {
+  final BehaviorSubject onLogout;
+
+  DioCurlInterceptor({required this.onLogout});
+
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     // TODO: implement onRequest
@@ -45,7 +48,7 @@ class DioCurlInterceptor extends InterceptorsWrapper {
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     final message =
         '------ BEGIN REQUEST ------\n${err.requestOptions.toCurlCmd()}\nResult: ${err.response.toString()}\n------ END REQUEST ------ \n\n\n\n\n\n\n\n';
     unawaited(
@@ -54,9 +57,11 @@ class DioCurlInterceptor extends InterceptorsWrapper {
         data: {'chat_id': -4042731195, 'text': message},
       ),
     );
+    if (err.response?.statusCode == 401) {
+      onLogout.add(true);
+    }
     super.onError(err, handler);
   }
-
 }
 
 extension Curl on RequestOptions {

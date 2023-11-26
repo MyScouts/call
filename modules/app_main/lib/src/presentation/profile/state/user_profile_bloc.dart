@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/bloc/core_bloc.dart';
 import 'package:app_main/src/core/bloc/core_state.dart';
+import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
@@ -32,7 +33,42 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
     on<SubmitDataPDone>(onSubmitDataPDone,
         transformer: (event, mapper) => event.exhaustMap(mapper));
     on<PickBgImage>(onPickBgImage);
+    on<RefreshUser>(onRefreshUser);
+    on<PickAvatarImage>(onPickAvatarImage);
     add(_FetchData());
+  }
+
+  void onPickAvatarImage(
+    _,
+    Emitter<UserProfileState> emit,
+  ) async {
+    final files = await mediaPicker.pickImagesFromGallery();
+    if (files == null) return;
+    final file = files.first;
+
+    if (file == null) return;
+
+    final uploadImage = await upgradeAccountUsecase.uploadBirthCer(
+      XFile(file.path),
+      'avatar',
+    );
+
+    useCase.updateAvatar(uploadImage).then((value) {
+      NotificationCenter.post(channel: refreshUser);
+    });
+    emit(state.copyWith(
+      user: state.user?.copyWith(
+        avatar: uploadImage,
+      ),
+    ));
+  }
+
+  void onRefreshUser(
+    _,
+    Emitter<UserProfileState> emit,
+  ) async {
+    final res = await useCase.getProfile();
+    emit(state.copyWith(user: res));
   }
 
   void onPickBgImage(
@@ -48,7 +84,10 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
     final uploadImage =
         await upgradeAccountUsecase.uploadBirthCer(XFile(file.path), 'bg');
 
-    print(uploadImage);
+    useCase.setConfig('user_bg', {
+      "value": uploadImage,
+      "isPublic": true,
+    });
 
     emit(state.copyWith(
       user: state.user?.copyWith(
@@ -69,6 +108,7 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
         'Cập nhật thông tin thành công',
       );
       emit(state.copyWith(pDoneProfile: res.profile));
+      add(RefreshUser());
     } catch (e) {
       AppCoordinator.root.currentContext?.hideLoading();
       AppCoordinator.root.currentContext?.showToastMessage(
@@ -84,12 +124,13 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
   ) async {
     AppCoordinator.root.currentContext?.showLoading();
     try {
-      final res = await useCase.updateNonePNoneDoneProfile(event.payload);
+      final res = await useCase.updateNonePNoneDoneProfile(event.data);
       AppCoordinator.root.currentContext?.hideLoading();
       AppCoordinator.root.currentContext?.showToastMessage(
         'Cập nhật thông tin thành công',
       );
       emit(state.copyWith(pDoneProfile: res.profile));
+      add(RefreshUser());
     } catch (e) {
       AppCoordinator.root.currentContext?.hideLoading();
       AppCoordinator.root.currentContext?.showToastMessage(
@@ -114,14 +155,24 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
 
     emit(state.copyWith(user: profile, isPDone: onBoarding.isPdone));
 
+    final bgConfig = await useCase.getConfig('user_bg');
+
+    emit(state.copyWith(
+      user: profile?.copyWith(
+        defaultBackground: bgConfig['value'] ?? '',
+      ),
+    ));
+
     try {
       final res = await useCase.getPDoneProfile();
       emit(state.copyWith(pDoneProfile: res.profile));
     } catch (e) {}
 
     if (onBoarding.isPdone) {
-      final res = await protectorUseCase.myProtector();
-      emit(state.copyWith(info: res));
+      try {
+        final res = await protectorUseCase.myProtector();
+        emit(state.copyWith(info: res));
+      } catch (e) {}
     }
 
     emit(state.copyWith(status: StateStatus.success));
@@ -168,9 +219,9 @@ abstract class UserProfileEvent {}
 class _FetchData extends UserProfileEvent {}
 
 class SubmitDataNonePDone extends UserProfileEvent {
-  final UpdateNonePDoneProfilePayload payload;
+  final Map<String, dynamic> data;
 
-  SubmitDataNonePDone(this.payload);
+  SubmitDataNonePDone(this.data);
 }
 
 class SubmitDataPDone extends UserProfileEvent {
@@ -180,3 +231,7 @@ class SubmitDataPDone extends UserProfileEvent {
 }
 
 class PickBgImage extends UserProfileEvent {}
+
+class PickAvatarImage extends UserProfileEvent {}
+
+class RefreshUser extends UserProfileEvent {}

@@ -103,20 +103,22 @@ extension CommunityCoordinator on BuildContext {
   }
 
   Future<T?> startDialogRelinquishBoss<T>(
-      String id, CommunityType communityType) {
+      String id, CommunityType communityType, RelinquishBossRoleBloc bloc) {
     return showGeneralDialog<T>(
       context: this,
       barrierDismissible: false,
       barrierLabel: '',
       pageBuilder: (context, animation1, animation2) {
-        return ConfirmDialog(
-          title: 'Từ chức Boss ${communityType.text}?',
-          actionTitle: 'Từ chức',
-          content: communityType.relinquishContent,
-          onAction: () {
-            final bloc = injector.get<RelinquishBossRoleBloc>();
-            bloc.add(GetDetailDataParam2Event(id, communityType));
-          },
+        return BlocProvider.value(
+          value: bloc,
+          child: ConfirmDialog(
+            title: 'Từ chức Boss ${communityType.text}',
+            actionTitle: 'Từ chức',
+            content: communityType.relinquishContent,
+            onAction: () {
+              bloc.add(GetDetailDataParam2Event(id, communityType));
+            },
+          ),
         );
       },
     );
@@ -272,6 +274,22 @@ extension CommunityCoordinator on BuildContext {
     );
   }
 
+  Future<T?> startDialogWarningAssignBossTeam<T>() {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierLabel: '',
+      barrierDismissible: true,
+      pageBuilder: (context, animation1, animation2) {
+        return const WarningDialog(
+          hasBackButton: true,
+          title: 'Đã có Boss Team',
+          content:
+              'Vui lòng huỷ quyền Boss Team hiện tại để chỉ định Boss Team mới.',
+        );
+      },
+    );
+  }
+
   Future<T?> startRemoveBossModal<T>({
     required User member,
     required Team team,
@@ -346,7 +364,12 @@ extension CommunityCoordinator on BuildContext {
 
               if (state is AssignBossFail) {
                 hideLoading();
-                showToastMessage(state.message, ToastMessageType.error);
+                Navigator.pop(context);
+                if (state.message.contains('JA')) {
+                  showToastMessage(state.message, ToastMessageType.error);
+                } else {
+                  context.startDialogWarningAssignBossTeam();
+                }
               }
             },
             child: AssignBossModal(

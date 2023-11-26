@@ -6,6 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:ui/ui.dart';
 
 import '../../community_constants.dart';
 import '../../widgets/day_countdown_widget.dart';
@@ -26,31 +27,65 @@ class TeamRequestListScreen extends StatefulWidget {
 class _TeamRequestListScreenState extends State<TeamRequestListScreen> {
   int _page = 0;
   final PageController _pageCtrl = PageController(initialPage: 0);
+  bool _result = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text(
-          'Yêu cầu cần phê duyệt',
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-      ),
-      body: Column(
-        children: [
-          _buildTab(),
-          const SizedBox(height: 20),
-          Expanded(
-            child: PageView(
-              controller: _pageCtrl,
+    return BlocProvider<TeamRequestCubit>(
+      create: (context) => injector.get<TeamRequestCubit>(),
+      child: BlocListener<TeamRequestCubit, TeamRequestState>(
+        listener: (context, state) {
+          if (state is OnReplyLeaveRequest) {
+            showLoading();
+          }
+          if (state is ReplyLeaveRequestSuccess) {
+            hideLoading();
+            _result = true;
+            if (state.isApproved) {
+              showToastMessage("Phê duyệt yêu cầu rời team thành công");
+            } else {
+              showToastMessage("Từ chối duyệt yêu cầu rời team thành công");
+            }
+          }
+          if (state is ReplyJoinRequestSuccess) {
+            hideLoading();
+            _result = true;
+            if (state.isApproved) {
+              showToastMessage("Phê duyệt yêu cầu tham gia team thành công");
+            } else {
+              showToastMessage(
+                  "Từ chối duyệt yêu cầu tham gia team thành công");
+            }
+          }
+        },
+        child: Scaffold(
+          appBar: BaseAppBar(
+            title: "Yêu cầu cần phê duyệt",
+            onPressed: () => Navigator.pop(context, _result),
+            isClose: false,
+          ),
+          body: WillPopScope(
+            onWillPop: () async {
+              Navigator.maybePop(context, _result);
+              return true;
+            },
+            child: Column(
               children: [
-                JoinRequestPage(team: widget.team),
-                LeaveRequestPage(team: widget.team),
+                _buildTab(),
+                const SizedBox(height: 5),
+                Expanded(
+                  child: PageView(
+                    controller: _pageCtrl,
+                    children: [
+                      JoinRequestPage(team: widget.team),
+                      LeaveRequestPage(team: widget.team),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -139,6 +174,7 @@ class _TeamRequestListScreenState extends State<TeamRequestListScreen> {
 
 class JoinRequestPage extends StatefulWidget {
   final Team team;
+
   const JoinRequestPage({
     super.key,
     required this.team,
@@ -149,7 +185,7 @@ class JoinRequestPage extends StatefulWidget {
 }
 
 class _JoinRequestPageState extends State<JoinRequestPage> {
-  final _bloc = injector.get<TeamRequestCubit>();
+  late final _bloc = context.read<TeamRequestCubit>();
 
   @override
   void initState() {
@@ -159,192 +195,181 @@ class _JoinRequestPageState extends State<JoinRequestPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _bloc,
-      child: BlocListener<TeamRequestCubit, TeamRequestState>(
-        listener: (context, state) {
-          if (state is OnReplyJoinRequest) {
-            showLoading();
-          }
-
-          if (state is ReplyJoinRequestSuccess) {
-            hideLoading();
-            if (state.isApproved) {
-              showToastMessage("Phê duyệt yêu cầu tham gia team thành công");
-            } else {
-              showToastMessage(
-                  "Từ chối duyệt yêu cầu tham gia team thành công");
-            }
-          }
-        },
-        child: Container(
-          child: _buildList(),
-        ),
-      ),
+    return Container(
+      child: _buildList(),
     );
   }
 
   _buildList() {
     return BlocBuilder<TeamRequestCubit, TeamRequestState>(
+      buildWhen: (pre, cur) =>
+          cur is ReplyJoinRequestSuccess ||
+          cur is OnReplyJoinRequest ||
+          cur is OnGetListRequest ||
+          cur is GetListJoinRequestSuccess ||
+          cur is GetListRequestFail,
       builder: (context, state) {
-        final request = state.requests;
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
-          child: Column(
-            children: [
-              if (state is OnGetListRequest)
-                const Center(child: CircularProgressIndicator()),
-              if (state is! OnGetListRequest && request.isEmpty)
-                const Center(child: Text("Không có yêu cầu nào!")),
-              if (request.isNotEmpty)
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: request.length,
-                    itemBuilder: (context, index) {
-                      final member = request[index];
-                      return Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 15),
-                        margin: const EdgeInsets.symmetric(vertical: 5),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: .2),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
+        if (state is OnGetListRequest || state is OnReplyJoinRequest) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (state is GetListJoinRequestSuccess ||
+            state is ReplyJoinRequestSuccess) {
+          if (state.requests.isEmpty) {
+            return const Padding(
+              padding: EdgeInsets.symmetric(horizontal: paddingHorizontal),
+              child: Center(child: Text("Không có yêu cầu nào!")),
+            );
+          }
+
+          final request = state.requests;
+
+          return ListView.builder(
+            itemCount: request.length,
+            itemBuilder: (context, index) {
+              final member = request[index];
+              return Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                margin: const EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 15,
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: .2),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(90),
+                              child: CachedNetworkImage(
+                                fit: BoxFit.cover,
+                                imageUrl: member.user?.avatar ?? "",
+                                errorWidget: (context, url, error) =>
+                                    ImageWidget(
+                                  ImageConstants.defaultUserAvatar,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    height: 40,
-                                    width: 40,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(90),
-                                      child: CachedNetworkImage(
-                                        imageUrl: member.user?.avatar ?? "",
-                                        errorWidget: (context, url, error) =>
-                                            ImageWidget(
-                                          ImageConstants.defaultUserAvatar,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 5),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        member.user.getdisplayName,
-                                        style: context.textTheme.titleMedium!
-                                            .copyWith(
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        member.user?.pDoneId ?? "",
-                                        style: context.textTheme.titleMedium!
-                                            .copyWith(color: Colors.grey[500]),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                              const SizedBox(height: 10),
                               Text(
-                                "Yêu cầu vào Team của ${member.user.getdisplayName}",
+                                member.user.getdisplayName,
                                 style: context.textTheme.titleMedium!.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(height: 10),
-                              Row(
-                                children: [
-                                  Expanded(
-                                      child: GestureDetector(
-                                    onTap: () => _bloc.replyJoinRequest(
-                                      teamId: member.team.id!,
-                                      payload: ReplyJoinRequestPayload(
-                                        userId: member.user!.id!,
-                                        isApproved: false,
-                                      ),
-                                    ),
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 10,
-                                        vertical: 10,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Color(0XFFE8F0FE),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.close,
-                                            size: 20,
-                                            color: context.theme.primaryColor,
-                                          ),
-                                          Text(
-                                            "Từ chối",
-                                            style: context.textTheme.titleSmall!
-                                                .copyWith(
-                                              color: context.theme.primaryColor,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )),
-                                  const SizedBox(width: 10),
-                                  Expanded(
-                                      child: GestureDetector(
-                                    onTap: () => _bloc.replyJoinRequest(
-                                      teamId: member.team.id!,
-                                      payload: ReplyJoinRequestPayload(
-                                        userId: member.user!.id!,
-                                        isApproved: true,
-                                      ),
-                                    ),
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 10,
-                                        vertical: 10,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: context.theme.primaryColor,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          const Icon(
-                                            Icons.check,
-                                            size: 20,
-                                            color: AppColors.white,
-                                          ),
-                                          Text(
-                                            "Phê duyệt",
-                                            style: context.textTheme.titleSmall!
-                                                .copyWith(
-                                                    color: AppColors.white),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )),
-                                ],
+                              Text(
+                                member.user?.pDoneId ?? "",
+                                style: context.textTheme.titleMedium!
+                                    .copyWith(color: Colors.grey[500]),
                               )
-                            ]),
-                      );
-                    },
-                  ),
-                )
-            ],
-          ),
+                            ],
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        "Yêu cầu vào Team của ${member.user.getdisplayName}",
+                        style: context.textTheme.titleMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: GestureDetector(
+                            onTap: () => _bloc.replyJoinRequest(
+                              teamId: member.team.id!,
+                              payload: ReplyJoinRequestPayload(
+                                userId: member.user!.id!,
+                                isApproved: false,
+                              ),
+                            ),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 10,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Color(0XFFE8F0FE),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.close,
+                                    size: 20,
+                                    color: context.theme.primaryColor,
+                                  ),
+                                  Text(
+                                    "Từ chối",
+                                    style:
+                                        context.textTheme.titleSmall!.copyWith(
+                                      color: context.theme.primaryColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )),
+                          const SizedBox(width: 10),
+                          Expanded(
+                              child: GestureDetector(
+                            onTap: () => _bloc.replyJoinRequest(
+                              teamId: member.team.id!,
+                              payload: ReplyJoinRequestPayload(
+                                userId: member.user!.id!,
+                                isApproved: true,
+                              ),
+                            ),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 10,
+                              ),
+                              decoration: BoxDecoration(
+                                color: context.theme.primaryColor,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.check,
+                                    size: 20,
+                                    color: AppColors.white,
+                                  ),
+                                  Text(
+                                    "Phê duyệt",
+                                    style: context.textTheme.titleSmall!
+                                        .copyWith(color: AppColors.white),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )),
+                        ],
+                      )
+                    ]),
+              );
+            },
+          );
+        }
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
+          child: const Center(child: Text('Đã xảy ra lỗi')),
         );
       },
     );
@@ -353,6 +378,7 @@ class _JoinRequestPageState extends State<JoinRequestPage> {
 
 class LeaveRequestPage extends StatefulWidget {
   final Team team;
+
   const LeaveRequestPage({
     super.key,
     required this.team,
@@ -363,7 +389,7 @@ class LeaveRequestPage extends StatefulWidget {
 }
 
 class _LeaveRequestPage extends State<LeaveRequestPage> {
-  final _bloc = injector.get<TeamRequestCubit>();
+  late final _bloc = context.read<TeamRequestCubit>();
 
   @override
   void initState() {
@@ -373,208 +399,196 @@ class _LeaveRequestPage extends State<LeaveRequestPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _bloc,
-      child: BlocListener<TeamRequestCubit, TeamRequestState>(
-        listener: (context, state) {
-          if (state is OnReplyLeaveRequest) {
-            showLoading();
-          }
-          if (state is ReplyLeaveRequestSuccess) {
-            hideLoading();
-            if (state.isApproved) {
-              showToastMessage("Phê duyệt yêu cầu rời team thành công");
-            } else {
-              showToastMessage("Từ chối duyệt yêu cầu rời team thành công");
-            }
-          }
-        },
-        child: Container(
-          child: _buildList(),
-        ),
-      ),
+    return Container(
+      child: _buildList(),
     );
   }
 
   _buildList() {
     return BlocBuilder<TeamRequestCubit, TeamRequestState>(
+      buildWhen: (pre, cur) =>
+          cur is ReplyLeaveRequestSuccess ||
+          cur is OnGetListRequest ||
+          cur is GetListLeaveRequestSuccess ||
+          cur is OnReplyJoinRequest ||
+          cur is GetListRequestFail,
       builder: (context, state) {
-        final request = state.requests;
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
-          child: Column(
-            children: [
-              if (state is OnGetListRequest)
-                const Center(child: CircularProgressIndicator()),
-              if (state is! OnGetListRequest && request.isEmpty)
-                Center(child: Text("Không có yêu cầu nào!")),
-              if (request.isNotEmpty)
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: request.length,
-                    itemBuilder: (context, index) {
-                      final member = request[index];
-                      return Container(
+        if (state is OnGetListRequest || state is OnReplyLeaveRequest) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (state is GetListLeaveRequestSuccess ||
+            state is ReplyLeaveRequestSuccess) {
+          if (state.requests.isEmpty) {
+            return const Padding(
+              padding: EdgeInsets.symmetric(horizontal: paddingHorizontal),
+              child: Center(child: Text("Không có yêu cầu nào!")),
+            );
+          }
+
+          final request = state.requests;
+
+          return ListView.builder(
+            itemCount: request.length,
+            itemBuilder: (context, index) {
+              final member = request[index];
+              return Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                margin: const EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 15,
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: .2),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(90),
+                              child: CachedNetworkImage(
+                                imageUrl: member.user?.avatar ?? "",
+                                errorWidget: (context, url, error) =>
+                                    ImageWidget(
+                                  ImageConstants.defaultUserAvatar,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  member.user.getdisplayName,
+                                  style:
+                                      context.textTheme.titleMedium!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  "Boss Team của Team ${member.team.name}",
+                                  softWrap: true,
+                                  style: context.textTheme.titleMedium!
+                                      .copyWith(color: Colors.grey[500]),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        "Yêu cầu rời Team của ${member.user.getdisplayName}",
+                        style: context.textTheme.titleMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 15),
-                        margin: const EdgeInsets.symmetric(vertical: 5),
+                          vertical: 10,
+                          horizontal: 10,
+                        ),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: .2),
+                          color: const Color(0XFFFFF5C7),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    height: 40,
-                                    width: 40,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(90),
-                                      child: CachedNetworkImage(
-                                        imageUrl: member.user?.avatar ?? "",
-                                        errorWidget: (context, url, error) =>
-                                            ImageWidget(
-                                          ImageConstants.defaultUserAvatar,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 5),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          member.user.getdisplayName,
-                                          style: context.textTheme.titleMedium!
-                                              .copyWith(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Text(
-                                          "Boss Team của Team ${member.team.name}",
-                                          softWrap: true,
-                                          style: context.textTheme.titleMedium!
-                                              .copyWith(
-                                                  color: Colors.grey[500]),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                "Thời gian phê duyệt còn lại",
+                                softWrap: true,
+                                style: context.textTheme.titleMedium!
+                                    .copyWith(color: AppColors.black),
                               ),
-                              const SizedBox(height: 10),
-                              Text(
-                                "Yêu cầu rời Team của ${member.user.getdisplayName}",
-                                style: context.textTheme.titleMedium!.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 10),
+                            ),
+                            Flexible(
+                              child: Container(
                                 padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
                                   vertical: 10,
-                                  horizontal: 10,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: const Color(0XFFFFF5C7),
-                                  borderRadius: BorderRadius.circular(10),
+                                  color: const Color(0XFFFF7626),
+                                  borderRadius: BorderRadius.circular(90),
                                 ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        "Thời gian phê duyệt còn lại",
-                                        softWrap: true,
-                                        style: context.textTheme.titleMedium!
-                                            .copyWith(color: AppColors.black),
-                                      ),
-                                    ),
-                                    Flexible(
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 20,
-                                          vertical: 10,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: const Color(0XFFFF7626),
-                                          borderRadius:
-                                              BorderRadius.circular(90),
-                                        ),
-                                        child: DayCountdownWidget(
-                                          durationInSeconds: member.createdAt!
-                                              .add(const Duration(
-                                                  days: CommunityConstant
-                                                      .dayForRelinquishBossGroupRequest))
-                                              .difference(DateTime.now())
-                                              .inSeconds,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                child: DayCountdownWidget(
+                                  durationInSeconds: member.createdAt!
+                                      .add(const Duration(
+                                          days: CommunityConstant
+                                              .dayForRelinquishBossGroupRequest))
+                                      .difference(DateTime.now())
+                                      .inSeconds,
                                 ),
                               ),
-                              const SizedBox(height: 10),
-                              Text(
-                                "Nếu bạn không phê duyệt trong thời gian đếm ngược, yêu cầu này sẽ tự động đồng ý với yêu cầu của người tạo.",
-                                style: context.textTheme.bodySmall!
-                                    .copyWith(color: Colors.grey[500]),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        "Nếu bạn không phê duyệt trong thời gian đếm ngược, yêu cầu này sẽ tự động đồng ý với yêu cầu của người tạo.",
+                        style: context.textTheme.bodySmall!
+                            .copyWith(color: Colors.grey[500]),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: GestureDetector(
+                            onTap: () => _bloc.replyLeaveRequest(
+                              teamId: member.team.id!,
+                              payload: ReplyJoinRequestPayload(
+                                userId: member.user!.id!,
+                                isApproved: true,
                               ),
-                              const SizedBox(height: 10),
-                              Row(
+                            ),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 10,
+                              ),
+                              decoration: BoxDecoration(
+                                color: context.theme.primaryColor,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Expanded(
-                                      child: GestureDetector(
-                                    onTap: () => _bloc.replyLeaveRequest(
-                                      teamId: member.team.id!,
-                                      payload: ReplyJoinRequestPayload(
-                                        userId: member.user!.id!,
-                                        isApproved: true,
-                                      ),
-                                    ),
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 10,
-                                        vertical: 10,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: context.theme.primaryColor,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          const Icon(
-                                            Icons.check,
-                                            size: 20,
-                                            color: AppColors.white,
-                                          ),
-                                          Text(
-                                            "Phê duyệt",
-                                            style: context.textTheme.titleSmall!
-                                                .copyWith(
-                                                    color: AppColors.white),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )),
+                                  const Icon(
+                                    Icons.check,
+                                    size: 20,
+                                    color: AppColors.white,
+                                  ),
+                                  Text(
+                                    "Phê duyệt",
+                                    style: context.textTheme.titleSmall!
+                                        .copyWith(color: AppColors.white),
+                                  ),
                                 ],
-                              )
-                            ]),
-                      );
-                    },
-                  ),
-                )
-            ],
-          ),
+                              ),
+                            ),
+                          )),
+                        ],
+                      )
+                    ]),
+              );
+            },
+          );
+        }
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
+          child: const Center(child: Text('Đã xảy ra lỗi')),
         );
       },
     );

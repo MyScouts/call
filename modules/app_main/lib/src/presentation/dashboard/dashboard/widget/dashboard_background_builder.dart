@@ -70,20 +70,20 @@ class DashBoardBgController extends ChangeNotifier {
       channel: changeBg,
       observer: this,
       onNotification: (option) {
-        useCase.saveDashBoardBg('bg $_page', option);
+        useCase.saveDashBoardBg('bg', option);
         path = option;
       },
     );
   }
 
-  String getImage(int page) {
-    final path = useCase.getDashBoardBg('bg 0');
+  String getImage() {
+    final path = useCase.getDashBoardBg('bg');
     if (path.isEmpty) {
-      String image = '';
-      if (page == 0) image = ImageConstants.bg1;
-      if (page == 1) image = ImageConstants.bg1;
-      if (page == 2) image = ImageConstants.bg1;
-      useCase.saveDashBoardBg('bg $_page', image);
+      String image = ImageConstants.bg1;
+      // if (page == 0) image = ImageConstants.bg1;
+      // if (page == 1) image = ImageConstants.bg1;
+      // if (page == 2) image = ImageConstants.bg1;
+      useCase.saveDashBoardBg('bg', image);
       return image;
     }
     return path;
@@ -97,7 +97,7 @@ class DashBoardBgController extends ChangeNotifier {
 
   set page(int value) {
     _page = value;
-    _path = getImage(_page);
+    _path = getImage();
     notifyListeners();
   }
 

@@ -95,6 +95,7 @@ class IconAppConstants {
   static String icEdit2 = IconApp.icEdit2.path;
   static String appSetting = IconApp.appSetting.path;
   static String icLiveArea = IconApp.icLiveArea.path;
+  static String icWalletCoupon = IconApp.icWalletCoupon.path;
   static String icSettingApp = IconApp.icSettingApp.path;
   static String icRadar = IconApp.icRadar.path;
   static String icMonitor = IconApp.icMonitor.path;
@@ -109,6 +110,7 @@ class IconAppConstants {
   static String icUsersGroup = IconApp.icUsersGroup.path;
   static String icLiveUser = IconApp.icLiveUser.path;
   static String icLiveUser3 = IconApp.icLiveUser3.path;
+  static String icVersion = IconApp.icVersion.path;
 }
 
 enum IconApp {
@@ -209,6 +211,7 @@ enum IconApp {
   icVideo('assets/icons/ic_video.svg'),
   icLiveArea('assets/icons/ic_live_area.svg'),
   icSettingApp('assets/icons/ic_setting_app.svg'),
+  icWalletCoupon('assets/icons/wallet_agency_coupon.svg'),
   appSetting('assets/icons/app_setting.png'),
   icRadar('assets/icons/ic_radar.svg'),
   icMonitor('assets/icons/ic_monitor.svg'),
@@ -223,6 +226,7 @@ enum IconApp {
   icUsersGroup('assets/icons/ic_user_group.svg'),
   icLiveUser('assets/icons/ic_live_user.svg'),
   icLiveUser3('assets/icons/ic_user_3.svg'),
+  icVersion('assets/icons/ic_version.svg'),
   icLeaveTeam('assets/icons/ic_leave_team.svg');
   const IconApp(this.path);
 
