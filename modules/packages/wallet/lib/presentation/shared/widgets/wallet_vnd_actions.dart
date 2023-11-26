@@ -82,7 +82,7 @@ class _WalletVNDActionsState extends State<WalletVNDActions> {
         );
         break;
       case WalletVNDActionType.transactionHistory:
-        context.startTransactionHistory();
+        context.startTransactionHistory(walletType: WalletType.vnd);
         break;
     }
   }

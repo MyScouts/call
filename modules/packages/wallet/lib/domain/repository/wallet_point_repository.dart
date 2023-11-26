@@ -8,11 +8,6 @@ import '../entities/agency/agency_info.dart';
 import '../entities/entities.dart';
 
 abstract class WalletPointRepository {
-  Future<List<PointTransactionHistory>> getTransactionHistories(
-      Map<String, dynamic> body);
-
-  Future<PointTransactionHistoryDetail> getTransactionHistoryDetail(int id);
-
   Future<List<AgencyResponse>> getAllAgency();
 
   Future<AgencyDetailResponse> getAgencyInfo(int id);

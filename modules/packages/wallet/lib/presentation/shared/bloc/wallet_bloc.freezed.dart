@@ -18,64 +18,51 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$WalletEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() getVndWalletInfo,
-    required TResult Function() getDiamondWalletInfo,
-    required TResult Function() getCoinWalletInfo,
-    required TResult Function() reloadVndWalletInfo,
-    required TResult Function() reloadDiamondWalletInfo,
     required TResult Function() getWalletInfo,
+    required TResult Function(WalletType walletType) getWalletTransactionList,
+    required TResult Function(String id) getWalletTransactionDetail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? getVndWalletInfo,
-    TResult? Function()? getDiamondWalletInfo,
-    TResult? Function()? getCoinWalletInfo,
-    TResult? Function()? reloadVndWalletInfo,
-    TResult? Function()? reloadDiamondWalletInfo,
     TResult? Function()? getWalletInfo,
+    TResult? Function(WalletType walletType)? getWalletTransactionList,
+    TResult? Function(String id)? getWalletTransactionDetail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getVndWalletInfo,
-    TResult Function()? getDiamondWalletInfo,
-    TResult Function()? getCoinWalletInfo,
-    TResult Function()? reloadVndWalletInfo,
-    TResult Function()? reloadDiamondWalletInfo,
     TResult Function()? getWalletInfo,
+    TResult Function(WalletType walletType)? getWalletTransactionList,
+    TResult Function(String id)? getWalletTransactionDetail,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_GetVndWalletInfoEvent value) getVndWalletInfo,
-    required TResult Function(_GetDiamondWalletInfo value) getDiamondWalletInfo,
-    required TResult Function(_GetCoinWalletInfo value) getCoinWalletInfo,
-    required TResult Function(_ReloadVndWalletInfo value) reloadVndWalletInfo,
-    required TResult Function(_ReloadDiamondWalletInfo value)
-        reloadDiamondWalletInfo,
     required TResult Function(_GetWalletInfoEvent value) getWalletInfo,
+    required TResult Function(_GetWalletTransactionListEvent value)
+        getWalletTransactionList,
+    required TResult Function(_GetWalletTransactionDetailEvent value)
+        getWalletTransactionDetail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_GetVndWalletInfoEvent value)? getVndWalletInfo,
-    TResult? Function(_GetDiamondWalletInfo value)? getDiamondWalletInfo,
-    TResult? Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
-    TResult? Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
-    TResult? Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
     TResult? Function(_GetWalletInfoEvent value)? getWalletInfo,
+    TResult? Function(_GetWalletTransactionListEvent value)?
+        getWalletTransactionList,
+    TResult? Function(_GetWalletTransactionDetailEvent value)?
+        getWalletTransactionDetail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_GetVndWalletInfoEvent value)? getVndWalletInfo,
-    TResult Function(_GetDiamondWalletInfo value)? getDiamondWalletInfo,
-    TResult Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
-    TResult Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
-    TResult Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
     TResult Function(_GetWalletInfoEvent value)? getWalletInfo,
+    TResult Function(_GetWalletTransactionListEvent value)?
+        getWalletTransactionList,
+    TResult Function(_GetWalletTransactionDetailEvent value)?
+        getWalletTransactionDetail,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -97,692 +84,6 @@ class _$WalletEventCopyWithImpl<$Res, $Val extends WalletEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-}
-
-/// @nodoc
-abstract class _$$GetVndWalletInfoEventImplCopyWith<$Res> {
-  factory _$$GetVndWalletInfoEventImplCopyWith(
-          _$GetVndWalletInfoEventImpl value,
-          $Res Function(_$GetVndWalletInfoEventImpl) then) =
-      __$$GetVndWalletInfoEventImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$GetVndWalletInfoEventImplCopyWithImpl<$Res>
-    extends _$WalletEventCopyWithImpl<$Res, _$GetVndWalletInfoEventImpl>
-    implements _$$GetVndWalletInfoEventImplCopyWith<$Res> {
-  __$$GetVndWalletInfoEventImplCopyWithImpl(_$GetVndWalletInfoEventImpl _value,
-      $Res Function(_$GetVndWalletInfoEventImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$GetVndWalletInfoEventImpl
-    with DiagnosticableTreeMixin
-    implements _GetVndWalletInfoEvent {
-  const _$GetVndWalletInfoEventImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalletEvent.getVndWalletInfo()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'WalletEvent.getVndWalletInfo'));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$GetVndWalletInfoEventImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() getVndWalletInfo,
-    required TResult Function() getDiamondWalletInfo,
-    required TResult Function() getCoinWalletInfo,
-    required TResult Function() reloadVndWalletInfo,
-    required TResult Function() reloadDiamondWalletInfo,
-    required TResult Function() getWalletInfo,
-  }) {
-    return getVndWalletInfo();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? getVndWalletInfo,
-    TResult? Function()? getDiamondWalletInfo,
-    TResult? Function()? getCoinWalletInfo,
-    TResult? Function()? reloadVndWalletInfo,
-    TResult? Function()? reloadDiamondWalletInfo,
-    TResult? Function()? getWalletInfo,
-  }) {
-    return getVndWalletInfo?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getVndWalletInfo,
-    TResult Function()? getDiamondWalletInfo,
-    TResult Function()? getCoinWalletInfo,
-    TResult Function()? reloadVndWalletInfo,
-    TResult Function()? reloadDiamondWalletInfo,
-    TResult Function()? getWalletInfo,
-    required TResult orElse(),
-  }) {
-    if (getVndWalletInfo != null) {
-      return getVndWalletInfo();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_GetVndWalletInfoEvent value) getVndWalletInfo,
-    required TResult Function(_GetDiamondWalletInfo value) getDiamondWalletInfo,
-    required TResult Function(_GetCoinWalletInfo value) getCoinWalletInfo,
-    required TResult Function(_ReloadVndWalletInfo value) reloadVndWalletInfo,
-    required TResult Function(_ReloadDiamondWalletInfo value)
-        reloadDiamondWalletInfo,
-    required TResult Function(_GetWalletInfoEvent value) getWalletInfo,
-  }) {
-    return getVndWalletInfo(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_GetVndWalletInfoEvent value)? getVndWalletInfo,
-    TResult? Function(_GetDiamondWalletInfo value)? getDiamondWalletInfo,
-    TResult? Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
-    TResult? Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
-    TResult? Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
-    TResult? Function(_GetWalletInfoEvent value)? getWalletInfo,
-  }) {
-    return getVndWalletInfo?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_GetVndWalletInfoEvent value)? getVndWalletInfo,
-    TResult Function(_GetDiamondWalletInfo value)? getDiamondWalletInfo,
-    TResult Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
-    TResult Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
-    TResult Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
-    TResult Function(_GetWalletInfoEvent value)? getWalletInfo,
-    required TResult orElse(),
-  }) {
-    if (getVndWalletInfo != null) {
-      return getVndWalletInfo(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _GetVndWalletInfoEvent implements WalletEvent {
-  const factory _GetVndWalletInfoEvent() = _$GetVndWalletInfoEventImpl;
-}
-
-/// @nodoc
-abstract class _$$GetDiamondWalletInfoImplCopyWith<$Res> {
-  factory _$$GetDiamondWalletInfoImplCopyWith(_$GetDiamondWalletInfoImpl value,
-          $Res Function(_$GetDiamondWalletInfoImpl) then) =
-      __$$GetDiamondWalletInfoImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$GetDiamondWalletInfoImplCopyWithImpl<$Res>
-    extends _$WalletEventCopyWithImpl<$Res, _$GetDiamondWalletInfoImpl>
-    implements _$$GetDiamondWalletInfoImplCopyWith<$Res> {
-  __$$GetDiamondWalletInfoImplCopyWithImpl(_$GetDiamondWalletInfoImpl _value,
-      $Res Function(_$GetDiamondWalletInfoImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$GetDiamondWalletInfoImpl
-    with DiagnosticableTreeMixin
-    implements _GetDiamondWalletInfo {
-  const _$GetDiamondWalletInfoImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalletEvent.getDiamondWalletInfo()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('type', 'WalletEvent.getDiamondWalletInfo'));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$GetDiamondWalletInfoImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() getVndWalletInfo,
-    required TResult Function() getDiamondWalletInfo,
-    required TResult Function() getCoinWalletInfo,
-    required TResult Function() reloadVndWalletInfo,
-    required TResult Function() reloadDiamondWalletInfo,
-    required TResult Function() getWalletInfo,
-  }) {
-    return getDiamondWalletInfo();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? getVndWalletInfo,
-    TResult? Function()? getDiamondWalletInfo,
-    TResult? Function()? getCoinWalletInfo,
-    TResult? Function()? reloadVndWalletInfo,
-    TResult? Function()? reloadDiamondWalletInfo,
-    TResult? Function()? getWalletInfo,
-  }) {
-    return getDiamondWalletInfo?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getVndWalletInfo,
-    TResult Function()? getDiamondWalletInfo,
-    TResult Function()? getCoinWalletInfo,
-    TResult Function()? reloadVndWalletInfo,
-    TResult Function()? reloadDiamondWalletInfo,
-    TResult Function()? getWalletInfo,
-    required TResult orElse(),
-  }) {
-    if (getDiamondWalletInfo != null) {
-      return getDiamondWalletInfo();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_GetVndWalletInfoEvent value) getVndWalletInfo,
-    required TResult Function(_GetDiamondWalletInfo value) getDiamondWalletInfo,
-    required TResult Function(_GetCoinWalletInfo value) getCoinWalletInfo,
-    required TResult Function(_ReloadVndWalletInfo value) reloadVndWalletInfo,
-    required TResult Function(_ReloadDiamondWalletInfo value)
-        reloadDiamondWalletInfo,
-    required TResult Function(_GetWalletInfoEvent value) getWalletInfo,
-  }) {
-    return getDiamondWalletInfo(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_GetVndWalletInfoEvent value)? getVndWalletInfo,
-    TResult? Function(_GetDiamondWalletInfo value)? getDiamondWalletInfo,
-    TResult? Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
-    TResult? Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
-    TResult? Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
-    TResult? Function(_GetWalletInfoEvent value)? getWalletInfo,
-  }) {
-    return getDiamondWalletInfo?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_GetVndWalletInfoEvent value)? getVndWalletInfo,
-    TResult Function(_GetDiamondWalletInfo value)? getDiamondWalletInfo,
-    TResult Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
-    TResult Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
-    TResult Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
-    TResult Function(_GetWalletInfoEvent value)? getWalletInfo,
-    required TResult orElse(),
-  }) {
-    if (getDiamondWalletInfo != null) {
-      return getDiamondWalletInfo(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _GetDiamondWalletInfo implements WalletEvent {
-  const factory _GetDiamondWalletInfo() = _$GetDiamondWalletInfoImpl;
-}
-
-/// @nodoc
-abstract class _$$GetCoinWalletInfoImplCopyWith<$Res> {
-  factory _$$GetCoinWalletInfoImplCopyWith(_$GetCoinWalletInfoImpl value,
-          $Res Function(_$GetCoinWalletInfoImpl) then) =
-      __$$GetCoinWalletInfoImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$GetCoinWalletInfoImplCopyWithImpl<$Res>
-    extends _$WalletEventCopyWithImpl<$Res, _$GetCoinWalletInfoImpl>
-    implements _$$GetCoinWalletInfoImplCopyWith<$Res> {
-  __$$GetCoinWalletInfoImplCopyWithImpl(_$GetCoinWalletInfoImpl _value,
-      $Res Function(_$GetCoinWalletInfoImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$GetCoinWalletInfoImpl
-    with DiagnosticableTreeMixin
-    implements _GetCoinWalletInfo {
-  const _$GetCoinWalletInfoImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalletEvent.getCoinWalletInfo()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('type', 'WalletEvent.getCoinWalletInfo'));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$GetCoinWalletInfoImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() getVndWalletInfo,
-    required TResult Function() getDiamondWalletInfo,
-    required TResult Function() getCoinWalletInfo,
-    required TResult Function() reloadVndWalletInfo,
-    required TResult Function() reloadDiamondWalletInfo,
-    required TResult Function() getWalletInfo,
-  }) {
-    return getCoinWalletInfo();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? getVndWalletInfo,
-    TResult? Function()? getDiamondWalletInfo,
-    TResult? Function()? getCoinWalletInfo,
-    TResult? Function()? reloadVndWalletInfo,
-    TResult? Function()? reloadDiamondWalletInfo,
-    TResult? Function()? getWalletInfo,
-  }) {
-    return getCoinWalletInfo?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getVndWalletInfo,
-    TResult Function()? getDiamondWalletInfo,
-    TResult Function()? getCoinWalletInfo,
-    TResult Function()? reloadVndWalletInfo,
-    TResult Function()? reloadDiamondWalletInfo,
-    TResult Function()? getWalletInfo,
-    required TResult orElse(),
-  }) {
-    if (getCoinWalletInfo != null) {
-      return getCoinWalletInfo();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_GetVndWalletInfoEvent value) getVndWalletInfo,
-    required TResult Function(_GetDiamondWalletInfo value) getDiamondWalletInfo,
-    required TResult Function(_GetCoinWalletInfo value) getCoinWalletInfo,
-    required TResult Function(_ReloadVndWalletInfo value) reloadVndWalletInfo,
-    required TResult Function(_ReloadDiamondWalletInfo value)
-        reloadDiamondWalletInfo,
-    required TResult Function(_GetWalletInfoEvent value) getWalletInfo,
-  }) {
-    return getCoinWalletInfo(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_GetVndWalletInfoEvent value)? getVndWalletInfo,
-    TResult? Function(_GetDiamondWalletInfo value)? getDiamondWalletInfo,
-    TResult? Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
-    TResult? Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
-    TResult? Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
-    TResult? Function(_GetWalletInfoEvent value)? getWalletInfo,
-  }) {
-    return getCoinWalletInfo?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_GetVndWalletInfoEvent value)? getVndWalletInfo,
-    TResult Function(_GetDiamondWalletInfo value)? getDiamondWalletInfo,
-    TResult Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
-    TResult Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
-    TResult Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
-    TResult Function(_GetWalletInfoEvent value)? getWalletInfo,
-    required TResult orElse(),
-  }) {
-    if (getCoinWalletInfo != null) {
-      return getCoinWalletInfo(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _GetCoinWalletInfo implements WalletEvent {
-  const factory _GetCoinWalletInfo() = _$GetCoinWalletInfoImpl;
-}
-
-/// @nodoc
-abstract class _$$ReloadVndWalletInfoImplCopyWith<$Res> {
-  factory _$$ReloadVndWalletInfoImplCopyWith(_$ReloadVndWalletInfoImpl value,
-          $Res Function(_$ReloadVndWalletInfoImpl) then) =
-      __$$ReloadVndWalletInfoImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$ReloadVndWalletInfoImplCopyWithImpl<$Res>
-    extends _$WalletEventCopyWithImpl<$Res, _$ReloadVndWalletInfoImpl>
-    implements _$$ReloadVndWalletInfoImplCopyWith<$Res> {
-  __$$ReloadVndWalletInfoImplCopyWithImpl(_$ReloadVndWalletInfoImpl _value,
-      $Res Function(_$ReloadVndWalletInfoImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$ReloadVndWalletInfoImpl
-    with DiagnosticableTreeMixin
-    implements _ReloadVndWalletInfo {
-  const _$ReloadVndWalletInfoImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalletEvent.reloadVndWalletInfo()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('type', 'WalletEvent.reloadVndWalletInfo'));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ReloadVndWalletInfoImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() getVndWalletInfo,
-    required TResult Function() getDiamondWalletInfo,
-    required TResult Function() getCoinWalletInfo,
-    required TResult Function() reloadVndWalletInfo,
-    required TResult Function() reloadDiamondWalletInfo,
-    required TResult Function() getWalletInfo,
-  }) {
-    return reloadVndWalletInfo();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? getVndWalletInfo,
-    TResult? Function()? getDiamondWalletInfo,
-    TResult? Function()? getCoinWalletInfo,
-    TResult? Function()? reloadVndWalletInfo,
-    TResult? Function()? reloadDiamondWalletInfo,
-    TResult? Function()? getWalletInfo,
-  }) {
-    return reloadVndWalletInfo?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getVndWalletInfo,
-    TResult Function()? getDiamondWalletInfo,
-    TResult Function()? getCoinWalletInfo,
-    TResult Function()? reloadVndWalletInfo,
-    TResult Function()? reloadDiamondWalletInfo,
-    TResult Function()? getWalletInfo,
-    required TResult orElse(),
-  }) {
-    if (reloadVndWalletInfo != null) {
-      return reloadVndWalletInfo();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_GetVndWalletInfoEvent value) getVndWalletInfo,
-    required TResult Function(_GetDiamondWalletInfo value) getDiamondWalletInfo,
-    required TResult Function(_GetCoinWalletInfo value) getCoinWalletInfo,
-    required TResult Function(_ReloadVndWalletInfo value) reloadVndWalletInfo,
-    required TResult Function(_ReloadDiamondWalletInfo value)
-        reloadDiamondWalletInfo,
-    required TResult Function(_GetWalletInfoEvent value) getWalletInfo,
-  }) {
-    return reloadVndWalletInfo(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_GetVndWalletInfoEvent value)? getVndWalletInfo,
-    TResult? Function(_GetDiamondWalletInfo value)? getDiamondWalletInfo,
-    TResult? Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
-    TResult? Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
-    TResult? Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
-    TResult? Function(_GetWalletInfoEvent value)? getWalletInfo,
-  }) {
-    return reloadVndWalletInfo?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_GetVndWalletInfoEvent value)? getVndWalletInfo,
-    TResult Function(_GetDiamondWalletInfo value)? getDiamondWalletInfo,
-    TResult Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
-    TResult Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
-    TResult Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
-    TResult Function(_GetWalletInfoEvent value)? getWalletInfo,
-    required TResult orElse(),
-  }) {
-    if (reloadVndWalletInfo != null) {
-      return reloadVndWalletInfo(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ReloadVndWalletInfo implements WalletEvent {
-  const factory _ReloadVndWalletInfo() = _$ReloadVndWalletInfoImpl;
-}
-
-/// @nodoc
-abstract class _$$ReloadDiamondWalletInfoImplCopyWith<$Res> {
-  factory _$$ReloadDiamondWalletInfoImplCopyWith(
-          _$ReloadDiamondWalletInfoImpl value,
-          $Res Function(_$ReloadDiamondWalletInfoImpl) then) =
-      __$$ReloadDiamondWalletInfoImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$ReloadDiamondWalletInfoImplCopyWithImpl<$Res>
-    extends _$WalletEventCopyWithImpl<$Res, _$ReloadDiamondWalletInfoImpl>
-    implements _$$ReloadDiamondWalletInfoImplCopyWith<$Res> {
-  __$$ReloadDiamondWalletInfoImplCopyWithImpl(
-      _$ReloadDiamondWalletInfoImpl _value,
-      $Res Function(_$ReloadDiamondWalletInfoImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$ReloadDiamondWalletInfoImpl
-    with DiagnosticableTreeMixin
-    implements _ReloadDiamondWalletInfo {
-  const _$ReloadDiamondWalletInfoImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalletEvent.reloadDiamondWalletInfo()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(
-        DiagnosticsProperty('type', 'WalletEvent.reloadDiamondWalletInfo'));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ReloadDiamondWalletInfoImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() getVndWalletInfo,
-    required TResult Function() getDiamondWalletInfo,
-    required TResult Function() getCoinWalletInfo,
-    required TResult Function() reloadVndWalletInfo,
-    required TResult Function() reloadDiamondWalletInfo,
-    required TResult Function() getWalletInfo,
-  }) {
-    return reloadDiamondWalletInfo();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? getVndWalletInfo,
-    TResult? Function()? getDiamondWalletInfo,
-    TResult? Function()? getCoinWalletInfo,
-    TResult? Function()? reloadVndWalletInfo,
-    TResult? Function()? reloadDiamondWalletInfo,
-    TResult? Function()? getWalletInfo,
-  }) {
-    return reloadDiamondWalletInfo?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getVndWalletInfo,
-    TResult Function()? getDiamondWalletInfo,
-    TResult Function()? getCoinWalletInfo,
-    TResult Function()? reloadVndWalletInfo,
-    TResult Function()? reloadDiamondWalletInfo,
-    TResult Function()? getWalletInfo,
-    required TResult orElse(),
-  }) {
-    if (reloadDiamondWalletInfo != null) {
-      return reloadDiamondWalletInfo();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_GetVndWalletInfoEvent value) getVndWalletInfo,
-    required TResult Function(_GetDiamondWalletInfo value) getDiamondWalletInfo,
-    required TResult Function(_GetCoinWalletInfo value) getCoinWalletInfo,
-    required TResult Function(_ReloadVndWalletInfo value) reloadVndWalletInfo,
-    required TResult Function(_ReloadDiamondWalletInfo value)
-        reloadDiamondWalletInfo,
-    required TResult Function(_GetWalletInfoEvent value) getWalletInfo,
-  }) {
-    return reloadDiamondWalletInfo(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_GetVndWalletInfoEvent value)? getVndWalletInfo,
-    TResult? Function(_GetDiamondWalletInfo value)? getDiamondWalletInfo,
-    TResult? Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
-    TResult? Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
-    TResult? Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
-    TResult? Function(_GetWalletInfoEvent value)? getWalletInfo,
-  }) {
-    return reloadDiamondWalletInfo?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_GetVndWalletInfoEvent value)? getVndWalletInfo,
-    TResult Function(_GetDiamondWalletInfo value)? getDiamondWalletInfo,
-    TResult Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
-    TResult Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
-    TResult Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
-    TResult Function(_GetWalletInfoEvent value)? getWalletInfo,
-    required TResult orElse(),
-  }) {
-    if (reloadDiamondWalletInfo != null) {
-      return reloadDiamondWalletInfo(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ReloadDiamondWalletInfo implements WalletEvent {
-  const factory _ReloadDiamondWalletInfo() = _$ReloadDiamondWalletInfoImpl;
 }
 
 /// @nodoc
@@ -831,12 +132,9 @@ class _$GetWalletInfoEventImpl
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() getVndWalletInfo,
-    required TResult Function() getDiamondWalletInfo,
-    required TResult Function() getCoinWalletInfo,
-    required TResult Function() reloadVndWalletInfo,
-    required TResult Function() reloadDiamondWalletInfo,
     required TResult Function() getWalletInfo,
+    required TResult Function(WalletType walletType) getWalletTransactionList,
+    required TResult Function(String id) getWalletTransactionDetail,
   }) {
     return getWalletInfo();
   }
@@ -844,12 +142,9 @@ class _$GetWalletInfoEventImpl
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? getVndWalletInfo,
-    TResult? Function()? getDiamondWalletInfo,
-    TResult? Function()? getCoinWalletInfo,
-    TResult? Function()? reloadVndWalletInfo,
-    TResult? Function()? reloadDiamondWalletInfo,
     TResult? Function()? getWalletInfo,
+    TResult? Function(WalletType walletType)? getWalletTransactionList,
+    TResult? Function(String id)? getWalletTransactionDetail,
   }) {
     return getWalletInfo?.call();
   }
@@ -857,12 +152,9 @@ class _$GetWalletInfoEventImpl
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? getVndWalletInfo,
-    TResult Function()? getDiamondWalletInfo,
-    TResult Function()? getCoinWalletInfo,
-    TResult Function()? reloadVndWalletInfo,
-    TResult Function()? reloadDiamondWalletInfo,
     TResult Function()? getWalletInfo,
+    TResult Function(WalletType walletType)? getWalletTransactionList,
+    TResult Function(String id)? getWalletTransactionDetail,
     required TResult orElse(),
   }) {
     if (getWalletInfo != null) {
@@ -874,13 +166,11 @@ class _$GetWalletInfoEventImpl
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_GetVndWalletInfoEvent value) getVndWalletInfo,
-    required TResult Function(_GetDiamondWalletInfo value) getDiamondWalletInfo,
-    required TResult Function(_GetCoinWalletInfo value) getCoinWalletInfo,
-    required TResult Function(_ReloadVndWalletInfo value) reloadVndWalletInfo,
-    required TResult Function(_ReloadDiamondWalletInfo value)
-        reloadDiamondWalletInfo,
     required TResult Function(_GetWalletInfoEvent value) getWalletInfo,
+    required TResult Function(_GetWalletTransactionListEvent value)
+        getWalletTransactionList,
+    required TResult Function(_GetWalletTransactionDetailEvent value)
+        getWalletTransactionDetail,
   }) {
     return getWalletInfo(this);
   }
@@ -888,12 +178,11 @@ class _$GetWalletInfoEventImpl
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_GetVndWalletInfoEvent value)? getVndWalletInfo,
-    TResult? Function(_GetDiamondWalletInfo value)? getDiamondWalletInfo,
-    TResult? Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
-    TResult? Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
-    TResult? Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
     TResult? Function(_GetWalletInfoEvent value)? getWalletInfo,
+    TResult? Function(_GetWalletTransactionListEvent value)?
+        getWalletTransactionList,
+    TResult? Function(_GetWalletTransactionDetailEvent value)?
+        getWalletTransactionDetail,
   }) {
     return getWalletInfo?.call(this);
   }
@@ -901,12 +190,11 @@ class _$GetWalletInfoEventImpl
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_GetVndWalletInfoEvent value)? getVndWalletInfo,
-    TResult Function(_GetDiamondWalletInfo value)? getDiamondWalletInfo,
-    TResult Function(_GetCoinWalletInfo value)? getCoinWalletInfo,
-    TResult Function(_ReloadVndWalletInfo value)? reloadVndWalletInfo,
-    TResult Function(_ReloadDiamondWalletInfo value)? reloadDiamondWalletInfo,
     TResult Function(_GetWalletInfoEvent value)? getWalletInfo,
+    TResult Function(_GetWalletTransactionListEvent value)?
+        getWalletTransactionList,
+    TResult Function(_GetWalletTransactionDetailEvent value)?
+        getWalletTransactionDetail,
     required TResult orElse(),
   }) {
     if (getWalletInfo != null) {
@@ -921,56 +209,379 @@ abstract class _GetWalletInfoEvent implements WalletEvent {
 }
 
 /// @nodoc
+abstract class _$$GetWalletTransactionListEventImplCopyWith<$Res> {
+  factory _$$GetWalletTransactionListEventImplCopyWith(
+          _$GetWalletTransactionListEventImpl value,
+          $Res Function(_$GetWalletTransactionListEventImpl) then) =
+      __$$GetWalletTransactionListEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({WalletType walletType});
+}
+
+/// @nodoc
+class __$$GetWalletTransactionListEventImplCopyWithImpl<$Res>
+    extends _$WalletEventCopyWithImpl<$Res, _$GetWalletTransactionListEventImpl>
+    implements _$$GetWalletTransactionListEventImplCopyWith<$Res> {
+  __$$GetWalletTransactionListEventImplCopyWithImpl(
+      _$GetWalletTransactionListEventImpl _value,
+      $Res Function(_$GetWalletTransactionListEventImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? walletType = null,
+  }) {
+    return _then(_$GetWalletTransactionListEventImpl(
+      walletType: null == walletType
+          ? _value.walletType
+          : walletType // ignore: cast_nullable_to_non_nullable
+              as WalletType,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$GetWalletTransactionListEventImpl
+    with DiagnosticableTreeMixin
+    implements _GetWalletTransactionListEvent {
+  const _$GetWalletTransactionListEventImpl({required this.walletType});
+
+  @override
+  final WalletType walletType;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WalletEvent.getWalletTransactionList(walletType: $walletType)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'WalletEvent.getWalletTransactionList'))
+      ..add(DiagnosticsProperty('walletType', walletType));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetWalletTransactionListEventImpl &&
+            (identical(other.walletType, walletType) ||
+                other.walletType == walletType));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, walletType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetWalletTransactionListEventImplCopyWith<
+          _$GetWalletTransactionListEventImpl>
+      get copyWith => __$$GetWalletTransactionListEventImplCopyWithImpl<
+          _$GetWalletTransactionListEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getWalletInfo,
+    required TResult Function(WalletType walletType) getWalletTransactionList,
+    required TResult Function(String id) getWalletTransactionDetail,
+  }) {
+    return getWalletTransactionList(walletType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getWalletInfo,
+    TResult? Function(WalletType walletType)? getWalletTransactionList,
+    TResult? Function(String id)? getWalletTransactionDetail,
+  }) {
+    return getWalletTransactionList?.call(walletType);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getWalletInfo,
+    TResult Function(WalletType walletType)? getWalletTransactionList,
+    TResult Function(String id)? getWalletTransactionDetail,
+    required TResult orElse(),
+  }) {
+    if (getWalletTransactionList != null) {
+      return getWalletTransactionList(walletType);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetWalletInfoEvent value) getWalletInfo,
+    required TResult Function(_GetWalletTransactionListEvent value)
+        getWalletTransactionList,
+    required TResult Function(_GetWalletTransactionDetailEvent value)
+        getWalletTransactionDetail,
+  }) {
+    return getWalletTransactionList(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetWalletInfoEvent value)? getWalletInfo,
+    TResult? Function(_GetWalletTransactionListEvent value)?
+        getWalletTransactionList,
+    TResult? Function(_GetWalletTransactionDetailEvent value)?
+        getWalletTransactionDetail,
+  }) {
+    return getWalletTransactionList?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetWalletInfoEvent value)? getWalletInfo,
+    TResult Function(_GetWalletTransactionListEvent value)?
+        getWalletTransactionList,
+    TResult Function(_GetWalletTransactionDetailEvent value)?
+        getWalletTransactionDetail,
+    required TResult orElse(),
+  }) {
+    if (getWalletTransactionList != null) {
+      return getWalletTransactionList(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetWalletTransactionListEvent implements WalletEvent {
+  const factory _GetWalletTransactionListEvent(
+          {required final WalletType walletType}) =
+      _$GetWalletTransactionListEventImpl;
+
+  WalletType get walletType;
+  @JsonKey(ignore: true)
+  _$$GetWalletTransactionListEventImplCopyWith<
+          _$GetWalletTransactionListEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$GetWalletTransactionDetailEventImplCopyWith<$Res> {
+  factory _$$GetWalletTransactionDetailEventImplCopyWith(
+          _$GetWalletTransactionDetailEventImpl value,
+          $Res Function(_$GetWalletTransactionDetailEventImpl) then) =
+      __$$GetWalletTransactionDetailEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String id});
+}
+
+/// @nodoc
+class __$$GetWalletTransactionDetailEventImplCopyWithImpl<$Res>
+    extends _$WalletEventCopyWithImpl<$Res,
+        _$GetWalletTransactionDetailEventImpl>
+    implements _$$GetWalletTransactionDetailEventImplCopyWith<$Res> {
+  __$$GetWalletTransactionDetailEventImplCopyWithImpl(
+      _$GetWalletTransactionDetailEventImpl _value,
+      $Res Function(_$GetWalletTransactionDetailEventImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+  }) {
+    return _then(_$GetWalletTransactionDetailEventImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$GetWalletTransactionDetailEventImpl
+    with DiagnosticableTreeMixin
+    implements _GetWalletTransactionDetailEvent {
+  const _$GetWalletTransactionDetailEventImpl({required this.id});
+
+  @override
+  final String id;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WalletEvent.getWalletTransactionDetail(id: $id)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(
+          DiagnosticsProperty('type', 'WalletEvent.getWalletTransactionDetail'))
+      ..add(DiagnosticsProperty('id', id));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetWalletTransactionDetailEventImpl &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetWalletTransactionDetailEventImplCopyWith<
+          _$GetWalletTransactionDetailEventImpl>
+      get copyWith => __$$GetWalletTransactionDetailEventImplCopyWithImpl<
+          _$GetWalletTransactionDetailEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getWalletInfo,
+    required TResult Function(WalletType walletType) getWalletTransactionList,
+    required TResult Function(String id) getWalletTransactionDetail,
+  }) {
+    return getWalletTransactionDetail(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getWalletInfo,
+    TResult? Function(WalletType walletType)? getWalletTransactionList,
+    TResult? Function(String id)? getWalletTransactionDetail,
+  }) {
+    return getWalletTransactionDetail?.call(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getWalletInfo,
+    TResult Function(WalletType walletType)? getWalletTransactionList,
+    TResult Function(String id)? getWalletTransactionDetail,
+    required TResult orElse(),
+  }) {
+    if (getWalletTransactionDetail != null) {
+      return getWalletTransactionDetail(id);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetWalletInfoEvent value) getWalletInfo,
+    required TResult Function(_GetWalletTransactionListEvent value)
+        getWalletTransactionList,
+    required TResult Function(_GetWalletTransactionDetailEvent value)
+        getWalletTransactionDetail,
+  }) {
+    return getWalletTransactionDetail(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetWalletInfoEvent value)? getWalletInfo,
+    TResult? Function(_GetWalletTransactionListEvent value)?
+        getWalletTransactionList,
+    TResult? Function(_GetWalletTransactionDetailEvent value)?
+        getWalletTransactionDetail,
+  }) {
+    return getWalletTransactionDetail?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetWalletInfoEvent value)? getWalletInfo,
+    TResult Function(_GetWalletTransactionListEvent value)?
+        getWalletTransactionList,
+    TResult Function(_GetWalletTransactionDetailEvent value)?
+        getWalletTransactionDetail,
+    required TResult orElse(),
+  }) {
+    if (getWalletTransactionDetail != null) {
+      return getWalletTransactionDetail(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetWalletTransactionDetailEvent implements WalletEvent {
+  const factory _GetWalletTransactionDetailEvent({required final String id}) =
+      _$GetWalletTransactionDetailEventImpl;
+
+  String get id;
+  @JsonKey(ignore: true)
+  _$$GetWalletTransactionDetailEventImplCopyWith<
+          _$GetWalletTransactionDetailEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$WalletState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String err) error,
-    required TResult Function() vndWalletInfoLoading,
-    required TResult Function(VndWalletInfo vndWalletInfo) vndWalletInfoLoaded,
-    required TResult Function(WalletType walletType) needToRegisterJA,
-    required TResult Function() getDiamondWalletInfoLoading,
-    required TResult Function() getDiamondWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoading,
-    required TResult Function() reloadVndWalletInfoSuccess,
-    required TResult Function() reloadDiamondWalletInfoSuccess,
     required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
     required TResult Function() getWalletInfoLoading,
+    required TResult Function(String err) getWalletTransactionListFailed,
+    required TResult Function(List<TransactionItem> transactions)
+        getWalletTransactionListSuccess,
+    required TResult Function() getWalletTransactionListLoading,
+    required TResult Function(TransactionItem transactions)
+        getWalletTransactionDetailSuccess,
+    required TResult Function() getWalletTransactionDetailLoading,
+    required TResult Function(String err) getWalletTransactionDetailFailed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String err)? error,
-    TResult? Function()? vndWalletInfoLoading,
-    TResult? Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult? Function(WalletType walletType)? needToRegisterJA,
-    TResult? Function()? getDiamondWalletInfoLoading,
-    TResult? Function()? getDiamondWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoading,
-    TResult? Function()? reloadVndWalletInfoSuccess,
-    TResult? Function()? reloadDiamondWalletInfoSuccess,
     TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
     TResult? Function()? getWalletInfoLoading,
+    TResult? Function(String err)? getWalletTransactionListFailed,
+    TResult? Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult? Function()? getWalletTransactionListLoading,
+    TResult? Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function()? getWalletTransactionDetailLoading,
+    TResult? Function(String err)? getWalletTransactionDetailFailed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String err)? error,
-    TResult Function()? vndWalletInfoLoading,
-    TResult Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult Function(WalletType walletType)? needToRegisterJA,
-    TResult Function()? getDiamondWalletInfoLoading,
-    TResult Function()? getDiamondWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoading,
-    TResult Function()? reloadVndWalletInfoSuccess,
-    TResult Function()? reloadDiamondWalletInfoSuccess,
     TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
     TResult Function()? getWalletInfoLoading,
+    TResult Function(String err)? getWalletTransactionListFailed,
+    TResult Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult Function()? getWalletTransactionListLoading,
+    TResult Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult Function()? getWalletTransactionDetailLoading,
+    TResult Function(String err)? getWalletTransactionDetailFailed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -978,66 +589,60 @@ mixin _$WalletState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Error value) error,
-    required TResult Function(_VndWalletInfoLoading value) vndWalletInfoLoading,
-    required TResult Function(_VndWalletInfoLoaded value) vndWalletInfoLoaded,
-    required TResult Function(_NeedToRegisterJA value) needToRegisterJA,
-    required TResult Function(_GetDiamondWalletInfoLoading value)
-        getDiamondWalletInfoLoading,
-    required TResult Function(_GetDiamondWalletInfoLoaded value)
-        getDiamondWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoaded value)
-        getCoinWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoading value)
-        getCoinWalletInfoLoading,
-    required TResult Function(_ReloadVndWalletInfoSuccess value)
-        reloadVndWalletInfoSuccess,
-    required TResult Function(_ReloadDiamondWalletInfoSuccess value)
-        reloadDiamondWalletInfoSuccess,
     required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
     required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
+    required TResult Function(_GetWalletTransactionListFailed value)
+        getWalletTransactionListFailed,
+    required TResult Function(_GetWalletTransactionListSuccess value)
+        getWalletTransactionListSuccess,
+    required TResult Function(_GetWalletTransactionListLoading value)
+        getWalletTransactionListLoading,
+    required TResult Function(_GetWalletTransactionDetailSuccess value)
+        getWalletTransactionDetailSuccess,
+    required TResult Function(_GetWalletTransactionDetailLoading value)
+        getWalletTransactionDetailLoading,
+    required TResult Function(_GetWalletTransactionDetailFailed value)
+        getWalletTransactionDetailFailed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Error value)? error,
-    TResult? Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult? Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult? Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult? Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult? Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoading value)?
-        getCoinWalletInfoLoading,
-    TResult? Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
     TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
     TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult? Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult? Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult? Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult? Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult? Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Error value)? error,
-    TResult Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoading value)? getCoinWalletInfoLoading,
-    TResult Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
     TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
     TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1107,17 +712,16 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String err) error,
-    required TResult Function() vndWalletInfoLoading,
-    required TResult Function(VndWalletInfo vndWalletInfo) vndWalletInfoLoaded,
-    required TResult Function(WalletType walletType) needToRegisterJA,
-    required TResult Function() getDiamondWalletInfoLoading,
-    required TResult Function() getDiamondWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoading,
-    required TResult Function() reloadVndWalletInfoSuccess,
-    required TResult Function() reloadDiamondWalletInfoSuccess,
     required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
     required TResult Function() getWalletInfoLoading,
+    required TResult Function(String err) getWalletTransactionListFailed,
+    required TResult Function(List<TransactionItem> transactions)
+        getWalletTransactionListSuccess,
+    required TResult Function() getWalletTransactionListLoading,
+    required TResult Function(TransactionItem transactions)
+        getWalletTransactionDetailSuccess,
+    required TResult Function() getWalletTransactionDetailLoading,
+    required TResult Function(String err) getWalletTransactionDetailFailed,
   }) {
     return initial();
   }
@@ -1127,17 +731,16 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String err)? error,
-    TResult? Function()? vndWalletInfoLoading,
-    TResult? Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult? Function(WalletType walletType)? needToRegisterJA,
-    TResult? Function()? getDiamondWalletInfoLoading,
-    TResult? Function()? getDiamondWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoading,
-    TResult? Function()? reloadVndWalletInfoSuccess,
-    TResult? Function()? reloadDiamondWalletInfoSuccess,
     TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
     TResult? Function()? getWalletInfoLoading,
+    TResult? Function(String err)? getWalletTransactionListFailed,
+    TResult? Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult? Function()? getWalletTransactionListLoading,
+    TResult? Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function()? getWalletTransactionDetailLoading,
+    TResult? Function(String err)? getWalletTransactionDetailFailed,
   }) {
     return initial?.call();
   }
@@ -1147,17 +750,16 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String err)? error,
-    TResult Function()? vndWalletInfoLoading,
-    TResult Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult Function(WalletType walletType)? needToRegisterJA,
-    TResult Function()? getDiamondWalletInfoLoading,
-    TResult Function()? getDiamondWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoading,
-    TResult Function()? reloadVndWalletInfoSuccess,
-    TResult Function()? reloadDiamondWalletInfoSuccess,
     TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
     TResult Function()? getWalletInfoLoading,
+    TResult Function(String err)? getWalletTransactionListFailed,
+    TResult Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult Function()? getWalletTransactionListLoading,
+    TResult Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult Function()? getWalletTransactionDetailLoading,
+    TResult Function(String err)? getWalletTransactionDetailFailed,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -1171,23 +773,20 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Error value) error,
-    required TResult Function(_VndWalletInfoLoading value) vndWalletInfoLoading,
-    required TResult Function(_VndWalletInfoLoaded value) vndWalletInfoLoaded,
-    required TResult Function(_NeedToRegisterJA value) needToRegisterJA,
-    required TResult Function(_GetDiamondWalletInfoLoading value)
-        getDiamondWalletInfoLoading,
-    required TResult Function(_GetDiamondWalletInfoLoaded value)
-        getDiamondWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoaded value)
-        getCoinWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoading value)
-        getCoinWalletInfoLoading,
-    required TResult Function(_ReloadVndWalletInfoSuccess value)
-        reloadVndWalletInfoSuccess,
-    required TResult Function(_ReloadDiamondWalletInfoSuccess value)
-        reloadDiamondWalletInfoSuccess,
     required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
     required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
+    required TResult Function(_GetWalletTransactionListFailed value)
+        getWalletTransactionListFailed,
+    required TResult Function(_GetWalletTransactionListSuccess value)
+        getWalletTransactionListSuccess,
+    required TResult Function(_GetWalletTransactionListLoading value)
+        getWalletTransactionListLoading,
+    required TResult Function(_GetWalletTransactionDetailSuccess value)
+        getWalletTransactionDetailSuccess,
+    required TResult Function(_GetWalletTransactionDetailLoading value)
+        getWalletTransactionDetailLoading,
+    required TResult Function(_GetWalletTransactionDetailFailed value)
+        getWalletTransactionDetailFailed,
   }) {
     return initial(this);
   }
@@ -1197,22 +796,20 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Error value)? error,
-    TResult? Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult? Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult? Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult? Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult? Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoading value)?
-        getCoinWalletInfoLoading,
-    TResult? Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
     TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
     TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult? Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult? Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult? Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult? Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult? Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
   }) {
     return initial?.call(this);
   }
@@ -1222,21 +819,20 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Error value)? error,
-    TResult Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoading value)? getCoinWalletInfoLoading,
-    TResult Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
     TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
     TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -1324,17 +920,16 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String err) error,
-    required TResult Function() vndWalletInfoLoading,
-    required TResult Function(VndWalletInfo vndWalletInfo) vndWalletInfoLoaded,
-    required TResult Function(WalletType walletType) needToRegisterJA,
-    required TResult Function() getDiamondWalletInfoLoading,
-    required TResult Function() getDiamondWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoading,
-    required TResult Function() reloadVndWalletInfoSuccess,
-    required TResult Function() reloadDiamondWalletInfoSuccess,
     required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
     required TResult Function() getWalletInfoLoading,
+    required TResult Function(String err) getWalletTransactionListFailed,
+    required TResult Function(List<TransactionItem> transactions)
+        getWalletTransactionListSuccess,
+    required TResult Function() getWalletTransactionListLoading,
+    required TResult Function(TransactionItem transactions)
+        getWalletTransactionDetailSuccess,
+    required TResult Function() getWalletTransactionDetailLoading,
+    required TResult Function(String err) getWalletTransactionDetailFailed,
   }) {
     return error(err);
   }
@@ -1344,17 +939,16 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String err)? error,
-    TResult? Function()? vndWalletInfoLoading,
-    TResult? Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult? Function(WalletType walletType)? needToRegisterJA,
-    TResult? Function()? getDiamondWalletInfoLoading,
-    TResult? Function()? getDiamondWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoading,
-    TResult? Function()? reloadVndWalletInfoSuccess,
-    TResult? Function()? reloadDiamondWalletInfoSuccess,
     TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
     TResult? Function()? getWalletInfoLoading,
+    TResult? Function(String err)? getWalletTransactionListFailed,
+    TResult? Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult? Function()? getWalletTransactionListLoading,
+    TResult? Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function()? getWalletTransactionDetailLoading,
+    TResult? Function(String err)? getWalletTransactionDetailFailed,
   }) {
     return error?.call(err);
   }
@@ -1364,17 +958,16 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String err)? error,
-    TResult Function()? vndWalletInfoLoading,
-    TResult Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult Function(WalletType walletType)? needToRegisterJA,
-    TResult Function()? getDiamondWalletInfoLoading,
-    TResult Function()? getDiamondWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoading,
-    TResult Function()? reloadVndWalletInfoSuccess,
-    TResult Function()? reloadDiamondWalletInfoSuccess,
     TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
     TResult Function()? getWalletInfoLoading,
+    TResult Function(String err)? getWalletTransactionListFailed,
+    TResult Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult Function()? getWalletTransactionListLoading,
+    TResult Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult Function()? getWalletTransactionDetailLoading,
+    TResult Function(String err)? getWalletTransactionDetailFailed,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1388,23 +981,20 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Error value) error,
-    required TResult Function(_VndWalletInfoLoading value) vndWalletInfoLoading,
-    required TResult Function(_VndWalletInfoLoaded value) vndWalletInfoLoaded,
-    required TResult Function(_NeedToRegisterJA value) needToRegisterJA,
-    required TResult Function(_GetDiamondWalletInfoLoading value)
-        getDiamondWalletInfoLoading,
-    required TResult Function(_GetDiamondWalletInfoLoaded value)
-        getDiamondWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoaded value)
-        getCoinWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoading value)
-        getCoinWalletInfoLoading,
-    required TResult Function(_ReloadVndWalletInfoSuccess value)
-        reloadVndWalletInfoSuccess,
-    required TResult Function(_ReloadDiamondWalletInfoSuccess value)
-        reloadDiamondWalletInfoSuccess,
     required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
     required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
+    required TResult Function(_GetWalletTransactionListFailed value)
+        getWalletTransactionListFailed,
+    required TResult Function(_GetWalletTransactionListSuccess value)
+        getWalletTransactionListSuccess,
+    required TResult Function(_GetWalletTransactionListLoading value)
+        getWalletTransactionListLoading,
+    required TResult Function(_GetWalletTransactionDetailSuccess value)
+        getWalletTransactionDetailSuccess,
+    required TResult Function(_GetWalletTransactionDetailLoading value)
+        getWalletTransactionDetailLoading,
+    required TResult Function(_GetWalletTransactionDetailFailed value)
+        getWalletTransactionDetailFailed,
   }) {
     return error(this);
   }
@@ -1414,22 +1004,20 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Error value)? error,
-    TResult? Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult? Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult? Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult? Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult? Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoading value)?
-        getCoinWalletInfoLoading,
-    TResult? Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
     TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
     TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult? Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult? Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult? Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult? Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult? Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
   }) {
     return error?.call(this);
   }
@@ -1439,21 +1027,20 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Error value)? error,
-    TResult Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoading value)? getCoinWalletInfoLoading,
-    TResult Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
     TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
     TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1470,1838 +1057,6 @@ abstract class _Error implements WalletState {
   @JsonKey(ignore: true)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$VndWalletInfoLoadingImplCopyWith<$Res> {
-  factory _$$VndWalletInfoLoadingImplCopyWith(_$VndWalletInfoLoadingImpl value,
-          $Res Function(_$VndWalletInfoLoadingImpl) then) =
-      __$$VndWalletInfoLoadingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$VndWalletInfoLoadingImplCopyWithImpl<$Res>
-    extends _$WalletStateCopyWithImpl<$Res, _$VndWalletInfoLoadingImpl>
-    implements _$$VndWalletInfoLoadingImplCopyWith<$Res> {
-  __$$VndWalletInfoLoadingImplCopyWithImpl(_$VndWalletInfoLoadingImpl _value,
-      $Res Function(_$VndWalletInfoLoadingImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$VndWalletInfoLoadingImpl
-    with DiagnosticableTreeMixin
-    implements _VndWalletInfoLoading {
-  const _$VndWalletInfoLoadingImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalletState.vndWalletInfoLoading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-        .add(DiagnosticsProperty('type', 'WalletState.vndWalletInfoLoading'));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$VndWalletInfoLoadingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(String err) error,
-    required TResult Function() vndWalletInfoLoading,
-    required TResult Function(VndWalletInfo vndWalletInfo) vndWalletInfoLoaded,
-    required TResult Function(WalletType walletType) needToRegisterJA,
-    required TResult Function() getDiamondWalletInfoLoading,
-    required TResult Function() getDiamondWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoading,
-    required TResult Function() reloadVndWalletInfoSuccess,
-    required TResult Function() reloadDiamondWalletInfoSuccess,
-    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
-    required TResult Function() getWalletInfoLoading,
-  }) {
-    return vndWalletInfoLoading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(String err)? error,
-    TResult? Function()? vndWalletInfoLoading,
-    TResult? Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult? Function(WalletType walletType)? needToRegisterJA,
-    TResult? Function()? getDiamondWalletInfoLoading,
-    TResult? Function()? getDiamondWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoading,
-    TResult? Function()? reloadVndWalletInfoSuccess,
-    TResult? Function()? reloadDiamondWalletInfoSuccess,
-    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
-    TResult? Function()? getWalletInfoLoading,
-  }) {
-    return vndWalletInfoLoading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(String err)? error,
-    TResult Function()? vndWalletInfoLoading,
-    TResult Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult Function(WalletType walletType)? needToRegisterJA,
-    TResult Function()? getDiamondWalletInfoLoading,
-    TResult Function()? getDiamondWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoading,
-    TResult Function()? reloadVndWalletInfoSuccess,
-    TResult Function()? reloadDiamondWalletInfoSuccess,
-    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
-    TResult Function()? getWalletInfoLoading,
-    required TResult orElse(),
-  }) {
-    if (vndWalletInfoLoading != null) {
-      return vndWalletInfoLoading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Error value) error,
-    required TResult Function(_VndWalletInfoLoading value) vndWalletInfoLoading,
-    required TResult Function(_VndWalletInfoLoaded value) vndWalletInfoLoaded,
-    required TResult Function(_NeedToRegisterJA value) needToRegisterJA,
-    required TResult Function(_GetDiamondWalletInfoLoading value)
-        getDiamondWalletInfoLoading,
-    required TResult Function(_GetDiamondWalletInfoLoaded value)
-        getDiamondWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoaded value)
-        getCoinWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoading value)
-        getCoinWalletInfoLoading,
-    required TResult Function(_ReloadVndWalletInfoSuccess value)
-        reloadVndWalletInfoSuccess,
-    required TResult Function(_ReloadDiamondWalletInfoSuccess value)
-        reloadDiamondWalletInfoSuccess,
-    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
-    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
-  }) {
-    return vndWalletInfoLoading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult? Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult? Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult? Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult? Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoading value)?
-        getCoinWalletInfoLoading,
-    TResult? Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
-    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
-    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
-  }) {
-    return vndWalletInfoLoading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Error value)? error,
-    TResult Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoading value)? getCoinWalletInfoLoading,
-    TResult Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
-    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
-    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
-    required TResult orElse(),
-  }) {
-    if (vndWalletInfoLoading != null) {
-      return vndWalletInfoLoading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _VndWalletInfoLoading implements WalletState {
-  const factory _VndWalletInfoLoading() = _$VndWalletInfoLoadingImpl;
-}
-
-/// @nodoc
-abstract class _$$VndWalletInfoLoadedImplCopyWith<$Res> {
-  factory _$$VndWalletInfoLoadedImplCopyWith(_$VndWalletInfoLoadedImpl value,
-          $Res Function(_$VndWalletInfoLoadedImpl) then) =
-      __$$VndWalletInfoLoadedImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({VndWalletInfo vndWalletInfo});
-
-  $VndWalletInfoCopyWith<$Res> get vndWalletInfo;
-}
-
-/// @nodoc
-class __$$VndWalletInfoLoadedImplCopyWithImpl<$Res>
-    extends _$WalletStateCopyWithImpl<$Res, _$VndWalletInfoLoadedImpl>
-    implements _$$VndWalletInfoLoadedImplCopyWith<$Res> {
-  __$$VndWalletInfoLoadedImplCopyWithImpl(_$VndWalletInfoLoadedImpl _value,
-      $Res Function(_$VndWalletInfoLoadedImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? vndWalletInfo = null,
-  }) {
-    return _then(_$VndWalletInfoLoadedImpl(
-      null == vndWalletInfo
-          ? _value.vndWalletInfo
-          : vndWalletInfo // ignore: cast_nullable_to_non_nullable
-              as VndWalletInfo,
-    ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $VndWalletInfoCopyWith<$Res> get vndWalletInfo {
-    return $VndWalletInfoCopyWith<$Res>(_value.vndWalletInfo, (value) {
-      return _then(_value.copyWith(vndWalletInfo: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$VndWalletInfoLoadedImpl
-    with DiagnosticableTreeMixin
-    implements _VndWalletInfoLoaded {
-  const _$VndWalletInfoLoadedImpl(this.vndWalletInfo);
-
-  @override
-  final VndWalletInfo vndWalletInfo;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalletState.vndWalletInfoLoaded(vndWalletInfo: $vndWalletInfo)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'WalletState.vndWalletInfoLoaded'))
-      ..add(DiagnosticsProperty('vndWalletInfo', vndWalletInfo));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$VndWalletInfoLoadedImpl &&
-            (identical(other.vndWalletInfo, vndWalletInfo) ||
-                other.vndWalletInfo == vndWalletInfo));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, vndWalletInfo);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$VndWalletInfoLoadedImplCopyWith<_$VndWalletInfoLoadedImpl> get copyWith =>
-      __$$VndWalletInfoLoadedImplCopyWithImpl<_$VndWalletInfoLoadedImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(String err) error,
-    required TResult Function() vndWalletInfoLoading,
-    required TResult Function(VndWalletInfo vndWalletInfo) vndWalletInfoLoaded,
-    required TResult Function(WalletType walletType) needToRegisterJA,
-    required TResult Function() getDiamondWalletInfoLoading,
-    required TResult Function() getDiamondWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoading,
-    required TResult Function() reloadVndWalletInfoSuccess,
-    required TResult Function() reloadDiamondWalletInfoSuccess,
-    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
-    required TResult Function() getWalletInfoLoading,
-  }) {
-    return vndWalletInfoLoaded(vndWalletInfo);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(String err)? error,
-    TResult? Function()? vndWalletInfoLoading,
-    TResult? Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult? Function(WalletType walletType)? needToRegisterJA,
-    TResult? Function()? getDiamondWalletInfoLoading,
-    TResult? Function()? getDiamondWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoading,
-    TResult? Function()? reloadVndWalletInfoSuccess,
-    TResult? Function()? reloadDiamondWalletInfoSuccess,
-    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
-    TResult? Function()? getWalletInfoLoading,
-  }) {
-    return vndWalletInfoLoaded?.call(vndWalletInfo);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(String err)? error,
-    TResult Function()? vndWalletInfoLoading,
-    TResult Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult Function(WalletType walletType)? needToRegisterJA,
-    TResult Function()? getDiamondWalletInfoLoading,
-    TResult Function()? getDiamondWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoading,
-    TResult Function()? reloadVndWalletInfoSuccess,
-    TResult Function()? reloadDiamondWalletInfoSuccess,
-    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
-    TResult Function()? getWalletInfoLoading,
-    required TResult orElse(),
-  }) {
-    if (vndWalletInfoLoaded != null) {
-      return vndWalletInfoLoaded(vndWalletInfo);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Error value) error,
-    required TResult Function(_VndWalletInfoLoading value) vndWalletInfoLoading,
-    required TResult Function(_VndWalletInfoLoaded value) vndWalletInfoLoaded,
-    required TResult Function(_NeedToRegisterJA value) needToRegisterJA,
-    required TResult Function(_GetDiamondWalletInfoLoading value)
-        getDiamondWalletInfoLoading,
-    required TResult Function(_GetDiamondWalletInfoLoaded value)
-        getDiamondWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoaded value)
-        getCoinWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoading value)
-        getCoinWalletInfoLoading,
-    required TResult Function(_ReloadVndWalletInfoSuccess value)
-        reloadVndWalletInfoSuccess,
-    required TResult Function(_ReloadDiamondWalletInfoSuccess value)
-        reloadDiamondWalletInfoSuccess,
-    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
-    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
-  }) {
-    return vndWalletInfoLoaded(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult? Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult? Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult? Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult? Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoading value)?
-        getCoinWalletInfoLoading,
-    TResult? Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
-    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
-    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
-  }) {
-    return vndWalletInfoLoaded?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Error value)? error,
-    TResult Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoading value)? getCoinWalletInfoLoading,
-    TResult Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
-    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
-    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
-    required TResult orElse(),
-  }) {
-    if (vndWalletInfoLoaded != null) {
-      return vndWalletInfoLoaded(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _VndWalletInfoLoaded implements WalletState {
-  const factory _VndWalletInfoLoaded(final VndWalletInfo vndWalletInfo) =
-      _$VndWalletInfoLoadedImpl;
-
-  VndWalletInfo get vndWalletInfo;
-  @JsonKey(ignore: true)
-  _$$VndWalletInfoLoadedImplCopyWith<_$VndWalletInfoLoadedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$NeedToRegisterJAImplCopyWith<$Res> {
-  factory _$$NeedToRegisterJAImplCopyWith(_$NeedToRegisterJAImpl value,
-          $Res Function(_$NeedToRegisterJAImpl) then) =
-      __$$NeedToRegisterJAImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({WalletType walletType});
-}
-
-/// @nodoc
-class __$$NeedToRegisterJAImplCopyWithImpl<$Res>
-    extends _$WalletStateCopyWithImpl<$Res, _$NeedToRegisterJAImpl>
-    implements _$$NeedToRegisterJAImplCopyWith<$Res> {
-  __$$NeedToRegisterJAImplCopyWithImpl(_$NeedToRegisterJAImpl _value,
-      $Res Function(_$NeedToRegisterJAImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? walletType = null,
-  }) {
-    return _then(_$NeedToRegisterJAImpl(
-      walletType: null == walletType
-          ? _value.walletType
-          : walletType // ignore: cast_nullable_to_non_nullable
-              as WalletType,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$NeedToRegisterJAImpl
-    with DiagnosticableTreeMixin
-    implements _NeedToRegisterJA {
-  const _$NeedToRegisterJAImpl({required this.walletType});
-
-  @override
-  final WalletType walletType;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalletState.needToRegisterJA(walletType: $walletType)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'WalletState.needToRegisterJA'))
-      ..add(DiagnosticsProperty('walletType', walletType));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$NeedToRegisterJAImpl &&
-            (identical(other.walletType, walletType) ||
-                other.walletType == walletType));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, walletType);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$NeedToRegisterJAImplCopyWith<_$NeedToRegisterJAImpl> get copyWith =>
-      __$$NeedToRegisterJAImplCopyWithImpl<_$NeedToRegisterJAImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(String err) error,
-    required TResult Function() vndWalletInfoLoading,
-    required TResult Function(VndWalletInfo vndWalletInfo) vndWalletInfoLoaded,
-    required TResult Function(WalletType walletType) needToRegisterJA,
-    required TResult Function() getDiamondWalletInfoLoading,
-    required TResult Function() getDiamondWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoading,
-    required TResult Function() reloadVndWalletInfoSuccess,
-    required TResult Function() reloadDiamondWalletInfoSuccess,
-    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
-    required TResult Function() getWalletInfoLoading,
-  }) {
-    return needToRegisterJA(walletType);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(String err)? error,
-    TResult? Function()? vndWalletInfoLoading,
-    TResult? Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult? Function(WalletType walletType)? needToRegisterJA,
-    TResult? Function()? getDiamondWalletInfoLoading,
-    TResult? Function()? getDiamondWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoading,
-    TResult? Function()? reloadVndWalletInfoSuccess,
-    TResult? Function()? reloadDiamondWalletInfoSuccess,
-    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
-    TResult? Function()? getWalletInfoLoading,
-  }) {
-    return needToRegisterJA?.call(walletType);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(String err)? error,
-    TResult Function()? vndWalletInfoLoading,
-    TResult Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult Function(WalletType walletType)? needToRegisterJA,
-    TResult Function()? getDiamondWalletInfoLoading,
-    TResult Function()? getDiamondWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoading,
-    TResult Function()? reloadVndWalletInfoSuccess,
-    TResult Function()? reloadDiamondWalletInfoSuccess,
-    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
-    TResult Function()? getWalletInfoLoading,
-    required TResult orElse(),
-  }) {
-    if (needToRegisterJA != null) {
-      return needToRegisterJA(walletType);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Error value) error,
-    required TResult Function(_VndWalletInfoLoading value) vndWalletInfoLoading,
-    required TResult Function(_VndWalletInfoLoaded value) vndWalletInfoLoaded,
-    required TResult Function(_NeedToRegisterJA value) needToRegisterJA,
-    required TResult Function(_GetDiamondWalletInfoLoading value)
-        getDiamondWalletInfoLoading,
-    required TResult Function(_GetDiamondWalletInfoLoaded value)
-        getDiamondWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoaded value)
-        getCoinWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoading value)
-        getCoinWalletInfoLoading,
-    required TResult Function(_ReloadVndWalletInfoSuccess value)
-        reloadVndWalletInfoSuccess,
-    required TResult Function(_ReloadDiamondWalletInfoSuccess value)
-        reloadDiamondWalletInfoSuccess,
-    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
-    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
-  }) {
-    return needToRegisterJA(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult? Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult? Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult? Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult? Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoading value)?
-        getCoinWalletInfoLoading,
-    TResult? Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
-    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
-    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
-  }) {
-    return needToRegisterJA?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Error value)? error,
-    TResult Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoading value)? getCoinWalletInfoLoading,
-    TResult Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
-    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
-    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
-    required TResult orElse(),
-  }) {
-    if (needToRegisterJA != null) {
-      return needToRegisterJA(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _NeedToRegisterJA implements WalletState {
-  const factory _NeedToRegisterJA({required final WalletType walletType}) =
-      _$NeedToRegisterJAImpl;
-
-  WalletType get walletType;
-  @JsonKey(ignore: true)
-  _$$NeedToRegisterJAImplCopyWith<_$NeedToRegisterJAImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$GetDiamondWalletInfoLoadingImplCopyWith<$Res> {
-  factory _$$GetDiamondWalletInfoLoadingImplCopyWith(
-          _$GetDiamondWalletInfoLoadingImpl value,
-          $Res Function(_$GetDiamondWalletInfoLoadingImpl) then) =
-      __$$GetDiamondWalletInfoLoadingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$GetDiamondWalletInfoLoadingImplCopyWithImpl<$Res>
-    extends _$WalletStateCopyWithImpl<$Res, _$GetDiamondWalletInfoLoadingImpl>
-    implements _$$GetDiamondWalletInfoLoadingImplCopyWith<$Res> {
-  __$$GetDiamondWalletInfoLoadingImplCopyWithImpl(
-      _$GetDiamondWalletInfoLoadingImpl _value,
-      $Res Function(_$GetDiamondWalletInfoLoadingImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$GetDiamondWalletInfoLoadingImpl
-    with DiagnosticableTreeMixin
-    implements _GetDiamondWalletInfoLoading {
-  const _$GetDiamondWalletInfoLoadingImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalletState.getDiamondWalletInfoLoading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(
-        DiagnosticsProperty('type', 'WalletState.getDiamondWalletInfoLoading'));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$GetDiamondWalletInfoLoadingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(String err) error,
-    required TResult Function() vndWalletInfoLoading,
-    required TResult Function(VndWalletInfo vndWalletInfo) vndWalletInfoLoaded,
-    required TResult Function(WalletType walletType) needToRegisterJA,
-    required TResult Function() getDiamondWalletInfoLoading,
-    required TResult Function() getDiamondWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoading,
-    required TResult Function() reloadVndWalletInfoSuccess,
-    required TResult Function() reloadDiamondWalletInfoSuccess,
-    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
-    required TResult Function() getWalletInfoLoading,
-  }) {
-    return getDiamondWalletInfoLoading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(String err)? error,
-    TResult? Function()? vndWalletInfoLoading,
-    TResult? Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult? Function(WalletType walletType)? needToRegisterJA,
-    TResult? Function()? getDiamondWalletInfoLoading,
-    TResult? Function()? getDiamondWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoading,
-    TResult? Function()? reloadVndWalletInfoSuccess,
-    TResult? Function()? reloadDiamondWalletInfoSuccess,
-    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
-    TResult? Function()? getWalletInfoLoading,
-  }) {
-    return getDiamondWalletInfoLoading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(String err)? error,
-    TResult Function()? vndWalletInfoLoading,
-    TResult Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult Function(WalletType walletType)? needToRegisterJA,
-    TResult Function()? getDiamondWalletInfoLoading,
-    TResult Function()? getDiamondWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoading,
-    TResult Function()? reloadVndWalletInfoSuccess,
-    TResult Function()? reloadDiamondWalletInfoSuccess,
-    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
-    TResult Function()? getWalletInfoLoading,
-    required TResult orElse(),
-  }) {
-    if (getDiamondWalletInfoLoading != null) {
-      return getDiamondWalletInfoLoading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Error value) error,
-    required TResult Function(_VndWalletInfoLoading value) vndWalletInfoLoading,
-    required TResult Function(_VndWalletInfoLoaded value) vndWalletInfoLoaded,
-    required TResult Function(_NeedToRegisterJA value) needToRegisterJA,
-    required TResult Function(_GetDiamondWalletInfoLoading value)
-        getDiamondWalletInfoLoading,
-    required TResult Function(_GetDiamondWalletInfoLoaded value)
-        getDiamondWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoaded value)
-        getCoinWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoading value)
-        getCoinWalletInfoLoading,
-    required TResult Function(_ReloadVndWalletInfoSuccess value)
-        reloadVndWalletInfoSuccess,
-    required TResult Function(_ReloadDiamondWalletInfoSuccess value)
-        reloadDiamondWalletInfoSuccess,
-    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
-    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
-  }) {
-    return getDiamondWalletInfoLoading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult? Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult? Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult? Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult? Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoading value)?
-        getCoinWalletInfoLoading,
-    TResult? Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
-    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
-    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
-  }) {
-    return getDiamondWalletInfoLoading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Error value)? error,
-    TResult Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoading value)? getCoinWalletInfoLoading,
-    TResult Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
-    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
-    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
-    required TResult orElse(),
-  }) {
-    if (getDiamondWalletInfoLoading != null) {
-      return getDiamondWalletInfoLoading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _GetDiamondWalletInfoLoading implements WalletState {
-  const factory _GetDiamondWalletInfoLoading() =
-      _$GetDiamondWalletInfoLoadingImpl;
-}
-
-/// @nodoc
-abstract class _$$GetDiamondWalletInfoLoadedImplCopyWith<$Res> {
-  factory _$$GetDiamondWalletInfoLoadedImplCopyWith(
-          _$GetDiamondWalletInfoLoadedImpl value,
-          $Res Function(_$GetDiamondWalletInfoLoadedImpl) then) =
-      __$$GetDiamondWalletInfoLoadedImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$GetDiamondWalletInfoLoadedImplCopyWithImpl<$Res>
-    extends _$WalletStateCopyWithImpl<$Res, _$GetDiamondWalletInfoLoadedImpl>
-    implements _$$GetDiamondWalletInfoLoadedImplCopyWith<$Res> {
-  __$$GetDiamondWalletInfoLoadedImplCopyWithImpl(
-      _$GetDiamondWalletInfoLoadedImpl _value,
-      $Res Function(_$GetDiamondWalletInfoLoadedImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$GetDiamondWalletInfoLoadedImpl
-    with DiagnosticableTreeMixin
-    implements _GetDiamondWalletInfoLoaded {
-  const _$GetDiamondWalletInfoLoadedImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalletState.getDiamondWalletInfoLoaded()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(
-        DiagnosticsProperty('type', 'WalletState.getDiamondWalletInfoLoaded'));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$GetDiamondWalletInfoLoadedImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(String err) error,
-    required TResult Function() vndWalletInfoLoading,
-    required TResult Function(VndWalletInfo vndWalletInfo) vndWalletInfoLoaded,
-    required TResult Function(WalletType walletType) needToRegisterJA,
-    required TResult Function() getDiamondWalletInfoLoading,
-    required TResult Function() getDiamondWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoading,
-    required TResult Function() reloadVndWalletInfoSuccess,
-    required TResult Function() reloadDiamondWalletInfoSuccess,
-    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
-    required TResult Function() getWalletInfoLoading,
-  }) {
-    return getDiamondWalletInfoLoaded();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(String err)? error,
-    TResult? Function()? vndWalletInfoLoading,
-    TResult? Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult? Function(WalletType walletType)? needToRegisterJA,
-    TResult? Function()? getDiamondWalletInfoLoading,
-    TResult? Function()? getDiamondWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoading,
-    TResult? Function()? reloadVndWalletInfoSuccess,
-    TResult? Function()? reloadDiamondWalletInfoSuccess,
-    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
-    TResult? Function()? getWalletInfoLoading,
-  }) {
-    return getDiamondWalletInfoLoaded?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(String err)? error,
-    TResult Function()? vndWalletInfoLoading,
-    TResult Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult Function(WalletType walletType)? needToRegisterJA,
-    TResult Function()? getDiamondWalletInfoLoading,
-    TResult Function()? getDiamondWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoading,
-    TResult Function()? reloadVndWalletInfoSuccess,
-    TResult Function()? reloadDiamondWalletInfoSuccess,
-    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
-    TResult Function()? getWalletInfoLoading,
-    required TResult orElse(),
-  }) {
-    if (getDiamondWalletInfoLoaded != null) {
-      return getDiamondWalletInfoLoaded();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Error value) error,
-    required TResult Function(_VndWalletInfoLoading value) vndWalletInfoLoading,
-    required TResult Function(_VndWalletInfoLoaded value) vndWalletInfoLoaded,
-    required TResult Function(_NeedToRegisterJA value) needToRegisterJA,
-    required TResult Function(_GetDiamondWalletInfoLoading value)
-        getDiamondWalletInfoLoading,
-    required TResult Function(_GetDiamondWalletInfoLoaded value)
-        getDiamondWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoaded value)
-        getCoinWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoading value)
-        getCoinWalletInfoLoading,
-    required TResult Function(_ReloadVndWalletInfoSuccess value)
-        reloadVndWalletInfoSuccess,
-    required TResult Function(_ReloadDiamondWalletInfoSuccess value)
-        reloadDiamondWalletInfoSuccess,
-    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
-    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
-  }) {
-    return getDiamondWalletInfoLoaded(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult? Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult? Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult? Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult? Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoading value)?
-        getCoinWalletInfoLoading,
-    TResult? Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
-    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
-    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
-  }) {
-    return getDiamondWalletInfoLoaded?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Error value)? error,
-    TResult Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoading value)? getCoinWalletInfoLoading,
-    TResult Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
-    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
-    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
-    required TResult orElse(),
-  }) {
-    if (getDiamondWalletInfoLoaded != null) {
-      return getDiamondWalletInfoLoaded(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _GetDiamondWalletInfoLoaded implements WalletState {
-  const factory _GetDiamondWalletInfoLoaded() =
-      _$GetDiamondWalletInfoLoadedImpl;
-}
-
-/// @nodoc
-abstract class _$$GetCoinWalletInfoLoadedImplCopyWith<$Res> {
-  factory _$$GetCoinWalletInfoLoadedImplCopyWith(
-          _$GetCoinWalletInfoLoadedImpl value,
-          $Res Function(_$GetCoinWalletInfoLoadedImpl) then) =
-      __$$GetCoinWalletInfoLoadedImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$GetCoinWalletInfoLoadedImplCopyWithImpl<$Res>
-    extends _$WalletStateCopyWithImpl<$Res, _$GetCoinWalletInfoLoadedImpl>
-    implements _$$GetCoinWalletInfoLoadedImplCopyWith<$Res> {
-  __$$GetCoinWalletInfoLoadedImplCopyWithImpl(
-      _$GetCoinWalletInfoLoadedImpl _value,
-      $Res Function(_$GetCoinWalletInfoLoadedImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$GetCoinWalletInfoLoadedImpl
-    with DiagnosticableTreeMixin
-    implements _GetCoinWalletInfoLoaded {
-  const _$GetCoinWalletInfoLoadedImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalletState.getCoinWalletInfoLoaded()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(
-        DiagnosticsProperty('type', 'WalletState.getCoinWalletInfoLoaded'));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$GetCoinWalletInfoLoadedImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(String err) error,
-    required TResult Function() vndWalletInfoLoading,
-    required TResult Function(VndWalletInfo vndWalletInfo) vndWalletInfoLoaded,
-    required TResult Function(WalletType walletType) needToRegisterJA,
-    required TResult Function() getDiamondWalletInfoLoading,
-    required TResult Function() getDiamondWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoading,
-    required TResult Function() reloadVndWalletInfoSuccess,
-    required TResult Function() reloadDiamondWalletInfoSuccess,
-    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
-    required TResult Function() getWalletInfoLoading,
-  }) {
-    return getCoinWalletInfoLoaded();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(String err)? error,
-    TResult? Function()? vndWalletInfoLoading,
-    TResult? Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult? Function(WalletType walletType)? needToRegisterJA,
-    TResult? Function()? getDiamondWalletInfoLoading,
-    TResult? Function()? getDiamondWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoading,
-    TResult? Function()? reloadVndWalletInfoSuccess,
-    TResult? Function()? reloadDiamondWalletInfoSuccess,
-    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
-    TResult? Function()? getWalletInfoLoading,
-  }) {
-    return getCoinWalletInfoLoaded?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(String err)? error,
-    TResult Function()? vndWalletInfoLoading,
-    TResult Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult Function(WalletType walletType)? needToRegisterJA,
-    TResult Function()? getDiamondWalletInfoLoading,
-    TResult Function()? getDiamondWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoading,
-    TResult Function()? reloadVndWalletInfoSuccess,
-    TResult Function()? reloadDiamondWalletInfoSuccess,
-    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
-    TResult Function()? getWalletInfoLoading,
-    required TResult orElse(),
-  }) {
-    if (getCoinWalletInfoLoaded != null) {
-      return getCoinWalletInfoLoaded();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Error value) error,
-    required TResult Function(_VndWalletInfoLoading value) vndWalletInfoLoading,
-    required TResult Function(_VndWalletInfoLoaded value) vndWalletInfoLoaded,
-    required TResult Function(_NeedToRegisterJA value) needToRegisterJA,
-    required TResult Function(_GetDiamondWalletInfoLoading value)
-        getDiamondWalletInfoLoading,
-    required TResult Function(_GetDiamondWalletInfoLoaded value)
-        getDiamondWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoaded value)
-        getCoinWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoading value)
-        getCoinWalletInfoLoading,
-    required TResult Function(_ReloadVndWalletInfoSuccess value)
-        reloadVndWalletInfoSuccess,
-    required TResult Function(_ReloadDiamondWalletInfoSuccess value)
-        reloadDiamondWalletInfoSuccess,
-    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
-    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
-  }) {
-    return getCoinWalletInfoLoaded(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult? Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult? Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult? Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult? Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoading value)?
-        getCoinWalletInfoLoading,
-    TResult? Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
-    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
-    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
-  }) {
-    return getCoinWalletInfoLoaded?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Error value)? error,
-    TResult Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoading value)? getCoinWalletInfoLoading,
-    TResult Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
-    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
-    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
-    required TResult orElse(),
-  }) {
-    if (getCoinWalletInfoLoaded != null) {
-      return getCoinWalletInfoLoaded(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _GetCoinWalletInfoLoaded implements WalletState {
-  const factory _GetCoinWalletInfoLoaded() = _$GetCoinWalletInfoLoadedImpl;
-}
-
-/// @nodoc
-abstract class _$$GetCoinWalletInfoLoadingImplCopyWith<$Res> {
-  factory _$$GetCoinWalletInfoLoadingImplCopyWith(
-          _$GetCoinWalletInfoLoadingImpl value,
-          $Res Function(_$GetCoinWalletInfoLoadingImpl) then) =
-      __$$GetCoinWalletInfoLoadingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$GetCoinWalletInfoLoadingImplCopyWithImpl<$Res>
-    extends _$WalletStateCopyWithImpl<$Res, _$GetCoinWalletInfoLoadingImpl>
-    implements _$$GetCoinWalletInfoLoadingImplCopyWith<$Res> {
-  __$$GetCoinWalletInfoLoadingImplCopyWithImpl(
-      _$GetCoinWalletInfoLoadingImpl _value,
-      $Res Function(_$GetCoinWalletInfoLoadingImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$GetCoinWalletInfoLoadingImpl
-    with DiagnosticableTreeMixin
-    implements _GetCoinWalletInfoLoading {
-  const _$GetCoinWalletInfoLoadingImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalletState.getCoinWalletInfoLoading()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(
-        DiagnosticsProperty('type', 'WalletState.getCoinWalletInfoLoading'));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$GetCoinWalletInfoLoadingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(String err) error,
-    required TResult Function() vndWalletInfoLoading,
-    required TResult Function(VndWalletInfo vndWalletInfo) vndWalletInfoLoaded,
-    required TResult Function(WalletType walletType) needToRegisterJA,
-    required TResult Function() getDiamondWalletInfoLoading,
-    required TResult Function() getDiamondWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoading,
-    required TResult Function() reloadVndWalletInfoSuccess,
-    required TResult Function() reloadDiamondWalletInfoSuccess,
-    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
-    required TResult Function() getWalletInfoLoading,
-  }) {
-    return getCoinWalletInfoLoading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(String err)? error,
-    TResult? Function()? vndWalletInfoLoading,
-    TResult? Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult? Function(WalletType walletType)? needToRegisterJA,
-    TResult? Function()? getDiamondWalletInfoLoading,
-    TResult? Function()? getDiamondWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoading,
-    TResult? Function()? reloadVndWalletInfoSuccess,
-    TResult? Function()? reloadDiamondWalletInfoSuccess,
-    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
-    TResult? Function()? getWalletInfoLoading,
-  }) {
-    return getCoinWalletInfoLoading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(String err)? error,
-    TResult Function()? vndWalletInfoLoading,
-    TResult Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult Function(WalletType walletType)? needToRegisterJA,
-    TResult Function()? getDiamondWalletInfoLoading,
-    TResult Function()? getDiamondWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoading,
-    TResult Function()? reloadVndWalletInfoSuccess,
-    TResult Function()? reloadDiamondWalletInfoSuccess,
-    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
-    TResult Function()? getWalletInfoLoading,
-    required TResult orElse(),
-  }) {
-    if (getCoinWalletInfoLoading != null) {
-      return getCoinWalletInfoLoading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Error value) error,
-    required TResult Function(_VndWalletInfoLoading value) vndWalletInfoLoading,
-    required TResult Function(_VndWalletInfoLoaded value) vndWalletInfoLoaded,
-    required TResult Function(_NeedToRegisterJA value) needToRegisterJA,
-    required TResult Function(_GetDiamondWalletInfoLoading value)
-        getDiamondWalletInfoLoading,
-    required TResult Function(_GetDiamondWalletInfoLoaded value)
-        getDiamondWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoaded value)
-        getCoinWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoading value)
-        getCoinWalletInfoLoading,
-    required TResult Function(_ReloadVndWalletInfoSuccess value)
-        reloadVndWalletInfoSuccess,
-    required TResult Function(_ReloadDiamondWalletInfoSuccess value)
-        reloadDiamondWalletInfoSuccess,
-    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
-    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
-  }) {
-    return getCoinWalletInfoLoading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult? Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult? Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult? Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult? Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoading value)?
-        getCoinWalletInfoLoading,
-    TResult? Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
-    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
-    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
-  }) {
-    return getCoinWalletInfoLoading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Error value)? error,
-    TResult Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoading value)? getCoinWalletInfoLoading,
-    TResult Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
-    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
-    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
-    required TResult orElse(),
-  }) {
-    if (getCoinWalletInfoLoading != null) {
-      return getCoinWalletInfoLoading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _GetCoinWalletInfoLoading implements WalletState {
-  const factory _GetCoinWalletInfoLoading() = _$GetCoinWalletInfoLoadingImpl;
-}
-
-/// @nodoc
-abstract class _$$ReloadVndWalletInfoSuccessImplCopyWith<$Res> {
-  factory _$$ReloadVndWalletInfoSuccessImplCopyWith(
-          _$ReloadVndWalletInfoSuccessImpl value,
-          $Res Function(_$ReloadVndWalletInfoSuccessImpl) then) =
-      __$$ReloadVndWalletInfoSuccessImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$ReloadVndWalletInfoSuccessImplCopyWithImpl<$Res>
-    extends _$WalletStateCopyWithImpl<$Res, _$ReloadVndWalletInfoSuccessImpl>
-    implements _$$ReloadVndWalletInfoSuccessImplCopyWith<$Res> {
-  __$$ReloadVndWalletInfoSuccessImplCopyWithImpl(
-      _$ReloadVndWalletInfoSuccessImpl _value,
-      $Res Function(_$ReloadVndWalletInfoSuccessImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$ReloadVndWalletInfoSuccessImpl
-    with DiagnosticableTreeMixin
-    implements _ReloadVndWalletInfoSuccess {
-  const _$ReloadVndWalletInfoSuccessImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalletState.reloadVndWalletInfoSuccess()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(
-        DiagnosticsProperty('type', 'WalletState.reloadVndWalletInfoSuccess'));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ReloadVndWalletInfoSuccessImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(String err) error,
-    required TResult Function() vndWalletInfoLoading,
-    required TResult Function(VndWalletInfo vndWalletInfo) vndWalletInfoLoaded,
-    required TResult Function(WalletType walletType) needToRegisterJA,
-    required TResult Function() getDiamondWalletInfoLoading,
-    required TResult Function() getDiamondWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoading,
-    required TResult Function() reloadVndWalletInfoSuccess,
-    required TResult Function() reloadDiamondWalletInfoSuccess,
-    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
-    required TResult Function() getWalletInfoLoading,
-  }) {
-    return reloadVndWalletInfoSuccess();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(String err)? error,
-    TResult? Function()? vndWalletInfoLoading,
-    TResult? Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult? Function(WalletType walletType)? needToRegisterJA,
-    TResult? Function()? getDiamondWalletInfoLoading,
-    TResult? Function()? getDiamondWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoading,
-    TResult? Function()? reloadVndWalletInfoSuccess,
-    TResult? Function()? reloadDiamondWalletInfoSuccess,
-    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
-    TResult? Function()? getWalletInfoLoading,
-  }) {
-    return reloadVndWalletInfoSuccess?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(String err)? error,
-    TResult Function()? vndWalletInfoLoading,
-    TResult Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult Function(WalletType walletType)? needToRegisterJA,
-    TResult Function()? getDiamondWalletInfoLoading,
-    TResult Function()? getDiamondWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoading,
-    TResult Function()? reloadVndWalletInfoSuccess,
-    TResult Function()? reloadDiamondWalletInfoSuccess,
-    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
-    TResult Function()? getWalletInfoLoading,
-    required TResult orElse(),
-  }) {
-    if (reloadVndWalletInfoSuccess != null) {
-      return reloadVndWalletInfoSuccess();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Error value) error,
-    required TResult Function(_VndWalletInfoLoading value) vndWalletInfoLoading,
-    required TResult Function(_VndWalletInfoLoaded value) vndWalletInfoLoaded,
-    required TResult Function(_NeedToRegisterJA value) needToRegisterJA,
-    required TResult Function(_GetDiamondWalletInfoLoading value)
-        getDiamondWalletInfoLoading,
-    required TResult Function(_GetDiamondWalletInfoLoaded value)
-        getDiamondWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoaded value)
-        getCoinWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoading value)
-        getCoinWalletInfoLoading,
-    required TResult Function(_ReloadVndWalletInfoSuccess value)
-        reloadVndWalletInfoSuccess,
-    required TResult Function(_ReloadDiamondWalletInfoSuccess value)
-        reloadDiamondWalletInfoSuccess,
-    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
-    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
-  }) {
-    return reloadVndWalletInfoSuccess(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult? Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult? Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult? Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult? Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoading value)?
-        getCoinWalletInfoLoading,
-    TResult? Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
-    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
-    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
-  }) {
-    return reloadVndWalletInfoSuccess?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Error value)? error,
-    TResult Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoading value)? getCoinWalletInfoLoading,
-    TResult Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
-    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
-    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
-    required TResult orElse(),
-  }) {
-    if (reloadVndWalletInfoSuccess != null) {
-      return reloadVndWalletInfoSuccess(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ReloadVndWalletInfoSuccess implements WalletState {
-  const factory _ReloadVndWalletInfoSuccess() =
-      _$ReloadVndWalletInfoSuccessImpl;
-}
-
-/// @nodoc
-abstract class _$$ReloadDiamondWalletInfoSuccessImplCopyWith<$Res> {
-  factory _$$ReloadDiamondWalletInfoSuccessImplCopyWith(
-          _$ReloadDiamondWalletInfoSuccessImpl value,
-          $Res Function(_$ReloadDiamondWalletInfoSuccessImpl) then) =
-      __$$ReloadDiamondWalletInfoSuccessImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$ReloadDiamondWalletInfoSuccessImplCopyWithImpl<$Res>
-    extends _$WalletStateCopyWithImpl<$Res,
-        _$ReloadDiamondWalletInfoSuccessImpl>
-    implements _$$ReloadDiamondWalletInfoSuccessImplCopyWith<$Res> {
-  __$$ReloadDiamondWalletInfoSuccessImplCopyWithImpl(
-      _$ReloadDiamondWalletInfoSuccessImpl _value,
-      $Res Function(_$ReloadDiamondWalletInfoSuccessImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$ReloadDiamondWalletInfoSuccessImpl
-    with DiagnosticableTreeMixin
-    implements _ReloadDiamondWalletInfoSuccess {
-  const _$ReloadDiamondWalletInfoSuccessImpl();
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalletState.reloadDiamondWalletInfoSuccess()';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty(
-        'type', 'WalletState.reloadDiamondWalletInfoSuccess'));
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$ReloadDiamondWalletInfoSuccessImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(String err) error,
-    required TResult Function() vndWalletInfoLoading,
-    required TResult Function(VndWalletInfo vndWalletInfo) vndWalletInfoLoaded,
-    required TResult Function(WalletType walletType) needToRegisterJA,
-    required TResult Function() getDiamondWalletInfoLoading,
-    required TResult Function() getDiamondWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoading,
-    required TResult Function() reloadVndWalletInfoSuccess,
-    required TResult Function() reloadDiamondWalletInfoSuccess,
-    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
-    required TResult Function() getWalletInfoLoading,
-  }) {
-    return reloadDiamondWalletInfoSuccess();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function(String err)? error,
-    TResult? Function()? vndWalletInfoLoading,
-    TResult? Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult? Function(WalletType walletType)? needToRegisterJA,
-    TResult? Function()? getDiamondWalletInfoLoading,
-    TResult? Function()? getDiamondWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoading,
-    TResult? Function()? reloadVndWalletInfoSuccess,
-    TResult? Function()? reloadDiamondWalletInfoSuccess,
-    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
-    TResult? Function()? getWalletInfoLoading,
-  }) {
-    return reloadDiamondWalletInfoSuccess?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(String err)? error,
-    TResult Function()? vndWalletInfoLoading,
-    TResult Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult Function(WalletType walletType)? needToRegisterJA,
-    TResult Function()? getDiamondWalletInfoLoading,
-    TResult Function()? getDiamondWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoading,
-    TResult Function()? reloadVndWalletInfoSuccess,
-    TResult Function()? reloadDiamondWalletInfoSuccess,
-    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
-    TResult Function()? getWalletInfoLoading,
-    required TResult orElse(),
-  }) {
-    if (reloadDiamondWalletInfoSuccess != null) {
-      return reloadDiamondWalletInfoSuccess();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Error value) error,
-    required TResult Function(_VndWalletInfoLoading value) vndWalletInfoLoading,
-    required TResult Function(_VndWalletInfoLoaded value) vndWalletInfoLoaded,
-    required TResult Function(_NeedToRegisterJA value) needToRegisterJA,
-    required TResult Function(_GetDiamondWalletInfoLoading value)
-        getDiamondWalletInfoLoading,
-    required TResult Function(_GetDiamondWalletInfoLoaded value)
-        getDiamondWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoaded value)
-        getCoinWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoading value)
-        getCoinWalletInfoLoading,
-    required TResult Function(_ReloadVndWalletInfoSuccess value)
-        reloadVndWalletInfoSuccess,
-    required TResult Function(_ReloadDiamondWalletInfoSuccess value)
-        reloadDiamondWalletInfoSuccess,
-    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
-    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
-  }) {
-    return reloadDiamondWalletInfoSuccess(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult? Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult? Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult? Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult? Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoading value)?
-        getCoinWalletInfoLoading,
-    TResult? Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
-    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
-    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
-  }) {
-    return reloadDiamondWalletInfoSuccess?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Error value)? error,
-    TResult Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoading value)? getCoinWalletInfoLoading,
-    TResult Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
-    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
-    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
-    required TResult orElse(),
-  }) {
-    if (reloadDiamondWalletInfoSuccess != null) {
-      return reloadDiamondWalletInfoSuccess(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ReloadDiamondWalletInfoSuccess implements WalletState {
-  const factory _ReloadDiamondWalletInfoSuccess() =
-      _$ReloadDiamondWalletInfoSuccessImpl;
 }
 
 /// @nodoc
@@ -3382,17 +1137,16 @@ class _$GetWalletInfoSuccessImpl
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String err) error,
-    required TResult Function() vndWalletInfoLoading,
-    required TResult Function(VndWalletInfo vndWalletInfo) vndWalletInfoLoaded,
-    required TResult Function(WalletType walletType) needToRegisterJA,
-    required TResult Function() getDiamondWalletInfoLoading,
-    required TResult Function() getDiamondWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoading,
-    required TResult Function() reloadVndWalletInfoSuccess,
-    required TResult Function() reloadDiamondWalletInfoSuccess,
     required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
     required TResult Function() getWalletInfoLoading,
+    required TResult Function(String err) getWalletTransactionListFailed,
+    required TResult Function(List<TransactionItem> transactions)
+        getWalletTransactionListSuccess,
+    required TResult Function() getWalletTransactionListLoading,
+    required TResult Function(TransactionItem transactions)
+        getWalletTransactionDetailSuccess,
+    required TResult Function() getWalletTransactionDetailLoading,
+    required TResult Function(String err) getWalletTransactionDetailFailed,
   }) {
     return getWalletInfoSuccess(wallet);
   }
@@ -3402,17 +1156,16 @@ class _$GetWalletInfoSuccessImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String err)? error,
-    TResult? Function()? vndWalletInfoLoading,
-    TResult? Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult? Function(WalletType walletType)? needToRegisterJA,
-    TResult? Function()? getDiamondWalletInfoLoading,
-    TResult? Function()? getDiamondWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoading,
-    TResult? Function()? reloadVndWalletInfoSuccess,
-    TResult? Function()? reloadDiamondWalletInfoSuccess,
     TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
     TResult? Function()? getWalletInfoLoading,
+    TResult? Function(String err)? getWalletTransactionListFailed,
+    TResult? Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult? Function()? getWalletTransactionListLoading,
+    TResult? Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function()? getWalletTransactionDetailLoading,
+    TResult? Function(String err)? getWalletTransactionDetailFailed,
   }) {
     return getWalletInfoSuccess?.call(wallet);
   }
@@ -3422,17 +1175,16 @@ class _$GetWalletInfoSuccessImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String err)? error,
-    TResult Function()? vndWalletInfoLoading,
-    TResult Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult Function(WalletType walletType)? needToRegisterJA,
-    TResult Function()? getDiamondWalletInfoLoading,
-    TResult Function()? getDiamondWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoading,
-    TResult Function()? reloadVndWalletInfoSuccess,
-    TResult Function()? reloadDiamondWalletInfoSuccess,
     TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
     TResult Function()? getWalletInfoLoading,
+    TResult Function(String err)? getWalletTransactionListFailed,
+    TResult Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult Function()? getWalletTransactionListLoading,
+    TResult Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult Function()? getWalletTransactionDetailLoading,
+    TResult Function(String err)? getWalletTransactionDetailFailed,
     required TResult orElse(),
   }) {
     if (getWalletInfoSuccess != null) {
@@ -3446,23 +1198,20 @@ class _$GetWalletInfoSuccessImpl
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Error value) error,
-    required TResult Function(_VndWalletInfoLoading value) vndWalletInfoLoading,
-    required TResult Function(_VndWalletInfoLoaded value) vndWalletInfoLoaded,
-    required TResult Function(_NeedToRegisterJA value) needToRegisterJA,
-    required TResult Function(_GetDiamondWalletInfoLoading value)
-        getDiamondWalletInfoLoading,
-    required TResult Function(_GetDiamondWalletInfoLoaded value)
-        getDiamondWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoaded value)
-        getCoinWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoading value)
-        getCoinWalletInfoLoading,
-    required TResult Function(_ReloadVndWalletInfoSuccess value)
-        reloadVndWalletInfoSuccess,
-    required TResult Function(_ReloadDiamondWalletInfoSuccess value)
-        reloadDiamondWalletInfoSuccess,
     required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
     required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
+    required TResult Function(_GetWalletTransactionListFailed value)
+        getWalletTransactionListFailed,
+    required TResult Function(_GetWalletTransactionListSuccess value)
+        getWalletTransactionListSuccess,
+    required TResult Function(_GetWalletTransactionListLoading value)
+        getWalletTransactionListLoading,
+    required TResult Function(_GetWalletTransactionDetailSuccess value)
+        getWalletTransactionDetailSuccess,
+    required TResult Function(_GetWalletTransactionDetailLoading value)
+        getWalletTransactionDetailLoading,
+    required TResult Function(_GetWalletTransactionDetailFailed value)
+        getWalletTransactionDetailFailed,
   }) {
     return getWalletInfoSuccess(this);
   }
@@ -3472,22 +1221,20 @@ class _$GetWalletInfoSuccessImpl
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Error value)? error,
-    TResult? Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult? Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult? Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult? Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult? Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoading value)?
-        getCoinWalletInfoLoading,
-    TResult? Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
     TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
     TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult? Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult? Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult? Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult? Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult? Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
   }) {
     return getWalletInfoSuccess?.call(this);
   }
@@ -3497,21 +1244,20 @@ class _$GetWalletInfoSuccessImpl
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Error value)? error,
-    TResult Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoading value)? getCoinWalletInfoLoading,
-    TResult Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
     TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
     TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
     required TResult orElse(),
   }) {
     if (getWalletInfoSuccess != null) {
@@ -3581,17 +1327,16 @@ class _$GetWalletInfoLoadingImpl
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String err) error,
-    required TResult Function() vndWalletInfoLoading,
-    required TResult Function(VndWalletInfo vndWalletInfo) vndWalletInfoLoaded,
-    required TResult Function(WalletType walletType) needToRegisterJA,
-    required TResult Function() getDiamondWalletInfoLoading,
-    required TResult Function() getDiamondWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoaded,
-    required TResult Function() getCoinWalletInfoLoading,
-    required TResult Function() reloadVndWalletInfoSuccess,
-    required TResult Function() reloadDiamondWalletInfoSuccess,
     required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
     required TResult Function() getWalletInfoLoading,
+    required TResult Function(String err) getWalletTransactionListFailed,
+    required TResult Function(List<TransactionItem> transactions)
+        getWalletTransactionListSuccess,
+    required TResult Function() getWalletTransactionListLoading,
+    required TResult Function(TransactionItem transactions)
+        getWalletTransactionDetailSuccess,
+    required TResult Function() getWalletTransactionDetailLoading,
+    required TResult Function(String err) getWalletTransactionDetailFailed,
   }) {
     return getWalletInfoLoading();
   }
@@ -3601,17 +1346,16 @@ class _$GetWalletInfoLoadingImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String err)? error,
-    TResult? Function()? vndWalletInfoLoading,
-    TResult? Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult? Function(WalletType walletType)? needToRegisterJA,
-    TResult? Function()? getDiamondWalletInfoLoading,
-    TResult? Function()? getDiamondWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoaded,
-    TResult? Function()? getCoinWalletInfoLoading,
-    TResult? Function()? reloadVndWalletInfoSuccess,
-    TResult? Function()? reloadDiamondWalletInfoSuccess,
     TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
     TResult? Function()? getWalletInfoLoading,
+    TResult? Function(String err)? getWalletTransactionListFailed,
+    TResult? Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult? Function()? getWalletTransactionListLoading,
+    TResult? Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function()? getWalletTransactionDetailLoading,
+    TResult? Function(String err)? getWalletTransactionDetailFailed,
   }) {
     return getWalletInfoLoading?.call();
   }
@@ -3621,17 +1365,16 @@ class _$GetWalletInfoLoadingImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String err)? error,
-    TResult Function()? vndWalletInfoLoading,
-    TResult Function(VndWalletInfo vndWalletInfo)? vndWalletInfoLoaded,
-    TResult Function(WalletType walletType)? needToRegisterJA,
-    TResult Function()? getDiamondWalletInfoLoading,
-    TResult Function()? getDiamondWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoaded,
-    TResult Function()? getCoinWalletInfoLoading,
-    TResult Function()? reloadVndWalletInfoSuccess,
-    TResult Function()? reloadDiamondWalletInfoSuccess,
     TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
     TResult Function()? getWalletInfoLoading,
+    TResult Function(String err)? getWalletTransactionListFailed,
+    TResult Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult Function()? getWalletTransactionListLoading,
+    TResult Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult Function()? getWalletTransactionDetailLoading,
+    TResult Function(String err)? getWalletTransactionDetailFailed,
     required TResult orElse(),
   }) {
     if (getWalletInfoLoading != null) {
@@ -3645,23 +1388,20 @@ class _$GetWalletInfoLoadingImpl
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Error value) error,
-    required TResult Function(_VndWalletInfoLoading value) vndWalletInfoLoading,
-    required TResult Function(_VndWalletInfoLoaded value) vndWalletInfoLoaded,
-    required TResult Function(_NeedToRegisterJA value) needToRegisterJA,
-    required TResult Function(_GetDiamondWalletInfoLoading value)
-        getDiamondWalletInfoLoading,
-    required TResult Function(_GetDiamondWalletInfoLoaded value)
-        getDiamondWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoaded value)
-        getCoinWalletInfoLoaded,
-    required TResult Function(_GetCoinWalletInfoLoading value)
-        getCoinWalletInfoLoading,
-    required TResult Function(_ReloadVndWalletInfoSuccess value)
-        reloadVndWalletInfoSuccess,
-    required TResult Function(_ReloadDiamondWalletInfoSuccess value)
-        reloadDiamondWalletInfoSuccess,
     required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
     required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
+    required TResult Function(_GetWalletTransactionListFailed value)
+        getWalletTransactionListFailed,
+    required TResult Function(_GetWalletTransactionListSuccess value)
+        getWalletTransactionListSuccess,
+    required TResult Function(_GetWalletTransactionListLoading value)
+        getWalletTransactionListLoading,
+    required TResult Function(_GetWalletTransactionDetailSuccess value)
+        getWalletTransactionDetailSuccess,
+    required TResult Function(_GetWalletTransactionDetailLoading value)
+        getWalletTransactionDetailLoading,
+    required TResult Function(_GetWalletTransactionDetailFailed value)
+        getWalletTransactionDetailFailed,
   }) {
     return getWalletInfoLoading(this);
   }
@@ -3671,22 +1411,20 @@ class _$GetWalletInfoLoadingImpl
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Error value)? error,
-    TResult? Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult? Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult? Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult? Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult? Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult? Function(_GetCoinWalletInfoLoading value)?
-        getCoinWalletInfoLoading,
-    TResult? Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult? Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
     TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
     TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult? Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult? Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult? Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult? Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult? Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
   }) {
     return getWalletInfoLoading?.call(this);
   }
@@ -3696,21 +1434,20 @@ class _$GetWalletInfoLoadingImpl
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Error value)? error,
-    TResult Function(_VndWalletInfoLoading value)? vndWalletInfoLoading,
-    TResult Function(_VndWalletInfoLoaded value)? vndWalletInfoLoaded,
-    TResult Function(_NeedToRegisterJA value)? needToRegisterJA,
-    TResult Function(_GetDiamondWalletInfoLoading value)?
-        getDiamondWalletInfoLoading,
-    TResult Function(_GetDiamondWalletInfoLoaded value)?
-        getDiamondWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoaded value)? getCoinWalletInfoLoaded,
-    TResult Function(_GetCoinWalletInfoLoading value)? getCoinWalletInfoLoading,
-    TResult Function(_ReloadVndWalletInfoSuccess value)?
-        reloadVndWalletInfoSuccess,
-    TResult Function(_ReloadDiamondWalletInfoSuccess value)?
-        reloadDiamondWalletInfoSuccess,
     TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
     TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
     required TResult orElse(),
   }) {
     if (getWalletInfoLoading != null) {
@@ -3722,4 +1459,1284 @@ class _$GetWalletInfoLoadingImpl
 
 abstract class _GetWalletInfoLoading implements WalletState {
   const factory _GetWalletInfoLoading() = _$GetWalletInfoLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$GetWalletTransactionListFailedImplCopyWith<$Res> {
+  factory _$$GetWalletTransactionListFailedImplCopyWith(
+          _$GetWalletTransactionListFailedImpl value,
+          $Res Function(_$GetWalletTransactionListFailedImpl) then) =
+      __$$GetWalletTransactionListFailedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String err});
+}
+
+/// @nodoc
+class __$$GetWalletTransactionListFailedImplCopyWithImpl<$Res>
+    extends _$WalletStateCopyWithImpl<$Res,
+        _$GetWalletTransactionListFailedImpl>
+    implements _$$GetWalletTransactionListFailedImplCopyWith<$Res> {
+  __$$GetWalletTransactionListFailedImplCopyWithImpl(
+      _$GetWalletTransactionListFailedImpl _value,
+      $Res Function(_$GetWalletTransactionListFailedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? err = null,
+  }) {
+    return _then(_$GetWalletTransactionListFailedImpl(
+      null == err
+          ? _value.err
+          : err // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$GetWalletTransactionListFailedImpl
+    with DiagnosticableTreeMixin
+    implements _GetWalletTransactionListFailed {
+  const _$GetWalletTransactionListFailedImpl(this.err);
+
+  @override
+  final String err;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WalletState.getWalletTransactionListFailed(err: $err)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty(
+          'type', 'WalletState.getWalletTransactionListFailed'))
+      ..add(DiagnosticsProperty('err', err));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetWalletTransactionListFailedImpl &&
+            (identical(other.err, err) || other.err == err));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, err);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetWalletTransactionListFailedImplCopyWith<
+          _$GetWalletTransactionListFailedImpl>
+      get copyWith => __$$GetWalletTransactionListFailedImplCopyWithImpl<
+          _$GetWalletTransactionListFailedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String err) error,
+    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
+    required TResult Function(String err) getWalletTransactionListFailed,
+    required TResult Function(List<TransactionItem> transactions)
+        getWalletTransactionListSuccess,
+    required TResult Function() getWalletTransactionListLoading,
+    required TResult Function(TransactionItem transactions)
+        getWalletTransactionDetailSuccess,
+    required TResult Function() getWalletTransactionDetailLoading,
+    required TResult Function(String err) getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionListFailed(err);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String err)? error,
+    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
+    TResult? Function(String err)? getWalletTransactionListFailed,
+    TResult? Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult? Function()? getWalletTransactionListLoading,
+    TResult? Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function()? getWalletTransactionDetailLoading,
+    TResult? Function(String err)? getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionListFailed?.call(err);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String err)? error,
+    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
+    TResult Function(String err)? getWalletTransactionListFailed,
+    TResult Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult Function()? getWalletTransactionListLoading,
+    TResult Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult Function()? getWalletTransactionDetailLoading,
+    TResult Function(String err)? getWalletTransactionDetailFailed,
+    required TResult orElse(),
+  }) {
+    if (getWalletTransactionListFailed != null) {
+      return getWalletTransactionListFailed(err);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
+    required TResult Function(_GetWalletTransactionListFailed value)
+        getWalletTransactionListFailed,
+    required TResult Function(_GetWalletTransactionListSuccess value)
+        getWalletTransactionListSuccess,
+    required TResult Function(_GetWalletTransactionListLoading value)
+        getWalletTransactionListLoading,
+    required TResult Function(_GetWalletTransactionDetailSuccess value)
+        getWalletTransactionDetailSuccess,
+    required TResult Function(_GetWalletTransactionDetailLoading value)
+        getWalletTransactionDetailLoading,
+    required TResult Function(_GetWalletTransactionDetailFailed value)
+        getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionListFailed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult? Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult? Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult? Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult? Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult? Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionListFailed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+    required TResult orElse(),
+  }) {
+    if (getWalletTransactionListFailed != null) {
+      return getWalletTransactionListFailed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetWalletTransactionListFailed implements WalletState {
+  const factory _GetWalletTransactionListFailed(final String err) =
+      _$GetWalletTransactionListFailedImpl;
+
+  String get err;
+  @JsonKey(ignore: true)
+  _$$GetWalletTransactionListFailedImplCopyWith<
+          _$GetWalletTransactionListFailedImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$GetWalletTransactionListSuccessImplCopyWith<$Res> {
+  factory _$$GetWalletTransactionListSuccessImplCopyWith(
+          _$GetWalletTransactionListSuccessImpl value,
+          $Res Function(_$GetWalletTransactionListSuccessImpl) then) =
+      __$$GetWalletTransactionListSuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<TransactionItem> transactions});
+}
+
+/// @nodoc
+class __$$GetWalletTransactionListSuccessImplCopyWithImpl<$Res>
+    extends _$WalletStateCopyWithImpl<$Res,
+        _$GetWalletTransactionListSuccessImpl>
+    implements _$$GetWalletTransactionListSuccessImplCopyWith<$Res> {
+  __$$GetWalletTransactionListSuccessImplCopyWithImpl(
+      _$GetWalletTransactionListSuccessImpl _value,
+      $Res Function(_$GetWalletTransactionListSuccessImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? transactions = null,
+  }) {
+    return _then(_$GetWalletTransactionListSuccessImpl(
+      transactions: null == transactions
+          ? _value._transactions
+          : transactions // ignore: cast_nullable_to_non_nullable
+              as List<TransactionItem>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$GetWalletTransactionListSuccessImpl
+    with DiagnosticableTreeMixin
+    implements _GetWalletTransactionListSuccess {
+  const _$GetWalletTransactionListSuccessImpl(
+      {required final List<TransactionItem> transactions})
+      : _transactions = transactions;
+
+  final List<TransactionItem> _transactions;
+  @override
+  List<TransactionItem> get transactions {
+    if (_transactions is EqualUnmodifiableListView) return _transactions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_transactions);
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WalletState.getWalletTransactionListSuccess(transactions: $transactions)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty(
+          'type', 'WalletState.getWalletTransactionListSuccess'))
+      ..add(DiagnosticsProperty('transactions', transactions));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetWalletTransactionListSuccessImpl &&
+            const DeepCollectionEquality()
+                .equals(other._transactions, _transactions));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_transactions));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetWalletTransactionListSuccessImplCopyWith<
+          _$GetWalletTransactionListSuccessImpl>
+      get copyWith => __$$GetWalletTransactionListSuccessImplCopyWithImpl<
+          _$GetWalletTransactionListSuccessImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String err) error,
+    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
+    required TResult Function(String err) getWalletTransactionListFailed,
+    required TResult Function(List<TransactionItem> transactions)
+        getWalletTransactionListSuccess,
+    required TResult Function() getWalletTransactionListLoading,
+    required TResult Function(TransactionItem transactions)
+        getWalletTransactionDetailSuccess,
+    required TResult Function() getWalletTransactionDetailLoading,
+    required TResult Function(String err) getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionListSuccess(transactions);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String err)? error,
+    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
+    TResult? Function(String err)? getWalletTransactionListFailed,
+    TResult? Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult? Function()? getWalletTransactionListLoading,
+    TResult? Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function()? getWalletTransactionDetailLoading,
+    TResult? Function(String err)? getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionListSuccess?.call(transactions);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String err)? error,
+    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
+    TResult Function(String err)? getWalletTransactionListFailed,
+    TResult Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult Function()? getWalletTransactionListLoading,
+    TResult Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult Function()? getWalletTransactionDetailLoading,
+    TResult Function(String err)? getWalletTransactionDetailFailed,
+    required TResult orElse(),
+  }) {
+    if (getWalletTransactionListSuccess != null) {
+      return getWalletTransactionListSuccess(transactions);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
+    required TResult Function(_GetWalletTransactionListFailed value)
+        getWalletTransactionListFailed,
+    required TResult Function(_GetWalletTransactionListSuccess value)
+        getWalletTransactionListSuccess,
+    required TResult Function(_GetWalletTransactionListLoading value)
+        getWalletTransactionListLoading,
+    required TResult Function(_GetWalletTransactionDetailSuccess value)
+        getWalletTransactionDetailSuccess,
+    required TResult Function(_GetWalletTransactionDetailLoading value)
+        getWalletTransactionDetailLoading,
+    required TResult Function(_GetWalletTransactionDetailFailed value)
+        getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionListSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult? Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult? Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult? Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult? Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult? Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionListSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+    required TResult orElse(),
+  }) {
+    if (getWalletTransactionListSuccess != null) {
+      return getWalletTransactionListSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetWalletTransactionListSuccess implements WalletState {
+  const factory _GetWalletTransactionListSuccess(
+          {required final List<TransactionItem> transactions}) =
+      _$GetWalletTransactionListSuccessImpl;
+
+  List<TransactionItem> get transactions;
+  @JsonKey(ignore: true)
+  _$$GetWalletTransactionListSuccessImplCopyWith<
+          _$GetWalletTransactionListSuccessImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$GetWalletTransactionListLoadingImplCopyWith<$Res> {
+  factory _$$GetWalletTransactionListLoadingImplCopyWith(
+          _$GetWalletTransactionListLoadingImpl value,
+          $Res Function(_$GetWalletTransactionListLoadingImpl) then) =
+      __$$GetWalletTransactionListLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$GetWalletTransactionListLoadingImplCopyWithImpl<$Res>
+    extends _$WalletStateCopyWithImpl<$Res,
+        _$GetWalletTransactionListLoadingImpl>
+    implements _$$GetWalletTransactionListLoadingImplCopyWith<$Res> {
+  __$$GetWalletTransactionListLoadingImplCopyWithImpl(
+      _$GetWalletTransactionListLoadingImpl _value,
+      $Res Function(_$GetWalletTransactionListLoadingImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$GetWalletTransactionListLoadingImpl
+    with DiagnosticableTreeMixin
+    implements _GetWalletTransactionListLoading {
+  const _$GetWalletTransactionListLoadingImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WalletState.getWalletTransactionListLoading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty(
+        'type', 'WalletState.getWalletTransactionListLoading'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetWalletTransactionListLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String err) error,
+    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
+    required TResult Function(String err) getWalletTransactionListFailed,
+    required TResult Function(List<TransactionItem> transactions)
+        getWalletTransactionListSuccess,
+    required TResult Function() getWalletTransactionListLoading,
+    required TResult Function(TransactionItem transactions)
+        getWalletTransactionDetailSuccess,
+    required TResult Function() getWalletTransactionDetailLoading,
+    required TResult Function(String err) getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionListLoading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String err)? error,
+    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
+    TResult? Function(String err)? getWalletTransactionListFailed,
+    TResult? Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult? Function()? getWalletTransactionListLoading,
+    TResult? Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function()? getWalletTransactionDetailLoading,
+    TResult? Function(String err)? getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionListLoading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String err)? error,
+    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
+    TResult Function(String err)? getWalletTransactionListFailed,
+    TResult Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult Function()? getWalletTransactionListLoading,
+    TResult Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult Function()? getWalletTransactionDetailLoading,
+    TResult Function(String err)? getWalletTransactionDetailFailed,
+    required TResult orElse(),
+  }) {
+    if (getWalletTransactionListLoading != null) {
+      return getWalletTransactionListLoading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
+    required TResult Function(_GetWalletTransactionListFailed value)
+        getWalletTransactionListFailed,
+    required TResult Function(_GetWalletTransactionListSuccess value)
+        getWalletTransactionListSuccess,
+    required TResult Function(_GetWalletTransactionListLoading value)
+        getWalletTransactionListLoading,
+    required TResult Function(_GetWalletTransactionDetailSuccess value)
+        getWalletTransactionDetailSuccess,
+    required TResult Function(_GetWalletTransactionDetailLoading value)
+        getWalletTransactionDetailLoading,
+    required TResult Function(_GetWalletTransactionDetailFailed value)
+        getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionListLoading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult? Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult? Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult? Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult? Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult? Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionListLoading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+    required TResult orElse(),
+  }) {
+    if (getWalletTransactionListLoading != null) {
+      return getWalletTransactionListLoading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetWalletTransactionListLoading implements WalletState {
+  const factory _GetWalletTransactionListLoading() =
+      _$GetWalletTransactionListLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$GetWalletTransactionDetailSuccessImplCopyWith<$Res> {
+  factory _$$GetWalletTransactionDetailSuccessImplCopyWith(
+          _$GetWalletTransactionDetailSuccessImpl value,
+          $Res Function(_$GetWalletTransactionDetailSuccessImpl) then) =
+      __$$GetWalletTransactionDetailSuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({TransactionItem transactions});
+}
+
+/// @nodoc
+class __$$GetWalletTransactionDetailSuccessImplCopyWithImpl<$Res>
+    extends _$WalletStateCopyWithImpl<$Res,
+        _$GetWalletTransactionDetailSuccessImpl>
+    implements _$$GetWalletTransactionDetailSuccessImplCopyWith<$Res> {
+  __$$GetWalletTransactionDetailSuccessImplCopyWithImpl(
+      _$GetWalletTransactionDetailSuccessImpl _value,
+      $Res Function(_$GetWalletTransactionDetailSuccessImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? transactions = null,
+  }) {
+    return _then(_$GetWalletTransactionDetailSuccessImpl(
+      transactions: null == transactions
+          ? _value.transactions
+          : transactions // ignore: cast_nullable_to_non_nullable
+              as TransactionItem,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$GetWalletTransactionDetailSuccessImpl
+    with DiagnosticableTreeMixin
+    implements _GetWalletTransactionDetailSuccess {
+  const _$GetWalletTransactionDetailSuccessImpl({required this.transactions});
+
+  @override
+  final TransactionItem transactions;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WalletState.getWalletTransactionDetailSuccess(transactions: $transactions)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty(
+          'type', 'WalletState.getWalletTransactionDetailSuccess'))
+      ..add(DiagnosticsProperty('transactions', transactions));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetWalletTransactionDetailSuccessImpl &&
+            (identical(other.transactions, transactions) ||
+                other.transactions == transactions));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, transactions);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetWalletTransactionDetailSuccessImplCopyWith<
+          _$GetWalletTransactionDetailSuccessImpl>
+      get copyWith => __$$GetWalletTransactionDetailSuccessImplCopyWithImpl<
+          _$GetWalletTransactionDetailSuccessImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String err) error,
+    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
+    required TResult Function(String err) getWalletTransactionListFailed,
+    required TResult Function(List<TransactionItem> transactions)
+        getWalletTransactionListSuccess,
+    required TResult Function() getWalletTransactionListLoading,
+    required TResult Function(TransactionItem transactions)
+        getWalletTransactionDetailSuccess,
+    required TResult Function() getWalletTransactionDetailLoading,
+    required TResult Function(String err) getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionDetailSuccess(transactions);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String err)? error,
+    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
+    TResult? Function(String err)? getWalletTransactionListFailed,
+    TResult? Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult? Function()? getWalletTransactionListLoading,
+    TResult? Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function()? getWalletTransactionDetailLoading,
+    TResult? Function(String err)? getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionDetailSuccess?.call(transactions);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String err)? error,
+    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
+    TResult Function(String err)? getWalletTransactionListFailed,
+    TResult Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult Function()? getWalletTransactionListLoading,
+    TResult Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult Function()? getWalletTransactionDetailLoading,
+    TResult Function(String err)? getWalletTransactionDetailFailed,
+    required TResult orElse(),
+  }) {
+    if (getWalletTransactionDetailSuccess != null) {
+      return getWalletTransactionDetailSuccess(transactions);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
+    required TResult Function(_GetWalletTransactionListFailed value)
+        getWalletTransactionListFailed,
+    required TResult Function(_GetWalletTransactionListSuccess value)
+        getWalletTransactionListSuccess,
+    required TResult Function(_GetWalletTransactionListLoading value)
+        getWalletTransactionListLoading,
+    required TResult Function(_GetWalletTransactionDetailSuccess value)
+        getWalletTransactionDetailSuccess,
+    required TResult Function(_GetWalletTransactionDetailLoading value)
+        getWalletTransactionDetailLoading,
+    required TResult Function(_GetWalletTransactionDetailFailed value)
+        getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionDetailSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult? Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult? Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult? Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult? Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult? Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionDetailSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+    required TResult orElse(),
+  }) {
+    if (getWalletTransactionDetailSuccess != null) {
+      return getWalletTransactionDetailSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetWalletTransactionDetailSuccess implements WalletState {
+  const factory _GetWalletTransactionDetailSuccess(
+          {required final TransactionItem transactions}) =
+      _$GetWalletTransactionDetailSuccessImpl;
+
+  TransactionItem get transactions;
+  @JsonKey(ignore: true)
+  _$$GetWalletTransactionDetailSuccessImplCopyWith<
+          _$GetWalletTransactionDetailSuccessImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$GetWalletTransactionDetailLoadingImplCopyWith<$Res> {
+  factory _$$GetWalletTransactionDetailLoadingImplCopyWith(
+          _$GetWalletTransactionDetailLoadingImpl value,
+          $Res Function(_$GetWalletTransactionDetailLoadingImpl) then) =
+      __$$GetWalletTransactionDetailLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$GetWalletTransactionDetailLoadingImplCopyWithImpl<$Res>
+    extends _$WalletStateCopyWithImpl<$Res,
+        _$GetWalletTransactionDetailLoadingImpl>
+    implements _$$GetWalletTransactionDetailLoadingImplCopyWith<$Res> {
+  __$$GetWalletTransactionDetailLoadingImplCopyWithImpl(
+      _$GetWalletTransactionDetailLoadingImpl _value,
+      $Res Function(_$GetWalletTransactionDetailLoadingImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$GetWalletTransactionDetailLoadingImpl
+    with DiagnosticableTreeMixin
+    implements _GetWalletTransactionDetailLoading {
+  const _$GetWalletTransactionDetailLoadingImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WalletState.getWalletTransactionDetailLoading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty(
+        'type', 'WalletState.getWalletTransactionDetailLoading'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetWalletTransactionDetailLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String err) error,
+    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
+    required TResult Function(String err) getWalletTransactionListFailed,
+    required TResult Function(List<TransactionItem> transactions)
+        getWalletTransactionListSuccess,
+    required TResult Function() getWalletTransactionListLoading,
+    required TResult Function(TransactionItem transactions)
+        getWalletTransactionDetailSuccess,
+    required TResult Function() getWalletTransactionDetailLoading,
+    required TResult Function(String err) getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionDetailLoading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String err)? error,
+    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
+    TResult? Function(String err)? getWalletTransactionListFailed,
+    TResult? Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult? Function()? getWalletTransactionListLoading,
+    TResult? Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function()? getWalletTransactionDetailLoading,
+    TResult? Function(String err)? getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionDetailLoading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String err)? error,
+    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
+    TResult Function(String err)? getWalletTransactionListFailed,
+    TResult Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult Function()? getWalletTransactionListLoading,
+    TResult Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult Function()? getWalletTransactionDetailLoading,
+    TResult Function(String err)? getWalletTransactionDetailFailed,
+    required TResult orElse(),
+  }) {
+    if (getWalletTransactionDetailLoading != null) {
+      return getWalletTransactionDetailLoading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
+    required TResult Function(_GetWalletTransactionListFailed value)
+        getWalletTransactionListFailed,
+    required TResult Function(_GetWalletTransactionListSuccess value)
+        getWalletTransactionListSuccess,
+    required TResult Function(_GetWalletTransactionListLoading value)
+        getWalletTransactionListLoading,
+    required TResult Function(_GetWalletTransactionDetailSuccess value)
+        getWalletTransactionDetailSuccess,
+    required TResult Function(_GetWalletTransactionDetailLoading value)
+        getWalletTransactionDetailLoading,
+    required TResult Function(_GetWalletTransactionDetailFailed value)
+        getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionDetailLoading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult? Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult? Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult? Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult? Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult? Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionDetailLoading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+    required TResult orElse(),
+  }) {
+    if (getWalletTransactionDetailLoading != null) {
+      return getWalletTransactionDetailLoading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetWalletTransactionDetailLoading implements WalletState {
+  const factory _GetWalletTransactionDetailLoading() =
+      _$GetWalletTransactionDetailLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$GetWalletTransactionDetailFailedImplCopyWith<$Res> {
+  factory _$$GetWalletTransactionDetailFailedImplCopyWith(
+          _$GetWalletTransactionDetailFailedImpl value,
+          $Res Function(_$GetWalletTransactionDetailFailedImpl) then) =
+      __$$GetWalletTransactionDetailFailedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String err});
+}
+
+/// @nodoc
+class __$$GetWalletTransactionDetailFailedImplCopyWithImpl<$Res>
+    extends _$WalletStateCopyWithImpl<$Res,
+        _$GetWalletTransactionDetailFailedImpl>
+    implements _$$GetWalletTransactionDetailFailedImplCopyWith<$Res> {
+  __$$GetWalletTransactionDetailFailedImplCopyWithImpl(
+      _$GetWalletTransactionDetailFailedImpl _value,
+      $Res Function(_$GetWalletTransactionDetailFailedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? err = null,
+  }) {
+    return _then(_$GetWalletTransactionDetailFailedImpl(
+      null == err
+          ? _value.err
+          : err // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$GetWalletTransactionDetailFailedImpl
+    with DiagnosticableTreeMixin
+    implements _GetWalletTransactionDetailFailed {
+  const _$GetWalletTransactionDetailFailedImpl(this.err);
+
+  @override
+  final String err;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WalletState.getWalletTransactionDetailFailed(err: $err)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty(
+          'type', 'WalletState.getWalletTransactionDetailFailed'))
+      ..add(DiagnosticsProperty('err', err));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetWalletTransactionDetailFailedImpl &&
+            (identical(other.err, err) || other.err == err));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, err);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetWalletTransactionDetailFailedImplCopyWith<
+          _$GetWalletTransactionDetailFailedImpl>
+      get copyWith => __$$GetWalletTransactionDetailFailedImplCopyWithImpl<
+          _$GetWalletTransactionDetailFailedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String err) error,
+    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
+    required TResult Function(String err) getWalletTransactionListFailed,
+    required TResult Function(List<TransactionItem> transactions)
+        getWalletTransactionListSuccess,
+    required TResult Function() getWalletTransactionListLoading,
+    required TResult Function(TransactionItem transactions)
+        getWalletTransactionDetailSuccess,
+    required TResult Function() getWalletTransactionDetailLoading,
+    required TResult Function(String err) getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionDetailFailed(err);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String err)? error,
+    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
+    TResult? Function(String err)? getWalletTransactionListFailed,
+    TResult? Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult? Function()? getWalletTransactionListLoading,
+    TResult? Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function()? getWalletTransactionDetailLoading,
+    TResult? Function(String err)? getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionDetailFailed?.call(err);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String err)? error,
+    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
+    TResult Function(String err)? getWalletTransactionListFailed,
+    TResult Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult Function()? getWalletTransactionListLoading,
+    TResult Function(TransactionItem transactions)?
+        getWalletTransactionDetailSuccess,
+    TResult Function()? getWalletTransactionDetailLoading,
+    TResult Function(String err)? getWalletTransactionDetailFailed,
+    required TResult orElse(),
+  }) {
+    if (getWalletTransactionDetailFailed != null) {
+      return getWalletTransactionDetailFailed(err);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
+    required TResult Function(_GetWalletTransactionListFailed value)
+        getWalletTransactionListFailed,
+    required TResult Function(_GetWalletTransactionListSuccess value)
+        getWalletTransactionListSuccess,
+    required TResult Function(_GetWalletTransactionListLoading value)
+        getWalletTransactionListLoading,
+    required TResult Function(_GetWalletTransactionDetailSuccess value)
+        getWalletTransactionDetailSuccess,
+    required TResult Function(_GetWalletTransactionDetailLoading value)
+        getWalletTransactionDetailLoading,
+    required TResult Function(_GetWalletTransactionDetailFailed value)
+        getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionDetailFailed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult? Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult? Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult? Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult? Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult? Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+  }) {
+    return getWalletTransactionDetailFailed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+    required TResult orElse(),
+  }) {
+    if (getWalletTransactionDetailFailed != null) {
+      return getWalletTransactionDetailFailed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetWalletTransactionDetailFailed implements WalletState {
+  const factory _GetWalletTransactionDetailFailed(final String err) =
+      _$GetWalletTransactionDetailFailedImpl;
+
+  String get err;
+  @JsonKey(ignore: true)
+  _$$GetWalletTransactionDetailFailedImplCopyWith<
+          _$GetWalletTransactionDetailFailedImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

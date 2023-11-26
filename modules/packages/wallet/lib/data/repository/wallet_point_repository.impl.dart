@@ -5,7 +5,6 @@ import 'package:wallet/data/datasources/models/request/buy_coin_request.dart';
 import 'package:wallet/data/datasources/models/wallet_coin_payment_information_response.dart';
 
 import '../../domain/domain.dart';
-import '../../domain/entities/agency/agency_info.dart';
 import '../datasources/models/exchange_coin_response.dart';
 import '../datasources/remote/remote.dart';
 
@@ -14,24 +13,6 @@ class WalletPointRepositoryImpl implements WalletPointRepository {
   final PointWalletApi _pointWalletApi;
 
   WalletPointRepositoryImpl(this._pointWalletApi);
-
-  @override
-  Future<List<PointTransactionHistory>> getTransactionHistories(
-      Map<String, dynamic> body) async {
-    final response = await _pointWalletApi.getTransactionList(
-      body: body,
-    );
-
-    return response.data.transactions;
-  }
-
-  @override
-  Future<PointTransactionHistoryDetail> getTransactionHistoryDetail(
-      int id) async {
-    final response = await _pointWalletApi.getTransactionDetail(id: id);
-
-    return response.data;
-  }
 
   @override
   Future<List<AgencyResponse>> getAllAgency() async {

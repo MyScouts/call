@@ -35,11 +35,11 @@ class CreateWithdrawOrderScreen extends StatefulWidget {
 
 class _CreateWithdrawOrderScreenState extends State<CreateWithdrawOrderScreen>
     with ValidationMixin {
-  WalletType _selectedValue = WalletType.vshop;
+  WalletType _selectedValue = WalletType.vnd;
   final controller = TextEditingController();
   late final _bloc = context.read<BankAccountBloc>();
   final dataKey = GlobalKey();
-  final walletType = WalletType.coinVnd;
+  // final walletType = WalletType.coinVnd;
 
   @override
   void initState() {
@@ -75,16 +75,16 @@ class _CreateWithdrawOrderScreenState extends State<CreateWithdrawOrderScreen>
               ),
             ),
             const Divider(thickness: 8, color: WalletTheme.lightGrey),
-            TabBarViewWidget(
-              walletDOneComponent: const SizedBox(),
-              walletCoinComponent: const SizedBox(),
-              walletDiamondComponent: BlocProvider(
-                create: (context) => WalletDiamondBloc(injector()),
-                child: const WalletDiamondScreen(),
-              ),
-              walletVndComponent: walletVndComponent(context),
-              initialIndex: walletType.initialIndexTabBar,
-            )
+            // TabBarViewWidget(
+            //   walletDOneComponent: const SizedBox(),
+            //   walletCoinComponent: const SizedBox(),
+            //   walletDiamondComponent: BlocProvider(
+            //     create: (context) => WalletDiamondBloc(injector()),
+            //     child: const WalletDiamondScreen(),
+            //   ),
+            //   walletVndComponent: walletVndComponent(context),
+            //   initialIndex: walletType.initialIndexTabBar,
+            // )
           ],
         ),
       ),
@@ -236,117 +236,117 @@ class _CreateWithdrawOrderScreenState extends State<CreateWithdrawOrderScreen>
                               ),
                             ),
                             const Spacer(),
-                            StatefulBuilder(
-                              builder: (context, setState) {
-                                return DropdownButton<WalletType>(
-                                  isDense: true,
-                                  value: _selectedValue,
-                                  icon: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, right: 5),
-                                    child:
-                                        ImageWidget(IconAppConstants.icArrowTop),
-                                  ),
-                                  underline: const SizedBox(),
-                                  onChanged: (WalletType? newValue) {
-                                    setState(() {
-                                      _selectedValue = newValue!;
-                                    });
-                                  },
-                                  style: context.text.titleLarge?.copyWith(
-                                    fontSize: 16,
-                                    color: AppColors.blue10,
-                                  ),
-                                  items: [WalletType.live, WalletType.vshop]
-                                      .map(
-                                        (wallet) => DropdownMenuItem(
-                                          value: wallet,
-                                          child: Text(wallet.walletTypeText),
-                                        ),
-                                      )
-                                      .toList(),
-                                );
-                              },
-                            ),
+                            // StatefulBuilder(
+                            //   builder: (context, setState) {
+                            //     return DropdownButton<WalletType>(
+                            //       isDense: true,
+                            //       value: _selectedValue,
+                            //       icon: Padding(
+                            //         padding: const EdgeInsets.only(
+                            //             left: 10, right: 5),
+                            //         child:
+                            //             ImageWidget(IconAppConstants.icArrowTop),
+                            //       ),
+                            //       underline: const SizedBox(),
+                            //       onChanged: (WalletType? newValue) {
+                            //         setState(() {
+                            //           _selectedValue = newValue!;
+                            //         });
+                            //       },
+                            //       style: context.text.titleLarge?.copyWith(
+                            //         fontSize: 16,
+                            //         color: AppColors.blue10,
+                            //       ),
+                            //       items: [WalletType.live, WalletType.vshop]
+                            //           .map(
+                            //             (wallet) => DropdownMenuItem(
+                            //               value: wallet,
+                            //               child: Text(wallet.walletTypeText),
+                            //             ),
+                            //           )
+                            //           .toList(),
+                            //     );
+                            //   },
+                            // ),
                           ],
                         ),
                         const SizedBox(height: 10),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              key: dataKey,
-                              child: validationFormBuilder(
-                                child: FormElement(
-                                  name: 'amount',
-                                  filled: false,
-                                  controller: controller,
-                                  hintText: 'Nhập số tiền cần rút',
-                                  enableBorderColor:
-                                      WalletTheme.greyLightBorder,
-                                  focusedBorderColor:
-                                      WalletTheme.greyLightBorder,
-                                  borderRadius: WalletConstant.borderRadius5,
-                                  keyBoardType: TextInputType.number,
-                                  suffixIcon: Padding(
-                                    padding: const EdgeInsets.all(12),
-                                    child: ImageWidget(IconAppConstants.group),
-                                  ),
-                                  valueTransformer: AppTextInputFormatter
-                                      .reversedFromCurrency,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly,
-                                    AppTextInputFormatter.currency,
-                                  ],
-                                  onChanged: (value) {
-                                    onValidation();
-                                  },
-                                  validator: (value) {
-                                    const minAmount = 50000;
-                                    if (value == null || value.isEmpty) {
-                                      return 'Bạn phải nhập số tiền';
-                                    }
-                                    final amount =
-                                        int.parse(value.replaceAll('.', ''));
-                                    if (amount >
-                                        (_selectedValue == WalletType.live
-                                            ? info.availableVLive!
-                                            : info.availableVShop!)) {
-                                      return 'Số tiền nhập vươt quá số dư';
-                                    }
-                                    if (amount < minAmount) {
-                                      // ignore: lines_longer_than_80_chars
-                                      return 'Số tiền tối thiểu là ${minAmount.toAppCurrencyString()}';
-                                    }
-
-                                    return null;
-                                  },
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: GradiantButton(
-                                width: 100,
-                                onPressed: () {
-                                  controller.text = _selectedValue ==
-                                          WalletType.live
-                                      ? info.availableVLive.toAppCurrencyString(
-                                          isWithSymbol: false)
-                                      : info.availableVShop.toAppCurrencyString(
-                                          isWithSymbol: false);
-                                  controller.selection =
-                                      TextSelection.fromPosition(
-                                    TextPosition(
-                                        offset: controller.text.length),
-                                  );
-                                },
-                                child: const Text('Tất cả'),
-                              ),
-                            )
-                          ],
-                        ),
+                        // Row(
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   children: [
+                        //     Expanded(
+                        //       key: dataKey,
+                        //       child: validationFormBuilder(
+                        //         child: FormElement(
+                        //           name: 'amount',
+                        //           filled: false,
+                        //           controller: controller,
+                        //           hintText: 'Nhập số tiền cần rút',
+                        //           enableBorderColor:
+                        //               WalletTheme.greyLightBorder,
+                        //           focusedBorderColor:
+                        //               WalletTheme.greyLightBorder,
+                        //           borderRadius: WalletConstant.borderRadius5,
+                        //           keyBoardType: TextInputType.number,
+                        //           suffixIcon: Padding(
+                        //             padding: const EdgeInsets.all(12),
+                        //             child: ImageWidget(IconAppConstants.group),
+                        //           ),
+                        //           valueTransformer: AppTextInputFormatter
+                        //               .reversedFromCurrency,
+                        //           inputFormatters: [
+                        //             FilteringTextInputFormatter.digitsOnly,
+                        //             AppTextInputFormatter.currency,
+                        //           ],
+                        //           onChanged: (value) {
+                        //             onValidation();
+                        //           },
+                        //           validator: (value) {
+                        //             const minAmount = 50000;
+                        //             if (value == null || value.isEmpty) {
+                        //               return 'Bạn phải nhập số tiền';
+                        //             }
+                        //             final amount =
+                        //                 int.parse(value.replaceAll('.', ''));
+                        //             if (amount >
+                        //                 (_selectedValue == WalletType.live
+                        //                     ? info.availableVLive!
+                        //                     : info.availableVShop!)) {
+                        //               return 'Số tiền nhập vươt quá số dư';
+                        //             }
+                        //             if (amount < minAmount) {
+                        //               // ignore: lines_longer_than_80_chars
+                        //               return 'Số tiền tối thiểu là ${minAmount.toAppCurrencyString()}';
+                        //             }
+                        //
+                        //             return null;
+                        //           },
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     const SizedBox(width: 20),
+                        //     Padding(
+                        //       padding: const EdgeInsets.only(top: 8.0),
+                        //       child: GradiantButton(
+                        //         width: 100,
+                        //         onPressed: () {
+                        //           controller.text = _selectedValue ==
+                        //                   WalletType.live
+                        //               ? info.availableVLive.toAppCurrencyString(
+                        //                   isWithSymbol: false)
+                        //               : info.availableVShop.toAppCurrencyString(
+                        //                   isWithSymbol: false);
+                        //           controller.selection =
+                        //               TextSelection.fromPosition(
+                        //             TextPosition(
+                        //                 offset: controller.text.length),
+                        //           );
+                        //         },
+                        //         child: const Text('Tất cả'),
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
                         const SizedBox(height: 10),
                         BankAccountDetailWidget(
                           bankAccount: widget.bankAccount,

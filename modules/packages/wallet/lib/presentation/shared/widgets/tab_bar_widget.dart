@@ -90,14 +90,14 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget>
           ]),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: ResourceType.values.map((type) => _tabButton(type)).toList(),
+        children: WalletType.values.map((type) => _tabButton(type)).toList(),
       ),
     );
   }
 
-  Widget _tabButton(ResourceType resourceType) {
+  Widget _tabButton(WalletType resourceType) {
     final index =
-        ResourceType.values.indexWhere((type) => type == resourceType);
+        WalletType.values.indexWhere((type) => type == resourceType);
     return InkWell(
       onTap: () {
         _pageCtrl.animateToPage(

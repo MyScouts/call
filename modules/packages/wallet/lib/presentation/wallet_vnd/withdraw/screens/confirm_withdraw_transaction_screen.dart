@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:wallet/core/core.dart';
 import 'package:wallet/presentation/presentation.dart';
 import 'package:wallet/presentation/shared/widgets/toast_message/toast_message.dart';
-import '../../../../../wallet.dart';
 import '../../../../data/datasources/models/request/withdraw_request.dart';
 import '../../../../domain/entities/wallet/bank_account.dart';
 import '../../../shared/bloc/wallet_bloc.dart';
-import '../../../shared/widgets/app_bar.dart';
 import '../../../shared/widgets/gradiant_button.dart';
 import '../../../wallet_constant.dart';
 import '../../bank_account/bloc/bank_account_bloc.dart';
@@ -39,7 +37,7 @@ class ConfirmWithdrawTransactionScreen extends StatelessWidget {
             withdrawLoaded: () {
               context.hideLoading();
               injector<WalletBloc>().add(
-                const WalletEvent.getVndWalletInfo(),
+                const WalletEvent.getWalletInfo(),
               );
               context.showSuccessDialog();
             },

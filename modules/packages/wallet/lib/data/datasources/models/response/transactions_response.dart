@@ -19,16 +19,18 @@ class TransactionsResponse {
 @JsonSerializable()
 class TransactionItem {
   final String? id;
-  final User? sender;
-  final User? receiver;
   final double? fromValue;
   final int? fromType;
   final double? toValue;
   final int? toType;
   final String? transactionType;
-  final int? category;
+  final String? category;
   final int? status;
+  final String? resolvedStatus;
   final DateTime? createdAt;
+  final Map<String, dynamic>? metadata;
+  final User? sender;
+  final User? receiver;
 
   TransactionItem({
     this.id,
@@ -42,6 +44,8 @@ class TransactionItem {
     this.category,
     this.status,
     this.createdAt,
+    this.resolvedStatus,
+    this.metadata,
   });
 
   factory TransactionItem.fromJson(Map<String, dynamic> json) =>

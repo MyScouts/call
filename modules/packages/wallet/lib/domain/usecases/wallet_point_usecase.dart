@@ -14,23 +14,6 @@ class WalletPointUseCase {
 
   WalletPointUseCase(this._walletPointRepository);
 
-  Future<List<PointTransactionHistory>> getTransactionHistories(
-    PointTransactionHistoryFilter filter,
-    Pagination paginate,
-  ) async {
-    final body = {
-      ...paginate.toJson(),
-      ...filter.toJson(),
-    };
-
-    return _walletPointRepository.getTransactionHistories(body);
-  }
-
-  Future<PointTransactionHistoryDetail> getTransactionHistoryDetail(
-      int id) async {
-    return _walletPointRepository.getTransactionHistoryDetail(id);
-  }
-
   Future<List<AgencyResponse>> getAllAgency() async {
     return _walletPointRepository.getAllAgency();
   }

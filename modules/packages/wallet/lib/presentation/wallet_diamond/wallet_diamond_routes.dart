@@ -18,10 +18,10 @@ class WalletDiamondRoutes extends RouteModule {
           child: const DiamondTransactionHistoryScreen(),
         );
       },
-      DiamondTransactionHistoryDetailScreen.routeName: (context) {
-        final id = settings.arguments as int;
-        return DiamondTransactionHistoryDetailScreen(id: id);
-      },
+      // DiamondTransactionHistoryDetailScreen.routeName: (context) {
+      //   final id = settings.arguments as int;
+      //   return DiamondTransactionHistoryDetailScreen(id: id);
+      // },
     };
   }
 }

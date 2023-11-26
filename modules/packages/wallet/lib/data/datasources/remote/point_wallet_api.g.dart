@@ -19,75 +19,6 @@ class _PointWalletApi implements PointWalletApi {
   String? baseUrl;
 
   @override
-  Future<ApiResponse<TransactionResponse<PointTransactionHistory>>>
-      getTransactionList({required Map<String, dynamic> body}) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body);
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<
-        ApiResponse<TransactionResponse<PointTransactionHistory>>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '/api/point/transaction/list',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
-    final value =
-        ApiResponse<TransactionResponse<PointTransactionHistory>>.fromJson(
-      _result.data!,
-      (json) => TransactionResponse<PointTransactionHistory>.fromJson(
-        json as Map<String, dynamic>,
-        (json) =>
-            PointTransactionHistory.fromJson(json as Map<String, dynamic>),
-      ),
-    );
-    return value;
-  }
-
-  @override
-  Future<ApiResponse<PointTransactionHistoryDetail>> getTransactionDetail(
-      {required int id}) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<PointTransactionHistoryDetail>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/api/point/transaction/${id}',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = ApiResponse<PointTransactionHistoryDetail>.fromJson(
-      _result.data!,
-      (json) =>
-          PointTransactionHistoryDetail.fromJson(json as Map<String, dynamic>),
-    );
-    return value;
-  }
-
-  @override
   Future<ApiResponse<AgencyListResponse>> getAllAgency() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -147,36 +78,6 @@ class _PointWalletApi implements PointWalletApi {
     );
     return value;
   }
-
-  // @override
-  // Future<ApiResponse<InvalidType>> getCoinWalletInfo() async {
-  //   const _extra = <String, dynamic>{};
-  //   final queryParameters = <String, dynamic>{};
-  //   final _headers = <String, dynamic>{};
-  //   final Map<String, dynamic>? _data = null;
-  //   final _result = await _dio.fetch<Map<String, dynamic>>(
-  //       _setStreamType<ApiResponse<InvalidType>>(Options(
-  //     method: 'GET',
-  //     headers: _headers,
-  //     extra: _extra,
-  //   )
-  //           .compose(
-  //             _dio.options,
-  //             '/api/coin-wallet/info',
-  //             queryParameters: queryParameters,
-  //             data: _data,
-  //           )
-  //           .copyWith(
-  //               baseUrl: _combineBaseUrls(
-  //             _dio.options.baseUrl,
-  //             baseUrl,
-  //           ))));
-  //   final value = ApiResponse<InvalidType>.fromJson(
-  //     _result.data!,
-  //     (json) => InvalidType.fromJson(json as Map<String, dynamic>),
-  //   );
-  //   return value;
-  // }
 
   @override
   Future<ApiResponse<EstCoinResponse>> estCoin({

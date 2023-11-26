@@ -87,7 +87,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: ResourceTypeExt.blueBackgroundColor,
+          backgroundColor: WalletTypeExt.blueBackgroundColor,
           title: Text(
             'Thông tin Đại lý',
             style:
@@ -127,7 +127,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                 });
           },
           child: Container(
-            color: ResourceTypeExt.blueBackgroundColor,
+            color: WalletTypeExt.blueBackgroundColor,
             padding: const EdgeInsets.fromLTRB(
               0,
               44,

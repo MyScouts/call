@@ -3,12 +3,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:wallet/data/datasources/models/est_coin_response.dart';
 import 'package:wallet/data/datasources/models/request/buy_coin_request.dart';
 import 'package:wallet/data/datasources/models/wallet_coin_payment_information_response.dart';
-import 'package:wallet/domain/entities/agency/agency.dart';
 
 import '../../../../data/datasources/models/exchange_coin_response.dart';
 import '../../../../data/datasources/models/request/agency_get_payment_information_request.dart';
 import '../../../../domain/domain.dart';
-import '../../../../domain/entities/agency/agency.dart';
 
 part 'agency_bloc.freezed.dart';
 

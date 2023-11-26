@@ -1,10 +1,9 @@
 import 'package:app_core/app_core.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:wallet/core/configuratons/configurations.dart';
+import 'package:wallet/data/datasources/models/response/transactions_response.dart';
 import 'package:wallet/data/datasources/models/response/wallet_info_response.dart';
 
 import '../../../domain/entities/wallet/vnd_wallet_info/vnd_wallet_info.dart';
@@ -38,6 +37,23 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
         debugPrint(e.toString());
         const errorMessage = 'Đã xảy ra lỗi';
         emit(const _Error(errorMessage));
+      }
+    });
+
+    on<_GetWalletTransactionListEvent>((event, emit) async {
+      try {
+        emit(const _GetWalletTransactionListLoading());
+        final transactions = await _walletRepository.getWalletTransactionList(
+          walletType: event.walletType,
+        );
+        emit(_GetWalletTransactionListSuccess(transactions: transactions));
+      } on DioException catch (e) {
+        const errorMessage = 'Đã xảy ra lỗi';
+        emit(const _GetWalletTransactionListFailed(errorMessage));
+      } catch (e) {
+        debugPrint(e.toString());
+        const errorMessage = 'Đã xảy ra lỗi';
+        emit(const _GetWalletTransactionListFailed(errorMessage));
       }
     });
   }

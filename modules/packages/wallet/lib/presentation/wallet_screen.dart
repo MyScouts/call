@@ -13,7 +13,6 @@ import 'shared/widgets/wallet_coin_actions.dart';
 import 'shared/widgets/wallet_diamond_resource_builder.dart';
 import 'shared/widgets/wallet_vnd_resource_builder.dart';
 import 'wallet_diamond/bloc/wallet_diamond_bloc.dart';
-import 'wallet_vnd/widgets/vnd_asset_status.dart';
 
 class WalletScreen extends StatefulWidget {
   static const String routeName = '/my-wallet';
@@ -150,33 +149,6 @@ class _WalletScreenState extends State<WalletScreen> {
           WalletVNDActions(),
         ],
       ),
-    );
-
-    return Builder(
-      builder: (context) {
-        bloc.add(const WalletEvent.getVndWalletInfo());
-        return BlocBuilder<WalletBloc, WalletState>(
-          bloc: bloc,
-          buildWhen: (previous, current) =>
-              current.whenOrNull(
-                vndWalletInfoLoaded: (info) => true,
-                needToRegisterJA: (walletType) => true,
-              ) ??
-              false,
-          builder: (context, state) => state.maybeWhen(
-            orElse: () => const LoadingWidget(),
-            needToRegisterJA: (walletType) => const SizedBox(),
-            vndWalletInfoLoaded: (vndWalletInfo) {
-              return Column(
-                children: [
-                  VNDAssetStatus(vndWalletInfo: vndWalletInfo),
-                  const Expanded(child: WalletVNDActions()),
-                ],
-              );
-            },
-          ),
-        );
-      },
     );
   }
 

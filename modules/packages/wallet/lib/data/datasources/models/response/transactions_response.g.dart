@@ -36,18 +36,18 @@ TransactionItem _$TransactionItemFromJson(Map<String, dynamic> json) =>
       toValue: (json['toValue'] as num?)?.toDouble(),
       toType: json['toType'] as int?,
       transactionType: json['transactionType'] as String?,
-      category: json['category'] as int?,
+      category: json['category'] as String?,
       status: json['status'] as int?,
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
+      resolvedStatus: json['resolvedStatus'] as String?,
+      metadata: json['metadata'] as Map<String, dynamic>?,
     );
 
 Map<String, dynamic> _$TransactionItemToJson(TransactionItem instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'sender': instance.sender,
-      'receiver': instance.receiver,
       'fromValue': instance.fromValue,
       'fromType': instance.fromType,
       'toValue': instance.toValue,
@@ -55,5 +55,9 @@ Map<String, dynamic> _$TransactionItemToJson(TransactionItem instance) =>
       'transactionType': instance.transactionType,
       'category': instance.category,
       'status': instance.status,
+      'resolvedStatus': instance.resolvedStatus,
       'createdAt': instance.createdAt?.toIso8601String(),
+      'metadata': instance.metadata,
+      'sender': instance.sender,
+      'receiver': instance.receiver,
     };

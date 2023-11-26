@@ -89,7 +89,7 @@ class UserInfoCard extends StatelessWidget {
               Expanded(
                 child: _resourceWidget(
                   context,
-                  resourceType: ResourceType.ddone,
+                  WalletType: WalletType.ddone,
                   resourceValue: '254',
                 ),
               ),
@@ -97,7 +97,7 @@ class UserInfoCard extends StatelessWidget {
               Expanded(
                 child: _resourceWidget(
                   context,
-                  resourceType: ResourceType.coin,
+                  WalletType: WalletType.coin,
                   resourceValue: walletInfo.availableCoin.toAppCurrencyString(
                     isWithSymbol: false,
                   ),
@@ -111,7 +111,7 @@ class UserInfoCard extends StatelessWidget {
               Expanded(
                 child: _resourceWidget(
                   context,
-                  resourceType: ResourceType.diamond,
+                  WalletType: WalletType.diamond,
                   resourceValue:
                       walletInfo.availableDiamond.toAppCurrencyString(
                     isWithSymbol: false,
@@ -122,7 +122,7 @@ class UserInfoCard extends StatelessWidget {
               Expanded(
                 child: _resourceWidget(
                   context,
-                  resourceType: ResourceType.vnd,
+                  WalletType: WalletType.vnd,
                   resourceValue: walletInfo.availableVnd.toAppCurrencyString(
                     isWithSymbol: false,
                   ),
@@ -135,9 +135,9 @@ class UserInfoCard extends StatelessWidget {
 
           _progressBar(context)
           // Wrap(
-          //   children: ResourceType.values
+          //   children: WalletType.values
           //       .map((type) => _resourceWidget(context,
-          //           resourceType: type, resourceValue: '254.281.212'))
+          //           WalletType: type, resourceValue: '254.281.212'))
           //       .toList(),
           // ),
           // Padding(
@@ -169,21 +169,21 @@ class UserInfoCard extends StatelessWidget {
   }
 
   Widget _resourceWidget(BuildContext context,
-      {required ResourceType resourceType, required String resourceValue}) {
+      {required WalletType WalletType, required String resourceValue}) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
-        color: resourceType.valueBgColor,
+        color: WalletType.valueBgColor,
         borderRadius: WalletConstant.borderRadius6,
       ),
       child: Row(
         children: [
-          resourceType.icon,
+          WalletType.icon,
           const SizedBox(width: 5),
           Text(
             resourceValue,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: resourceType.valueColor,
+                  color: WalletType.valueColor,
                   fontSize: 14,
                 ),
           )
