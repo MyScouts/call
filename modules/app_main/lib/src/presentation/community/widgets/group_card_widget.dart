@@ -32,11 +32,11 @@ class GroupCardWidget extends StatelessWidget {
                         const BorderRadius.vertical(top: Radius.circular(10)),
                     child: CachedNetworkImage(
                       width: double.infinity,
-                      imageUrl: group.banner ?? "",
+                      imageUrl: (group.banner ?? '').replaceAll('///', '//'),
                       fit: BoxFit.cover,
                       errorWidget: (context, url, error) {
                         return ImageWidget(
-                          group.banner ?? ImageConstants.communityBanner,
+                          group.banner ?? ImageConstants.imgDefaultTeamBanner,
                           fit: BoxFit.cover,
                         );
                       },
@@ -63,7 +63,7 @@ class GroupCardWidget extends StatelessWidget {
                           fit: BoxFit.cover,
                           errorWidget: (context, url, error) {
                             return ImageWidget(
-                              ImageConstants.imgDefaultTeamBanner,
+                              IconAppConstants.icDefaultTeamAvt,
                               borderRadius: 100,
                             );
                           },

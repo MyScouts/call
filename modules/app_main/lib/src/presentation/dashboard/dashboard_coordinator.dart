@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/presentation/camera/camera_result_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_module.dart';
@@ -8,6 +9,7 @@ import 'package:app_main/src/presentation/dashboard/widget/start_team_dialog.dar
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
+import 'package:wallet/presentation/wallet_coodinator.dart';
 
 import 'dashboard/widget/dashboard_option_sheet.dart';
 import 'dashboard/widget/remove_confirm_dialog.dart';
@@ -78,10 +80,17 @@ extension DashBoardCoordinator on BuildContext {
     );
   }
 
+  Future<T?> _startWallet<T>() async {
+    return startMyWallet(read<UserCubit>().currentUser);
+  }
+
   Future<T?> handleStartAppWidget<T>({required String id, String? path}) async {
     switch (id) {
       case "ic_team":
         return _startTeam();
+
+      case 'ic_wallet':
+        return _startWallet();
       default:
         if (path != null) {
           Navigator.of(this).pushNamed(path);

@@ -11,6 +11,8 @@ import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
 
+import '../../blocs/user/user_cubit.dart';
+
 class CommunityWidget extends StatefulWidget {
   static const String routeName = 'community';
 
@@ -40,6 +42,8 @@ class _CommunityWidgetState extends State<CommunityWidget>
     _communityTabController.dispose();
   }
 
+  late final myId = context.read<UserCubit>().currentUser?.id;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +65,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
                   child: Row(
                     children: [
                       GestureDetector(
-                        onTap: () => context.startDiary(),
+                        onTap: () => context.startDiary(userId: myId.toString()),
                         child: const AppAvatarWidget(),
                       ),
                       const SizedBox(width: 15),

@@ -10,6 +10,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart';
 import '../../data/models/responses/confirm_register_ja_response.dart';
+import '../../data/models/responses/pdone/pdone_check_exist_by_id_number_response.dart';
 import '../../data/models/responses/pdone/pdone_information_response.dart';
 import '../../data/models/responses/pdone/pdone_my_protector_information_response.dart';
 import '../../data/models/responses/pdone/pdone_registering_profile.dart';
@@ -136,6 +137,10 @@ class UpgradeAccountUsecase {
     return _upgradeAccountRepository.pDoneProfile();
   }
 
+  Future<String> getEKycKey() {
+    return _upgradeAccountRepository.getEKycKey();
+  }
+
   Future<PDoneMyProtectorInformationResponse> protectorRequested() {
     return _upgradeAccountRepository.protectorRequested();
   }
@@ -150,5 +155,9 @@ class UpgradeAccountUsecase {
 
   Future<PDoneRegisteringProfileData?> getRegisteringProfile() {
     return _upgradeAccountRepository.getRegisteringProfile();
+  }
+
+  Future<CheckExistIdentityNumber?> checkExistIdentityNumber(String identityNumber) {
+    return _upgradeAccountRepository.checkExistIdentityNumber(identityNumber);
   }
 }

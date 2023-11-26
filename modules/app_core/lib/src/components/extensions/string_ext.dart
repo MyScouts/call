@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 import '../../../app_core.dart';
@@ -108,6 +109,7 @@ extension DatetimeFormat on String {
 
   String getDisplayDate([String pattern = 'yyyy-MM-dd']) {
     final format = DateFormat(pattern);
+    debugPrint('Date: $this');
     final dateTime = format.parse(this);
     return dateTime.ddMMyyyy;
   }

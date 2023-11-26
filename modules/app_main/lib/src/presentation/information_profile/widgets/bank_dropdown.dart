@@ -1,4 +1,5 @@
 import 'package:app_main/src/domain/entities/bank.dart';
+import 'package:design_system/design_system.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
@@ -6,12 +7,14 @@ class BankDropdown extends StatefulWidget {
   final Function(String) onChange;
   final bool required;
   final List<Bank> banks;
+  final bool enable;
 
   const BankDropdown({
     super.key,
     required this.onChange,
     this.required = false,
     this.banks = const [],
+    this.enable = true,
   });
 
   @override
@@ -19,6 +22,15 @@ class BankDropdown extends StatefulWidget {
 }
 
 class _BankDropdownState extends State<BankDropdown> {
+
+  @override
+  void didUpdateWidget(covariant BankDropdown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if(widget.enable != oldWidget.enable) {
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -46,65 +58,69 @@ class _BankDropdownState extends State<BankDropdown> {
           ],
         ),
         const SizedBox(height: 7),
-        DropdownButtonFormField2<Bank>(
-          isExpanded: true,
-          decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(vertical: 12),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
+        IgnorePointer(
+          ignoring: !widget.enable,
+          child: DropdownButtonFormField2<Bank>(
+            isExpanded: true,
+            decoration: InputDecoration(
+              fillColor: widget.enable ? Colors.white : AppColors.grey70,
+              contentPadding: const EdgeInsets.symmetric(vertical: 12),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
             ),
-          ),
-          hint: const Text(
-            'Chọn ngân hàng.',
-            style: TextStyle(fontSize: 14),
-          ),
-          value: widget.banks.first,
-          items: widget.banks
-              .map((item) => DropdownMenuItem<Bank>(
-                    value: item,
-                    child: Text(
-                      item.name!,
-                      style: const TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
-                  ))
-              .toList(),
-          validator: (value) {
-            print(value);
-            if (value == null) {
-              return 'Chọn ngân hàng.';
-            }
-            return null;
-          },
-          onChanged: (value) {
-            if (value != null) {
-              widget.onChange(value.name!);
+            hint: const Text(
+              'Chọn ngân hàng.',
+              style: TextStyle(fontSize: 14),
+            ),
+            value: widget.banks.first,
+            items: widget.banks
+                .map((item) => DropdownMenuItem<Bank>(
+              value: item,
+              child: Text(
+                item.name!,
+                style: const TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+            ))
+                .toList(),
+            validator: (value) {
+              print(value);
+              if (value == null) {
+                return 'Chọn ngân hàng.';
+              }
+              return null;
+            },
+            onChanged: (value) {
+              if (value != null) {
+                widget.onChange(value.name!);
+                value = value;
+                setState(() {});
+              }
+            },
+            onSaved: (value) {
               value = value;
               setState(() {});
-            }
-          },
-          onSaved: (value) {
-            value = value;
-            setState(() {});
-          },
-          buttonStyleData: const ButtonStyleData(
-            padding: EdgeInsets.only(right: 8),
-          ),
-          iconStyleData: const IconStyleData(
-            icon: Icon(
-              Icons.arrow_drop_down,
-              color: Colors.black45,
+            },
+            buttonStyleData: const ButtonStyleData(
+              padding: EdgeInsets.only(right: 8),
             ),
-            iconSize: 24,
-          ),
-          dropdownStyleData: DropdownStyleData(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
+            iconStyleData: const IconStyleData(
+              icon: Icon(
+                Icons.arrow_drop_down,
+                color: Colors.black45,
+              ),
+              iconSize: 24,
             ),
-          ),
-          menuItemStyleData: const MenuItemStyleData(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            dropdownStyleData: DropdownStyleData(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            menuItemStyleData: const MenuItemStyleData(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+            ),
           ),
         ),
       ],

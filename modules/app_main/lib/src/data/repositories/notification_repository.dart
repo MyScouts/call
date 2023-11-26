@@ -6,4 +6,6 @@ abstract class NotificationRepository {
   Future unregister(String fcmToken);
 
   Future<List<NotificationData>> list(int page, [int pageSize = 10]);
+
+  Future delete(int id);
 }

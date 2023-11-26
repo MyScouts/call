@@ -1,10 +1,10 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/app_main.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
-import 'package:app_main/src/presentation/shared/user/bloc/user_bloc.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -102,12 +102,31 @@ class StatusBarWidget extends StatelessWidget {
                 },
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: BlocBuilder<UserBloc, UserState>(
+                  child: BlocBuilder<UserCubit, UserState>(
                     builder: (_, state) {
+                      if(state.currentUser?.avatar?.trim().isEmpty ?? false) {
+                        return  Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: context.theme.primaryColor,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(90),
+                          ),
+                          child: ClipRRect(
+                            child: ImageWidget(
+                              ImageConstants.defaultUserAvatar,
+                              borderRadius: 100,
+                            ),
+                          ),
+                        );
+                      }
                       return AspectRatio(
                         aspectRatio: 1,
                         child: CircleNetworkImage(
-                          url: state.currentUser?.avatar ?? '',
+                          url: context.read<UserCubit>().currentUser?.avatar ?? '',
                           size: 40,
                           defaultImage: ImageWidget(
                             ImageConstants.defaultUserAvatar,
