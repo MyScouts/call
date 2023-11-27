@@ -111,7 +111,7 @@ enum ImageApp {
   cmBg('assets/images/cm_bg.png'),
   perBg('assets/images/per_bg.png'),
   ecomBg('assets/images/ecom_bg.png'),
-  live('assets/images/live.png'),
+  live('assets/images/live_tab.png'),
   emptyDataList('assets/images/empty_data_list.png'),
   communityBanner('assets/images/community_banner.png'),
   communityXayDung('assets/images/xaydung.jpg'),
