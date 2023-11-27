@@ -16,7 +16,7 @@ class LabelFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12, top: 20),
+      padding: const EdgeInsets.only(bottom: 5, top: 10),
       child: Row(
         children: [
           Text(
