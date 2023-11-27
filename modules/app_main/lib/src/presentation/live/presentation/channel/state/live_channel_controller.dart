@@ -5,7 +5,9 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/services/live_service/impl/live_socket_service_impl.dart';
 import 'package:app_main/src/core/services/live_service/live_service.dart';
 import 'package:app_main/src/core/services/live_service/live_socket_service.dart';
+import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/presentation/live/data/model/response/join_live_response.dart';
+import 'package:app_main/src/presentation/live/domain/entities/live_comment.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_member.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
@@ -52,7 +54,15 @@ class LiveChannelController {
     this.service,
     this.socketService,
     this.floatingGiftsProvider,
-  );
+  ) {
+    NotificationCenter.subscribe(
+      channel: sendMessage,
+      observer: this,
+      onNotification: (msg) {
+        socketService.sendMessage({'type': 'raw', 'rawContent': msg});
+      },
+    );
+  }
 
   final Rx<LiveStreamState> _state = LiveStreamState.loading.obs;
 
@@ -72,6 +82,10 @@ class LiveChannelController {
 
   final RxBool _hostInBackground = false.obs;
 
+  final RxBool _showMessageInput = false.obs;
+
+  RxBool get showMessageInput => _showMessageInput;
+
   bool get hostInLive {
     if (_me.value.isOwner) return true;
     return host != null;
@@ -90,6 +104,14 @@ class LiveChannelController {
   }
 
   LiveData get info => _info.value;
+
+  void enableMessage() {
+    _showMessageInput.value = true;
+  }
+
+  void disableMessage() {
+    _showMessageInput.value = false;
+  }
 
   void join(int id, [String? password]) async {
     try {
@@ -130,8 +152,12 @@ class LiveChannelController {
         _info.value.agoraToken ?? '',
         _info.value.agoraChannel ?? '',
         _me.value.info.userID,
-        role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
+        role: _me.value.isOwner
+            ? ClientRoleType.clientRoleBroadcaster
+            : ClientRoleType.clientRoleAudience,
       );
+
+
 
       ///get members
       final users = await repository.listMembers(_info.value.id);
@@ -223,7 +249,8 @@ class LiveChannelController {
       androidNotificationOptions: AndroidNotificationOptions(
         channelId: 'notification_channel_id',
         channelName: 'Foreground Notification',
-        channelDescription: 'This notification appears when the foreground service is running.',
+        channelDescription:
+            'This notification appears when the foreground service is running.',
         channelImportance: NotificationChannelImportance.LOW,
         priority: NotificationPriority.LOW,
         iconData: const NotificationIconData(
@@ -300,6 +327,15 @@ class LiveChannelController {
       );
       _members.value = [..._members, member];
       print('length ===> ${_members.length}');
+
+      final message = LiveComment(
+        member: member,
+        message: '',
+        type: LiveCommentType.join,
+        createdAt: DateTime.now(),
+      );
+
+      NotificationCenter.post(channel: receiveMessage, options: message);
     });
 
     socketService.on(socketUserLeaveEvent, (Map data) {
@@ -318,6 +354,20 @@ class LiveChannelController {
       debugPrint('$socketBannedEvent ===> ${data['user']}');
       _enableChat.value = false;
     });
+
+    socketService.on(socketMessageEvent, (Map data) {
+      debugPrint('$socketMessageEvent ===> $data');
+      final user = User.fromJson(data['user']);
+      final member = _members.firstWhereOrNull((e) => e.info.userID == user.id);
+      if (member == null) return;
+      final message = LiveComment(
+        member: member,
+        message: data['rawContent'] ?? '',
+        type: LiveCommentType.message,
+        createdAt: DateTime.tryParse(data['createdAt'] ?? '') ?? DateTime.now(),
+      );
+      NotificationCenter.post(channel: receiveMessage, options: message);
+    });
   }
 
   void leaveLive() async {
@@ -335,13 +385,18 @@ class LiveChannelController {
 }
 
 extension RemoteVideoStateReasonX on RemoteVideoStateReason {
-  bool get isNetworkCongestion => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
+  bool get isNetworkCongestion =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
 
-  bool get isNetworkRecovery => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
+  bool get isNetworkRecovery =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
 
-  bool get isRemoteOffline => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
+  bool get isRemoteOffline =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
 
-  bool get isRemoteUnmuted => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
+  bool get isRemoteUnmuted =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
 
-  bool get isRemoteInBackground => this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
+  bool get isRemoteInBackground =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
 }

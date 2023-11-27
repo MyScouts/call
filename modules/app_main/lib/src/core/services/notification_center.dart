@@ -9,9 +9,14 @@ const String showAppStore = 'showAppStore';
 const String disposeCameraPreview = 'disposeCameraPreview';
 const String refreshUser = 'refreshUser';
 
+
+///live
+const String receiveMessage = 'receiveMessage';
+const String sendMessage = 'sendMessage';
+
 typedef ObserverCallback = void Function(dynamic options);
 
-class NotificationCenter {
+class NotificationCenter<T> {
   final Map<String, Map<int, ObserverCallback>> _channelObservers = {};
 
   static final NotificationCenter _sharedCenter = NotificationCenter._();

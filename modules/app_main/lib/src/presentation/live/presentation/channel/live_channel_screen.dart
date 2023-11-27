@@ -1,13 +1,13 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
-import 'package:app_main/src/core/utils/loading_indicator/platform_loading.dart';
-import 'package:app_main/src/di/di.dart';
+import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_bottom_action.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_channel_header.dart';
+import 'package:app_main/src/presentation/live/presentation/channel/widget/live_loading_screen.dart';
+import 'package:app_main/src/presentation/live/presentation/live_message/live_message_input.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'widget/sent_gift_page.dart';
 
 class LiveChannelScreen extends StatefulWidget {
@@ -22,7 +22,7 @@ class LiveChannelScreen extends StatefulWidget {
 }
 
 class LiveChannelScreenState extends State<LiveChannelScreen> {
-  final controller = getIt<LiveChannelController>();
+  late final controller = context.read<LiveChannelController>();
 
   @override
   void initState() {
@@ -38,29 +38,46 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          const _RtcRender(),
-          const Align(
-            alignment: Alignment.topCenter,
-            child: SafeArea(
-              child: LiveChannelHeader(),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
+      body: Focus(
+        onFocusChange: (value) {
+          if(!value) controller.disableMessage();
+        },
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            const _RtcRender(),
+            const Align(
+              alignment: Alignment.topCenter,
+              child: SafeArea(
+                child: LiveChannelHeader(),
+              ),
             ),
-          ),
-          const Align(
-            alignment: Alignment.bottomCenter,
-            child: LiveBottomAction(),
-          ),
-          Positioned.fill(
-            child: IgnorePointer(
-              ignoring: true,
-              child: SentGiftPage(provider: controller.floatingGiftsProvider),
+            const Align(
+              alignment: Alignment.bottomCenter,
+              child: LiveBottomAction(),
             ),
-          ),
-        ],
+            Positioned.fill(
+              child: IgnorePointer(
+                ignoring: true,
+                child: SentGiftPage(
+                  provider: controller.floatingGiftsProvider,
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Obx(() {
+                if (controller.showMessageInput.value) {
+                  return const LiveMessageInput();
+                }
+                return const SizedBox.shrink();
+              }),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -84,20 +101,7 @@ class _RtcRenderState extends State<_RtcRender> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = context.findAncestorStateOfType<LiveChannelScreenState>()!.controller;
-
-    if (provider != null) {
-      return AgoraVideoView(
-        key: const Key('render preview'),
-        controller: VideoViewController(
-          rtcEngine: provider!.controller.service.engine,
-          canvas: const VideoCanvas(
-            uid: 0,
-            renderMode: RenderModeType.renderModeHidden,
-          ),
-        ),
-      );
-    }
+    final controller = context.read<LiveChannelController>();
 
     return Obx(() {
       if (controller.state.value == LiveStreamState.stop) {
@@ -151,7 +155,7 @@ class _RtcRenderState extends State<_RtcRender> {
         );
       }
 
-      return const Center(child: PlatformLoadingIndicator());
+      return const LiveLoadingScreen();
     });
   }
 }

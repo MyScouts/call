@@ -7,8 +7,9 @@ import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/routes.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:localization/localization.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 import 'app_dimens.dart';
 import 'core/coordinator/app_coordinator.dart';
 import 'core/utils/toast_message/toast_message.dart';
@@ -18,7 +19,7 @@ class Application extends StatefulWidget {
   final AdaptiveThemeMode? savedThemeMode;
   final String initialRoute;
   final String title;
-  final List<BlocProvider> providers;
+  final List<SingleChildStatelessWidget> providers;
   final bool isProduction;
   final NotificationService notificationService;
 
@@ -62,22 +63,22 @@ class _ApplicationState extends State<Application>
     );
   }
 
-  Overlay _materialBuilder(BuildContext context, Widget? child) {
+  MediaQuery _materialBuilder(BuildContext context, Widget? child) {
     final data = MediaQuery.of(context).copyWith(textScaleFactor: 1);
     setMediaQueryData(data);
-    return Overlay(
-      initialEntries: [
-        OverlayEntry(
-          builder: (context) {
-            return Material(
-              child: MediaQuery(
-                data: data,
+    return MediaQuery(
+      data: data,
+      child: Overlay(
+        initialEntries: [
+          OverlayEntry(
+            builder: (context) {
+              return Material(
                 child: toastBuilder(context, child!),
-              ),
-            );
-          },
-        ),
-      ],
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -120,7 +121,7 @@ class _ApplicationState extends State<Application>
       light: theme.getTheme(Brightness.light),
       dark: theme.getTheme(Brightness.dark),
       initial: widget.savedThemeMode ?? AdaptiveThemeMode.light,
-      builder: (ThemeData light, ThemeData dark) => MultiBlocProvider(
+      builder: (ThemeData light, ThemeData dark) => MultiProvider(
         providers: widget.providers,
         child: _buildMaterialApp(
           locale: const Locale('vi', 'VN'),

@@ -70,8 +70,9 @@ class LiveSocketServiceImpl extends LiveSocketService {
   @override
   void sendMessage(data) {
     if (_socket == null) return;
-    _socket?.emit("message", data);
+    _socket?.emit(socketMessageEvent, data);
   }
+
 
   @override
   Future<void> disconnect() async {

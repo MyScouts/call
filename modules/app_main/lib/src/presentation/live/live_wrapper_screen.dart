@@ -56,7 +56,9 @@ class _LiveWrapperScreenState extends State<LiveWrapperScreen> {
               LiveChannelScreen(liveID: controller.id!),
               if (controller.isStartStream.value)
                 _StartLive(
-                  onEnd: controller.endStartStream,
+                  onEnd: () {
+                    controller.endStartStream();
+                  },
                 ),
             ],
           );

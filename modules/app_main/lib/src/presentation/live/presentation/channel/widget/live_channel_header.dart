@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imagewidget/imagewidget.dart';
 
+import 'leave_live_confirm.dart';
+
 class LiveChannelHeader extends StatelessWidget {
   const LiveChannelHeader({super.key});
 
@@ -124,9 +126,10 @@ class LiveChannelHeader extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: (){
+            onTap: () {
               context.showBottomSheetLive(controller);
             },
+            behavior: HitTestBehavior.opaque,
             child: Row(
               children: [
                 Container(
@@ -155,7 +158,20 @@ class LiveChannelHeader extends StatelessWidget {
                     ],
                   ),
                 ),
-                const CloseButton(color: Colors.white),
+                CloseButton(
+                  color: Colors.white,
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => LeaveLiveConfirm(
+                        onRemoved: () {
+                          controller.leaveLive();
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),
