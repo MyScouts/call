@@ -78,6 +78,7 @@ class ImageConstants {
   static String imgWithDraw = ImageApp.imgWithDraw.path;
   static String imgChargeDiamond = ImageApp.imgChargeDiamond.path;
   static String imgFindAgency = ImageApp.imgFindAgency.path;
+  static String imgTransactionEmpty = ImageApp.imgTransactionEmpty.path;
 }
 
 enum ImageApp {
@@ -110,7 +111,7 @@ enum ImageApp {
   cmBg('assets/images/cm_bg.png'),
   perBg('assets/images/per_bg.png'),
   ecomBg('assets/images/ecom_bg.png'),
-  live('assets/images/live.png'),
+  live('assets/images/live_tab.png'),
   emptyDataList('assets/images/empty_data_list.png'),
   communityBanner('assets/images/community_banner.png'),
   communityXayDung('assets/images/xaydung.jpg'),
@@ -157,7 +158,8 @@ enum ImageApp {
   imgWithDraw('assets/images/imgWithDraw.png'),
   imgFindAgency('assets/images/imgFindAgency.png'),
   walletTotalDiamond('assets/images/wallet_total_diamond.jpg'),
-  imgChargeDiamond('assets/images/imgChargeDiamond.png');
+  imgChargeDiamond('assets/images/imgChargeDiamond.png'),
+  imgTransactionEmpty('assets/images/imgTransactionEmpty.png');
 
   const ImageApp(this.path);
 

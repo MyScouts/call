@@ -1,13 +1,13 @@
-import 'package:dio/dio.dart';
+import 'package:app_core/app_core.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:wallet/core/configuratons/configurations.dart';
+import 'package:wallet/data/datasources/models/response/transactions_response.dart';
+import 'package:wallet/data/datasources/models/response/wallet_info_response.dart';
 
-import '../../../../wallet.dart';
-import '../../../core/configuratons/configurations.dart';
 import '../../../domain/entities/wallet/vnd_wallet_info/vnd_wallet_info.dart';
-import '../../../domain/usecases/wallet_usecase.dart';
+import '../../../domain/repository/wallet_repository.dart';
 import '../../wallet_constant.dart';
 
 part 'wallet_bloc.freezed.dart';
@@ -18,62 +18,42 @@ part 'wallet_state.dart';
 
 @singleton
 class WalletBloc extends Bloc<WalletEvent, WalletState> {
-  final WalletUseCase _walletUseCase;
+  final WalletRepository _walletRepository;
   late VndWalletInfo vndWalletInfo = const VndWalletInfo();
 
-  WalletBloc(this._walletUseCase) : super(const _Initial()) {
-    on<_ReloadVndWalletInfo>((event, emit) {
-      emit(const WalletState.reloadVndWalletInfoSuccess());
-    });
-    on<_ReloadDiamondWalletInfo>((event, emit) {
-      emit(const WalletState.reloadDiamondWalletInfoSuccess());
-    });
-    on<_GetVndWalletInfoEvent>((event, emit) async {
+  WalletBloc(this._walletRepository) : super(const _Initial()) {
+    on<_GetWalletInfoEvent>((event, emit) async {
       try {
-        emit(const _VndWalletInfoLoading());
-        vndWalletInfo = await _walletUseCase.getVndWalletInfo();
-        WalletInjectedData.setVndWalletInfo = vndWalletInfo;
-        emit(_VndWalletInfoLoaded(vndWalletInfo));
-      } on DioError catch (e) {
-        const errorMessage = 'Đã xảy ra lỗi';
-        final String code = (e.response?.data?['code'] ?? '') as String;
-        if (code.contains('NOT_JA')) {
-          emit(const _NeedToRegisterJA(walletType: WalletType.coinVnd));
-          return;
+        emit(const _GetWalletInfoLoading());
+        final wallet = await _walletRepository.getWalletInfo();
+        if (wallet != null) {
+          WalletInjectedData.setUserWallet = wallet;
         }
+        emit(_GetWalletInfoSuccess(wallet: wallet));
+      } on DioException catch (e) {
+        const errorMessage = 'Đã xảy ra lỗi';
+        emit(const _Error(errorMessage));
+      } catch (e) {
+        debugPrint(e.toString());
+        const errorMessage = 'Đã xảy ra lỗi';
         emit(const _Error(errorMessage));
       }
     });
-    on<_GetDiamondWalletInfo>((event, emit) async {
+
+    on<_GetWalletTransactionListEvent>((event, emit) async {
       try {
-        emit(const _GetDiamondWalletInfoLoading());
-        final diamondWalletInfo = await _walletUseCase.getDiamondWalletInfo();
-        WalletInjectedData.setDiamondWalletInfo = diamondWalletInfo;
-        emit(const _GetDiamondWalletInfoLoaded());
-      } on DioError catch (e) {
+        emit(const _GetWalletTransactionListLoading());
+        final transactions = await _walletRepository.getWalletTransactionList(
+          walletType: event.walletType,
+        );
+        emit(_GetWalletTransactionListSuccess(transactions: transactions));
+      } on DioException catch (e) {
         const errorMessage = 'Đã xảy ra lỗi';
-        final String code = (e.response?.data?['code'] ?? '') as String;
-        if (code.contains('NOT_JA')) {
-          emit(const _NeedToRegisterJA(walletType: WalletType.diamond));
-          return;
-        }
-        emit(const _Error(errorMessage));
-      }
-    });
-    on<_GetCoinWalletInfo>((event, emit) async {
-      try {
-        emit(const _GetCoinWalletInfoLoading());
-        final coinWalletInfo = await _walletUseCase.getCoinWalletInfo();
-        WalletInjectedData.setCoinWalletInfo = coinWalletInfo;
-        emit(const _GetCoinWalletInfoLoaded());
-      } on DioError catch (e) {
+        emit(const _GetWalletTransactionListFailed(errorMessage));
+      } catch (e) {
+        debugPrint(e.toString());
         const errorMessage = 'Đã xảy ra lỗi';
-        final String code = (e.response?.data?['code'] ?? '') as String;
-        if (code.contains('NOT_JA')) {
-          emit(const _NeedToRegisterJA(walletType: WalletType.coin));
-          return;
-        }
-        emit(const _Error(errorMessage));
+        emit(const _GetWalletTransactionListFailed(errorMessage));
       }
     });
   }

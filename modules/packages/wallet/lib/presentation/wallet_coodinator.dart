@@ -8,6 +8,7 @@ import 'shared/model/bank_account_and_bloc_params.dart';
 import 'wallet_constant.dart';
 import 'wallet_diamond/bloc/wallet_diamond_bloc.dart';
 import 'wallet_screen.dart';
+import 'wallet_transaction_history_screen.dart';
 import 'wallet_vnd/bank_account/bloc/bank_account_bloc.dart';
 import 'wallet_vnd/bank_account/screens/add_bank_account_screen.dart';
 import 'wallet_vnd/bank_account/screens/bank_account_details_screen.dart';
@@ -15,11 +16,8 @@ import 'wallet_vnd/bank_account/screens/bank_account_veryfy_otp_screen.dart';
 import 'wallet_vnd/bank_account/screens/bank_accounts_screen.dart';
 import 'wallet_vnd/dialog/choose_bank_account_dialog.dart';
 import 'wallet_vnd/dialog/delete_bank_account_dialog.dart';
-import 'wallet_vnd/dialog/register_ja_dialog.dart';
 import 'wallet_vnd/dialog/succes_dialog.dart';
 import 'wallet_vnd/dialog/warning_dialog.dart';
-import 'wallet_vnd/transaction_history/transaction_history.dart';
-import 'wallet_vnd/transaction_history_detail/transaction_history_detail.dart';
 import 'wallet_vnd/withdraw/screens/confirm_withdraw_transaction_screen.dart';
 import 'wallet_vnd/withdraw/screens/create_withdraw_order_screen.dart';
 
@@ -89,12 +87,6 @@ extension WalletCoordinator on BuildContext {
     );
   }
 
-  Future<T?> transactionHistory<T>(TransactionHistoryVendor vendor) =>
-      Navigator.of(this).pushNamed(
-        TransactionHistoryScreen.routeName,
-        arguments: vendor,
-      );
-
   Future<T?> createWithdrawOrder<T>(
       {required BankAccountParams bankAccountParams}) {
     return Navigator.of(this).pushNamed<T>(
@@ -110,12 +102,6 @@ extension WalletCoordinator on BuildContext {
       arguments: withdrawParams,
     );
   }
-
-  Future<T?> transactionHistoryDetail<T>(int id) =>
-      Navigator.of(this).pushNamed(
-        TransactionHistoryDetailScreen.routeName,
-        arguments: id,
-      );
 
   Future<void> showWarningDialog() async {
     await showDialog(
@@ -137,20 +123,20 @@ extension WalletCoordinator on BuildContext {
     );
   }
 
-  Future<void> showRegisterJaDialog(
-      {required WalletType walletType,
-      bool isPipLive = false,
-      String? content}) async {
-    await showDialog(
-      context: this,
-      barrierDismissible: false,
-      builder: (_) => RegisterJADialog(
-        walletType: walletType,
-        isPipLive: isPipLive,
-        content: content,
-      ),
-    );
-  }
+  // Future<void> showRegisterJaDialog(
+  //     {required WalletType walletType,
+  //     bool isPipLive = false,
+  //     String? content}) async {
+  //   await showDialog(
+  //     context: this,
+  //     barrierDismissible: false,
+  //     builder: (_) => RegisterJADialog(
+  //       walletType: walletType,
+  //       isPipLive: isPipLive,
+  //       content: content,
+  //     ),
+  //   );
+  // }
 
   Future<void> showSuccessDialog() async {
     await showDialog(
@@ -168,6 +154,13 @@ extension WalletCoordinator on BuildContext {
         value: bloc,
         child: DeleteBankAccountDialog(bankAccountId: id),
       ),
+    );
+  }
+
+  Future<T?> startTransactionHistory<T>({required WalletType walletType}) {
+    return Navigator.of(this).pushNamed(
+      WalletTransactionHistoryScreen.routeName,
+      arguments: walletType,
     );
   }
 }

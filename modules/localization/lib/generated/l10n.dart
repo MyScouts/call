@@ -70,23 +70,6 @@ class S {
     );
   }
 
-  /// `{date} | {time} `
-  String formatDateDDmmYYYYhhMM(DateTime date, DateTime time) {
-    final DateFormat dateDateFormat = DateFormat.yMd(Intl.getCurrentLocale());
-    final String dateString = dateDateFormat.format(date);
-
-    final DateFormat timeDateFormat =
-        DateFormat('hh:mm a', Intl.getCurrentLocale());
-    final String timeString = timeDateFormat.format(time);
-
-    return Intl.message(
-      '$dateString | $timeString ',
-      name: 'formatDateDDmmYYYYhhMM',
-      desc: 'format datetime',
-      args: [dateString, timeString],
-    );
-  }
-
   /// `Resend OTP success.`
   String get messages_resend_otp_success {
     return Intl.message(
@@ -466,6 +449,47 @@ class S {
       args: [],
     );
   }
+
+  /// `Account profile`
+  String get account_profile {
+    return Intl.message(
+      'Account profile',
+      name: 'account_profile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Live`
+  String get live {
+    return Intl.message(
+      'Live',
+      name: 'live',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Đăng ký V-Shop`
+  String get pdoneAction_registerVShop {
+    return Intl.message(
+      'Đăng ký V-Shop',
+      name: 'pdoneAction_registerVShop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{date} | {time} `
+  String formatDateDDmmYYYYhhMM(Object date, Object time) {
+    return Intl.message(
+      '$date | $time ',
+      name: 'formatDateDDmmYYYYhhMM',
+      desc: '',
+      args: [date, time],
+    );
+  }
+
   /// `Nhóm cộng đồng`
   String get community_group {
     return Intl.message(
@@ -536,11 +560,91 @@ class S {
     );
   }
 
-  /// `Đăng ký V-Shop`
-  String get pdoneAction_registerVShop {
+  /// `Cộng đồng`
+  String get community {
     return Intl.message(
-      'Đăng ký V-Shop',
-      name: 'pdoneAction_registerVShop',
+      'Cộng đồng',
+      name: 'community',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `TV Live`
+  String get tv_live {
+    return Intl.message(
+      'TV Live',
+      name: 'tv_live',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `MarShop`
+  String get marShop {
+    return Intl.message(
+      'MarShop',
+      name: 'marShop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cổ vũ cho chủ phòng để tăng exp`
+  String get gift_hint {
+    return Intl.message(
+      'Cổ vũ cho chủ phòng để tăng exp',
+      name: 'gift_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gift`
+  String get gift {
+    return Intl.message(
+      'Gift',
+      name: 'gift',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Vote`
+  String get vote {
+    return Intl.message(
+      'Vote',
+      name: 'vote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phổ biến`
+  String get popular {
+    return Intl.message(
+      'Phổ biến',
+      name: 'popular',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mới nhất`
+  String get latest {
+    return Intl.message(
+      'Mới nhất',
+      name: 'latest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `VIP`
+  String get vip {
+    return Intl.message(
+      'VIP',
+      name: 'vip',
       desc: '',
       args: [],
     );

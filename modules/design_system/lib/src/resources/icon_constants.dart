@@ -38,6 +38,8 @@ class IconAppConstants {
   static String icDoc = IconApp.icDoc.path;
   static String icFemale = IconApp.icFemale.path;
   static String icMale = IconApp.icMale.path;
+  static String icMaleSVG = IconApp.icMaleSVG.path;
+  static String icFeMaleSVG = IconApp.icFeMaleSVG.path;
   static String icUserGroup = IconApp.icUserGroup.path;
   static String icUserAddSolid = IconApp.icUserAddSolid.path;
   static String icUserAddOutline = IconApp.icUserAddOutline.path;
@@ -97,7 +99,36 @@ class IconAppConstants {
   static String icLiveArea = IconApp.icLiveArea.path;
   static String icWalletCoupon = IconApp.icWalletCoupon.path;
   static String icSettingApp = IconApp.icSettingApp.path;
+  static String icRadar = IconApp.icRadar.path;
+  static String icMonitor = IconApp.icMonitor.path;
+  static String icBag2 = IconApp.icBag2.path;
+  static String icUser3 = IconApp.icUser3.path;
+  static String icCoin = IconApp.icCoin.path;
+  static String icChevronRight = IconApp.icChevronRight.path;
+  static String icCreateLive = IconApp.icCreateLive.path;
+  static String icArrowDown = IconApp.icArrowDown.path;
+  static String icUsers = IconApp.icUsers.path;
+  static String icGlobal = IconApp.icGlobal.path;
+  static String icUsersGroup = IconApp.icUsersGroup.path;
+  static String icLiveUser = IconApp.icLiveUser.path;
+  static String icLiveUser3 = IconApp.icLiveUser3.path;
+
+  /// wallet
+  static String icFilter = IconApp.icFilter.path;
   static String icVersion = IconApp.icVersion.path;
+  static String icDiamond = IconApp.icDiamond.path;
+  static String icLiveMember = IconApp.icLiveMember.path;
+  static String icLiveMarshop = IconApp.icLiveMarshop.path;
+  static String icLiveComment = IconApp.icLiveComment.path;
+  static String icLiveShare = IconApp.icLiveShare.path;
+  static String icLiveSetting = IconApp.icLiveSetting.path;
+  static String icLiveQr = IconApp.icLiveQr.path;
+  static String icLiveRose = IconApp.icLiveRose.path;
+  static String icLiveGift = IconApp.icLiveGift.path;
+  static String icLiveHeart = IconApp.icLiveHeart.path;
+  static String icTop1Awards = IconApp.icTop1Awards.path;
+  static String icTop2Awards = IconApp.icTop2Awards.path;
+  static String icTop3Awards = IconApp.icTop3Awards.path;
 }
 
 enum IconApp {
@@ -121,6 +152,8 @@ enum IconApp {
   icUserGroup('assets/icons/ic_user_group.svg'),
   icFemale('assets/icons/ic_female.png'),
   icMale('assets/icons/ic_male.png'),
+  icMaleSVG('assets/icons/ic_male.svg'),
+  icFeMaleSVG('assets/icons/ic_female.svg'),
   icWheelOfFortune('assets/icons/wheel_of_fortune.png'),
   icChanel('assets/icons/ic_chanel.png'),
   icBToB('assets/icons/ic_b_to_b.png'),
@@ -200,7 +233,36 @@ enum IconApp {
   icSettingApp('assets/icons/ic_setting_app.svg'),
   icWalletCoupon('assets/icons/wallet_agency_coupon.svg'),
   appSetting('assets/icons/app_setting.png'),
+  icRadar('assets/icons/ic_radar.svg'),
+  icMonitor('assets/icons/ic_monitor.svg'),
+  icBag2('assets/icons/ic_bag-2.svg'),
+  icUser3('assets/icons/user3.svg'),
+  icCoin('assets/icons/ic_coin.png'),
+  icChevronRight('assets/icons/ic_chevron-right.svg'),
+  icCreateLive('assets/icons/ic_create_live.png'),
+  icArrowDown('assets/icons/ic_arrow_down.svg'),
+  icUsers('assets/icons/ic_users.svg'),
+  icGlobal('assets/icons/ic_global.svg'),
+  icUsersGroup('assets/icons/ic_user_group.svg'),
+  icLiveUser('assets/icons/ic_live_user.svg'),
+  icLiveUser3('assets/icons/ic_user_3.svg'),
+
+  /// wallet
+  icFilter('assets/icons/icFilter.svg'),
   icVersion('assets/icons/ic_version.svg'),
+  icDiamond('assets/icons/diamond.png'),
+  icLiveMember('assets/icons/live_member.svg'),
+  icLiveMarshop('assets/icons/live_marshop.svg'),
+  icLiveComment('assets/icons/live_comment.svg'),
+  icLiveShare('assets/icons/live_share.svg'),
+  icLiveSetting('assets/icons/live_setting.svg'),
+  icLiveQr('assets/icons/live_qr.svg'),
+  icLiveRose('assets/icons/live_rose.png'),
+  icLiveGift('assets/icons/live_gift.png'),
+  icLiveHeart('assets/icons/live_heart.png'),
+  icTop1Awards('assets/icons/ic_top_1_awards.png'),
+  icTop2Awards('assets/icons/ic_top_2_awards.png'),
+  icTop3Awards('assets/icons/ic_top_3_awards.png'),
   icLeaveTeam('assets/icons/ic_leave_team.svg');
 
   const IconApp(this.path);

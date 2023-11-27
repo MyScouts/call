@@ -12,8 +12,6 @@ import '../models/models.dart';
 part 'vnd_wallet_api.g.dart';
 
 class VndWalletApiConstants {
-  static const transactionList = 'api/vnd-wallet/transaction/list';
-  static const transactionDetail = '/api/vnd-wallet/transaction/{id}';
   static const vndWalletInfo = '/api/vnd-wallet/info';
   static const getAllBanksInfo = '/api/bank-account/banks-info';
   static const getBankAccounts = '/api/bank-account';
@@ -32,12 +30,6 @@ abstract class VndWalletApi {
   @factoryMethod
   factory VndWalletApi(WalletProvider provider) => _VndWalletApi(provider.dio);
 
-  @POST(VndWalletApiConstants.transactionList)
-  Future<ApiResponse<TransactionResponse<TransactionHistory>>>
-      getTransactionList({
-    @Body() required Map<String, dynamic> body,
-  });
-
   @GET(VndWalletApiConstants.vndWalletInfo)
   Future<ApiResponse<VndWalletInfo>> getVndWalletInfo();
 
@@ -53,11 +45,6 @@ abstract class VndWalletApi {
   @POST(VndWalletApiConstants.uploadImage)
   @MultiPart()
   Future<ApiResponse<dynamic>> uploadImage(@Part(name: 'file') File file);
-
-  @GET(VndWalletApiConstants.transactionDetail)
-  Future<ApiResponse<TransactionHistoryDetail>> getTransactionDetail({
-    @Path('id') required int id,
-  });
 
   @POST(VndWalletApiConstants.addBankAccount)
   Future<ApiResponse<BankAccount>> addBankAccount({
