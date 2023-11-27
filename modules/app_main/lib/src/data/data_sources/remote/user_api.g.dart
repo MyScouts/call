@@ -141,6 +141,33 @@ class _UserApi implements UserApi {
   }
 
   @override
+  Future<GetUserFollowDetailResponse> getFollowUser(int userId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GetUserFollowDetailResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/v1/following/user/${userId}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = GetUserFollowDetailResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<ApiResponse<FollowUserResponse>> followUser(
       {required FollowUserPayload body}) async {
     const _extra = <String, dynamic>{};
@@ -156,7 +183,7 @@ class _UserApi implements UserApi {
     )
             .compose(
               _dio.options,
-              'api/users/follow',
+              'api/v1/following/follow',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -186,7 +213,7 @@ class _UserApi implements UserApi {
     )
         .compose(
           _dio.options,
-          'api/users/unfollow',
+          'api/v1/following/unfollow',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -196,6 +223,33 @@ class _UserApi implements UserApi {
           baseUrl,
         ))));
     final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<ApprovedRequestResponse> approvedRequest() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApprovedRequestResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/v1/following/approval-requests',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApprovedRequestResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -364,12 +418,12 @@ class _UserApi implements UserApi {
 
   @override
   Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(
-      UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload) async {
+      Map<String, dynamic> data) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(updateNonePDoneProfilePayload.toJson());
+    _data.addAll(data);
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<UpdateNonePDoneProfileReponse>(Options(
       method: 'PATCH',
@@ -436,6 +490,144 @@ class _UserApi implements UserApi {
         .compose(
           _dio.options,
           'api/v1/team/${teamID}/invite',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<UserVerifyResponse> updateEmail(Map<String, dynamic> json) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(json);
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<UserVerifyResponse>(Options(
+      method: 'PATCH',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/v1/user/email',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = UserVerifyResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<Object> genOtpEmail(Map<String, dynamic> json) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(json);
+    final _result = await _dio.fetch(_setStreamType<Object>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'api/v1/user/add-email-otp',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<dynamic> updateAvatar(Map<String, dynamic> json) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(json);
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+      method: 'PATCH',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'api/v1/user',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<dynamic> setConfig(
+    String key,
+    Map<String, dynamic> json,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(json);
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'api/v1/setting/personal/${key}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<dynamic> getConfig(String key) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'api/v1/setting/personal/${key}',
           queryParameters: queryParameters,
           data: _data,
         )

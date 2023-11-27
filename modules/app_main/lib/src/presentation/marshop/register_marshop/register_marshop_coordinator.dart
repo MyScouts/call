@@ -9,9 +9,10 @@ import '../register_customer/widget/verify_phone_otp_dialog_widget.dart';
 
 extension RegisterMarshopCoordinator on BuildContext {
   Future<T?> startDialogVerifyRegisterMarshop<T>({
-    int? marshopId,
+    String? marshopId,
     required String name,
     required int userId,
+    required String phone,
   }) {
     return showGeneralDialog<T>(
       context: this,
@@ -22,16 +23,19 @@ extension RegisterMarshopCoordinator on BuildContext {
           listener: (context, state) {},
           child: AutoHideKeyboard(
             child: DialogContainerWidget(
-              child: VerifyPhoneOTPDialogWidget(onVerify: (otpCode) {
-                context.read<MarshopCubit>().registerMarshop(
-                      userId,
-                      RegisterMarshopPayload(
-                        name: name,
-                        referralId: marshopId ?? 0,
-                        otp: otpCode,
-                      ),
-                    );
-              }),
+              child: VerifyPhoneOTPDialogWidget(
+                  phone: phone,
+                  onVerify: (otpCode) {
+                    context.read<MarshopCubit>().registerMarshop(
+                          userId,
+                          RegisterMarshopPayload(
+                            name: name,
+                            referralId:
+                                marshopId != null ? int.parse(marshopId) : null,
+                            otp: otpCode,
+                          ),
+                        );
+                  }),
             ),
           ),
         );

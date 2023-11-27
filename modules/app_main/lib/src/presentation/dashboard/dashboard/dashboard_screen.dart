@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 
+import 'package:app_core/app_core.dart';
 import 'package:app_main/app_main.dart';
+import 'package:app_main/src/blocs/app/app_cubit.dart';
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/usecases/dashboard_share_preferences_usecase.dart';
@@ -10,6 +12,7 @@ import 'package:app_main/src/presentation/call/call_1v1/managers/call_manager.da
 import 'package:app_main/src/presentation/call/call_1v1/managers/ios_call_manager.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_store_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_background_builder.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_base_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_community_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_ecommerce_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_personal_tab.dart';
@@ -32,11 +35,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class DashBoardInheritedData extends InheritedWidget {
   final PageController pageController;
-
+  final DashBoardController dashBoardController;
   const DashBoardInheritedData({
     super.key,
     required super.child,
     required this.pageController,
+    required this.dashBoardController,
   });
 
   @override
@@ -62,10 +66,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   late int _page = widget.page ?? (controller.mainPage ?? 0);
 
-  bool _showEditMode = false;
-
   bool _showAppStore = false;
   bool get authenticate => isAuthenticate.value;
+
+  late final DashBoardController dashBoardController;
 
   Widget _buildDot(BuildContext context, int index) {
     final page = _page;
@@ -80,17 +84,17 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     );
   }
 
-  void enableEditMode() {
-    setState(() {
-      _showEditMode = true;
-    });
-  }
+  // void enableEditMode() {
+  //   setState(() {
+  //     _showEditMode = true;
+  //   });
+  // }
 
-  void disableEditMode() {
-    setState(() {
-      _showEditMode = false;
-    });
-  }
+  // void disableEditMode() {
+  //   setState(() {
+  //     _showEditMode = false;
+  //   });
+  // }
 
   AndroidCallManager? _androidCallManager = AndroidCallManager.shared;
   IOSCallManager? _iOSCallManager = IOSCallManager.shared;
@@ -98,6 +102,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   void initState() {
     super.initState();
+    dashBoardController = DashBoardController();
     NotificationCenter.subscribe(
       channel: showAppStore,
       observer: this,
@@ -128,7 +133,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           handleDiddisconnectEvent();
           break;
         case StringeeClientEvents.didFailWithError:
-          handleDidFailWithErrorEvent(map['body']['code'], map['body']['message']);
+          handleDidFailWithErrorEvent(
+              map['body']['code'], map['body']['message']);
           break;
         case StringeeClientEvents.requestAccessToken:
           handleRequestAccessTokenEvent();
@@ -173,18 +179,22 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     if (androidInfo.version.sdkInt >= 33) {
       // Register permission for show notification in android 13
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+          FlutterLocalNotificationsPlugin();
       flutterLocalNotificationsPlugin
-          .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()!
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()!
           .requestNotificationsPermission();
     }
   }
 
   Future<void> registerPushWithStringeeServer() async {
     if (isAndroid) {
-      Stream<String> tokenRefreshStream = FirebaseMessaging.instance.onTokenRefresh;
+      Stream<String> tokenRefreshStream =
+          FirebaseMessaging.instance.onTokenRefresh;
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      bool? registered = (prefs.getBool("register") == null) ? false : prefs.getBool("register");
+      bool? registered = (prefs.getBool("register") == null)
+          ? false
+          : prefs.getBool("register");
 
       ///kiểm tra đã register push chưa
       if (registered != null && !registered) {
@@ -201,7 +211,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       ///Nhận token mới từ firebase
       tokenRefreshStream.listen((token) {
         ///Xóa token cũ
-        CallManager.shared.client.unregisterPush(prefs.getString("token")!).then((value) {
+        CallManager.shared.client
+            .unregisterPush(prefs.getString("token")!)
+            .then((value) {
           if (value['status']) {
             ///Register với token mới
             prefs.setBool("register", false);
@@ -254,186 +266,188 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   void dispose() {
     super.dispose();
     NotificationCenter.unsubscribe(channel: showAppStore, observer: this);
+    dashBoardController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return DashBoardInheritedData(
-      pageController: _pageController,
-      child: Scaffold(
-        body: Stack(
-          fit: StackFit.expand,
-          children: [
-            DashBoardBackgroundBuilder(
-              key: const Key('bg_image'),
-              page: _page,
-              builder: (image) => ImageWidget(image, fit: BoxFit.fill),
-            ),
-            SafeArea(
-              bottom: false,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: StatusBarWidget(
-                      enableEditMode: _showEditMode,
-                      openAppStore: () {
-                        setState(() {
-                          _showAppStore = true;
-                        });
-                      },
-                      openNotification: () {
-                        if (!authenticate) {
-                          context.requiredLogin();
-                          return;
-                        }
-                        notificationKey.currentState?.forward();
-                      },
-                      onCanceled: () {
-                        setState(() {
-                          _showEditMode = false;
-                        });
-                        NotificationCenter.post(channel: cancelEditMode);
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: PageView(
-                      controller: _pageController,
-                      children: [
-                        DashBoardCommunityTab(
-                          enableEditMode: enableEditMode,
-                          disableEditMode: disableEditMode,
-                        ),
-                        DashBoardPersonalTab(
-                          enableEditMode: enableEditMode,
-                          disableEditMode: disableEditMode,
-                        ),
-                        DashBoardEcommerceTab(
-                          enableEditMode: enableEditMode,
-                          disableEditMode: disableEditMode,
-                        ),
-                      ],
-                      onPageChanged: (page) {
-                        setState(() {
-                          _page = page;
-                        });
-                      },
-                    ),
-                  ),
-                  Builder(
-                    builder: (ctx) => Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        3,
-                        (index) => _buildDot(ctx, index),
+    return BlocListener<AppCubit, AppState>(
+      listener: (context, state) {
+        if (state is ForceLogoutSuccess) {
+          context.startLoginUtil();
+        }
+      },
+      child: DashBoardInheritedData(
+        dashBoardController: dashBoardController,
+        pageController: _pageController,
+        child: Scaffold(
+          body: Stack(
+            fit: StackFit.expand,
+            children: [
+              DashBoardBackgroundBuilder(
+                page: _page,
+                builder: (image) => ImageWidget(image, fit: BoxFit.fill),
+              ),
+              SafeArea(
+                bottom: false,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: ListenableBuilder(
+                        listenable: dashBoardController,
+                        builder: (_, __) {
+                          return StatusBarWidget(
+                            enableEditMode: dashBoardController.enableEditMode,
+                            openAppStore: () {
+                              setState(() {
+                                _showAppStore = true;
+                              });
+                            },
+                            openNotification: () {
+                              if (!authenticate) {
+                                context.requiredLogin();
+                                return;
+                              }
+                              notificationKey.currentState?.forward();
+                            },
+                            onCanceled: () {
+                              dashBoardController.enableEditMode = false;
+                            },
+                          );
+                        },
                       ),
                     ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: DockWidget(),
-                  ),
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: ExpandableFab(
-                  onClick: authenticate ? null : () => context.requiredLogin(),
-                  fabMargin: 8,
-                  children: [
-                    ActionButton(
-                        icon: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: const Color(0xffBFE0FF),
-                              width: 3,
-                            ),
-                            shape: BoxShape.circle,
-                            gradient: const LinearGradient(
-                              colors: [
-                                Color(0xff66B2FF),
-                                Color(0xff0080FF),
-                              ],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                            ),
-                          ),
-                          padding: const EdgeInsets.all(15),
-                          child: ImageWidget(IconAppConstants.icEdit2),
+                    Expanded(
+                      child: PageView(
+                        controller: _pageController,
+                        children: const [
+                          DashBoardCommunityTab(),
+                          DashBoardPersonalTab(),
+                          DashBoardEcommerceTab(),
+                        ],
+                        onPageChanged: (page) {
+                          setState(() {
+                            _page = page;
+                          });
+                        },
+                      ),
+                    ),
+                    Builder(
+                      builder: (ctx) => Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          3,
+                          (index) => _buildDot(ctx, index),
                         ),
-                        onPressed: () {
-                          print("===M1");
-                        }),
-                    ActionButton(
-                        icon: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: const Color(0xffBFE0FF),
-                              width: 3,
-                            ),
-                            shape: BoxShape.circle,
-                            gradient: const LinearGradient(
-                              colors: [
-                                Color(0xff66B2FF),
-                                Color(0xff0080FF),
-                              ],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                            ),
-                          ),
-                          padding: const EdgeInsets.all(15),
-                          child: ImageWidget(IconAppConstants.icVideoOc),
-                        ),
-                        onPressed: () {
-                          print("===M1");
-                        }),
-                    ActionButton(
-                        icon: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: const Color(0xffBFE0FF),
-                              width: 3,
-                            ),
-                            shape: BoxShape.circle,
-                            gradient: const LinearGradient(
-                              colors: [
-                                Color(0xff66B2FF),
-                                Color(0xff0080FF),
-                              ],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                            ),
-                          ),
-                          padding: const EdgeInsets.all(15),
-                          child: ImageWidget(IconAppConstants.icVideo),
-                        ),
-                        onPressed: () {
-                          print("===M1");
-                        }),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: DockWidget(),
+                    ),
                   ],
                 ),
               ),
-            ),
-            NotificationScreen(
-              key: notificationKey,
-              onClose: () {
-                notificationKey.currentState?.revert();
-              },
-            ),
-            if (_showAppStore)
-              AppStoreScreen(
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: ExpandableFab(
+                    onClick:
+                        authenticate ? null : () => context.requiredLogin(),
+                    fabMargin: 8,
+                    children: [
+                      ActionButton(
+                          icon: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: const Color(0xffBFE0FF),
+                                width: 3,
+                              ),
+                              shape: BoxShape.circle,
+                              gradient: const LinearGradient(
+                                colors: [
+                                  Color(0xff66B2FF),
+                                  Color(0xff0080FF),
+                                ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ),
+                            ),
+                            padding: const EdgeInsets.all(15),
+                            child: ImageWidget(IconAppConstants.icEdit2),
+                          ),
+                          onPressed: () {
+                            print("===M1");
+                          }),
+                      ActionButton(
+                          icon: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: const Color(0xffBFE0FF),
+                                width: 3,
+                              ),
+                              shape: BoxShape.circle,
+                              gradient: const LinearGradient(
+                                colors: [
+                                  Color(0xff66B2FF),
+                                  Color(0xff0080FF),
+                                ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ),
+                            ),
+                            padding: const EdgeInsets.all(15),
+                            child: ImageWidget(IconAppConstants.icVideoOc),
+                          ),
+                          onPressed: () {
+                            print("===M1");
+                          }),
+                      ActionButton(
+                          icon: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: const Color(0xffBFE0FF),
+                                width: 3,
+                              ),
+                              shape: BoxShape.circle,
+                              gradient: const LinearGradient(
+                                colors: [
+                                  Color(0xff66B2FF),
+                                  Color(0xff0080FF),
+                                ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ),
+                            ),
+                            padding: const EdgeInsets.all(15),
+                            child: ImageWidget(IconAppConstants.icVideo),
+                          ),
+                          onPressed: () {
+                            print("===M1");
+                          }),
+                    ],
+                  ),
+                ),
+              ),
+              NotificationScreen(
+                key: notificationKey,
                 onClose: () {
-                  setState(() {
-                    _showAppStore = false;
-                  });
+                  notificationKey.currentState?.revert();
                 },
               ),
-          ],
+              if (_showAppStore)
+                AppStoreScreen(
+                  onClose: () {
+                    setState(() {
+                      _showAppStore = false;
+                    });
+                  },
+                ),
+            ],
+          ),
         ),
       ),
     );

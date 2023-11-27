@@ -4,7 +4,6 @@ import 'package:app_main/src/data/models/payloads/auth/authentication_payload.da
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
 import 'package:app_main/src/data/repositories/user_repository.dart';
 import 'package:app_main/src/domain/entities/change_password_payload.dart';
-import 'package:app_main/src/domain/usecases/notification_usecase.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/presentation/call/call_1v1/managers/call_manager.dart';
 import 'package:flutter/foundation.dart';
@@ -20,14 +19,12 @@ class AuthenticationUsecase {
   final UserRepository _userRepository;
   final UserSharePreferencesUsecase _userSharePreferencesUsecase;
   final NotificationService _notificationService;
-  final NotificationUsecase _notificationUsecase;
 
   AuthenticationUsecase(
     this._authRepository,
     this._userSharePreferencesUsecase,
     this._userRepository,
     this._notificationService,
-    this._notificationUsecase,
   );
 
   Future<void> signOut([bool forceLogout = false]) async {
@@ -137,13 +134,6 @@ class AuthenticationUsecase {
     debugPrint("fcmToken: $fcmToken");
     if (fcmToken?.isNotEmpty ?? false) {
       await _userSharePreferencesUsecase.saveFCMToken(fcmToken!);
-      try {
-        await _notificationUsecase.register(fcmToken);
-      } catch (e) {
-        if (kDebugMode) {
-          // throw Exception(e.toString());
-        }
-      }
     }
   }
 }

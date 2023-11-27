@@ -354,7 +354,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                 ),
               ),
               Text(
-                _informationNonePdoneProfile.identityNumber,
+                _informationNonePdoneProfile.identityNumber ?? '',
                 style: const TextStyle(
                   color: AppColors.black,
                   fontWeight: FontWeight.normal,

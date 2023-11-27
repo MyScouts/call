@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:localization/localization.dart';
 
 import '../../ui.dart';
 
@@ -113,7 +112,7 @@ class _InputDateTimeWidgetState extends State<InputDateTimeWidget> {
           child: IgnorePointer(
             ignoring: true,
             child: TextInputLayout(
-              contentPadding: const EdgeInsets.all(14),
+              contentPadding: const EdgeInsets.all(13),
               controller: _controller,
               validator: widget.validator,
               paddingError: EdgeInsets.zero,
@@ -133,12 +132,15 @@ class _InputDateTimeWidgetState extends State<InputDateTimeWidget> {
         if (widget.displayValueIsLabel == false)
           Align(
             alignment: Alignment.centerRight,
-            child: Container(
-              margin: const EdgeInsets.only(top: 10, right: 10),
-              child: const Icon(
-                Icons.calendar_month,
-                color: AppColors.grey10,
-                size: 20,
+            child: GestureDetector(
+              onTap: _onPickingDate,
+              child: Container(
+                margin: const EdgeInsets.only(top: 13, right: 10),
+                child: const Icon(
+                  Icons.calendar_month,
+                  color: AppColors.grey10,
+                  size: 20,
+                ),
               ),
             ),
           )
@@ -149,6 +151,7 @@ class _InputDateTimeWidgetState extends State<InputDateTimeWidget> {
 
 extension _InputDateTimeWidgetStateExt on _InputDateTimeWidgetState {
   DateTime get minimumDate => widget.min ?? DateTime.utc(1900);
+
   DateTime get maximumDate => widget.max ?? DateTime.now();
 
   DateTime get _initialDate {

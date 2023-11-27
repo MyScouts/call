@@ -32,6 +32,10 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: BlocConsumer<AppCubit, AppState>(
         listener: (context, state) {
+          if (state is ForceLogoutSuccess) {
+            context.startLoginUtil();
+          }
+
           if (state is UpgradeAppVersion) {
             context.showForceUpgradeAppDialog();
           }
@@ -52,7 +56,8 @@ class _SplashScreenState extends State<SplashScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ImageWidget(ImageConstants.bgAppLogo),
-                if (state is AppInitial) _buildLoading(),
+                if (state is AppInitial || state is LoadingAppVersion)
+                  _buildLoading(),
               ],
             ),
           );

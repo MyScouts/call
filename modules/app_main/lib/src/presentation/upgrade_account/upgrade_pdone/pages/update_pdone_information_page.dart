@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/extensions/string_extension.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:ui/ui.dart';
 
 import '../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
 import '../../../../domain/entities/update_account/update_pdone_birth_place_payload.dart';
+import '../../../../domain/entities/update_account/update_place_information_payload.dart';
 import '../../../../domain/entities/update_account/update_profile_payload.dart';
 import '../../../shared/extensions/validation_extension.dart';
 import '../../upgrade_account_constants.dart';
@@ -30,7 +32,9 @@ class UpdatePDoneInformationPage extends StatefulWidget {
     super.key,
     this.onNextPage,
   });
+
   final VoidCallback? onNextPage;
+
   @override
   State<UpdatePDoneInformationPage> createState() =>
       _UpdatePDoneInformationPageState();
@@ -158,7 +162,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
   }
 
   void _sendOTP() {
-    upgradePDoneBloc.add(UpdatePDoneSendOTPEvent());
+    upgradePDoneBloc.add(UpdatePDoneSendOTPEvent(identifyNumberCtrl.text));
   }
 
   void onUpdatePayload(UpdateProfilePayload val) {
@@ -191,11 +195,13 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
   }
 
   void _initTextFormField() {
-    if (((upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).dataEKyc
-            as Map<dynamic, dynamic>)
-        .isNotEmpty) {
-      final eKycData = (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess)
-          .dataEKyc['object'];
+    dynamic dataEKyc =
+        (upgradePDoneBloc.state as ExtractedEKycIdCardSuccess).dataEKyc;
+    if (dataEKyc is String && dataEKyc.isNotEmpty) {
+      dataEKyc = dataEKyc.toMap();
+    }
+    if (dataEKyc.isNotEmpty) {
+      final eKycData = dataEKyc['object'];
       identifyNumberCtrl.text = eKycData['id'] ?? '';
       final nameArr = eKycData['name'].toString().split(" ");
 
@@ -228,11 +234,11 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       supplyDate = eKycData['issue_date'].toString().parseDateTime();
       expiryDate = eKycData['valid_date'].toString().parseDateTime();
       if (DateTime.now().year - (birthDay?.year ?? 0) >= 18) {
-        pDoneAPICaller = PDoneAPICaller.adult;
-        // pDoneAPICaller = PDoneAPICaller.teenager;
-      } else {
-        pDoneAPICaller = PDoneAPICaller.teenager;
         // pDoneAPICaller = PDoneAPICaller.adult;
+        pDoneAPICaller = PDoneAPICaller.teenager;
+      } else {
+        // pDoneAPICaller = PDoneAPICaller.teenager;
+        pDoneAPICaller = PDoneAPICaller.adult;
       }
     } else {
       pDoneOptionMethod = PDoneOptionMethod.userBirthCer;

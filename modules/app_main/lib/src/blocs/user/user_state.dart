@@ -189,7 +189,7 @@ final class UpdateNonePDoneProfileFailed extends UserState {
 final class OnGetOnboarding extends UserState {}
 
 final class OnboardingSuccess extends UserState {
-  final OnboardingResponse onboarding;
+  final OnBoarding onboarding;
   OnboardingSuccess({required this.onboarding});
 }
 

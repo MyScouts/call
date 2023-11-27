@@ -4,6 +4,15 @@ class UpgradeAccountConstants {
   static const double horizontalScreen = 20.0; // second
 }
 
+
+class PDoneType {
+  static const int unknown = 0;
+  static const int child = 1;
+  static const int childEKyc = 2;
+  static const int teenager = 3;
+  static const int adult = 4;
+}
+
 enum KycStep {
   verifyOtp,
   updateInformation,
