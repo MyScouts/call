@@ -22,7 +22,7 @@ extension ThemeDataExt on ThemeData {
 
   ThemeDisplayMetric get themeDisplayMetric => const ThemeDisplayMetric();
 
-  String get fontFamily => 'SVN-Gilroy';
+  String get fontFamily => 'Inter';
 
   ThemeData getTheme(Brightness theme, {Map<String, dynamic>? themeJson}) {
     final dataThemeColor = theme.getThemeColor();
