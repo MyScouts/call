@@ -405,12 +405,12 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 9N584357TB;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
-				FLUTTER_BUILD_NAME = 2.0.0;
-				FLUTTER_BUILD_NUMBER = 7;
+				FLUTTER_BUILD_NAME = 2.1.0;
+				FLUTTER_BUILD_NUMBER = 3;
 				FLUTTER_TARGET = lib/main_dev.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = VDONE;
@@ -418,7 +418,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -631,6 +631,7 @@
 					"\"LinkPresentation\"",
 					"-weak_framework",
 					"\"UserNotifications\"",
+					"-ld64",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.vdone.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -758,12 +759,12 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 9N584357TB;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
-				FLUTTER_BUILD_NAME = 2.0.0;
-				FLUTTER_BUILD_NUMBER = 7;
+				FLUTTER_BUILD_NAME = 2.1.0;
+				FLUTTER_BUILD_NUMBER = 3;
 				FLUTTER_TARGET = lib/main_dev.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = VDONE;
@@ -771,7 +772,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -984,6 +985,7 @@
 					"\"LinkPresentation\"",
 					"-weak_framework",
 					"\"UserNotifications\"",
+					"-ld64",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.vdone.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1005,12 +1007,12 @@
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 9N584357TB;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
-				FLUTTER_BUILD_NAME = 2.0.0;
-				FLUTTER_BUILD_NUMBER = 7;
+				FLUTTER_BUILD_NAME = 2.1.0;
+				FLUTTER_BUILD_NUMBER = 3;
 				FLUTTER_TARGET = lib/main_dev.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = VDONE;
@@ -1018,7 +1020,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.1.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1232,6 +1234,7 @@
 					"\"LinkPresentation\"",
 					"-weak_framework",
 					"\"UserNotifications\"",
+					"-ld64",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.vdone.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";

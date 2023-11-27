@@ -69,7 +69,7 @@ abstract class UserApi {
   );
 
   @POST(UserApiConstants.followUser)
-  Future<ApiResponse<FollowUserResponse>> followUser({
+  Future<FollowUserResponse> followUser({
     @Body() required FollowUserPayload body,
   });
 
