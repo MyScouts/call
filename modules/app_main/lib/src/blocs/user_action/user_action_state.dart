@@ -17,7 +17,8 @@ final class ReportUserFail extends UserActionState {
 final class OnFollowUser extends UserActionState {}
 
 final class FollowUserSuccess extends UserActionState {
-  FollowUserSuccess();
+  final bool approvalRequired;
+  FollowUserSuccess({required this.approvalRequired});
 }
 
 final class FollowUserFail extends UserActionState {

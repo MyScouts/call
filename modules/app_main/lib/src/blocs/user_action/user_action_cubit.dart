@@ -41,8 +41,8 @@ class UserActionCubit extends Cubit<UserActionState> {
     if (state is OnFollowUser) return;
     try {
       emit(OnFollowUser());
-      await _userUsecase.followUser(payload: payload);
-      emit(FollowUserSuccess());
+      final response = await _userUsecase.followUser(payload: payload);
+      emit(FollowUserSuccess(approvalRequired: response.approvalRequired));
       getFollowUser(userId: payload.followeeId);
     } on DioException catch (error) {
       final data = error.response!.data;
@@ -52,6 +52,10 @@ class UserActionCubit extends Cubit<UserActionState> {
         case "REQUEST_ALREADY_SENT":
           err =
               "Bạn đã gởi yêu cầu theo dõi đến người bảo hộ, vui lòng chờ xác nhận.";
+        case "NOT_PDONE_FOLLOWEE":
+          err = "Người theo dõi không phải là P-Done.";
+        case "PROTECTOR_NOT_FOUND":
+          err = "Không tìm thấy thông tin người bảo hộ để xác nhận.";
         default:
           err = S.current.message_otp_not_match;
           break;

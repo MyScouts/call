@@ -6,7 +6,7 @@ part 'user_action_response.g.dart';
 @freezed
 class FollowUserResponse with _$FollowUserResponse {
   const factory FollowUserResponse({
-    required bool isFriend,
+    bool? isFriend,
     required bool approvalRequired,
   }) = _FollowUserResponse;
 

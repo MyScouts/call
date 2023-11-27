@@ -77,7 +77,12 @@ class _DiaryScreenState extends State<DiaryScreen> {
           if (state is FollowUserSuccess) {
             hideLoading();
             _friendStatus.value = true;
-            showToastMessage("Theo dõi người dùng thành công.");
+            if (state.approvalRequired) {
+              showToastMessage(
+                  "Yêu cầu theo dõi đã được gởi đến người bảo hộ.");
+            } else {
+              showToastMessage("Theo dõi người dùng thành công.");
+            }
           }
 
           if (state is FollowUserFail) {
