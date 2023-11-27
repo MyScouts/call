@@ -30,7 +30,8 @@ extension RegisterMarshopCoordinator on BuildContext {
                           userId,
                           RegisterMarshopPayload(
                             name: name,
-                            referralId: marshopId,
+                            referralId:
+                                marshopId != null ? int.parse(marshopId) : null,
                             otp: otpCode,
                           ),
                         );

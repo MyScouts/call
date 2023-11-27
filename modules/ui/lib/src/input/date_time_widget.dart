@@ -112,7 +112,7 @@ class _InputDateTimeWidgetState extends State<InputDateTimeWidget> {
           child: IgnorePointer(
             ignoring: true,
             child: TextInputLayout(
-              contentPadding: const EdgeInsets.all(14),
+              contentPadding: const EdgeInsets.all(13),
               controller: _controller,
               validator: widget.validator,
               paddingError: EdgeInsets.zero,
@@ -135,7 +135,7 @@ class _InputDateTimeWidgetState extends State<InputDateTimeWidget> {
             child: GestureDetector(
               onTap: _onPickingDate,
               child: Container(
-                margin: const EdgeInsets.only(top: 10, right: 10),
+                margin: const EdgeInsets.only(top: 13, right: 10),
                 child: const Icon(
                   Icons.calendar_month,
                   color: AppColors.grey10,

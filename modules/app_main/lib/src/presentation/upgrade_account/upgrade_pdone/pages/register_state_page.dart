@@ -135,7 +135,7 @@ class UpgradePdoneSuccessWidthProtectorDialog extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 16, top: 8),
                 child: Text(
-                  'Hồ sơ đang chờ duyệt\nbạn sẽ nhận được thông báo khi quá trình xét duyệt\nhoàn thành',
+                  'Hồ sơ đang chờ duyệt bạn sẽ nhận\nđược thông báo khi quá trình xét duyệt\nhoàn thành',
                   style: Theme.of(context).textTheme.bodyMedium,
                   textAlign: TextAlign.center,
                 ),
