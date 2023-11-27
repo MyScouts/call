@@ -95,7 +95,6 @@ class _GenderInputState extends State<GenderInput> {
                   ))
               .toList(),
           validator: (value) {
-            print(value);
             if (value == null) {
               return 'Chọn giới tính.';
             }

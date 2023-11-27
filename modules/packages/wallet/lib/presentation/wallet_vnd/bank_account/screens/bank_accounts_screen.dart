@@ -26,7 +26,6 @@ class BankAccountsScreen extends StatefulWidget {
 
 class _BankAccountsScreenState extends State<BankAccountsScreen> {
   late final bloc = context.read<BankAccountBloc>();
-  final walletType = WalletType.coinVnd;
 
   @override
   void initState() {
@@ -49,25 +48,25 @@ class _BankAccountsScreenState extends State<BankAccountsScreen> {
             ),
             child: UserInfoCard(
               user: WalletInjectedData.user,
-              walletInfo: WalletInjectedData.coinWalletInfo,
+              walletInfo: WalletInjectedData.userWallet,
             ),
           ),
           const Divider(thickness: 8, color: WalletTheme.lightGrey),
-          TabBarViewWidget(
-            walletDOneComponent: const SizedBox(),
-            walletCoinComponent: const SizedBox(),
-            walletDiamondComponent: BlocProvider(
-              create: (context) => WalletDiamondBloc(injector()),
-              child: const WalletDiamondScreen(),
-            ),
-            walletVndComponent: Column(
-              children: [
-                VNDAssetStatus(vndWalletInfo: WalletInjectedData.vndWalletInfo),
-                const Expanded(child: BankAccountWidget()),
-              ],
-            ),
-            initialIndex: walletType.initialIndexTabBar,
-          )
+          // TabBarViewWidget(
+          //   walletDOneComponent: const SizedBox(),
+          //   walletCoinComponent: const SizedBox(),
+          //   walletDiamondComponent: BlocProvider(
+          //     create: (context) => WalletDiamondBloc(injector()),
+          //     child: const WalletDiamondScreen(),
+          //   ),
+          //   walletVndComponent: Column(
+          //     children: [
+          //       VNDAssetStatus(vndWalletInfo: WalletInjectedData.vndWalletInfo),
+          //       const Expanded(child: BankAccountWidget()),
+          //     ],
+          //   ),
+          //   initialIndex: 2,
+          // )
         ],
       ),
     );
