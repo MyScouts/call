@@ -10,6 +10,8 @@ export 'src/button/icon_vertical_button.dart';
 export 'src/button/primary_button.dart';
 export 'src/button/primary_solid_button.dart';
 
+export 'src/const/constains.dart';
+
 /// decoration
 export 'src/decoration/tab_indicator_decoration.dart';
 export 'src/dialog/action_dialog.dart';

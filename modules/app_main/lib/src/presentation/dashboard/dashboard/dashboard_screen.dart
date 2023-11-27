@@ -7,6 +7,9 @@ import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/usecases/dashboard_share_preferences_usecase.dart';
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
+import 'package:app_main/src/presentation/call/call_1v1/managers/android_call_manager.dart';
+import 'package:app_main/src/presentation/call/call_1v1/managers/call_manager.dart';
+import 'package:app_main/src/presentation/call/call_1v1/managers/ios_call_manager.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_store_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_background_builder.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_base_tab.dart';
@@ -20,8 +23,15 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:injectable/injectable.dart';
+import 'package:mobilehub_core/mobilehub_core.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:stringee_flutter_plugin/stringee_flutter_plugin.dart';
 import 'package:ui/ui.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashBoardInheritedData extends InheritedWidget {
   final PageController pageController;
@@ -74,6 +84,21 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     );
   }
 
+  // void enableEditMode() {
+  //   setState(() {
+  //     _showEditMode = true;
+  //   });
+  // }
+
+  // void disableEditMode() {
+  //   setState(() {
+  //     _showEditMode = false;
+  //   });
+  // }
+
+  AndroidCallManager? _androidCallManager = AndroidCallManager.shared;
+  IOSCallManager? _iOSCallManager = IOSCallManager.shared;
+
   @override
   void initState() {
     super.initState();
@@ -87,6 +112,154 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         });
       },
     );
+    if (isAndroid) {
+      _androidCallManager!.setContext(context);
+
+      ///cấp quyền truy cập với android
+      requestPermissions();
+    } else {
+      /// Cấu hình thư viện để nhận push notification và sử dụng Callkit để show giao diện call native của iOS
+      _iOSCallManager!.configureCallKeep();
+    }
+
+    /// Lắng nghe sự kiện của StringeeClient(kết nối, cuộc gọi đến...)
+    CallManager.shared.client.eventStreamController.stream.listen((event) {
+      Map<dynamic, dynamic> map = event;
+      switch (map['eventType']) {
+        case StringeeClientEvents.didConnect:
+          handleDidConnectEvent();
+          break;
+        case StringeeClientEvents.didDisconnect:
+          handleDiddisconnectEvent();
+          break;
+        case StringeeClientEvents.didFailWithError:
+          handleDidFailWithErrorEvent(
+              map['body']['code'], map['body']['message']);
+          break;
+        case StringeeClientEvents.requestAccessToken:
+          handleRequestAccessTokenEvent();
+          break;
+        case StringeeClientEvents.didReceiveCustomMessage:
+          handleDidReceiveCustomMessageEvent(map['body']);
+          break;
+        case StringeeClientEvents.incomingCall:
+          StringeeCall? call = map['body'];
+          if (isAndroid) {
+            _androidCallManager!.handleIncomingCallEvent(call!, context);
+          } else {
+            _iOSCallManager!.handleIncomingCallEvent(call!, context);
+          }
+          break;
+        case StringeeClientEvents.incomingCall2:
+          StringeeCall2? call = map['body'];
+          if (isAndroid) {
+            _androidCallManager!.handleIncomingCall2Event(call!, context);
+          } else {
+            _iOSCallManager!.handleIncomingCall2Event(call!, context);
+          }
+          break;
+        default:
+          break;
+      }
+    });
+  }
+
+  requestPermissions() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    List<Permission> permissions = [
+      Permission.camera,
+      Permission.microphone,
+    ];
+    if (androidInfo.version.sdkInt >= 31) {
+      permissions.add(Permission.bluetoothConnect);
+    }
+    Map<Permission, PermissionStatus> statuses = await permissions.request();
+
+    if (androidInfo.version.sdkInt >= 33) {
+      // Register permission for show notification in android 13
+      FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+          FlutterLocalNotificationsPlugin();
+      flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()!
+          .requestNotificationsPermission();
+    }
+  }
+
+  Future<void> registerPushWithStringeeServer() async {
+    if (isAndroid) {
+      Stream<String> tokenRefreshStream =
+          FirebaseMessaging.instance.onTokenRefresh;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      bool? registered = (prefs.getBool("register") == null)
+          ? false
+          : prefs.getBool("register");
+
+      ///kiểm tra đã register push chưa
+      if (registered != null && !registered) {
+        FirebaseMessaging.instance.getToken().then((token) {
+          CallManager.shared.client.registerPush(token!).then((value) {
+            if (value['status']) {
+              prefs.setBool("register", true);
+              prefs.setString("token", token);
+            }
+          });
+        });
+      }
+
+      ///Nhận token mới từ firebase
+      tokenRefreshStream.listen((token) {
+        ///Xóa token cũ
+        CallManager.shared.client
+            .unregisterPush(prefs.getString("token")!)
+            .then((value) {
+          if (value['status']) {
+            ///Register với token mới
+            prefs.setBool("register", false);
+            prefs.remove("token");
+            CallManager.shared.client.registerPush(token).then((value) {
+              if (value['status']) {
+                prefs.setBool("register", true);
+                prefs.setString("token", token);
+              }
+            });
+          }
+        });
+      });
+    } else {
+      _iOSCallManager!.registerPushWithStringeeServer();
+    }
+  }
+
+  /// StringeeClient Listeners
+  ///
+  void handleDidConnectEvent() {
+    print("handleDidConnectEvent");
+    if (!isAndroid) {
+      _iOSCallManager!.startTimeoutForIncomingCall();
+    }
+
+    registerPushWithStringeeServer();
+  }
+
+  void handleDiddisconnectEvent() {
+    print("handleDiddisconnectEvent");
+    if (!isAndroid) {
+      _iOSCallManager!.stopTimeoutForIncomingCall();
+    }
+  }
+
+  void handleDidFailWithErrorEvent(int? code, String message) {
+    print('code: ' + code.toString() + ', message: ' + message);
+  }
+
+  void handleRequestAccessTokenEvent() {
+    print('Request new access token');
+  }
+
+  void handleDidReceiveCustomMessageEvent(Map<dynamic, dynamic> map) {
+    print('from: ' + map['fromUserId'] + '\nmessage: ' + map['message']);
   }
 
   @override

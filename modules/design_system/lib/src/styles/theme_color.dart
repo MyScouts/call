@@ -130,6 +130,16 @@ class AppColors {
   /// organge
   static const Color organge1 = Color(0xffFFAD0D);
 
+  /// gray
+  static const Color gray500 = Color(0xFF6E6E6E);
+
+  /// bg
+  static const Color bgFa = Color(0xFFFAFAFA);
+  static const Color bgButtonCall = Color(0xFFF3F7FA);
+
   static const Color bgColor = Color(0xFFF3F8FF);
   static const Color borderColor = Color(0xFFF2F2F2);
+  static const Color bgCard = Color(0xFFF8F8F8);
+
+  static const Color lineColor = Color(0xFFEAEDF0);
 }

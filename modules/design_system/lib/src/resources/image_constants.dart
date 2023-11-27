@@ -65,7 +65,6 @@ class ImageConstants {
   static String profileEmpty = ImageApp.profileEmpty.path;
   static String walletTotalDiamond = ImageApp.walletTotalDiamond.path;
 
-
   /// wallet
   static String imgWalletHeader = ImageApp.imgWalletHeader.path;
   static String imgGoldMember = ImageApp.imgGoldMember.path;
@@ -78,6 +77,7 @@ class ImageConstants {
   static String imgWithDraw = ImageApp.imgWithDraw.path;
   static String imgChargeDiamond = ImageApp.imgChargeDiamond.path;
   static String imgFindAgency = ImageApp.imgFindAgency.path;
+  static String imgNoResults = ImageApp.imgNoResults.path;
 }
 
 enum ImageApp {
@@ -157,7 +157,8 @@ enum ImageApp {
   imgWithDraw('assets/images/imgWithDraw.png'),
   imgFindAgency('assets/images/imgFindAgency.png'),
   walletTotalDiamond('assets/images/wallet_total_diamond.jpg'),
-  imgChargeDiamond('assets/images/imgChargeDiamond.png');
+  imgChargeDiamond('assets/images/imgChargeDiamond.png'),
+  imgNoResults('assets/images/img_no_results.svg');
 
   const ImageApp(this.path);
 

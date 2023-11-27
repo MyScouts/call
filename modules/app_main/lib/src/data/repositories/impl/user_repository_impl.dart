@@ -145,4 +145,8 @@ class AuthRepositoryImpl extends UserRepository {
   Future<ApprovedRequestResponse> approvedRequests() {
     return _userAPI.approvedRequest();
   }
+
+  Future<void> getStringgeToken() {
+    return _userAPI.getStringeeToken();
+  }
 }

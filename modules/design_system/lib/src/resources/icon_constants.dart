@@ -98,6 +98,17 @@ class IconAppConstants {
   static String icWalletCoupon = IconApp.icWalletCoupon.path;
   static String icSettingApp = IconApp.icSettingApp.path;
   static String icVersion = IconApp.icVersion.path;
+  static String icUserGroup3 = IconApp.icUserGroup3.path;
+  static String icCallSvg = IconApp.icCallSvg.path;
+  static String icCallVideo = IconApp.icCallVideo.path;
+  static String icAnswer = IconApp.icAnswer.path;
+  static String icEnd = IconApp.icEnd.path;
+  static String icMicro = IconApp.icMicro.path;
+  static String icVideoCall = IconApp.icVideoCall.path;
+  static String icVolume = IconApp.icVolume.path;
+  static String icIncomingCall = IconApp.icIncomingCall.path;
+  static String icSwitchCamera = IconApp.icSwitchCamera.path;
+  static String icCallAway = IconApp.icCallAway.path;
 }
 
 enum IconApp {
@@ -201,7 +212,18 @@ enum IconApp {
   icWalletCoupon('assets/icons/wallet_agency_coupon.svg'),
   appSetting('assets/icons/app_setting.png'),
   icVersion('assets/icons/ic_version.svg'),
-  icLeaveTeam('assets/icons/ic_leave_team.svg');
+  icLeaveTeam('assets/icons/ic_leave_team.svg'),
+  icUserGroup3('assets/icons/ic_user_group3.svg'),
+  icCallSvg('assets/icons/ic_call.svg'),
+  icCallVideo('assets/icons/ic_call_video.svg'),
+  icAnswer('assets/icons/ic_answer.svg'),
+  icEnd('assets/icons/ic_end.svg'),
+  icMicro('assets/icons/ic_micro.svg'),
+  icVideoCall('assets/icons/ic_video_call.svg'),
+  icVolume('assets/icons/ic_volume.svg'),
+  icIncomingCall('assets/icons/ic_incoming_call.svg'),
+  icSwitchCamera('assets/icons/ic_switch_camera.svg'),
+  icCallAway('assets/icons/ic_call_away.svg');
 
   const IconApp(this.path);
 
