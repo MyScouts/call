@@ -1,3 +1,4 @@
+import 'package:app_main/src/core/utils/loading_indicator/platform_loading.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -36,7 +37,7 @@ class LiveLoadingScreen extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              Lottie.asset(ImageConstants.loading),
+              const PlatformLoadingIndicator(),
               const Spacer(),
             ],
           ),
