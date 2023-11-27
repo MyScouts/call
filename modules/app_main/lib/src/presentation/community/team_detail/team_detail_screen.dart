@@ -74,7 +74,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
 
           var banner = ImageConstants.imgDefaultTeamBanner;
           if (team?.banner != null) {
-            banner = team!.banner!.optimizeSize600;
+            banner = team!.banner!;
           }
 
           final isBossGroup = myId == team?.group?.boss?.id;
@@ -85,7 +85,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
 
           return SliverLayoutNestedScrollView(
             cover: ImageWidget(
-              banner,
+              banner.replaceAll('///', '//'),
               width: MediaQuery.of(context).size.width,
             ),
             actionAppBar: canUpdateMembers
@@ -128,9 +128,12 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                             _actionButtons(showInvite: !isBossTeam),
                           _introductionWidget(team),
                           if (!canUpdateMembers && !isMember)
-                            _askToJoinBtn(
-                              canAskToJoin: members.length < 500,
-                              teamId: '${team?.id}',
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15),
+                              child: _askToJoinBtn(
+                                canAskToJoin: members.length < 500,
+                                teamId: '${team?.id}',
+                              ),
                             ),
                           if (!canUpdateMembers && isMember)
                             _askToLeaveBtn(teamId: '${team?.id}'),
@@ -471,7 +474,11 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
   void _onTeamDetailBlocListen(BuildContext context, TeamDetailState state) {
     if (state is FetchTeamsMemberSuccess) {
       if (state.team.boss == null && state.team.group?.boss?.id == myId) {
-        context.askAssignBoss(team: state.team);
+        context.askAssignBoss(team: state.team).then((value) {
+          if (value != null && value == true) {
+            teamDetailBloc.add(FetchTeamDetailEvent(widget.id));
+          }
+        });
       }
     }
     if (state is GetLeaveTeamStatusLoading) {

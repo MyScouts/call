@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/responses/pdone/pdone_registering_profile.dart';
 import 'package:app_main/src/presentation/app_coordinator.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_account_constants.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -30,17 +31,17 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
   PDoneRegisteringProfileData? registeringProfileData;
 
   String getMethod() {
-    if (profileData?.type == 4 ||
-        profileData?.type == 3 ||
-        profileData?.type == 2) {
+    if (profileData?.type == PDoneType.adult ||
+        profileData?.type == PDoneType.teenager ||
+        profileData?.type == PDoneType.childEKyc) {
       return 'Dùng căn cước';
     }
 
-    if (profileData?.type == 1) {
+    if (profileData?.type == PDoneType.child) {
       return 'Dùng giấy khai sinh';
     }
 
-    if (registeringProfileData?.type == 1) {
+    if (registeringProfileData?.type == PDoneType.child) {
       return 'Dùng giấy khai sinh';
     }
 
@@ -48,18 +49,19 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
   }
 
   String getAge() {
-    if (profileData?.type == 4) {
+    if (profileData?.type == PDoneType.adult) {
       return 'Trên 18 tuổi';
     }
-    if (profileData?.type == 3) {
+    if (profileData?.type == PDoneType.teenager) {
       return 'Trên 15 tuổi';
     }
 
-    if (profileData?.type == 1 || profileData?.type == 2) {
+    if (profileData?.type == PDoneType.child ||
+        profileData?.type == PDoneType.childEKyc) {
       return 'Dưới 15 tuổi';
     }
 
-    if (registeringProfileData?.type == 1) {
+    if (registeringProfileData?.type == PDoneType.child) {
       return 'Dưới 15 tuổi';
     }
 
@@ -91,7 +93,7 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
     }
 
     if (state is PDoneNotYetRegisterState) {
-      context.startReplaceUpgradePDone();
+      context.startUpgradePDone().then((value) => context.pop(data: true));
     }
 
     if (state is PDoneLoadedFailureInformation) {
@@ -104,7 +106,7 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(243, 248, 255, 1),
       appBar: AppBar(
-        title: const Text('Cập nhật P-done'),
+        title: const Text('Cập nhật P-DONE'),
         centerTitle: true,
         backgroundColor: const Color.fromRGBO(243, 248, 255, 1),
         titleSpacing: 0,
@@ -146,7 +148,7 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
 
   Widget _buildTitle(BuildContext context) {
     return Text(
-      'Thông tin PDONE',
+      'Thông tin P-DONE',
       style: context.textTheme.labelLarge!.copyWith(),
     );
   }
@@ -313,15 +315,15 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
   }
 
   bool _getStatusButton(int old, int type) {
-    if ((type == 1 || type == 2) && old <= 14) {
+    if ((type == PDoneType.child || type == PDoneType.childEKyc) && old <= 14) {
       return true;
     }
 
-    if (type == 3 && old < 18) {
+    if (type == PDoneType.teenager && old < 18) {
       return true;
     }
 
-    if (type == 4) {
+    if (type == PDoneType.adult) {
       return true;
     }
 

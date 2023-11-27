@@ -75,14 +75,15 @@ class AuthRepositoryImpl extends UserRepository {
   }
 
   @override
-  Future<UpdateNonePDoneProfileReponse> updatePDoneProfile(UpdateNonePDoneProfilePayload updatePDoneProfilePayload) {
+  Future<UpdateNonePDoneProfileReponse> updatePDoneProfile(
+      UpdateNonePDoneProfilePayload updatePDoneProfilePayload) {
     return _userAPI.updatePDoneProfile(updatePDoneProfilePayload);
   }
 
   @override
   Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(
-      UpdateNonePDoneProfilePayload updateNonePDoneProfilePayload) {
-    return _userAPI.updateNonePDoneProfile(updateNonePDoneProfilePayload);
+      Map<String, dynamic> data) {
+    return _userAPI.updateNonePDoneProfile(data);
   }
 
   @override
@@ -99,5 +100,39 @@ class AuthRepositoryImpl extends UserRepository {
   @override
   Future invite(String teamID, Map<String, dynamic> json) {
     return _userAPI.invite(json, teamID);
+  }
+
+  @override
+  Future<User> updateEmail(Map<String, dynamic> json) async {
+    final res = await _userAPI.updateEmail(json);
+    return res.user;
+  }
+
+  @override
+  Future<bool> genOtpEmail(String email) async {
+    final res = await _userAPI.genOtpEmail({'email': email});
+    if (res is Map) {
+      return (res)['result'] ?? false;
+    }
+
+    return false;
+  }
+
+  @override
+  Future updateAvatar(String url) {
+    return _userAPI.updateAvatar({
+      'avatar': url,
+    });
+  }
+
+  @override
+  Future setConfig(String key, Map<String, dynamic> json) {
+    return _userAPI.setConfig(key, json);
+  }
+
+  @override
+  Future<Map<String, dynamic>> getConfig(String key) async {
+    final res = await _userAPI.getConfig(key);
+    return Map<String, dynamic>.from(res);
   }
 }

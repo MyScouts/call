@@ -1,12 +1,13 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/app/app_cubit.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
-import 'package:app_main/src/presentation/information_profile/screens/information_profile_screen.dart';
 import 'package:app_main/src/presentation/settings/setting_constants.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
+import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
 import 'package:app_main/src/presentation/settings/widget/item_setting_widget.dart';
 import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
@@ -32,6 +33,7 @@ class _SettingScreenState extends State<SettingScreen> {
   late final userCubit = context.read<UserCubit>();
   late User _authInfo;
   OnboardingResponse? _onboarding;
+  PackageInfo? currentPackageInfo;
 
   @override
   void initState() {
@@ -64,26 +66,56 @@ class _SettingScreenState extends State<SettingScreen> {
               }
             },
           ),
+          BlocListener<AppCubit, AppState>(
+            listener: (context, state) {
+              if (state is LoadingAppVersion) {
+                showLoading();
+              } else {
+                hideLoading();
+              }
+
+              currentPackageInfo = switch (state) {
+                (UpgradeAppVersion s) => s.currentPackageInfo,
+                (OptionalUpgradeAppVersion s) => s.currentPackageInfo,
+                (LatestAppVersion s) => s.currentPackageInfo,
+                _ => null,
+              };
+
+              switch (state) {
+                case OptionalUpgradeAppVersion(version: final version):
+                  context.updateOptionalAppVersion(
+                    version: version,
+                    onUpdateAppVersion: () {},
+                  );
+                  break;
+                case LatestAppVersion():
+                  context.confirmLatestAppVersion();
+                  break;
+                default:
+                  break;
+              }
+            },
+          ),
+          BlocListener<ConfirmRegisterJABloc, GetDetailState>(
+            listener: _onListenerConfirmJABloc,
+          )
         ],
-        child: BlocListener<ConfirmRegisterJABloc, GetDetailState>(
-          listener: _onListenerConfirmJABloc,
-          child: SafeArea(
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: paddingHorizontal,
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildSession1(),
-                    const SizedBox(height: 10),
-                    _buildSearch(),
-                    const SizedBox(height: 10),
-                    _buildSessionMenus(),
-                    _buildVersion(),
-                  ],
-                ),
+        child: SafeArea(
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: paddingHorizontal,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildSession1(),
+                  const SizedBox(height: 10),
+                  _buildSearch(),
+                  const SizedBox(height: 10),
+                  _buildSessionMenus(),
+                  _buildVersion(),
+                ],
               ),
             ),
           ),
@@ -186,19 +218,17 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   _buildSessionMenus() {
-    return BlocBuilder<UserCubit, UserState>(
-      builder: (context, state) {
-        return Column(
-          children: Setting.session1Menus(
-            context,
-            user: userCubit.currentUser,
-            onUpdate: () {
-              userCubit.onboarding();
-            },
-            onboarding: state is OnboardingSuccess ? state.onboarding : null,
-          ).map((settings) => _buildMenus(settings)).toList(),
-        );
-      },
+    return Column(
+      children: Setting.session1Menus(
+        context,
+        user: userCubit.currentUser,
+        onUpdate: () {
+          userCubit.onboarding();
+        },
+        onboarding: _onboarding,
+        osType: currentPlatformName,
+        isProduction: Configurations.isProduction,
+      ).map((settings) => _buildMenus(settings)).toList(),
     );
   }
 
@@ -216,80 +246,29 @@ class _SettingScreenState extends State<SettingScreen> {
         ),
         child: Row(
           children: [
-            Container(
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: context.theme.primaryColor,
-                  width: 2,
-                ),
-                borderRadius: BorderRadius.circular(90),
-              ),
-              child: ClipRRect(
-                child: ImageWidget(
-                  ImageConstants.defaultUserAvatar,
-                  borderRadius: 100,
-                ),
-              ),
+            BlocBuilder<UserCubit, UserState>(
+              builder: (_, state) {
+                return AppAvatarWidget(
+                  avatar: userCubit.currentUser?.avatar,
+                  width: 50,
+                  height: 50,
+                  defaultAvatar: ImageConstants.defaultUserAvatar,
+                  isPDone: _onboarding?.isPdone ?? false,
+                );
+              },
             ),
             const SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      _authInfo.getdisplayName,
-                      style: context.textTheme.titleMedium!.copyWith(
-                        fontSize: 15,
-                        color: AppColors.black,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    if (_authInfo.isPDone!)
-                      Container(
-                        width: 18,
-                        height: 18,
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.only(left: 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(90),
-                          color: context.theme.primaryColor,
-                        ),
-                        child: Text(
-                          "P",
-                          textAlign: TextAlign.center,
-                          style: context.textTheme.titleSmall!.copyWith(
-                            color: AppColors.white,
-                            height: 0,
-                            fontSize: 11,
-                          ),
-                        ),
-                      ),
-                    if (_authInfo.isJA ?? false)
-                      Container(
-                        height: 18,
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.only(left: 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(90),
-                          color: context.theme.colorScheme.secondary,
-                        ),
-                        child: Text(
-                          "JA",
-                          textAlign: TextAlign.center,
-                          style: context.textTheme.titleSmall!.copyWith(
-                            color: AppColors.white,
-                            height: 0,
-                            fontSize: 11,
-                          ),
-                        ),
-                      ),
-                  ],
+                Text(
+                  _authInfo.getdisplayName,
+                  style: context.textTheme.titleMedium!.copyWith(
+                    fontSize: 15,
+                    color: AppColors.black,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-                const SizedBox(height: 2),
                 Text(
                   "ID: ${_authInfo.pDoneId}",
                   style: context.textTheme.titleMedium!.copyWith(
@@ -302,16 +281,6 @@ class _SettingScreenState extends State<SettingScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  Route _createRoute() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          const InformationProfileScreen(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return child;
-      },
     );
   }
 
@@ -340,7 +309,7 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-  _buildVersion() {
+  Widget _buildVersion() {
     return FutureBuilder<PackageInfo>(
       future: DeviceService.getPackageInfo(),
       builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {

@@ -9,9 +9,11 @@ const showResendOTP = false;
 
 class VerifyPhoneOTPDialogWidget extends StatefulWidget {
   final Function(String) onVerify;
+  final String? phone;
   const VerifyPhoneOTPDialogWidget({
     super.key,
     required this.onVerify,
+    this.phone,
   });
 
   @override
@@ -66,11 +68,12 @@ class _VerifyPhoneOTPDialogWidgetState extends State<VerifyPhoneOTPDialogWidget>
             ),
           ),
           Text(
-            'Mã OTP đã được gửi về số điện thoại',
+            'Mã OTP đã được gửi về số điện thoại ${widget.phone.formatPhone}',
             style: Theme.of(context)
                 .textTheme
                 .headlineMedium!
                 .copyWith(fontWeight: FontWeight.w400),
+            textAlign: TextAlign.center,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),

@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/extensions/list_extension.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/community/team_detail/bloc/team_detail_bloc.dart';
-import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -203,6 +204,7 @@ class _RemoveMemberSheetState extends State<RemoveMemberSheet> {
                               false;
                           if (ok) {
                             bloc.add(KickMember(e.id ?? 0, _team?.id ?? ''));
+                            showToastMessage('Loại bỏ khỏi team thành công');
                           }
                         },
                       ),
@@ -238,6 +240,7 @@ class _RemoveMemberSheetState extends State<RemoveMemberSheet> {
                     if (ok) {
                       for (final x in _chooseRemove.keys.toList()) {
                         bloc.add(KickMember(x, _team?.id ?? ''));
+                        showToastMessage('Loại bỏ khỏi team thành công');
                       }
                     }
                   },
@@ -303,9 +306,20 @@ class _UserCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CircleNetworkImage(
-                  url: user.avatar ?? '',
-                  size: 40,
+                // CircleNetworkImage(
+                //   url: user.avatar ?? '',
+                //   size: 40,
+                // ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: CachedNetworkImage(
+                    height: 40,
+                    width: 40,
+                    imageUrl: user.avatar ?? "",
+                    errorWidget: (context, url, error) => ImageWidget(
+                      ImageConstants.defaultUserAvatar,
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 8),
                 Column(

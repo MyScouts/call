@@ -73,7 +73,7 @@ class _NotificationAPI implements NotificationAPI {
   }
 
   @override
-  Future<ApiResponse<ListNotificationDataResponse>> list(
+  Future<ListNotificationDataResponse> list(
     int page,
     int pageSize,
   ) async {
@@ -85,14 +85,14 @@ class _NotificationAPI implements NotificationAPI {
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<ListNotificationDataResponse>>(Options(
+        _setStreamType<ListNotificationDataResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'api/notifications',
+              'api/v1/notification',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -101,11 +101,33 @@ class _NotificationAPI implements NotificationAPI {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<ListNotificationDataResponse>.fromJson(
-      _result.data!,
-      (json) =>
-          ListNotificationDataResponse.fromJson(json as Map<String, dynamic>),
-    );
+    final value = ListNotificationDataResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<dynamic> delete(int id) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+      method: 'DELETE',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'api/v1/notification/${id}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = _result.data;
     return value;
   }
 

@@ -30,6 +30,6 @@ class Routes extends RouteModuleBuilder {
 
   @override
   List<RouteModuleBuilder> get routerModules => [
-    get<WalletRoutes>(),
-  ];
+        get<WalletRoutes>(),
+      ];
 }

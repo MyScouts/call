@@ -113,7 +113,7 @@ class JAContractPdfPage {
 
   Widget _contactInformationDescription() {
     return Text(
-      'Hôm nay, ngày ${DateTime.now().day} tháng ${DateTime.now().month} năm ${DateTime.now().year}, tại trụ sở chính của Công ty cổ phần tập đoàn công nghệ Viptam chúng tôi gồm:',
+      '                   Hôm nay, ngày ${DateTime.now().day} tháng ${DateTime.now().month} năm ${DateTime.now().year}, tại trụ sở chính của Công ty cổ phần tập đoàn công nghệ Viptam chúng tôi gồm:',
       style: defaultTextStyle,
     );
   }
@@ -172,7 +172,10 @@ class JAContractPdfPage {
                 style: defaultTextStyle.copyWith(fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 100),
-              Text(model.user.getdisplayName, style: defaultTextStyle),
+              Text(
+                model.pDoneInformationData?.fullName ?? '',
+                style: defaultTextStyle.copyWith(fontWeight: FontWeight.bold),
+              ),
             ],
           ),
         ),

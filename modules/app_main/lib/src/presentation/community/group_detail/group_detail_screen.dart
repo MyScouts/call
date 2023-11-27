@@ -147,10 +147,19 @@ class _TeamCard extends StatelessWidget {
             IntrinsicHeight(
               child: Row(
                 children: [
-                  AppAvatarWidget(
-                    avatar: team.avatar ?? team.boss?.avatar,
-                    width: 38,
-                    height: 38,
+                  SizedBox(
+                    height: 40,
+                    width: 40,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(90),
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        imageUrl: team.avatar ?? "",
+                        errorWidget: (context, url, error) => ImageWidget(
+                          IconAppConstants.icDefaultTeamAvt,
+                        ),
+                      ),
+                    ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
@@ -453,7 +462,23 @@ class _Avatar extends StatelessWidget {
           ),
         ],
       ),
-      child: CircleNetworkImage(url: group.avatar ?? '', size: 136),
+      child: SizedBox(
+        width: 136,
+        height: 136,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(100),
+          child: CachedNetworkImage(
+            imageUrl: group.avatar ?? "",
+            fit: BoxFit.cover,
+            errorWidget: (context, url, error) {
+              return ImageWidget(
+                IconAppConstants.icDefaultTeamAvt,
+                borderRadius: 100,
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 }
@@ -535,9 +560,22 @@ class _CollapsedTopBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircleNetworkImage(
-                url: group.avatar ?? '',
-                size: 30,
+              SizedBox(
+                width: 30,
+                height: 30,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: CachedNetworkImage(
+                    imageUrl: group.avatar ?? "",
+                    fit: BoxFit.cover,
+                    errorWidget: (context, url, error) {
+                      return ImageWidget(
+                        IconAppConstants.icDefaultTeamAvt,
+                        borderRadius: 100,
+                      );
+                    },
+                  ),
+                ),
               ),
               const SizedBox(width: 8),
               Flexible(
@@ -572,15 +610,23 @@ class _GroupBanner extends StatelessWidget {
             .group;
     final imageWidth = (screenWidth * pixelRatio).round();
 
-    return CachedNetworkImage(
+    if (group.banner == null || group.banner!.isEmpty) {
+      return ImageWidget(
+        ImageConstants.imgDefaultTeamBanner,
+        height: screenWidth / cmBannerRatio,
+        width: screenWidth,
+      );
+    }
+
+    return ImageWidget(
+      group.banner!.replaceAll('///', '//'),
       fit: BoxFit.cover,
-      imageUrl: group.banner ?? '',
-      // cacheKey: '${group.banner}-$imageWidth',
       height: screenWidth / cmBannerRatio,
       width: screenWidth,
-      maxWidthDiskCache: imageWidth,
-      errorWidget: (context, url, error) => const ColoredBox(
-        color: Color(0x1A2F6BFF),
+      errorWidget: ImageWidget(
+        ImageConstants.imgDefaultTeamBanner,
+        height: screenWidth / cmBannerRatio,
+        width: screenWidth,
       ),
     );
   }

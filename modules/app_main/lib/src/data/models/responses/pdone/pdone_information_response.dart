@@ -37,8 +37,6 @@ class PDoneInformationData {
   final String? job;
   final String? interest;
   final String? talent;
-  // final LocationData? birthPlace;
-  // final LocationData? currentPlace;
   final int? protector;
   final String? protectorPDoneId;
   final String? birthCertificateUrl;
@@ -50,8 +48,6 @@ class PDoneInformationData {
     required this.sex,
     required this.birthday,
     required this.identityNumber,
-    required this.birthPlace,
-    required this.currentPlace,
     required this.supplyDate,
     required this.supplyAddress,
     required this.type,
@@ -63,8 +59,8 @@ class PDoneInformationData {
     this.maritalStatus,
     this.talent,
     this.weight,
-    // this.birthPlace,
-    // this.currentPlace,
+    this.birthPlace,
+    this.currentPlace,
     this.birthCertificateUrl,
     this.protector,
     this.protectorPDoneId,

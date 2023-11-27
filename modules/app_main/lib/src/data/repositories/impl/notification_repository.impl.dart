@@ -24,6 +24,11 @@ class NotificationRepositoryImpl extends NotificationRepository {
   @override
   Future<List<NotificationData>> list(int page, [int pageSize = 10]) async {
     final response = await _notificationApi.list(page, pageSize);
-    return response.data.rows;
+    return response.rows;
+  }
+
+  @override
+  Future delete(int id) async {
+    return _notificationApi.delete(id);
   }
 }

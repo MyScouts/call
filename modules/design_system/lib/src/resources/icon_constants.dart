@@ -100,6 +100,7 @@ class IconAppConstants {
 
   /// wallet
   static String icFilter = IconApp.icFilter.path;
+  static String icVersion = IconApp.icVersion.path;
 }
 
 enum IconApp {
@@ -202,10 +203,11 @@ enum IconApp {
   icSettingApp('assets/icons/ic_setting_app.svg'),
   icWalletCoupon('assets/icons/wallet_agency_coupon.svg'),
   appSetting('assets/icons/app_setting.png'),
-  icLeaveTeam('assets/icons/ic_leave_team.svg'),
 
   /// wallet
-  icFilter('assets/icons/icFilter.svg');
+  icFilter('assets/icons/icFilter.svg'),
+  icVersion('assets/icons/ic_version.svg'),
+  icLeaveTeam('assets/icons/ic_leave_team.svg');
 
   const IconApp(this.path);
 
