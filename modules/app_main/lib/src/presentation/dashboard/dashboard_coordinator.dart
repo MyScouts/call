@@ -88,9 +88,8 @@ extension DashBoardCoordinator on BuildContext {
     switch (id) {
       case "ic_team":
         return _startTeam();
-
       case 'ic_wallet':
-      // return _startWallet();
+        return _startWallet();
       default:
         if (path != null) {
           Navigator.of(this).pushNamed(path);
