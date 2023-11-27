@@ -37,5 +37,7 @@ abstract class UserRepository {
 
   Future<List<User>> listFriends();
 
+  Future<void> getStringgeToken();
+
   Future invite(String teamID, Map<String, dynamic> json);
 }

@@ -27,6 +27,7 @@ class UserApiConstants {
   static const updateNonePDoneProfile = "api/v1/p-done/non-p-done-profile";
   static const listFriends = "/api/v1/following/friend";
   static const invite = "api/v1/team/{id}/invite";
+  static const stringeeToken = "api/v1/call/stringee-token";
 }
 
 @RestApi()
@@ -96,4 +97,7 @@ abstract class UserApi {
     @Body() Map<String, dynamic> json,
     @Path('id') String teamID,
   );
+
+  @GET(UserApiConstants.stringeeToken)
+  Future getStringeeToken();
 }

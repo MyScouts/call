@@ -1,5 +1,6 @@
 import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/dashboard/system_setting/system_setting.dart';
+import 'package:app_main/src/presentation/call/phone_book/phone_book_page.dart';
 import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:equatable/equatable.dart';
@@ -298,6 +299,7 @@ final personalDefault = {
     id: 'ic_call',
     title: 'Điện thoại',
     backgroundImage: IconAppConstants.icCall,
+    path: PhoneBookPage.routeName,
   ),
   'wg_weather_banner': DashBoardWidgetItem(
     id: 'wg_weather_banner',

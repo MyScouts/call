@@ -63,6 +63,7 @@ class ImageConstants {
   static String screenshot2 = ImageApp.screenshot2.path;
   static String screenshot3 = ImageApp.screenshot3.path;
   static String profileEmpty = ImageApp.profileEmpty.path;
+  static String imgNoResults = ImageApp.imgNoResults.path;
 }
 
 enum ImageApp {
@@ -128,7 +129,8 @@ enum ImageApp {
   profileEmpty('assets/images/profile_empty.png'),
   screenshot1('assets/images/screenshot_1.png'),
   screenshot2('assets/images/screenshot_2.png'),
-  screenshot3('assets/images/screenshot_3.png');
+  screenshot3('assets/images/screenshot_3.png'),
+  imgNoResults('assets/images/img_no_results.svg');
 
   const ImageApp(this.path);
 

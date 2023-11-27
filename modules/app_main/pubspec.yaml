@@ -29,6 +29,17 @@ dependencies:
   staggered_reorderable:
     path: ../staggered_reorderable
 
+  #for ios
+  uuid: ^3.0.7
+
+  #for android
+  device_info_plus: ^9.1.1
+
+  callkeep:
+    git:
+      url: https://github.com/stringeecom/callkeep.git
+      ref: master
+
   intl: ^0.18.1
   http_parser: ^4.0.2
   freezed_annotation: ^2.4.1
@@ -83,6 +94,9 @@ dependencies:
   version: ^3.0.2
   pdf: ^3.10.6
   printing: ^5.11.1
+  stringee_flutter_plugin:
+    git:
+      url: https://github.com/stringeecom/stringee_flutter_plugin.git
 
 dev_dependencies:
   flutter_test:

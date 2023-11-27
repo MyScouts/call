@@ -100,4 +100,9 @@ class AuthRepositoryImpl extends UserRepository {
   Future invite(String teamID, Map<String, dynamic> json) {
     return _userAPI.invite(json, teamID);
   }
+
+  @override
+  Future<void> getStringgeToken() {
+    return _userAPI.getStringeeToken();
+  }
 }
