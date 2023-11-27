@@ -45,7 +45,8 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
     return SafeArea(
       child: Container(
         decoration: const BoxDecoration(
-            borderRadius: BorderRadius.horizontal(left: Radius.circular(16), right: Radius.circular(16)),
+            borderRadius: BorderRadius.horizontal(
+                left: Radius.circular(16), right: Radius.circular(16)),
             color: Colors.white),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -84,7 +85,8 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
             const SizedBox(height: 12),
             Obx(() {
               return GiftPage(
-                key: ObjectKey(giftController.giftCardList.value.giftList ?? []),
+                key:
+                    ObjectKey(giftController.giftCardList.value.giftList ?? []),
                 gifts: giftController.giftCardList.value.giftList ?? [],
                 selectedGift: selectedGift,
                 onChanged: (GiftCard value) {
@@ -105,7 +107,10 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                   const SizedBox(width: 4),
                   ImageWidget(IconAppConstants.icChevronRight),
                   Obx(() {
-                    return Text(giftController.userPointResponse.value.totalPoint?.toString() ?? '0',
+                    return Text(
+                        giftController.userPointResponse.value.totalPoint
+                                ?.toString() ??
+                            '0',
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -121,13 +126,18 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                           giftId: selectedGift.value!.id!);
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 9.5, horizontal: 10),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 9.5, horizontal: 10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        gradient: const LinearGradient(colors: [Color(0xff971FF5), Color(0xffDE38EC)]),
+                        gradient: const LinearGradient(
+                            colors: [Color(0xff971FF5), Color(0xffDE38EC)]),
                       ),
                       child: const Text("Ủng hộ",
-                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white)),
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white)),
                     ),
                   )
                 ],
@@ -168,7 +178,8 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                               height: 4,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(3.5),
-                                  color: giftController.giftType.value == GiftType.values[index]
+                                  color: giftController.giftType.value ==
+                                          GiftType.values[index]
                                       ? const Color(0xff9627df)
                                       : Colors.transparent))
                         ],
@@ -195,9 +206,11 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 10),
                           decoration: BoxDecoration(
-                              color: giftController.indexSelectCommon.value == index
+                              color: giftController.indexSelectCommon.value ==
+                                      index
                                   ? const Color(0xff9627DF)
                                   : const Color(0xffFEEDFF),
                               borderRadius: BorderRadius.circular(8)),
@@ -206,7 +219,8 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: giftController.indexSelectCommon.value == index
+                                color: giftController.indexSelectCommon.value ==
+                                        index
                                     ? Colors.white
                                     : const Color(0xff9627DF)),
                           ),
@@ -232,20 +246,23 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                       giftController.amount.value = listAmount[index];
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 17, vertical: 4),
                       decoration: BoxDecoration(
-                          color: giftController.amount.value == listAmount[index]
-                              ? const Color(0xff9627DF)
-                              : Colors.transparent,
+                          color:
+                              giftController.amount.value == listAmount[index]
+                                  ? const Color(0xff9627DF)
+                                  : Colors.transparent,
                           borderRadius: BorderRadius.circular(100)),
                       child: Text(
                         listAmount[index].toString(),
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: giftController.amount.value == listAmount[index]
-                                ? Colors.white
-                                : const Color(0xff9627DF)),
+                            color:
+                                giftController.amount.value == listAmount[index]
+                                    ? Colors.white
+                                    : const Color(0xff9627DF)),
                       ),
                     ),
                   )),
@@ -305,11 +322,15 @@ class PercentWidget extends StatelessWidget {
           Container(
               width: constant.maxWidth,
               height: 4,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffEAEDF0))),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: const Color(0xffEAEDF0))),
           Container(
               width: constant.maxWidth * percent / 100,
               height: 4,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xff9627df))),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: const Color(0xff9627df))),
         ],
       );
     });

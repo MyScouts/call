@@ -25,7 +25,6 @@ class MediaPickerImpl implements MediaPicker {
 
       if (files.isEmpty || files.first.path == null) return null;
 
-
       final List<MediaFile> pickedImages = <MediaFile>[];
 
       for (final file in files) {
@@ -45,7 +44,7 @@ class MediaPickerImpl implements MediaPicker {
       }
 
       return pickedImages;
-    } catch (error, trace) {
+    } catch (error) {
       return null;
     }
   }
@@ -78,7 +77,7 @@ class MediaPickerImpl implements MediaPicker {
         width: image.width ?? 0.0,
         height: image.height ?? 0.0,
       );
-    } catch (error, trace) {
+    } catch (error) {
       if (error is PlatformException) rethrow;
       return null;
     }

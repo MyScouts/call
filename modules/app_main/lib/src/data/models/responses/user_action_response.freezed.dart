@@ -20,8 +20,8 @@ FollowUserResponse _$FollowUserResponseFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$FollowUserResponse {
-  bool get isFriend => throw _privateConstructorUsedError;
-  bool get isFollowed => throw _privateConstructorUsedError;
+  bool? get isFriend => throw _privateConstructorUsedError;
+  bool get approvalRequired => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +35,7 @@ abstract class $FollowUserResponseCopyWith<$Res> {
           FollowUserResponse value, $Res Function(FollowUserResponse) then) =
       _$FollowUserResponseCopyWithImpl<$Res, FollowUserResponse>;
   @useResult
-  $Res call({bool isFriend, bool isFollowed});
+  $Res call({bool? isFriend, bool approvalRequired});
 }
 
 /// @nodoc
@@ -51,17 +51,17 @@ class _$FollowUserResponseCopyWithImpl<$Res, $Val extends FollowUserResponse>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isFriend = null,
-    Object? isFollowed = null,
+    Object? isFriend = freezed,
+    Object? approvalRequired = null,
   }) {
     return _then(_value.copyWith(
-      isFriend: null == isFriend
+      isFriend: freezed == isFriend
           ? _value.isFriend
           : isFriend // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isFollowed: null == isFollowed
-          ? _value.isFollowed
-          : isFollowed // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      approvalRequired: null == approvalRequired
+          ? _value.approvalRequired
+          : approvalRequired // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -75,7 +75,7 @@ abstract class _$$FollowUserResponseImplCopyWith<$Res>
       __$$FollowUserResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isFriend, bool isFollowed});
+  $Res call({bool? isFriend, bool approvalRequired});
 }
 
 /// @nodoc
@@ -89,17 +89,17 @@ class __$$FollowUserResponseImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isFriend = null,
-    Object? isFollowed = null,
+    Object? isFriend = freezed,
+    Object? approvalRequired = null,
   }) {
     return _then(_$FollowUserResponseImpl(
-      isFriend: null == isFriend
+      isFriend: freezed == isFriend
           ? _value.isFriend
           : isFriend // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isFollowed: null == isFollowed
-          ? _value.isFollowed
-          : isFollowed // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      approvalRequired: null == approvalRequired
+          ? _value.approvalRequired
+          : approvalRequired // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -109,19 +109,19 @@ class __$$FollowUserResponseImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$FollowUserResponseImpl implements _FollowUserResponse {
   const _$FollowUserResponseImpl(
-      {required this.isFriend, required this.isFollowed});
+      {this.isFriend, required this.approvalRequired});
 
   factory _$FollowUserResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$FollowUserResponseImplFromJson(json);
 
   @override
-  final bool isFriend;
+  final bool? isFriend;
   @override
-  final bool isFollowed;
+  final bool approvalRequired;
 
   @override
   String toString() {
-    return 'FollowUserResponse(isFriend: $isFriend, isFollowed: $isFollowed)';
+    return 'FollowUserResponse(isFriend: $isFriend, approvalRequired: $approvalRequired)';
   }
 
   @override
@@ -131,13 +131,13 @@ class _$FollowUserResponseImpl implements _FollowUserResponse {
             other is _$FollowUserResponseImpl &&
             (identical(other.isFriend, isFriend) ||
                 other.isFriend == isFriend) &&
-            (identical(other.isFollowed, isFollowed) ||
-                other.isFollowed == isFollowed));
+            (identical(other.approvalRequired, approvalRequired) ||
+                other.approvalRequired == approvalRequired));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, isFriend, isFollowed);
+  int get hashCode => Object.hash(runtimeType, isFriend, approvalRequired);
 
   @JsonKey(ignore: true)
   @override
@@ -156,16 +156,16 @@ class _$FollowUserResponseImpl implements _FollowUserResponse {
 
 abstract class _FollowUserResponse implements FollowUserResponse {
   const factory _FollowUserResponse(
-      {required final bool isFriend,
-      required final bool isFollowed}) = _$FollowUserResponseImpl;
+      {final bool? isFriend,
+      required final bool approvalRequired}) = _$FollowUserResponseImpl;
 
   factory _FollowUserResponse.fromJson(Map<String, dynamic> json) =
       _$FollowUserResponseImpl.fromJson;
 
   @override
-  bool get isFriend;
+  bool? get isFriend;
   @override
-  bool get isFollowed;
+  bool get approvalRequired;
   @override
   @JsonKey(ignore: true)
   _$$FollowUserResponseImplCopyWith<_$FollowUserResponseImpl> get copyWith =>

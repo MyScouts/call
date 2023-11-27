@@ -1,7 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/app/app_cubit.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
-import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/settings/setting_constants.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
@@ -32,7 +31,7 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   late final userCubit = context.read<UserCubit>();
   late User _authInfo;
-  OnboardingResponse? _onboarding;
+  OnBoarding? _onboarding;
   PackageInfo? currentPackageInfo;
 
   @override
@@ -133,7 +132,7 @@ class _SettingScreenState extends State<SettingScreen> {
         jaStatus: state.data.jaInfo,
         user: userCubit.currentUser?.copyWith(
           isJA: _onboarding?.isJA,
-          isPDone: _onboarding?.isPdone,
+          isPDone: _onboarding?.isPdone ?? false,
         ),
       );
     } else if (state is GetDetailError) {

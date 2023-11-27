@@ -1,8 +1,6 @@
-import 'package:app_main/src/domain/entities/notification/notification_type.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'notification_data.g.dart';
-
 
 class NotificationData {
   final int id;
