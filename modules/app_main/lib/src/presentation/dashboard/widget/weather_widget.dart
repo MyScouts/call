@@ -131,10 +131,10 @@ class WeatherWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(22.0),
                       gradient: const LinearGradient(
                         colors: [
-                          Color(0xff007AF6),
-                          Color(0xff77B1EB),
+                          Color(0xff00AFFB),
+                          Color(0xff0075E0),
                         ],
-                        begin: Alignment.topCenter,
+                        begin: Alignment.topLeft,
                         end: Alignment.bottomCenter,
                       ),
                     ),

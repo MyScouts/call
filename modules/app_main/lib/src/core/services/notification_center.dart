@@ -8,6 +8,7 @@ const String showEditMode = 'showEditMode';
 const String showAppStore = 'showAppStore';
 const String disposeCameraPreview = 'disposeCameraPreview';
 const String refreshUser = 'refreshUser';
+const String dashboardPageChange = 'dashboardPageChange';
 
 typedef ObserverCallback = void Function(dynamic options);
 
