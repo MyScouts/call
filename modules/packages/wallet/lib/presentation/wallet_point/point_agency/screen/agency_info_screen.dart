@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app_core/app_core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +47,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
   final _moneyController = TextEditingController();
   final _coinController = TextEditingController();
   final _userIDController = TextEditingController();
+  Timer? _debounce;
 
   @override
   void initState() {
@@ -110,13 +113,17 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                 },
                 estCoin: (EstCoinResponse response) {
                   exchangeVND = response.vnd;
+                  _moneyController.text =
+                      (response.vnd).toAppCurrencyString(isWithSymbol: false);
+                  _coinController.text =
+                      (response.coin).toAppCurrencyString(isWithSymbol: false);
                 },
                 exchangeSuccess: (ExchangeCoinResponse response) {
                   _agencyBloc.add(
                     AgencyEvent.getPaymentInformation(
                       widget.agencyId,
                       AgencyPaymentInformation(
-                          vnd: 0, pDoneId: _userIDController.text),
+                          vnd: exchangeVND, pDoneId: _userIDController.text),
                     ),
                   );
                 },
@@ -359,7 +366,6 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
         TextFormField(
           controller: _coinController,
           onChanged: (val) {
-            _moneyController.clear();
             _onEstCoin();
           },
           style: context.textTheme.titleLarge!.copyWith(
@@ -433,7 +439,6 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
         TextFormField(
           controller: _moneyController,
           onChanged: (value) {
-            _coinController.clear();
             _onEstCoin();
           },
           style: context.textTheme.titleLarge!.copyWith(
@@ -517,7 +522,8 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
   }
 
   void _onEstCoin() {
-    Debouncer(milliseconds: 1200).run(() {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 1200), () {
       _agencyBloc.add(AgencyEvent.est(
           widget.agencyId,
           int.tryParse(_moneyController.text.replaceAll('.', '')) ?? 0,
