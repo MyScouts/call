@@ -67,6 +67,7 @@ class WalletTheme {
   static const Color textBoldColor = Color(0xFF101B28);
   static const Color subtitleColor = Color(0xFFA6A6A6);
   static const Color dividerColor = Color(0xFFEAEDF0);
+  static const Color borderColor = Color(0xFFD0D6DD);
 }
 
 extension WalletThemeExt on BuildContext {

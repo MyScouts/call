@@ -7,13 +7,11 @@ import 'package:wallet/core/core.dart';
 import 'package:wallet/presentation/presentation.dart';
 
 import '../../../../../wallet.dart';
-import '../../../core/theme/wallet_theme.dart';
 import '../../../domain/entities/wallet/bank_account.dart';
 import '../../shared/model/bank_account_and_bloc_params.dart';
 import '../../shared/widgets/gradiant_button.dart';
 import '../../wallet_constant.dart';
 import '../bank_account/bloc/bank_account_bloc.dart';
-import '../widgets/add_bank_account_widget.dart';
 import '../widgets/bank_account_detail_widget.dart';
 
 class ChooseBankAccountDialog extends StatefulWidget {
@@ -157,13 +155,13 @@ class _ChooseBankAccountDialogState extends State<ChooseBankAccountDialog> {
                 );
               },
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: context.horizontal,
-                vertical: 10,
-              ),
-              child: const AddBankAccountWidget(),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(
+            //     horizontal: context.horizontal,
+            //     vertical: 10,
+            //   ),
+            //   child: const AddBankAccountWidget(),
+            // ),
             Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: context.horizontal,

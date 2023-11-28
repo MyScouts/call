@@ -4,7 +4,6 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:ui/ui.dart';
-import '../../../../wallet.dart';
 import '../../../core/theme/wallet_theme.dart';
 import '../../shared/widgets/icon_button_widget.dart';
 import '../../wallet_constant.dart';
@@ -15,11 +14,11 @@ class QrCodeWidget extends StatefulWidget {
   final ValueChanged<File?>? qrCodeFile;
 
   const QrCodeWidget({
-    Key? key,
+    super.key,
     this.isChecked = false,
     this.qrCodeFile,
     this.qrImage,
-  }) : super(key: key);
+  });
 
   @override
   State<QrCodeWidget> createState() => _QrCodeWidgetState();
@@ -50,10 +49,10 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
         const SizedBox(height: 5),
         Text(
           'Mã QR ',
-          style: context.text.titleMedium?.copyWith(
-            color: WalletTheme.greyTextColor,
+          style: context.text.bodyMedium?.copyWith(
+            color: WalletTheme.grey72,
             fontSize: 14,
-            fontWeight: FontWeight.w500,
+            height: 20 / 14,
           ),
         ),
         const SizedBox(height: 25),
@@ -105,16 +104,16 @@ class _QrCodeWidgetState extends State<QrCodeWidget> {
           ],
         ),
         const SizedBox(height: 15),
-        if (!widget.isChecked)
-          Text(
-            WalletConstant.qrCodeMessage,
-            textAlign: TextAlign.center,
-            style: context.text.titleMedium?.copyWith(
-              color: WalletTheme.greyLightTextColor,
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
+        // if (!widget.isChecked)
+        //   Text(
+        //     WalletConstant.qrCodeMessage,
+        //     textAlign: TextAlign.center,
+        //     style: context.text.titleMedium?.copyWith(
+        //       color: WalletTheme.greyLightTextColor,
+        //       fontSize: 12,
+        //       fontWeight: FontWeight.w400,
+        //     ),
+        //   ),
       ],
     );
   }
