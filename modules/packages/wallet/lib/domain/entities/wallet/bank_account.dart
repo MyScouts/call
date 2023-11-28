@@ -1,6 +1,4 @@
-
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../../../wallet.dart';
 import '../bank/bank.dart';
 
 part 'bank_account.freezed.dart';

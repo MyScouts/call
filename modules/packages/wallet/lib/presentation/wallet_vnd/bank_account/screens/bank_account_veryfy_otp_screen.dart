@@ -15,7 +15,7 @@ import '../bloc/bank_account_bloc.dart';
 class VerifyBankAccountOTPScreen extends StatefulWidget {
   static const String routeName = '/verify-bank-account-otp';
 
-  const VerifyBankAccountOTPScreen({Key? key}) : super(key: key);
+  const VerifyBankAccountOTPScreen({super.key});
 
   @override
   State<VerifyBankAccountOTPScreen> createState() =>
@@ -131,7 +131,7 @@ class _VerifyBankAccountOTPScreenState extends State<VerifyBankAccountOTPScreen>
                       const TextSpan(text: 'đến số điện thoại\n\n\n'),
                       TextSpan(
                         text:
-                            '(+${_user.phoneCode}) ${_formatPhoneNumber(_user.phone)}\n\n',
+                            '${_user.phoneCode != null ? '(+${_user.phoneCode})' : ''} ${_formatPhoneNumber(_user.phone)}\n\n',
                         style: context.text.titleLarge?.copyWith(
                           fontSize: 24,
                           fontWeight: FontWeight.w500,
