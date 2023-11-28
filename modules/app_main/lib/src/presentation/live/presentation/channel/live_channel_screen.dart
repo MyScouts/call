@@ -1,11 +1,13 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/utils/loading_indicator/platform_loading.dart';
 import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_bottom_action.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_channel_header.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_loading_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/live_message/live_message_input.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'widget/sent_gift_page.dart';
@@ -43,40 +45,46 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
       backgroundColor: Colors.white,
       body: Focus(
         onFocusChange: (value) {
-          if(!value) controller.disableMessage();
+          if (!value) controller.disableMessage();
         },
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            const _RtcRender(),
-            const Align(
-              alignment: Alignment.topCenter,
-              child: SafeArea(
-                child: LiveChannelHeader(),
-              ),
-            ),
-            const Align(
-              alignment: Alignment.bottomCenter,
-              child: LiveBottomAction(),
-            ),
-            Positioned.fill(
-              child: IgnorePointer(
-                ignoring: true,
-                child: SentGiftPage(
-                  provider: controller.floatingGiftsProvider,
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          behavior: HitTestBehavior.opaque,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              const _RtcRender(),
+              const Align(
+                alignment: Alignment.topCenter,
+                child: SafeArea(
+                  child: LiveChannelHeader(),
                 ),
               ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Obx(() {
-                if (controller.showMessageInput.value) {
-                  return const LiveMessageInput();
-                }
-                return const SizedBox.shrink();
-              }),
-            ),
-          ],
+              const Align(
+                alignment: Alignment.bottomCenter,
+                child: LiveBottomAction(),
+              ),
+              Positioned.fill(
+                child: IgnorePointer(
+                  ignoring: true,
+                  child: SentGiftPage(
+                    provider: controller.floatingGiftsProvider,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Obx(() {
+                  if (controller.showMessageInput.value) {
+                    return const LiveMessageInput();
+                  }
+                  return const SizedBox.shrink();
+                }),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -155,7 +163,17 @@ class _RtcRenderState extends State<_RtcRender> {
         );
       }
 
-      return const LiveLoadingScreen();
+      return SizedBox.expand(
+        child: Obx(() {
+          if (controller.roomInfoFetching.value) {
+            return const Center(child: PlatformLoadingIndicator());
+          }
+          return CachedNetworkImage(
+            imageUrl: controller.info.medias.first.link,
+            fit: BoxFit.cover,
+          );
+        }),
+      );
     });
   }
 }

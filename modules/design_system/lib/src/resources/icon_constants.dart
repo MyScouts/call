@@ -130,6 +130,7 @@ class IconAppConstants {
   static String icLiveMenu = IconApp.icLiveMenu.path;
   static String icLiveSend = IconApp.icLiveSend.path;
   static String icLiveLogo = IconApp.icLiveLogo.path;
+  static String icLove = IconApp.icLove.path;
 }
 
 enum IconApp {
@@ -265,6 +266,7 @@ enum IconApp {
   icLiveMenu('assets/icons/live_menu.svg'),
   icLiveSend('assets/icons/live_send.svg'),
   icLiveLogo('assets/icons/live_logo.svg'),
+  icLove('assets/icons/love.png'),
   icLeaveTeam('assets/icons/ic_leave_team.svg');
 
   const IconApp(this.path);

@@ -11,6 +11,7 @@ import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'app_dimens.dart';
+import 'app_size.dart';
 import 'core/coordinator/app_coordinator.dart';
 import 'core/utils/toast_message/toast_message.dart';
 import 'presentation/notification/notification_coordinator.dart';
@@ -66,6 +67,7 @@ class _ApplicationState extends State<Application>
   MediaQuery _materialBuilder(BuildContext context, Widget? child) {
     final data = MediaQuery.of(context).copyWith(textScaleFactor: 1);
     setMediaQueryData(data);
+    SizeConfig.init(context);
     return MediaQuery(
       data: data,
       child: Overlay(

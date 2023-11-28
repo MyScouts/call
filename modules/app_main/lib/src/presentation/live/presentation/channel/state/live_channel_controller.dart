@@ -84,6 +84,10 @@ class LiveChannelController {
 
   final RxBool _showMessageInput = false.obs;
 
+  final RxBool _roomInfoFetching = true.obs;
+
+  RxBool get roomInfoFetching => _roomInfoFetching;
+
   RxBool get showMessageInput => _showMessageInput;
 
   bool get hostInLive {
@@ -120,6 +124,7 @@ class LiveChannelController {
         userUseCase.getProfile(),
       ]);
       _info = (res.first as JoinLiveResponse).data.obs;
+      _roomInfoFetching.value = false;
       final user = res.last as User?;
       if (user == null) return;
 
@@ -157,8 +162,6 @@ class LiveChannelController {
             : ClientRoleType.clientRoleAudience,
       );
 
-
-
       ///get members
       final users = await repository.listMembers(_info.value.id);
       final result = <LiveMember>[];
@@ -185,6 +188,12 @@ class LiveChannelController {
     } catch (e) {
       print(e);
     }
+  }
+
+  void reaction() {
+    EasyDebounce.debounce('reaction', const Duration(milliseconds: 300), () {
+      socketService.socket.emit('reaction', {'type': 'heart', 'metadata': {}});
+    });
   }
 
   Future previewQuit() async {
@@ -293,6 +302,13 @@ class LiveChannelController {
 
     socketService.on(socketReConnectEvent, (data) {
       debugPrint('Đang kết nối lại ${socketService.socket.id}');
+    });
+
+    socketService.on(socketReactionEvent, (Map data) {
+      debugPrint('$socketReactionEvent ===> $data');
+      if (data['type'] == 'heart') {
+        NotificationCenter.post(channel: reactionEvent);
+      }
     });
 
     socketService.on(socketGiftGiven, (data) {

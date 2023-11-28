@@ -1,10 +1,10 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
+import 'package:app_main/src/presentation/live/presentation/live_reaction/live_reaction_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 import 'live_button_action.dart';
@@ -31,9 +31,9 @@ class LiveBottomAction extends StatelessWidget {
               children: [
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 3,
-                  child: const Row(
+                  child: Row(
                     children: [
-                      Expanded(
+                      const Expanded(
                         child: Column(
                           children: [
                             Expanded(child: LiveCommentWidget()),
@@ -43,9 +43,10 @@ class LiveBottomAction extends StatelessWidget {
                       ),
                       SizedBox(
                         width: 60,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [],
+                        child: GestureDetector(
+                          onDoubleTap: controller.reaction,
+                          behavior: HitTestBehavior.opaque,
+                          child: const LiveReactionScreen(),
                         ),
                       ),
                     ],
@@ -131,13 +132,13 @@ class _ActionBan extends StatelessWidget {
         padding: EdgeInsets.all(4.0),
         child: Text(
           'Nghiêm cấm tất cả các nội dung không lành'
-              ' mạnh, thô tục, tình dục (bao gồm tình dục'
-              ' trẻ em), trái với thuần phong mỹ tục;'
-              ' các nội dụng liên quan đến chống phá'
-              ' nhà nước, vi phamj bản quyền hoặc pháp'
-              ' luật trong phòng live. Nếu vi phạm,'
-              ' VDONE sẽ tạm ngưng hoặc xóa tài khoản'
-              ' của bạn.',
+          ' mạnh, thô tục, tình dục (bao gồm tình dục'
+          ' trẻ em), trái với thuần phong mỹ tục;'
+          ' các nội dụng liên quan đến chống phá'
+          ' nhà nước, vi phamj bản quyền hoặc pháp'
+          ' luật trong phòng live. Nếu vi phạm,'
+          ' VDONE sẽ tạm ngưng hoặc xóa tài khoản'
+          ' của bạn.',
           style: TextStyle(
             fontSize: 13,
             color: Color(0xffB6B5BA),
