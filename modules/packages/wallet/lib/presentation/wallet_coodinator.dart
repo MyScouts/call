@@ -30,11 +30,8 @@ extension WalletCoordinator on BuildContext {
     return Navigator.of(this).pushNamed(WalletScreen.routeName);
   }
 
-  Future<T?> bankAccounts<T>({required VndWalletInfo vndWalletInfo}) {
-    return Navigator.of(this).pushNamed(
-      BankAccountsScreen.routeName,
-      arguments: vndWalletInfo,
-    );
+  Future<T?> bankAccounts<T>() {
+    return Navigator.of(this).pushNamed(BankAccountsScreen.routeName);
   }
 
   void backToBankAccounts<T>() {

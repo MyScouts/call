@@ -64,13 +64,11 @@ class _WalletVNDActionsState extends State<WalletVNDActions> {
   void onTap(WalletVNDActionType type) {
     switch (type) {
       case WalletVNDActionType.bankAccountInfo:
-        showToastMessage(
-          'Tính năng này đang được phát triển.',
-          ToastMessageType.warning,
-        );
-        // context.bankAccounts(
-        //   vndWalletInfo: context.read<WalletBloc>().vndWalletInfo,
+        // showToastMessage(
+        //   'Tính năng này đang được phát triển.',
+        //   ToastMessageType.warning,
         // );
+        context.bankAccounts();
         break;
       case WalletVNDActionType.withdrawalOrder:
         // context.showChooseBankAccountDialog(
