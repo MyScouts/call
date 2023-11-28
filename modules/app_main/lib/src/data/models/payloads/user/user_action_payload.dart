@@ -1,4 +1,3 @@
-import 'package:app_main/src/domain/entities/update_account/update_pdone_birth_place_payload.dart';
 import 'package:app_main/src/domain/entities/update_account/update_pdone_birth_place_payload_2.dart';
 import 'package:app_main/src/domain/entities/update_account/update_place_information_payload.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -21,10 +20,10 @@ class ReportUserPayload {
 
 @JsonSerializable()
 class FollowUserPayload {
-  final int id;
+  final int followeeId;
 
   const FollowUserPayload({
-    required this.id,
+    required this.followeeId,
   });
 
   factory FollowUserPayload.fromJson(Map<String, dynamic> json) =>
@@ -35,10 +34,10 @@ class FollowUserPayload {
 
 @JsonSerializable()
 class UnFollowPayload {
-  final int id;
+  final int followeeId;
 
   const UnFollowPayload({
-    required this.id,
+    required this.followeeId,
   });
 
   factory UnFollowPayload.fromJson(Map<String, dynamic> json) =>

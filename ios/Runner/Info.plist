@@ -44,11 +44,11 @@
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs camera access to scan QR codes</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>your description.</string>
+	<string>Your location is required for accurate notifactions benefits for you, also you cane disable it with no problem </string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>your description</string>
+	<string>Your location is required for accurate notifactions benefits for you, also you cane disable it with no problem </string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>your description.</string>
+	<string>Your location is required for accurate notifactions benefits for you, also you cane disable it with no problem </string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allow $(APP_NAME) access to your micro phone to make video call?</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>

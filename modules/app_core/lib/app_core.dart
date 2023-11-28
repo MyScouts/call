@@ -33,6 +33,7 @@ export 'src/domain/entities/community/fan_group.dart';
 export 'src/domain/entities/community/group.dart';
 export 'src/domain/entities/community/group_detail.dart';
 export 'src/domain/entities/community/team.dart';
+export 'src/domain/entities/onboarding/onboarding.dart';
 export 'src/domain/entities/update_information/update_information_type.dart';
 export 'src/domain/entities/update_information/update_pdone_options.dart';
 export 'src/domain/entities/user/user.dart';
