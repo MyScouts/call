@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/live/data/data_sources/remote/live_api.dart';
+import 'package:app_main/src/presentation/live/data/model/response/data_get_invite_friend.dart';
 import 'package:app_main/src/presentation/live/data/model/response/gift_card_live.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_category_detail.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
@@ -56,7 +57,7 @@ class LiveRepositoryImpl extends LiveRepository {
 
   @override
   Future sendGift({required int userId, required int liveId, required int giftId, required int total}) async {
-    return _liveApi.sendGift(userId,liveId,giftId,total);
+    return _liveApi.sendGift(userId, liveId, giftId, total);
   }
 
   @override
@@ -84,8 +85,20 @@ class LiveRepositoryImpl extends LiveRepository {
     return result.data;
   }
 
+  @override
   Future<bool> endLive({required int liveId}) async {
     final res = await _liveApi.endLive(liveId: liveId);
     return res.data;
+  }
+
+  @override
+  Future<DataGetInviteFriend> getInviteFriend({
+    int? page,
+    int? pageSize,
+    required bool isFriend,
+  }) async {
+    final result = await _liveApi.getListInviteFriend(page: page, pageSize: pageSize, isFriend: isFriend);
+
+    return result.data;
   }
 }

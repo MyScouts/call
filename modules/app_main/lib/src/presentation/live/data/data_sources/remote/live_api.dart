@@ -7,6 +7,7 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../../../../core/networking/api_response.dart';
 import '../../../domain/entities/gift_card_list.dart';
+import '../../model/response/data_get_invite_friend.dart';
 import '../../model/response/gift_card_live.dart';
 import '../../model/response/join_live_response.dart';
 import '../../model/response/live.dart';
@@ -48,6 +49,8 @@ class LiveApiConstant {
   static const String sendGift = 'api/gift-card/give-gift';
 
   static const String userPoint = 'api/point/info';
+
+  static const String getListInviteFriend = '/api/users/list-friends';
 }
 
 @RestApi()
@@ -99,6 +102,13 @@ abstract class LiveApi {
 
   @DELETE(LiveApiConstant.livePathId)
   Future<ApiResponse<bool>> endLive({@Path('id') required int liveId});
+
+  @GET(LiveApiConstant.getListInviteFriend)
+  Future<ApiResponse<DataGetInviteFriend>> getListInviteFriend({
+    @Query('page') int? page,
+    @Query('pageSize') int? pageSize,
+    @Query('isFriend') required bool isFriend,
+  });
 
 //
 // @POST(LiveApiConstant.joinLive)

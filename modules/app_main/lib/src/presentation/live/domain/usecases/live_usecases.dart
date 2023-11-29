@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 
 import '../../data/model/request/send_gift_payload.dart';
+import '../../data/model/response/data_get_invite_friend.dart';
 import '../../data/model/response/gift_card_live.dart';
 import '../../data/model/response/live.dart';
 import '../../data/model/response/user_point_response.dart';
@@ -41,5 +42,17 @@ class LiveUseCase {
 
   Future<GiftCardLive> getInfoGiftCard(int liveId) async {
     return _liveRepository.getInfoGiftCard(liveId);
+  }
+
+  Future<DataGetInviteFriend> getListInviteFriend({
+    int? page,
+    int? pageSize,
+    required bool isFriend,
+  }) async {
+    return _liveRepository.getInviteFriend(
+      page: page,
+      pageSize: pageSize,
+      isFriend: isFriend,
+    );
   }
 }

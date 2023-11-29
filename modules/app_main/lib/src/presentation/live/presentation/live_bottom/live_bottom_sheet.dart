@@ -39,6 +39,7 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
   @override
   void initState() {
     liveBottomController.getLeaderBoard(widget.controller.info.id);
+    liveBottomController.getListFriend();
     super.initState();
   }
 
