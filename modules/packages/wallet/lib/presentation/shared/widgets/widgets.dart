@@ -1,5 +1,4 @@
 export 'app_bar.dart';
-export 'bank_accounts_widget.dart';
 export 'contact_widget.dart';
 export 'dropdown_button.dart';
 export 'form_element.dart';

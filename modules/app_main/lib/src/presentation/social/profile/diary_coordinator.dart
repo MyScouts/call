@@ -57,7 +57,7 @@ extension AuthenticationCoordinator on BuildContext {
             if (state is UnFollowSuccess) {
               hideLoading();
               Navigator.pop(context, userInfo.copyWith(isFollowed: false));
-              if (userInfo.isFriend!) {
+              if (userInfo.isFriend) {
                 showToastMessage("Huỷ kết bạn thành công.");
               } else {
                 showToastMessage("Bỏ theo dõi người dùng thành công.");

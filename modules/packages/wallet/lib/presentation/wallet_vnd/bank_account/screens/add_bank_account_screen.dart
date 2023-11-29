@@ -15,7 +15,7 @@ import '../bloc/bank_account_bloc.dart';
 class AddBankAccountScreen extends StatefulWidget {
   static const String routeName = '/add-bank-account';
 
-  const AddBankAccountScreen({Key? key}) : super(key: key);
+  const AddBankAccountScreen({super.key});
 
   @override
   State<AddBankAccountScreen> createState() => _AddBankAccountScreenState();

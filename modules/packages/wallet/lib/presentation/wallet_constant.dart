@@ -89,11 +89,11 @@ extension BankAccountFieldExt on BankAccountField {
   String get title {
     switch (this) {
       case BankAccountField.bankName:
-        return 'Tên ngân hàng:';
+        return 'Tên ngân hàng';
       case BankAccountField.bankAccountNumber:
-        return 'Số tài khoản:';
+        return 'Số tài khoản';
       case BankAccountField.bankAccountHolder:
-        return 'Tên chủ tài khoản:';
+        return 'Tên chủ tài khoản';
     }
   }
 }

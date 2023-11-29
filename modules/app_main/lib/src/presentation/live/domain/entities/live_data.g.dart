@@ -17,6 +17,16 @@ LiveData _$LiveDataFromJson(Map<String, dynamic> json) => LiveData(
       createdAt: DateTime.parse(json['createdAt'] as String),
       agoraChannel: json['agoraChannel'] as String?,
       agoraToken: json['agoraToken'] as String?,
+      medias: (json['medias'] as List<dynamic>?)
+              ?.map((e) => LiveMedia.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      isBanned: json['isBanned'] as bool? ?? false,
+      categories: (json['categories'] as List<dynamic>?)
+              ?.map(
+                  (e) => LiveCategoryDetail.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$LiveDataToJson(LiveData instance) => <String, dynamic>{
@@ -28,6 +38,9 @@ Map<String, dynamic> _$LiveDataToJson(LiveData instance) => <String, dynamic>{
       'createdAt': instance.createdAt.toIso8601String(),
       'agoraChannel': instance.agoraChannel,
       'agoraToken': instance.agoraToken,
+      'isBanned': instance.isBanned,
+      'medias': instance.medias,
+      'categories': instance.categories,
     };
 
 const _$LiveTypeEnumMap = {

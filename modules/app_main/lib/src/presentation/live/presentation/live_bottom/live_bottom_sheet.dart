@@ -1,3 +1,4 @@
+import 'package:app_main/src/presentation/live/presentation/live_bottom/list_friend_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -5,6 +6,7 @@ import '../../../../di/di.dart';
 import '../channel/state/live_channel_controller.dart';
 import 'leader_board_tab.dart';
 import 'live_bottom_controller.dart';
+import 'viewer_tab.dart';
 
 class LiveBottomSheet extends StatefulWidget {
   final LiveChannelController controller;
@@ -38,14 +40,15 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
   @override
   void initState() {
     liveBottomController.getLeaderBoard(widget.controller.info.id);
+    liveBottomController.getListFriend();
     super.initState();
   }
 
   List<Widget> get listTab => [
-        Container(),
+        ViewerTab(controller: widget.controller),
         Container(),
         LeaderBoardTab(controller: liveBottomController),
-        Container(),
+        ListFriendTab(controller: liveBottomController, liveData: widget.controller.info),
       ];
 
   @override

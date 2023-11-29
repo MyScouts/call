@@ -1,10 +1,13 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/live/presentation/list_gift/gift_controller.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:localization/localization.dart';
+import 'package:wallet/core/core.dart';
+import 'package:wallet/domain/repository/wallet_repository.dart';
 
 import '../../../../blocs/user/user_cubit.dart';
 import '../../../../di/di.dart';
@@ -105,7 +108,7 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                   const SizedBox(width: 4),
                   ImageWidget(IconAppConstants.icChevronRight),
                   Obx(() {
-                    return Text(giftController.userPointResponse.value.totalPoint?.toString() ?? '0',
+                    return Text(giftController.userWallet.value.availableCoin?.toStringAsFixed(0) ?? '0',
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -113,12 +116,21 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                   }),
                   Expanded(child: giftAmount()),
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       if (selectedGift.value == null) return;
+                      if ((selectedGift.value?.coinValue ?? 0) * giftController.amount.value >
+                          giftController.userWallet.value.availableCoin!) {
+                        return context.showToastText('Bạn không đủ xu');
+                      }
                       giftController.sentGift(
                           userId: widget.controller.info.user!.id!,
                           liveId: widget.controller.info.id,
                           giftId: selectedGift.value!.id!);
+                      final wallet = await getIt.get<WalletRepository>().getWalletInfo();
+                      if (wallet != null) {
+                        WalletInjectedData.setUserWallet = wallet;
+                        giftController.userWallet.value = WalletInjectedData.userWallet;
+                      }
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 9.5, horizontal: 10),
@@ -224,31 +236,34 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
     return Obx(() {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Row(
-          children: List<Widget>.generate(
-              listAmount.length,
-              (index) => GestureDetector(
-                    onTap: () {
-                      giftController.amount.value = listAmount[index];
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 4),
-                      decoration: BoxDecoration(
-                          color: giftController.amount.value == listAmount[index]
-                              ? const Color(0xff9627DF)
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(100)),
-                      child: Text(
-                        listAmount[index].toString(),
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: List<Widget>.generate(
+                listAmount.length,
+                (index) => GestureDetector(
+                      onTap: () {
+                        giftController.amount.value = listAmount[index];
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        decoration: BoxDecoration(
                             color: giftController.amount.value == listAmount[index]
-                                ? Colors.white
-                                : const Color(0xff9627DF)),
+                                ? const Color(0xff9627DF)
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(100)),
+                        child: Text(
+                          listAmount[index].toString(),
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: giftController.amount.value == listAmount[index]
+                                  ? Colors.white
+                                  : const Color(0xff9627DF)),
+                        ),
                       ),
-                    ),
-                  )),
+                    )),
+          ),
         ),
       );
     });

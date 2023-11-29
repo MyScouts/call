@@ -2,7 +2,6 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../wallet.dart';
 import '../../../core/theme/wallet_theme.dart';
 import '../../../domain/entities/bank/bank.dart';
 import '../../wallet_constant.dart';
@@ -13,9 +12,9 @@ class SelectBankWidget extends StatefulWidget {
   final ValueChanged<Bank> onSelectedBank;
 
   const SelectBankWidget({
-    Key? key,
+    super.key,
     required this.onSelectedBank,
-  }) : super(key: key);
+  });
 
   @override
   State<SelectBankWidget> createState() => _SelectBankWidgetState();
