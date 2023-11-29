@@ -1,6 +1,9 @@
+import 'package:app_core/app_core.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../data/models/responses/list_followees_response.dart';
+import '../../../../domain/usecases/user_usecase.dart';
 import '../../data/model/request/invite_friend_req.dart';
 import '../../data/model/response/data_get_invite_friend.dart';
 import '../../data/model/response/gift_card_live.dart';
@@ -14,9 +17,9 @@ class LiveBottomController {
 
   final giftCardLive = const GiftCardLive().obs;
 
-  final dataGetInviteFriend = DataGetInviteFriend().obs;
+  final UserUsecase userUsecase;
 
-  LiveBottomController(this.useCase);
+  LiveBottomController(this.useCase, this.userUsecase);
 
   Future<void> getLeaderBoard(int roomId) async {
     try {
@@ -24,9 +27,20 @@ class LiveBottomController {
     } catch (e) {}
   }
 
+  final listFriends = <User>[].obs;
+
+  final listFollow = <FolloweesUser>[].obs;
+
+
   Future<void> getListFriend() async {
     try {
-      dataGetInviteFriend.value = await useCase.getListInviteFriend(isFriend: true, page: 1, pageSize: 100);
+      listFriends.value = await userUsecase.listFriends();
+    } catch (e) {}
+  }
+
+  Future<void> getListFollow() async {
+    try {
+      listFollow.value = await userUsecase.listFollowees();
     } catch (e) {}
   }
 

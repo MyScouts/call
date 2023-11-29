@@ -1,3 +1,4 @@
+import 'package:app_main/src/presentation/live/presentation/live_bottom/list_follow_tab.dart';
 import 'package:app_main/src/presentation/live/presentation/live_bottom/list_friend_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,17 +18,22 @@ class LiveBottomSheet extends StatefulWidget {
   State<LiveBottomSheet> createState() => _LiveBottomSheetState();
 }
 
-enum TabLiveBottom { viewer, follow, rank, invite }
+enum TabLiveBottom {
+  viewer,
+  invite,
+  // follow,
+  rank,
+}
 
 extension TabLiveBottomExt on TabLiveBottom {
   String get title {
     switch (this) {
       case TabLiveBottom.viewer:
-        return 'Đang xem';
-      case TabLiveBottom.follow:
-        return 'Người follow';
+        return 'Số người xem';
+      // case TabLiveBottom.follow:
+      //   return 'Người follow';
       case TabLiveBottom.rank:
-        return 'BXH';
+        return 'Bảng cống hiến';
       case TabLiveBottom.invite:
         return 'Mời bạn bè';
     }
@@ -40,15 +46,16 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
   @override
   void initState() {
     liveBottomController.getLeaderBoard(widget.controller.info.id);
-    liveBottomController.getListFriend();
+    //liveBottomController.getListFriend();
+    liveBottomController.getListFollow();
     super.initState();
   }
 
   List<Widget> get listTab => [
         ViewerTab(controller: widget.controller),
-        Container(),
+        //ListFriendTab(controller: liveBottomController, liveData: widget.controller.info),
+        ListFollowTab(controller: liveBottomController, liveData: widget.controller.info),
         LeaderBoardTab(controller: liveBottomController),
-        ListFriendTab(controller: liveBottomController, liveData: widget.controller.info),
       ];
 
   @override
@@ -90,13 +97,22 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
                       padding: const EdgeInsets.all(10),
                       child: Column(
                         children: [
-                          Text(
-                            TabLiveBottom.values[index].title,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                          Obx(() {
+                            final viewerCount = widget.controller.members.length;
+                            final color = liveBottomController.tabIndex.value == index
+                                ? const Color(0xff4B84F7)
+                                : const Color(0xff8C8C8C);
+                            if (TabLiveBottom.values[index] == TabLiveBottom.viewer) {
+                              return Text(
+                                '${TabLiveBottom.values[index].title} $viewerCount',
+                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: color),
+                              );
+                            }
+                            return Text(
+                              TabLiveBottom.values[index].title,
+                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: color),
+                            );
+                          }),
                           const SizedBox(height: 4),
                           Container(
                               width: 22,
@@ -104,7 +120,7 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(3.5),
                                   color: liveBottomController.tabIndex.value == index
-                                      ? const Color(0xff9627df)
+                                      ? const Color(0xff4B84F7)
                                       : Colors.transparent))
                         ],
                       ),
