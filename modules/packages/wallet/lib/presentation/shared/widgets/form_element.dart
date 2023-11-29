@@ -31,7 +31,7 @@ class FormElement extends StatefulWidget {
   final Color? color;
 
   const FormElement({
-    Key? key,
+    super.key,
     this.title,
     this.isRequired = true,
     required this.name,
@@ -53,7 +53,7 @@ class FormElement extends StatefulWidget {
     this.valueTransformer,
     this.inputFormatters,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   State<FormElement> createState() => _FormElementState();
@@ -73,8 +73,10 @@ class _FormElementState extends State<FormElement> {
     return Theme(
       data: Theme.of(context).copyWith(
         inputDecorationTheme: InputDecorationTheme(
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 5,
+          ),
           hintStyle: const TextStyle(
             fontWeight: FontWeight.w400,
             fontSize: 16,
@@ -95,7 +97,10 @@ class _FormElementState extends State<FormElement> {
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderSide: const BorderSide(
-                color: AppColors.red36, width: 1, style: BorderStyle.solid),
+              color: AppColors.red36,
+              width: 1,
+              style: BorderStyle.solid,
+            ),
             borderRadius: borderRadius,
           ),
           border: OutlineInputBorder(
@@ -126,9 +131,10 @@ class _FormElementState extends State<FormElement> {
                   text: TextSpan(
                     text: widget.title,
                     style: context.text.titleMedium?.copyWith(
-                      color: WalletTheme.greyTextColor,
+                      color: const Color(0xFF212121),
                       fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
+                      height: 20 / 14,
                     ),
                     children: [
                       if (widget.isRequired)

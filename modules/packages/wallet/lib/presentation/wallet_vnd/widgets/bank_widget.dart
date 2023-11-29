@@ -23,22 +23,20 @@ class BankWidget extends StatelessWidget {
         border: Border.all(color: WalletTheme.borderColor),
         borderRadius: WalletConstant.borderRadius12,
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(
-            child: ImageWidget(bank?.logo ?? '', fit: BoxFit.fitWidth),
-          ),
-          Expanded(
-            child: Text(
-              '${bank?.shortName}',
-              textAlign: TextAlign.center,
-              style: context.text.titleMedium?.copyWith(
-                color: const Color(0xFF101B28),
-                fontWeight: FontWeight.w500,
-                fontSize: 12,
-                height: 16 / 12,
-              ),
+          ImageWidget(bank?.logo ?? '', fit: BoxFit.fitWidth),
+          const SizedBox(height: 5),
+          Text(
+            '${bank?.shortName}',
+            textAlign: TextAlign.center,
+            style: context.text.titleMedium?.copyWith(
+              color: const Color(0xFF101B28),
+              fontWeight: FontWeight.w500,
+              fontSize: 12,
+              height: 16 / 12,
             ),
           )
         ],
