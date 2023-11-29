@@ -55,6 +55,7 @@ class _LiveTitlePickerState extends State<LiveTitlePicker> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TextFormField(
+                  textInputAction: TextInputAction.done,
                   autofocus: true,
                   controller: controller,
                   maxLines: 3,

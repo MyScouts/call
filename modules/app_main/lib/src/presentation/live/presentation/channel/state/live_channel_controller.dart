@@ -5,7 +5,9 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/services/live_service/impl/live_socket_service_impl.dart';
 import 'package:app_main/src/core/services/live_service/live_service.dart';
 import 'package:app_main/src/core/services/live_service/live_socket_service.dart';
+import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/presentation/live/data/model/response/join_live_response.dart';
+import 'package:app_main/src/presentation/live/domain/entities/live_comment.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_member.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
@@ -52,7 +54,15 @@ class LiveChannelController {
     this.service,
     this.socketService,
     this.floatingGiftsProvider,
-  );
+  ) {
+    NotificationCenter.subscribe(
+      channel: sendMessage,
+      observer: this,
+      onNotification: (msg) {
+        socketService.sendMessage({'type': 'raw', 'rawContent': msg});
+      },
+    );
+  }
 
   final Rx<LiveStreamState> _state = LiveStreamState.loading.obs;
 
@@ -71,6 +81,14 @@ class LiveChannelController {
   final RxBool _hostOffline = true.obs;
 
   final RxBool _hostInBackground = false.obs;
+
+  final RxBool _showMessageInput = false.obs;
+
+  final RxBool _roomInfoFetching = true.obs;
+
+  RxBool get roomInfoFetching => _roomInfoFetching;
+
+  RxBool get showMessageInput => _showMessageInput;
 
   bool get hostInLive {
     if (_me.value.isOwner) return true;
@@ -91,6 +109,14 @@ class LiveChannelController {
 
   LiveData get info => _info.value;
 
+  void enableMessage() {
+    _showMessageInput.value = true;
+  }
+
+  void disableMessage() {
+    _showMessageInput.value = false;
+  }
+
   void join(int id, [String? password]) async {
     try {
       final res = await Future.wait([
@@ -98,6 +124,7 @@ class LiveChannelController {
         userUseCase.getProfile(),
       ]);
       _info = (res.first as JoinLiveResponse).data.obs;
+      _roomInfoFetching.value = false;
       final user = res.last as User?;
       if (user == null) return;
 
@@ -159,6 +186,12 @@ class LiveChannelController {
     } catch (e) {
       print(e);
     }
+  }
+
+  void reaction() {
+    EasyDebounce.debounce('reaction', const Duration(milliseconds: 300), () {
+      socketService.socket.emit('reaction', {'type': 'heart', 'metadata': {}});
+    });
   }
 
   Future previewQuit() async {
@@ -268,6 +301,13 @@ class LiveChannelController {
       debugPrint('Đang kết nối lại ${socketService.socket.id}');
     });
 
+    socketService.on(socketReactionEvent, (Map data) {
+      debugPrint('$socketReactionEvent ===> $data');
+      if (data['type'] == 'heart') {
+        NotificationCenter.post(channel: reactionEvent);
+      }
+    });
+
     socketService.on(socketGiftGiven, (data) {
       debugPrint('$socketGiftGiven ===> $data');
       final gift = SentGiftResponse.fromJson(data as Map<String, Object?>);
@@ -300,6 +340,15 @@ class LiveChannelController {
       );
       _members.value = [..._members, member];
       print('length ===> ${_members.length}');
+
+      final message = LiveComment(
+        member: member,
+        message: '',
+        type: LiveCommentType.join,
+        createdAt: DateTime.now(),
+      );
+
+      NotificationCenter.post(channel: receiveMessage, options: message);
     });
 
     socketService.on(socketUserLeaveEvent, (Map data) {
@@ -317,6 +366,20 @@ class LiveChannelController {
     socketService.on(socketBannedEvent, (Map data) {
       debugPrint('$socketBannedEvent ===> ${data['user']}');
       _enableChat.value = false;
+    });
+
+    socketService.on(socketMessageEvent, (Map data) {
+      debugPrint('$socketMessageEvent ===> $data');
+      final user = User.fromJson(data['user']);
+      final member = _members.firstWhereOrNull((e) => e.info.userID == user.id);
+      if (member == null) return;
+      final message = LiveComment(
+        member: member,
+        message: data['rawContent'] ?? '',
+        type: LiveCommentType.message,
+        createdAt: DateTime.tryParse(data['createdAt'] ?? '') ?? DateTime.now(),
+      );
+      NotificationCenter.post(channel: receiveMessage, options: message);
     });
   }
 
