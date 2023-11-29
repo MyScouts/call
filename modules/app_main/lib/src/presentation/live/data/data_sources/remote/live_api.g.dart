@@ -387,6 +387,37 @@ class _LiveApi implements LiveApi {
   }
 
   @override
+  Future<ApiResponse<MemberCountData>> memberCount(
+      {required List<int> liveIds}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'liveIds': liveIds};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<MemberCountData>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/live/member-count',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<MemberCountData>.fromJson(
+      _result.data!,
+      (json) => MemberCountData.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
   Future<ApiResponse<LiveStreamCategoryResponse>> getAllCateGory() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

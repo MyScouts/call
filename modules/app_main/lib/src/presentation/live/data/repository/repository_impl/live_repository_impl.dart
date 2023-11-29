@@ -5,6 +5,7 @@ import 'package:app_main/src/presentation/live/data/model/response/data_get_invi
 import 'package:app_main/src/presentation/live/data/model/response/gift_card_live.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_category_detail.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
+import 'package:app_main/src/presentation/live/domain/entities/live_member_count.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/entities/gift_card_list.dart';
@@ -107,5 +108,11 @@ class LiveRepositoryImpl extends LiveRepository {
   Future<dynamic> inviteFriend(String liveId, InviteFriendReq user) async {
     final result = await _liveApi.inviteFriend(liveId: liveId, user: user);
     return result.status;
+  }
+
+  @override
+  Future<List<LiveMemberCount>> memberCount(List<int> liveIDs) async {
+    final result = await _liveApi.memberCount(liveIds: liveIDs);
+    return result.data.data;
   }
 }

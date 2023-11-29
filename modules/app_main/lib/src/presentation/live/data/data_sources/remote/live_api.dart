@@ -12,6 +12,7 @@ import '../../model/response/data_get_invite_friend.dart';
 import '../../model/response/gift_card_live.dart';
 import '../../model/response/join_live_response.dart';
 import '../../model/response/live.dart';
+import '../../model/response/member_count_data.dart';
 import '../../model/response/user_point_response.dart';
 
 part 'live_api.g.dart';
@@ -116,6 +117,9 @@ abstract class LiveApi {
   @POST(LiveApiConstant.inviteFriend)
   Future<ApiResponse<dynamic>> inviteFriend(
       {@Path('id') required String liveId, @Body() required InviteFriendReq user});
+
+  @GET(LiveApiConstant.memberCount)
+  Future<ApiResponse<MemberCountData>> memberCount({@Query('liveIds') required List<int> liveIds});
 
 //
 // @POST(LiveApiConstant.joinLive)

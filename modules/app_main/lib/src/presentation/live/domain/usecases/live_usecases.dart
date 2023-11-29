@@ -8,6 +8,7 @@ import '../../data/model/response/live.dart';
 import '../../data/model/response/user_point_response.dart';
 import '../../data/repository/live_repository.dart';
 import '../entities/gift_card_list.dart';
+import '../entities/live_member_count.dart';
 
 @injectable
 class LiveUseCase {
@@ -59,5 +60,9 @@ class LiveUseCase {
 
   Future<dynamic> inviteFriend({required String liveId, required InviteFriendReq user}) async {
     return (_liveRepository.inviteFriend(liveId, user));
+  }
+
+  Future<List<LiveMemberCount>> memberCount(List<int> liveIDs) async {
+    return _liveRepository.memberCount(liveIDs);
   }
 }
