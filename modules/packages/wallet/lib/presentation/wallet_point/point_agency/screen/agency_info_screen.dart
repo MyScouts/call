@@ -109,14 +109,23 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
             state.whenOrNull(
                 initial: () {},
                 error: (msg) {
+                  // if (msg == "PROFILE_NOT_FOUND") {
+                  //
+                  // } else {
+                  //   showToastMessage(msg, ToastMessageType.error);
+                  // }
                   showToastMessage(msg, ToastMessageType.error);
                 },
                 estCoin: (EstCoinResponse response) {
                   exchangeVND = response.vnd;
-                  _moneyController.text =
-                      (response.vnd).toAppCurrencyString(isWithSymbol: false);
+                  _moneyController.text = response.vnd != 0
+                      ? (response.vnd).toAppCurrencyString(isWithSymbol: false)
+                      : '';
                   _coinController.text =
-                      (response.coin).toAppCurrencyString(isWithSymbol: false);
+                      (response.coin + response.bonusCoin) != 0
+                          ? (response.coin + response.bonusCoin)
+                              .toAppCurrencyString(isWithSymbol: false)
+                          : '';
                 },
                 exchangeSuccess: (ExchangeCoinResponse response) {
                   _agencyBloc.add(
@@ -256,10 +265,15 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
             style: context.textTheme.titleMedium!
                 .copyWith(fontWeight: FontWeight.normal, fontSize: 16),
           ),
-          Text(
-            content,
-            style: context.textTheme.titleMedium!
-                .copyWith(color: AppColors.black, fontSize: 16),
+          Expanded(
+            child: Text(
+              content,
+              style: context.textTheme.titleMedium!.copyWith(
+                  color: AppColors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16),
+              textAlign: TextAlign.right,
+            ),
           ),
         ],
       ),
@@ -374,11 +388,38 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
           ),
           decoration: InputDecoration(
               border: InputBorder.none,
-              focusedBorder: InputBorder.none,
-              enabledBorder: InputBorder.none,
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: AppColors.black10.withOpacity(0.6), width: 1),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: AppColors.black10.withOpacity(0.6), width: 1),
+              ),
               errorBorder: InputBorder.none,
               disabledBorder: InputBorder.none,
               hintText: 'Nhập số xu muốn mua',
+              suffixIcon: IconButton(
+                splashColor: Colors.transparent,
+                onPressed: () {
+                  _coinController.clear();
+                  _moneyController.clear();
+                  _onEstCoin();
+                },
+                icon: Container(
+                  margin: const EdgeInsets.only(top: 12),
+                  padding: const EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    color: const Color(0XFFACACAC),
+                    borderRadius: BorderRadius.circular(90),
+                  ),
+                  child: const Icon(
+                    Icons.clear,
+                    size: 12,
+                    color: AppColors.white,
+                  ),
+                ),
+              ),
               hintStyle: TextStyle(
                   fontSize: 16,
                   color: AppColors.black10.withOpacity(0.6),
@@ -447,8 +488,14 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
           ),
           decoration: InputDecoration(
             border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  color: AppColors.black10.withOpacity(0.6), width: 1),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  color: AppColors.black10.withOpacity(0.6), width: 1),
+            ),
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
             hintText: 'Nhập số tiền',
@@ -456,16 +503,31 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                 fontSize: 16,
                 color: AppColors.black10.withOpacity(0.6),
                 fontWeight: FontWeight.normal),
+            suffixIcon: IconButton(
+              splashColor: Colors.transparent,
+              onPressed: () {
+                _moneyController.clear();
+                _coinController.clear();
+                _onEstCoin();
+              },
+              icon: Container(
+                margin: const EdgeInsets.only(top: 12),
+                padding: const EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  color: const Color(0XFFACACAC),
+                  borderRadius: BorderRadius.circular(90),
+                ),
+                child: const Icon(
+                  Icons.clear,
+                  size: 12,
+                  color: AppColors.white,
+                ),
+              ),
+            ),
           ),
           inputFormatters: [
             ThousandsFormatter(),
           ],
-        ),
-        Container(
-          height: 0.5,
-          width: 400,
-          color: AppColors.black10.withOpacity(0.6),
-          margin: const EdgeInsets.symmetric(horizontal: 8),
         ),
         BlocBuilder<AgencyBloc, AgencyState>(builder: (context, state) {
           return state.maybeWhen(
