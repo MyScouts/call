@@ -19,6 +19,7 @@ import 'package:injectable/injectable.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
+import '../../../data/model/response/gift_card_live.dart';
 import '../../../data/model/response/sent_gift_response.dart';
 import '../../../data/repository/live_repository.dart';
 import '../widget/sent_gift_page.dart';
@@ -74,6 +75,8 @@ class LiveChannelController {
 
   RxList<LiveMember> get members => _members;
 
+  final giftCardLive = const GiftCardLive().obs;
+
   Rx<LiveMember> get me => _me;
 
   final RxBool _enableChat = true.obs;
@@ -99,6 +102,12 @@ class LiveChannelController {
     if (!hostInLive) return null;
     final host = _members.firstWhereOrNull((e) => e.isOwner);
     return host;
+  }
+
+  Future<void> getLeaderBoard(int roomId) async {
+    try {
+      giftCardLive.value = await repository.getInfoGiftCard(roomId);
+    } catch (e) {}
   }
 
   int get hostID {
@@ -137,6 +146,7 @@ class LiveChannelController {
         isOwner: _info.value.user?.id == user.id,
       ).obs;
 
+      await getLeaderBoard(_info.value.id);
       if (_me.value.isOwner) {
         await [Permission.microphone, Permission.camera].request();
         await service.initEngine(enableMic: true, enableWebCam: true);
@@ -310,6 +320,7 @@ class LiveChannelController {
 
     socketService.on(socketGiftGiven, (data) {
       debugPrint('$socketGiftGiven ===> $data');
+      getLeaderBoard(_info.value.id);
       final gift = SentGiftResponse.fromJson(data as Map<String, Object?>);
       if (gift.giftCard?.metadata?.isStaticGif == true) {
         floatingGiftsProvider.addGift(

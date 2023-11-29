@@ -1,5 +1,4 @@
 import 'package:app_main/src/presentation/live/presentation/live_bottom/list_follow_tab.dart';
-import 'package:app_main/src/presentation/live/presentation/live_bottom/list_friend_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
