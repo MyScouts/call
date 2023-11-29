@@ -92,7 +92,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
             phoneNumber: _phoneCtrl.text.trim(),
             password: _passwordCtrl.text,
             birthDay: birthDay?.toYYYYmmdd ?? '1999-01-01',
-            sex: _gender ?? 0,
+            sex: _gender ?? 2,
           );
         }
 
@@ -358,7 +358,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
           password: _passwordCtrl.text,
           phoneCode: _phoneCode.replaceAll("+", ""),
           birthday: birthDay?.toYYYYmmdd ?? '1999-01-01',
-          sex: _gender ?? 0,
+          sex: _gender ?? 2,
         );
   }
 }
