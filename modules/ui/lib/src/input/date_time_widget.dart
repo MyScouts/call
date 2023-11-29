@@ -112,7 +112,7 @@ class _InputDateTimeWidgetState extends State<InputDateTimeWidget> {
           child: IgnorePointer(
             ignoring: true,
             child: TextInputLayout(
-              contentPadding: const EdgeInsets.all(15),
+              contentPadding: const EdgeInsets.all(13),
               controller: _controller,
               validator: widget.validator,
               paddingError: EdgeInsets.zero,
