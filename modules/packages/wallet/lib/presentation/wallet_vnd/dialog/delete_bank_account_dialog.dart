@@ -1,20 +1,14 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:imagewidget/imagewidget.dart';
 import 'package:wallet/core/core.dart';
-
-import '../../../../wallet.dart';
-import '../../shared/widgets/common_outline_button.dart';
-import '../../shared/widgets/gradiant_button.dart';
 import '../../wallet_constant.dart';
 import '../bank_account/bloc/bank_account_bloc.dart';
 
 class DeleteBankAccountDialog extends StatelessWidget {
   final int bankAccountId;
 
-  const DeleteBankAccountDialog({Key? key, required this.bankAccountId})
-      : super(key: key);
+  const DeleteBankAccountDialog({super.key, required this.bankAccountId});
 
   @override
   Widget build(BuildContext context) {
@@ -25,57 +19,114 @@ class DeleteBankAccountDialog extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: context.horizontal12, vertical: 10),
+          horizontal: context.horizontal,
+          vertical: 10,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Align(
-              alignment: Alignment.topRight,
-              child: InkWell(
-                onTap: context.popNavigator,
-                child: const Icon(Icons.close),
-              ),
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Opacity(
+                  opacity: 0,
+                  child: InkWell(
+                    onTap: () {},
+                    child: const Icon(Icons.close),
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  'Huỷ liên kết thẻ',
+                  style: context.text.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                    height: 24 / 16,
+                  ),
+                ),
+                const Spacer(),
+                InkWell(
+                  onTap: context.popNavigator,
+                  child: const Icon(Icons.close),
+                ),
+              ],
             ),
             const SizedBox(height: 25),
-            ImageWidget(IconAppConstants.icClear),
-            const SizedBox(height: 20),
             Text(
-              'Bạn có chắc chắn muốn xóa tài khoản ngân hàng khỏi danh sách',
+              'Bạn chắn chắn muốn huỷ liên kết thẻ ngân hàng với ví của mình?',
               style: context.text.titleLarge?.copyWith(
-                  fontSize: 18, fontWeight: FontWeight.w500, height: 1.2),
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: const Color(0xFF6E6E6E),
+                height: 20 / 14,
+              ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 40),
             Row(
               children: [
                 const SizedBox(width: 20),
                 Expanded(
-                  child: CommonOutlineButton(
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 20,
+                      ),
+                      backgroundColor: const Color(0xFFF4F4F4),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
                     onPressed: context.popNavigator,
-                    height: 50,
-                    borderRadius: WalletConstant.borderRadius90,
-                    label: 'Huỷ',
+                    child: Text(
+                      'Quay về',
+                      style: context.text.bodyLarge?.copyWith(
+                        color: const Color(0xFF6E6E6E),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                        height: 24 / 16,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 30),
                 Expanded(
-                  child: GradiantButton(
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 20,
+                      ),
+                      backgroundColor: const Color(0xFFDE372D),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
                     onPressed: () {
                       context.popNavigator();
                       context.read<BankAccountBloc>().add(
                             BankAccountEvent.deleteBankAccount(
-                                bankId: bankAccountId),
+                              bankId: bankAccountId,
+                            ),
                           );
                     },
-                    height: 50,
-                    borderRadius: WalletConstant.borderRadius90,
-                    child: const Text('Xác nhận'),
+                    child: Text(
+                      'Huỷ liên kết',
+                      style: context.text.bodyLarge?.copyWith(
+                        color: AppColors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                        height: 24 / 16,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 20),
               ],
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
           ],
         ),
       ),

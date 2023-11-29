@@ -19,7 +19,6 @@ class CameraScreen extends StatefulWidget {
 class _CameraScreenState extends State<CameraScreen> {
   CameraController? controller;
   late List<CameraDescription> _cameras;
-  final _textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
   final textRecognizer = GoogleMlKit.vision.textRecognizer();
 
   @override
@@ -118,7 +117,6 @@ class _CameraScreenState extends State<CameraScreen> {
                   child: CupertinoSwitch(
                     activeColor: context.theme.primaryColor,
                     value: false,
-                
                     onChanged: (value) {},
                   ),
                 )

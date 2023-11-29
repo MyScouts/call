@@ -112,7 +112,6 @@ class _AppPhoneInputState extends State<AppPhoneInput> {
                       country?.dialCode ?? "",
                       style: const TextStyle(
                         color: Color(0xFF212121),
-                        height: 20 / 14,
                         leadingDistribution: TextLeadingDistribution.even,
                       ),
                     )

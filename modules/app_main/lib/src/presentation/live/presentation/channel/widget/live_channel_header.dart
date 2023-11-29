@@ -128,7 +128,7 @@ class LiveChannelHeader extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              context.showBottomSheetLive(controller);
+              context.showBottomGift(controller);
             },
             behavior: HitTestBehavior.opaque,
             child: Row(
@@ -139,7 +139,7 @@ class LiveChannelHeader extends StatelessWidget {
                       .map((element) => SizedBox(
                             child: AvatarWidget(avatar: element.info.avatar, size: 30),
                           ))
-                      .toList()
+                      .take(2).toList()
                       .separated(const SizedBox(width: 8)),
                 ),
                 Container(

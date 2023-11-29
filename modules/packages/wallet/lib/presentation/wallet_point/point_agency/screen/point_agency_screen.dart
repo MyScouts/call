@@ -55,13 +55,11 @@ class PointAgencyScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 10),
-                              SearchInputInformationWidget<Agency>(
+                              SearchInputInformationWidget<AgencyResponse>(
                                 required: true,
                                 suggestions: agencies
                                     .map((e) => SuggestionsField(
-                                        name:
-                                            ' ${e.agencyName ?? e.displayName}',
-                                        data: e))
+                                        name: ' ${e.name}', data: e))
                                     .toList(),
                                 initialValue: null,
                                 onSelected: (value) {

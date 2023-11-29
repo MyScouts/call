@@ -88,4 +88,6 @@ abstract class UpgradeAccountRepository {
   Future<PDoneRegisteringProfileData?> getRegisteringProfile();
 
   Future<CheckExistIdentityNumber?> checkExistIdentityNumber(String identityNumber);
+
+  Future<String> getEKycKey();
 }

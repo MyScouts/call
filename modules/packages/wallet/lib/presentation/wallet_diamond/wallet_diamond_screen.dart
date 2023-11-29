@@ -101,17 +101,10 @@ class WalletDiamondDefaultScreen extends StatelessWidget {
   void onTap(BuildContext context, WalletDiamondActionType type) {
     switch (type) {
       case WalletDiamondActionType.chargeDiamondToVnd:
-        if (context.userType == UserType.isPDone) {
-          context.showRegisterJaDialog(
-              walletType: WalletType.diamond,
-              content: WalletConstant.registerJADialogText,
-              isPipLive: isPIP);
-        } else {
-          WalletDiamondNestedRoute.navigatorKey.currentState?.pushNamed(
-            WalletDiamondNestedRoute.chargeDiamondToVnd,
-          );
-          context.read<WalletDiamondBloc>().add(LoadWalletDiamondInfo());
-        }
+        WalletDiamondNestedRoute.navigatorKey.currentState?.pushNamed(
+          WalletDiamondNestedRoute.chargeDiamondToVnd,
+        );
+        context.read<WalletDiamondBloc>().add(LoadWalletDiamondInfo());
         break;
       case WalletDiamondActionType.transactionHistory:
         context

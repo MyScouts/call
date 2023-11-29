@@ -1,7 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/app/app_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
-import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
 import 'package:app_main/src/presentation/profile/user_profile_screen.dart';
@@ -29,8 +28,8 @@ class Setting {
   static List<List<Setting>> session1Menus(
     BuildContext context, {
     User? user,
-    OnboardingResponse? onboarding,
-    Function()? onUpdate,
+    OnBoarding? onboarding,
+    required Function() onUpdate,
     required String osType,
     required bool isProduction,
   }) =>
@@ -66,7 +65,7 @@ class Setting {
             text: "P-Done",
             icon: IconAppConstants.icUpgrade,
             onPressed: () =>
-                context.startPDoneInformation().then((value) => onUpdate!()),
+                context.startPDoneInformation().then((value) => onUpdate()),
           ),
           Setting(
             text: "JA",

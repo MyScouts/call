@@ -137,6 +137,10 @@ class UpgradeAccountUsecase {
     return _upgradeAccountRepository.pDoneProfile();
   }
 
+  Future<String> getEKycKey() {
+    return _upgradeAccountRepository.getEKycKey();
+  }
+
   Future<PDoneMyProtectorInformationResponse> protectorRequested() {
     return _upgradeAccountRepository.protectorRequested();
   }

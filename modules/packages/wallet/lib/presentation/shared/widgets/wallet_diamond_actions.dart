@@ -1,6 +1,5 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-
 import '../../../core/core.dart';
 import '../../presentation.dart';
 import '../../wallet_constant.dart';
@@ -64,18 +63,10 @@ class _WalletDiamondActionsState extends State<WalletDiamondActions> {
   void onTap(WalletDiamondActionType type) {
     switch (type) {
       case WalletDiamondActionType.chargeDiamondToVnd:
-        if (context.userType == UserType.isPDone) {
-          context.showRegisterJaDialog(
-            walletType: WalletType.diamond,
-            content: WalletConstant.registerJADialogText,
-          );
-        } else {
-          //TODO: navigate to charge screen
           context.navigateCharDiamondToVND();
-        }
         break;
       case WalletDiamondActionType.transactionHistory:
-        //TODO: Navigate to transaction history
+        context.startTransactionHistory(walletType: WalletType.diamond);
         break;
     }
   }

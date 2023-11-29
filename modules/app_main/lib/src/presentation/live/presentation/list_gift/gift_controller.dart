@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
 import 'package:localization/generated/l10n.dart';
+import 'package:wallet/core/core.dart';
+import 'package:wallet/data/datasources/models/response/wallet_info_response.dart';
 
 import '../../data/model/response/user_point_response.dart';
 import '../../domain/entities/gift_card_list.dart';
@@ -20,7 +22,7 @@ class GiftController {
 
   final giftCardList = const GiftCardList().obs;
 
-  final userPointResponse = const UserPointResponse().obs;
+  final userWallet = UserWallet().obs;
 
   Future<void> getListGiftCard() async {
     try {
@@ -30,7 +32,7 @@ class GiftController {
 
   Future<void> getUserPoint() async {
     try {
-      userPointResponse.value = await _useCase.getUserPoint();
+      userWallet.value = WalletInjectedData.userWallet;
     } catch (e) {}
   }
 

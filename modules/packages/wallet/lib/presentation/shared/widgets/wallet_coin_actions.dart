@@ -1,9 +1,11 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:wallet/presentation/wallet_coodinator.dart';
 import 'package:wallet/presentation/wallet_point/wallet_point_constant.dart';
 import 'package:wallet/presentation/wallet_point/wallet_point_coodinator.dart';
 
 import '../../../core/core.dart';
+import '../../wallet_constant.dart';
 
 class WalletCoinActions extends StatefulWidget {
   const WalletCoinActions({super.key});
@@ -66,7 +68,7 @@ class _WalletCoinActionsState extends State<WalletCoinActions> {
         context.pointAllAgency();
         break;
       case WalletPointActionType.transactionHistory:
-        context.pointTransactionHistory();
+        context.startTransactionHistory(walletType: WalletType.coin);
         break;
     }
   }

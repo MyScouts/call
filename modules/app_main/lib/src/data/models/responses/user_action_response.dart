@@ -6,8 +6,8 @@ part 'user_action_response.g.dart';
 @freezed
 class FollowUserResponse with _$FollowUserResponse {
   const factory FollowUserResponse({
-    required bool isFriend,
-    required bool isFollowed,
+    bool? isFriend,
+    required bool approvalRequired,
   }) = _FollowUserResponse;
 
   factory FollowUserResponse.fromJson(Map<String, dynamic> json) =>

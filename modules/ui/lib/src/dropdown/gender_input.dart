@@ -50,14 +50,11 @@ class _GenderInputState extends State<GenderInput> {
       children: [
         Row(
           children: [
-            const Text(
+            Text(
               "Giới tính",
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF212121),
-                height: 20 / 14,
-                leadingDistribution: TextLeadingDistribution.even,
-              ),
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
             ),
             widget.required
                 ? Text(
@@ -95,7 +92,6 @@ class _GenderInputState extends State<GenderInput> {
                   ))
               .toList(),
           validator: (value) {
-            print(value);
             if (value == null) {
               return 'Chọn giới tính.';
             }

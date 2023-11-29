@@ -141,6 +141,33 @@ class _UserApi implements UserApi {
   }
 
   @override
+  Future<GetUserFollowDetailResponse> getFollowUser(int userId) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<GetUserFollowDetailResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/v1/following/user/${userId}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = GetUserFollowDetailResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<ApiResponse<FollowUserResponse>> followUser(
       {required FollowUserPayload body}) async {
     const _extra = <String, dynamic>{};
@@ -156,7 +183,7 @@ class _UserApi implements UserApi {
     )
             .compose(
               _dio.options,
-              'api/users/follow',
+              'api/v1/following/follow',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -186,7 +213,7 @@ class _UserApi implements UserApi {
     )
         .compose(
           _dio.options,
-          'api/users/unfollow',
+          'api/v1/following/unfollow',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -196,6 +223,33 @@ class _UserApi implements UserApi {
           baseUrl,
         ))));
     final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<ApprovedRequestResponse> approvedRequest() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApprovedRequestResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/v1/following/approval-requests',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApprovedRequestResponse.fromJson(_result.data!);
     return value;
   }
 
