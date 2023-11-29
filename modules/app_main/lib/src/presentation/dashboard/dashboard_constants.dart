@@ -145,7 +145,9 @@ class DashBoardGroupItem extends DashBoardItem {
       title: json['title'],
       backgroundImage: json['background_image'],
       path: json['path'],
-      items: List.from(json['items'] ?? []).map((e) => DashBoardIconItem.fromJson(e)).toList(),
+      items: List.from(json['items'] ?? [])
+          .map((e) => DashBoardIconItem.fromJson(e))
+          .toList(),
     );
   }
 
@@ -164,81 +166,33 @@ class DashBoardGroupItem extends DashBoardItem {
 }
 
 final Map<String, DashBoardItem> mapItems = {
-  'wg_weather': const DashBoardWidgetItem(
-    id: 'wg_weather',
-    title: 'Thời tiết',
+  'wg_team': const DashBoardWidgetItem(
+    id: 'wg_team',
+    title: 'Team Công nghệ',
     backgroundImage: '',
     width: 2,
     height: 2,
   ),
-  'wg_clock': const DashBoardWidgetItem(
-    id: 'wg_clock',
-    title: 'Đồng hồ',
-    backgroundImage: '',
-    width: 2,
-    height: 2,
-  ),
-  'ic_tv': DashBoardIconItem(
-    id: 'ic_tv',
-    title: 'Kênh',
-    backgroundImage: IconAppConstants.icTv,
-  ),
   'ic_live': DashBoardIconItem(
-      id: 'ic_live', title: 'Live', backgroundImage: IconAppConstants.icLive, path: LiveHomeScreen.routeName),
-  'ic_bird': DashBoardIconItem(
-    id: 'ic_bird',
-    title: 'Nữ thần hoà bình',
-    backgroundImage: IconAppConstants.icBird,
+    id: 'ic_live',
+    title: 'Live',
+    backgroundImage: IconAppConstants.icLive,
   ),
-  'ic_my_driver': DashBoardIconItem(
-    id: 'ic_my_driver',
-    title: 'QR Code',
-    backgroundImage: IconAppConstants.icDoc,
-    path: ScanQrCodeScanScreen.routeName,
-  ),
-  'ic_my_doctor': DashBoardIconItem(
-    id: 'ic_my_doctor',
-    title: 'Bác sĩ của tôi',
-    backgroundImage: IconAppConstants.icDashboardContact,
-  ),
-  'ic_my_job': DashBoardIconItem(
-    id: 'ic_my_job',
-    title: 'Việc làm của tôi',
-    backgroundImage: IconAppConstants.icGroupTeam,
-  ),
-};
-
-final communityDefault = {
-  'wg_weather': DashBoardWidgetItem(
-    id: 'wg_weather',
-    title: 'Thời tiết',
-    backgroundImage: IconAppConstants.icClock,
-    width: 2,
-    height: 2,
-  ),
-  'wg_clock': DashBoardWidgetItem(
-    id: 'wg_clock',
-    title: 'Đồng hồ',
-    backgroundImage: IconAppConstants.icClock,
-    width: 2,
-    height: 2,
-  ),
-  'ic_tv': DashBoardIconItem(
-    id: 'ic_tv',
-    title: 'Kênh',
-    backgroundImage: IconAppConstants.icTv,
-  ),
-  'ic_live': DashBoardIconItem(
-      id: 'ic_live', title: 'Live', backgroundImage: IconAppConstants.icLive, path: LiveHomeScreen.routeName),
-  'ic_bird': DashBoardIconItem(
-    id: 'ic_bird',
-    title: 'Nữ thần hoà bình',
-    backgroundImage: IconAppConstants.icBird,
+  'ic_wallet': DashBoardIconItem(
+    id: 'ic_wallet',
+    title: 'Ví',
+    backgroundImage: IconAppConstants.icWallet,
   ),
   'ic_qr': DashBoardIconItem(
     id: 'ic_qr',
     title: 'QR Code',
     backgroundImage: IconAppConstants.icQr,
+    path: ScanQrCodeScanScreen.routeName,
+  ),
+  'ic_scan': DashBoardIconItem(
+    id: 'ic_scan',
+    title: 'Quét QR',
+    backgroundImage: IconAppConstants.icScan,
     path: ScanQrCodeScanScreen.routeName,
   ),
   'ic_group': DashBoardIconItem(
@@ -252,35 +206,32 @@ final communityDefault = {
     title: 'Team',
     backgroundImage: IconAppConstants.icTeam,
   ),
-  'ic_calenda': DashBoardIconItem(
-    id: 'ic_calenda',
-    title: 'Lịch',
-    backgroundImage: IconAppConstants.icAppCalenda,
+};
+
+final communityDefault = {
+  'wg_live_1': const DashBoardWidgetItem(
+    id: 'wg_live_1',
+    title: 'Live',
+    backgroundImage: '',
+    width: 2,
+    height: 3,
+  ),
+  'wg_team': const DashBoardWidgetItem(
+    id: 'wg_team',
+    title: 'Team Công nghệ',
+    backgroundImage: '',
+    width: 2,
+    height: 2,
+  ),
+  'ic_live': DashBoardIconItem(
+    id: 'ic_live',
+    title: 'Live',
+    backgroundImage: IconAppConstants.icLive,
   ),
   'ic_wallet': DashBoardIconItem(
     id: 'ic_wallet',
     title: 'Ví',
     backgroundImage: IconAppConstants.icWallet,
-  ),
-  'ic_mess': DashBoardIconItem(
-    id: 'ic_mess',
-    title: 'Tin nhắn',
-    backgroundImage: IconAppConstants.icMess,
-  ),
-};
-
-final personalDefault = {
-  'wg_weather': DashBoardWidgetItem(
-    id: 'wg_weather',
-    title: 'Thời tiết',
-    backgroundImage: IconAppConstants.icClock,
-    width: 2,
-    height: 2,
-  ),
-  'ic_tv': DashBoardIconItem(
-    id: 'ic_tv',
-    title: 'Kênh',
-    backgroundImage: IconAppConstants.icTv,
   ),
   'ic_qr': DashBoardIconItem(
     id: 'ic_qr',
@@ -288,10 +239,39 @@ final personalDefault = {
     backgroundImage: IconAppConstants.icQr,
     path: ScanQrCodeScanScreen.routeName,
   ),
-  'ic_call': DashBoardIconItem(
-    id: 'ic_call',
-    title: 'Điện thoại',
-    backgroundImage: IconAppConstants.icCall,
+  'ic_scan': DashBoardIconItem(
+    id: 'ic_scan',
+    title: 'Quét QR',
+    backgroundImage: IconAppConstants.icScan,
+    path: ScanQrCodeScanScreen.routeName,
+  ),
+  'ic_group': DashBoardIconItem(
+    id: 'ic_group',
+    title: 'Group Team',
+    backgroundImage: IconAppConstants.icGroupTeam,
+    path: CommunityWidget.routeName,
+  ),
+  'ic_team': DashBoardIconItem(
+    id: 'ic_team',
+    title: 'Team',
+    backgroundImage: IconAppConstants.icTeam,
+  ),
+};
+
+final personalDefault = {
+  'wg_clock': DashBoardWidgetItem(
+    id: 'wg_clock',
+    title: 'Đồng hồ',
+    backgroundImage: IconAppConstants.icClock,
+    width: 2,
+    height: 2,
+  ),
+  'wg_weather': DashBoardWidgetItem(
+    id: 'wg_weather',
+    title: 'Thời tiết',
+    backgroundImage: IconAppConstants.icClock,
+    width: 2,
+    height: 2,
   ),
   'wg_weather_banner': DashBoardWidgetItem(
     id: 'wg_weather_banner',
@@ -300,10 +280,15 @@ final personalDefault = {
     width: 4,
     height: 2,
   ),
+  'ic_profile': DashBoardIconItem(
+    id: 'ic_profile',
+    title: 'Profile',
+    backgroundImage: IconAppConstants.icProfile,
+  ),
   'ic_setting': DashBoardIconItem(
     id: 'ic_setting',
     title: 'Cài đặt',
-    backgroundImage: IconAppConstants.appSetting,
+    backgroundImage: IconAppConstants.icSettingHome,
     path: SystemSetting.routerName,
   ),
   'ic_mess': DashBoardIconItem(
@@ -311,10 +296,22 @@ final personalDefault = {
     title: 'Tin nhắn',
     backgroundImage: IconAppConstants.icMess,
   ),
-  'ic_bird': DashBoardIconItem(
-    id: 'ic_bird',
-    title: 'Nữ thần hoà bình',
-    backgroundImage: IconAppConstants.icBird,
+  'ic_call': DashBoardIconItem(
+    id: 'ic_call',
+    title: 'Điện thoại',
+    backgroundImage: IconAppConstants.icCall,
+  ),
+  'ic_qr': DashBoardIconItem(
+    id: 'ic_qr',
+    title: 'QR Code',
+    backgroundImage: IconAppConstants.icQr,
+    path: ScanQrCodeScanScreen.routeName,
+  ),
+  'ic_scan': DashBoardIconItem(
+    id: 'ic_scan',
+    title: 'Quét QR',
+    backgroundImage: IconAppConstants.icScan,
+    path: ScanQrCodeScanScreen.routeName,
   ),
 };
 
@@ -326,18 +323,23 @@ final eCommerceDefault = {
     width: 4,
     height: 2,
   ),
-  'ic_profile': DashBoardIconItem(
-    id: 'ic_profile',
-    title: 'Profile',
-    backgroundImage: IconAppConstants.icProfile,
+  'wg_live_2': const DashBoardWidgetItem(
+    id: 'wg_live_2',
+    title: 'Shop live',
+    backgroundImage: '',
+    width: 2,
+    height: 3,
   ),
-  "ic_bird": DashBoardIconItem(
-    id: 'ic_bird',
-    title: 'Nữ thần hoà bình',
-    backgroundImage: IconAppConstants.icBird,
+  "ic_marShop": DashBoardIconItem(
+    id: 'ic_marShop',
+    title: 'MarShop',
+    backgroundImage: IconAppConstants.icMaShop,
   ),
-  'ic_live': DashBoardIconItem(
-      id: 'ic_live', title: 'Live', backgroundImage: IconAppConstants.icLive, path: LiveHomeScreen.routeName),
+  'ic_market': DashBoardIconItem(
+    id: 'ic_market',
+    title: 'MarketHome',
+    backgroundImage: IconAppConstants.icMarket,
+  ),
 };
 
 final mapData = {
