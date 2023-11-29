@@ -1,10 +1,14 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/live/presentation/list_gift/gift_controller.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:localization/localization.dart';
+import 'package:wallet/core/core.dart';
+import 'package:wallet/domain/repository/wallet_repository.dart';
+import 'package:wallet/presentation/shared/bloc/wallet_bloc.dart';
 
 import '../../../../blocs/user/user_cubit.dart';
 import '../../../../di/di.dart';
@@ -45,8 +49,7 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
     return SafeArea(
       child: Container(
         decoration: const BoxDecoration(
-            borderRadius: BorderRadius.horizontal(
-                left: Radius.circular(16), right: Radius.circular(16)),
+            borderRadius: BorderRadius.horizontal(left: Radius.circular(16), right: Radius.circular(16)),
             color: Colors.white),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -85,8 +88,7 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
             const SizedBox(height: 12),
             Obx(() {
               return GiftPage(
-                key:
-                    ObjectKey(giftController.giftCardList.value.giftList ?? []),
+                key: ObjectKey(giftController.giftCardList.value.giftList ?? []),
                 gifts: giftController.giftCardList.value.giftList ?? [],
                 selectedGift: selectedGift,
                 onChanged: (GiftCard value) {
@@ -107,10 +109,7 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                   const SizedBox(width: 4),
                   ImageWidget(IconAppConstants.icChevronRight),
                   Obx(() {
-                    return Text(
-                        giftController.userPointResponse.value.totalPoint
-                                ?.toString() ??
-                            '0',
+                    return Text(giftController.userWallet.value.availableCoin?.toStringAsFixed(0) ?? '0',
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -118,26 +117,30 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                   }),
                   Expanded(child: giftAmount()),
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       if (selectedGift.value == null) return;
+                      if ((selectedGift.value?.coinValue ?? 0) * giftController.amount.value >
+                          giftController.userWallet.value.availableCoin!) {
+                        return context.showToastText('Bạn không đủ xu');
+                      }
                       giftController.sentGift(
                           userId: widget.controller.info.user!.id!,
                           liveId: widget.controller.info.id,
                           giftId: selectedGift.value!.id!);
+                      final wallet = await getIt.get<WalletRepository>().getWalletInfo();
+                      if (wallet != null) {
+                        WalletInjectedData.setUserWallet = wallet;
+                        giftController.userWallet.value = WalletInjectedData.userWallet;
+                      }
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 9.5, horizontal: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 9.5, horizontal: 10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        gradient: const LinearGradient(
-                            colors: [Color(0xff971FF5), Color(0xffDE38EC)]),
+                        gradient: const LinearGradient(colors: [Color(0xff971FF5), Color(0xffDE38EC)]),
                       ),
                       child: const Text("Ủng hộ",
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white)),
+                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white)),
                     ),
                   )
                 ],
@@ -178,8 +181,7 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                               height: 4,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(3.5),
-                                  color: giftController.giftType.value ==
-                                          GiftType.values[index]
+                                  color: giftController.giftType.value == GiftType.values[index]
                                       ? const Color(0xff9627df)
                                       : Colors.transparent))
                         ],
@@ -206,11 +208,9 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                           decoration: BoxDecoration(
-                              color: giftController.indexSelectCommon.value ==
-                                      index
+                              color: giftController.indexSelectCommon.value == index
                                   ? const Color(0xff9627DF)
                                   : const Color(0xffFEEDFF),
                               borderRadius: BorderRadius.circular(8)),
@@ -219,8 +219,7 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                             style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: giftController.indexSelectCommon.value ==
-                                        index
+                                color: giftController.indexSelectCommon.value == index
                                     ? Colors.white
                                     : const Color(0xff9627DF)),
                           ),
@@ -238,34 +237,34 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
     return Obx(() {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Row(
-          children: List<Widget>.generate(
-              listAmount.length,
-              (index) => GestureDetector(
-                    onTap: () {
-                      giftController.amount.value = listAmount[index];
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 17, vertical: 4),
-                      decoration: BoxDecoration(
-                          color:
-                              giftController.amount.value == listAmount[index]
-                                  ? const Color(0xff9627DF)
-                                  : Colors.transparent,
-                          borderRadius: BorderRadius.circular(100)),
-                      child: Text(
-                        listAmount[index].toString(),
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color:
-                                giftController.amount.value == listAmount[index]
-                                    ? Colors.white
-                                    : const Color(0xff9627DF)),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: List<Widget>.generate(
+                listAmount.length,
+                (index) => GestureDetector(
+                      onTap: () {
+                        giftController.amount.value = listAmount[index];
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                        decoration: BoxDecoration(
+                            color: giftController.amount.value == listAmount[index]
+                                ? const Color(0xff9627DF)
+                                : Colors.transparent,
+                            borderRadius: BorderRadius.circular(100)),
+                        child: Text(
+                          listAmount[index].toString(),
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: giftController.amount.value == listAmount[index]
+                                  ? Colors.white
+                                  : const Color(0xff9627DF)),
+                        ),
                       ),
-                    ),
-                  )),
+                    )),
+          ),
         ),
       );
     });
@@ -322,15 +321,11 @@ class PercentWidget extends StatelessWidget {
           Container(
               width: constant.maxWidth,
               height: 4,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: const Color(0xffEAEDF0))),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xffEAEDF0))),
           Container(
               width: constant.maxWidth * percent / 100,
               height: 4,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: const Color(0xff9627df))),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xff9627df))),
         ],
       );
     });
