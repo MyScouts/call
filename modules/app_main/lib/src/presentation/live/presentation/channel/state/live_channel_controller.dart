@@ -96,7 +96,6 @@ class LiveChannelController {
   }
 
   LiveMember? get host {
-    if (!hostInLive) return null;
     final host = _members.firstWhereOrNull((e) => e.isOwner);
     return host;
   }
