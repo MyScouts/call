@@ -5,7 +5,6 @@ import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_bottom_action.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_channel_header.dart';
-import 'package:app_main/src/presentation/live/presentation/channel/widget/live_loading_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/live_message/live_message_input.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';

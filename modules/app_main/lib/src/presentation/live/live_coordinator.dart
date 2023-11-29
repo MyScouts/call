@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/live/presentation/channel/join_channel_provider.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/live_channel_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/create/widget/live_category_picker.dart';
 import 'package:app_main/src/presentation/live/presentation/create/widget/live_title_picker.dart';
@@ -56,17 +57,22 @@ extension LiveCoordinator on BuildContext {
 
   void joinLive(int liveID) {
     Navigator.of(this).pushNamed(
-      LiveChannelScreen.routerName,
+      JoinChannelProvider.routerName,
       arguments: liveID,
     );
   }
 
+
   void showBottomGift(LiveChannelController controller) {
-    showModalBottomSheet(context: this, builder: (context) => GiftCardBottomSheet(controller: controller));
+    showModalBottomSheet(
+        context: this,
+        builder: (context) => GiftCardBottomSheet(controller: controller));
   }
 
   void showBottomSheetLive(LiveChannelController controller) {
-    showModalBottomSheet(context: this, builder: (context) => LiveBottomSheet(controller: controller));
+    showModalBottomSheet(
+        context: this,
+        builder: (context) => LiveBottomSheet(controller: controller));
   }
 
   Future<T?> startSelectUser<T>({required int userId}) {
