@@ -8,8 +8,9 @@ import 'package:localization/localization.dart';
 
 class LiveWidget extends StatelessWidget {
   final LiveDetail liveDetail;
+  final int viewer;
 
-  const LiveWidget({super.key, required this.liveDetail});
+  const LiveWidget({super.key, required this.liveDetail, required this.viewer});
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +81,9 @@ class LiveWidget extends StatelessWidget {
                             IconAppConstants.icUser3,
                           ),
                           const SizedBox(width: 4),
-                          const Text(
-                            '870',
-                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white),
+                           Text(
+                            viewer.toString(),
+                            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white),
                           ),
                         ],
                       ),

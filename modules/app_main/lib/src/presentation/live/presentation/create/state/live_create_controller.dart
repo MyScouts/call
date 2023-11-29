@@ -63,6 +63,7 @@ class LiveCreateController {
   void startStream() async {
     _isCreated.value = true;
     _isStartStream.value = true;
+    dispose();
   }
 
   void endStartStream() {
@@ -71,9 +72,5 @@ class LiveCreateController {
 
   void dispose() {
     service.dispose();
-    NotificationCenter.unsubscribe(
-      channel: disposeCameraPreview,
-      observer: this,
-    );
   }
 }

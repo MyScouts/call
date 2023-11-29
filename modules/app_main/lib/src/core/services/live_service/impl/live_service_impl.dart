@@ -37,10 +37,8 @@ class LiveServiceImpl extends LiveService {
   @override
   Future dispose() async {
     if (_engine != null) {
-      await Future.wait([
-        _engine!.leaveChannel(),
-        _engine!.release(),
-      ]);
+      _engine!.leaveChannel();
+      _engine!.release();
     }
     _engine = null;
   }
@@ -141,6 +139,7 @@ class LiveServiceImpl extends LiveService {
       _engine!.leaveChannel(),
       _engine!.release(),
     ]);
+    _engine = null;
   }
 
   @override
