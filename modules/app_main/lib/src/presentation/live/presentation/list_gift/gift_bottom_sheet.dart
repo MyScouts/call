@@ -8,7 +8,6 @@ import 'package:imagewidget/imagewidget.dart';
 import 'package:localization/localization.dart';
 import 'package:wallet/core/core.dart';
 import 'package:wallet/domain/repository/wallet_repository.dart';
-import 'package:wallet/presentation/shared/bloc/wallet_bloc.dart';
 
 import '../../../../blocs/user/user_cubit.dart';
 import '../../../../di/di.dart';
