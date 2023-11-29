@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,7 +22,7 @@ class _ListFriendTabState extends State<ListFriendTab> {
   Widget build(BuildContext context) {
     return Obx(() {
       final list = widget.controller.dataGetInviteFriend.value.rows ?? [];
-      if(list.isEmpty){
+      if (list.isEmpty) {
         return const Center(
           child: Text("Bạn không có bạn bè"),
         );
@@ -29,11 +30,16 @@ class _ListFriendTabState extends State<ListFriendTab> {
       return ListView.separated(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           itemBuilder: (context, index) {
-            return UserLisTile(
-              user: list[index].userFollow!,
-              onChanged: (User value) {
-                widget.controller.inviteFriend(widget.liveData.id.toString(), [value.id!]);
+            return GestureDetector(
+              onTap: () {
+                context.startSelectUser(userId: list[index].userFollow!.id!);
               },
+              child: UserLisTile(
+                user: list[index].userFollow!,
+                onChanged: (User value) {
+                  widget.controller.inviteFriend(widget.liveData.id.toString(), [value.id!]);
+                },
+              ),
             );
           },
           separatorBuilder: (context, index) {
