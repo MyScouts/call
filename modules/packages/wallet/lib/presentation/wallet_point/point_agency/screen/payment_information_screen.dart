@@ -199,11 +199,14 @@ class _PaymentInformationState extends State<PaymentInformationScreen> {
             style: context.textTheme.titleMedium!
                 .copyWith(fontWeight: FontWeight.normal, fontSize: 16),
           ),
-          Text(
-            content,
-            style: context.textTheme.titleMedium!
-                .copyWith(color: AppColors.black, fontSize: 16),
-          ),
+          Expanded(
+            child: Text(
+              content,
+              style: context.textTheme.titleMedium!
+                  .copyWith(color: AppColors.black, fontSize: 16),
+              textAlign: TextAlign.right,
+            ),
+          )
         ],
       ),
     );
