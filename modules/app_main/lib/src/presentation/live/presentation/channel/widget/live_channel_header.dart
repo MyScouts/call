@@ -128,7 +128,7 @@ class LiveChannelHeader extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              context.showBottomGift(controller);
+              context.showBottomSheetLive(controller);
             },
             behavior: HitTestBehavior.opaque,
             child: Row(
