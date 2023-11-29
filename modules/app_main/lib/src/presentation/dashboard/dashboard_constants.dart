@@ -145,9 +145,7 @@ class DashBoardGroupItem extends DashBoardItem {
       title: json['title'],
       backgroundImage: json['background_image'],
       path: json['path'],
-      items: List.from(json['items'] ?? [])
-          .map((e) => DashBoardIconItem.fromJson(e))
-          .toList(),
+      items: List.from(json['items'] ?? []).map((e) => DashBoardIconItem.fromJson(e)).toList(),
     );
   }
 
@@ -174,10 +172,7 @@ final Map<String, DashBoardItem> mapItems = {
     height: 2,
   ),
   'ic_live': DashBoardIconItem(
-    id: 'ic_live',
-    title: 'Live',
-    backgroundImage: IconAppConstants.icLive,
-  ),
+      id: 'ic_live', title: 'Live', backgroundImage: IconAppConstants.icLive, path: LiveHomeScreen.routeName),
   'ic_wallet': DashBoardIconItem(
     id: 'ic_wallet',
     title: 'Ví',
@@ -227,6 +222,7 @@ final communityDefault = {
     id: 'ic_live',
     title: 'Live',
     backgroundImage: IconAppConstants.icLive,
+    path: LiveHomeScreen.routeName,
   ),
   'ic_wallet': DashBoardIconItem(
     id: 'ic_wallet',
