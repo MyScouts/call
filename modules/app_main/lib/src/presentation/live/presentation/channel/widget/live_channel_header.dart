@@ -139,7 +139,7 @@ class LiveChannelHeader extends StatelessWidget {
                       .map((element) => SizedBox(
                             child: AvatarWidget(avatar: element.info.avatar, size: 30),
                           ))
-                      .toList()
+                      .take(2).toList()
                       .separated(const SizedBox(width: 8)),
                 ),
                 Container(
