@@ -168,6 +168,20 @@ class IconAppConstants {
   static String icDeleteCall = IconApp.icDeleteCall.path;
   static String icVideoAnswer = IconApp.icVideoAnswer.path;
   static String icBackCall = IconApp.icBackCall.path;
+  static String icVideoRd = IconApp.icVideoRd.path;
+  static String icCamera = IconApp.icCamera.path;
+  static String icShopVdone = IconApp.icShopVdone.path;
+  static String icPost = IconApp.icPost.path;
+  static String icReels = IconApp.icReels.path;
+  static String icVideoRdTrans = IconApp.icVideoRdTrans.path;
+  static String icPostActive = IconApp.icPostActive.path;
+  static String icVideoRdTransActive = IconApp.icVideoRdTransActive.path;
+  static String icReelsActive = IconApp.icReelsActive.path;
+  static String icHeart = IconApp.icHeart.path;
+  static String icHeartRd = IconApp.icHeartRd.path;
+  static String icComment = IconApp.icComment.path;
+  static String icShare = IconApp.icShare.path;
+  static String icHeartActive = IconApp.icHeartActive.path;
 }
 
 enum IconApp {
@@ -346,7 +360,22 @@ enum IconApp {
   icCallAway('assets/icons/ic_call_away.svg'),
   icDeleteCall('assets/icons/ic_delete.svg'),
   icVideoAnswer('assets/icons/ic_video_answer.svg'),
-  icBackCall('assets/icons/ic_back_call.svg');
+  icBackCall('assets/icons/ic_back_call.svg'),
+  icVideoRd('assets/icons/ic_video_rd.svg'),
+  icCamera('assets/icons/ic_camera.svg'),
+  icShopVdone('assets/icons/ic_shop_vdone.svg'),
+  icPost('assets/icons/ic_post.svg'),
+  icReels('assets/icons/ic_reels.svg'),
+  icVideoRdTrans('assets/icons/ic_video_rd_trans.svg'),
+  icPostActive('assets/icons/ic_post_active.svg'),
+  icVideoRdTransActive('assets/icons/ic_video_rd_trans_active.svg'),
+  icReelsActive('assets/icons/ic_reels_active.svg'),
+  icHeart('assets/icons/ic_heart.svg'),
+  icHeartRd('assets/icons/ic_heart_rd.svg'),
+  icComment('assets/icons/ic_comment.svg'),
+  icShare('assets/icons/ic_share.svg'),
+  icHeartActive('assets/icons/ic_heart_active.svg');
+
 
   const IconApp(this.path);
 

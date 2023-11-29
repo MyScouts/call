@@ -53,6 +53,7 @@ export 'src/skeleton/box_skeleton.dart';
 export 'src/slider/carousel_slider_widget.dart';
 export 'src/slider/page_indicator_widget.dart';
 export 'src/social/avatar_widget.dart';
+export 'src/text/read_more_hashtag_widget.dart';
 export 'src/text/read_more_widget.dart';
 export 'src/text/requirement_check_list_widget.dart';
 export 'src/widget/app_avatar_widget.dart';
