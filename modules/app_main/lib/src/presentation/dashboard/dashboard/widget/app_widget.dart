@@ -5,8 +5,11 @@ import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_b
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard/widget/clock_widget.dart';
+import 'package:app_main/src/presentation/dashboard/widget/live_widget.dart';
+import 'package:app_main/src/presentation/dashboard/widget/live_widget_2.dart';
 import 'package:app_main/src/presentation/dashboard/widget/weather_banner_widget.dart';
 import 'package:app_main/src/presentation/dashboard/widget/weather_widget.dart';
+import 'package:app_main/src/presentation/dashboard/widget/widget_team.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +54,7 @@ class AppWidget extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   if (authenticate) {
-                    if(enableRemoveIcon) return;
+                    if (enableRemoveIcon) return;
                     context.handleStartAppWidget(id: app.id, path: app.path);
                     return;
                   }
@@ -63,12 +66,22 @@ class AppWidget extends StatelessWidget {
                     Widget child = Stack(
                       clipBehavior: Clip.none,
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(14),
-                          child: ImageWidget(
-                            app.backgroundImage,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
+                        DecoratedBox(
+                          decoration: const BoxDecoration(boxShadow: [
+                            BoxShadow(
+                              offset: Offset(0, 1),
+                              color: Color.fromRGBO(0, 0, 0, 0.20),
+                              blurRadius: 12,
+                              spreadRadius: 1,
+                            ),
+                          ]),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(14),
+                            child: ImageWidget(
+                              app.backgroundImage,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                         if (enableRemoveIcon && !fromAppStore)
@@ -207,6 +220,18 @@ class AppWidgetBuilder extends AppWidget {
           );
         }
 
+        if (app.id == 'wg_live_1') {
+          return const LiveWidget(enableEditMode: false);
+        }
+
+        if (app.id == 'wg_live_2') {
+          return const LiveWidget2(enableEditMode: false);
+        }
+
+        if (app.id == 'wg_team') {
+          return const WidgetTeam(enableEditMode: false);
+        }
+
         if (app.id == 'wg_weather_banner') {
           return WeatherBannerWidget(
             enableEditMode: controller.enableEditMode,
@@ -273,6 +298,10 @@ class AppWidgetGroupBuilder extends AppWidget {
         key: key,
         enableEditMode: false,
       );
+    }
+
+    if (app.id == 'wg_live_1') {
+      return const LiveWidget(enableEditMode: false);
     }
 
     if (app.id == 'wg_weather_banner') {

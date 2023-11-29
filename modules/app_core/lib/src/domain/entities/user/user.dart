@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:design_system/design_system.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../community/team.dart';
@@ -162,6 +163,39 @@ extension SexExt on Sex {
         return IconAppConstants.icMale;
       default:
         return IconAppConstants.icMale;
+    }
+  }
+
+  String getIcon1() {
+    switch (this) {
+      case Sex.female:
+        return IconAppConstants.icFeMaleSVG;
+      case Sex.male:
+        return IconAppConstants.icMaleSVG;
+      default:
+        return IconAppConstants.icMaleSVG;
+    }
+  }
+
+  Color get sexBackGroundColor {
+    switch (this) {
+      case Sex.female:
+        return const Color(0XFFFFEDF8);
+      case Sex.male:
+        return const Color(0XFF79B6EF);
+      default:
+        return const Color(0XFF79B6EF);
+    }
+  }
+
+  Color get sexColor {
+    switch (this) {
+      case Sex.female:
+        return const Color(0XFFE495DA);
+      case Sex.male:
+        return  Colors.white;
+      default:
+        return const Color(0XFF79B6EF);
     }
   }
 }
