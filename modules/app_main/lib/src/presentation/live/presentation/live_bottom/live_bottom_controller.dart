@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../data/model/request/invite_friend_req.dart';
 import '../../data/model/response/data_get_invite_friend.dart';
 import '../../data/model/response/gift_card_live.dart';
 import '../../domain/usecases/live_usecases.dart';
@@ -25,7 +26,17 @@ class LiveBottomController {
 
   Future<void> getListFriend() async {
     try {
-      dataGetInviteFriend.value = await useCase.getListInviteFriend(isFriend: false, page: 1, pageSize: 100);
+      dataGetInviteFriend.value = await useCase.getListInviteFriend(isFriend: true, page: 1, pageSize: 100);
+    } catch (e) {}
+  }
+
+  Future<void> inviteFriend(String id, List<int> userIds) async {
+    try {
+      await useCase.inviteFriend(
+          liveId: id.toString(),
+          user: InviteFriendReq(
+            userIds: userIds,
+          ));
     } catch (e) {}
   }
 }

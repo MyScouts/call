@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 
+import '../../data/model/request/invite_friend_req.dart';
 import '../../data/model/request/send_gift_payload.dart';
 import '../../data/model/response/data_get_invite_friend.dart';
 import '../../data/model/response/gift_card_live.dart';
@@ -54,5 +55,9 @@ class LiveUseCase {
       pageSize: pageSize,
       isFriend: isFriend,
     );
+  }
+
+  Future<dynamic> inviteFriend({required String liveId, required InviteFriendReq user}) async {
+    return (_liveRepository.inviteFriend(liveId, user));
   }
 }

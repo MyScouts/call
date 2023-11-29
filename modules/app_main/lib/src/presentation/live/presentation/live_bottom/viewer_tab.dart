@@ -16,7 +16,6 @@ class ViewerTab extends StatefulWidget {
 }
 
 class _ViewerTabState extends State<ViewerTab> {
-
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -49,23 +48,13 @@ class _ViewerTabState extends State<ViewerTab> {
                             Visibility(
                               visible: widget.controller.members[index].isOwner,
                               child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 8),
+                                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  gradient: const LinearGradient(colors: [
-                                    Color(0xff3679F6),
-                                    Color(0xff79F7DD)
-                                  ])
-                                ),
-                                child: const Text(
-                                    "Chủ phòng",
+                                    borderRadius: BorderRadius.circular(10),
+                                    gradient: const LinearGradient(colors: [Color(0xff3679F6), Color(0xff79F7DD)])),
+                                child: const Text("Chủ phòng",
                                     style: TextStyle(
-                                      fontSize: 8,
-                                      fontWeight: FontWeight.w700,
-                                      height: 1,
-                                      color: Colors.white
-                                    )
-                                ),
+                                        fontSize: 8, fontWeight: FontWeight.w700, height: 1, color: Colors.white)),
                               ),
                             )
                           ],

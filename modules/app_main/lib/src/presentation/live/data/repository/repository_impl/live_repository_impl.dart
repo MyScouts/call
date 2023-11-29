@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/live/data/data_sources/remote/live_api.dart';
+import 'package:app_main/src/presentation/live/data/model/request/invite_friend_req.dart';
 import 'package:app_main/src/presentation/live/data/model/response/data_get_invite_friend.dart';
 import 'package:app_main/src/presentation/live/data/model/response/gift_card_live.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_category_detail.dart';
@@ -100,5 +101,11 @@ class LiveRepositoryImpl extends LiveRepository {
     final result = await _liveApi.getListInviteFriend(page: page, pageSize: pageSize, isFriend: isFriend);
 
     return result.data;
+  }
+
+  @override
+  Future<dynamic> inviteFriend(String liveId, InviteFriendReq user) async {
+    final result = await _liveApi.inviteFriend(liveId: liveId, user: user);
+    return result.status;
   }
 }

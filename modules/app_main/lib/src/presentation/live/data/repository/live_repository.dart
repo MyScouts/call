@@ -3,6 +3,7 @@ import 'package:app_main/src/presentation/live/domain/entities/live_category_det
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 
 import '../../domain/entities/gift_card_list.dart';
+import '../model/request/invite_friend_req.dart';
 import '../model/response/data_get_invite_friend.dart';
 import '../model/response/gift_card_live.dart';
 import '../model/response/join_live_response.dart';
@@ -40,4 +41,6 @@ abstract class LiveRepository {
     int? pageSize,
     required bool isFriend,
   });
+
+  Future<dynamic> inviteFriend(String liveId, InviteFriendReq user);
 }

@@ -1,3 +1,4 @@
+import 'package:app_main/src/presentation/live/presentation/live_bottom/list_friend_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -47,7 +48,7 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
         ViewerTab(controller: widget.controller),
         Container(),
         LeaderBoardTab(controller: liveBottomController),
-        Container(),
+        ListFriendTab(controller: liveBottomController, liveData: widget.controller.info),
       ];
 
   @override
