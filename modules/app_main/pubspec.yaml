@@ -94,6 +94,8 @@ dependencies:
   wakelock_plus: ^1.1.2
   flutter_foreground_task: ^6.1.2
   flutter_slidable: ^3.0.1
+  provider: ^6.1.1
+  sa4_migration_kit: ^1.0.0
 
 dev_dependencies:
   flutter_test:

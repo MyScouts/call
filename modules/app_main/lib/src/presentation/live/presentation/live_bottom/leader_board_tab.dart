@@ -1,4 +1,5 @@
 import 'package:app_main/src/presentation/live/domain/entities/gifter_info.dart';
+import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -59,58 +60,66 @@ class _LeaderBoardTabState extends State<LeaderBoardTab> {
       return ListView.separated(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           itemBuilder: (context, index) {
-            return Row(
-              children: [
-                iconLeader(index),
-                const SizedBox(width: 1.82),
-                AvatarWidget(
-                  avatar: list[index].giver?.avatar,
-                  size: 36,
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(list[index].giver?.displayName ?? '',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          )),
-                      Row(
+            return GestureDetector(
+              onTap: () {
+                context.startSelectUser(userId: list[index].giver!.id!);
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 9),
+                child: Row(
+                  children: [
+                    iconLeader(index),
+                    const SizedBox(width: 1.82),
+                    AvatarWidget(
+                      avatar: list[index].giver?.avatar,
+                      size: 36,
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ImageWidget(IconAppConstants.icMaleSVG),
-                          const SizedBox(width: 4),
-                          const Row(
+                          Text(list[index].giver?.displayName ?? '',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              )),
+                          Row(
                             children: [
-                              Text("Lv.15",
-                                  style: TextStyle(
-                                    fontSize: 8,
-                                    fontWeight: FontWeight.w700,
-                                  ))
+                              ImageWidget(IconAppConstants.icMaleSVG),
+                              const SizedBox(width: 4),
+                              const Row(
+                                children: [
+                                  Text("Lv.15",
+                                      style: TextStyle(
+                                        fontSize: 8,
+                                        fontWeight: FontWeight.w700,
+                                      ))
+                                ],
+                              )
                             ],
                           )
                         ],
-                      )
-                    ],
-                  ),
-                ),
-                Row(
-                  children: [
-                    Text(list[index].coinSrt,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                        )),
-                    const SizedBox(width: 4),
-                    ImageWidget(
-                      IconAppConstants.icDiamond,
-                      width: 16,
-                      height: 16,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(list[index].coinSrt,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            )),
+                        const SizedBox(width: 4),
+                        ImageWidget(
+                          IconAppConstants.icDiamond,
+                          width: 16,
+                          height: 16,
+                        )
+                      ],
                     )
                   ],
-                )
-              ],
+                ),
+              ),
             );
           },
           separatorBuilder: (context, index) {

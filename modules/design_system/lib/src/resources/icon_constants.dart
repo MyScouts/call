@@ -129,6 +129,18 @@ class IconAppConstants {
   static String icTop1Awards = IconApp.icTop1Awards.path;
   static String icTop2Awards = IconApp.icTop2Awards.path;
   static String icTop3Awards = IconApp.icTop3Awards.path;
+  static String icLive2User = IconApp.icLive2User.path;
+  static String icLiveMenu = IconApp.icLiveMenu.path;
+  static String icLiveSend = IconApp.icLiveSend.path;
+  static String icLiveLogo = IconApp.icLiveLogo.path;
+  static String icLove = IconApp.icLove.path;
+  static String icScan = IconApp.icScan.path;
+  static String icMaShop = IconApp.icMaShop.path;
+  static String icMarket = IconApp.icMarket.path;
+  static String icLive1 = IconApp.icLive1.path;
+  static String icLive2 = IconApp.icLive2.path;
+  static String widgetTeam = IconApp.widgetTeam.path;
+  static String icSettingHome = IconApp.icSettingHome.path;
 }
 
 enum IconApp {
@@ -263,6 +275,18 @@ enum IconApp {
   icTop1Awards('assets/icons/ic_top_1_awards.png'),
   icTop2Awards('assets/icons/ic_top_2_awards.png'),
   icTop3Awards('assets/icons/ic_top_3_awards.png'),
+  icLive2User('assets/icons/live_2user.svg'),
+  icLiveMenu('assets/icons/live_menu.svg'),
+  icLiveSend('assets/icons/live_send.svg'),
+  icLiveLogo('assets/icons/live_logo.svg'),
+  icLove('assets/icons/love.png'),
+  icScan('assets/icons/ic_scan.png'),
+  icMaShop('assets/icons/ic_mashop.png'),
+  icMarket('assets/icons/ic_market.png'),
+  icLive1('assets/icons/ic_live_1.png'),
+  icLive2('assets/icons/ic_live_2.png'),
+  widgetTeam('assets/icons/widget_team.png'),
+  icSettingHome('assets/icons/ic_setting_home.png'),
   icLeaveTeam('assets/icons/ic_leave_team.svg');
 
   const IconApp(this.path);

@@ -26,6 +26,7 @@ import 'package:ui/ui.dart';
 class DashBoardInheritedData extends InheritedWidget {
   final PageController pageController;
   final DashBoardController dashBoardController;
+
   const DashBoardInheritedData({
     super.key,
     required super.child,
@@ -57,6 +58,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   late int _page = widget.page ?? (controller.mainPage ?? 0);
 
   bool _showAppStore = false;
+
   bool get authenticate => isAuthenticate.value;
 
   late final DashBoardController dashBoardController;
@@ -158,6 +160,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           setState(() {
                             _page = page;
                           });
+                          NotificationCenter.post(
+                            channel: dashboardPageChange,
+                            options: _page,
+                          );
                         },
                       ),
                     ),

@@ -9,10 +9,12 @@ class LiveComment {
   final LiveMember member;
   final String message;
   final LiveCommentType type;
+  final DateTime createdAt;
 
   LiveComment({
     required this.member,
     required this.message,
     required this.type,
+    required this.createdAt,
   });
 }

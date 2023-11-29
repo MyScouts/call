@@ -8,6 +8,8 @@ export 'src/resources/icon_constants.dart';
 
 export 'src/styles/theme.dart';
 
+export 'generated/assets.gen.dart';
+
 extension Ctx on BuildContext {
   Size get size => MediaQuery.of(this).size;
   double get paddingTop => MediaQuery.of(this).padding.top;
