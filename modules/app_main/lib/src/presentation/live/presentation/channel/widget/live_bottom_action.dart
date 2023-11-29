@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:app_main/src/presentation/live/presentation/live_reaction/live_reaction_screen.dart';
+import 'package:app_main/src/presentation/live/presentation/setting/setting_sheet.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,13 @@ import 'live_rose_button.dart';
 
 class LiveBottomAction extends StatelessWidget {
   const LiveBottomAction({super.key});
+
+  void liveSetting(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) => const SettingSheet(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,9 +89,10 @@ class LiveBottomAction extends StatelessWidget {
                               ),
                             if (controller.me.value.isOwner)
                               LiveButtonAction(
-                                icon:
-                                    ImageWidget(IconAppConstants.icLiveSetting),
-                                onPressed: () {},
+                                icon: ImageWidget(
+                                  IconAppConstants.icLiveSetting,
+                                ),
+                                onPressed: () => liveSetting(context),
                               ),
                             if (controller.me.value.isOwner)
                               LiveButtonAction(

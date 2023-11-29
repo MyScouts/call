@@ -139,6 +139,7 @@ class LiveServiceImpl extends LiveService {
       _engine!.leaveChannel(),
       _engine!.release(),
     ]);
+    _engine = null;
   }
 
   @override
