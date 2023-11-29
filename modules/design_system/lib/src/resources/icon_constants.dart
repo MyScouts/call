@@ -112,6 +112,9 @@ class IconAppConstants {
   static String icUsersGroup = IconApp.icUsersGroup.path;
   static String icLiveUser = IconApp.icLiveUser.path;
   static String icLiveUser3 = IconApp.icLiveUser3.path;
+
+  /// wallet
+  static String icFilter = IconApp.icFilter.path;
   static String icVersion = IconApp.icVersion.path;
   static String icDiamond = IconApp.icDiamond.path;
   static String icLiveMember = IconApp.icLiveMember.path;
@@ -248,6 +251,9 @@ enum IconApp {
   icUsersGroup('assets/icons/ic_user_group.svg'),
   icLiveUser('assets/icons/ic_live_user.svg'),
   icLiveUser3('assets/icons/ic_user_3.svg'),
+
+  /// wallet
+  icFilter('assets/icons/icFilter.svg'),
   icVersion('assets/icons/ic_version.svg'),
   icDiamond('assets/icons/diamond.png'),
   icLiveMember('assets/icons/live_member.svg'),

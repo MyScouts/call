@@ -6,6 +6,7 @@ import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/
 import 'package:app_main/src/data/models/payloads/upgrade_account/upgrade_pdone/upgrade_pdone_payload.dart';
 import 'package:app_main/src/data/models/responses/confirm_register_ja_response.dart';
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
+import 'package:app_main/src/data/models/responses/pdone/pdone_ekyc_data.dart';
 import 'package:app_main/src/data/models/responses/pdone/pdone_registering_profile.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
 import 'package:injectable/injectable.dart';
@@ -68,6 +69,7 @@ class UpgradeAccountApiConstants {
   static const upgradePdone = "api/v1/p-done/upgrade";
   static const eKycUpgrade = "api/v1/p-done/e-kyc-upgrade";
   static const pDoneRegisteringProfile = "api/v1/p-done/registering-profile";
+  static const eKycKey = "api/v1/setting/ekyc";
   static const checkExistByIdentityNumber =
       "api/v1/p-done/identity-number-exist";
 }
@@ -196,4 +198,7 @@ abstract class UpgradeAccountApi {
   @GET(UpgradeAccountApiConstants.checkExistByIdentityNumber)
   Future<CheckExistIdentityNumber> checkExistIdentityNumber(
       @Query('identityNumber') String identityNumber);
+
+  @GET(UpgradeAccountApiConstants.eKycKey)
+  Future<PDoneEKycData> getEKycKey();
 }

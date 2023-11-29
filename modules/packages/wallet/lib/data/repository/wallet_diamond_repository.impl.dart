@@ -11,22 +11,6 @@ class WalletDiamondRepositoryImpl implements WalletDiamondRepository {
   WalletDiamondRepositoryImpl(this._diamondWalletApi);
 
   @override
-  Future<List<DiamondTransactionHistory>> getTransactionHistories(
-      Map<String, dynamic> body) async {
-    final response = await _diamondWalletApi.getTransactionList(body: body);
-
-    return response.data.transactions;
-  }
-
-  @override
-  Future<DiamondTransactionHistoryDetail> getTransactionHistoryDetail(
-      int id) async {
-    final response = await _diamondWalletApi.getTransactionDetail(id: id);
-
-    return response.data;
-  }
-
-  @override
   Future<DiamondWalletInfo> getWalletInfo() async {
     final response = await _diamondWalletApi.getDiamondWalletInfo();
 

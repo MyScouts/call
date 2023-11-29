@@ -6,9 +6,7 @@ import 'package:wallet/core/core.dart';
 import 'package:wallet/presentation/presentation.dart';
 import 'package:wallet/presentation/shared/widgets/toast_message/toast_message.dart';
 
-import '../../../../../wallet.dart';
 import '../../../../domain/entities/wallet/bank_account.dart';
-import '../../../shared/widgets/app_bar.dart';
 import '../../../wallet_constant.dart';
 import '../../widgets/qrcode_widget.dart';
 import '../bloc/bank_account_bloc.dart';
@@ -17,8 +15,7 @@ class BankAccountDetailsScreen extends StatefulWidget {
   final BankAccount bankAccount;
   static const String routeName = '/bank-account-details';
 
-  const BankAccountDetailsScreen({Key? key, required this.bankAccount})
-      : super(key: key);
+  const BankAccountDetailsScreen({super.key, required this.bankAccount});
 
   @override
   State<BankAccountDetailsScreen> createState() =>
@@ -26,10 +23,6 @@ class BankAccountDetailsScreen extends StatefulWidget {
 }
 
 class _BankAccountDetailsScreenState extends State<BankAccountDetailsScreen> {
-  late final screenPadding = EdgeInsets.symmetric(
-    horizontal: context.horizontal,
-    vertical: 5,
-  );
   late final paddingBottom = MediaQuery.of(context).padding.bottom;
   late final _bloc = context.read<BankAccountBloc>();
 
@@ -49,7 +42,7 @@ class _BankAccountDetailsScreenState extends State<BankAccountDetailsScreen> {
       child: Scaffold(
         appBar: appbarBuilder(
           context,
-          title: 'Tài khoản ngân hàng',
+          title: 'Thông tin khoản ngân hàng',
           leading: IconButton(
             padding: const EdgeInsets.all(2),
             icon: const Icon(Icons.arrow_back),
@@ -73,87 +66,61 @@ class _BankAccountDetailsScreenState extends State<BankAccountDetailsScreen> {
             );
           },
           child: Padding(
-            padding: EdgeInsets.only(bottom: paddingBottom),
+            padding: EdgeInsets.only(
+              bottom: paddingBottom,
+              left: context.horizontal,
+              right: context.horizontal,
+            ),
             child: Stack(
               children: [
                 SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        color: WalletTheme.blueCheckedColor,
-                        margin: const EdgeInsets.symmetric(vertical: 10),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: context.horizontal,
-                          vertical: 10,
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.check,
-                              color: AppColors.white,
+                      const SizedBox(height: 20),
+                      ...BankAccountField.values.map(
+                        (field) =>
+                            bankAccountFiledWidget(bankAccountField: field),
+                      ),
+                      QrCodeWidget(
+                        isChecked: true,
+                        qrImage: widget.bankAccount.qrImage,
+                      ),
+                      setDefaultBankAccountWidget(),
+                      const SizedBox(height: 30),
+                      SizedBox(
+                        width: double.infinity,
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 12,
+                              horizontal: 20,
                             ),
-                            const SizedBox(width: 10),
-                            Text(
-                              'Đã kiểm tra',
-                              style: context.text.titleMedium?.copyWith(
-                                color: AppColors.white,
-                                fontSize: 16,
-                              ),
+                            backgroundColor: const Color(0xFFFEF3F2),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                          ],
+                          ),
+                          onPressed: () {
+                            if (widget.bankAccount.id != null) {
+                              context.showDeleteBankAccount(
+                                id: widget.bankAccount.id!,
+                                bloc: _bloc,
+                              );
+                            }
+                          },
+                          child: Text(
+                            'Huỷ liên kết',
+                            style: context.text.bodyLarge?.copyWith(
+                              color: const Color(0xFFDE372D),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16,
+                              height: 24 / 16,
+                            ),
+                          ),
                         ),
                       ),
-                      ...BankAccountField.values
-                          .map((field) =>
-                              bankAccountFiledWidget(bankAccountField: field))
-                          .toList(),
-                      Padding(
-                        padding: screenPadding,
-                        child: QrCodeWidget(
-                          isChecked: true,
-                          qrImage: widget.bankAccount.qrImage,
-                        ),
-                      ),
-                      setDefaultBankAccountWidget()
                     ],
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: context.horizontal),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: WalletConstant.borderRadius8,
-                            side: const BorderSide(
-                              color: AppColors.blue10,
-                              width: 1,
-                            ),
-                          ),
-                        ),
-                        onPressed: () {
-                          if (widget.bankAccount.id != null) {
-                            context.showDeleteBankAccount(
-                              id: widget.bankAccount.id!,
-                              bloc: _bloc,
-                            );
-                          }
-                        },
-                        child: Text(
-                          'XOÁ',
-                          style: context.text.titleLarge?.copyWith(
-                            fontSize: 18,
-                            color: AppColors.blue10,
-                          ),
-                        ),
-                      ),
-                    ),
                   ),
                 ),
               ],
@@ -166,30 +133,30 @@ class _BankAccountDetailsScreenState extends State<BankAccountDetailsScreen> {
 
   Widget bankAccountFiledWidget({required BankAccountField bankAccountField}) {
     return Padding(
-      padding: screenPadding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.symmetric(
+        vertical: 10,
+      ),
+      child: Row(
         children: [
           Text(
             bankAccountField.title,
             style: context.text.bodyMedium?.copyWith(
               color: WalletTheme.grey72,
               fontSize: 14,
+              height: 20 / 14,
             ),
           ),
-          Text(
-            fieldValue(bankAccountField),
-            style: context.text.bodyMedium?.copyWith(
-              color: WalletTheme.black,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              height: 1.5,
+          Expanded(
+            child: Text(
+              fieldValue(bankAccountField),
+              textAlign: TextAlign.end,
+              style: context.text.bodyMedium?.copyWith(
+                color: WalletTheme.black,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                height: 20 / 14,
+              ),
             ),
-          ),
-          const SizedBox(height: 5),
-          const Divider(
-            color: WalletTheme.grey73,
-            thickness: 1,
           ),
         ],
       ),
@@ -199,9 +166,19 @@ class _BankAccountDetailsScreenState extends State<BankAccountDetailsScreen> {
   String fieldValue(BankAccountField filed) {
     switch (filed) {
       case BankAccountField.bankName:
-        return '${widget.bankAccount.bank?.name}';
+        return '${widget.bankAccount.bank?.shortName}';
       case BankAccountField.bankAccountNumber:
-        return '${widget.bankAccount.bankNumber}';
+        String hiddenBankNumber = '';
+        for (int i = 0; i < widget.bankAccount.bankNumber!.length - 3; i++) {
+          hiddenBankNumber = '$hiddenBankNumber*';
+        }
+
+        final lastThreeDigits = widget.bankAccount.bankNumber != null &&
+                widget.bankAccount.bankNumber!.length >= 3
+            ? '*${widget.bankAccount.bankNumber?.substring((widget.bankAccount.bankNumber!.length) - 3, widget.bankAccount.bankNumber!.length)}'
+            : '***';
+
+        return '$hiddenBankNumber$lastThreeDigits';
       case BankAccountField.bankAccountHolder:
         return '${widget.bankAccount.bankHolder}';
     }
@@ -210,37 +187,34 @@ class _BankAccountDetailsScreenState extends State<BankAccountDetailsScreen> {
   Widget setDefaultBankAccountWidget() {
     return StatefulBuilder(
       builder: (context, setState) {
-        return Padding(
-          padding: screenPadding,
-          child: Row(
-            children: [
-              Text(
-                'Thiết lập tài khoản mặc định',
-                style: context.text.titleMedium?.copyWith(
-                  color: WalletTheme.greyTextColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
+        return Row(
+          children: [
+            Text(
+              'Tài khoản thanh toán mặc định',
+              style: context.text.titleMedium?.copyWith(
+                color: WalletTheme.greyTextColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
               ),
-              const Spacer(),
-              CupertinoSwitch(
-                value: isDefault,
-                activeColor: AppColors.blue10,
-                onChanged: (value) {
-                  isDefault = value;
-                  if (widget.bankAccount.id != null) {
-                    _bloc.add(
-                      BankAccountEvent.setDefaultBankAccount(
-                        bankAccountId: widget.bankAccount.id!,
-                        isDefault: isDefault,
-                      ),
-                    );
-                  }
-                  setState(() {});
-                },
-              )
-            ],
-          ),
+            ),
+            const Spacer(),
+            CupertinoSwitch(
+              value: isDefault,
+              activeColor: AppColors.blue10,
+              onChanged: (value) {
+                isDefault = value;
+                if (widget.bankAccount.id != null) {
+                  _bloc.add(
+                    BankAccountEvent.setDefaultBankAccount(
+                      bankAccountId: widget.bankAccount.id!,
+                      isDefault: isDefault,
+                    ),
+                  );
+                }
+                setState(() {});
+              },
+            )
+          ],
         );
       },
     );

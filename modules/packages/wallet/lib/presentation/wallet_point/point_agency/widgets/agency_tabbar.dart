@@ -22,23 +22,9 @@ class AgencyTabBarWidget extends StatefulWidget {
 
 class _AgencyTabBarWidgetState extends State<AgencyTabBarWidget>
     with TickerProviderStateMixin {
-
-  late TabController _tabController;
-  late final userType = context.userType;
-
-  @override
-  void initState() {
-    _tabController = TabController(
-      length: userType.walletCanShow.length,
-      vsync: this,
-      initialIndex: widget.initialIndex,
-    );
-    super.initState();
-  }
-
   @override
   void dispose() {
-    _tabController.dispose();
+    _pageCtrl.dispose();
     super.dispose();
   }
 

@@ -86,14 +86,14 @@ class ThemeText {
       ),
 
       bodyLarge: styleByFontFamily(
-        fontSize: 15,
-        fontWeight: FontWeight.w900,
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
       ),
 
       /// Text in TextField, Title of Listile
       titleMedium: styleByFontFamily(
         fontSize: 14,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w400,
       ),
     );
   }

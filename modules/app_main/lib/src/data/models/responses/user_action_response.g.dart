@@ -9,13 +9,13 @@ part of 'user_action_response.dart';
 _$FollowUserResponseImpl _$$FollowUserResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$FollowUserResponseImpl(
-      isFriend: json['isFriend'] as bool,
-      isFollowed: json['isFollowed'] as bool,
+      isFriend: json['isFriend'] as bool?,
+      approvalRequired: json['approvalRequired'] as bool,
     );
 
 Map<String, dynamic> _$$FollowUserResponseImplToJson(
         _$FollowUserResponseImpl instance) =>
     <String, dynamic>{
       'isFriend': instance.isFriend,
-      'isFollowed': instance.isFollowed,
+      'approvalRequired': instance.approvalRequired,
     };

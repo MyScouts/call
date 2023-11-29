@@ -32,10 +32,10 @@ class User with _$User {
     String? deletedAt,
     String? pDoneId,
     String? displayName,
-    bool? isPDone,
-    bool? isFriend,
-    bool? isFollowing,
-    bool? isFollowed,
+    @Default(false) bool isPDone,
+    @Default(false) bool isFriend,
+    @Default(false) bool isFollowing,
+    @Default(false) bool isFollowed,
     @Default(0) int totalFollower,
     @Default(0) int totalFollowing,
     @Default(0) int totalFriend,
@@ -60,17 +60,17 @@ class User with _$User {
 }
 
 extension UserExtNull on User? {
-  String get getdisplayName =>
-      [this?.displayName, _userDefaultName].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getdisplayName => [this?.displayName, _userDefaultName]
+      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
-  String get getEmail =>
-      [this?.email, _userDefaultEmail].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getEmail => [this?.email, _userDefaultEmail]
+      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
-  String get getAddress =>
-      [this?.address, _userDefaultAddress].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getAddress => [this?.address, _userDefaultAddress]
+      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
-  String get getNickname =>
-      [this?.nickname, _userDefaultNickname].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getNickname => [this?.nickname, _userDefaultNickname]
+      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
   String get getBirthday {
     final DateTime? birthday = this?.birthday;
@@ -82,7 +82,8 @@ extension UserExtNull on User? {
 
   bool get getIsJA => this?.isJA ?? false;
 
-  bool get getIsHasNickname => this?.nickname != null && this!.nickname!.isNotEmpty;
+  bool get getIsHasNickname =>
+      this?.nickname != null && this!.nickname!.isNotEmpty;
 
   bool get getIsHasEmail => this?.email != null && this!.email!.isNotEmpty;
 

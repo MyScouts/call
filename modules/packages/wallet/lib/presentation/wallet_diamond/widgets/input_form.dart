@@ -199,6 +199,14 @@ class _WalletDiamondInputFormState extends State<WalletDiamondInputForm>
               decoration: InputDecoration(
                   // border: InputBorder.none,
                   // focusedBorder: InputBorder.none,
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        color: AppColors.black10.withOpacity(0.6), width: 1),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        color: AppColors.black10.withOpacity(0.6), width: 1),
+                  ),
                   // enabledBorder: InputBorder.none,
                   // errorBorder: InputBorder.none,
                   // disabledBorder: InputBorder.none,

@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/upgrade_account/place_information_constant.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -25,18 +28,17 @@ class PDoneInformationBloc
   FutureOr<void> _mapPDoneGetInformationEvent(PDoneGetInformationEvent event,
       Emitter<PDoneInformationState> emit) async {
     emit(PDoneLoadingInformation());
-    try {
-      final res = await _upgradeAccountUsecase.pDoneProfile();
-      final registeringProfile =
-          await _upgradeAccountUsecase.getRegisteringProfile();
-      if (res.profile.type == 0 && registeringProfile == null) {
-        emit(PDoneNotYetRegisterState());
-      } else {
-        emit(PDoneLoadedSuccessInformation(
-            data: res.profile, registeringProfile: registeringProfile));
-      }
-    } catch (e) {
-      emit(PDoneLoadedFailureInformation(errorMessage: e.toString()));
+    final res = await _upgradeAccountUsecase.pDoneProfile();
+    final eKycBase64 = await _upgradeAccountUsecase.getEKycKey();
+    final decoded = utf8.decode(base64.decode(eKycBase64));
+    ekycInfo = json.decode(decoded);
+    final registeringProfile =
+    await _upgradeAccountUsecase.getRegisteringProfile();
+    if (res.profile.type == 0 && registeringProfile == null) {
+      emit(PDoneNotYetRegisterState());
+    } else {
+      emit(PDoneLoadedSuccessInformation(
+          data: res.profile, registeringProfile: registeringProfile));
     }
   }
 }

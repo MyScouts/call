@@ -243,4 +243,11 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
     final response = await _upgradeAccountApi.checkExistIdentityNumber(identityNumber);
     return response;
   }
+
+  @override
+  Future<String> getEKycKey() async{
+    // TODO: implement getEKycKey
+    final response = await _upgradeAccountApi.getEKycKey();
+    return response.value;
+  }
 }

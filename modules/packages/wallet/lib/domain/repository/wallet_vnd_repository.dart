@@ -20,11 +20,6 @@ abstract class WalletVndRepository {
 
   Future<bool> deleteBankAccount({required int bankId});
 
-  Future<List<TransactionHistory>> getTransactionHistories(
-      Map<String, dynamic> body);
-
-  Future<TransactionHistoryDetail> getTransactionHistoryDetail(int id);
-
   Future<num> estimateTax(num value);
 
   Future<void> withdraw(WithdrawRequest request);

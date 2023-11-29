@@ -88,7 +88,6 @@ extension DashBoardCoordinator on BuildContext {
     switch (id) {
       case "ic_team":
         return _startTeam();
-
       case 'ic_wallet':
         return _startWallet();
       default:

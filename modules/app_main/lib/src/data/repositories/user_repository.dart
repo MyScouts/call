@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/data/models/responses/follow_response.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
 import 'package:app_main/src/data/models/responses/update_none_pdone_profile_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
@@ -58,4 +59,7 @@ abstract class UserRepository {
   Future setConfig(String key, Map<String, dynamic> json);
 
   Future<Map<String, dynamic>> getConfig(String key);
+
+  Future<GetUserFollowDetailResponse> getFollowUser(int userId);
+  Future<ApprovedRequestResponse> approvedRequests();
 }
