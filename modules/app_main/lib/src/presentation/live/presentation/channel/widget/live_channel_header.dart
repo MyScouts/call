@@ -1,3 +1,4 @@
+import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/live_channel_screen.dart';
@@ -5,6 +6,7 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:ui/ui.dart';
 
 import 'leave_live_confirm.dart';
 
@@ -49,8 +51,7 @@ class LiveChannelHeader extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.all(4.0),
                 child: Obx(() {
-                  final host = controller.members.value
-                      .firstWhereOrNull((e) => e.isOwner);
+                  final host = controller.members.firstWhereOrNull((e) => e.isOwner);
                   return IntrinsicHeight(
                     child: Row(
                       children: [
@@ -132,6 +133,15 @@ class LiveChannelHeader extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             child: Row(
               children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: controller.members
+                      .map((element) => SizedBox(
+                            child: AvatarWidget(avatar: element.info.avatar, size: 30),
+                          ))
+                      .toList()
+                      .separated(const SizedBox(width: 8)),
+                ),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.5),
@@ -147,7 +157,7 @@ class LiveChannelHeader extends StatelessWidget {
                       const SizedBox(width: 2),
                       Obx(
                         () => Text(
-                          controller.members.value.length.toString(),
+                          controller.members.length.toString(),
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,
