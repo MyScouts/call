@@ -157,9 +157,7 @@ class LiveChannelController {
         _info.value.agoraToken ?? '',
         _info.value.agoraChannel ?? '',
         _me.value.info.userID,
-        role: _me.value.isOwner
-            ? ClientRoleType.clientRoleBroadcaster
-            : ClientRoleType.clientRoleAudience,
+        role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
       );
 
       ///get members
@@ -258,8 +256,7 @@ class LiveChannelController {
       androidNotificationOptions: AndroidNotificationOptions(
         channelId: 'notification_channel_id',
         channelName: 'Foreground Notification',
-        channelDescription:
-            'This notification appears when the foreground service is running.',
+        channelDescription: 'This notification appears when the foreground service is running.',
         channelImportance: NotificationChannelImportance.LOW,
         priority: NotificationPriority.LOW,
         iconData: const NotificationIconData(
@@ -401,18 +398,13 @@ class LiveChannelController {
 }
 
 extension RemoteVideoStateReasonX on RemoteVideoStateReason {
-  bool get isNetworkCongestion =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
+  bool get isNetworkCongestion => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
 
-  bool get isNetworkRecovery =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
+  bool get isNetworkRecovery => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
 
-  bool get isRemoteOffline =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
+  bool get isRemoteOffline => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
 
-  bool get isRemoteUnmuted =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
+  bool get isRemoteUnmuted => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
 
-  bool get isRemoteInBackground =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
+  bool get isRemoteInBackground => this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
 }

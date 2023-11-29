@@ -5,6 +5,7 @@ import '../../../../di/di.dart';
 import '../channel/state/live_channel_controller.dart';
 import 'leader_board_tab.dart';
 import 'live_bottom_controller.dart';
+import 'viewer_tab.dart';
 
 class LiveBottomSheet extends StatefulWidget {
   final LiveChannelController controller;
@@ -42,7 +43,7 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
   }
 
   List<Widget> get listTab => [
-        Container(),
+        ViewerTab(controller: widget.controller),
         Container(),
         LeaderBoardTab(controller: liveBottomController),
         Container(),
