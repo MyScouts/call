@@ -257,38 +257,38 @@ final communityDefault = {
 };
 
 final personalDefault = {
-  'wg_clock': DashBoardWidgetItem(
-    id: 'wg_clock',
-    title: 'Đồng hồ',
-    backgroundImage: IconAppConstants.icClock,
-    width: 2,
-    height: 2,
-  ),
-  'wg_weather': DashBoardWidgetItem(
-    id: 'wg_weather',
-    title: 'Thời tiết',
-    backgroundImage: IconAppConstants.icClock,
-    width: 2,
-    height: 2,
-  ),
-  'wg_weather_banner': DashBoardWidgetItem(
-    id: 'wg_weather_banner',
-    title: 'Thời gian và thời tiết',
-    backgroundImage: IconAppConstants.icClock,
-    width: 4,
-    height: 2,
-  ),
+  // 'wg_clock': DashBoardWidgetItem(
+  //   id: 'wg_clock',
+  //   title: 'Đồng hồ',
+  //   backgroundImage: IconAppConstants.icClock,
+  //   width: 2,
+  //   height: 2,
+  // ),
+  // 'wg_weather': DashBoardWidgetItem(
+  //   id: 'wg_weather',
+  //   title: 'Thời tiết',
+  //   backgroundImage: IconAppConstants.icClock,
+  //   width: 2,
+  //   height: 2,
+  // ),
+  // 'wg_weather_banner': DashBoardWidgetItem(
+  //   id: 'wg_weather_banner',
+  //   title: 'Thời gian và thời tiết',
+  //   backgroundImage: IconAppConstants.icClock,
+  //   width: 4,
+  //   height: 2,
+  // ),
   'ic_profile': DashBoardIconItem(
     id: 'ic_profile',
     title: 'Profile',
     backgroundImage: IconAppConstants.icProfile,
   ),
-  'ic_setting': DashBoardIconItem(
-    id: 'ic_setting',
-    title: 'Cài đặt',
-    backgroundImage: IconAppConstants.icSettingHome,
-    path: SystemSetting.routerName,
-  ),
+  // 'ic_setting': DashBoardIconItem(
+  //   id: 'ic_setting',
+  //   title: 'Cài đặt',
+  //   backgroundImage: IconAppConstants.icSettingHome,
+  //   path: SystemSetting.routerName,
+  // ),
   'ic_mess': DashBoardIconItem(
     id: 'ic_mess',
     title: 'Tin nhắn',

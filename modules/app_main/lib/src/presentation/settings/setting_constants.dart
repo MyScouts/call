@@ -3,6 +3,7 @@ import 'package:app_main/src/blocs/app/app_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/presentation/community/community.component.dart';
+import 'package:app_main/src/presentation/dashboard/system_setting/system_setting.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
 import 'package:app_main/src/presentation/profile/user_profile_screen.dart';
 import 'package:app_main/src/presentation/protector/manage_protector_screen.dart';
@@ -36,6 +37,12 @@ class Setting {
   }) =>
       [
         [
+          Setting(
+            text: "Cài đặt chung",
+            icon: IconAppConstants.icSettingHome,
+            onPressed: () =>
+                Navigator.of(context).pushNamed(SystemSetting.routerName),
+          ),
           Setting(
             text: "Cài đặt tài khoản",
             icon: IconAppConstants.icSettingAccount,
