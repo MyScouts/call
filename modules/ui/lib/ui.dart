@@ -4,6 +4,7 @@ export 'src/appbar/base_appbar.dart';
 export 'src/button/common_outline_button.dart';
 export 'src/button/custom_back_button.dart';
 export 'src/button/custom_close_button.dart';
+
 /// button
 export 'src/button/icon_vertical_button.dart';
 export 'src/button/primary_button.dart';
@@ -26,6 +27,8 @@ export 'src/dropdown/dropdown_widget.dart';
 export 'src/dropdown/gender_input.dart';
 export 'src/dropdown/items/dropdown_item_widget.dart';
 export 'src/expandable_fab/expandable_fab.dart';
+export 'src/skeleton/app_circle_indicator.dart';
+
 /// extensions
 export 'src/extensions/device_media/device_image_extension.dart';
 export 'src/extensions/device_media/picked_file.dart';

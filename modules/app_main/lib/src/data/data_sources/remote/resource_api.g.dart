@@ -230,7 +230,6 @@ class _ResourceApi implements ResourceApi {
 
   @override
   Future<String> storageUploadUrl(XFile file, String prefix) async {
-    // TODO: implement storageUploadUrl
     final resource = '$prefix${file.name}';
     final _responseGetUrlUpload = StorageUploadUrlResponse.fromJson(
         (await _dio.get('api/v1/storage/upload-url?filepath=${resource}'))
@@ -244,6 +243,8 @@ class _ResourceApi implements ResourceApi {
       ),
       data: imageData,
     );
+    print(_responseGetUrlUpload.publicUrl);
+
     return _responseGetUrlUpload.publicUrl;
   }
 }

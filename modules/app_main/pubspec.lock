@@ -13,10 +13,10 @@ packages:
     dependency: transitive
     description:
       name: _flutterfire_internals
-      sha256: dd68ecea9f1e3556d385521bd21c7bafd6311a8c1e11abe2595ca27974f468ee
+      sha256: eb0ac20f704799b986049fbb3c1c16421eca319a1b872378d669513e12452ba5
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.13"
+    version: "1.3.14"
   adaptive_theme:
     dependency: "direct main"
     description:
@@ -25,6 +25,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.4.1"
+  agora_rtc_engine:
+    dependency: "direct main"
+    description:
+      path: "../agora_rtc_engine-6.1.0"
+      relative: true
+    source: path
+    version: "6.1.0"
   analyzer:
     dependency: transitive
     description:
@@ -156,10 +163,10 @@ packages:
     dependency: "direct dev"
     description:
       name: build_runner
-      sha256: "10c6bcdbf9d049a0b666702cf1cee4ddfdc38f02a19d35ae392863b47519848b"
+      sha256: "67d591d602906ef9201caf93452495ad1812bea2074f04e25dbd7c133785821b"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.6"
+    version: "2.4.7"
   build_runner_core:
     dependency: transitive
     description:
@@ -220,10 +227,10 @@ packages:
     dependency: transitive
     description:
       name: camera_android
-      sha256: "58463140f1b39591b8e2155861b436abad4ceb48160058be8374164ff0309ef3"
+      sha256: b63304d553dde613ca68fb40aaa76bbbcdbd051683bdbf2019671ec8d9645ce7
       url: "https://pub.dev"
     source: hosted
-    version: "0.10.8+13"
+    version: "0.10.8+14"
   camera_avfoundation:
     dependency: transitive
     description:
@@ -431,6 +438,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.5"
+  events_emitter:
+    dependency: "direct main"
+    description:
+      name: events_emitter
+      sha256: a075477bdf9c8c0c31bb7c7b7bdd357b4486c34f30163119f96de4e7f54abeff
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.2"
   extended_image:
     dependency: transitive
     description:
@@ -523,10 +538,10 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_core
-      sha256: "471b46ea6a9af503184d4de691566887daedd312aec5baac5baa42d819f56446"
+      sha256: d301561d614487688d797717bef013a264c517d1d09e4c5c1325c3a64c835efb
       url: "https://pub.dev"
     source: hosted
-    version: "2.23.0"
+    version: "2.24.0"
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -539,34 +554,34 @@ packages:
     dependency: transitive
     description:
       name: firebase_core_web
-      sha256: "0631a2ec971dbc540275e2fa00c3a8a2676f0a7adbc3c197d6fba569db689d97"
+      sha256: "10159d9ee42c79f4548971d92f3f0fcd5791f6738cda3583a4e3b2c8b244c018"
       url: "https://pub.dev"
     source: hosted
-    version: "2.8.1"
+    version: "2.9.0"
   firebase_messaging:
     dependency: "direct main"
     description:
       name: firebase_messaging
-      sha256: f4576000e749c906d44649feadb2449ada39eab9777650319bdd6fa69a3044f5
+      sha256: "260064e1b512a9e1970b5964d645eba888208ca3de42459c38e484c8ecdc37a9"
       url: "https://pub.dev"
     source: hosted
-    version: "14.7.5"
+    version: "14.7.6"
   firebase_messaging_platform_interface:
     dependency: transitive
     description:
       name: firebase_messaging_platform_interface
-      sha256: dcf065ecb9518ddc671477f9b8592274df7ccf74c6aaa15f02fc92b1f2b9c8a8
+      sha256: "81fb8c983356dd75ee660f276c918380325df7a1ab1e981ede911809e9ddff30"
       url: "https://pub.dev"
     source: hosted
-    version: "4.5.14"
+    version: "4.5.15"
   firebase_messaging_web:
     dependency: transitive
     description:
       name: firebase_messaging_web
-      sha256: "11b7920273367ce2cb272d29153bb7aaae93577eba1eba423c7af61d7f2a3eb2"
+      sha256: "1c5d9b6cf929ab471300143059d1641a26b73c9c24adb5266e241aea23c090aa"
       url: "https://pub.dev"
     source: hosted
-    version: "3.5.14"
+    version: "3.5.15"
   fixnum:
     dependency: transitive
     description:
@@ -612,14 +627,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.1"
-  flutter_chat_bubble:
+  flutter_foreground_task:
     dependency: "direct main"
     description:
-      name: flutter_chat_bubble
-      sha256: ede33df7237fea3d89464c8493bfa0bee2f94f50fd097ebd30c517c3c0d4fcf9
+      name: flutter_foreground_task
+      sha256: e48d2d810a2d643362e64de41146ed8e95d4dd282bae6abbb32309d9f0bf5d67
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.2"
+    version: "6.1.2"
   flutter_form_builder:
     dependency: transitive
     description:
@@ -915,6 +930,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.2"
+  get:
+    dependency: "direct main"
+    description:
+      name: get
+      sha256: e4e7335ede17452b391ed3b2ede016545706c01a02292a6c97619705e7d2a85e
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.6.6"
   get_it:
     dependency: "direct main"
     description:
@@ -1243,6 +1266,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  iris_event:
+    dependency: transitive
+    description:
+      name: iris_event
+      sha256: bd5d84ac0edb0dd65dfadfae1e76422f783e73a73c9a06b4e78419d0d3a2d48e
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   js:
     dependency: transitive
     description:
@@ -1559,6 +1590,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
+  pretty_qr_code:
+    dependency: transitive
+    description:
+      name: pretty_qr_code
+      sha256: "799fa8d5c605028302cb7debbf3f180ce56678c4927fb2ecc4b174a3bee526d6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   printing:
     dependency: "direct main"
     description:
@@ -1576,7 +1615,7 @@ packages:
     source: hosted
     version: "3.1.0"
   provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: provider
       sha256: "9a96a0a19b594dbc5bf0f1f27d2bc67d5f95957359b461cd9feb44ed6ae75096"
@@ -1686,6 +1725,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
+  sa4_migration_kit:
+    dependency: "direct main"
+    description:
+      name: sa4_migration_kit
+      sha256: "635df6de79b8b396705a630ba2d7bc7a2a1df4f69b4bfc10aa104290f6fdca85"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   screenshot:
     dependency: "direct main"
     description:
@@ -1807,6 +1854,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  simple_animations:
+    dependency: transitive
+    description:
+      name: simple_animations
+      sha256: "1ea7b93fb98e2a611b6865d632de55607b766328d14700143353129ee0559d3a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.2"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -2130,6 +2185,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.0+2"
+  wakelock_plus:
+    dependency: "direct main"
+    description:
+      name: wakelock_plus
+      sha256: f268ca2116db22e57577fb99d52515a24bdc1d570f12ac18bb762361d43b043d
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.4"
+  wakelock_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: wakelock_plus_platform_interface
+      sha256: "40fabed5da06caff0796dc638e1f07ee395fb18801fbff3255a2372db2d80385"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   wallet:
     dependency: "direct main"
     description:

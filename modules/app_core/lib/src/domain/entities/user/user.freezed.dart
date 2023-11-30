@@ -40,10 +40,10 @@ mixin _$User {
   String? get deletedAt => throw _privateConstructorUsedError;
   String? get pDoneId => throw _privateConstructorUsedError;
   String? get displayName => throw _privateConstructorUsedError;
-  bool? get isPDone => throw _privateConstructorUsedError;
-  bool? get isFriend => throw _privateConstructorUsedError;
-  bool? get isFollowing => throw _privateConstructorUsedError;
-  bool? get isFollowed => throw _privateConstructorUsedError;
+  bool get isPDone => throw _privateConstructorUsedError;
+  bool get isFriend => throw _privateConstructorUsedError;
+  bool get isFollowing => throw _privateConstructorUsedError;
+  bool get isFollowed => throw _privateConstructorUsedError;
   int get totalFollower => throw _privateConstructorUsedError;
   int get totalFollowing => throw _privateConstructorUsedError;
   int get totalFriend => throw _privateConstructorUsedError;
@@ -94,10 +94,10 @@ abstract class $UserCopyWith<$Res> {
       String? deletedAt,
       String? pDoneId,
       String? displayName,
-      bool? isPDone,
-      bool? isFriend,
-      bool? isFollowing,
-      bool? isFollowed,
+      bool isPDone,
+      bool isFriend,
+      bool isFollowing,
+      bool isFollowed,
       int totalFollower,
       int totalFollowing,
       int totalFriend,
@@ -154,10 +154,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? deletedAt = freezed,
     Object? pDoneId = freezed,
     Object? displayName = freezed,
-    Object? isPDone = freezed,
-    Object? isFriend = freezed,
-    Object? isFollowing = freezed,
-    Object? isFollowed = freezed,
+    Object? isPDone = null,
+    Object? isFriend = null,
+    Object? isFollowing = null,
+    Object? isFollowed = null,
     Object? totalFollower = null,
     Object? totalFollowing = null,
     Object? totalFriend = null,
@@ -258,22 +258,22 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
               as String?,
-      isPDone: freezed == isPDone
+      isPDone: null == isPDone
           ? _value.isPDone
           : isPDone // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isFriend: freezed == isFriend
+              as bool,
+      isFriend: null == isFriend
           ? _value.isFriend
           : isFriend // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isFollowing: freezed == isFollowing
+              as bool,
+      isFollowing: null == isFollowing
           ? _value.isFollowing
           : isFollowing // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isFollowed: freezed == isFollowed
+              as bool,
+      isFollowed: null == isFollowed
           ? _value.isFollowed
           : isFollowed // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as bool,
       totalFollower: null == totalFollower
           ? _value.totalFollower
           : totalFollower // ignore: cast_nullable_to_non_nullable
@@ -402,10 +402,10 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       String? deletedAt,
       String? pDoneId,
       String? displayName,
-      bool? isPDone,
-      bool? isFriend,
-      bool? isFollowing,
-      bool? isFollowed,
+      bool isPDone,
+      bool isFriend,
+      bool isFollowing,
+      bool isFollowed,
       int totalFollower,
       int totalFollowing,
       int totalFriend,
@@ -461,10 +461,10 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? deletedAt = freezed,
     Object? pDoneId = freezed,
     Object? displayName = freezed,
-    Object? isPDone = freezed,
-    Object? isFriend = freezed,
-    Object? isFollowing = freezed,
-    Object? isFollowed = freezed,
+    Object? isPDone = null,
+    Object? isFriend = null,
+    Object? isFollowing = null,
+    Object? isFollowed = null,
     Object? totalFollower = null,
     Object? totalFollowing = null,
     Object? totalFriend = null,
@@ -565,22 +565,22 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
               as String?,
-      isPDone: freezed == isPDone
+      isPDone: null == isPDone
           ? _value.isPDone
           : isPDone // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isFriend: freezed == isFriend
+              as bool,
+      isFriend: null == isFriend
           ? _value.isFriend
           : isFriend // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isFollowing: freezed == isFollowing
+              as bool,
+      isFollowing: null == isFollowing
           ? _value.isFollowing
           : isFollowing // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isFollowed: freezed == isFollowed
+              as bool,
+      isFollowed: null == isFollowed
           ? _value.isFollowed
           : isFollowed // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as bool,
       totalFollower: null == totalFollower
           ? _value.totalFollower
           : totalFollower // ignore: cast_nullable_to_non_nullable
@@ -681,10 +681,10 @@ class _$UserImpl implements _User {
       this.deletedAt,
       this.pDoneId,
       this.displayName,
-      this.isPDone,
-      this.isFriend,
-      this.isFollowing,
-      this.isFollowed,
+      this.isPDone = false,
+      this.isFriend = false,
+      this.isFollowing = false,
+      this.isFollowed = false,
       this.totalFollower = 0,
       this.totalFollowing = 0,
       this.totalFriend = 0,
@@ -749,13 +749,17 @@ class _$UserImpl implements _User {
   @override
   final String? displayName;
   @override
-  final bool? isPDone;
+  @JsonKey()
+  final bool isPDone;
   @override
-  final bool? isFriend;
+  @JsonKey()
+  final bool isFriend;
   @override
-  final bool? isFollowing;
+  @JsonKey()
+  final bool isFollowing;
   @override
-  final bool? isFollowed;
+  @JsonKey()
+  final bool isFollowed;
   @override
   @JsonKey()
   final int totalFollower;
@@ -969,10 +973,10 @@ abstract class _User implements User {
       final String? deletedAt,
       final String? pDoneId,
       final String? displayName,
-      final bool? isPDone,
-      final bool? isFriend,
-      final bool? isFollowing,
-      final bool? isFollowed,
+      final bool isPDone,
+      final bool isFriend,
+      final bool isFollowing,
+      final bool isFollowed,
       final int totalFollower,
       final int totalFollowing,
       final int totalFriend,
@@ -1035,13 +1039,13 @@ abstract class _User implements User {
   @override
   String? get displayName;
   @override
-  bool? get isPDone;
+  bool get isPDone;
   @override
-  bool? get isFriend;
+  bool get isFriend;
   @override
-  bool? get isFollowing;
+  bool get isFollowing;
   @override
-  bool? get isFollowed;
+  bool get isFollowed;
   @override
   int get totalFollower;
   @override

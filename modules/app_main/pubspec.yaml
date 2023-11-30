@@ -28,7 +28,7 @@ dependencies:
     path: ../reorderable
   staggered_reorderable:
     path: ../staggered_reorderable
-    
+
   wallet:
     path: ../packages/wallet
 
@@ -86,10 +86,16 @@ dependencies:
   version: ^3.0.2
   pdf: ^3.10.6
   printing: ^5.11.1
-  flutter_slidable: ^3.0.1
+  agora_rtc_engine:
+    path: ../agora_rtc_engine-6.1.0
+  events_emitter: ^0.5.2
   socket_io_client: ^2.0.3+1
-  flutter_chat_bubble: ^2.0.2
-
+  get: ^4.6.6
+  wakelock_plus: ^1.1.2
+  flutter_foreground_task: ^6.1.2
+  flutter_slidable: ^3.0.1
+  provider: ^6.1.1
+  sa4_migration_kit: ^1.0.0
 
 dev_dependencies:
   flutter_test:

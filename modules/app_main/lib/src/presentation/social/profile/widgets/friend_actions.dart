@@ -1,6 +1,5 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user_action/user_action_cubit.dart';
-import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +58,9 @@ class _FriendMenuActionsState extends State<FriendMenuActions> {
           ),
           GestureDetector(
             onTap: () => context.read<UserActionCubit>().unFollow(
-                  payload: UnFollowPayload(id: widget.userInfo.id!),
+                  payload: UnFollowPayload(
+                    followeeId: widget.userInfo.id!,
+                  ),
                 ),
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 20),
@@ -69,9 +70,7 @@ class _FriendMenuActionsState extends State<FriendMenuActions> {
                   Row(
                     children: [
                       Text(
-                        widget.userInfo.isFriend!
-                            ? "Huỷ bạn bè"
-                            : "Bỏ theo dõi",
+                        widget.userInfo.isFriend ? "Huỷ bạn bè" : "Bỏ theo dõi",
                         style: context.textTheme.titleMedium!.copyWith(
                           fontSize: 15,
                           color: AppColors.red500,

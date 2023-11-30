@@ -1,112 +1,8 @@
-import 'dart:math';
-
+// ignore_for_file: constant_identifier_names
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:imagewidget/imagewidget.dart';
-import 'package:intl/intl.dart';
 import 'package:wallet/core/core.dart';
-
-enum UserType { isDefault, isPDone, isJA }
-
-extension UserExt on BuildContext {
-  UserType get userType {
-    final user = WalletInjectedData.user;
-
-    if (user.isPDone == false) {
-      return UserType.isDefault;
-    }
-    if (user.isJA == false) {
-      return UserType.isPDone;
-    }
-    return UserType.isJA;
-  }
-}
-
-extension UserTypeExt on UserType {
-  List<WalletType> get walletCanShow {
-    switch (this) {
-      case UserType.isDefault:
-        return [WalletType.coin];
-      case UserType.isPDone:
-        return [WalletType.coin, WalletType.diamond];
-      case UserType.isJA:
-        return [WalletType.coin, WalletType.diamond, WalletType.coinVnd];
-    }
-  }
-}
-
-enum WalletType { coin, diamond, coinVnd, live, vshop }
-
-extension WalletTypeExt on WalletType {
-  String get walletNameInDialog {
-    switch (this) {
-      case WalletType.live:
-      case WalletType.vshop:
-      case WalletType.coinVnd:
-        return 'ví VNĐ';
-      case WalletType.coin:
-        return 'ví xu';
-      case WalletType.diamond:
-        return 'ví kim cương';
-    }
-  }
-
-  String get icon {
-    switch (this) {
-      case WalletType.coinVnd:
-        return IconAppConstants.camera2;
-      case WalletType.coin:
-        return IconAppConstants.camera2;
-      case WalletType.diamond:
-        return IconAppConstants.camera2;
-      case WalletType.live:
-        return IconAppConstants.camera2;
-      case WalletType.vshop:
-        return IconAppConstants.camera2;
-    }
-  }
-
-  String get walletTypeText {
-    switch (this) {
-      case WalletType.coinVnd:
-        return 'VNĐ';
-      case WalletType.coin:
-        return 'Xu';
-      case WalletType.diamond:
-        return 'Kim cương';
-      case WalletType.live:
-        return 'V-Live';
-      case WalletType.vshop:
-        return 'V-Shop';
-    }
-  }
-
-  String get name {
-    switch (this) {
-      case WalletType.coinVnd:
-      case WalletType.coin:
-      case WalletType.diamond:
-      case WalletType.live:
-        return 'v_live';
-      case WalletType.vshop:
-        return 'v_shop';
-    }
-  }
-
-  int get initialIndexTabBar {
-    switch (this) {
-      case WalletType.coin:
-        return 0;
-      case WalletType.diamond:
-        return 1;
-      case WalletType.live:
-      case WalletType.vshop:
-      case WalletType.coinVnd:
-        return 2;
-    }
-  }
-}
 
 enum WalletVNDActionType {
   bankAccountInfo,
@@ -184,86 +80,114 @@ extension BankAccountFieldExt on BankAccountField {
       case BankAccountField.bankName:
         return 'Chọn ngân hàng';
       case BankAccountField.bankAccountNumber:
-        return 'Nhập số tài khoản';
+        return 'XXXXXXXXXXXXXX';
       case BankAccountField.bankAccountHolder:
-        return 'Nhập tên chủ tài khoản';
+        return 'Nhập đầy họ tên chủ tài khoản';
     }
   }
 
   String get title {
     switch (this) {
       case BankAccountField.bankName:
-        return 'Tên ngân hàng:';
+        return 'Tên ngân hàng';
       case BankAccountField.bankAccountNumber:
-        return 'Số tài khoản:';
+        return 'Số tài khoản';
       case BankAccountField.bankAccountHolder:
-        return 'Tên chủ tài khoản:';
+        return 'Họ và tên chủ tài khoản';
     }
   }
 }
 
-enum ResourceType { ddone, coin, diamond, vnd }
+enum WalletType { ddone, coin, diamond, vnd }
 
-extension ResourceTypeExt on ResourceType {
+extension WalletTypeExt on WalletType {
   Widget get icon {
     switch (this) {
-      case ResourceType.ddone:
+      case WalletType.ddone:
         return ImageWidget(ImageConstants.icWalletDDone, width: 20, height: 20);
-      case ResourceType.coin:
+      case WalletType.coin:
         return ImageWidget(ImageConstants.icWalletCoin, width: 20, height: 20);
-      case ResourceType.diamond:
-        return ImageWidget(ImageConstants.icWalletDiamond,
-            width: 20, height: 20);
-      case ResourceType.vnd:
+      case WalletType.diamond:
+        return ImageWidget(
+          ImageConstants.icWalletDiamond,
+          width: 20,
+          height: 20,
+        );
+      case WalletType.vnd:
         return ImageWidget(ImageConstants.icWalletVnd, width: 20, height: 20);
+    }
+  }
+
+  Widget iconTransaction(BuildContext context) {
+    switch (this) {
+      case WalletType.ddone:
+        return ImageWidget(ImageConstants.icWalletDDone, width: 20, height: 20);
+      case WalletType.coin:
+        return ImageWidget(ImageConstants.icWalletCoin, width: 20, height: 20);
+      case WalletType.diamond:
+        return ImageWidget(
+          ImageConstants.icWalletDiamond,
+          width: 20,
+          height: 20,
+        );
+      case WalletType.vnd:
+        return Text(
+          'vnđ',
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                height: 24 / 16,
+                color: const Color(0xFF4B84F7),
+              ),
+        );
     }
   }
 
   Color get valueColor {
     switch (this) {
-      case ResourceType.ddone:
+      case WalletType.ddone:
         return WalletTheme.ddoneColor;
-      case ResourceType.coin:
+      case WalletType.coin:
         return WalletTheme.coinColor;
-      case ResourceType.diamond:
+      case WalletType.diamond:
         return WalletTheme.diamondColor;
-      case ResourceType.vnd:
+      case WalletType.vnd:
         return WalletTheme.vndColor;
     }
   }
 
   Color get valueBgColor {
     switch (this) {
-      case ResourceType.ddone:
+      case WalletType.ddone:
         return WalletTheme.ddoneBgColor;
-      case ResourceType.coin:
+      case WalletType.coin:
         return WalletTheme.coinBgColor;
-      case ResourceType.diamond:
+      case WalletType.diamond:
         return WalletTheme.diamondBgColor;
-      case ResourceType.vnd:
+      case WalletType.vnd:
         return WalletTheme.vndBgColor;
     }
   }
 
   String get resourceTabText {
     switch (this) {
-      case ResourceType.ddone:
+      case WalletType.ddone:
         return 'D-One';
-      case ResourceType.coin:
+      case WalletType.coin:
         return 'Xu';
-      case ResourceType.diamond:
+      case WalletType.diamond:
         return 'Kim cương';
-      case ResourceType.vnd:
+      case WalletType.vnd:
         return 'VNĐ';
     }
   }
 
-  static Color get blueBackgroundColor{
+  static Color get blueBackgroundColor {
     return const Color.fromRGBO(75, 132, 247, 1);
   }
 }
 
-enum RechargeType { byMoney, byCoin}
+enum RechargeType { byMoney, byCoin }
 
 extension RechargeTypeExt on RechargeType {
   Color get valueColor {
@@ -275,7 +199,6 @@ extension RechargeTypeExt on RechargeType {
     }
   }
 
-
   String get resourceTabText {
     switch (this) {
       case RechargeType.byMoney:
@@ -285,8 +208,148 @@ extension RechargeTypeExt on RechargeType {
     }
   }
 
-  static Color get blueBackgroundColor{
+  static Color get blueBackgroundColor {
     return const Color.fromRGBO(75, 132, 247, 1);
+  }
+}
+
+enum TransactionCategory { MARSHOP, LIVE }
+
+extension TransactionCategoryExt on TransactionCategory {
+  String get text {
+    switch (this) {
+      case TransactionCategory.MARSHOP:
+        return 'Marshop';
+      case TransactionCategory.LIVE:
+        return 'V-Live';
+    }
+  }
+}
+
+enum TransactionValueType {
+  COIN(0),
+  DIAMOND(1),
+  VND(2),
+  D_ONE(3),
+  PENDING_DIAMOND(21),
+  PENDING_VND(22),
+  WITHDRAWING_VND(32),
+  CASH(99);
+
+  final int value;
+
+  const TransactionValueType(this.value);
+}
+
+enum TransactionResolvedStatus { failed, succeed, pending }
+
+extension TransactionStatusExt on TransactionResolvedStatus {
+  String get text {
+    switch (this) {
+      case TransactionResolvedStatus.pending:
+        return 'Chờ xác nhận';
+      case TransactionResolvedStatus.succeed:
+        return 'Thành công';
+      case TransactionResolvedStatus.failed:
+        return 'Thất bại';
+    }
+  }
+
+  Color get color {
+    switch (this) {
+      case TransactionResolvedStatus.pending:
+        return const Color(0xFFFFA41C);
+      case TransactionResolvedStatus.succeed:
+        return const Color(0xFF00A65F);
+      case TransactionResolvedStatus.failed:
+        return const Color(0xFFDE372D);
+    }
+  }
+}
+
+enum TransactionType {
+  LIVE_GIFT('LIVE_GIFT'),
+  LIVE_VOTE('LIVE_VOTE'),
+  WITHDRAW_FROM_LIVE('WITHDRAW_FROM_LIVE'),
+  DIAMOND_TO_VND('DIAMOND_TO_VND'),
+  BUY_COIN_FROM_AGENCY('BUY_COIN_FROM_AGENCY'),
+  MARSHOP_COMMISSION('MARSHOP_COMMISSION'),
+  WITHDRAW_FROM_MARSHOP('WITHDRAW_FROM_MARSHOP'),
+  GROUP_INCOME('GROUP_INCOME'),
+  TEAM_INCOME('TEAM_INCOME'),
+  DIAMOND_AVAILABLE('DIAMOND_AVAILABLE'),
+  VND_AVAILABLE('VND_AVAILABLE'),
+  REQUEST_WITHDRAW_VND('REQUEST_WITHDRAW_VND'),
+  WITHDRAW_VND_COMPLETED('WITHDRAW_VND_COMPLETED');
+
+  final String value;
+
+  const TransactionType(this.value);
+}
+
+extension TransactionTypeExt on TransactionType {
+  String title(BuildContext context, {required String? receiverPDoneId}) {
+    final myId = WalletInjectedData.user.pDoneId;
+    switch (this) {
+      case TransactionType.LIVE_GIFT:
+        return myId == receiverPDoneId ? 'Nhận quà' : 'Tặng quà';
+      case TransactionType.LIVE_VOTE:
+        return myId == receiverPDoneId ? 'Nhận vote' : 'Tặng vote';
+      case TransactionType.DIAMOND_TO_VND:
+        return 'Đổi kim cương';
+      case TransactionType.BUY_COIN_FROM_AGENCY:
+        return 'Mua xu';
+      case TransactionType.GROUP_INCOME:
+        return 'Nhận tiền từ Group';
+      case TransactionType.TEAM_INCOME:
+        return 'Nhận tiền từ Team';
+      case TransactionType.DIAMOND_AVAILABLE:
+        return 'Nhận từ Kim cương chờ duyệt';
+      case TransactionType.VND_AVAILABLE:
+        return 'Nhận từ ví VNĐ chờ duyệt';
+      case TransactionType.MARSHOP_COMMISSION:
+        return 'Hoa hồng từ đơn hàng';
+      case TransactionType.WITHDRAW_FROM_LIVE:
+      case TransactionType.WITHDRAW_FROM_MARSHOP:
+      case TransactionType.REQUEST_WITHDRAW_VND:
+        return 'Rút tiền từ ví VNĐ';
+      case TransactionType.WITHDRAW_VND_COMPLETED:
+        return 'Rút tiền về tài khoản ngân hàng';
+    }
+  }
+
+  String operator(BuildContext context,
+      {required String? receiverPDoneId, required WalletType walletType}) {
+    final myId = WalletInjectedData.user.pDoneId;
+
+    switch (this) {
+      case TransactionType.LIVE_GIFT:
+      case TransactionType.LIVE_VOTE:
+        return myId == receiverPDoneId ? '+' : '-';
+      case TransactionType.DIAMOND_TO_VND:
+        if (walletType == WalletType.diamond) {
+          return '-';
+        } else {
+          return '+';
+        }
+      case TransactionType.BUY_COIN_FROM_AGENCY:
+        return '+';
+      case TransactionType.GROUP_INCOME:
+      case TransactionType.TEAM_INCOME:
+        return '+';
+      case TransactionType.DIAMOND_AVAILABLE:
+        return '+';
+      case TransactionType.VND_AVAILABLE:
+        return '+';
+      case TransactionType.MARSHOP_COMMISSION:
+        return '+';
+      case TransactionType.WITHDRAW_FROM_LIVE:
+      case TransactionType.WITHDRAW_FROM_MARSHOP:
+      case TransactionType.REQUEST_WITHDRAW_VND:
+        return '-';
+      case TransactionType.WITHDRAW_VND_COMPLETED:
+        return '';
+    }
   }
 }
 
@@ -328,4 +391,3 @@ class WalletConstant {
 
   static const timeInputLimit = 60;
 }
-

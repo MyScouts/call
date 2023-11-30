@@ -1,5 +1,4 @@
 import 'package:app_main/src/domain/entities/notification/notification_data.dart';
-import 'package:app_main/src/domain/entities/notification/notification_type.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'notification_data_response.g.dart';

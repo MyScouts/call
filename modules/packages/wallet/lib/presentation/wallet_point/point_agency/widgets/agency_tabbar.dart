@@ -22,23 +22,9 @@ class AgencyTabBarWidget extends StatefulWidget {
 
 class _AgencyTabBarWidgetState extends State<AgencyTabBarWidget>
     with TickerProviderStateMixin {
-
-  late TabController _tabController;
-  late final userType = context.userType;
-
-  @override
-  void initState() {
-    _tabController = TabController(
-      length: userType.walletCanShow.length,
-      vsync: this,
-      initialIndex: widget.initialIndex,
-    );
-    super.initState();
-  }
-
   @override
   void dispose() {
-    _tabController.dispose();
+    _pageCtrl.dispose();
     super.dispose();
   }
 
@@ -82,6 +68,7 @@ class _AgencyTabBarWidgetState extends State<AgencyTabBarWidget>
   _buildTab() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      margin: EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: WalletConstant.borderRadius90,
@@ -94,8 +81,11 @@ class _AgencyTabBarWidgetState extends State<AgencyTabBarWidget>
             ),
           ]),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: RechargeType.values.map((type) => _tabButton(type)).toList(),
+        children: RechargeType.values
+            .map(
+              (type) => Expanded(child: _tabButton(type)),
+            )
+            .toList(),
       ),
     );
   }

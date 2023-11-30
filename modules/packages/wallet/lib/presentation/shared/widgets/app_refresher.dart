@@ -17,9 +17,8 @@ class AppRefresher extends StatelessWidget {
     this.physics,
     this.scrollDirection,
     this.scrollController,
-    Key? key,
-  })  : builder = null,
-        super(key: key);
+    super.key,
+  })  : builder = null;
 
   const AppRefresher.builder({
     Key? key,
