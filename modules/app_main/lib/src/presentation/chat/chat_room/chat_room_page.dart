@@ -4,7 +4,6 @@ import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/entities/chat/message_model.dart';
 import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_cubit.dart';
 import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_state.dart';
-import 'package:app_main/src/presentation/chat/conversation/cubit/conversation_cubit.dart';
 import 'package:app_main/src/presentation/chat/widgets/avatar_chat_widget.dart';
 import 'package:app_main/src/presentation/chat/widgets/message_widget.dart';
 import 'package:design_system/design_system.dart';
@@ -131,7 +130,6 @@ class ChatRoomPageState extends State<ChatRoomPage> {
 
   @override
   void dispose() {
-    getIt.get<ConversationCubit>().init();
     super.dispose();
   }
 }
