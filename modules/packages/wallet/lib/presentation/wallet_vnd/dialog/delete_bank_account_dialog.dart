@@ -63,10 +63,9 @@ class DeleteBankAccountDialog extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 35),
             Row(
               children: [
-                const SizedBox(width: 20),
                 Expanded(
                   child: TextButton(
                     style: TextButton.styleFrom(
@@ -91,7 +90,7 @@ class DeleteBankAccountDialog extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 30),
+                const SizedBox(width: 20),
                 Expanded(
                   child: TextButton(
                     style: TextButton.styleFrom(
@@ -123,10 +122,9 @@ class DeleteBankAccountDialog extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 20),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 18),
           ],
         ),
       ),
