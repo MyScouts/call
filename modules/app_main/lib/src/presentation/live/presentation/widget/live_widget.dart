@@ -81,7 +81,7 @@ class LiveWidget extends StatelessWidget {
                             IconAppConstants.icUser3,
                           ),
                           const SizedBox(width: 4),
-                           Text(
+                          Text(
                             viewer.toString(),
                             style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white),
                           ),
@@ -91,6 +91,21 @@ class LiveWidget extends StatelessWidget {
                   ],
                 ),
                 const Spacer(),
+                Visibility(
+                  visible: liveDetail.categories?.isNotEmpty == true,
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(90)),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5.5),
+                    child: Text(
+                      liveDetail.categories?.firstOrNull?.name ?? '',
+                      style: const TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Text(

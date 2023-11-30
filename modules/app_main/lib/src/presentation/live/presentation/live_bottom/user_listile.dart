@@ -7,8 +7,9 @@ import 'package:ui/ui.dart';
 class UserLisTile extends StatefulWidget {
   final User user;
   final ValueChanged<User> onChanged;
+  final bool isInvited;
 
-  const UserLisTile({super.key, required this.user, required this.onChanged});
+  const UserLisTile({super.key, required this.user, required this.onChanged, this.isInvited = false});
 
   @override
   State<UserLisTile> createState() => _UserLisTileState();
@@ -16,6 +17,12 @@ class UserLisTile extends StatefulWidget {
 
 class _UserLisTileState extends State<UserLisTile> {
   bool isInvited = false;
+
+  @override
+  void initState() {
+    isInvited = widget.isInvited;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +42,7 @@ class _UserLisTileState extends State<UserLisTile> {
                 Row(
                   children: [
                     Flexible(
-                      child: Text(widget.user.name ?? '',
+                      child: Text(widget.user.fullName ?? '',
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
@@ -45,7 +52,7 @@ class _UserLisTileState extends State<UserLisTile> {
                 ),
                 Row(
                   children: [
-                    ImageWidget(IconAppConstants.icMaleSVG),
+                    ImageWidget(widget.user.sexCodeValue.getIcon1()),
                     const SizedBox(width: 4),
                     const Row(
                       children: [

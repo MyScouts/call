@@ -27,6 +27,7 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       deletedAt: json['deletedAt'] as String?,
       pDoneId: json['pDoneId'] as String?,
       displayName: json['displayName'] as String?,
+      fullName: json['fullName'] as String?,
       isPDone: json['isPDone'] as bool? ?? false,
       isFriend: json['isFriend'] as bool? ?? false,
       isFollowing: json['isFollowing'] as bool? ?? false,
@@ -58,6 +59,7 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       fanGroup: json['fanGroup'] == null
           ? null
           : UserFanGroupInfo.fromJson(json['fanGroup'] as Map<String, dynamic>),
+      sexCode: json['sexCode'] as int?,
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
@@ -82,6 +84,7 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'deletedAt': instance.deletedAt,
       'pDoneId': instance.pDoneId,
       'displayName': instance.displayName,
+      'fullName': instance.fullName,
       'isPDone': instance.isPDone,
       'isFriend': instance.isFriend,
       'isFollowing': instance.isFollowing,
@@ -104,6 +107,7 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'vShopId': instance.vShopId,
       'vShopPDoneId': instance.vShopPDoneId,
       'fanGroup': instance.fanGroup,
+      'sexCode': instance.sexCode,
     };
 
 const _$SexEnumMap = {
