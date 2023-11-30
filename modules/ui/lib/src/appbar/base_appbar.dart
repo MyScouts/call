@@ -3,21 +3,23 @@ import 'package:flutter/material.dart';
 import '../../ui.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
+  final String? title;
+  final Widget? titleWidget;
   final bool isClose;
   final Function()? onPressed;
+  final Color? backgroundColor;
   const BaseAppBar({
     super.key,
     this.isClose = true,
-    required this.title,
-    this.onPressed,
+    this.title,
+    this.onPressed, this.titleWidget, this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title),
-      backgroundColor: Colors.transparent,
+      title: titleWidget ?? Text(title ?? ''),
+      backgroundColor: backgroundColor ?? Colors.transparent,
       bottomOpacity: 0.0,
       elevation: 0.0,
       centerTitle: true,
