@@ -95,13 +95,13 @@ class _LiveCategoryPickerState extends State<LiveCategoryPicker> {
                     children: controller.category.map<Widget>((e) {
                       return GestureDetector(
                         onTap: () {
-                          if(_categories.contains(e)) {
+                          if(_categories.isEmpty) {
                             setState(() {
-                              _categories.remove(e);
+                              _categories.add(e);
                             });
                           } else {
                             setState(() {
-                              _categories.add(e);
+                              _categories = [e];
                             });
                           }
                         },

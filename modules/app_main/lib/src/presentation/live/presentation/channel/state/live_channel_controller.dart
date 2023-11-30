@@ -117,6 +117,34 @@ class LiveChannelController {
 
   LiveData get info => _info.value;
 
+  final RxBool _mic = false.obs;
+
+  RxBool get mic => _mic;
+
+  final RxBool _video = false.obs;
+
+  RxBool get video => _video;
+
+  void enableVideo() {
+    if (_video.value) {
+      _video.value = false;
+      service.disableVideoStream();
+    } else {
+      _video.value = true;
+      service.enableVideoStream();
+    }
+  }
+
+  void enableAudio() {
+    if (_mic.value) {
+      _mic.value = false;
+      service.disableAudioStream();
+    } else {
+      _mic.value = true;
+      service.enableAudioStream();
+    }
+  }
+
   void enableMessage() {
     _showMessageInput.value = true;
   }
@@ -153,22 +181,6 @@ class LiveChannelController {
         await service.initEngine(enableMic: false, enableWebCam: false);
       }
 
-      _onSocketEvent();
-
-      socketService.connect(
-        '${Configurations.baseUrl}live?id=${_info.value.id}',
-        token: userSharePreferencesUseCase.getToken() ?? '',
-      );
-
-      _listenRtcEvent();
-
-      await service.joinChannel(
-        _info.value.agoraToken ?? '',
-        _info.value.agoraChannel ?? '',
-        _me.value.info.userID,
-        role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
-      );
-
       ///get members
       final users = await repository.listMembers(_info.value.id);
       final result = <LiveMember>[];
@@ -184,6 +196,24 @@ class LiveChannelController {
         ));
       }
       _members.value = result;
+
+      _onSocketEvent();
+
+      socketService.connect(
+        '${Configurations.baseUrl}live?id=${_info.value.id}',
+        token: userSharePreferencesUseCase.getToken() ?? '',
+      );
+
+      _listenRtcEvent();
+
+      await service.joinChannel(
+        _info.value.agoraToken ?? '',
+        _info.value.agoraChannel ?? '',
+        _me.value.info.userID,
+        role: _me.value.isOwner
+            ? ClientRoleType.clientRoleBroadcaster
+            : ClientRoleType.clientRoleAudience,
+      );
 
       _hostOffline.value = !hostInLive;
 
@@ -265,7 +295,8 @@ class LiveChannelController {
       androidNotificationOptions: AndroidNotificationOptions(
         channelId: 'notification_channel_id',
         channelName: 'Foreground Notification',
-        channelDescription: 'This notification appears when the foreground service is running.',
+        channelDescription:
+            'This notification appears when the foreground service is running.',
         channelImportance: NotificationChannelImportance.LOW,
         priority: NotificationPriority.LOW,
         iconData: const NotificationIconData(
@@ -289,8 +320,12 @@ class LiveChannelController {
   }
 
   bool isMemberInLive(int userID) {
-    final user = _members.firstWhereOrNull((e) => e.info.userID == userID);
-    return user != null;
+    return getMember(userID) != null;
+  }
+
+  LiveMember? getMember(int id) {
+    final user = _members.firstWhereOrNull((e) => e.info.userID == id);
+    return user;
   }
 
   void _onSocketEvent() {
@@ -351,10 +386,23 @@ class LiveChannelController {
       _members.value = [..._members, member];
       print('length ===> ${_members.length}');
 
-      final message = LiveComment(
+      if (user.id == _me.value.info.userID) {
+        NotificationCenter.post(
+          channel: receiveMessage,
+          options: SystemMessage(
+            message: 'Nghiêm cấm tất cả các nội dung không lành mạnh, thô tục,'
+                ' tình dục (bao gồm tình dục trẻ em), trái với thuần phong mỹ tục;'
+                ' các nội dụng liên quan đến chống phá nhà nước, vi phạm bản'
+                ' quyền hoặc pháp luật trong phòng live. Nếu vi phạm, VDONE'
+                ' sẽ tạm ngưng hoặc xóa tài khoản của bạn.',
+            createdAt: DateTime.now(),
+          ),
+        );
+      }
+
+      final message = JoinMessage(
         member: member,
         message: '',
-        type: LiveCommentType.join,
         createdAt: DateTime.now(),
       );
 
@@ -365,6 +413,9 @@ class LiveChannelController {
       debugPrint('$socketUserLeaveEvent ===> ${data['user']}');
       final user = User.fromJson(data['user']);
       if (!isMemberInLive(user.id!)) return;
+      if (getMember(user.id!)?.isOwner ?? false) {
+        _state.value = LiveStreamState.stop;
+      }
       _members.value = _members.where((e) => e.info.userID != user.id).toList();
     });
 
@@ -383,10 +434,9 @@ class LiveChannelController {
       final user = User.fromJson(data['user']);
       final member = _members.firstWhereOrNull((e) => e.info.userID == user.id);
       if (member == null) return;
-      final message = LiveComment(
+      final message = UserMessage(
         member: member,
         message: data['rawContent'] ?? '',
-        type: LiveCommentType.message,
         createdAt: DateTime.tryParse(data['createdAt'] ?? '') ?? DateTime.now(),
       );
       NotificationCenter.post(channel: receiveMessage, options: message);
@@ -396,6 +446,13 @@ class LiveChannelController {
   void leaveLive() async {
     socketService.disconnect();
     service.leaveChannel();
+    _state.value = LiveStreamState.loading;
+    _hostOffline.value = true;
+    _hostInBackground.value = false;
+    _showMessageInput.value = false;
+    _roomInfoFetching.value = true;
+    _enableChat.value = true;
+    _members.value = [];
 
     if (_me.value.isOwner) repository.endLive(liveId: _info.value.id);
 
@@ -404,17 +461,24 @@ class LiveChannelController {
     }
 
     WakelockPlus.disable();
+
+    NotificationCenter.unsubscribe(channel: sendMessage, observer: this);
   }
 }
 
 extension RemoteVideoStateReasonX on RemoteVideoStateReason {
-  bool get isNetworkCongestion => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
+  bool get isNetworkCongestion =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
 
-  bool get isNetworkRecovery => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
+  bool get isNetworkRecovery =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
 
-  bool get isRemoteOffline => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
+  bool get isRemoteOffline =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
 
-  bool get isRemoteUnmuted => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
+  bool get isRemoteUnmuted =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
 
-  bool get isRemoteInBackground => this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
+  bool get isRemoteInBackground =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
 }
