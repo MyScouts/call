@@ -151,9 +151,7 @@ class _LiveEndScreenState extends State<LiveEndScreen> {
                         crossAxisCount: 2,
                         children: reLives.take(4).map<Widget>((e) {
                           return LiveWidget(
-                            call: () {
-                              Navigator.of(context).pop();
-                            },
+                            call:  Navigator.of(context).pop,
                             liveDetail: e,
                             viewer: listController.listLiveCount
                                     .firstWhereOrNull(
