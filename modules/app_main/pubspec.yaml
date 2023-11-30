@@ -96,6 +96,7 @@ dependencies:
   flutter_slidable: ^3.0.1
   provider: ^6.1.1
   sa4_migration_kit: ^1.0.0
+  device_info_plus: ^9.1.1
 
 dev_dependencies:
   flutter_test:
