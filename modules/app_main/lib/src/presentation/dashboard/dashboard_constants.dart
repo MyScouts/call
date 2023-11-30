@@ -207,13 +207,13 @@ final Map<String, DashBoardItem> mapItems = {
 };
 
 final communityDefault = {
-  'wg_live_1': const DashBoardWidgetItem(
-    id: 'wg_live_1',
-    title: 'Live',
-    backgroundImage: '',
-    width: 2,
-    height: 3,
-  ),
+  // 'wg_live_1': const DashBoardWidgetItem(
+  //   id: 'wg_live_1',
+  //   title: 'Live',
+  //   backgroundImage: '',
+  //   width: 2,
+  //   height: 3,
+  // ),
   'wg_team': const DashBoardWidgetItem(
     id: 'wg_team',
     title: 'Team Công nghệ',
@@ -321,13 +321,13 @@ final eCommerceDefault = {
     width: 4,
     height: 2,
   ),
-  'wg_live_2': const DashBoardWidgetItem(
-    id: 'wg_live_2',
-    title: 'Shop live',
-    backgroundImage: '',
-    width: 2,
-    height: 3,
-  ),
+  // 'wg_live_2': const DashBoardWidgetItem(
+  //   id: 'wg_live_2',
+  //   title: 'Shop live',
+  //   backgroundImage: '',
+  //   width: 2,
+  //   height: 3,
+  // ),
   "ic_marShop": DashBoardIconItem(
     id: 'ic_marShop',
     title: 'MarShop',
