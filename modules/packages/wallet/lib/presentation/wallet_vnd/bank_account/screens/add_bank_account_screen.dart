@@ -253,9 +253,6 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
                   hintText: BankAccountField.bankAccountHolder.hintText,
                   controller: _bankAccountHolderCtrl,
                   keyBoardType: TextInputType.text,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
-                  ],
                   onChanged: (value) {
                     setState(() {});
                   },

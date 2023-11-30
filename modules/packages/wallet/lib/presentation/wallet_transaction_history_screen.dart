@@ -2,6 +2,8 @@ import 'package:app_core/app_core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
+import 'package:wallet/data/datasources/models/request/wallet_transactions_request.dart';
+import 'package:wallet/presentation/shared/widgets/datetime_filter_sheet.dart';
 import 'package:wallet/presentation/shared/widgets/transaction_filter_sheet.dart';
 import 'package:wallet/presentation/shared/widgets/wallet_transaction_item_widget.dart';
 import 'package:wallet/presentation/wallet_constant.dart';
@@ -26,13 +28,39 @@ class WalletTransactionHistoryScreen extends StatefulWidget {
 
 class _WalletTransactionHistoryScreenState
     extends State<WalletTransactionHistoryScreen> {
-  final _selectedDate = DateTime.now();
+  DateTime _selectedDate = DateTime.now();
+
+  FilterOption _selectedFilter = FilterOption(status: [], type: []);
+
+  num get _fromTimestamp => DateTime(
+        _selectedDate.year,
+        _selectedDate.month,
+        _selectedDate.day,
+        0,
+        0,
+        0,
+      ).millisecondsSinceEpoch;
+
+  num get _toTimestamp => DateTime(
+        _selectedDate.year,
+        _selectedDate.month,
+        _selectedDate.day,
+        23,
+        59,
+        59,
+      ).millisecondsSinceEpoch;
   late final _bloc = injector<WalletBloc>();
 
   @override
   void initState() {
     _bloc.add(
-      WalletEvent.getWalletTransactionList(walletType: widget.walletType),
+      WalletEvent.getWalletTransactionList(
+        walletType: widget.walletType,
+        request: WalletTransactionsRequest(
+          fromTimestamp: _fromTimestamp,
+          toTimestamp: _selectedDate.millisecondsSinceEpoch,
+        ),
+      ),
     );
     super.initState();
   }
@@ -55,74 +83,132 @@ class _WalletTransactionHistoryScreenState
             ),
           ),
           actions: [
-            // IconButton(
-            //   onPressed: () {
-            //     showModalBottomSheet(
-            //       context: context,
-            //       shape: const RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.vertical(top: Radius.circular(12))
-            //       ),
-            //       builder: (BuildContext context) {
-            //         return const TransactionFilterSheet();
-            //       },
-            //     );
-            //   },
-            //   padding: const EdgeInsets.symmetric(horizontal: 23),
-            //   icon: const Icon(
-            //     Icons.filter_alt_outlined,
-            //     color: Color(0xFF667385),
-            //     size: 30,
-            //   ),
-            // )
+            IconButton(
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(12),
+                    ),
+                  ),
+                  builder: (BuildContext context) {
+                    return TransactionFilterSheet(
+                      walletType: widget.walletType,
+                      initValue: _selectedFilter,
+                      onResetFilter: () {
+                        _bloc.add(
+                          WalletEvent.getWalletTransactionList(
+                            walletType: widget.walletType,
+                            request: WalletTransactionsRequest(
+                              fromTimestamp: _fromTimestamp,
+                              toTimestamp: _selectedDate.millisecondsSinceEpoch,
+                            ),
+                          ),
+                        );
+                      },
+                      onFilterSelected: (FilterOption value) {
+                        _selectedFilter = value;
+                        _bloc.add(
+                          WalletEvent.filterTransaction(
+                            filter: _selectedFilter,
+                          ),
+                        );
+                      },
+                    );
+                  },
+                );
+              },
+              padding: const EdgeInsets.symmetric(horizontal: 23),
+              icon: const Icon(
+                Icons.filter_alt_outlined,
+                color: Color(0xFF667385),
+                size: 30,
+              ),
+            )
           ],
         ),
       ),
       body: Column(
         children: [
-          // _filterWidget(),
+          _dateFilterWidget(),
           Expanded(child: _buildList()),
         ],
       ),
     );
   }
 
-  Widget _filterWidget() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      decoration: const BoxDecoration(
-        color: AppColors.white,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Thời gian',
-            style: context.text.titleMedium?.copyWith(
-              fontWeight: FontWeight.w400,
-              fontSize: 12,
-              height: 1.8,
+  Widget _dateFilterWidget() {
+    return BlocBuilder<WalletBloc, WalletState>(
+      bloc: _bloc,
+      builder: (context, state) => GestureDetector(
+        onTap: () {
+          showModalBottomSheet(
+            context: context,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(12),
+              ),
             ),
+            builder: (BuildContext context) {
+              return DatetimeFilterSheet(
+                initialDateTime: _selectedDate,
+                onDateSelected: (date) {
+                  _selectedDate = date;
+                  final request = WalletTransactionsRequest(
+                    fromTimestamp: _fromTimestamp,
+                    toTimestamp: _toTimestamp,
+                  );
+                  _selectedFilter = FilterOption(status: [], type: []);
+                  _bloc.add(
+                    WalletEvent.getWalletTransactionList(
+                      walletType: widget.walletType,
+                      request: request,
+                    ),
+                  );
+                },
+              );
+            },
+          );
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          decoration: const BoxDecoration(
+            color: AppColors.white,
           ),
-          Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Text(
-                  _selectedDate.text(),
-                  style: context.text.titleMedium?.copyWith(
-                    color: const Color(0xFF101B28),
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
-                    height: 1.4,
-                  ),
+              Text(
+                'Thời gian',
+                style: context.text.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
+                  height: 1.8,
                 ),
               ),
-              const Icon(
-                Icons.arrow_forward_ios_outlined,
-                size: 15,
-              )
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      _selectedDate.text(),
+                      style: context.text.titleMedium?.copyWith(
+                        color: const Color(0xFF101B28),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                        height: 1.4,
+                      ),
+                    ),
+                  ),
+                  const Icon(
+                    Icons.arrow_forward_ios_outlined,
+                    size: 15,
+                  )
+                ],
+              ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -146,7 +232,6 @@ class _WalletTransactionHistoryScreenState
             if (transactions.isEmpty) {
               return const TransactionsEmptyWidget();
             }
-
             return ListView(
               padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
               children: transactions
@@ -154,6 +239,9 @@ class _WalletTransactionHistoryScreenState
                     (item) => WalletTransactionItemWidget(
                       transactionItem: item,
                       walletType: widget.walletType,
+                      // onTap: () => context.startTransactionHistoryDetails(
+                      //   '${item.id}',
+                      // ),
                     ),
                   )
                   .toList(),
