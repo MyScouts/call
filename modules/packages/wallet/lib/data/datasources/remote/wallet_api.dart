@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:wallet/data/datasources/models/response/transaction_details_response.dart';
 import 'package:wallet/data/datasources/models/response/wallet_info_response.dart';
 
 import '../../../core/core.dart';
@@ -30,16 +31,34 @@ abstract class WalletApi {
   // Future<TransactionsResponse> getWalletTransactionList();
 
   @GET(WalletApiConstants.transactionsVNDWallet)
-  Future<TransactionsResponse> getTransactionsVNDWallet();
+  Future<TransactionsResponse> getTransactionsVNDWallet({
+    @Query('page') int? page,
+    @Query('pageSize') int? pageSize,
+    @Query('category') String? category,
+    @Query('fromTimestamp') num? fromTimestamp,
+    @Query('toTimestamp') num? toTimestamp,
+  });
 
   @GET(WalletApiConstants.transactionsDiamondWallet)
-  Future<TransactionsResponse> getTransactionsDiamondWallet();
+  Future<TransactionsResponse> getTransactionsDiamondWallet({
+    @Query('page') int? page,
+    @Query('pageSize') int? pageSize,
+    @Query('category') String? category,
+    @Query('fromTimestamp') num? fromTimestamp,
+    @Query('toTimestamp') num? toTimestamp,
+  });
 
   @GET(WalletApiConstants.transactionsCoinWallet)
-  Future<TransactionsResponse> getTransactionsCoinWallet();
+  Future<TransactionsResponse> getTransactionsCoinWallet({
+    @Query('page') int? page,
+    @Query('pageSize') int? pageSize,
+    @Query('category') String? category,
+    @Query('fromTimestamp') num? fromTimestamp,
+    @Query('toTimestamp') num? toTimestamp,
+  });
 
-// @GET(PointWalletApiConstants.transactionDetail)
-// Future<ApiResponse<PointTransactionHistoryDetail>> getTransactionDetail({
-//   @Path('id') required int id,
-// });
+  @GET(WalletApiConstants.transactionDetail)
+  Future<TransactionDetailsResponse> getTransactionDetail({
+    @Path('id') required String id,
+  });
 }

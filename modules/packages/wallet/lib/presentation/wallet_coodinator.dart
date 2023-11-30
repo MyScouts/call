@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
+import 'package:wallet/presentation/transaction_history_detail_screen.dart';
 
 import '../core/configuratons/configurations.dart';
 import '../core/utils/extension.dart';
@@ -159,5 +160,10 @@ extension WalletCoordinator on BuildContext {
       WalletTransactionHistoryScreen.routeName,
       arguments: walletType,
     );
+  }
+
+  Future<T?> startTransactionHistoryDetails<T>(String id) {
+    return Navigator.of(this)
+        .pushNamed(TransactionHistoryDetailScreen.routeName);
   }
 }
