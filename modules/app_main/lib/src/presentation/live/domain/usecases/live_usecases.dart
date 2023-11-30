@@ -8,6 +8,7 @@ import '../../data/model/response/live.dart';
 import '../../data/model/response/user_point_response.dart';
 import '../../data/repository/live_repository.dart';
 import '../entities/gift_card_list.dart';
+import '../entities/live_category_detail.dart';
 import '../entities/live_member_count.dart';
 
 @injectable
@@ -64,5 +65,9 @@ class LiveUseCase {
 
   Future<List<LiveMemberCount>> memberCount(List<int> liveIDs) async {
     return _liveRepository.memberCount(liveIDs);
+  }
+
+  Future<List<LiveCategoryDetail>> getAllCategory() async {
+    return _liveRepository.listCategory();
   }
 }

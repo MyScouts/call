@@ -5,6 +5,7 @@ import 'package:app_main/src/presentation/live/presentation/create/widget/live_c
 import 'package:app_main/src/presentation/live/presentation/create/widget/live_title_picker.dart';
 import 'package:app_main/src/presentation/live/presentation/create/widget/live_type_picker.dart';
 import 'package:app_main/src/presentation/live/presentation/live_bottom/live_user_info_bottom_sheet.dart';
+import 'package:app_main/src/presentation/live/presentation/live_tab/filter_bottom.dart';
 import 'package:flutter/material.dart';
 
 import '../social/profile/profile_bloc.dart';
@@ -14,6 +15,7 @@ import 'domain/entities/live_type.dart';
 import 'presentation/channel/state/live_channel_controller.dart';
 import 'presentation/list_gift/gift_bottom_sheet.dart';
 import 'presentation/live_bottom/live_bottom_sheet.dart';
+import 'presentation/live_tab/live_controller.dart';
 
 extension LiveCoordinator on BuildContext {
   void showLiveTypePicker({
@@ -62,17 +64,16 @@ extension LiveCoordinator on BuildContext {
     );
   }
 
-
   void showBottomGift(LiveChannelController controller) {
-    showModalBottomSheet(
-        context: this,
-        builder: (context) => GiftCardBottomSheet(controller: controller));
+    showModalBottomSheet(context: this, builder: (context) => GiftCardBottomSheet(controller: controller));
   }
 
   void showBottomSheetLive(LiveChannelController controller) {
-    showModalBottomSheet(
-        context: this,
-        builder: (context) => LiveBottomSheet(controller: controller));
+    showModalBottomSheet(context: this, builder: (context) => LiveBottomSheet(controller: controller));
+  }
+
+  Future showFilterSearchLive(LiveController controller) {
+    return showModalBottomSheet(context: this, builder: (context) => FilterBottom(controller: controller));
   }
 
   Future<T?> startSelectUser<T>({required int userId}) {

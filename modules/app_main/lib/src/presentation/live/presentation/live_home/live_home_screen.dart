@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:ui/ui.dart';
 
+import '../live_tab/live_home_search.dart';
 import '../live_tab/live_screen_tab.dart';
 import '../widget/tab-bar-groups.dart';
 
@@ -68,7 +69,10 @@ class _LiveHomeScreenState extends State<LiveHomeScreen> with SingleTickerProvid
                             IconAppConstants.icSearch,
                             color: const Color(0xff4B84F7),
                           ),
-                          highlightColor: Colors.black, onPressed: () {},
+                          highlightColor: Colors.black,
+                          onPressed: () {
+                            Navigator.pushNamed(context, LiveStreamSearch.routeName);
+                          },
                         ),
                       ),
                       SizedBox(
