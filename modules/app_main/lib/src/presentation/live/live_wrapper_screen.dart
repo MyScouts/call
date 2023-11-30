@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app_main/src/di/di.dart';
+import 'package:app_main/src/presentation/live/presentation/channel/join_channel_provider.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/live_channel_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/create/live_create_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/create/state/live_create_controller.dart';
@@ -53,7 +54,7 @@ class _LiveWrapperScreenState extends State<LiveWrapperScreen> {
           return Stack(
             fit: StackFit.expand,
             children: [
-              LiveChannelScreen(liveID: controller.id!),
+              JoinChannelProvider(liveID: controller.id!),
               if (controller.isStartStream.value)
                 _StartLive(
                   onEnd: () {

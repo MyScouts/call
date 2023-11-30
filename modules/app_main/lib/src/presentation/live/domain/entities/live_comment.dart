@@ -1,20 +1,38 @@
 import 'package:app_main/src/presentation/live/domain/entities/live_member.dart';
 
-enum LiveCommentType {
-  join,
-  message,
-}
-
-class LiveComment {
-  final LiveMember member;
+abstract class LiveMessageData {
   final String message;
-  final LiveCommentType type;
   final DateTime createdAt;
 
-  LiveComment({
-    required this.member,
+  LiveMessageData({
     required this.message,
-    required this.type,
     required this.createdAt,
+  });
+}
+
+class JoinMessage extends LiveMessageData {
+  final LiveMember member;
+
+  JoinMessage({
+    required this.member,
+    required super.message,
+    required super.createdAt,
+  });
+}
+
+class SystemMessage extends LiveMessageData {
+  SystemMessage({
+    required super.message,
+    required super.createdAt,
+  });
+}
+
+class UserMessage extends LiveMessageData {
+  final LiveMember member;
+
+  UserMessage({
+    required this.member,
+    required super.message,
+    required super.createdAt,
   });
 }

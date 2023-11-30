@@ -5,6 +5,7 @@ import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_bottom_action.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_channel_header.dart';
+import 'package:app_main/src/presentation/live/presentation/channel/widget/live_end_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/live_message/live_message_input.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -82,6 +83,13 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
                   return const SizedBox.shrink();
                 }),
               ),
+              Obx(() {
+                if (controller.state.value == LiveStreamState.stop) {
+                  return const LiveEndScreen();
+                }
+
+                return const SizedBox.shrink();
+              }),
             ],
           ),
         ),
@@ -111,18 +119,6 @@ class _RtcRenderState extends State<_RtcRender> {
     final controller = context.read<LiveChannelController>();
 
     return Obx(() {
-      if (controller.state.value == LiveStreamState.stop) {
-        return const Center(
-          child: Text(
-            'Live đã kết thúc',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-              color: Colors.black,
-            ),
-          ),
-        );
-      }
       if (controller.state.value == LiveStreamState.watching) {
         if (controller.hostInLive) {
           if (controller.me.value.isOwner) {

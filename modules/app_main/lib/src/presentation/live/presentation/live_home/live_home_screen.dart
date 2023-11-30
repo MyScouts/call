@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:ui/ui.dart';
 
+import '../live_tab/live_home_search.dart';
 import '../live_tab/live_screen_tab.dart';
 import '../widget/tab-bar-groups.dart';
 
@@ -50,43 +51,30 @@ class _LiveHomeScreenState extends State<LiveHomeScreen> with SingleTickerProvid
                   decoration: const BoxDecoration(
                     color: AppColors.white,
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
                     children: [
                       GestureDetector(
                         onTap: () => context.startDiary(),
                         child: const AppAvatarWidget(),
                       ),
-                      const SizedBox(width: 15),
-                      Expanded(
-                        child: SizedBox(
-                          height: 40,
-                          child: TextField(
-                            style: context.text.titleMedium!.copyWith(color: Colors.grey),
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.zero,
-                              isDense: false,
-                              hintText: "Tìm kiếm...",
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide.none,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide.none,
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide.none,
-                              ),
-                              prefixIcon: const Icon(Icons.search, color: AppColors.grey14),
-                              fillColor: const Color(0XFFF2F2F2),
-                              filled: true,
-                            ),
+                      Expanded(child: TabBarGroups(controller: _liveTabController)),
+                      SizedBox(
+                        width: 35,
+                        height: 35,
+                        child: IconButton(
+                          padding: EdgeInsets.zero,
+                          //onPressed: () => context.startCommunityNotification(),
+                          icon: ImageWidget(
+                            IconAppConstants.icSearch,
+                            color: const Color(0xff4B84F7),
                           ),
+                          highlightColor: Colors.black,
+                          onPressed: () {
+                            Navigator.pushNamed(context, LiveStreamSearch.routeName);
+                          },
                         ),
                       ),
-                      const SizedBox(width: 15),
                       SizedBox(
                         width: 35,
                         height: 35,
@@ -110,7 +98,6 @@ class _LiveHomeScreenState extends State<LiveHomeScreen> with SingleTickerProvid
                     ],
                   ),
                 ),
-                TabBarGroups(controller: _liveTabController),
                 Expanded(
                   child: TabBarView(
                     controller: _liveTabController,

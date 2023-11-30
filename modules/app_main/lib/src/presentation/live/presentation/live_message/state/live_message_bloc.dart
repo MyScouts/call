@@ -22,7 +22,7 @@ class LiveMessageBloc extends CoreBloc<LiveMessageEvent, LiveMessageState> {
       channel: receiveMessage,
       observer: this,
       onNotification: (msg) {
-        if (msg is LiveComment) add(UpdateMessage(msg));
+        if (msg is LiveMessageData) add(UpdateMessage(msg));
       },
     );
   }
@@ -45,14 +45,16 @@ class LiveMessageBloc extends CoreBloc<LiveMessageEvent, LiveMessageState> {
 }
 
 class LiveMessageState extends CoreState {
-  final List<LiveComment> comments;
+  final List<LiveMessageData> comments;
 
   LiveMessageState({
     super.status,
     this.comments = const [],
   });
 
-  LiveMessageState copyWith({List<LiveComment>? comments}) {
+  LiveMessageState copyWith({
+    List<LiveMessageData>? comments,
+  }) {
     return LiveMessageState(
       status: status,
       comments: comments ?? this.comments,
@@ -69,7 +71,7 @@ class SendEvent extends LiveMessageEvent {
 }
 
 class UpdateMessage extends LiveMessageEvent {
-  final LiveComment comment;
+  final LiveMessageData comment;
 
   UpdateMessage(this.comment);
 }

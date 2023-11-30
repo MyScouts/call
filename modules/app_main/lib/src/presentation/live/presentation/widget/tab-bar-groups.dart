@@ -1,7 +1,6 @@
-import 'package:design_system/design_system.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
-import 'package:imagewidget/imagewidget.dart';
+import 'package:get/get.dart';
 import 'package:localization/localization.dart';
 
 class TabBarGroups extends StatefulWidget {
@@ -13,133 +12,62 @@ class TabBarGroups extends StatefulWidget {
   State<TabBarGroups> createState() => _TabBarGroupsState();
 }
 
-class _TabBarGroupsState extends State<TabBarGroups> {
-  @override
-  void initState() {
-    widget.controller.addListener(() {
-      setState(() {});
-    });
-    super.initState();
+enum TabLiveEnum { live, tvLive, marShop }
+
+extension TabLiveEnumExt on TabLiveEnum {
+  String get title {
+    switch (this) {
+      case TabLiveEnum.live:
+        return S.current.live;
+      case TabLiveEnum.tvLive:
+        return S.current.tv_live;
+      case TabLiveEnum.marShop:
+        return S.current.marShop;
+    }
   }
+}
+
+class _TabBarGroupsState extends State<TabBarGroups> {
+  final indexSelect = 0.obs;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 35),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
       ),
       child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              children: [
-                CupertinoButton(
-                  onPressed: () {
-                    widget.controller.animateTo(0);
-                    setState(() {});
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ImageWidget(
-                        IconAppConstants.icRadar,
-                        color: (widget.controller.index == 0) ? const Color(0xff4b84f7) : const Color(0xffacacac),
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        S.of(context).live,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: (widget.controller.index == 0) ? const Color(0xff4b84f7) : const Color(0xffacacac),
-                            ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 3,
-                  decoration: BoxDecoration(
-                    color: (widget.controller.index == 0) ? const Color(0xff4b84f7) : Colors.transparent,
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
-                  ),
-                )
-              ],
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: TabLiveEnum.values.mapIndexed((index, e) {
+          return GestureDetector(
+            onTap: () {
+              indexSelect.value = index;
+              widget.controller.animateTo(index);
+            },
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  Obx(() {
+                    final color = indexSelect.value == index ? const Color(0xff4B84F7) : const Color(0xff8C8C8C);
+                    return Text(
+                      TabLiveEnum.values[index].title,
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: color),
+                    );
+                  }),
+                  const SizedBox(height: 4),
+                  Container(
+                      width: 22,
+                      height: 4,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(3.5),
+                          color: indexSelect.value == index ? const Color(0xff4B84F7) : Colors.transparent))
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: Column(
-              children: [
-                CupertinoButton(
-                  onPressed: () {
-                    widget.controller.animateTo(1);
-                    setState(() {});
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ImageWidget(
-                        IconAppConstants.icMonitor,
-                        color: (widget.controller.index == 1) ? const Color(0xff4b84f7) : const Color(0xffacacac),
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        S.of(context).tv_live,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: (widget.controller.index == 1) ? const Color(0xff4b84f7) : const Color(0xffacacac),
-                            ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 3,
-                  decoration: BoxDecoration(
-                    color: (widget.controller.index == 1) ? const Color(0xff4b84f7) : Colors.transparent,
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Expanded(
-            child: Column(
-              children: [
-                CupertinoButton(
-                  onPressed: () {
-                    widget.controller.animateTo(2);
-                    setState(() {});
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ImageWidget(
-                        IconAppConstants.icBag2,
-                        color: (widget.controller.index == 2) ? const Color(0xff4b84f7) : const Color(0xffacacac),
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        S.of(context).marShop,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: (widget.controller.index == 2) ? const Color(0xff4b84f7) : const Color(0xffacacac),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 3,
-                  decoration: BoxDecoration(
-                    color: (widget.controller.index == 2) ? const Color(0xff4b84f7) : Colors.transparent,
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
-                  ),
-                )
-              ],
-            ),
-          )
-
-        ],
+          );
+        }).toList(),
       ),
     );
   }
