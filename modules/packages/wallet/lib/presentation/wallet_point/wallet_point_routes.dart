@@ -18,7 +18,9 @@ class WalletPointRoutes extends RouteModule {
         final data = settings.arguments as Map<String, dynamic>;
         return PaymentInformationScreen(
           paymentInfo: data['paymentInfo'],
-          agency: data['agency'], rPDoneUserId: data['pDoneId'],
+          agency: data['agency'],
+          rPDoneUserId: data['pDoneId'],
+          exchangeCoinResponse: data['exchangeCoinResponse'],
         );
       },
       PointAgencyScreen.routeName: (context) {
@@ -28,7 +30,7 @@ class WalletPointRoutes extends RouteModule {
             ..add(
               const AgencyEvent.getAllAgency(),
             ),
-          child: const PointAgencyScreen(),
+          child: PointAgencyScreen(),
         );
       },
       AgencyInfoScreen.routeName: (context) {

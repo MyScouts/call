@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../data/datasources/models/exchange_coin_response.dart';
 import '../../data/datasources/models/wallet_coin_payment_information_response.dart';
 import '../../domain/entities/agency/agency.dart';
 import 'point_agency/screen/agency_info_screen.dart';
@@ -14,13 +15,14 @@ extension WalletVndCoordinator on BuildContext {
       .pushNamed(AgencyInfoScreen.routeName, arguments: agencyId);
 
   Future<T?> coinPaymentInformation<T>(WalletCoinPaymentInformation paymentInfo,
-          AgencyResponse agency, String pDoneId) =>
+          AgencyResponse agency, String pDoneId, ExchangeCoinResponse exchangeCoinResponse) =>
       Navigator.of(this).pushReplacementNamed(
         PaymentInformationScreen.routeName,
         arguments: {
           'paymentInfo': paymentInfo,
           'agency': agency,
-          'pDoneId': pDoneId
+          'pDoneId': pDoneId,
+          'exchangeCoinResponse': exchangeCoinResponse
         },
       );
 }
