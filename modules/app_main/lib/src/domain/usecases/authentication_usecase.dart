@@ -1,5 +1,6 @@
 import 'package:app_main/app_main.dart';
 import 'package:app_main/src/core/services/notifications/notification_service.dart';
+import 'package:app_main/src/core/socket/chat_socket.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
 import 'package:app_main/src/data/repositories/user_repository.dart';
@@ -18,12 +19,14 @@ class AuthenticationUsecase {
   final UserRepository _userRepository;
   final UserSharePreferencesUsecase _userSharePreferencesUsecase;
   final NotificationService _notificationService;
+  final ChatSocket _chatSocket;
 
   AuthenticationUsecase(
     this._authRepository,
     this._userSharePreferencesUsecase,
     this._userRepository,
-    this._notificationService,
+    this._notificationService, 
+    this._chatSocket,
   );
 
   Future<void> signOut([bool forceLogout = false]) async {
@@ -107,6 +110,7 @@ class AuthenticationUsecase {
   }
 
   Future syncUser() async {
+    _chatSocket.connect();
     final user = await _userRepository.getProfile();
     _userSharePreferencesUsecase.saveUserInfo(user!);
     isAuthenticate.add(true);

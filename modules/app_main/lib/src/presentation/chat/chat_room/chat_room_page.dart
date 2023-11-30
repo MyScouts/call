@@ -2,7 +2,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/entities/chat/message_model.dart';
-import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_cubit.dart';
 import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_state.dart';
 import 'package:app_main/src/presentation/chat/conversation/cubit/conversation_cubit.dart';
@@ -10,7 +9,6 @@ import 'package:app_main/src/presentation/chat/widgets/avatar_chat_widget.dart';
 import 'package:app_main/src/presentation/chat/widgets/message_widget.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
 

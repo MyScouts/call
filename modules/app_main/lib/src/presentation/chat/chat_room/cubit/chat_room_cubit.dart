@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/chat/new_conversations_payload.dart';
 import 'package:app_main/src/data/models/payloads/chat/new_message_payload.dart';
+import 'package:app_main/src/data/models/responses/chat/message_dto.dart';
 import 'package:app_main/src/domain/entities/chat/message_model.dart';
 import 'package:app_main/src/domain/entities/chat/result_model.dart';
 import 'package:app_main/src/domain/usecases/chat_usecase.dart';
@@ -77,15 +78,18 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
         emit(value.copyWith(
           messages: [...value.messages, messageModel]
         ));
-        // emit(ChatRoomStateData(
-        //     messages: [...value.messages, _message],
-        //     conversation: value.conversation,
-        //     page: value.page,
-        //     loadMoreError: value.loadMoreError,
-        //     canLoadMore: value.canLoadMore));
       });
     } catch (e) {
       emit(ChatRoomState.error(e));
     }
   }
+
+  void updateMessage(MessageDto message) {
+    state.mapOrNull((value) async {
+      emit(value.copyWith(
+          messages: [...value.messages, message]
+      ));
+    });
+  }
+
 }
