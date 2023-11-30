@@ -134,20 +134,44 @@ class LiveChannelHeader extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             child: Row(
               children: [
-                Obx(
-                  () => Row(
+                Obx(() {
+                  if (controller.giftCardLive.value.giversInfo == null) {
+                    return const SizedBox();
+                  }
+                  return Row(
                     mainAxisSize: MainAxisSize.min,
-                    children: controller.members.value
-                        .map((element) => SizedBox(
-                              child: AvatarWidget(
-                                  avatar: element.info.avatar, size: 30),
-                            ))
+                    children: controller.giftCardLive.value.giversInfo!
+                        .mapIndexed((index, element) {
+                          if (index == 0) {
+                            return SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: Stack(
+                                children: [
+                                  ImageWidget(
+                                    IconAppConstants.icTop1Awards,
+                                    width: 40,
+                                    height: 40,
+                                  ),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: SizedBox(
+                                      child: AvatarWidget(avatar: element.giver?.avatar, size: 25),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          }
+                          return SizedBox(
+                            child: AvatarWidget(avatar: element.giver?.avatar, size: 30),
+                          );
+                        })
                         .take(2)
                         .toList()
                         .separated(const SizedBox(width: 8)),
-                  ),
-                ),
-                const SizedBox(width: 8),
+                  );
+                }),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.5),

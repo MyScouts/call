@@ -148,8 +148,10 @@ class _BankAccountsScreenState extends State<BankAccountsScreen> {
             ),
             TextButton(
               style: TextButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 20,
+                ),
                 backgroundColor: const Color(0xFFE8F0FE),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -185,41 +187,43 @@ class _BankAccountsScreenState extends State<BankAccountsScreen> {
 
   _buildSecondPage() {
     final bankAccounts = _selectedBank?.bankAccounts ?? [];
-    return Builder(builder: (_) {
-      return ListView(
-        padding: EdgeInsets.only(
-          top: 20,
-          right: context.horizontal,
-          left: context.horizontal,
-        ),
-        children: [
-          Text(
-            'Tài khoản đã liên kết',
-            style: context.text.titleMedium?.copyWith(
-              color: const Color(0xFF212121),
-              fontSize: 16,
-              height: 24 / 16,
-              fontWeight: FontWeight.w600,
-            ),
+    return Builder(
+      builder: (_) {
+        return ListView(
+          padding: EdgeInsets.only(
+            top: 20,
+            right: context.horizontal,
+            left: context.horizontal,
           ),
-          const SizedBox(height: 20),
-          ...bankAccounts.map(
-            (bankAccount) => Padding(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: BankAccountDetailWidget(
-                bankAccount: bankAccount,
-                onTap: () {
-                  context.bankAccountDetails(
-                    bankAccount: bankAccount,
-                    bankAccountBloc: context.read<BankAccountBloc>(),
-                  );
-                },
+          children: [
+            Text(
+              'Tài khoản đã liên kết',
+              style: context.text.titleMedium?.copyWith(
+                color: const Color(0xFF212121),
+                fontSize: 16,
+                height: 24 / 16,
+                fontWeight: FontWeight.w600,
               ),
             ),
-          ),
-        ],
-      );
-    });
+            const SizedBox(height: 20),
+            ...bankAccounts.map(
+              (bankAccount) => Padding(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: BankAccountDetailWidget(
+                  bankAccount: bankAccount,
+                  onTap: () {
+                    context.bankAccountDetails(
+                      bankAccount: bankAccount,
+                      bankAccountBloc: context.read<BankAccountBloc>(),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 

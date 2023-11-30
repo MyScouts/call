@@ -238,8 +238,8 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
               children: [
                 Text(
                   "LV.1",
-                  style:context.text.titleMedium
-                ?.copyWith(fontSize: 14, height: 1, color: Colors.white, fontWeight: FontWeight.w600),
+                  style: context.text.titleMedium
+                      ?.copyWith(fontSize: 14, height: 1, color: Colors.white, fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -400,7 +400,8 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
             onTap: () {
               context.startDiary(userId: widget.userId.toString());
             },
-            width: null, disabled: false,
+            width: null,
+            disabled: false,
           ),
         )
       ],
