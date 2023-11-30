@@ -86,9 +86,11 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
 
   void updateMessage(MessageDto message) {
     state.mapOrNull((value) async {
-      emit(value.copyWith(
-          messages: [...value.messages, message]
-      ));
+      if(_conversationId == message.conversationId) {
+        emit(value.copyWith(
+            messages: [...value.messages, message]
+        ));
+      }
     });
   }
 
