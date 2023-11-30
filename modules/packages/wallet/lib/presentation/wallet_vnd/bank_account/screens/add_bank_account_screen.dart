@@ -1,14 +1,16 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobilehub_core/mobilehub_core.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
+import 'package:ui/ui.dart';
 import 'package:wallet/presentation/presentation.dart';
 import 'package:wallet/presentation/shared/widgets/toast_message/toast_message.dart';
 
 import '../../../../domain/entities/bank/bank.dart';
-import '../../../shared/widgets/gradiant_button.dart';
 import '../../../wallet_constant.dart';
+import '../../widgets/bank_widget.dart';
 import '../../widgets/qrcode_widget.dart';
 import '../bloc/bank_account_bloc.dart';
 
@@ -33,6 +35,8 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
 
   late final _bloc = context.read<BankAccountBloc>();
 
+  List<Bank> banks = [];
+
   AddBankAccountParams get addBankAccountParams => AddBankAccountParams();
 
   @override
@@ -46,6 +50,9 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
     _bankCtrl.dispose();
     _bankAccountHolderCtrl.dispose();
     _bankNumberCtrl.dispose();
+
+    _pageCtrl.dispose();
+
     super.dispose();
   }
 
@@ -54,10 +61,11 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
       _bankAccountHolderCtrl.text.isNotEmpty &&
       _bankNumberCtrl.text.isNotEmpty;
 
+  late final PageController _pageCtrl = PageController(initialPage: 0);
+  String _titleAppbar = 'Thêm liên kết ngân hàng';
+
   @override
   Widget build(BuildContext context) {
-    final isShowKeyboard = MediaQuery.of(context).viewInsets.bottom.toInt() > 0;
-
     return BlocListener<BankAccountBloc, BankAccountState>(
       listener: (context, state) {
         state.whenOrNull(
@@ -76,10 +84,19 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
         );
       },
       child: Scaffold(
-        appBar: appbarBuilder(
-          context,
-          title: 'Thêm tài khoản ngân hàng',
-          hasBottom: true,
+        appBar: BaseAppBar(
+          title: _titleAppbar,
+          onPressed: () {
+            if (_pageCtrl.page == 0) {
+              Navigator.pop(context);
+            } else {
+              _pageCtrl.jumpToPage(0);
+              _titleAppbar = 'Thêm liên kết ngân hàng';
+              setState(() {});
+            }
+            context.hideKeyboard();
+          },
+          isClose: false,
         ),
         body: BlocBuilder<BankAccountBloc, BankAccountState>(
           buildWhen: (previous, current) =>
@@ -91,119 +108,212 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
             return state.maybeWhen(
               orElse: () => const LoadingWidget(),
               getAllBanksInfoSuccess: () {
-                return Stack(
-                  children: [
-                    SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 70),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 20),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: context.horizontal,
-                              ),
-                              child: SelectBankWidget(
-                                onSelectedBank: (Bank bank) {
-                                  _selectedBank = bank;
-                                },
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(
-                                context.horizontal,
-                                0,
-                                context.horizontal,
-                                20,
-                              ),
-                              child: Column(
-                                children: [
-                                  const SizedBox(height: 10),
-                                  FormElement(
-                                    isRequired: true,
-                                    name:
-                                        BankAccountField.bankAccountNumber.name,
-                                    title: BankAccountField
-                                        .bankAccountNumber.title,
-                                    hintText: BankAccountField
-                                        .bankAccountNumber.hintText,
-                                    controller: _bankNumberCtrl,
-                                    keyBoardType: TextInputType.number,
-                                    onChanged: (value) {
-                                      setState(() {});
-                                    },
-                                  ),
-                                  FormElement(
-                                    name:
-                                        BankAccountField.bankAccountHolder.name,
-                                    title: BankAccountField
-                                        .bankAccountHolder.title,
-                                    hintText: BankAccountField
-                                        .bankAccountHolder.hintText,
-                                    controller: _bankAccountHolderCtrl,
-                                    onChanged: (value) {
-                                      setState(() {});
-                                    },
-                                  ),
-                                  const SizedBox(height: 5),
-                                  QrCodeWidget(
-                                    isChecked: false,
-                                    qrCodeFile: (value) {
-                                      if (value != null) {
-                                        _bloc.add(
-                                          BankAccountEvent.uploadImage(
-                                              file: value),
-                                        );
-                                      }
-                                    },
-                                  ),
-                                  const SizedBox(height: 10),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).padding.bottom),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Visibility(
-                          visible: !isShowKeyboard,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: context.horizontal,
-                            ),
-                            child: GradiantButton(
-                              onPressed: validation
-                                  ? () {
-                                      final params = AddBankAccountParams(
-                                        bank: _selectedBank,
-                                        bankNumber: _bankNumberCtrl.text,
-                                        bankHolderName:
-                                            _bankAccountHolderCtrl.text,
-                                        qrImage: qrImage,
-                                        isDefault: false,
-                                      );
-                                      _bloc.setAddBankAccountParams(params);
-                                      _bloc
-                                          .add(const BankAccountEvent.getOtp());
-                                    }
-                                  : null,
-                              child: const Text('TIẾP THEO'),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                banks = context.read<BankAccountBloc>().banks;
+
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: context.horizontal),
+                  child: PageView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    controller: _pageCtrl,
+                    children: [
+                      _buildFirstPage(),
+                      _buildSecondPage(),
+                    ],
+                  ),
                 );
               },
             );
           },
         ),
+      ),
+    );
+  }
+
+  Duration debounce = const Duration(milliseconds: 300);
+
+  _buildFirstPage() {
+    const double itemHeight = 120;
+    final double itemWidth = MediaQuery.of(context).size.width / 3;
+
+    return Builder(
+      builder: (context) {
+        return SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              Text(
+                'Chọn ngân hàng liên kết',
+                style: context.text.titleMedium?.copyWith(
+                  color: const Color((0xFF101B28)),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  height: 24 / 16,
+                ),
+              ),
+              const SizedBox(height: 15),
+              FormElement(
+                name: 'searchBank',
+                isRequired: true,
+                hintText: 'Nhập tên ngân hàng cần tìm',
+                onChanged: (value) {
+                  // if (value != '' && value != null) {
+                  //   EasyDebounce.debounce(
+                  //     'SEARCH_BANK',
+                  //     debounce,
+                  //     () {
+                  //       banks = banks.where((element) {
+                  //         return '${element.name}${element.code}${element.shortName}'
+                  //             .contains(value);
+                  //       }).toList();
+                  //     },
+                  //   );
+                  // }
+                },
+                prefixIcon: const Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Icon(Icons.search),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 15,
+                  crossAxisSpacing: 15,
+                  childAspectRatio: itemWidth / itemHeight,
+                  children: banks
+                      .map(
+                        (bank) => DecoratedBox(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 2,
+                              color: _selectedBank?.id != bank.id
+                                  ? Colors.transparent
+                                  : const Color(0xFF4B84F7),
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: GestureDetector(
+                            onTap: () {
+                              _selectedBank = bank;
+                              setState(() {});
+                            },
+                            child: BankWidget(bank: bank),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+              const SizedBox(height: 15),
+              PrimaryButton(
+                title: 'TIẾP THEO',
+                onTap: () {
+                  _titleAppbar = '${_selectedBank?.shortName}';
+                  _pageCtrl.animateToPage(
+                    1,
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeIn,
+                  );
+                  setState(() {});
+                },
+                disabled: _selectedBank == null,
+                width: double.infinity,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  _buildSecondPage() {
+    final isShowKeyboard = MediaQuery.of(context).viewInsets.bottom.toInt() > 0;
+
+    return AutoHideKeyboard(
+      child: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 10),
+                const Text(
+                  'Vui lòng đảm bảo chính xác thông tin đã cung cấp',
+                  style: TextStyle(
+                    color: Color(0xFF6E6E6E),
+                    fontSize: 14,
+                    height: 20 / 14,
+                  ),
+                ),
+                FormElement(
+                  isRequired: true,
+                  name: BankAccountField.bankAccountHolder.name,
+                  title: BankAccountField.bankAccountHolder.title,
+                  hintText: BankAccountField.bankAccountHolder.hintText,
+                  controller: _bankAccountHolderCtrl,
+                  keyBoardType: TextInputType.text,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
+                  ],
+                  onChanged: (value) {
+                    setState(() {});
+                  },
+                ),
+                FormElement(
+                  isRequired: true,
+                  name: BankAccountField.bankAccountNumber.name,
+                  title: BankAccountField.bankAccountNumber.title,
+                  hintText: BankAccountField.bankAccountNumber.hintText,
+                  controller: _bankNumberCtrl,
+                  keyBoardType: TextInputType.number,
+                  onChanged: (value) {
+                    setState(() {});
+                  },
+                ),
+                const SizedBox(height: 5),
+                QrCodeWidget(
+                  isChecked: false,
+                  qrCodeFile: (value) {
+                    if (value != null) {
+                      _bloc.add(
+                        BankAccountEvent.uploadImage(file: value),
+                      );
+                    }
+                  },
+                ),
+                const SizedBox(height: 10),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).padding.bottom,
+            ),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Visibility(
+                visible: !isShowKeyboard,
+                child: PrimaryButton(
+                  title: 'TIẾP THEO',
+                  onTap: () {
+                    final params = AddBankAccountParams(
+                      bank: _selectedBank,
+                      bankNumber: _bankNumberCtrl.text,
+                      bankHolderName: _bankAccountHolderCtrl.text,
+                      qrImage: qrImage,
+                      isDefault: false,
+                    );
+                    _bloc.setAddBankAccountParams(params);
+                    _bloc.add(const BankAccountEvent.getOtp());
+                  },
+                  disabled: !validation,
+                  width: double.infinity,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

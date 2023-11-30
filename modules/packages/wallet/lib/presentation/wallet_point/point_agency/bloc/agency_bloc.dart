@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:wallet/data/datasources/models/est_coin_response.dart';
@@ -50,8 +51,12 @@ class AgencyBloc extends Bloc<AgencyEvent, AgencyState> {
         );
         emit(_ExchangeSuccess(response: response));
       } catch (e) {
-        const errMessage = 'Đã xảy ra lỗi';
-        emit(const _Error(errMessage));
+        if (e is DioException) {
+          emit(_Error(e.response?.data['code'] ?? ''));
+        } else {
+          const errMessage = 'Đã xảy ra lỗi';
+          emit(const _Error(errMessage));
+        }
       }
     });
 
