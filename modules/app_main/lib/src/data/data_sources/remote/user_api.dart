@@ -11,6 +11,7 @@ import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../models/responses/api_response.dart';
+import '../../models/responses/list_followees_response.dart';
 
 part 'user_api.g.dart';
 
@@ -29,6 +30,7 @@ class UserApiConstants {
   static const updatePDoneProfile = "api/v1/p-done/profile";
   static const updateNonePDoneProfile = "api/v1/p-done/non-p-done-profile";
   static const listFriends = "/api/v1/following/friend";
+  static const listFollowees = "/api/v1/following/followees";
   static const invite = "api/v1/team/{id}/invite";
   static const email = "api/v1/user/email";
   static const genEmail = "api/v1/user/add-email-otp";
@@ -105,6 +107,9 @@ abstract class UserApi {
 
   @GET(UserApiConstants.listFriends)
   Future<ListFriendUserResponse> listFriends();
+
+  @GET(UserApiConstants.listFollowees)
+  Future<ListFolloweesResponse> listFollowees();
 
   @POST(UserApiConstants.invite)
   Future invite(

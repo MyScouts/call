@@ -121,6 +121,9 @@ abstract class LiveApi {
   @GET(LiveApiConstant.memberCount)
   Future<ApiResponse<MemberCountData>> memberCount({@Query('liveIds') required List<int> liveIds});
 
+  @GET(LiveApiConstant.getAllCateGory)
+  Future<ApiResponse<LiveStreamCategoryResponse>> getAllCateGory();
+
 //
 // @POST(LiveApiConstant.joinLive)
 // Future<ApiResponse<LiveResponse>> joinLive({
@@ -165,8 +168,6 @@ abstract class LiveApi {
 // Future<ApiResponse<SupervisorOfMe>> supervisorOfMe();
 //
 //
-  @GET(LiveApiConstant.getAllCateGory)
-  Future<ApiResponse<LiveStreamCategoryResponse>> getAllCateGory();
 //
 // @PATCH(LiveApiConstant.livePathId)
 // Future<ApiResponse<bool>> updateLive(
