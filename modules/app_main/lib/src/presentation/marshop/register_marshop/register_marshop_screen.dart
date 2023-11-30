@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/presentation/marshop/marshop_constant.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_coordinator.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_constants.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
@@ -92,46 +93,17 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
         ),
       ],
       child: ScaffoldHideKeyboard(
-        appBar: const BaseAppBar(title: "Đăng ký Marshop"),
+        appBar: const BaseAppBar(title: "Đăng ký tài khoản MarShop"),
         body: Form(
           key: formKey,
           child: SingleChildScrollView(
             child: Column(children: [
+              _buildForm(),
               const ReadMorePolicy(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: AcceptTermWithCheckboxWidget(
                   acceptTerm: _acceptTerm,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: paddingHorizontal),
-                child: CustomTextField(
-                  label: "Tên shop",
-                  controller: _marshopName,
-                  onChange: (value) => onValidation(),
-                  hintText: "",
-                  validator: (value) =>
-                      ValidationHelper.requiredValid(value, "Tên shop"),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: paddingHorizontal),
-                child: CustomTextField(
-                  label: "Mã marshop",
-                  controller: _marshopIdCtrl,
-                  onChange: (value) => onValidation(),
-                  validator: (value) =>
-                      ValidationHelper.requiredValid(value, "Mã Marshop"),
-                  hintText: "",
-                  prefixIcon: GestureDetector(
-                    onTap: _startQrCodeScan,
-                    child: const Icon(Icons.qr_code),
-                  ),
                 ),
               ),
               const SizedBox(height: 10),
@@ -174,5 +146,60 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
         onValidation();
       }
     });
+  }
+
+  _buildForm() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
+      child: Column(
+        children: [
+          _buildRules(),
+          const SizedBox(height: 15),
+          Row(
+            children: [
+              Assets.icons_ic_qrcode_png.image(width: 50),
+              const SizedBox(width: 15),
+              Expanded(
+                child: CustomTextField(
+                  controller: _marshopIdCtrl,
+                  hintText: "Nhập ID Marshop giới thiệu",
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Text(
+            "Bạn chưa có MarShop giới thiệu ?",
+            style: context.text.bodyMedium!.copyWith(
+              color: context.theme.primaryColor,
+            ),
+          ),
+          const SizedBox(height: 10),
+        ],
+      ),
+    );
+  }
+
+  _buildRules() {
+    return Column(
+      children: RegisterMarshopRule.values.reversed
+          .map((e) => Container(
+                margin: const EdgeInsets.symmetric(vertical: 5),
+                child: Row(
+                  children: [
+                    Assets.icons_shape_check_fail.image(
+                      width: 25,
+                      fit: BoxFit.cover,
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      e.getText(),
+                      style: context.textTheme.titleMedium,
+                    ),
+                  ],
+                ),
+              ))
+          .toList(),
+    );
   }
 }

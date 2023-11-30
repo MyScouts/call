@@ -5,7 +5,7 @@
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal
+// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -990,6 +990,14 @@ class Assets {
   static const AssetGenImage icons_ic_live =
       AssetGenImage('assets/icons/ic_live.png');
 
+  /// File path: assets/icons/ic_live_1.png
+  static const AssetGenImage icons_ic_live_1 =
+      AssetGenImage('assets/icons/ic_live_1.png');
+
+  /// File path: assets/icons/ic_live_2.png
+  static const AssetGenImage icons_ic_live_2 =
+      AssetGenImage('assets/icons/ic_live_2.png');
+
   /// File path: assets/icons/ic_live_area.svg
   static const SvgGenImage icons_ic_live_area =
       SvgGenImage('assets/icons/ic_live_area.svg');
@@ -1010,6 +1018,10 @@ class Assets {
   static const SvgGenImage icons_ic_male_svg =
       SvgGenImage('assets/icons/ic_male.svg');
 
+  /// File path: assets/icons/ic_market.png
+  static const AssetGenImage icons_ic_market =
+      AssetGenImage('assets/icons/ic_market.png');
+
   /// File path: assets/icons/ic_market_home.png
   static const AssetGenImage icons_ic_market_home =
       AssetGenImage('assets/icons/ic_market_home.png');
@@ -1017,6 +1029,10 @@ class Assets {
   /// File path: assets/icons/ic_marshop.png
   static const AssetGenImage icons_ic_marshop =
       AssetGenImage('assets/icons/ic_marshop.png');
+
+  /// File path: assets/icons/ic_mashop.png
+  static const AssetGenImage icons_ic_mashop =
+      AssetGenImage('assets/icons/ic_mashop.png');
 
   /// File path: assets/icons/ic_menu.svg
   static const SvgGenImage icons_ic_menu =
@@ -1062,9 +1078,17 @@ class Assets {
   static const AssetGenImage icons_ic_qr =
       AssetGenImage('assets/icons/ic_qr.png');
 
+  /// File path: assets/icons/ic_qrcode.png
+  static const AssetGenImage icons_ic_qrcode_png =
+      AssetGenImage('assets/icons/ic_qrcode.png');
+
   /// File path: assets/icons/ic_qrcode.svg
-  static const SvgGenImage icons_ic_qrcode =
+  static const SvgGenImage icons_ic_qrcode_svg =
       SvgGenImage('assets/icons/ic_qrcode.svg');
+
+  /// File path: assets/icons/ic_qrcode_outline.svg
+  static const SvgGenImage icons_ic_qrcode_outline =
+      SvgGenImage('assets/icons/ic_qrcode_outline.svg');
 
   /// File path: assets/icons/ic_radar.svg
   static const SvgGenImage icons_ic_radar =
@@ -1081,6 +1105,10 @@ class Assets {
   /// File path: assets/icons/ic_reject_protector.png
   static const AssetGenImage icons_ic_reject_protector =
       AssetGenImage('assets/icons/ic_reject_protector.png');
+
+  /// File path: assets/icons/ic_scan.png
+  static const AssetGenImage icons_ic_scan =
+      AssetGenImage('assets/icons/ic_scan.png');
 
   /// File path: assets/icons/ic_search.svg
   static const SvgGenImage icons_ic_search =
@@ -1101,6 +1129,10 @@ class Assets {
   /// File path: assets/icons/ic_setting_app.svg
   static const SvgGenImage icons_ic_setting_app =
       SvgGenImage('assets/icons/ic_setting_app.svg');
+
+  /// File path: assets/icons/ic_setting_home.png
+  static const AssetGenImage icons_ic_setting_home =
+      AssetGenImage('assets/icons/ic_setting_home.png');
 
   /// File path: assets/icons/ic_share_link_team.svg
   static const SvgGenImage icons_ic_share_link_team =
@@ -1313,6 +1345,14 @@ class Assets {
   static const SvgGenImage icons_pro_ads =
       SvgGenImage('assets/icons/pro_ads.svg');
 
+  /// File path: assets/icons/shape_check_fail.png
+  static const AssetGenImage icons_shape_check_fail =
+      AssetGenImage('assets/icons/shape_check_fail.png');
+
+  /// File path: assets/icons/shape_check_success.png
+  static const AssetGenImage icons_shape_check_success =
+      AssetGenImage('assets/icons/shape_check_success.png');
+
   /// File path: assets/icons/star.svg
   static const SvgGenImage icons_star = SvgGenImage('assets/icons/star.svg');
 
@@ -1338,6 +1378,10 @@ class Assets {
   /// File path: assets/icons/wheel_of_fortune.png
   static const AssetGenImage icons_wheel_of_fortune =
       AssetGenImage('assets/icons/wheel_of_fortune.png');
+
+  /// File path: assets/icons/widget_team.png
+  static const AssetGenImage icons_widget_team =
+      AssetGenImage('assets/icons/widget_team.png');
 
   /// File path: assets/images/app_logo.png
   static const AssetGenImage images_app_logo =
@@ -1548,7 +1592,8 @@ class Assets {
       AssetGenImage('assets/images/live.png');
 
   /// File path: assets/images/loading.json
-  static const String images_loading = 'assets/images/loading.json';
+  static const String images_loading =
+      'packages/design_system/assets/images/loading.json';
 
   /// File path: assets/images/locket.webp
   static const AssetGenImage images_locket =
@@ -1955,13 +2000,17 @@ class Assets {
         icons_ic_ja,
         icons_ic_leave_team,
         icons_ic_live,
+        icons_ic_live_1,
+        icons_ic_live_2,
         icons_ic_live_area,
         icons_ic_live_user,
         icons_ic_logout,
         icons_ic_male_png,
         icons_ic_male_svg,
+        icons_ic_market,
         icons_ic_market_home,
         icons_ic_marshop,
+        icons_ic_mashop,
         icons_ic_menu,
         icons_ic_mess,
         icons_ic_messages,
@@ -1973,16 +2022,20 @@ class Assets {
         icons_ic_picture,
         icons_ic_profile,
         icons_ic_qr,
-        icons_ic_qrcode,
+        icons_ic_qrcode_png,
+        icons_ic_qrcode_svg,
+        icons_ic_qrcode_outline,
         icons_ic_radar,
         icons_ic_rain,
         icons_ic_reject,
         icons_ic_reject_protector,
+        icons_ic_scan,
         icons_ic_search,
         icons_ic_security,
         icons_ic_setting_png,
         icons_ic_setting_svg,
         icons_ic_setting_app,
+        icons_ic_setting_home,
         icons_ic_share_link_team,
         icons_ic_shop_live,
         icons_ic_sun,
@@ -2036,6 +2089,8 @@ class Assets {
         icons_newspaper,
         icons_pro,
         icons_pro_ads,
+        icons_shape_check_fail,
+        icons_shape_check_success,
         icons_star,
         icons_user3,
         icons_visibility,
@@ -2043,6 +2098,7 @@ class Assets {
         icons_vn_flag,
         icons_wallet_agency_coupon,
         icons_wheel_of_fortune,
+        icons_widget_team,
         images_app_logo,
         images_avatar,
         images_back_cmnd,
@@ -2181,7 +2237,16 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider() => AssetImage(_assetName);
+  ImageProvider provider({
+    AssetBundle? bundle,
+    String? package = 'design_system',
+  }) {
+    return AssetImage(
+      _assetName,
+      bundle: bundle,
+      package: package,
+    );
+  }
 
   String get path => _assetName;
 
@@ -2204,13 +2269,14 @@ class SvgGenImage {
     AlignmentGeometry alignment = Alignment.center,
     bool allowDrawingOutsideViewBox = false,
     WidgetBuilder? placeholderBuilder,
-    Color? color,
-    BlendMode colorBlendMode = BlendMode.srcIn,
     String? semanticsLabel,
     bool excludeFromSemantics = false,
+    SvgTheme theme = const SvgTheme(),
+    ColorFilter? colorFilter,
     Clip clipBehavior = Clip.hardEdge,
-    bool cacheColorFilter = false,
-    SvgTheme? theme,
+    @deprecated Color? color,
+    @deprecated BlendMode colorBlendMode = BlendMode.srcIn,
+    @deprecated bool cacheColorFilter = false,
   }) {
     return SvgPicture.asset(
       _assetName,
@@ -2224,13 +2290,14 @@ class SvgGenImage {
       alignment: alignment,
       allowDrawingOutsideViewBox: allowDrawingOutsideViewBox,
       placeholderBuilder: placeholderBuilder,
-      color: color,
-      colorBlendMode: colorBlendMode,
       semanticsLabel: semanticsLabel,
       excludeFromSemantics: excludeFromSemantics,
+      theme: theme,
+      colorFilter: colorFilter,
+      color: color,
+      colorBlendMode: colorBlendMode,
       clipBehavior: clipBehavior,
       cacheColorFilter: cacheColorFilter,
-      theme: theme,
     );
   }
 
