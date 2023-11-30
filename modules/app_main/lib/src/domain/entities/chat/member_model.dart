@@ -6,6 +6,5 @@ abstract class MemberModel {
     String? get displayName;
     String? get fullName;
     String? get birthday;
-    int get sexCode;
-
+    int? get sexCode;
 }

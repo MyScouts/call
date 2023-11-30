@@ -38,7 +38,7 @@ class _FriendApi implements FriendApi {
     )
             .compose(
               _dio.options,
-              'api/v1/following/friends',
+              'api/v1/following/friend',
               queryParameters: queryParameters,
               data: _data,
             )

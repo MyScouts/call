@@ -1,6 +1,7 @@
 import 'package:app_main/src/core/networking/items_response.dart';
 import 'package:app_main/src/data/models/payloads/chat/new_conversations_payload.dart';
 import 'package:app_main/src/data/models/payloads/chat/new_message_payload.dart';
+import 'package:app_main/src/data/models/responses/chat/conversation_detail_response_dto.dart';
 import 'package:app_main/src/data/models/responses/chat/conversation_dto.dart';
 import 'package:app_main/src/data/models/responses/chat/message_dto.dart';
 import 'package:app_main/src/data/models/responses/chat/result_dto.dart';
@@ -31,12 +32,12 @@ abstract class ChatApi {
   });
 
   @POST(ChatApiConstant.getConversations)
-  Future<ItemsResponse<ConversationDto>> createConversations({
+  Future<ResultDto> createConversations({
     @Body() required NewConversationsPayload payload,
   });
 
   @GET(ChatApiConstant.detailConversations)
-  Future<ConversationDto> getConversationsDetail({
+  Future<ConversationDetailResponseDto> getConversationsDetail({
     @Path('conversationId') required int conversationId,
   });
 
@@ -51,7 +52,7 @@ abstract class ChatApi {
   });
 
   @POST(ChatApiConstant.messages)
-  Future<ResultDto> newMessage({
+  Future<MessageDto> newMessage({
     @Path('conversationId') required int conversationId,
     @Body() required NewMessagePayload payload,
   });

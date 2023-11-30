@@ -7,7 +7,7 @@ import 'package:retrofit/http.dart';
 part 'friend_api.g.dart';
 
 class FriendApiConstant {
-  static const String getFriend = 'api/v1/following/friends';
+  static const String getFriend = 'api/v1/following/friend';
 }
 
 @RestApi()

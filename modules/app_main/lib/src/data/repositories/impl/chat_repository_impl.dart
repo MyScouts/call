@@ -2,6 +2,7 @@ import 'package:app_main/src/core/networking/items_response.dart';
 import 'package:app_main/src/data/data_sources/remote/chat_api.dart';
 import 'package:app_main/src/data/models/payloads/chat/new_conversations_payload.dart';
 import 'package:app_main/src/data/models/payloads/chat/new_message_payload.dart';
+import 'package:app_main/src/domain/entities/chat/conversation_detail_response_model.dart';
 import 'package:app_main/src/domain/entities/chat/conversation_model.dart';
 import 'package:app_main/src/domain/entities/chat/message_model.dart';
 import 'package:app_main/src/domain/entities/chat/result_model.dart';
@@ -17,7 +18,7 @@ class ChatRepositoryImpl extends ChatRepository {
   );
 
   @override
-  Future<ItemsResponse<ConversationModel>> createConversations(
+  Future<ResultModel> createConversations(
       {required NewConversationsPayload payload}) async {
     return await _chatApi.createConversations(payload: payload);
   }
@@ -34,7 +35,7 @@ class ChatRepositoryImpl extends ChatRepository {
   }
 
   @override
-  Future<ConversationModel> getConversationsDetail({required int conversationId}) async {
+  Future<ConversationDetailResponseModel> getConversationsDetail({required int conversationId}) async {
     return await _chatApi.getConversationsDetail(conversationId: conversationId);
   }
 
@@ -46,7 +47,7 @@ class ChatRepositoryImpl extends ChatRepository {
   }
 
   @override
-  Future<ResultModel> newMessage(
+  Future<MessageModel> newMessage(
       {required int conversationId, required NewMessagePayload payload}) async {
     return await _chatApi.newMessage(conversationId: conversationId, payload: payload);
   }

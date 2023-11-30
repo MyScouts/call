@@ -87,6 +87,9 @@ dependencies:
   pdf: ^3.10.6
   printing: ^5.11.1
   flutter_slidable: ^3.0.1
+  socket_io_client: ^2.0.3+1
+  flutter_chat_bubble: ^2.0.2
+
 
 dev_dependencies:
   flutter_test:

@@ -28,13 +28,13 @@ class MessageDto extends MessageModel {
   final String messageId;
 
   @override
-  final Map metadata;
+  final Map? metadata;
 
   @override
   final bool seen;
 
   @override
-  final MemberDto sender;
+  final MemberDto? sender;
 
   @override
   final int type;

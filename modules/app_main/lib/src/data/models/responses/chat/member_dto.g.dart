@@ -13,7 +13,7 @@ MemberDto _$MemberDtoFromJson(Map<String, dynamic> json) => MemberDto(
       fullName: json['fullName'] as String?,
       id: json['id'] as int,
       pDoneId: json['pDoneId'] as String?,
-      sexCode: json['sexCode'] as int,
+      sexCode: json['sexCode'] as int?,
     );
 
 Map<String, dynamic> _$MemberDtoToJson(MemberDto instance) => <String, dynamic>{

@@ -1,3 +1,4 @@
+import 'package:app_main/src/presentation/chat/conversation/conversation_page.dart';
 import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/dashboard/system_setting/system_setting.dart';
 import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
@@ -293,6 +294,7 @@ final personalDefault = {
     id: 'ic_mess',
     title: 'Tin nhắn',
     backgroundImage: IconAppConstants.icMess,
+    path: ConversationPage.routeName,
   ),
   'ic_call': DashBoardIconItem(
     id: 'ic_call',

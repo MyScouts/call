@@ -55,15 +55,15 @@ class _ChatApi implements ChatApi {
   }
 
   @override
-  Future<ItemsResponse<ConversationDto>> createConversations(
+  Future<ResultDto> createConversations(
       {required NewConversationsPayload payload}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(payload.toJson());
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ItemsResponse<ConversationDto>>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<ResultDto>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -79,22 +79,19 @@ class _ChatApi implements ChatApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ItemsResponse<ConversationDto>.fromJson(
-      _result.data!,
-      (json) => ConversationDto.fromJson(json as Map<String, dynamic>),
-    );
+    final value = ResultDto.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<ConversationDto> getConversationsDetail(
+  Future<ConversationDetailResponseDto> getConversationsDetail(
       {required int conversationId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ConversationDto>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ConversationDetailResponseDto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -110,7 +107,7 @@ class _ChatApi implements ChatApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ConversationDto.fromJson(_result.data!);
+    final value = ConversationDetailResponseDto.fromJson(_result.data!);
     return value;
   }
 
@@ -169,7 +166,7 @@ class _ChatApi implements ChatApi {
   }
 
   @override
-  Future<ResultDto> newMessage({
+  Future<MessageDto> newMessage({
     required int conversationId,
     required NewMessagePayload payload,
   }) async {
@@ -179,7 +176,7 @@ class _ChatApi implements ChatApi {
     final _data = <String, dynamic>{};
     _data.addAll(payload.toJson());
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ResultDto>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<MessageDto>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -195,7 +192,7 @@ class _ChatApi implements ChatApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ResultDto.fromJson(_result.data!);
+    final value = MessageDto.fromJson(_result.data!);
     return value;
   }
 

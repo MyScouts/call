@@ -11,9 +11,11 @@ MessageDto _$MessageDtoFromJson(Map<String, dynamic> json) => MessageDto(
       createdAt: json['createdAt'] as String,
       message: json['message'] as String,
       messageId: json['messageId'] as String,
-      metadata: json['metadata'] as Map<String, dynamic>,
+      metadata: json['metadata'] as Map<String, dynamic>?,
       seen: json['seen'] as bool,
-      sender: MemberDto.fromJson(json['sender'] as Map<String, dynamic>),
+      sender: json['sender'] == null
+          ? null
+          : MemberDto.fromJson(json['sender'] as Map<String, dynamic>),
       type: json['type'] as int,
     );
 

@@ -1,6 +1,7 @@
 import 'package:app_main/src/core/networking/items_response.dart';
 import 'package:app_main/src/data/models/payloads/chat/new_conversations_payload.dart';
 import 'package:app_main/src/data/models/payloads/chat/new_message_payload.dart';
+import 'package:app_main/src/domain/entities/chat/conversation_detail_response_model.dart';
 import 'package:app_main/src/domain/entities/chat/conversation_model.dart';
 import 'package:app_main/src/domain/entities/chat/message_model.dart';
 import 'package:app_main/src/domain/entities/chat/result_model.dart';
@@ -30,13 +31,13 @@ class ChatUseCase {
     return _chatRepository.getConversations(page: page, pageSize: pageSize);
   }
 
-  Future<ItemsResponse<ConversationModel>> createConversations({
+  Future<ResultModel> createConversations({
     required NewConversationsPayload payload,
   }) {
     return _chatRepository.createConversations(payload: payload);
   }
 
-  Future<ConversationModel> getConversationsDetail({
+  Future<ConversationDetailResponseModel> getConversationsDetail({
     required int conversationId,
   }) {
     return _chatRepository.getConversationsDetail(conversationId: conversationId);
@@ -54,7 +55,7 @@ class ChatUseCase {
     return _chatRepository.realAllConversations(conversationId: conversationId);
   }
 
-  Future<ResultModel> newMessage({
+  Future<MessageModel> newMessage({
     required int conversationId,
     required NewMessagePayload payload,
   }) {

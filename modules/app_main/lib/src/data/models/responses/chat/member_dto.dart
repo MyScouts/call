@@ -29,5 +29,5 @@ class MemberDto extends MemberModel {
   final String? pDoneId;
 
   @override
-  final int sexCode;
+  final int? sexCode;
 }
