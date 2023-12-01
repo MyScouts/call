@@ -88,8 +88,8 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                           showDialog(
                               context: context,
                               builder: (_) => ConfirmChatDialog(
-                                    title: 'Chặn Thanh Vân',
-                                    content: 'Thanh Vân sẽ không thể :\n\n'
+                                    title: 'Chặn ${conversation.conversation.membersNotMe.first.member.fullName}',
+                                    content: '${conversation.conversation.membersNotMe.first.member.fullName} sẽ không thể :\n\n'
                                         ' • Xem bài viết trên trang cá nhân của bạn\n'
                                         ' • Nhắn tin cho bạn\n'
                                         ' • Thêm bạn làm bạn bè\n'
