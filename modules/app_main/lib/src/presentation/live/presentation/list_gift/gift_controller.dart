@@ -3,7 +3,9 @@ import 'package:injectable/injectable.dart';
 import 'package:localization/generated/l10n.dart';
 import 'package:wallet/core/core.dart';
 import 'package:wallet/data/datasources/models/response/wallet_info_response.dart';
+import 'package:wallet/domain/repository/wallet_repository.dart';
 
+import '../../../../di/di.dart';
 import '../../data/model/response/user_point_response.dart';
 import '../../domain/entities/gift_card_list.dart';
 import '../../domain/usecases/live_usecases.dart';
@@ -32,7 +34,11 @@ class GiftController {
 
   Future<void> getUserPoint() async {
     try {
-      userWallet.value = WalletInjectedData.userWallet;
+      final wallet = await getIt.get<WalletRepository>().getWalletInfo();
+      if (wallet != null) {
+        WalletInjectedData.setUserWallet = wallet;
+        userWallet.value = WalletInjectedData.userWallet;
+      }
     } catch (e) {}
   }
 

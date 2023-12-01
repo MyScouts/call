@@ -57,12 +57,14 @@ class _TabBarGroupsState extends State<TabBarGroups> {
                     );
                   }),
                   const SizedBox(height: 4),
-                  Container(
-                      width: 22,
-                      height: 4,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(3.5),
-                          color: indexSelect.value == index ? const Color(0xff4B84F7) : Colors.transparent))
+                  Obx(() {
+                    return Container(
+                        width: 22,
+                        height: 4,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(3.5),
+                            color: indexSelect.value == index ? const Color(0xff4B84F7) : Colors.transparent));
+                  })
                 ],
               ),
             ),

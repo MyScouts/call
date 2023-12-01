@@ -16,16 +16,16 @@ class FilterBottom extends StatefulWidget {
 
 class _FilterBottomState extends State<FilterBottom> {
   bool isSelect(LiveCategoryDetail liveCategoryDetail) {
-    return listCategorySelect.value?.id == liveCategoryDetail.id;
+    return listCategorySelect.firstWhereOrNull((element) => element.id == liveCategoryDetail.id) != null;
   }
 
   @override
   void initState() {
-    listCategorySelect.value = widget.controller.listCategorySelect.value;
+    listCategorySelect.value = List.from(widget.controller.listCategorySelect);
     super.initState();
   }
 
-  final Rxn<LiveCategoryDetail> listCategorySelect = Rxn<LiveCategoryDetail>();
+  final listCategorySelect = <LiveCategoryDetail>[].obs;
 
   final isSelectAll = false.obs;
 
@@ -84,33 +84,40 @@ class _FilterBottomState extends State<FilterBottom> {
               child: Obx(() {
                 return Wrap(
                   children: [
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     isSelectAll.value = !isSelectAll.value;
-                    //   },
-                    //   child: Container(
-                    //     decoration: BoxDecoration(
-                    //         borderRadius: BorderRadius.circular(16),
-                    //         border: Border.all(
-                    //             color: isSelectAll.value ? const Color(0xff4B84F7) : const Color(0xffD0D6DD))),
-                    //     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    //     child: Text(
-                    //       'Tất cả',
-                    //       style: TextStyle(
-                    //           color: isSelectAll.value ? const Color(0xff4B84F7) : Colors.black,
-                    //           fontWeight: isSelectAll.value ? FontWeight.w600 : FontWeight.w400),
-                    //     ),
-                    //   ),
-                    // ),
-                    // const SizedBox(width: 8),
+                    GestureDetector(
+                      onTap: () {
+                        isSelectAll.value = !isSelectAll.value;
+                        if (isSelectAll.value) {
+                          listCategorySelect.clear();
+                        } else {
+                          listCategorySelect.value = List.from(widget.controller.listCategorySelect);
+                        }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                                color: isSelectAll.value ? const Color(0xff4B84F7) : const Color(0xffD0D6DD))),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        child: Text(
+                          'Tất cả',
+                          style: TextStyle(
+                              color: isSelectAll.value ? const Color(0xff4B84F7) : Colors.black,
+                              fontWeight: isSelectAll.value ? FontWeight.w600 : FontWeight.w400),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
                     ...widget.controller.listCategory
                         .map((element) => SizedBox(
                               child: GestureDetector(
                                 onTap: () {
                                   if (isSelect(element)) {
-                                    listCategorySelect.value = null;
+                                    listCategorySelect.remove(element);
                                   } else {
-                                    listCategorySelect.value = element;
+                                    if (listCategorySelect.length < 3) {
+                                      listCategorySelect.add(element);
+                                    }
                                   }
                                 },
                                 child: Container(
@@ -145,7 +152,7 @@ class _FilterBottomState extends State<FilterBottom> {
                           style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xffE8F0FE), foregroundColor: Colors.blue),
                           onPressed: () {
-                            listCategorySelect.value = widget.controller.listCategorySelect.value;
+                            listCategorySelect.value = List.from(widget.controller.listCategorySelect);
                           },
                           child: const Text("Thiết lập lại"))),
                   const SizedBox(
@@ -158,8 +165,8 @@ class _FilterBottomState extends State<FilterBottom> {
                             foregroundColor: Colors.white,
                           ),
                           onPressed: () {
-                            widget.controller.listCategorySelect.value = listCategorySelect.value;
-                            Navigator.pop(context, listCategorySelect.value);
+                            widget.controller.listCategorySelect.value = List.from(listCategorySelect);
+                            Navigator.pop(context, List.from(listCategorySelect));
                           },
                           child: const Text("Áp dụng"))),
                 ],

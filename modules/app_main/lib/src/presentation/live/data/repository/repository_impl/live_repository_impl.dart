@@ -26,7 +26,7 @@ class LiveRepositoryImpl extends LiveRepository {
     required int page,
     required int pageSize,
     required List<String> types,
-    int? categoryId,
+    List<int>? categoryId,
   }) async {
     final result = await _liveApi.getListLive(
       page: page,
