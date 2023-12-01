@@ -8,17 +8,19 @@ import '../button/common_outline_button.dart';
 import '../button/primary_button.dart';
 import 'widgets/dialog_container_widget.dart';
 
-class ConfirmChatDialog extends StatelessWidget {
+class ChatDialog extends StatelessWidget {
   final String title;
   final String actionTitle;
   final Color? actionColor;
   final String? content;
+  final Widget? contentWidget;
   final TextAlign? contentAlign;
   final VoidCallback onAction;
   final VoidCallback? onCancel;
   final bool isBack;
+  final bool showCancel;
 
-  const ConfirmChatDialog({
+  const ChatDialog({
     super.key,
     required this.title,
     required this.actionTitle,
@@ -26,8 +28,10 @@ class ConfirmChatDialog extends StatelessWidget {
     this.content,
     this.onCancel,
     this.isBack = true,
+    this.showCancel = true,
     this.actionColor,
     this.contentAlign,
+    this.contentWidget,
   });
 
   @override
@@ -71,33 +75,38 @@ class ConfirmChatDialog extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                     fontWeight: FontWeight.w600, color: AppColors.textSecondary, fontSize: 14),
               ),
+            if(contentWidget != null)
+              contentWidget!,
             Padding(
               padding: const EdgeInsets.only(top: 25),
               child: Row(
                 children: [
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        onCancel?.call();
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8), color: const Color(0xfff4f4f4)),
-                        child: Center(
-                          child: Text(
-                            'Huỷ',
-                            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.textSecondary,
-                                fontSize: 16),
+                  if (showCancel) ...[
+                    Expanded(
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          onCancel?.call();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: const Color(0xfff4f4f4)),
+                          child: Center(
+                            child: Text(
+                              'Huỷ',
+                              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.textSecondary,
+                                  fontSize: 16),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  kSpacingWidth12,
+                    kSpacingWidth12,
+                  ],
                   Expanded(
                     child: InkWell(
                       onTap: () {
