@@ -58,3 +58,27 @@ Map<String, dynamic> _$GetListMarshopPayloadToJson(
       'page': instance.page,
       'pageSize': instance.pageSize,
     };
+
+GetMarshopInfoPayload _$GetMarshopInfoPayloadFromJson(
+        Map<String, dynamic> json) =>
+    GetMarshopInfoPayload(
+      userId: json['userId'] as int?,
+      pdoneId: json['pdoneId'] as String?,
+      marshopId: json['marshopId'] as int?,
+    );
+
+Map<String, dynamic> _$GetMarshopInfoPayloadToJson(
+    GetMarshopInfoPayload instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('userId', instance.userId);
+  writeNotNull('pdoneId', instance.pdoneId);
+  writeNotNull('marshopId', instance.marshopId);
+  return val;
+}

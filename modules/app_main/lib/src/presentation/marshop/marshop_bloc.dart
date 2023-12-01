@@ -6,11 +6,18 @@ import 'package:injectable/injectable.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 
 typedef GetListMarshopBloc
-    = GetListBlocParam1<MarshopInfo, GetListMarshopPayload>;
+    = GetListBlocParam1<MarshopResponse, GetListMarshopPayload>;
+
+typedef MarshopDetailBloc
+    = GetDetailBlocParam1<MarshopResponse, GetMarshopInfoPayload>;
 
 @module
 abstract class MarshopBlocFactory {
   @factory
   GetListMarshopBloc listMarshopBloc(MarshopUsecase usecase) =>
       GetListMarshopBloc(usecase.getMarShops);
+
+  @factory
+  MarshopDetailBloc getMarshopInfo(MarshopUsecase usecase) =>
+      MarshopDetailBloc(usecase.getMarShop);
 }

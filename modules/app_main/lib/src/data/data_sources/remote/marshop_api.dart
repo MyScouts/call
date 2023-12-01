@@ -10,6 +10,7 @@ class MarshopApiConstant {
   static const String customerRegister = "api/v1/marshop/customer/register";
   static const String registerMarshop = "api/v1/marshop/{userId}";
   static const String listMarshop = "api/v1/marshop/list";
+  static const String marshopInfo = "api/v1/marshop/user";
 }
 
 @RestApi()
@@ -30,5 +31,10 @@ abstract class MarshopAPI {
   @GET(MarshopApiConstant.listMarshop)
   Future<ListMarshopResponse> listMarshop(
     @Queries() GetListMarshopPayload query,
+  );
+
+  @GET(MarshopApiConstant.marshopInfo)
+  Future<MarshopResponse> getMarshop(
+    @Queries() GetMarshopInfoPayload query,
   );
 }

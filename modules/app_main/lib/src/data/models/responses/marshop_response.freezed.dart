@@ -21,7 +21,7 @@ ListMarshopResponse _$ListMarshopResponseFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ListMarshopResponse {
   int get total => throw _privateConstructorUsedError;
-  List<MarshopInfo> get marshops => throw _privateConstructorUsedError;
+  List<MarshopResponse> get marshops => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +35,7 @@ abstract class $ListMarshopResponseCopyWith<$Res> {
           ListMarshopResponse value, $Res Function(ListMarshopResponse) then) =
       _$ListMarshopResponseCopyWithImpl<$Res, ListMarshopResponse>;
   @useResult
-  $Res call({int total, List<MarshopInfo> marshops});
+  $Res call({int total, List<MarshopResponse> marshops});
 }
 
 /// @nodoc
@@ -62,7 +62,7 @@ class _$ListMarshopResponseCopyWithImpl<$Res, $Val extends ListMarshopResponse>
       marshops: null == marshops
           ? _value.marshops
           : marshops // ignore: cast_nullable_to_non_nullable
-              as List<MarshopInfo>,
+              as List<MarshopResponse>,
     ) as $Val);
   }
 }
@@ -75,7 +75,7 @@ abstract class _$$ListMarshopResponseImplCopyWith<$Res>
       __$$ListMarshopResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int total, List<MarshopInfo> marshops});
+  $Res call({int total, List<MarshopResponse> marshops});
 }
 
 /// @nodoc
@@ -100,7 +100,7 @@ class __$$ListMarshopResponseImplCopyWithImpl<$Res>
       marshops: null == marshops
           ? _value._marshops
           : marshops // ignore: cast_nullable_to_non_nullable
-              as List<MarshopInfo>,
+              as List<MarshopResponse>,
     ));
   }
 }
@@ -109,7 +109,7 @@ class __$$ListMarshopResponseImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ListMarshopResponseImpl implements _ListMarshopResponse {
   const _$ListMarshopResponseImpl(
-      {required this.total, required final List<MarshopInfo> marshops})
+      {required this.total, required final List<MarshopResponse> marshops})
       : _marshops = marshops;
 
   factory _$ListMarshopResponseImpl.fromJson(Map<String, dynamic> json) =>
@@ -117,9 +117,9 @@ class _$ListMarshopResponseImpl implements _ListMarshopResponse {
 
   @override
   final int total;
-  final List<MarshopInfo> _marshops;
+  final List<MarshopResponse> _marshops;
   @override
-  List<MarshopInfo> get marshops {
+  List<MarshopResponse> get marshops {
     if (_marshops is EqualUnmodifiableListView) return _marshops;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_marshops);
@@ -161,8 +161,9 @@ class _$ListMarshopResponseImpl implements _ListMarshopResponse {
 
 abstract class _ListMarshopResponse implements ListMarshopResponse {
   const factory _ListMarshopResponse(
-      {required final int total,
-      required final List<MarshopInfo> marshops}) = _$ListMarshopResponseImpl;
+          {required final int total,
+          required final List<MarshopResponse> marshops}) =
+      _$ListMarshopResponseImpl;
 
   factory _ListMarshopResponse.fromJson(Map<String, dynamic> json) =
       _$ListMarshopResponseImpl.fromJson;
@@ -170,19 +171,19 @@ abstract class _ListMarshopResponse implements ListMarshopResponse {
   @override
   int get total;
   @override
-  List<MarshopInfo> get marshops;
+  List<MarshopResponse> get marshops;
   @override
   @JsonKey(ignore: true)
   _$$ListMarshopResponseImplCopyWith<_$ListMarshopResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-MarshopInfo _$MarshopInfoFromJson(Map<String, dynamic> json) {
-  return _MarshopInfo.fromJson(json);
+MarshopResponse _$MarshopResponseFromJson(Map<String, dynamic> json) {
+  return _MarshopResponse.fromJson(json);
 }
 
 /// @nodoc
-mixin _$MarshopInfo {
+mixin _$MarshopResponse {
   int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get code => throw _privateConstructorUsedError;
@@ -190,15 +191,15 @@ mixin _$MarshopInfo {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $MarshopInfoCopyWith<MarshopInfo> get copyWith =>
+  $MarshopResponseCopyWith<MarshopResponse> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MarshopInfoCopyWith<$Res> {
-  factory $MarshopInfoCopyWith(
-          MarshopInfo value, $Res Function(MarshopInfo) then) =
-      _$MarshopInfoCopyWithImpl<$Res, MarshopInfo>;
+abstract class $MarshopResponseCopyWith<$Res> {
+  factory $MarshopResponseCopyWith(
+          MarshopResponse value, $Res Function(MarshopResponse) then) =
+      _$MarshopResponseCopyWithImpl<$Res, MarshopResponse>;
   @useResult
   $Res call({int id, String name, String code, MarshopUserInfo user});
 
@@ -206,9 +207,9 @@ abstract class $MarshopInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MarshopInfoCopyWithImpl<$Res, $Val extends MarshopInfo>
-    implements $MarshopInfoCopyWith<$Res> {
-  _$MarshopInfoCopyWithImpl(this._value, this._then);
+class _$MarshopResponseCopyWithImpl<$Res, $Val extends MarshopResponse>
+    implements $MarshopResponseCopyWith<$Res> {
+  _$MarshopResponseCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -253,11 +254,11 @@ class _$MarshopInfoCopyWithImpl<$Res, $Val extends MarshopInfo>
 }
 
 /// @nodoc
-abstract class _$$MarshopInfoImplCopyWith<$Res>
-    implements $MarshopInfoCopyWith<$Res> {
-  factory _$$MarshopInfoImplCopyWith(
-          _$MarshopInfoImpl value, $Res Function(_$MarshopInfoImpl) then) =
-      __$$MarshopInfoImplCopyWithImpl<$Res>;
+abstract class _$$MarshopResponseImplCopyWith<$Res>
+    implements $MarshopResponseCopyWith<$Res> {
+  factory _$$MarshopResponseImplCopyWith(_$MarshopResponseImpl value,
+          $Res Function(_$MarshopResponseImpl) then) =
+      __$$MarshopResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({int id, String name, String code, MarshopUserInfo user});
@@ -267,11 +268,11 @@ abstract class _$$MarshopInfoImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$MarshopInfoImplCopyWithImpl<$Res>
-    extends _$MarshopInfoCopyWithImpl<$Res, _$MarshopInfoImpl>
-    implements _$$MarshopInfoImplCopyWith<$Res> {
-  __$$MarshopInfoImplCopyWithImpl(
-      _$MarshopInfoImpl _value, $Res Function(_$MarshopInfoImpl) _then)
+class __$$MarshopResponseImplCopyWithImpl<$Res>
+    extends _$MarshopResponseCopyWithImpl<$Res, _$MarshopResponseImpl>
+    implements _$$MarshopResponseImplCopyWith<$Res> {
+  __$$MarshopResponseImplCopyWithImpl(
+      _$MarshopResponseImpl _value, $Res Function(_$MarshopResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -282,7 +283,7 @@ class __$$MarshopInfoImplCopyWithImpl<$Res>
     Object? code = null,
     Object? user = null,
   }) {
-    return _then(_$MarshopInfoImpl(
+    return _then(_$MarshopResponseImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -305,15 +306,15 @@ class __$$MarshopInfoImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$MarshopInfoImpl implements _MarshopInfo {
-  const _$MarshopInfoImpl(
+class _$MarshopResponseImpl implements _MarshopResponse {
+  const _$MarshopResponseImpl(
       {required this.id,
       required this.name,
       required this.code,
       required this.user});
 
-  factory _$MarshopInfoImpl.fromJson(Map<String, dynamic> json) =>
-      _$$MarshopInfoImplFromJson(json);
+  factory _$MarshopResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MarshopResponseImplFromJson(json);
 
   @override
   final int id;
@@ -326,14 +327,14 @@ class _$MarshopInfoImpl implements _MarshopInfo {
 
   @override
   String toString() {
-    return 'MarshopInfo(id: $id, name: $name, code: $code, user: $user)';
+    return 'MarshopResponse(id: $id, name: $name, code: $code, user: $user)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MarshopInfoImpl &&
+            other is _$MarshopResponseImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.code, code) || other.code == code) &&
@@ -347,26 +348,27 @@ class _$MarshopInfoImpl implements _MarshopInfo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$MarshopInfoImplCopyWith<_$MarshopInfoImpl> get copyWith =>
-      __$$MarshopInfoImplCopyWithImpl<_$MarshopInfoImpl>(this, _$identity);
+  _$$MarshopResponseImplCopyWith<_$MarshopResponseImpl> get copyWith =>
+      __$$MarshopResponseImplCopyWithImpl<_$MarshopResponseImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$MarshopInfoImplToJson(
+    return _$$MarshopResponseImplToJson(
       this,
     );
   }
 }
 
-abstract class _MarshopInfo implements MarshopInfo {
-  const factory _MarshopInfo(
+abstract class _MarshopResponse implements MarshopResponse {
+  const factory _MarshopResponse(
       {required final int id,
       required final String name,
       required final String code,
-      required final MarshopUserInfo user}) = _$MarshopInfoImpl;
+      required final MarshopUserInfo user}) = _$MarshopResponseImpl;
 
-  factory _MarshopInfo.fromJson(Map<String, dynamic> json) =
-      _$MarshopInfoImpl.fromJson;
+  factory _MarshopResponse.fromJson(Map<String, dynamic> json) =
+      _$MarshopResponseImpl.fromJson;
 
   @override
   int get id;
@@ -378,7 +380,7 @@ abstract class _MarshopInfo implements MarshopInfo {
   MarshopUserInfo get user;
   @override
   @JsonKey(ignore: true)
-  _$$MarshopInfoImplCopyWith<_$MarshopInfoImpl> get copyWith =>
+  _$$MarshopResponseImplCopyWith<_$MarshopResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

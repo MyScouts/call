@@ -7,7 +7,7 @@ part 'marshop_response.g.dart';
 class ListMarshopResponse with _$ListMarshopResponse {
   const factory ListMarshopResponse({
     required int total,
-    required List<MarshopInfo> marshops,
+    required List<MarshopResponse> marshops,
   }) = _ListMarshopResponse;
 
   factory ListMarshopResponse.fromJson(Map<String, dynamic> json) =>
@@ -15,16 +15,16 @@ class ListMarshopResponse with _$ListMarshopResponse {
 }
 
 @freezed
-class MarshopInfo with _$MarshopInfo {
-  const factory MarshopInfo({
+class MarshopResponse with _$MarshopResponse {
+  const factory MarshopResponse({
     required int id,
     required String name,
     required String code,
     required MarshopUserInfo user,
-  }) = _MarshopInfo;
+  }) = _MarshopResponse;
 
-  factory MarshopInfo.fromJson(Map<String, dynamic> json) =>
-      _$MarshopInfoFromJson(json);
+  factory MarshopResponse.fromJson(Map<String, dynamic> json) =>
+      _$MarshopResponseFromJson(json);
 }
 
 @freezed

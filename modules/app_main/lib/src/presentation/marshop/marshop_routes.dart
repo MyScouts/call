@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
+import 'package:app_main/src/presentation/marshop/marshop_bloc.dart';
 import 'package:app_main/src/presentation/marshop/register_customer/register_customer_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/%20marshop_referral_code_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_screen.dart';
@@ -20,8 +21,11 @@ class MarkShopRoutes extends RouteModule {
           final args = settings.arguments as Map<String, dynamic>;
           return BlocProvider.value(
             value: injector.get<UserCubit>(),
-            child: RegisterMarshopScreen(
-              marshopId: args['marshopId'],
+            child: BlocProvider(
+              create: (context) => injector.get<MarshopDetailBloc>(),
+              child: RegisterMarshopScreen(
+                marshopId: args['marshopId'],
+              ),
             ),
           );
         },

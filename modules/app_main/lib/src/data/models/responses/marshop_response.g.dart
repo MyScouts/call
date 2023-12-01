@@ -11,7 +11,7 @@ _$ListMarshopResponseImpl _$$ListMarshopResponseImplFromJson(
     _$ListMarshopResponseImpl(
       total: json['total'] as int,
       marshops: (json['marshops'] as List<dynamic>)
-          .map((e) => MarshopInfo.fromJson(e as Map<String, dynamic>))
+          .map((e) => MarshopResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -22,15 +22,17 @@ Map<String, dynamic> _$$ListMarshopResponseImplToJson(
       'marshops': instance.marshops,
     };
 
-_$MarshopInfoImpl _$$MarshopInfoImplFromJson(Map<String, dynamic> json) =>
-    _$MarshopInfoImpl(
+_$MarshopResponseImpl _$$MarshopResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$MarshopResponseImpl(
       id: json['id'] as int,
       name: json['name'] as String,
       code: json['code'] as String,
       user: MarshopUserInfo.fromJson(json['user'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$MarshopInfoImplToJson(_$MarshopInfoImpl instance) =>
+Map<String, dynamic> _$$MarshopResponseImplToJson(
+        _$MarshopResponseImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

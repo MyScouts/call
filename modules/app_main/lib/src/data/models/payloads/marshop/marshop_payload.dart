@@ -52,3 +52,24 @@ class GetListMarshopPayload {
 
   Map<String, dynamic> toJson() => _$GetListMarshopPayloadToJson(this);
 }
+
+@JsonSerializable()
+class GetMarshopInfoPayload {
+  @JsonKey(includeIfNull: false)
+  int? userId;
+  @JsonKey(includeIfNull: false)
+  String? pdoneId;
+  @JsonKey(includeIfNull: false)
+  int? marshopId;
+
+  GetMarshopInfoPayload({
+    this.userId,
+    this.pdoneId,
+    this.marshopId,
+  });
+
+  factory GetMarshopInfoPayload.fromJson(Map<String, dynamic> json) =>
+      _$GetMarshopInfoPayloadFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GetMarshopInfoPayloadToJson(this);
+}
