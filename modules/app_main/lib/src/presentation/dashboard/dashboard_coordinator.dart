@@ -6,6 +6,7 @@ import 'package:app_main/src/presentation/dashboard/dashboard_module.dart';
 import 'package:app_main/src/presentation/dashboard/search/search_screen.dart';
 import 'package:app_main/src/presentation/dashboard/system_setting/system_setting.dart';
 import 'package:app_main/src/presentation/dashboard/widget/start_team_dialog.dart';
+import 'package:app_main/src/presentation/live/presentation/live_home/live_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
@@ -90,6 +91,8 @@ extension DashBoardCoordinator on BuildContext {
         return _startTeam();
       case 'ic_wallet':
         return _startWallet();
+      case 'ic_live':
+        return Navigator.of(this).pushNamed(LiveHomeScreen.routeName);
       default:
         if (path != null) {
           Navigator.of(this).pushNamed(path);

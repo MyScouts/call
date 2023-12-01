@@ -36,19 +36,19 @@ class UserInfoHeader extends StatelessWidget {
   });
 
   bool _getButtonStatus() {
-    if (followInfoCtrl.value == null) return true;
-    final followInfo = followInfoCtrl.value!.relation;
+    // if (followInfoCtrl.value == null) return true;
+    // final followInfo = followInfoCtrl.value!.relation;
 
-    if (followInfo.isFollowee || followInfo.isFriend) return false;
+    // if (followInfo.isFollowee || followInfo.isFriend) return false;
 
-    if (onBoarding != null) {
-      if (onBoarding!.isPdone && authInfo.old > 15) return false;
-      if (onBoarding!.isPdone && authInfo.old <= 15) {
-        return false;
-      }
-    }
+    // if (onBoarding != null) {
+    //   if (onBoarding!.isPdone && authInfo.old > 15) return false;
+    //   if (onBoarding!.isPdone && authInfo.old <= 15) {
+    //     return false;
+    //   }
+    // }
 
-    return true;
+    return false;
   }
 
   @override

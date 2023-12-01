@@ -7,6 +7,7 @@ import 'package:app_main/src/core/services/live_service/live_service.dart';
 import 'package:app_main/src/core/services/live_service/live_socket_service.dart';
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/presentation/live/data/model/response/join_live_response.dart';
+import 'package:app_main/src/presentation/live/domain/entities/agora_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_comment.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_member.dart';
@@ -71,6 +72,9 @@ class LiveChannelController {
 
   late Rx<LiveData> _info;
   late Rx<LiveMember> _me;
+
+  AgoraData? _agora;
+
   late final RxList<LiveMember> _members = <LiveMember>[].obs;
 
   RxList<LiveMember> get members => _members;
@@ -160,6 +164,7 @@ class LiveChannelController {
         userUseCase.getProfile(),
       ]);
       _info = (res.first as JoinLiveResponse).data.obs;
+      _agora = (res.first as JoinLiveResponse).agoraData.first;
       _roomInfoFetching.value = false;
       final user = res.last as User?;
       if (user == null) return;
@@ -207,8 +212,8 @@ class LiveChannelController {
       _listenRtcEvent();
 
       await service.joinChannel(
-        _info.value.agoraToken ?? '',
-        _info.value.agoraChannel ?? '',
+        _agora?.token ?? '',
+        _agora?.channel ?? '',
         _me.value.info.userID,
         role: _me.value.isOwner
             ? ClientRoleType.clientRoleBroadcaster
