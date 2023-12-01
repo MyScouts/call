@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 
+import '../../data/datasources/models/response/wallet_info_response.dart';
 import '../entities/wallet/diamond_wallet/diamond_wallet_info.dart';
 import '../../data/datasources/models/exchange_diamond_response.dart';
 import '../repository/wallet_diamond_repository.dart';
@@ -24,7 +25,7 @@ class WalletDiamondUseCase {
   //   return _walletDiamondRepository.getTransactionHistories(body);
   // }
 
-  Future<DiamondWalletInfo> getWalletInfo() =>
+  Future<WalletInfoResponse> getWalletInfo() =>
       _walletDiamondRepository.getWalletInfo();
 
   Future<ExchangeDiamondResponse> exchangeDiamond(
