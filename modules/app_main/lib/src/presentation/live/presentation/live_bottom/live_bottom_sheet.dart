@@ -29,12 +29,23 @@ extension TabLiveBottomExt on TabLiveBottom {
     switch (this) {
       case TabLiveBottom.viewer:
         return 'Số người xem';
-      // case TabLiveBottom.follow:
-      //   return 'Người follow';
+    // case TabLiveBottom.follow:
+    //   return 'Người follow';
       case TabLiveBottom.rank:
         return 'Bảng cống hiến';
       case TabLiveBottom.invite:
         return 'Mời bạn bè';
+    }
+  }
+
+  double? get height {
+    switch (this) {
+      case TabLiveBottom.viewer:
+        return 450;
+      case TabLiveBottom.rank:
+        return 650;
+      case TabLiveBottom.invite:
+        return 450;
     }
   }
 }
@@ -50,7 +61,8 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
     super.initState();
   }
 
-  List<Widget> get listTab => [
+  List<Widget> get listTab =>
+      [
         ViewerTab(controller: widget.controller),
         //ListFriendTab(controller: liveBottomController, liveData: widget.controller.info),
         ListFollowTab(controller: liveBottomController, liveData: widget.controller.info),
@@ -60,24 +72,27 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
-        decoration: const BoxDecoration(
-            borderRadius: BorderRadius.horizontal(left: Radius.circular(16), right: Radius.circular(16)),
-            color: Colors.white),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 16),
-            tabIndexView(),
-            const Divider(
-              thickness: 1,
-              color: Color(0xffE3E3E3),
-            ),
-            const SizedBox(height: 16),
-            Expanded(child: Obx(() => listTab[liveBottomController.tabIndex.value]))
-          ],
-        ),
-      ),
+      child: Obx(() {
+        return Container(
+          height: TabLiveBottom.values[liveBottomController.tabIndex.value].height,
+          decoration: const BoxDecoration(
+              borderRadius: BorderRadius.horizontal(left: Radius.circular(16), right: Radius.circular(16)),
+              color: Colors.white),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 16),
+              tabIndexView(),
+              const Divider(
+                thickness: 1,
+                color: Color(0xffE3E3E3),
+              ),
+              const SizedBox(height: 16),
+              Expanded(child: Obx(() => listTab[liveBottomController.tabIndex.value]))
+            ],
+          ),
+        );
+      }),
     );
   }
 
@@ -88,7 +103,8 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
         child: Row(
           children: List<Widget>.generate(
               TabLiveBottom.values.length,
-              (index) => GestureDetector(
+                  (index) =>
+                  GestureDetector(
                     onTap: () {
                       liveBottomController.tabIndex.value = index;
                     },
