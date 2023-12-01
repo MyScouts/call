@@ -1,11 +1,16 @@
+import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SettingSheet extends StatelessWidget {
   const SettingSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.read<LiveChannelController>();
+
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(
         top: Radius.circular(8.0),
@@ -43,7 +48,9 @@ class SettingSheet extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: Theme.of(context).primaryColor,
+                          color: Theme
+                              .of(context)
+                              .primaryColor,
                         ),
                       ),
                     ),
@@ -58,16 +65,38 @@ class SettingSheet extends StatelessWidget {
                 crossAxisSpacing: 24,
                 childAspectRatio: 2 / 3,
                 children: [
-                  _Item(
-                    title: 'Gọi âm thanh',
-                    icon: Assets.icons_lives_micro.svg(),
-                    action: () {},
-                  ),
-                  _Item(
-                    title: 'Gọi video',
-                    icon: Assets.icons_lives_video.svg(),
-                    action: () {},
-                  ),
+                  Obx(() {
+                    final action = controller.enableAudio;
+                    if(controller.mic.value) {
+                      return _Item(
+                        title: 'Gọi âm thanh',
+                        icon: Assets.icons_lives_micro.svg(),
+                        action: action,
+                      );
+                    }
+
+                    return _Item(
+                      title: 'Gọi âm thanh',
+                      icon: Assets.icons_lives_micro.svg(),
+                      action: action,
+                    );
+                  }),
+                  Obx(() {
+                    final action = controller.enableVideo;
+                    if(controller.mic.value) {
+                      return  _Item(
+                        title: 'Gọi video',
+                        icon: Assets.icons_lives_video.svg(),
+                        action: action,
+                      );
+                    }
+
+                    return  _Item(
+                      title: 'Gọi video',
+                      icon: Assets.icons_lives_video.svg(),
+                      action: action,
+                    );
+                  }),
                   _Item(
                     title: 'Filter',
                     icon: Assets.icons_lives_filter.svg(),

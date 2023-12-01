@@ -7,6 +7,7 @@ import 'package:app_main/src/data/models/responses/search_user_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../data/models/responses/list_followees_response.dart';
 import '../../data/models/responses/update_none_pdone_profile_response.dart';
 import '../../data/repositories/user_repository.dart';
 
@@ -85,8 +86,7 @@ class UserUsecase {
     return _userRepository.updatePDoneProfile(updateNonePDoneProfilePayload);
   }
 
-  Future<UpdateNonePDoneProfileReponse> updateNonePNoneDoneProfile(
-      Map<String, dynamic> data) {
+  Future<UpdateNonePDoneProfileReponse> updateNonePNoneDoneProfile(Map<String, dynamic> data) {
     return _userRepository.updateNonePDoneProfile(data);
   }
 
@@ -96,6 +96,10 @@ class UserUsecase {
 
   Future<List<User>> listFriends() {
     return _userRepository.listFriends();
+  }
+
+  Future<List<FolloweesUser>> listFollowees() {
+    return _userRepository.listFollowees();
   }
 
   Future invite(String teamID, Map<String, dynamic> json) {

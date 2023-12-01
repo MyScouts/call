@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobilehub_core/mobilehub_core.dart';
+import 'package:wallet/presentation/transaction_history_detail_screen.dart';
 import 'package:wallet/presentation/wallet_constant.dart';
 import 'package:wallet/presentation/wallet_transaction_history_screen.dart';
 import 'package:wallet/presentation/wallet_diamond/screens/charge_diamond_to_vnd_screen.dart';
@@ -91,6 +92,10 @@ class AppWalletRoutes extends RouteModule {
             value: injector<WalletDiamondBloc>()..add(LoadWalletDiamondInfo()),
             child: const ChargeDiamondToVndScreen(),
           );
+        },
+        TransactionHistoryDetailScreen.routeName: (context) {
+          final id = settings.arguments.toString();
+          return TransactionHistoryDetailScreen(id: id);
         },
       };
 }

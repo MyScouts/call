@@ -12,6 +12,7 @@ class LiveCommentWidget extends StatelessWidget {
     return BlocBuilder<LiveMessageBloc, LiveMessageState>(
       builder: (_, state) {
         return ListView.separated(
+          padding: const EdgeInsets.symmetric(vertical: 16),
           reverse: true,
           itemBuilder: (_, index) {
             final list = state.comments.reversed.toList();
@@ -31,11 +32,12 @@ class LiveCommentCard extends StatelessWidget {
     required this.comment,
   });
 
-  final LiveComment comment;
+  final LiveMessageData comment;
 
   @override
   Widget build(BuildContext context) {
-    if (comment.type == LiveCommentType.join) {
+    if (comment is JoinMessage) {
+      final cm = comment as JoinMessage;
       return Row(
         children: [
           Container(
@@ -50,7 +52,7 @@ class LiveCommentCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CircleNetworkImage(
-                  url: comment.member.info.avatar,
+                  url: cm.member.info.avatar,
                   size: 17,
                 ),
                 const SizedBox(width: 4),
@@ -60,7 +62,7 @@ class LiveCommentCard extends StatelessWidget {
                       return RichText(
                         text: TextSpan(children: [
                           TextSpan(
-                            text: comment.member.info.name,
+                            text: cm.member.info.name,
                             style: const TextStyle(
                               color: Color(0xffB6B5BA),
                               fontSize: 13,
@@ -87,6 +89,45 @@ class LiveCommentCard extends StatelessWidget {
       );
     }
 
+    if (comment is SystemMessage) {
+      return Align(
+        alignment: Alignment.centerLeft,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.3),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 6,
+              vertical: 4,
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Flexible(
+                  child: RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                        text: comment.message,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ]),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    final cm = comment as UserMessage;
+
     return Align(
       alignment: Alignment.centerLeft,
       child: DecoratedBox(
@@ -101,7 +142,7 @@ class LiveCommentCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CircleNetworkImage(
-                url: comment.member.info.avatar,
+                url: cm.member.info.avatar,
                 size: 17,
               ),
               const SizedBox(width: 4),
@@ -109,7 +150,7 @@ class LiveCommentCard extends StatelessWidget {
                 child: RichText(
                   text: TextSpan(children: [
                     TextSpan(
-                      text: '${comment.member.info.name}: ',
+                      text: '${cm.member.info.name}: ',
                       style: const TextStyle(
                         color: Color(0xffB6B5BA),
                         fontSize: 13,
@@ -117,7 +158,7 @@ class LiveCommentCard extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: comment.message,
+                      text: cm.message,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 13,

@@ -1,3 +1,4 @@
+import 'package:wallet/data/datasources/models/request/wallet_transactions_request.dart';
 import 'package:wallet/data/datasources/models/response/wallet_info_response.dart';
 import 'package:wallet/presentation/wallet_constant.dart';
 
@@ -8,5 +9,8 @@ abstract class WalletRepository {
 
   Future<List<TransactionItem>> getWalletTransactionList({
     required WalletType walletType,
+    WalletTransactionsRequest? request,
   });
+
+  Future<TransactionItem> getTransactionDetails(String id);
 }

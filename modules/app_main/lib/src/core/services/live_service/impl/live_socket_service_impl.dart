@@ -24,6 +24,7 @@ class LiveSocketServiceImpl extends LiveSocketService {
     required String token,
     String? deviceId,
   }) async {
+    if(_socket != null) disconnect();
     _socket = io.io(
       url,
       io.OptionBuilder()

@@ -22,7 +22,7 @@ class WalletState with _$WalletState {
       _GetWalletTransactionListLoading;
 
   const factory WalletState.getWalletTransactionDetailSuccess(
-          {required TransactionItem transactions}) =
+          {required TransactionItem transaction}) =
       _GetWalletTransactionDetailSuccess;
 
   const factory WalletState.getWalletTransactionDetailLoading() =

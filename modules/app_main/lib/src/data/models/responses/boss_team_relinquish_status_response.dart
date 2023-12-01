@@ -9,12 +9,10 @@ class BossTeamRelinquishStatusResponse {
 
   BossTeamRelinquishStatusResponse({this.giveUpRequest});
 
-  factory BossTeamRelinquishStatusResponse.fromJson(
-          Map<String, dynamic> json) =>
+  factory BossTeamRelinquishStatusResponse.fromJson(Map<String, dynamic> json) =>
       _$BossTeamRelinquishStatusResponseFromJson(json);
 
-  Map<String, dynamic> toJson() =>
-      _$BossTeamRelinquishStatusResponseToJson(this);
+  Map<String, dynamic> toJson() => _$BossTeamRelinquishStatusResponseToJson(this);
 }
 
 @JsonSerializable()
@@ -25,8 +23,7 @@ class GiveUpRequest {
 
   GiveUpRequest({this.createdAt, this.user, this.team});
 
-  factory GiveUpRequest.fromJson(Map<String, dynamic> json) =>
-      _$GiveUpRequestFromJson(json);
+  factory GiveUpRequest.fromJson(Map<String, dynamic> json) => _$GiveUpRequestFromJson(json);
 
   Map<String, dynamic> toJson() => _$GiveUpRequestToJson(this);
 }

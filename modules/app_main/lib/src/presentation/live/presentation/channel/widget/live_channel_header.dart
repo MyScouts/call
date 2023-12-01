@@ -1,7 +1,8 @@
+import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
-import 'package:app_main/src/presentation/live/presentation/channel/live_channel_screen.dart';
+import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,8 +16,7 @@ class LiveChannelHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.findAncestorStateOfType<LiveChannelScreenState>();
-    final controller = state!.controller;
+    final controller = context.read<LiveChannelController>();
 
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -51,7 +51,8 @@ class LiveChannelHeader extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.all(4.0),
                 child: Obx(() {
-                  final host = controller.members.firstWhereOrNull((e) => e.isOwner);
+                  final host = controller.members.value
+                      .firstWhereOrNull((e) => e.isOwner);
                   return IntrinsicHeight(
                     child: Row(
                       children: [
@@ -133,15 +134,44 @@ class LiveChannelHeader extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             child: Row(
               children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: controller.members
-                      .map((element) => SizedBox(
-                            child: AvatarWidget(avatar: element.info.avatar, size: 30),
-                          ))
-                      .take(2).toList()
-                      .separated(const SizedBox(width: 8)),
-                ),
+                Obx(() {
+                  if (controller.giftCardLive.value.giversInfo == null) {
+                    return const SizedBox();
+                  }
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: controller.giftCardLive.value.giversInfo!
+                        .mapIndexed((index, element) {
+                          if (index == 0) {
+                            return SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: Stack(
+                                children: [
+                                  ImageWidget(
+                                    IconAppConstants.icTop1Awards,
+                                    width: 40,
+                                    height: 40,
+                                  ),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: SizedBox(
+                                      child: AvatarWidget(avatar: element.giver?.avatar, size: 25),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          }
+                          return SizedBox(
+                            child: AvatarWidget(avatar: element.giver?.avatar, size: 30),
+                          );
+                        })
+                        .take(2)
+                        .toList()
+                        .separated(const SizedBox(width: 8)),
+                  );
+                }),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.5),
@@ -157,7 +187,7 @@ class LiveChannelHeader extends StatelessWidget {
                       const SizedBox(width: 2),
                       Obx(
                         () => Text(
-                          controller.members.length.toString(),
+                          controller.members.value.length.toString(),
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,

@@ -21,7 +21,7 @@ class _ListFriendTabState extends State<ListFriendTab> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      final list = widget.controller.dataGetInviteFriend.value.rows ?? [];
+      final list = widget.controller.listFriends;
       if (list.isEmpty) {
         return const Center(
           child: Text("Bạn không có bạn bè"),
@@ -32,10 +32,10 @@ class _ListFriendTabState extends State<ListFriendTab> {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                context.startSelectUser(userId: list[index].userFollow!.id!);
+                context.startSelectUser(userId: list[index].id!);
               },
               child: UserLisTile(
-                user: list[index].userFollow!,
+                user: list[index],
                 onChanged: (User value) {
                   widget.controller.inviteFriend(widget.liveData.id.toString(), [value.id!]);
                 },
