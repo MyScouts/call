@@ -19,7 +19,7 @@ class MessageDto extends MessageModel {
   final int conversationId;
 
   @override
-  final String createdAt;
+  final DateTime createdAt;
 
   @override
   final String message;

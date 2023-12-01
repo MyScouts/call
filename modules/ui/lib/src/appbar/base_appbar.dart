@@ -7,12 +7,16 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? titleWidget;
   final bool isClose;
   final Function()? onPressed;
+  final List<Widget>? actions;
   final Color? backgroundColor;
   const BaseAppBar({
     super.key,
     this.isClose = true,
     this.title,
-    this.onPressed, this.titleWidget, this.backgroundColor,
+    this.onPressed,
+    this.titleWidget,
+    this.backgroundColor,
+    this.actions,
   });
 
   @override
@@ -28,9 +32,10 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
         onPressed: onPressed,
       ),
       shape: Border.all(width: 0, color: Colors.transparent),
-      actions: [
-        if (isClose) const CustomCloseButton(alignment: Alignment.center),
-      ],
+      actions: actions ??
+          [
+            if (isClose) const CustomCloseButton(alignment: Alignment.center),
+          ],
     );
   }
 
