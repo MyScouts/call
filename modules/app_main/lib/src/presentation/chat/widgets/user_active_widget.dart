@@ -17,7 +17,7 @@ class UserActiveWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         await context.startChatRoom(
-          conversationId: data.id,
+          memberId: data.id,
         );
         getIt.get<ConversationCubit>().init();
       },

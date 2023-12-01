@@ -7,7 +7,7 @@ abstract class MessageModel {
   int get type;
   MemberModel? get sender;
   bool get seen;
-  String get createdAt;
+  DateTime get createdAt;
   String get message;
   Map? get metadata;
 }
