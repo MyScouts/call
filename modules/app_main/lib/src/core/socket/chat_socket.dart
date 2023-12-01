@@ -126,7 +126,7 @@ class ChatSocket {
   void _transformMessageData(dynamic data) {
     if (data != null) {
       final messageData = MessageDto.fromJson(data);
-      getIt.get<ChatRoomCubit>().updateMessage(data);
+      getIt.get<ChatRoomCubit>().updateMessage(messageData);
     }
   }
 }

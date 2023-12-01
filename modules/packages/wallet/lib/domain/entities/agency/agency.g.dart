@@ -22,6 +22,9 @@ Map<String, dynamic> _$AgencyDetailResponseToJson(
 AgencyResponse _$AgencyResponseFromJson(Map<String, dynamic> json) =>
     AgencyResponse(
       id: json['id'] as int?,
+      coinDiscounts: (json['coinDiscounts'] as List<dynamic>?)
+          ?.map((e) => CoinDiscountResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
       name: json['name'] as String?,
       availableCoin: json['availableCoin'] as num?,
       user: json['user'] == null
@@ -35,6 +38,7 @@ Map<String, dynamic> _$AgencyResponseToJson(AgencyResponse instance) =>
       'name': instance.name,
       'availableCoin': instance.availableCoin,
       'user': instance.user,
+      'coinDiscounts': instance.coinDiscounts,
     };
 
 AgencyUser _$AgencyUserFromJson(Map<String, dynamic> json) => AgencyUser(

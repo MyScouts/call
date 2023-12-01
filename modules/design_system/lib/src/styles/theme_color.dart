@@ -136,6 +136,7 @@ class AppColors {
   static const Color borderColor = Color(0xFFF2F2F2);
 
   static const Color textDisable = Color(0xffACACAC);
+  static const Color textSecondary = Color(0xff6E6E6E);
 
   static const Color bgSenderMessage = Color(0xff0070F0);
 }

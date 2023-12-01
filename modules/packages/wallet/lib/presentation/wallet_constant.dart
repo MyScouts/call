@@ -288,6 +288,43 @@ enum TransactionType {
 }
 
 extension TransactionTypeExt on TransactionType {
+  String filterText({required WalletType walletType}) {
+    switch (this) {
+      case TransactionType.LIVE_GIFT:
+        if (walletType == WalletType.diamond) {
+          return 'Nhận quà';
+        } else {
+          return 'Tặng quà';
+        }
+      case TransactionType.LIVE_VOTE:
+        if (walletType == WalletType.diamond) {
+          return 'Nhận vote';
+        } else {
+          return 'Tặng vote';
+        }
+      case TransactionType.WITHDRAW_FROM_LIVE:
+      case TransactionType.WITHDRAW_FROM_MARSHOP:
+      case TransactionType.REQUEST_WITHDRAW_VND:
+        return 'Rút tiền từ ví VNĐ';
+      case TransactionType.DIAMOND_TO_VND:
+        return 'Đổi kim cương';
+      case TransactionType.BUY_COIN_FROM_AGENCY:
+        return 'Mua xu';
+      case TransactionType.MARSHOP_COMMISSION:
+        return 'Hoa hồng đơn hàng';
+      case TransactionType.GROUP_INCOME:
+        return 'Nhận tiền từ Group';
+      case TransactionType.TEAM_INCOME:
+        return 'Nhận tiền từ Team';
+      case TransactionType.DIAMOND_AVAILABLE:
+        return 'Nhận từ Kim cương chờ duyệt';
+      case TransactionType.VND_AVAILABLE:
+        return 'Nhận từ ví VNĐ chờ duyệt';
+      case TransactionType.WITHDRAW_VND_COMPLETED:
+        return 'Rút tiền về tài khoản ngân hàng';
+    }
+  }
+
   String title(BuildContext context, {required String? receiverPDoneId}) {
     final myId = WalletInjectedData.user.pDoneId;
     switch (this) {

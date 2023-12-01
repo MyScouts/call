@@ -25,6 +25,7 @@ class ConversationWidget extends StatelessWidget {
       },
       child: Container(
         height: 60,
+        width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
           children: [
@@ -37,7 +38,7 @@ class ConversationWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    data.name ?? '',
+                    data.membersNotMe.first.member.fullName ?? '',
                     style: context.textTheme.labelLarge?.copyWith(
                       fontSize: 16,
                     ),
@@ -45,6 +46,8 @@ class ConversationWidget extends StatelessWidget {
                   kSpacingHeight6,
                   Text(
                     data.latestMessage?.message ?? '',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: context.textTheme.bodyMedium?.copyWith(
                       fontWeight:
                           data.latestMessage?.seen ?? true ? FontWeight.w400 : FontWeight.w600,
@@ -56,13 +59,16 @@ class ConversationWidget extends StatelessWidget {
                 ],
               ),
             ),
+            kSpacingWidth4,
             Column(
               children: [
                 Text(
-                  '',
+                  data.latestMessage?.createdAt.timeMessage ?? '',
                   style: context.textTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight.w500,
-                    color: AppColors.greyLightTextColor,
+                    color: data.latestMessage?.seen ?? true
+                        ? AppColors.greyLightTextColor
+                        : AppColors.black,
                   ),
                 ),
                 if (data.countUnSeen != 0) ...[

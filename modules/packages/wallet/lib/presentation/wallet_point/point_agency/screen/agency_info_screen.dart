@@ -79,6 +79,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
 
   late AgencyResponse agency;
   num exchangeVND = 0;
+  ExchangeCoinResponse? exchangeCoinResponse;
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +129,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                           : '';
                 },
                 exchangeSuccess: (ExchangeCoinResponse response) {
+                  exchangeCoinResponse = response;
                   _agencyBloc.add(
                     AgencyEvent.getPaymentInformation(
                       widget.agencyId,
@@ -138,8 +140,8 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                 },
                 paymentInformation: (WalletCoinPaymentInformation paymentInfo) {
                   // context.pointTransactionHistoryDetail(userId);
-                  context.coinPaymentInformation(
-                      paymentInfo, agency, _userIDController.text);
+                  context.coinPaymentInformation(paymentInfo, agency,
+                      _userIDController.text, exchangeCoinResponse!);
                 });
           },
           child: Container(

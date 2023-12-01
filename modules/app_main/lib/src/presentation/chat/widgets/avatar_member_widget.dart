@@ -1,7 +1,7 @@
 //import 'dart:developer' as developer;
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:imagewidget/imagewidget.dart';
+import 'package:ui/ui.dart';
 
 class AvatarMemberWidget extends StatelessWidget {
   final String avatar;
@@ -13,15 +13,10 @@ class AvatarMemberWidget extends StatelessWidget {
     return SizedBox(
       width: size,
       height: size,
-      child: ImageWidget(
-        avatar,
-        borderRadius: 100,
-        width: size,
-        height: size,
-        errorWidget: ImageWidget(
-          ImageConstants.defaultAvatar,
-          borderRadius: 100,
-        ),
+      child: AvatarWidget(
+        avatar: avatar,
+        size: size,
+
       ),
     );
   }

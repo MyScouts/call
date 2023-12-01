@@ -19,22 +19,30 @@ mixin _$WalletEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getWalletInfo,
-    required TResult Function(WalletType walletType) getWalletTransactionList,
+    required TResult Function(
+            WalletType walletType, WalletTransactionsRequest? request)
+        getWalletTransactionList,
     required TResult Function(String id) getWalletTransactionDetail,
+    required TResult Function(FilterOption filter) filterTransaction,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getWalletInfo,
-    TResult? Function(WalletType walletType)? getWalletTransactionList,
+    TResult? Function(
+            WalletType walletType, WalletTransactionsRequest? request)?
+        getWalletTransactionList,
     TResult? Function(String id)? getWalletTransactionDetail,
+    TResult? Function(FilterOption filter)? filterTransaction,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getWalletInfo,
-    TResult Function(WalletType walletType)? getWalletTransactionList,
+    TResult Function(WalletType walletType, WalletTransactionsRequest? request)?
+        getWalletTransactionList,
     TResult Function(String id)? getWalletTransactionDetail,
+    TResult Function(FilterOption filter)? filterTransaction,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -45,6 +53,7 @@ mixin _$WalletEvent {
         getWalletTransactionList,
     required TResult Function(_GetWalletTransactionDetailEvent value)
         getWalletTransactionDetail,
+    required TResult Function(_FilterTransactionEvent value) filterTransaction,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,6 +63,7 @@ mixin _$WalletEvent {
         getWalletTransactionList,
     TResult? Function(_GetWalletTransactionDetailEvent value)?
         getWalletTransactionDetail,
+    TResult? Function(_FilterTransactionEvent value)? filterTransaction,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +73,7 @@ mixin _$WalletEvent {
         getWalletTransactionList,
     TResult Function(_GetWalletTransactionDetailEvent value)?
         getWalletTransactionDetail,
+    TResult Function(_FilterTransactionEvent value)? filterTransaction,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -133,8 +144,11 @@ class _$GetWalletInfoEventImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getWalletInfo,
-    required TResult Function(WalletType walletType) getWalletTransactionList,
+    required TResult Function(
+            WalletType walletType, WalletTransactionsRequest? request)
+        getWalletTransactionList,
     required TResult Function(String id) getWalletTransactionDetail,
+    required TResult Function(FilterOption filter) filterTransaction,
   }) {
     return getWalletInfo();
   }
@@ -143,8 +157,11 @@ class _$GetWalletInfoEventImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getWalletInfo,
-    TResult? Function(WalletType walletType)? getWalletTransactionList,
+    TResult? Function(
+            WalletType walletType, WalletTransactionsRequest? request)?
+        getWalletTransactionList,
     TResult? Function(String id)? getWalletTransactionDetail,
+    TResult? Function(FilterOption filter)? filterTransaction,
   }) {
     return getWalletInfo?.call();
   }
@@ -153,8 +170,10 @@ class _$GetWalletInfoEventImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getWalletInfo,
-    TResult Function(WalletType walletType)? getWalletTransactionList,
+    TResult Function(WalletType walletType, WalletTransactionsRequest? request)?
+        getWalletTransactionList,
     TResult Function(String id)? getWalletTransactionDetail,
+    TResult Function(FilterOption filter)? filterTransaction,
     required TResult orElse(),
   }) {
     if (getWalletInfo != null) {
@@ -171,6 +190,7 @@ class _$GetWalletInfoEventImpl
         getWalletTransactionList,
     required TResult Function(_GetWalletTransactionDetailEvent value)
         getWalletTransactionDetail,
+    required TResult Function(_FilterTransactionEvent value) filterTransaction,
   }) {
     return getWalletInfo(this);
   }
@@ -183,6 +203,7 @@ class _$GetWalletInfoEventImpl
         getWalletTransactionList,
     TResult? Function(_GetWalletTransactionDetailEvent value)?
         getWalletTransactionDetail,
+    TResult? Function(_FilterTransactionEvent value)? filterTransaction,
   }) {
     return getWalletInfo?.call(this);
   }
@@ -195,6 +216,7 @@ class _$GetWalletInfoEventImpl
         getWalletTransactionList,
     TResult Function(_GetWalletTransactionDetailEvent value)?
         getWalletTransactionDetail,
+    TResult Function(_FilterTransactionEvent value)? filterTransaction,
     required TResult orElse(),
   }) {
     if (getWalletInfo != null) {
@@ -215,7 +237,7 @@ abstract class _$$GetWalletTransactionListEventImplCopyWith<$Res> {
           $Res Function(_$GetWalletTransactionListEventImpl) then) =
       __$$GetWalletTransactionListEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({WalletType walletType});
+  $Res call({WalletType walletType, WalletTransactionsRequest? request});
 }
 
 /// @nodoc
@@ -231,12 +253,17 @@ class __$$GetWalletTransactionListEventImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? walletType = null,
+    Object? request = freezed,
   }) {
     return _then(_$GetWalletTransactionListEventImpl(
       walletType: null == walletType
           ? _value.walletType
           : walletType // ignore: cast_nullable_to_non_nullable
               as WalletType,
+      request: freezed == request
+          ? _value.request
+          : request // ignore: cast_nullable_to_non_nullable
+              as WalletTransactionsRequest?,
     ));
   }
 }
@@ -246,14 +273,17 @@ class __$$GetWalletTransactionListEventImplCopyWithImpl<$Res>
 class _$GetWalletTransactionListEventImpl
     with DiagnosticableTreeMixin
     implements _GetWalletTransactionListEvent {
-  const _$GetWalletTransactionListEventImpl({required this.walletType});
+  const _$GetWalletTransactionListEventImpl(
+      {required this.walletType, this.request});
 
   @override
   final WalletType walletType;
+  @override
+  final WalletTransactionsRequest? request;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalletEvent.getWalletTransactionList(walletType: $walletType)';
+    return 'WalletEvent.getWalletTransactionList(walletType: $walletType, request: $request)';
   }
 
   @override
@@ -261,7 +291,8 @@ class _$GetWalletTransactionListEventImpl
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'WalletEvent.getWalletTransactionList'))
-      ..add(DiagnosticsProperty('walletType', walletType));
+      ..add(DiagnosticsProperty('walletType', walletType))
+      ..add(DiagnosticsProperty('request', request));
   }
 
   @override
@@ -270,11 +301,12 @@ class _$GetWalletTransactionListEventImpl
         (other.runtimeType == runtimeType &&
             other is _$GetWalletTransactionListEventImpl &&
             (identical(other.walletType, walletType) ||
-                other.walletType == walletType));
+                other.walletType == walletType) &&
+            (identical(other.request, request) || other.request == request));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, walletType);
+  int get hashCode => Object.hash(runtimeType, walletType, request);
 
   @JsonKey(ignore: true)
   @override
@@ -288,32 +320,40 @@ class _$GetWalletTransactionListEventImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getWalletInfo,
-    required TResult Function(WalletType walletType) getWalletTransactionList,
+    required TResult Function(
+            WalletType walletType, WalletTransactionsRequest? request)
+        getWalletTransactionList,
     required TResult Function(String id) getWalletTransactionDetail,
+    required TResult Function(FilterOption filter) filterTransaction,
   }) {
-    return getWalletTransactionList(walletType);
+    return getWalletTransactionList(walletType, request);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getWalletInfo,
-    TResult? Function(WalletType walletType)? getWalletTransactionList,
+    TResult? Function(
+            WalletType walletType, WalletTransactionsRequest? request)?
+        getWalletTransactionList,
     TResult? Function(String id)? getWalletTransactionDetail,
+    TResult? Function(FilterOption filter)? filterTransaction,
   }) {
-    return getWalletTransactionList?.call(walletType);
+    return getWalletTransactionList?.call(walletType, request);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getWalletInfo,
-    TResult Function(WalletType walletType)? getWalletTransactionList,
+    TResult Function(WalletType walletType, WalletTransactionsRequest? request)?
+        getWalletTransactionList,
     TResult Function(String id)? getWalletTransactionDetail,
+    TResult Function(FilterOption filter)? filterTransaction,
     required TResult orElse(),
   }) {
     if (getWalletTransactionList != null) {
-      return getWalletTransactionList(walletType);
+      return getWalletTransactionList(walletType, request);
     }
     return orElse();
   }
@@ -326,6 +366,7 @@ class _$GetWalletTransactionListEventImpl
         getWalletTransactionList,
     required TResult Function(_GetWalletTransactionDetailEvent value)
         getWalletTransactionDetail,
+    required TResult Function(_FilterTransactionEvent value) filterTransaction,
   }) {
     return getWalletTransactionList(this);
   }
@@ -338,6 +379,7 @@ class _$GetWalletTransactionListEventImpl
         getWalletTransactionList,
     TResult? Function(_GetWalletTransactionDetailEvent value)?
         getWalletTransactionDetail,
+    TResult? Function(_FilterTransactionEvent value)? filterTransaction,
   }) {
     return getWalletTransactionList?.call(this);
   }
@@ -350,6 +392,7 @@ class _$GetWalletTransactionListEventImpl
         getWalletTransactionList,
     TResult Function(_GetWalletTransactionDetailEvent value)?
         getWalletTransactionDetail,
+    TResult Function(_FilterTransactionEvent value)? filterTransaction,
     required TResult orElse(),
   }) {
     if (getWalletTransactionList != null) {
@@ -361,10 +404,12 @@ class _$GetWalletTransactionListEventImpl
 
 abstract class _GetWalletTransactionListEvent implements WalletEvent {
   const factory _GetWalletTransactionListEvent(
-          {required final WalletType walletType}) =
+          {required final WalletType walletType,
+          final WalletTransactionsRequest? request}) =
       _$GetWalletTransactionListEventImpl;
 
   WalletType get walletType;
+  WalletTransactionsRequest? get request;
   @JsonKey(ignore: true)
   _$$GetWalletTransactionListEventImplCopyWith<
           _$GetWalletTransactionListEventImpl>
@@ -452,8 +497,11 @@ class _$GetWalletTransactionDetailEventImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getWalletInfo,
-    required TResult Function(WalletType walletType) getWalletTransactionList,
+    required TResult Function(
+            WalletType walletType, WalletTransactionsRequest? request)
+        getWalletTransactionList,
     required TResult Function(String id) getWalletTransactionDetail,
+    required TResult Function(FilterOption filter) filterTransaction,
   }) {
     return getWalletTransactionDetail(id);
   }
@@ -462,8 +510,11 @@ class _$GetWalletTransactionDetailEventImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getWalletInfo,
-    TResult? Function(WalletType walletType)? getWalletTransactionList,
+    TResult? Function(
+            WalletType walletType, WalletTransactionsRequest? request)?
+        getWalletTransactionList,
     TResult? Function(String id)? getWalletTransactionDetail,
+    TResult? Function(FilterOption filter)? filterTransaction,
   }) {
     return getWalletTransactionDetail?.call(id);
   }
@@ -472,8 +523,10 @@ class _$GetWalletTransactionDetailEventImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getWalletInfo,
-    TResult Function(WalletType walletType)? getWalletTransactionList,
+    TResult Function(WalletType walletType, WalletTransactionsRequest? request)?
+        getWalletTransactionList,
     TResult Function(String id)? getWalletTransactionDetail,
+    TResult Function(FilterOption filter)? filterTransaction,
     required TResult orElse(),
   }) {
     if (getWalletTransactionDetail != null) {
@@ -490,6 +543,7 @@ class _$GetWalletTransactionDetailEventImpl
         getWalletTransactionList,
     required TResult Function(_GetWalletTransactionDetailEvent value)
         getWalletTransactionDetail,
+    required TResult Function(_FilterTransactionEvent value) filterTransaction,
   }) {
     return getWalletTransactionDetail(this);
   }
@@ -502,6 +556,7 @@ class _$GetWalletTransactionDetailEventImpl
         getWalletTransactionList,
     TResult? Function(_GetWalletTransactionDetailEvent value)?
         getWalletTransactionDetail,
+    TResult? Function(_FilterTransactionEvent value)? filterTransaction,
   }) {
     return getWalletTransactionDetail?.call(this);
   }
@@ -514,6 +569,7 @@ class _$GetWalletTransactionDetailEventImpl
         getWalletTransactionList,
     TResult Function(_GetWalletTransactionDetailEvent value)?
         getWalletTransactionDetail,
+    TResult Function(_FilterTransactionEvent value)? filterTransaction,
     required TResult orElse(),
   }) {
     if (getWalletTransactionDetail != null) {
@@ -535,6 +591,176 @@ abstract class _GetWalletTransactionDetailEvent implements WalletEvent {
 }
 
 /// @nodoc
+abstract class _$$FilterTransactionEventImplCopyWith<$Res> {
+  factory _$$FilterTransactionEventImplCopyWith(
+          _$FilterTransactionEventImpl value,
+          $Res Function(_$FilterTransactionEventImpl) then) =
+      __$$FilterTransactionEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({FilterOption filter});
+}
+
+/// @nodoc
+class __$$FilterTransactionEventImplCopyWithImpl<$Res>
+    extends _$WalletEventCopyWithImpl<$Res, _$FilterTransactionEventImpl>
+    implements _$$FilterTransactionEventImplCopyWith<$Res> {
+  __$$FilterTransactionEventImplCopyWithImpl(
+      _$FilterTransactionEventImpl _value,
+      $Res Function(_$FilterTransactionEventImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? filter = null,
+  }) {
+    return _then(_$FilterTransactionEventImpl(
+      filter: null == filter
+          ? _value.filter
+          : filter // ignore: cast_nullable_to_non_nullable
+              as FilterOption,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$FilterTransactionEventImpl
+    with DiagnosticableTreeMixin
+    implements _FilterTransactionEvent {
+  const _$FilterTransactionEventImpl({required this.filter});
+
+  @override
+  final FilterOption filter;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WalletEvent.filterTransaction(filter: $filter)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'WalletEvent.filterTransaction'))
+      ..add(DiagnosticsProperty('filter', filter));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FilterTransactionEventImpl &&
+            (identical(other.filter, filter) || other.filter == filter));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, filter);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FilterTransactionEventImplCopyWith<_$FilterTransactionEventImpl>
+      get copyWith => __$$FilterTransactionEventImplCopyWithImpl<
+          _$FilterTransactionEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getWalletInfo,
+    required TResult Function(
+            WalletType walletType, WalletTransactionsRequest? request)
+        getWalletTransactionList,
+    required TResult Function(String id) getWalletTransactionDetail,
+    required TResult Function(FilterOption filter) filterTransaction,
+  }) {
+    return filterTransaction(filter);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getWalletInfo,
+    TResult? Function(
+            WalletType walletType, WalletTransactionsRequest? request)?
+        getWalletTransactionList,
+    TResult? Function(String id)? getWalletTransactionDetail,
+    TResult? Function(FilterOption filter)? filterTransaction,
+  }) {
+    return filterTransaction?.call(filter);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getWalletInfo,
+    TResult Function(WalletType walletType, WalletTransactionsRequest? request)?
+        getWalletTransactionList,
+    TResult Function(String id)? getWalletTransactionDetail,
+    TResult Function(FilterOption filter)? filterTransaction,
+    required TResult orElse(),
+  }) {
+    if (filterTransaction != null) {
+      return filterTransaction(filter);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetWalletInfoEvent value) getWalletInfo,
+    required TResult Function(_GetWalletTransactionListEvent value)
+        getWalletTransactionList,
+    required TResult Function(_GetWalletTransactionDetailEvent value)
+        getWalletTransactionDetail,
+    required TResult Function(_FilterTransactionEvent value) filterTransaction,
+  }) {
+    return filterTransaction(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetWalletInfoEvent value)? getWalletInfo,
+    TResult? Function(_GetWalletTransactionListEvent value)?
+        getWalletTransactionList,
+    TResult? Function(_GetWalletTransactionDetailEvent value)?
+        getWalletTransactionDetail,
+    TResult? Function(_FilterTransactionEvent value)? filterTransaction,
+  }) {
+    return filterTransaction?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetWalletInfoEvent value)? getWalletInfo,
+    TResult Function(_GetWalletTransactionListEvent value)?
+        getWalletTransactionList,
+    TResult Function(_GetWalletTransactionDetailEvent value)?
+        getWalletTransactionDetail,
+    TResult Function(_FilterTransactionEvent value)? filterTransaction,
+    required TResult orElse(),
+  }) {
+    if (filterTransaction != null) {
+      return filterTransaction(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FilterTransactionEvent implements WalletEvent {
+  const factory _FilterTransactionEvent({required final FilterOption filter}) =
+      _$FilterTransactionEventImpl;
+
+  FilterOption get filter;
+  @JsonKey(ignore: true)
+  _$$FilterTransactionEventImplCopyWith<_$FilterTransactionEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$WalletState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -546,7 +772,7 @@ mixin _$WalletState {
     required TResult Function(List<TransactionItem> transactions)
         getWalletTransactionListSuccess,
     required TResult Function() getWalletTransactionListLoading,
-    required TResult Function(TransactionItem transactions)
+    required TResult Function(TransactionItem transaction)
         getWalletTransactionDetailSuccess,
     required TResult Function() getWalletTransactionDetailLoading,
     required TResult Function(String err) getWalletTransactionDetailFailed,
@@ -562,7 +788,7 @@ mixin _$WalletState {
     TResult? Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult? Function()? getWalletTransactionListLoading,
-    TResult? Function(TransactionItem transactions)?
+    TResult? Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult? Function()? getWalletTransactionDetailLoading,
     TResult? Function(String err)? getWalletTransactionDetailFailed,
@@ -578,7 +804,7 @@ mixin _$WalletState {
     TResult Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult Function()? getWalletTransactionListLoading,
-    TResult Function(TransactionItem transactions)?
+    TResult Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult Function()? getWalletTransactionDetailLoading,
     TResult Function(String err)? getWalletTransactionDetailFailed,
@@ -718,7 +944,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     required TResult Function(List<TransactionItem> transactions)
         getWalletTransactionListSuccess,
     required TResult Function() getWalletTransactionListLoading,
-    required TResult Function(TransactionItem transactions)
+    required TResult Function(TransactionItem transaction)
         getWalletTransactionDetailSuccess,
     required TResult Function() getWalletTransactionDetailLoading,
     required TResult Function(String err) getWalletTransactionDetailFailed,
@@ -737,7 +963,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult? Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult? Function()? getWalletTransactionListLoading,
-    TResult? Function(TransactionItem transactions)?
+    TResult? Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult? Function()? getWalletTransactionDetailLoading,
     TResult? Function(String err)? getWalletTransactionDetailFailed,
@@ -756,7 +982,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult Function()? getWalletTransactionListLoading,
-    TResult Function(TransactionItem transactions)?
+    TResult Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult Function()? getWalletTransactionDetailLoading,
     TResult Function(String err)? getWalletTransactionDetailFailed,
@@ -926,7 +1152,7 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     required TResult Function(List<TransactionItem> transactions)
         getWalletTransactionListSuccess,
     required TResult Function() getWalletTransactionListLoading,
-    required TResult Function(TransactionItem transactions)
+    required TResult Function(TransactionItem transaction)
         getWalletTransactionDetailSuccess,
     required TResult Function() getWalletTransactionDetailLoading,
     required TResult Function(String err) getWalletTransactionDetailFailed,
@@ -945,7 +1171,7 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     TResult? Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult? Function()? getWalletTransactionListLoading,
-    TResult? Function(TransactionItem transactions)?
+    TResult? Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult? Function()? getWalletTransactionDetailLoading,
     TResult? Function(String err)? getWalletTransactionDetailFailed,
@@ -964,7 +1190,7 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     TResult Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult Function()? getWalletTransactionListLoading,
-    TResult Function(TransactionItem transactions)?
+    TResult Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult Function()? getWalletTransactionDetailLoading,
     TResult Function(String err)? getWalletTransactionDetailFailed,
@@ -1143,7 +1369,7 @@ class _$GetWalletInfoSuccessImpl
     required TResult Function(List<TransactionItem> transactions)
         getWalletTransactionListSuccess,
     required TResult Function() getWalletTransactionListLoading,
-    required TResult Function(TransactionItem transactions)
+    required TResult Function(TransactionItem transaction)
         getWalletTransactionDetailSuccess,
     required TResult Function() getWalletTransactionDetailLoading,
     required TResult Function(String err) getWalletTransactionDetailFailed,
@@ -1162,7 +1388,7 @@ class _$GetWalletInfoSuccessImpl
     TResult? Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult? Function()? getWalletTransactionListLoading,
-    TResult? Function(TransactionItem transactions)?
+    TResult? Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult? Function()? getWalletTransactionDetailLoading,
     TResult? Function(String err)? getWalletTransactionDetailFailed,
@@ -1181,7 +1407,7 @@ class _$GetWalletInfoSuccessImpl
     TResult Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult Function()? getWalletTransactionListLoading,
-    TResult Function(TransactionItem transactions)?
+    TResult Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult Function()? getWalletTransactionDetailLoading,
     TResult Function(String err)? getWalletTransactionDetailFailed,
@@ -1333,7 +1559,7 @@ class _$GetWalletInfoLoadingImpl
     required TResult Function(List<TransactionItem> transactions)
         getWalletTransactionListSuccess,
     required TResult Function() getWalletTransactionListLoading,
-    required TResult Function(TransactionItem transactions)
+    required TResult Function(TransactionItem transaction)
         getWalletTransactionDetailSuccess,
     required TResult Function() getWalletTransactionDetailLoading,
     required TResult Function(String err) getWalletTransactionDetailFailed,
@@ -1352,7 +1578,7 @@ class _$GetWalletInfoLoadingImpl
     TResult? Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult? Function()? getWalletTransactionListLoading,
-    TResult? Function(TransactionItem transactions)?
+    TResult? Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult? Function()? getWalletTransactionDetailLoading,
     TResult? Function(String err)? getWalletTransactionDetailFailed,
@@ -1371,7 +1597,7 @@ class _$GetWalletInfoLoadingImpl
     TResult Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult Function()? getWalletTransactionListLoading,
-    TResult Function(TransactionItem transactions)?
+    TResult Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult Function()? getWalletTransactionDetailLoading,
     TResult Function(String err)? getWalletTransactionDetailFailed,
@@ -1549,7 +1775,7 @@ class _$GetWalletTransactionListFailedImpl
     required TResult Function(List<TransactionItem> transactions)
         getWalletTransactionListSuccess,
     required TResult Function() getWalletTransactionListLoading,
-    required TResult Function(TransactionItem transactions)
+    required TResult Function(TransactionItem transaction)
         getWalletTransactionDetailSuccess,
     required TResult Function() getWalletTransactionDetailLoading,
     required TResult Function(String err) getWalletTransactionDetailFailed,
@@ -1568,7 +1794,7 @@ class _$GetWalletTransactionListFailedImpl
     TResult? Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult? Function()? getWalletTransactionListLoading,
-    TResult? Function(TransactionItem transactions)?
+    TResult? Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult? Function()? getWalletTransactionDetailLoading,
     TResult? Function(String err)? getWalletTransactionDetailFailed,
@@ -1587,7 +1813,7 @@ class _$GetWalletTransactionListFailedImpl
     TResult Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult Function()? getWalletTransactionListLoading,
-    TResult Function(TransactionItem transactions)?
+    TResult Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult Function()? getWalletTransactionDetailLoading,
     TResult Function(String err)? getWalletTransactionDetailFailed,
@@ -1781,7 +2007,7 @@ class _$GetWalletTransactionListSuccessImpl
     required TResult Function(List<TransactionItem> transactions)
         getWalletTransactionListSuccess,
     required TResult Function() getWalletTransactionListLoading,
-    required TResult Function(TransactionItem transactions)
+    required TResult Function(TransactionItem transaction)
         getWalletTransactionDetailSuccess,
     required TResult Function() getWalletTransactionDetailLoading,
     required TResult Function(String err) getWalletTransactionDetailFailed,
@@ -1800,7 +2026,7 @@ class _$GetWalletTransactionListSuccessImpl
     TResult? Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult? Function()? getWalletTransactionListLoading,
-    TResult? Function(TransactionItem transactions)?
+    TResult? Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult? Function()? getWalletTransactionDetailLoading,
     TResult? Function(String err)? getWalletTransactionDetailFailed,
@@ -1819,7 +2045,7 @@ class _$GetWalletTransactionListSuccessImpl
     TResult Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult Function()? getWalletTransactionListLoading,
-    TResult Function(TransactionItem transactions)?
+    TResult Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult Function()? getWalletTransactionDetailLoading,
     TResult Function(String err)? getWalletTransactionDetailFailed,
@@ -1976,7 +2202,7 @@ class _$GetWalletTransactionListLoadingImpl
     required TResult Function(List<TransactionItem> transactions)
         getWalletTransactionListSuccess,
     required TResult Function() getWalletTransactionListLoading,
-    required TResult Function(TransactionItem transactions)
+    required TResult Function(TransactionItem transaction)
         getWalletTransactionDetailSuccess,
     required TResult Function() getWalletTransactionDetailLoading,
     required TResult Function(String err) getWalletTransactionDetailFailed,
@@ -1995,7 +2221,7 @@ class _$GetWalletTransactionListLoadingImpl
     TResult? Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult? Function()? getWalletTransactionListLoading,
-    TResult? Function(TransactionItem transactions)?
+    TResult? Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult? Function()? getWalletTransactionDetailLoading,
     TResult? Function(String err)? getWalletTransactionDetailFailed,
@@ -2014,7 +2240,7 @@ class _$GetWalletTransactionListLoadingImpl
     TResult Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult Function()? getWalletTransactionListLoading,
-    TResult Function(TransactionItem transactions)?
+    TResult Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult Function()? getWalletTransactionDetailLoading,
     TResult Function(String err)? getWalletTransactionDetailFailed,
@@ -2112,7 +2338,7 @@ abstract class _$$GetWalletTransactionDetailSuccessImplCopyWith<$Res> {
           $Res Function(_$GetWalletTransactionDetailSuccessImpl) then) =
       __$$GetWalletTransactionDetailSuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({TransactionItem transactions});
+  $Res call({TransactionItem transaction});
 }
 
 /// @nodoc
@@ -2128,12 +2354,12 @@ class __$$GetWalletTransactionDetailSuccessImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? transactions = null,
+    Object? transaction = null,
   }) {
     return _then(_$GetWalletTransactionDetailSuccessImpl(
-      transactions: null == transactions
-          ? _value.transactions
-          : transactions // ignore: cast_nullable_to_non_nullable
+      transaction: null == transaction
+          ? _value.transaction
+          : transaction // ignore: cast_nullable_to_non_nullable
               as TransactionItem,
     ));
   }
@@ -2144,14 +2370,14 @@ class __$$GetWalletTransactionDetailSuccessImplCopyWithImpl<$Res>
 class _$GetWalletTransactionDetailSuccessImpl
     with DiagnosticableTreeMixin
     implements _GetWalletTransactionDetailSuccess {
-  const _$GetWalletTransactionDetailSuccessImpl({required this.transactions});
+  const _$GetWalletTransactionDetailSuccessImpl({required this.transaction});
 
   @override
-  final TransactionItem transactions;
+  final TransactionItem transaction;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'WalletState.getWalletTransactionDetailSuccess(transactions: $transactions)';
+    return 'WalletState.getWalletTransactionDetailSuccess(transaction: $transaction)';
   }
 
   @override
@@ -2160,7 +2386,7 @@ class _$GetWalletTransactionDetailSuccessImpl
     properties
       ..add(DiagnosticsProperty(
           'type', 'WalletState.getWalletTransactionDetailSuccess'))
-      ..add(DiagnosticsProperty('transactions', transactions));
+      ..add(DiagnosticsProperty('transaction', transaction));
   }
 
   @override
@@ -2168,12 +2394,12 @@ class _$GetWalletTransactionDetailSuccessImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GetWalletTransactionDetailSuccessImpl &&
-            (identical(other.transactions, transactions) ||
-                other.transactions == transactions));
+            (identical(other.transaction, transaction) ||
+                other.transaction == transaction));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, transactions);
+  int get hashCode => Object.hash(runtimeType, transaction);
 
   @JsonKey(ignore: true)
   @override
@@ -2194,12 +2420,12 @@ class _$GetWalletTransactionDetailSuccessImpl
     required TResult Function(List<TransactionItem> transactions)
         getWalletTransactionListSuccess,
     required TResult Function() getWalletTransactionListLoading,
-    required TResult Function(TransactionItem transactions)
+    required TResult Function(TransactionItem transaction)
         getWalletTransactionDetailSuccess,
     required TResult Function() getWalletTransactionDetailLoading,
     required TResult Function(String err) getWalletTransactionDetailFailed,
   }) {
-    return getWalletTransactionDetailSuccess(transactions);
+    return getWalletTransactionDetailSuccess(transaction);
   }
 
   @override
@@ -2213,12 +2439,12 @@ class _$GetWalletTransactionDetailSuccessImpl
     TResult? Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult? Function()? getWalletTransactionListLoading,
-    TResult? Function(TransactionItem transactions)?
+    TResult? Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult? Function()? getWalletTransactionDetailLoading,
     TResult? Function(String err)? getWalletTransactionDetailFailed,
   }) {
-    return getWalletTransactionDetailSuccess?.call(transactions);
+    return getWalletTransactionDetailSuccess?.call(transaction);
   }
 
   @override
@@ -2232,14 +2458,14 @@ class _$GetWalletTransactionDetailSuccessImpl
     TResult Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult Function()? getWalletTransactionListLoading,
-    TResult Function(TransactionItem transactions)?
+    TResult Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult Function()? getWalletTransactionDetailLoading,
     TResult Function(String err)? getWalletTransactionDetailFailed,
     required TResult orElse(),
   }) {
     if (getWalletTransactionDetailSuccess != null) {
-      return getWalletTransactionDetailSuccess(transactions);
+      return getWalletTransactionDetailSuccess(transaction);
     }
     return orElse();
   }
@@ -2320,10 +2546,10 @@ class _$GetWalletTransactionDetailSuccessImpl
 
 abstract class _GetWalletTransactionDetailSuccess implements WalletState {
   const factory _GetWalletTransactionDetailSuccess(
-          {required final TransactionItem transactions}) =
+          {required final TransactionItem transaction}) =
       _$GetWalletTransactionDetailSuccessImpl;
 
-  TransactionItem get transactions;
+  TransactionItem get transaction;
   @JsonKey(ignore: true)
   _$$GetWalletTransactionDetailSuccessImplCopyWith<
           _$GetWalletTransactionDetailSuccessImpl>
@@ -2389,7 +2615,7 @@ class _$GetWalletTransactionDetailLoadingImpl
     required TResult Function(List<TransactionItem> transactions)
         getWalletTransactionListSuccess,
     required TResult Function() getWalletTransactionListLoading,
-    required TResult Function(TransactionItem transactions)
+    required TResult Function(TransactionItem transaction)
         getWalletTransactionDetailSuccess,
     required TResult Function() getWalletTransactionDetailLoading,
     required TResult Function(String err) getWalletTransactionDetailFailed,
@@ -2408,7 +2634,7 @@ class _$GetWalletTransactionDetailLoadingImpl
     TResult? Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult? Function()? getWalletTransactionListLoading,
-    TResult? Function(TransactionItem transactions)?
+    TResult? Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult? Function()? getWalletTransactionDetailLoading,
     TResult? Function(String err)? getWalletTransactionDetailFailed,
@@ -2427,7 +2653,7 @@ class _$GetWalletTransactionDetailLoadingImpl
     TResult Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult Function()? getWalletTransactionListLoading,
-    TResult Function(TransactionItem transactions)?
+    TResult Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult Function()? getWalletTransactionDetailLoading,
     TResult Function(String err)? getWalletTransactionDetailFailed,
@@ -2606,7 +2832,7 @@ class _$GetWalletTransactionDetailFailedImpl
     required TResult Function(List<TransactionItem> transactions)
         getWalletTransactionListSuccess,
     required TResult Function() getWalletTransactionListLoading,
-    required TResult Function(TransactionItem transactions)
+    required TResult Function(TransactionItem transaction)
         getWalletTransactionDetailSuccess,
     required TResult Function() getWalletTransactionDetailLoading,
     required TResult Function(String err) getWalletTransactionDetailFailed,
@@ -2625,7 +2851,7 @@ class _$GetWalletTransactionDetailFailedImpl
     TResult? Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult? Function()? getWalletTransactionListLoading,
-    TResult? Function(TransactionItem transactions)?
+    TResult? Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult? Function()? getWalletTransactionDetailLoading,
     TResult? Function(String err)? getWalletTransactionDetailFailed,
@@ -2644,7 +2870,7 @@ class _$GetWalletTransactionDetailFailedImpl
     TResult Function(List<TransactionItem> transactions)?
         getWalletTransactionListSuccess,
     TResult Function()? getWalletTransactionListLoading,
-    TResult Function(TransactionItem transactions)?
+    TResult Function(TransactionItem transaction)?
         getWalletTransactionDetailSuccess,
     TResult Function()? getWalletTransactionDetailLoading,
     TResult Function(String err)? getWalletTransactionDetailFailed,
