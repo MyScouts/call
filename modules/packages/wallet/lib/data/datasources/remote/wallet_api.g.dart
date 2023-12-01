@@ -46,9 +46,22 @@ class _WalletApi implements WalletApi {
   }
 
   @override
-  Future<TransactionsResponse> getTransactionsVNDWallet() async {
+  Future<TransactionsResponse> getTransactionsVNDWallet({
+    int? page,
+    int? pageSize,
+    String? category,
+    num? fromTimestamp,
+    num? toTimestamp,
+  }) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'page': page,
+      r'pageSize': pageSize,
+      r'category': category,
+      r'fromTimestamp': fromTimestamp,
+      r'toTimestamp': toTimestamp,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -73,9 +86,22 @@ class _WalletApi implements WalletApi {
   }
 
   @override
-  Future<TransactionsResponse> getTransactionsDiamondWallet() async {
+  Future<TransactionsResponse> getTransactionsDiamondWallet({
+    int? page,
+    int? pageSize,
+    String? category,
+    num? fromTimestamp,
+    num? toTimestamp,
+  }) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'page': page,
+      r'pageSize': pageSize,
+      r'category': category,
+      r'fromTimestamp': fromTimestamp,
+      r'toTimestamp': toTimestamp,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -100,9 +126,22 @@ class _WalletApi implements WalletApi {
   }
 
   @override
-  Future<TransactionsResponse> getTransactionsCoinWallet() async {
+  Future<TransactionsResponse> getTransactionsCoinWallet({
+    int? page,
+    int? pageSize,
+    String? category,
+    num? fromTimestamp,
+    num? toTimestamp,
+  }) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'page': page,
+      r'pageSize': pageSize,
+      r'category': category,
+      r'fromTimestamp': fromTimestamp,
+      r'toTimestamp': toTimestamp,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -123,6 +162,34 @@ class _WalletApi implements WalletApi {
               baseUrl,
             ))));
     final value = TransactionsResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TransactionDetailsResponse> getTransactionDetail(
+      {required String id}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TransactionDetailsResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/v1/transaction/${id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = TransactionDetailsResponse.fromJson(_result.data!);
     return value;
   }
 

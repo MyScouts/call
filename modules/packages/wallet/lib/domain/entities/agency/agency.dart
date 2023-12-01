@@ -1,6 +1,7 @@
 // ignore_for_file: invalid_annotation_target
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:wallet/data/datasources/models/exchange_coin_response.dart';
 
 part 'agency.g.dart';
 
@@ -22,9 +23,11 @@ class AgencyResponse {
   final String? name;
   final num? availableCoin;
   final AgencyUser? user;
+  final List<CoinDiscountResponse>? coinDiscounts;
 
   AgencyResponse(
       {required this.id,
+      required this.coinDiscounts,
       required this.name,
       required this.availableCoin,
       required this.user});
