@@ -14,6 +14,7 @@ class ConversationCubit extends Cubit<ConversationState> {
 
   Future<void> init() async {
     try {
+      emit(const ConversationState.loading());
       final FriendResponseModel friendResponse =
           await _chatUseCase.getFriends(page: 1, pageSize: kPageSize);
       final ItemsResponse<ConversationModel> conversationResponse =

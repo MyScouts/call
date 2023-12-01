@@ -25,6 +25,8 @@ class ChatRoomPageState extends State<ChatRoomPage> {
   final ChatRoomCubit _cubit = getIt.get();
   final scrollController = ScrollController();
   final textController = TextEditingController();
+  final reportController = TextEditingController();
+  final enable = TextEditingController();
 
   @override
   void initState() {
@@ -66,45 +68,82 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                   ),
                   actions: [
                     PopupMenuButton<int>(
-                      icon: const Icon(Icons.more_vert),
+                      icon: const Icon(
+                        Icons.more_vert,
+                        color: AppColors.black,
+                      ),
                       color: AppColors.white,
                       onSelected: (i) {
                         if (i == 0) {
                           showDialog(
-                              context: context,
-                              builder: (_) => ConfirmChatDialog(
-                                    title: 'Xóa cuộc trò chuyện',
-                                    content:
-                                        'Cuộc trò chuyện của bạn sẽ được xóa vĩnh viễn và không thể khôi phục',
-                                    actionTitle: 'Xóa',
-                                    onAction: () {
-                                      _cubit
-                                          .deleteConversation()
-                                          .then((value) => Navigator.pop(context));
-                                    },
-                                  ));
+                            context: context,
+                            builder: (_) => ChatDialog(
+                              title: 'Xóa cuộc trò chuyện',
+                              content:
+                                  'Cuộc trò chuyện của bạn sẽ được xóa vĩnh viễn và không thể khôi phục',
+                              actionTitle: 'Xóa',
+                              onAction: () {
+                                _cubit.deleteConversation().then((value) => Navigator.pop(context));
+                              },
+                            ),
+                          );
                         } else if (i == 1) {
+                          showDialog(
+                            context: context,
+                            builder: (_) => ChatDialog(
+                              title: 'Báo cáo',
+                              actionTitle: 'Gửi',
+                              showCancel: false,
+                              actionColor: AppColors.blueEdit,
+                              contentWidget: TextFormField(
+                                controller: reportController,
+                                minLines: 3,
+                                maxLines: 5,
+                                decoration: InputDecoration(
+                                  fillColor: AppColors.white,
+                                  hintText: 'Nhập nội dung báo cáo...',
+                                  contentPadding: const EdgeInsets.all(8),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: const BorderSide(color: Color(0xffEAEDF0))),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(color: Color(0xffEAEDF0)),
+                                      borderRadius: BorderRadius.circular(12)),
+                                ),
+                              ),
+                              onAction: () {
+                                if (reportController.text.isNotEmpty) {
+                                  _cubit.reportUser(
+                                      widget.memberId ??
+                                          conversation.conversation.membersNotMe.first.member.id,
+                                      reportController.text);
+                                }
+                              },
+                            ),
+                          );
                         } else if (i == 2) {
                           showDialog(
-                              context: context,
-                              builder: (_) => ConfirmChatDialog(
-                                    title: 'Chặn ${conversation.conversation.membersNotMe.first.member.fullName}',
-                                    content: '${conversation.conversation.membersNotMe.first.member.fullName} sẽ không thể :\n\n'
-                                        ' • Xem bài viết trên trang cá nhân của bạn\n'
-                                        ' • Nhắn tin cho bạn\n'
-                                        ' • Thêm bạn làm bạn bè\n'
-                                        ' • Nếu các bạn là bạn bè, chặn tài khoản đồng nghĩa với việc hủy kết bạn',
-                                    actionTitle: 'Xác nhận',
-                                    actionColor: AppColors.blueEdit,
-                                    contentAlign: TextAlign.start,
-                                    onAction: () {
-                                      _cubit
-                                          .blockUser(widget.memberId ??
-                                              conversation
-                                                  .conversation.membersNotMe.first.member.id)
-                                          .then((value) => Navigator.pop(context));
-                                    },
-                                  ));
+                            context: context,
+                            builder: (_) => ChatDialog(
+                              title:
+                                  'Chặn ${conversation.conversation.membersNotMe.first.member.fullName}',
+                              content:
+                                  '${conversation.conversation.membersNotMe.first.member.fullName} sẽ không thể :\n\n'
+                                  ' • Xem bài viết trên trang cá nhân của bạn\n'
+                                  ' • Nhắn tin cho bạn\n'
+                                  ' • Thêm bạn làm bạn bè\n'
+                                  ' • Nếu các bạn là bạn bè, chặn tài khoản đồng nghĩa với việc hủy kết bạn',
+                              actionTitle: 'Xác nhận',
+                              actionColor: AppColors.blueEdit,
+                              contentAlign: TextAlign.start,
+                              onAction: () {
+                                _cubit
+                                    .blockUser(widget.memberId ??
+                                        conversation.conversation.membersNotMe.first.member.id)
+                                    .then((value) => Navigator.pop(context));
+                              },
+                            ),
+                          );
                         }
                       },
                       itemBuilder: (BuildContext context) {
