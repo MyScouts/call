@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 const _dashboardItems = '_dashboardItems';
 const _dashboardPage = '_dashboardPage';
 const _dashboardFav = '_dashboardFav';
+const _dashboardPath = '_dashboardPath';
 
 @injectable
 class DashboardSharePreferenceUseCase {
@@ -70,5 +71,13 @@ class DashboardSharePreferenceUseCase {
       }
       return DashBoardGroupItem.fromJson(e);
     }).toList();
+  }
+
+  void saveInitPath(String key, String id) {
+    _shared.setString('$key $_dashboardPath', id);
+  }
+
+  String? getInitPath(String key) {
+   return _shared.getString('$key $_dashboardPath');
   }
 }

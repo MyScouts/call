@@ -26,7 +26,6 @@ abstract class DashboardBaseBloc
     on<ChangeItem>(onChangeItem);
     on<AddItemToGroup>(onAddItemToGroup);
     on<ChangeGroup>(onChangeGroup);
-
     add(_FetchDashBoardItems());
   }
 
@@ -260,6 +259,12 @@ class ChangeGroup extends DashboardBaseEvent {
   final DashBoardGroupItem group;
 
   ChangeGroup(this.group);
+}
+
+class SaveInitPath extends DashboardBaseEvent {
+  final String id;
+
+  SaveInitPath(this.id);
 }
 
 abstract class DashboardBaseState {}

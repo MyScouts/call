@@ -11,6 +11,7 @@ import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_store_s
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_background_builder.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_base_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_community_tab.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_drawer.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_ecommerce_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_personal_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dock_widget.dart';
@@ -110,6 +111,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         dashBoardController: dashBoardController,
         pageController: _pageController,
         child: Scaffold(
+          endDrawer: const DashboardDrawer(),
           body: Stack(
             fit: StackFit.expand,
             children: [
@@ -126,13 +128,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       padding: const EdgeInsets.only(top: 16),
                       child: ListenableBuilder(
                         listenable: dashBoardController,
-                        builder: (_, __) {
+                        builder: (ctx, __) {
                           return StatusBarWidget(
                             enableEditMode: dashBoardController.enableEditMode,
                             openAppStore: () {
-                              setState(() {
-                                _showAppStore = true;
-                              });
+                              // setState(() {
+                              //   _showAppStore = true;
+                              // });
+                              Scaffold.of(ctx).openEndDrawer();
                             },
                             openNotification: () {
                               if (!authenticate) {
