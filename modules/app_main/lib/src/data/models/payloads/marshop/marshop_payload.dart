@@ -36,3 +36,19 @@ class RegisterMarshopPayload {
 
   Map<String, dynamic> toJson() => _$RegisterMarshopPayloadToJson(this);
 }
+
+@JsonSerializable()
+class GetListMarshopPayload {
+  final int page;
+  final int pageSize;
+
+  GetListMarshopPayload({
+    required this.page,
+    required this.pageSize,
+  });
+
+  factory GetListMarshopPayload.fromJson(Map<String, dynamic> json) =>
+      _$GetListMarshopPayloadFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GetListMarshopPayloadToJson(this);
+}

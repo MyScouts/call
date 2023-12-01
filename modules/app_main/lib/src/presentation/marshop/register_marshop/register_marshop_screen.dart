@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/marshop/marshop_constant.dart';
+import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_coordinator.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_constants.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
@@ -168,10 +169,13 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen>
             ],
           ),
           const SizedBox(height: 10),
-          Text(
-            "Bạn chưa có MarShop giới thiệu ?",
-            style: context.text.bodyMedium!.copyWith(
-              color: context.theme.primaryColor,
+          GestureDetector(
+            onTap: () => context.startMarshopReferralScreen(),
+            child: Text(
+              "Bạn chưa có MarShop giới thiệu ?",
+              style: context.text.bodyMedium!.copyWith(
+                color: context.theme.primaryColor,
+              ),
             ),
           ),
           const SizedBox(height: 10),

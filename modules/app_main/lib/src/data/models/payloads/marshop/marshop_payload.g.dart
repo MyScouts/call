@@ -44,3 +44,17 @@ Map<String, dynamic> _$RegisterMarshopPayloadToJson(
   writeNotNull('referralId', instance.referralId);
   return val;
 }
+
+GetListMarshopPayload _$GetListMarshopPayloadFromJson(
+        Map<String, dynamic> json) =>
+    GetListMarshopPayload(
+      page: json['page'] as int,
+      pageSize: json['pageSize'] as int,
+    );
+
+Map<String, dynamic> _$GetListMarshopPayloadToJson(
+        GetListMarshopPayload instance) =>
+    <String, dynamic>{
+      'page': instance.page,
+      'pageSize': instance.pageSize,
+    };

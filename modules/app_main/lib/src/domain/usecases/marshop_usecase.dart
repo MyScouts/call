@@ -1,4 +1,5 @@
 import 'package:app_main/src/data/models/payloads/marshop/marshop_payload.dart';
+import 'package:app_main/src/data/models/responses/marshop_response.dart';
 import 'package:app_main/src/data/repositories/marshop_repository.dart';
 import 'package:injectable/injectable.dart';
 
@@ -16,5 +17,10 @@ class MarshopUsecase {
 
   Future registerMarshop(int userId, RegisterMarshopPayload payload) {
     return _marshopRepository.registerMarshop(userId, payload);
+  }
+
+  Future<List<MarshopInfo>> getMarShops(GetListMarshopPayload payload) async {
+    final response = await _marshopRepository.getMarShops(payload);
+    return response.marshops;
   }
 }
