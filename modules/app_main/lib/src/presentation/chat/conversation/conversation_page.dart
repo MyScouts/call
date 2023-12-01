@@ -105,6 +105,7 @@ class ConversationPageState extends State<ConversationPage> {
                           ),
                         ),
                         kSpacingHeight12,
+                        if(friends.isNotEmpty)
                         SizedBox(
                           height: 100,
                           child: ListView.separated(

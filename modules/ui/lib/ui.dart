@@ -13,7 +13,7 @@ export 'src/const/constains.dart';
 export 'src/decoration/tab_indicator_decoration.dart';
 export 'src/dialog/action_dialog.dart';
 export 'src/dialog/approve_dialog.dart';
-export 'src/dialog/confirm_chat_dialog.dart';
+export 'src/dialog/chat_dialog.dart';
 export 'src/dialog/confirm_dialog.dart';
 export 'src/dialog/congratulation_dialog.dart';
 export 'src/dialog/request_permission_dialog_widget.dart';
