@@ -68,7 +68,7 @@ abstract class LiveApi {
     @Query('page') required int page,
     @Query('pageSize') required int pageSize,
     @Query('types') required List<String> types,
-    @Query('categoryIds') int? categoryId,
+    @Query('categoryIds')  List<int>? categoryId,
   });
 
   @POST(LiveApiConstant.joinLive)

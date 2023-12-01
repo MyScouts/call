@@ -21,7 +21,7 @@ class LiveUseCase {
     required int page,
     required int pageSize,
     required List<String> types,
-    int? categoryId,
+    List<int>? categoryId,
   }) {
     return _liveRepository.getListLive(
       page: page,

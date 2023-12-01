@@ -23,7 +23,7 @@ class _LiveApi implements LiveApi {
     required int page,
     required int pageSize,
     required List<String> types,
-    int? categoryId,
+    List<int>? categoryId,
   }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{

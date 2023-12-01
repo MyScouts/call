@@ -16,7 +16,7 @@ abstract class LiveRepository {
     required int page,
     required int pageSize,
     required List<String> types,
-    int? categoryId,
+    List<int>? categoryId,
   });
 
   Future<JoinLiveResponse> joinLive({required int id, String? password});

@@ -122,15 +122,11 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                           giftController.userWallet.value.availableCoin!) {
                         return context.showToastText('Bạn không đủ xu');
                       }
-                      giftController.sentGift(
+                      await giftController.sentGift(
                           userId: widget.controller.info.user!.id!,
                           liveId: widget.controller.info.id,
                           giftId: selectedGift.value!.id!);
-                      final wallet = await getIt.get<WalletRepository>().getWalletInfo();
-                      if (wallet != null) {
-                        WalletInjectedData.setUserWallet = wallet;
-                        giftController.userWallet.value = WalletInjectedData.userWallet;
-                      }
+                      await giftController.getUserPoint();
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 9.5, horizontal: 10),
