@@ -14,6 +14,7 @@ const String reactionEvent = 'reaction';
 const String receiveMessage = 'receiveMessage';
 const String sendMessage = 'sendMessage';
 const String dashboardPageChange = 'dashboardPageChange';
+const String refreshLive = 'refreshLive';
 
 typedef ObserverCallback = void Function(dynamic options);
 
@@ -38,7 +39,8 @@ class NotificationCenter<T> {
       'Observer $observer ${observer.hashCode} is already subscribed to the channel $channel',
     );
 
-    _sharedCenter._channelObservers[channel]?[observer.hashCode] = onNotification;
+    _sharedCenter._channelObservers[channel]?[observer.hashCode] =
+        onNotification;
   }
 
   ///
@@ -70,7 +72,8 @@ class NotificationCenter<T> {
   ///
   static void post({required String channel, dynamic options}) {
     log('NOTIFICATION_CENTER_POST: $channel $options');
-    for (final callback in _sharedCenter._channelObservers[channel]?.values ?? <Function(dynamic)>[]) {
+    for (final callback in _sharedCenter._channelObservers[channel]?.values ??
+        <Function(dynamic)>[]) {
       Future(() => callback(options));
     }
   }

@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/chat/new_conversations_payload.dart';
 import 'package:app_main/src/data/models/payloads/chat/new_message_payload.dart';
+import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/chat/message_dto.dart';
 import 'package:app_main/src/domain/entities/chat/message_model.dart';
 import 'package:app_main/src/domain/entities/chat/result_model.dart';
@@ -9,17 +10,18 @@ import 'package:app_main/src/domain/usecases/user_usecase.dart';
 import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_state.dart';
 import 'package:injectable/injectable.dart';
 
-@injectable
+@singleton
 class ChatRoomCubit extends Cubit<ChatRoomState> {
   ChatRoomCubit(this._chatUseCase, this._userUsecase) : super(const ChatRoomState.loading());
 
-  final int kPageSize = 10;
+  final int kPageSize = 20;
   final ChatUseCase _chatUseCase;
   final UserUsecase _userUsecase;
-  late final int _conversationId;
+  late int _conversationId;
 
   Future<void> init({int? conversationId, int? memberId}) async {
     try {
+      emit(const ChatRoomState.loading());
       if (conversationId == null && memberId != null) {
         final User? user = await _userUsecase.geSynctUserById(memberId);
         final ResultModel newConversation = await _chatUseCase.createConversations(
@@ -72,26 +74,34 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
 
   Future<void> sendMessage(String message) async {
     try {
-      final MessageModel messageModel = await _chatUseCase.newMessage(
+      _chatUseCase.newMessage(
           conversationId: _conversationId, payload: NewMessagePayload(message: message));
-      state.mapOrNull((value) async {
-        emit(value.copyWith(
-          messages: [...value.messages, messageModel]
-        ));
-      });
     } catch (e) {
       emit(ChatRoomState.error(e));
     }
   }
 
-  void updateMessage(MessageDto message) {
+  void updateMessage(MessageModel message) {
     state.mapOrNull((value) async {
-      if(_conversationId == message.conversationId) {
-        emit(value.copyWith(
-            messages: [...value.messages, message]
-        ));
+      if (_conversationId == message.conversationId) {
+        emit(value.copyWith(messages: [message, ...value.messages]));
       }
     });
   }
 
+  void readMessage() async {
+    await _chatUseCase.realAllConversations(conversationId: _conversationId);
+  }
+
+  Future<void> deleteConversation() async {
+    await _chatUseCase.deleteConversations(conversationId: _conversationId);
+  }
+
+  Future<void> blockUser(int userId) async {
+    await _userUsecase.blockUser(userId: userId);
+  }
+
+  Future<void> reportUser(int userId, String content) async {
+    await _userUsecase.reportUser(userId: userId, payload: ReportUserPayload(content: content));
+  }
 }

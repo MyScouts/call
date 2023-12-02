@@ -65,6 +65,7 @@ class AppColors {
   static const Color grey75 = Color(0xff90A3BF);
   static const Color greyIcon = Color(0xff3F3F46);
   static const Color gray50 = Color(0xffF4F4F4);
+  static const Color neutral200 = Color(0xffC8C8C8);
 
   /// white
   static const Color white = Color(0xffffffff);
@@ -136,6 +137,7 @@ class AppColors {
   static const Color borderColor = Color(0xFFF2F2F2);
 
   static const Color textDisable = Color(0xffACACAC);
+  static const Color textSecondary = Color(0xff6E6E6E);
 
   static const Color bgSenderMessage = Color(0xff0070F0);
 }

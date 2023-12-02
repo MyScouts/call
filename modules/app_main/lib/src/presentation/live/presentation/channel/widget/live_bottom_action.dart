@@ -7,6 +7,7 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:provider/provider.dart';
 
 import 'live_button_action.dart';
 import '../../live_message/live_comment_widget.dart';
@@ -19,7 +20,10 @@ class LiveBottomAction extends StatelessWidget {
   void liveSetting(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      builder: (_) => const SettingSheet(),
+      builder: (_) => Provider.value(
+        value: context.read<LiveChannelController>(),
+        child: const SettingSheet(),
+      ),
     );
   }
 
@@ -42,12 +46,7 @@ class LiveBottomAction extends StatelessWidget {
                   child: Row(
                     children: [
                       const Expanded(
-                        child: Column(
-                          children: [
-                            Expanded(child: LiveCommentWidget()),
-                            _ActionBan(),
-                          ],
-                        ),
+                        child: LiveCommentWidget(),
                       ),
                       SizedBox(
                         width: 60,
@@ -67,12 +66,12 @@ class LiveBottomAction extends StatelessWidget {
                       Expanded(
                         child: Row(
                           children: <Widget>[
-                            if (controller.me.value.isOwner)
-                              LiveButtonAction(
-                                icon:
-                                    ImageWidget(IconAppConstants.icLiveMarshop),
-                                onPressed: () {},
+                            LiveButtonAction(
+                              icon: ImageWidget(
+                                IconAppConstants.icLiveMarshop,
                               ),
+                              onPressed: () {},
+                            ),
                             LiveButtonAction(
                               icon: ImageWidget(IconAppConstants.icLiveComment),
                               onPressed: controller.enableMessage,
@@ -102,7 +101,9 @@ class LiveBottomAction extends StatelessWidget {
                               ),
                             if (!controller.me.value.isOwner)
                               LiveButtonAction(
-                                icon: ImageWidget(IconAppConstants.icLiveMenu),
+                                icon: ImageWidget(
+                                  IconAppConstants.icLiveMenu,
+                                ),
                                 onPressed: () {},
                               ),
                             const Spacer(),
