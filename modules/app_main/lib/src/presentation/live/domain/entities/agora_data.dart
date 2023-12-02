@@ -6,12 +6,12 @@ part 'agora_data.g.dart';
 class AgoraData {
   final String channel;
   final String token;
-  final int uid;
+  final int? uid;
 
   AgoraData({
     required this.channel,
     required this.token,
-    required this.uid,
+    this.uid,
   });
 
   factory AgoraData.fromJson(Map<String, dynamic> json) =>

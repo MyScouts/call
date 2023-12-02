@@ -6,6 +6,7 @@ import 'package:app_main/src/core/services/live_service/impl/live_socket_service
 import 'package:app_main/src/core/services/live_service/live_service.dart';
 import 'package:app_main/src/core/services/live_service/live_socket_service.dart';
 import 'package:app_main/src/core/services/notification_center.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/live/data/model/response/join_live_response.dart';
 import 'package:app_main/src/presentation/live/domain/entities/agora_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_comment.dart';
@@ -157,7 +158,7 @@ class LiveChannelController {
     _showMessageInput.value = false;
   }
 
-  void join(int id, [String? password]) async {
+  void join(int id, [String? password, BuildContext? context]) async {
     try {
       final res = await Future.wait([
         repository.joinLive(id: id, password: password),
@@ -177,8 +178,15 @@ class LiveChannelController {
         ),
         isOwner: _info.value.user?.id == user.id,
       ).obs;
-
       await getLeaderBoard(_info.value.id);
+    } catch (e) {
+      context?.showToastMessage(
+        'Live không còn tồn tại',
+        ToastMessageType.error,
+      );
+    }
+
+    try {
       if (_me.value.isOwner) {
         await [Permission.microphone, Permission.camera].request();
         await service.initEngine(enableMic: true, enableWebCam: true);
@@ -459,7 +467,10 @@ class LiveChannelController {
     _enableChat.value = true;
     _members.value = [];
 
-    if (_me.value.isOwner) repository.endLive(liveId: _info.value.id);
+    if (_me.value.isOwner) {
+      await repository.endLive(liveId: _info.value.id);
+      NotificationCenter.post(channel: refreshLive);
+    }
 
     if (Platform.isAndroid && await FlutterForegroundTask.isRunningService) {
       FlutterForegroundTask.stopService();

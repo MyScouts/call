@@ -12,13 +12,20 @@ class LiveScreenTab extends StatefulWidget {
   State<LiveScreenTab> createState() => _LiveScreenTabState();
 }
 
-class _LiveScreenTabState extends State<LiveScreenTab> with AutomaticKeepAliveClientMixin {
+class _LiveScreenTabState extends State<LiveScreenTab>
+    with AutomaticKeepAliveClientMixin {
   final liveController = getIt<LiveController>();
 
   @override
   void initState() {
     liveController.getListLive();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    liveController.close();
+    super.dispose();
   }
 
   @override
@@ -35,13 +42,15 @@ class _LiveScreenTabState extends State<LiveScreenTab> with AutomaticKeepAliveCl
           crossAxisCount: 2,
           mainAxisSpacing: 10,
           crossAxisSpacing: 7,
-          children: List.generate(liveController.live.value.lives?.length ?? 0, (index) {
+          children: List.generate(liveController.live.value.lives?.length ?? 0,
+              (index) {
             final live = liveController.live.value.lives![index];
             return LiveWidget(
               liveDetail: live,
-              viewer:
-                  liveController.listLiveCount.firstWhereOrNull((element) => element.liveId == live.id!)?.memberCount ??
-                      0,
+              viewer: liveController.listLiveCount
+                      .firstWhereOrNull((element) => element.liveId == live.id!)
+                      ?.memberCount ??
+                  0,
             );
           }),
         ),

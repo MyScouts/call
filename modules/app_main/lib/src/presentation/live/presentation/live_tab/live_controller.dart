@@ -1,3 +1,4 @@
+import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/presentation/live/domain/usecases/live_usecases.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
@@ -10,7 +11,15 @@ import '../../domain/entities/live_member_count.dart';
 class LiveController {
   final LiveUseCase _useCase;
 
-  LiveController(this._useCase);
+  LiveController(this._useCase) {
+    NotificationCenter.subscribe(
+      channel: refreshLive,
+      observer: this,
+      onNotification: (options) {
+        getListLive();
+      },
+    );
+  }
 
   Rx<Live> live = const Live().obs;
 
@@ -23,9 +32,14 @@ class LiveController {
   Future<void> getListLive() async {
     try {
       live.value = await _useCase.getListLive(
-          page: 1, pageSize: 20, types: [], categoryId: listCategorySelect.map((element) => element.id!).toList());
+          page: 1,
+          pageSize: 20,
+          types: [],
+          categoryId:
+              listCategorySelect.map((element) => element.id!).toList());
       if (live.value.lives?.isNotEmpty == true) {
-        listLiveCount.value = await _useCase.memberCount(live.value.lives!.map((e) => e.id!).toList());
+        listLiveCount.value = await _useCase
+            .memberCount(live.value.lives!.map((e) => e.id!).toList());
       }
     } catch (e) {}
   }
@@ -34,5 +48,9 @@ class LiveController {
     try {
       listCategory.value = await _useCase.getAllCategory();
     } catch (e) {}
+  }
+
+  void close() {
+    NotificationCenter.unsubscribe(channel: refreshLive, observer: this);
   }
 }
