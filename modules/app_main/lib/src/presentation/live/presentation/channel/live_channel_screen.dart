@@ -10,12 +10,18 @@ import 'package:app_main/src/presentation/live/presentation/live_message/live_me
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'widget/sent_gift_page.dart';
 
 class LiveChannelScreen extends StatefulWidget {
-  const LiveChannelScreen({super.key, required this.liveID});
+  const LiveChannelScreen({
+    super.key,
+    required this.liveID,
+    this.fromPip = false,
+  });
 
   final int liveID;
+  final bool fromPip;
 
   static const String routerName = '/live_channel';
 
@@ -28,14 +34,8 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
 
   @override
   void initState() {
-    controller.join(widget.liveID);
+    if(!widget.fromPip) controller.join(widget.liveID, context);
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller.leaveLive();
-    super.dispose();
   }
 
   @override
@@ -122,25 +122,34 @@ class _RtcRenderState extends State<_RtcRender> {
       if (controller.state.value == LiveStreamState.watching) {
         if (controller.hostInLive) {
           if (controller.me.value.isOwner) {
-            return AgoraVideoView(
-              controller: VideoViewController(
-                rtcEngine: controller.service.engine,
-                canvas: const VideoCanvas(
-                  uid: 0,
-                  renderMode: RenderModeType.renderModeHidden,
+            return Hero(
+              tag: 'render owner',
+              child: AgoraVideoView(
+                controller: VideoViewController(
+                  rtcEngine: controller.service.engine,
+                  canvas: const VideoCanvas(
+                    uid: 0,
+                    renderMode: RenderModeType.renderModeHidden,
+                  ),
                 ),
               ),
             );
           }
 
-          return AgoraVideoView(
-            controller: VideoViewController(
-              rtcEngine: controller.service.engine,
-              canvas: VideoCanvas(
-                uid: controller.hostID,
-                renderMode: RenderModeType.renderModeHidden,
-                mirrorMode: VideoMirrorModeType.videoMirrorModeEnabled,
-                sourceType: VideoSourceType.videoSourceCamera,
+          return Hero(
+            tag: controller.hostID,
+            child: AgoraVideoView(
+              controller: VideoViewController.remote(
+                rtcEngine: controller.service.engine,
+                canvas: VideoCanvas(
+                  uid: controller.hostID,
+                  renderMode: RenderModeType.renderModeHidden,
+                  mirrorMode: VideoMirrorModeType.videoMirrorModeEnabled,
+                  sourceType: VideoSourceType.videoSourceCamera,
+                ),
+                connection: RtcConnection(
+                  channelId: controller.agora?.channel,
+                ),
               ),
             ),
           );

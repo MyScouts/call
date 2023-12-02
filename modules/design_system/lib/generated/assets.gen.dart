@@ -854,6 +854,10 @@ class Assets {
   static const AssetGenImage icons_ic_bird =
       AssetGenImage('assets/icons/ic_bird.png');
 
+  /// File path: assets/icons/ic_block_chat.svg
+  static const SvgGenImage icons_ic_block_chat =
+      SvgGenImage('assets/icons/ic_block_chat.svg');
+
   /// File path: assets/icons/ic_call.png
   static const AssetGenImage icons_ic_call =
       AssetGenImage('assets/icons/ic_call.png');
@@ -921,6 +925,10 @@ class Assets {
   /// File path: assets/icons/ic_delete.png
   static const AssetGenImage icons_ic_delete =
       AssetGenImage('assets/icons/ic_delete.png');
+
+  /// File path: assets/icons/ic_delete_chat.svg
+  static const SvgGenImage icons_ic_delete_chat =
+      SvgGenImage('assets/icons/ic_delete_chat.svg');
 
   /// File path: assets/icons/ic_doc.png
   static const AssetGenImage icons_ic_doc =
@@ -990,6 +998,14 @@ class Assets {
   static const AssetGenImage icons_ic_live =
       AssetGenImage('assets/icons/ic_live.png');
 
+  /// File path: assets/icons/ic_live_1.png
+  static const AssetGenImage icons_ic_live_1 =
+      AssetGenImage('assets/icons/ic_live_1.png');
+
+  /// File path: assets/icons/ic_live_2.png
+  static const AssetGenImage icons_ic_live_2 =
+      AssetGenImage('assets/icons/ic_live_2.png');
+
   /// File path: assets/icons/ic_live_area.svg
   static const SvgGenImage icons_ic_live_area =
       SvgGenImage('assets/icons/ic_live_area.svg');
@@ -1010,6 +1026,10 @@ class Assets {
   static const SvgGenImage icons_ic_male_svg =
       SvgGenImage('assets/icons/ic_male.svg');
 
+  /// File path: assets/icons/ic_market.png
+  static const AssetGenImage icons_ic_market =
+      AssetGenImage('assets/icons/ic_market.png');
+
   /// File path: assets/icons/ic_market_home.png
   static const AssetGenImage icons_ic_market_home =
       AssetGenImage('assets/icons/ic_market_home.png');
@@ -1017,6 +1037,10 @@ class Assets {
   /// File path: assets/icons/ic_marshop.png
   static const AssetGenImage icons_ic_marshop =
       AssetGenImage('assets/icons/ic_marshop.png');
+
+  /// File path: assets/icons/ic_mashop.png
+  static const AssetGenImage icons_ic_mashop =
+      AssetGenImage('assets/icons/ic_mashop.png');
 
   /// File path: assets/icons/ic_menu.svg
   static const SvgGenImage icons_ic_menu =
@@ -1082,6 +1106,14 @@ class Assets {
   static const AssetGenImage icons_ic_reject_protector =
       AssetGenImage('assets/icons/ic_reject_protector.png');
 
+  /// File path: assets/icons/ic_report_chat.svg
+  static const SvgGenImage icons_ic_report_chat =
+      SvgGenImage('assets/icons/ic_report_chat.svg');
+
+  /// File path: assets/icons/ic_scan.png
+  static const AssetGenImage icons_ic_scan =
+      AssetGenImage('assets/icons/ic_scan.png');
+
   /// File path: assets/icons/ic_search.svg
   static const SvgGenImage icons_ic_search =
       SvgGenImage('assets/icons/ic_search.svg');
@@ -1101,6 +1133,10 @@ class Assets {
   /// File path: assets/icons/ic_setting_app.svg
   static const SvgGenImage icons_ic_setting_app =
       SvgGenImage('assets/icons/ic_setting_app.svg');
+
+  /// File path: assets/icons/ic_setting_home.png
+  static const AssetGenImage icons_ic_setting_home =
+      AssetGenImage('assets/icons/ic_setting_home.png');
 
   /// File path: assets/icons/ic_share_link_team.svg
   static const SvgGenImage icons_ic_share_link_team =
@@ -1286,9 +1322,17 @@ class Assets {
   static const SvgGenImage icons_lives_gift_1 =
       SvgGenImage('assets/icons/lives/gift_1.svg');
 
+  /// File path: assets/icons/lives/live.png
+  static const AssetGenImage icons_lives_live =
+      AssetGenImage('assets/icons/lives/live.png');
+
   /// File path: assets/icons/lives/micro.svg
   static const SvgGenImage icons_lives_micro =
       SvgGenImage('assets/icons/lives/micro.svg');
+
+  /// File path: assets/icons/lives/pip_up.svg
+  static const SvgGenImage icons_lives_pip_up =
+      SvgGenImage('assets/icons/lives/pip_up.svg');
 
   /// File path: assets/icons/lives/public.svg
   static const SvgGenImage icons_lives_public =
@@ -1338,6 +1382,10 @@ class Assets {
   /// File path: assets/icons/wheel_of_fortune.png
   static const AssetGenImage icons_wheel_of_fortune =
       AssetGenImage('assets/icons/wheel_of_fortune.png');
+
+  /// File path: assets/icons/widget_team.png
+  static const AssetGenImage icons_widget_team =
+      AssetGenImage('assets/icons/widget_team.png');
 
   /// File path: assets/images/app_logo.png
   static const AssetGenImage images_app_logo =
@@ -1921,6 +1969,7 @@ class Assets {
         icons_ic_bag_2,
         icons_ic_bell,
         icons_ic_bird,
+        icons_ic_block_chat,
         icons_ic_call,
         icons_ic_camera_round,
         icons_ic_care,
@@ -1938,6 +1987,7 @@ class Assets {
         icons_ic_dashboard_contact_svg,
         icons_ic_default_team_avt,
         icons_ic_delete,
+        icons_ic_delete_chat,
         icons_ic_doc,
         icons_ic_dots_horizontal,
         icons_ic_ecommerce,
@@ -1955,13 +2005,17 @@ class Assets {
         icons_ic_ja,
         icons_ic_leave_team,
         icons_ic_live,
+        icons_ic_live_1,
+        icons_ic_live_2,
         icons_ic_live_area,
         icons_ic_live_user,
         icons_ic_logout,
         icons_ic_male_png,
         icons_ic_male_svg,
+        icons_ic_market,
         icons_ic_market_home,
         icons_ic_marshop,
+        icons_ic_mashop,
         icons_ic_menu,
         icons_ic_mess,
         icons_ic_messages,
@@ -1978,11 +2032,14 @@ class Assets {
         icons_ic_rain,
         icons_ic_reject,
         icons_ic_reject_protector,
+        icons_ic_report_chat,
+        icons_ic_scan,
         icons_ic_search,
         icons_ic_security,
         icons_ic_setting_png,
         icons_ic_setting_svg,
         icons_ic_setting_app,
+        icons_ic_setting_home,
         icons_ic_share_link_team,
         icons_ic_shop_live,
         icons_ic_sun,
@@ -2029,7 +2086,9 @@ class Assets {
         icons_lives_edit,
         icons_lives_filter,
         icons_lives_gift_1,
+        icons_lives_live,
         icons_lives_micro,
+        icons_lives_pip_up,
         icons_lives_public,
         icons_lives_video,
         icons_love,
@@ -2043,6 +2102,7 @@ class Assets {
         icons_vn_flag,
         icons_wallet_agency_coupon,
         icons_wheel_of_fortune,
+        icons_widget_team,
         images_app_logo,
         images_avatar,
         images_back_cmnd,
