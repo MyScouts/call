@@ -5,6 +5,7 @@ import 'package:app_main/src/presentation/marshop/register_customer/register_cus
 import 'package:app_main/src/presentation/marshop/register_marshop/%20marshop_referral_code_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_pack_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_screen.dart';
+import 'package:app_main/src/presentation/marshop/register_marshop/register_pack_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -38,6 +39,10 @@ class MarkShopRoutes extends RouteModule {
             create: (context) => injector.get<ListMarshopRegisterPackBloc>(),
             child: const RegisterMarshopPackScreen(),
           );
+        },
+        RegisterPackDetailScreen.routeName: (context) {
+          final args = settings.arguments as Map<String, dynamic>;
+          return RegisterPackDetailScreen(pack: args['pack']);
         },
       };
 }

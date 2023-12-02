@@ -1,4 +1,7 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/data/models/responses/marshop_response.dart';
+import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
@@ -27,10 +30,82 @@ class _RegisterMarshopPackScreenState extends State<RegisterMarshopPackScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BaseAppBar(
+      appBar: const BaseAppBar(
         title: "Chọn gói Marshop",
         isClose: false,
       ),
+      body: Container(
+          padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
+          child: Column(
+            children: [
+              _buildList(),
+            ],
+          )),
+    );
+  }
+
+  _buildList() {
+    return BlocBuilder<ListMarshopRegisterPackBloc, GetListState>(
+      buildWhen: (old, state) =>
+          state is GetListDataSuccess<MarshopRegisterPackResponse>,
+      builder: (_, state) {
+        if (state is GetListDataSuccess<MarshopRegisterPackResponse>) {
+          return Expanded(
+            child: ListView.builder(
+              itemCount: state.data.length,
+              itemBuilder: (context, index) {
+                final item = state.data[index];
+                return GestureDetector(
+                  onTap: () => context.tartRegisterPackDetailScreen(pack: item),
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 5),
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: AppColors.grey13,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Assets.icons_ic_pack.image(width: 25),
+                            const SizedBox(width: 5),
+                            Text(
+                              item.name,
+                              style: context.textTheme.titleSmall,
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          item.price.toAppCurrencyString(),
+                          style: context.textTheme.titleLarge!.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: context.theme.primaryColor,
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            "Xem chi tiết",
+                            style: context.textTheme.bodyMedium!.copyWith(
+                              color: context.theme.primaryColor,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        }
+        return const SizedBox.shrink();
+      },
     );
   }
 }

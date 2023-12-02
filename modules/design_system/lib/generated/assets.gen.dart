@@ -854,6 +854,10 @@ class Assets {
   static const AssetGenImage icons_ic_bird =
       AssetGenImage('assets/icons/ic_bird.png');
 
+  /// File path: assets/icons/ic_block_chat.svg
+  static const SvgGenImage icons_ic_block_chat =
+      SvgGenImage('assets/icons/ic_block_chat.svg');
+
   /// File path: assets/icons/ic_call.png
   static const AssetGenImage icons_ic_call =
       AssetGenImage('assets/icons/ic_call.png');
@@ -906,6 +910,10 @@ class Assets {
   static const AssetGenImage icons_ic_create_live =
       AssetGenImage('assets/icons/ic_create_live.png');
 
+  /// File path: assets/icons/ic_crown.svg
+  static const SvgGenImage icons_ic_crown =
+      SvgGenImage('assets/icons/ic_crown.svg');
+
   /// File path: assets/icons/ic_dashboard_contact.png
   static const AssetGenImage icons_ic_dashboard_contact_png =
       AssetGenImage('assets/icons/ic_dashboard_contact.png');
@@ -921,6 +929,10 @@ class Assets {
   /// File path: assets/icons/ic_delete.png
   static const AssetGenImage icons_ic_delete =
       AssetGenImage('assets/icons/ic_delete.png');
+
+  /// File path: assets/icons/ic_delete_chat.svg
+  static const SvgGenImage icons_ic_delete_chat =
+      SvgGenImage('assets/icons/ic_delete_chat.svg');
 
   /// File path: assets/icons/ic_doc.png
   static const AssetGenImage icons_ic_doc =
@@ -949,6 +961,10 @@ class Assets {
   /// File path: assets/icons/ic_female.svg
   static const SvgGenImage icons_ic_female_svg =
       SvgGenImage('assets/icons/ic_female.svg');
+
+  /// File path: assets/icons/ic_filter-tick.svg
+  static const SvgGenImage icons_ic_filter_tick =
+      SvgGenImage('assets/icons/ic_filter-tick.svg');
 
   /// File path: assets/icons/ic_flag.svg
   static const SvgGenImage icons_ic_flag =
@@ -1058,6 +1074,10 @@ class Assets {
   static const SvgGenImage icons_ic_newspaper_ban =
       SvgGenImage('assets/icons/ic_newspaper_ban.svg');
 
+  /// File path: assets/icons/ic_pack.png
+  static const AssetGenImage icons_ic_pack =
+      AssetGenImage('assets/icons/ic_pack.png');
+
   /// File path: assets/icons/ic_payment.png
   static const AssetGenImage icons_ic_payment =
       AssetGenImage('assets/icons/ic_payment.png');
@@ -1106,6 +1126,10 @@ class Assets {
   static const AssetGenImage icons_ic_reject_protector =
       AssetGenImage('assets/icons/ic_reject_protector.png');
 
+  /// File path: assets/icons/ic_report_chat.svg
+  static const SvgGenImage icons_ic_report_chat =
+      SvgGenImage('assets/icons/ic_report_chat.svg');
+
   /// File path: assets/icons/ic_scan.png
   static const AssetGenImage icons_ic_scan =
       AssetGenImage('assets/icons/ic_scan.png');
@@ -1153,6 +1177,10 @@ class Assets {
   /// File path: assets/icons/ic_team.svg
   static const SvgGenImage icons_ic_team_svg =
       SvgGenImage('assets/icons/ic_team.svg');
+
+  /// File path: assets/icons/ic_top1_back.svg
+  static const SvgGenImage icons_ic_top1_back =
+      SvgGenImage('assets/icons/ic_top1_back.svg');
 
   /// File path: assets/icons/ic_top_1_awards.png
   static const AssetGenImage icons_ic_top_1_awards =
@@ -1966,6 +1994,7 @@ class Assets {
         icons_ic_bag_2,
         icons_ic_bell,
         icons_ic_bird,
+        icons_ic_block_chat,
         icons_ic_call,
         icons_ic_camera_round,
         icons_ic_care,
@@ -1979,10 +2008,12 @@ class Assets {
         icons_ic_cloud,
         icons_ic_coin,
         icons_ic_create_live,
+        icons_ic_crown,
         icons_ic_dashboard_contact_png,
         icons_ic_dashboard_contact_svg,
         icons_ic_default_team_avt,
         icons_ic_delete,
+        icons_ic_delete_chat,
         icons_ic_doc,
         icons_ic_dots_horizontal,
         icons_ic_ecommerce,
@@ -1990,6 +2021,7 @@ class Assets {
         icons_ic_error_circle,
         icons_ic_female_png,
         icons_ic_female_svg,
+        icons_ic_filter_tick,
         icons_ic_flag,
         icons_ic_friend_ban,
         icons_ic_global,
@@ -2017,6 +2049,7 @@ class Assets {
         icons_ic_monitor,
         icons_ic_news,
         icons_ic_newspaper_ban,
+        icons_ic_pack,
         icons_ic_payment,
         icons_ic_phone,
         icons_ic_picture,
@@ -2029,6 +2062,7 @@ class Assets {
         icons_ic_rain,
         icons_ic_reject,
         icons_ic_reject_protector,
+        icons_ic_report_chat,
         icons_ic_scan,
         icons_ic_search,
         icons_ic_security,
@@ -2041,6 +2075,7 @@ class Assets {
         icons_ic_sun,
         icons_ic_team_png,
         icons_ic_team_svg,
+        icons_ic_top1_back,
         icons_ic_top_1_awards,
         icons_ic_top_2_awards,
         icons_ic_top_3_awards,
