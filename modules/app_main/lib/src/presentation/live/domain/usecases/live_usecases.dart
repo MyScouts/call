@@ -70,4 +70,8 @@ class LiveUseCase {
   Future<List<LiveCategoryDetail>> getAllCategory() async {
     return _liveRepository.listCategory();
   }
+
+  Future<Live> getListLivefollowing({required int page, required int pageSize, bool? isFriend}) {
+    return _liveRepository.getListLivefollowing(page: page, pageSize: pageSize, isFriend: isFriend ?? false);
+  }
 }
