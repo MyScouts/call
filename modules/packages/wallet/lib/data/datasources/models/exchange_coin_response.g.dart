@@ -11,8 +11,10 @@ ExchangeCoinResponse _$ExchangeCoinResponseFromJson(
     ExchangeCoinResponse(
       id: json['id'] as num,
       coin: json['coin'] as num,
-      coinDiscount: CoinDiscountResponse.fromJson(
-          json['coinDiscount'] as Map<String, dynamic>),
+      coinDiscount: json['coinDiscount'] == null
+          ? null
+          : CoinDiscountResponse.fromJson(
+              json['coinDiscount'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ExchangeCoinResponseToJson(

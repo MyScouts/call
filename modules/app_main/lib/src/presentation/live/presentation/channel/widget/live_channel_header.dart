@@ -51,8 +51,7 @@ class LiveChannelHeader extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.all(4.0),
                 child: Obx(() {
-                  final host = controller.members.value
-                      .firstWhereOrNull((e) => e.isOwner);
+                  final host = controller.members.value.firstWhereOrNull((e) => e.isOwner);
                   return IntrinsicHeight(
                     child: Row(
                       children: [
@@ -172,6 +171,7 @@ class LiveChannelHeader extends StatelessWidget {
                         .separated(const SizedBox(width: 8)),
                   );
                 }),
+                const SizedBox(width: 8),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.5),
@@ -187,7 +187,7 @@ class LiveChannelHeader extends StatelessWidget {
                       const SizedBox(width: 2),
                       Obx(
                         () => Text(
-                          controller.members.value.length.toString(),
+                          controller.members.length.toString(),
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w400,

@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:localization/localization.dart';
-import 'package:wallet/core/core.dart';
-import 'package:wallet/domain/repository/wallet_repository.dart';
 
 import '../../../../blocs/user/user_cubit.dart';
 import '../../../../di/di.dart';
@@ -122,15 +120,11 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                           giftController.userWallet.value.availableCoin!) {
                         return context.showToastText('Bạn không đủ xu');
                       }
-                      giftController.sentGift(
+                      await giftController.sentGift(
                           userId: widget.controller.info.user!.id!,
                           liveId: widget.controller.info.id,
                           giftId: selectedGift.value!.id!);
-                      final wallet = await getIt.get<WalletRepository>().getWalletInfo();
-                      if (wallet != null) {
-                        WalletInjectedData.setUserWallet = wallet;
-                        giftController.userWallet.value = WalletInjectedData.userWallet;
-                      }
+                      await giftController.getUserPoint();
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 9.5, horizontal: 10),
@@ -141,10 +135,12 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                       child: const Text("Ủng hộ",
                           style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white)),
                     ),
-                  )
+                  ),
                 ],
               ),
-            )
+            ),
+            const SizedBox(height: 16),
+            SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
           ],
         ),
       ),

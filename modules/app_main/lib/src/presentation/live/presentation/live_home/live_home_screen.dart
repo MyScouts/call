@@ -1,11 +1,16 @@
+import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
+import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
 import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
-import 'package:ui/ui.dart';
 
+import '../../../../../app_main.dart';
+import '../../../../blocs/user/user_cubit.dart';
+import '../../../community/widgets/circle_image.dart';
 import '../live_tab/live_home_search.dart';
 import '../live_tab/live_screen_tab.dart';
 import '../widget/tab-bar-groups.dart';
@@ -34,6 +39,8 @@ class _LiveHomeScreenState extends State<LiveHomeScreen> with SingleTickerProvid
     _liveTabController.dispose();
   }
 
+  bool get authenticate => isAuthenticate.value;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,8 +62,48 @@ class _LiveHomeScreenState extends State<LiveHomeScreen> with SingleTickerProvid
                   child: Row(
                     children: [
                       GestureDetector(
-                        onTap: () => context.startDiary(),
-                        child: const AppAvatarWidget(),
+                        onTap: () {
+                          if (!authenticate) {
+                            context.requiredLogin();
+                            return;
+                          }
+                          context.startSetting();
+                        },
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: BlocBuilder<UserCubit, UserState>(
+                            builder: (_, state) {
+                              if (state.currentUser?.avatar?.trim().isEmpty ?? false) {
+                                return Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: context.theme.primaryColor,
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(90),
+                                  ),
+                                  child: ClipRRect(
+                                    child: ImageWidget(
+                                      ImageConstants.defaultUserAvatar,
+                                      borderRadius: 100,
+                                    ),
+                                  ),
+                                );
+                              }
+                              return CircleNetworkImage(
+                                url: context.read<UserCubit>().currentUser?.avatar ?? '',
+                                size: 40,
+                                defaultImage: ImageWidget(
+                                  ImageConstants.defaultUserAvatar,
+                                  borderRadius: 100,
+                                  fit: BoxFit.cover,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
                       ),
                       Expanded(child: TabBarGroups(controller: _liveTabController)),
                       SizedBox(

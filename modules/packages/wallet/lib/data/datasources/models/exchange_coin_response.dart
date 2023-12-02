@@ -6,13 +6,15 @@ part 'exchange_coin_response.g.dart';
 class ExchangeCoinResponse {
   final num id;
   final num coin;
-  final CoinDiscountResponse coinDiscount;
+  final CoinDiscountResponse? coinDiscount;
 
   ExchangeCoinResponse(
-      {required this.id, required this.coin, required this.coinDiscount});
+      {required this.id, required this.coin, this.coinDiscount});
 
-  factory ExchangeCoinResponse.fromJson(Map<String, dynamic> json) =>
-      _$ExchangeCoinResponseFromJson(json);
+  factory ExchangeCoinResponse.fromJson(Map<String, dynamic> json) {
+    print('json : ${json}');
+    return _$ExchangeCoinResponseFromJson(json);
+  }
 
   Map<String, dynamic> toJson() => _$ExchangeCoinResponseToJson(this);
 }

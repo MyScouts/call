@@ -29,15 +29,13 @@ class ChargeDiamondToVndScreen extends StatelessWidget {
           buildWhen: (previous, current) => current is WalletDiamondLoaded,
           builder: (context, state) {
             if (state is WalletDiamondLoaded) {
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    DiamondAssetStatus(vndWalletInfo: state.walletDiamondInfo),
-                    WalletDiamondInputForm(
-                      vndWalletInfo: state.walletDiamondInfo,
-                    ),
-                  ],
-                ),
+              return Column(
+                children: [
+                  DiamondAssetStatus(vndWalletInfo: state.walletDiamondInfo),
+                  WalletDiamondInputForm(
+                    vndWalletInfo: state.walletDiamondInfo,
+                  ),
+                ],
               );
             }
 
