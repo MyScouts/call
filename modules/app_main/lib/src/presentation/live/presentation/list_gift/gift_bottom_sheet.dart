@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:localization/localization.dart';
-import 'package:wallet/core/core.dart';
-import 'package:wallet/domain/repository/wallet_repository.dart';
 
 import '../../../../blocs/user/user_cubit.dart';
 import '../../../../di/di.dart';
@@ -137,10 +135,12 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                       child: const Text("Ủng hộ",
                           style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white)),
                     ),
-                  )
+                  ),
                 ],
               ),
-            )
+            ),
+            const SizedBox(height: 16),
+            SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
           ],
         ),
       ),
