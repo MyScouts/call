@@ -8,7 +8,7 @@ class WalletDiamondNavigateToTransactionHistoryScreen
     extends WalletDiamondState {}
 
 class WalletDiamondLoaded extends WalletDiamondState {
-  final DiamondWalletInfo walletDiamondInfo;
+  final WalletInfoResponse walletDiamondInfo;
 
   WalletDiamondLoaded(this.walletDiamondInfo);
 }
