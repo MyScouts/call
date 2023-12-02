@@ -97,6 +97,7 @@ dependencies:
   provider: ^6.1.1
   sa4_migration_kit: ^1.0.0
   device_info_plus: ^9.1.1
+  emoji_picker_flutter: ^1.6.3
 
 dev_dependencies:
   flutter_test:
