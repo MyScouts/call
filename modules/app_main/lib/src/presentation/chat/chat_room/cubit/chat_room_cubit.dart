@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/chat/new_conversations_payload.dart';
 import 'package:app_main/src/data/models/payloads/chat/new_message_payload.dart';
+import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/chat/message_dto.dart';
 import 'package:app_main/src/domain/entities/chat/message_model.dart';
 import 'package:app_main/src/domain/entities/chat/result_model.dart';
@@ -73,7 +74,7 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
 
   Future<void> sendMessage(String message) async {
     try {
-       _chatUseCase.newMessage(
+      _chatUseCase.newMessage(
           conversationId: _conversationId, payload: NewMessagePayload(message: message));
     } catch (e) {
       emit(ChatRoomState.error(e));
@@ -83,9 +84,7 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
   void updateMessage(MessageModel message) {
     state.mapOrNull((value) async {
       if (_conversationId == message.conversationId) {
-        emit(value.copyWith(
-            messages: [message, ...value.messages]
-        ));
+        emit(value.copyWith(messages: [message, ...value.messages]));
       }
     });
   }
@@ -101,8 +100,8 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
   Future<void> blockUser(int userId) async {
     await _userUsecase.blockUser(userId: userId);
   }
-  
-  
 
-
+  Future<void> reportUser(int userId, String content) async {
+    await _userUsecase.reportUser(userId: userId, payload: ReportUserPayload(content: content));
+  }
 }

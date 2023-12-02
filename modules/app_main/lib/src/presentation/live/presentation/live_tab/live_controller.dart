@@ -27,7 +27,7 @@ class LiveController {
 
   final listCategory = <LiveCategoryDetail>[].obs;
 
-  final Rxn<LiveCategoryDetail> listCategorySelect = Rxn<LiveCategoryDetail>();
+  final listCategorySelect = <LiveCategoryDetail>[].obs;
 
   Future<void> getListLive() async {
     try {
@@ -35,7 +35,8 @@ class LiveController {
           page: 1,
           pageSize: 20,
           types: [],
-          categoryId: listCategorySelect.value?.id);
+          categoryId:
+              listCategorySelect.map((element) => element.id!).toList());
       if (live.value.lives?.isNotEmpty == true) {
         listLiveCount.value = await _useCase
             .memberCount(live.value.lives!.map((e) => e.id!).toList());

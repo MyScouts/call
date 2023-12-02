@@ -56,12 +56,14 @@ class _LiveStreamSearchState extends State<LiveStreamSearch> {
               await context.showFilterSearchLive(liveController);
               liveController.getListLive();
             },
-            child: ImageWidget(
-              IconAppConstants.icFilter,
-              color: const Color(0xff4B84F7),
-              height: 30,
-              width: 30,
-            ),
+            child: Obx(() {
+              return ImageWidget(
+                liveController.listCategorySelect.isEmpty ? IconAppConstants.icFilter : IconAppConstants.icFilterTick,
+                color: const Color(0xff4B84F7),
+                height: 30,
+                width: 30,
+              );
+            }),
           ),
         ),
         title: SizedBox(
