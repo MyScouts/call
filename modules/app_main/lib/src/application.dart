@@ -4,9 +4,11 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:app_main/src/core/services/notifications/mixins/notification_mixin.dart';
 import 'package:app_main/src/core/services/notifications/notification_service.dart';
 import 'package:app_main/src/di/di.dart';
+import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
 import 'package:app_main/src/presentation/routes.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -71,11 +73,22 @@ class _ApplicationState extends State<Application>
     return MediaQuery(
       data: data,
       child: Overlay(
+        key: AppCoordinator.overlayKey,
         initialEntries: [
           OverlayEntry(
             builder: (context) {
               return Material(
-                child: toastBuilder(context, child!),
+                child: Stack(
+                  children: [
+                    toastBuilder(context, child!),
+                    Obx(() {
+                      if(PipHandler.showPip.value) {
+                        return PipHandler.pipView;
+                      }
+                      return const SizedBox.shrink();
+                    }),
+                  ],
+                ),
               );
             },
           ),

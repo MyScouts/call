@@ -1,23 +1,75 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/app_size.dart';
 import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
+import 'package:app_main/src/presentation/live/presentation/channel/widget/pip_video_render.dart';
+import 'package:app_main/src/presentation/live/presentation/live_message/state/live_message_bloc.dart';
+import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
+import 'package:app_main/src/presentation/live/presentation/pip/pip_view.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:provider/provider.dart';
 import 'package:ui/ui.dart';
 
 import 'leave_live_confirm.dart';
 
-class LiveChannelHeader extends StatelessWidget {
+class LiveChannelHeader extends StatefulWidget {
   const LiveChannelHeader({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final controller = context.read<LiveChannelController>();
+  State<LiveChannelHeader> createState() => _LiveChannelHeaderState();
+}
 
+class _LiveChannelHeaderState extends State<LiveChannelHeader> {
+  late final controller = context.read<LiveChannelController>();
+  late final LiveMessageBloc commentController;
+  bool showPip = true;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    commentController = context.read<LiveMessageBloc>();
+  }
+
+  @override
+  void dispose() {
+    if (showPip) {
+      Future.delayed(const Duration(milliseconds: 300), () {
+        PipHandler.addOverlay(
+          PipView(
+            width: SizeConfig.screenWidth * 0.3,
+            height: SizeConfig.screenWidth * 0.6,
+            borderRadius: BorderRadius.circular(8),
+            backgroundColor: Colors.black.withOpacity(0.8),
+            child: MultiProvider(
+              providers: [
+                Provider<LiveChannelController>.value(
+                  value: controller,
+                ),
+                BlocProvider<LiveMessageBloc>.value(
+                  value: commentController,
+                ),
+              ],
+              child: const PipVideoRender(),
+            ),
+            // child: Provider<LiveChannelController>.value(
+            //   value: controller,
+            //   child: const PipVideoRender(),
+            // ),
+          ),
+        );
+      });
+    }
+    super.dispose();
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
@@ -155,7 +207,9 @@ class LiveChannelHeader extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.center,
                                     child: SizedBox(
-                                      child: AvatarWidget(avatar: element.giver?.avatar, size: 25),
+                                      child: AvatarWidget(
+                                          avatar: element.giver?.avatar,
+                                          size: 25),
                                     ),
                                   )
                                 ],
@@ -163,7 +217,8 @@ class LiveChannelHeader extends StatelessWidget {
                             );
                           }
                           return SizedBox(
-                            child: AvatarWidget(avatar: element.giver?.avatar, size: 30),
+                            child: AvatarWidget(
+                                avatar: element.giver?.avatar, size: 30),
                           );
                         })
                         .take(2)
@@ -205,6 +260,7 @@ class LiveChannelHeader extends StatelessWidget {
                       context: context,
                       builder: (_) => LeaveLiveConfirm(
                         onRemoved: () {
+                          showPip = false;
                           controller.leaveLive();
                           Navigator.of(context).pop();
                         },
