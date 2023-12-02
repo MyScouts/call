@@ -2,9 +2,11 @@
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/entities/chat/message_model.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
 
 import 'avatar_member_widget.dart';
@@ -35,7 +37,7 @@ class MessageWidget extends StatelessWidget {
         ],
         Container(
           alignment: isSender ? Alignment.topRight : Alignment.topLeft,
-          padding: const EdgeInsets.all(12),
+          padding: EdgeInsets.all(message.metadata?.images?.isNotEmpty ?? false ? 0 : 12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
               topRight: isSender ? const Radius.circular(0) : const Radius.circular(16),
@@ -43,17 +45,34 @@ class MessageWidget extends StatelessWidget {
               bottomLeft: isSender ? const Radius.circular(16) : const Radius.circular(0),
               bottomRight: const Radius.circular(16),
             ),
-            color: isSender ? AppColors.bgSenderMessage : AppColors.white,
+            color: message.metadata?.images?.isNotEmpty ?? false
+                ? AppColors.white
+                : isSender
+                    ? AppColors.bgSenderMessage
+                    : AppColors.white,
           ),
           child: ConstrainedBox(
             constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.6),
-            child: Text(
-              message.message,
-              maxLines: 99,
-              style: context.text.bodyMedium?.copyWith(
-                color: isSender ? AppColors.white : AppColors.black,
-              ),
-            ),
+            child: message.metadata?.images?.isNotEmpty ?? false
+                ? Wrap(
+                    children: List.generate(
+                      message.metadata?.images?.length ?? 0,
+                      (index) => CachedNetworkImage(
+                        imageUrl: message.metadata?.images?[index] ?? '',
+                        progressIndicatorBuilder: (_, __, ___) => const LoadingWidget(),
+                        errorWidget: (_, __, ___) => const Center(
+                          child: Icon(Icons.error),
+                        ),
+                      ),
+                    ),
+                  )
+                : Text(
+                    message.message ?? '',
+                    maxLines: 99,
+                    style: context.text.bodyMedium?.copyWith(
+                      color: isSender ? AppColors.white : AppColors.black,
+                    ),
+                  ),
           ),
         ),
         if (isSender) ...[

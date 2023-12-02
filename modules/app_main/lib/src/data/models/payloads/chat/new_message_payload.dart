@@ -8,11 +8,11 @@ class NewMessagePayload {
   factory NewMessagePayload.fromJson(Map<String, dynamic> json) =>
       _$NewMessagePayloadFromJson(json);
 
-  NewMessagePayload({required this.message, this.metadata});
+  NewMessagePayload({this.message, this.metadata});
 
 
   Map<String, dynamic> toJson() => _$NewMessagePayloadToJson(this);
 
-  final String message;
+  final String? message;
   final MetaDataDto? metadata;
 }
