@@ -11,6 +11,8 @@ typedef GetListMarshopBloc
 typedef MarshopDetailBloc
     = GetDetailBlocParam1<MarshopResponse, GetMarshopInfoPayload>;
 
+typedef ListMarshopRegisterPackBloc = GetListBloc<MarshopRegisterPackResponse>;
+
 @module
 abstract class MarshopBlocFactory {
   @factory
@@ -20,4 +22,8 @@ abstract class MarshopBlocFactory {
   @factory
   MarshopDetailBloc getMarshopInfo(MarshopUsecase usecase) =>
       MarshopDetailBloc(usecase.getMarShop);
+
+  @factory
+  ListMarshopRegisterPackBloc getMarshopPack(MarshopUsecase usecase) =>
+      ListMarshopRegisterPackBloc(usecase.getRegisterPacks);
 }

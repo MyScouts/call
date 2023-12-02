@@ -40,3 +40,49 @@ class MarshopUserInfo with _$MarshopUserInfo {
   factory MarshopUserInfo.fromJson(Map<String, dynamic> json) =>
       _$MarshopUserInfoFromJson(json);
 }
+
+@freezed
+class MarshopRegisterPacksResponse with _$MarshopRegisterPacksResponse {
+  const factory MarshopRegisterPacksResponse({
+    required List<MarshopRegisterPackResponse> packs,
+  }) = _MarshopRegisterPacksResponse;
+
+  factory MarshopRegisterPacksResponse.fromJson(Map<String, dynamic> json) =>
+      _$MarshopRegisterPacksResponseFromJson(json);
+}
+
+@freezed
+class MarshopRegisterPackResponse with _$MarshopRegisterPackResponse {
+  const factory MarshopRegisterPackResponse({
+    required int id,
+    required int price,
+    required String name,
+    required List<MarshopRegisterPackRule> rules,
+  }) = _MarshopRegisterPackResponse;
+
+  factory MarshopRegisterPackResponse.fromJson(Map<String, dynamic> json) =>
+      _$MarshopRegisterPackResponseFromJson(json);
+}
+
+@freezed
+class MarshopRegisterPackRule with _$MarshopRegisterPackRule {
+  const factory MarshopRegisterPackRule({
+    required int quantity,
+    required String title,
+    required String content,
+    required List<MarshopRegisterPackProduct> products,
+  }) = _MarshopRegisterPackRule;
+
+  factory MarshopRegisterPackRule.fromJson(Map<String, dynamic> json) =>
+      _$MarshopRegisterPackRuleFromJson(json);
+}
+
+@freezed
+class MarshopRegisterPackProduct with _$MarshopRegisterPackProduct {
+  const factory MarshopRegisterPackProduct({
+    required String id,
+  }) = _MarshopRegisterPackProduct;
+
+  factory MarshopRegisterPackProduct.fromJson(Map<String, dynamic> json) =>
+      _$MarshopRegisterPackProductFromJson(json);
+}

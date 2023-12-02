@@ -31,4 +31,8 @@ class MarshopRepositoryImpl extends MarshopRepository {
   Future<MarshopResponse> getMarShop(GetMarshopInfoPayload payload) {
     return _marshopAPI.getMarshop(payload);
   }
+
+  @override
+  Future<MarshopRegisterPacksResponse> getRegisterPacks() =>
+      _marshopAPI.getRegisterPacks();
 }

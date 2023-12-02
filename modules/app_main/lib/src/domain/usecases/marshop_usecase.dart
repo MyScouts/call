@@ -28,4 +28,9 @@ class MarshopUsecase {
   Future<MarshopResponse> getMarShop(GetMarshopInfoPayload payload) async {
     return _marshopRepository.getMarShop(payload);
   }
+
+  Future<List<MarshopRegisterPackResponse>> getRegisterPacks() async {
+    final response = await _marshopRepository.getRegisterPacks();
+    return response.packs;
+  }
 }

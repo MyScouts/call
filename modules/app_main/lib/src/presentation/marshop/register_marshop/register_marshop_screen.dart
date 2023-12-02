@@ -118,10 +118,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
                       ),
                       child: PrimaryButton(
                         title: S.current.register,
-                        onTap: () {
-                          showLoading();
-                          context.read<AuthCubit>().sendOTP();
-                        },
+                        onTap: () => context.tartRegisterPackScreen(),
                         disabled: !valid,
                         width: MediaQuery.of(context).size.width,
                       ),

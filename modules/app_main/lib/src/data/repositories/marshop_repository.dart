@@ -6,4 +6,5 @@ abstract class MarshopRepository {
   Future registerMarshop(int userId, RegisterMarshopPayload payload);
   Future<ListMarshopResponse> getMarShops(GetListMarshopPayload payload);
   Future<MarshopResponse> getMarShop(GetMarshopInfoPayload payload);
+  Future<MarshopRegisterPacksResponse> getRegisterPacks();
 }

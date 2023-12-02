@@ -3,6 +3,7 @@ import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/presentation/marshop/marshop_bloc.dart';
 import 'package:app_main/src/presentation/marshop/register_customer/register_customer_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/%20marshop_referral_code_screen.dart';
+import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_pack_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -31,6 +32,12 @@ class MarkShopRoutes extends RouteModule {
         },
         MarshopReferralCodeScreen.routeName: (context) {
           return const MarshopReferralCodeScreen();
+        },
+        RegisterMarshopPackScreen.routeName: (context) {
+          return BlocProvider(
+            create: (context) => injector.get<ListMarshopRegisterPackBloc>(),
+            child: const RegisterMarshopPackScreen(),
+          );
         },
       };
 }
