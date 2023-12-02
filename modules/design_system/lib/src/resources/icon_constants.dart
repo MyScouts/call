@@ -113,6 +113,8 @@ class IconAppConstants {
   static String icLiveUser = IconApp.icLiveUser.path;
   static String icLiveUser3 = IconApp.icLiveUser3.path;
   static String icFilterTick = IconApp.icFilterTick.path;
+  static String icCrown = IconApp.icCrown.path;
+  static String icTop1Back = IconApp.icTop1Back.path;
 
   /// wallet
   static String icFilter = IconApp.icFilter.path;
@@ -263,6 +265,8 @@ enum IconApp {
   icLiveUser('assets/icons/ic_live_user.svg'),
   icLiveUser3('assets/icons/ic_user_3.svg'),
   icFilterTick('assets/icons/ic_filter-tick.svg'),
+  icCrown('assets/icons/ic_crown.svg'),
+  icTop1Back('assets/icons/ic_top1_back.svg'),
 
   /// wallet
   icFilter('assets/icons/icFilter.svg'),
