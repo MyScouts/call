@@ -6,7 +6,9 @@ import 'package:app_main/src/core/services/live_service/impl/live_socket_service
 import 'package:app_main/src/core/services/live_service/live_service.dart';
 import 'package:app_main/src/core/services/live_service/live_socket_service.dart';
 import 'package:app_main/src/core/services/notification_center.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/live/data/model/response/join_live_response.dart';
+import 'package:app_main/src/presentation/live/domain/entities/agora_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_comment.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_member.dart';
@@ -71,6 +73,9 @@ class LiveChannelController {
 
   late Rx<LiveData> _info;
   late Rx<LiveMember> _me;
+
+  AgoraData? _agora;
+
   late final RxList<LiveMember> _members = <LiveMember>[].obs;
 
   RxList<LiveMember> get members => _members;
@@ -153,13 +158,14 @@ class LiveChannelController {
     _showMessageInput.value = false;
   }
 
-  void join(int id, [String? password]) async {
+  void join(int id, [String? password, BuildContext? context]) async {
     try {
       final res = await Future.wait([
         repository.joinLive(id: id, password: password),
         userUseCase.getProfile(),
       ]);
       _info = (res.first as JoinLiveResponse).data.obs;
+      _agora = (res.first as JoinLiveResponse).agoraData.first;
       _roomInfoFetching.value = false;
       final user = res.last as User?;
       if (user == null) return;
@@ -172,8 +178,15 @@ class LiveChannelController {
         ),
         isOwner: _info.value.user?.id == user.id,
       ).obs;
-
       await getLeaderBoard(_info.value.id);
+    } catch (e) {
+      context?.showToastMessage(
+        'Live không còn tồn tại',
+        ToastMessageType.error,
+      );
+    }
+
+    try {
       if (_me.value.isOwner) {
         await [Permission.microphone, Permission.camera].request();
         await service.initEngine(enableMic: true, enableWebCam: true);
@@ -207,8 +220,8 @@ class LiveChannelController {
       _listenRtcEvent();
 
       await service.joinChannel(
-        _info.value.agoraToken ?? '',
-        _info.value.agoraChannel ?? '',
+        _agora?.token ?? '',
+        _agora?.channel ?? '',
         _me.value.info.userID,
         role: _me.value.isOwner
             ? ClientRoleType.clientRoleBroadcaster
@@ -454,7 +467,10 @@ class LiveChannelController {
     _enableChat.value = true;
     _members.value = [];
 
-    if (_me.value.isOwner) repository.endLive(liveId: _info.value.id);
+    if (_me.value.isOwner) {
+      await repository.endLive(liveId: _info.value.id);
+      NotificationCenter.post(channel: refreshLive);
+    }
 
     if (Platform.isAndroid && await FlutterForegroundTask.isRunningService) {
       FlutterForegroundTask.stopService();

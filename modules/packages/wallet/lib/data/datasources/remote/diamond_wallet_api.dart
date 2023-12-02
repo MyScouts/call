@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:wallet/data/datasources/models/response/wallet_info_response.dart';
 
 import '../../../core/core.dart';
 import '../../../core/networking/api_response.dart';
@@ -23,7 +24,7 @@ abstract class DiamondWalletApi {
       _DiamondWalletApi(provider.dio);
 
   @GET(DiamondWalletApiConstants.getDiamondWalletInfo)
-  Future<ApiResponse<DiamondWalletInfo>> getDiamondWalletInfo();
+  Future<ApiResponse<WalletInfoResponse>> getDiamondWalletInfo();
 
   @POST(DiamondWalletApiConstants.exchangeDiamond)
   Future<ApiResponse<ExchangeDiamondResponse>> exchangeDiamond({

@@ -65,11 +65,13 @@ extension LiveCoordinator on BuildContext {
   }
 
   void showBottomGift(LiveChannelController controller) {
-    showModalBottomSheet(context: this, builder: (context) => GiftCardBottomSheet(controller: controller));
+    showModalBottomSheet(
+        context: this, isScrollControlled: true, builder: (context) => GiftCardBottomSheet(controller: controller));
   }
 
   void showBottomSheetLive(LiveChannelController controller) {
-    showModalBottomSheet(context: this, builder: (context) => LiveBottomSheet(controller: controller));
+    showModalBottomSheet(
+        context: this, isScrollControlled: true, builder: (context) => LiveBottomSheet(controller: controller));
   }
 
   Future showFilterSearchLive(LiveController controller) {

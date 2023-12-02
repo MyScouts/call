@@ -3,6 +3,8 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
+import 'package:ui/ui.dart';
+import 'package:wallet/data/datasources/models/exchange_coin_response.dart';
 import 'package:wallet/domain/domain.dart';
 import 'package:wallet/presentation/wallet_coordinator_external.dart';
 
@@ -13,11 +15,13 @@ class PaymentInformationScreen extends StatefulWidget {
   static const routeName = '/wallet-coin-payment-info';
   final WalletCoinPaymentInformation paymentInfo;
   final AgencyResponse agency;
+  final ExchangeCoinResponse exchangeCoinResponse;
   final String rPDoneUserId;
 
   const PaymentInformationScreen(
       {super.key,
       required this.paymentInfo,
+      required this.exchangeCoinResponse,
       required this.agency,
       required this.rPDoneUserId});
 
@@ -111,6 +115,8 @@ class _PaymentInformationState extends State<PaymentInformationScreen> {
           _paymentInformationRow(context, 'Số xu nhận',
               widget.paymentInfo.coin.toAppCurrencyString(isWithSymbol: false)),
           _paymentInformationRow(context, 'ID người nhận', widget.rPDoneUserId),
+          _paymentInformationRow(context, 'Khuyến mãi',
+              '${widget.exchangeCoinResponse.coinDiscount?.discountRate ?? 0}%'),
         ],
       ),
     );
@@ -149,7 +155,12 @@ class _PaymentInformationState extends State<PaymentInformationScreen> {
     );
   }
 
+  String genImageQr() {
+    return 'https://img.vietqr.io/image/${widget.paymentInfo.bankAccount.bank?.shortName}-${widget.paymentInfo.bankAccount.bankNumber}-qr-only.jpg?amount=${widget.paymentInfo.vnd}&addInfo=${widget.paymentInfo.content}';
+  }
+
   Widget buildQrPayment(BuildContext context) {
+    print(widget.paymentInfo.bankAccount);
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.all(16),
@@ -170,17 +181,25 @@ class _PaymentInformationState extends State<PaymentInformationScreen> {
           ),
           Align(
             alignment: Alignment.center,
-            child: SizedBox(
-              width: 168,
-              child: PrettyQrView(
-                qrImage: QrImage(
-                  QrCode.fromData(
-                    data: 'https://pub.dev/packages/pretty_qr_code',
-                    errorCorrectLevel: QrErrorCorrectLevel.H,
-                  ),
-                ),
-              ),
+            child: AppAvatarWidget(
+              width: 230,
+              border: Border.all(color: Colors.transparent, width: 0),
+              height: 230,
+              radius: 0,
+              avatar: genImageQr(),
             ),
+            // child: SizedBox(
+            //   width: 168,
+            //   child: ,
+            //   // child: PrettyQrView(
+            //   //   qrImage: QrImage(
+            //   //     QrCode.fromData(
+            //   //       data: 'https://pub.dev/packages/pretty_qr_code',
+            //   //       errorCorrectLevel: QrErrorCorrectLevel.H,
+            //   //     ),
+            //   //   ),
+            //   // ),
+            // ),
           )
         ],
       ),

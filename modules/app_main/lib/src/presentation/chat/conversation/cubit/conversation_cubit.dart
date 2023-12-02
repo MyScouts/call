@@ -6,14 +6,15 @@ import 'package:app_main/src/domain/usecases/chat_usecase.dart';
 import 'package:app_main/src/presentation/chat/conversation/cubit/conversation_state.dart';
 import 'package:injectable/injectable.dart';
 
-@injectable
+@singleton
 class ConversationCubit extends Cubit<ConversationState> {
   ConversationCubit(this._chatUseCase) : super(const ConversationState.loading());
-  final int kPageSize = 10;
+  final int kPageSize = 20;
   final ChatUseCase _chatUseCase;
 
   Future<void> init() async {
     try {
+      emit(const ConversationState.loading());
       final FriendResponseModel friendResponse =
           await _chatUseCase.getFriends(page: 1, pageSize: kPageSize);
       final ItemsResponse<ConversationModel> conversationResponse =
