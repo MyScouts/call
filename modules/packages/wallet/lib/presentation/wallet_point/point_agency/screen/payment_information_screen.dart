@@ -115,7 +115,8 @@ class _PaymentInformationState extends State<PaymentInformationScreen> {
           _paymentInformationRow(context, 'Số xu nhận',
               widget.paymentInfo.coin.toAppCurrencyString(isWithSymbol: false)),
           _paymentInformationRow(context, 'ID người nhận', widget.rPDoneUserId),
-          _paymentInformationRow(context, 'Khuyến mãi', '${widget.exchangeCoinResponse.coinDiscount.discountRate}%'),
+          _paymentInformationRow(context, 'Khuyến mãi',
+              '${widget.exchangeCoinResponse.coinDiscount?.discountRate ?? 0}%'),
         ],
       ),
     );
