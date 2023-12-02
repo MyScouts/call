@@ -7,7 +7,6 @@ import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart'
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
-import 'package:ui/ui.dart';
 
 import '../../../../../app_main.dart';
 import '../../../../blocs/user/user_cubit.dart';

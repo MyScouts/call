@@ -23,7 +23,11 @@ class LiveController {
 
   Rx<Live> live = const Live().obs;
 
+  Rx<Live> liveForYou = const Live().obs;
+
   final listLiveCount = <LiveMemberCount>[].obs;
+
+  final listLiveCountForYour = <LiveMemberCount>[].obs;
 
   final listCategory = <LiveCategoryDetail>[].obs;
 
@@ -32,14 +36,18 @@ class LiveController {
   Future<void> getListLive() async {
     try {
       live.value = await _useCase.getListLive(
-          page: 1,
-          pageSize: 20,
-          types: [],
-          categoryId:
-              listCategorySelect.map((element) => element.id!).toList());
+          page: 1, pageSize: 20, types: [], categoryId: listCategorySelect.map((element) => element.id!).toList());
       if (live.value.lives?.isNotEmpty == true) {
-        listLiveCount.value = await _useCase
-            .memberCount(live.value.lives!.map((e) => e.id!).toList());
+        listLiveCount.value = await _useCase.memberCount(live.value.lives!.map((e) => e.id!).toList());
+      }
+    } catch (e) {}
+  }
+
+  Future<void> getListLiveForYou() async {
+    try {
+      liveForYou.value = await _useCase.getListLivefollowing(page: 1, pageSize: 20, isFriend: false);
+      if (liveForYou.value.lives?.isNotEmpty == true) {
+        listLiveCountForYour.value = await _useCase.memberCount(liveForYou.value.lives!.map((e) => e.id!).toList());
       }
     } catch (e) {}
   }
