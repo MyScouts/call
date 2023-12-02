@@ -4,7 +4,6 @@ export 'package:collection/collection.dart';
 export 'package:dio/dio.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:mobilehub_core/mobilehub_core.dart';
-
 export 'src/app_core_factory.dart';
 export 'src/components/blocs/bloc_observer.dart';
 export 'src/components/blocs/bloc_transformer.dart';
@@ -34,6 +33,8 @@ export 'src/domain/entities/community/group.dart';
 export 'src/domain/entities/community/group_detail.dart';
 export 'src/domain/entities/community/team.dart';
 export 'src/domain/entities/onboarding/onboarding.dart';
+export 'src/domain/entities/social/comment.dart';
+export 'src/domain/entities/social/post.dart';
 export 'src/domain/entities/update_information/update_information_type.dart';
 export 'src/domain/entities/update_information/update_pdone_options.dart';
 export 'src/domain/entities/user/user.dart';

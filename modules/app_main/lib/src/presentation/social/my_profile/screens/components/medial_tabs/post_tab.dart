@@ -1,5 +1,9 @@
-
-import 'package:app_main/src/presentation/shared/user/views/user_avatar_widget.dart';
+import 'package:app_core/app_core.dart';
+import 'package:app_main/src/di/di.dart';
+import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_bloc.dart';
+import 'package:app_main/src/presentation/social/my_profile/screens/widgets/react_comment_widget.dart';
+import 'package:app_main/src/presentation/social/my_profile/screens/widgets/profile_avatar.dart';
+import 'package:app_main/src/presentation/social/my_profile/screens/widgets/react_widget.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -8,43 +12,55 @@ import 'package:ui/ui.dart';
 import '../../widgets/multiple_image.dart';
 
 class PostTab extends StatefulWidget {
-  const PostTab({super.key});
+  const PostTab({required this.posts, required this.onLoadMore, super.key});
+  final List<Post> posts;
+  final Function onLoadMore;
 
   @override
   State<PostTab> createState() => _PostTabState();
 }
 
 class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
-  // late final _controller = getIt<ManageProtectController>();
+  final myProfileBloc = getIt<MyProfileBloc>();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    var controller = PrimaryScrollController.of(context);
+    controller.addListener(() {
+      if (controller.position.pixels >= controller.position.maxScrollExtent) {
+        widget.onLoadMore();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     return CustomScrollView(
       shrinkWrap: true,
       key: widget.key,
+      physics: const ClampingScrollPhysics(),
       slivers: [
         SliverToBoxAdapter(
           child: Container(
             color: AppColors.white,
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _buildPost(),
-                _buildPost(),
-                _buildPost(),
-                _buildPost(),
-                _buildPost(),
-              ],
-            ),
+                mainAxisSize: MainAxisSize.min,
+                children:
+                    widget.posts.map((post) => _buildPost(post)).toList()),
           ),
         )
       ],
     );
   }
 
-  Widget _buildPost() {
+  Widget _buildPost(Post post) {
+    final hasMedia = post.getListMedia.isNotEmpty;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -55,97 +71,65 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
             children: [
               Row(
                 children: [
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.only(right: 16),
-                    child: UserAvatarWidget(size: 42),
+                    child: ProfileAvatar(
+                      avatarUrl: post.user.getUserAvatar,
+                      size: 42,
+                      isPDone: post.user.getIsPDone,
+                      fontSize: 12,
+                      profileTypePadding: 2,
+                      avatarPadding: 3,
+                      backgroundColor: AppColors.blueEdit,
+                    ),
                   ),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildInfoDetail(),
+                        _buildInfoDetail(post),
                         const SizedBox(height: 2),
-                        _buildPostTime(),
+                        _buildPostTime(post.getTime),
                       ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
-              SizedBox(
-                height: 172,
-                child: CommonMultiImageView.multiAsset(
-                  listAssetPath: [
-                    ImageConstants.banner,
-                    ImageConstants.banner,
-                    ImageConstants.banner,
-                    ImageConstants.banner,
-                    ImageConstants.banner,
-                  ],
-                  width: double.infinity,
-                  radius: 12,
+              if (hasMedia) const SizedBox(height: 12),
+              if (hasMedia)
+                SizedBox(
+                  height: 172,
+                  child: CommonMultiImageView.multiAsset(
+                    listAssetPath: post.getListMedia
+                        .map((media) => media.link ?? '')
+                        .toList(),
+                    width: double.infinity,
+                    radius: 12,
+                  ),
                 ),
-              ),
               const SizedBox(height: 12),
-              const Text(
-                'Hãy vui cùng tôi 🥰🥰🥰🥰🥰🥰',
-                style: TextStyle(
+              Text(
+                post.getSubject,
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const ReadMoreHashtag(
-                data:
-                    '''Một bức ảnh với phong cảnh thật đẹp phải không ạ? 🤩 Mới được đến một đất nước đầy sự lãng mạn và thật sự ấn tượng bởi những con người ở nơi này Hẹn một ngày gặp lại 🥰🥰🥰\n#likes4like #beautifulview #love''',
+              ReadMoreHashtag(
+                data: post.getContent,
                 trimMode: TrimModeRM.LINE,
                 trimLines: 3,
                 expandedText: '',
                 collapsedText: '...Xem thêm',
-                dataStyle: TextStyle(
+                dataStyle: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                 ),
                 colorHighlightDetectedText: AppColors.blue34,
               ),
               const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        ImageWidget(
-                          IconAppConstants.icHeartRd,
-                          width: 16,
-                          height: 16,
-                        ),
-                        SizedBox(width: 5),
-                        const Text(
-                          'Bạn, Linh và 287 người khác',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.grey76,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      ],
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 28),
-                    child: Text(
-                      '34 bình luận',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.grey76,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(height: 10),
-              _buildInteract(),
-              _buildLatestComment(),
+              ReactWidget(post: post),
+              _buildLatestComment(post.latestComment),
             ],
           ),
         ),
@@ -156,16 +140,26 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
     );
   }
 
-  Widget _buildLatestComment() {
+  Widget _buildLatestComment(Comment? latestComment) {
+    if (latestComment == null) return const SizedBox.shrink();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(right: 16),
-              child: UserAvatarWidget(size: 42),
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: ProfileAvatar(
+                avatarUrl: latestComment.user.getUserAvatar,
+                size: 42,
+                isPDone: latestComment.user.getIsPDone,
+                fontSize: 12,
+                profileTypePadding: 2,
+                avatarPadding: 3,
+                backgroundColor: AppColors.blueEdit,
+              ),
             ),
             Expanded(
               child: Column(
@@ -180,9 +174,9 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
                             Expanded(
                               child: Row(
                                 children: [
-                                  const Text(
-                                    'Văn Thành',
-                                    style: TextStyle(
+                                  Text(
+                                    latestComment.user.getdisplayName,
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                       color: AppColors.black10,
@@ -190,11 +184,12 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
                                     ),
                                   ),
                                   const SizedBox(width: 4),
-                                  ImageWidget(
-                                    IconAppConstants.icShopVdone,
-                                    width: 24,
-                                    height: 24,
-                                  ),
+                                  if (latestComment.user.getIsPDone)
+                                    ImageWidget(
+                                      IconAppConstants.icShopVdone,
+                                      width: 24,
+                                      height: 24,
+                                    ),
                                 ],
                               ),
                             ),
@@ -203,21 +198,21 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      _buildPostTime(),
+                      _buildPostTime(latestComment.getTime),
                     ],
                   ),
                   const SizedBox(width: 4),
-                  const Text(
-                    '@VN1234567891',
-                    style: TextStyle(
+                  Text(
+                    latestComment.user.getPDoneId,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                       color: AppColors.grey77,
                     ),
                   ),
-                  const Text(
-                    'Ôi đẹp ghê :)) Cho xin 1 chuyến đi cùng đi 🥰 Cơ mà không có tiền :<',
-                    style: TextStyle(
+                  Text(
+                    latestComment.getContent,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                     ),
@@ -225,17 +220,12 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
                   const SizedBox(height: 9),
                   Row(
                     children: [
-                      ImageWidget(
-                        IconAppConstants.icHeartActive,
-                        width: 16,
-                        height: 16,
+                      ReactCommentWidget(
+                        commentId: latestComment.id!,
+                        latestCommentTotalReaction:
+                            latestComment.getTotalReaction,
+                        isHearted: latestComment.getIsHearted,
                       ),
-                      const SizedBox(width: 5),
-                      Text('12',
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.red70)),
                       const SizedBox(width: 14),
                       ImageWidget(
                         IconAppConstants.icComment,
@@ -243,7 +233,7 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
                         height: 16,
                       ),
                       const SizedBox(width: 5),
-                      Text('Phản hồi',
+                      const Text('Phản hồi',
                           style: TextStyle(
                               fontSize: 14, fontWeight: FontWeight.w600)),
                     ],
@@ -257,72 +247,10 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
     );
   }
 
-  Widget _buildDivider() {
-    return Container(
-      height: 40,
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: const VerticalDivider(),
-    );
-  }
-
-  Widget _buildInteract() {
-    return SizedBox(
-      height: 56,
-      child: Row(
-        children: [
-          _buildItemInteract(
-            text: 'Thích',
-            iconName: IconAppConstants.icHeart,
-            isLike: true,
-          ),
-          _buildDivider(),
-          _buildItemInteract(
-            text: 'Bình luận',
-            iconName: IconAppConstants.icHeart,
-          ),
-          _buildDivider(),
-          _buildItemInteract(
-            text: 'Chia sẻ',
-            iconName: IconAppConstants.icHeart,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildItemInteract(
-      {required String text, required String iconName, bool isLike = false}) {
-    return Expanded(
-      flex: 3,
-      child: InkWell(
-        onTap: () => print('OnTap interact'),
-        child: Container(
-          height: 40,
-          alignment: Alignment.center,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ImageWidget(iconName, width: 16, height: 16),
-              const SizedBox(width: 10),
-              Text(
-                text,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.grey76,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPostTime() {
-    return const Text(
-      '2 phút trước',
-      style: TextStyle(
+  Widget _buildPostTime(String time) {
+    return Text(
+      time,
+      style: const TextStyle(
         fontSize: 12,
         fontWeight: FontWeight.w400,
         color: AppColors.grey77,
@@ -330,30 +258,31 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
     );
   }
 
-  Widget _buildInfoDetail() {
+  Widget _buildInfoDetail(Post post) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
           children: [
-            const Text(
-              'Trang Trần',
-              style: TextStyle(
+            Text(
+              post.user.getdisplayName,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
                 color: AppColors.black10,
               ),
             ),
-            const SizedBox(width: 4),
-            ImageWidget(
-              IconAppConstants.icShopVdone,
-              width: 24,
-              height: 24,
-            ),
+            if (post.user.getIsPDone) const SizedBox(width: 4),
+            if (post.user.getIsPDone)
+              ImageWidget(
+                IconAppConstants.icShopVdone,
+                width: 24,
+                height: 24,
+              ),
             const SizedBox(width: 8),
-            const Text(
-              '@VN1234567891',
-              style: TextStyle(
+            Text(
+              post.user.getPDoneId,
+              style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
                 color: AppColors.grey77,

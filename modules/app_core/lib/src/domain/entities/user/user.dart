@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../community/team.dart';
 import '../community/user_fan_group_info.dart';
+import 'user_profile.dart';
 
 part 'user.freezed.dart';
 
@@ -12,49 +13,53 @@ part 'user.g.dart';
 
 @freezed
 class User with _$User {
-  const factory User(
-      {int? id,
-      String? username,
-      String? name,
-      String? nickname,
-      String? email,
-      String? phone,
-      String? avatar,
-      Sex? sex,
-      String? phoneCode,
-      String? address,
-      String? forgotHash,
-      int? status,
-      int? roleId,
-      String? roleMemberCode,
-      int? createdById,
-      String? createdAt,
-      String? updatedAt,
-      String? deletedAt,
-      String? pDoneId,
-      String? displayName,
-      String? fullName,
-      @Default(false) bool isPDone,
-      @Default(false) bool isFriend,
-      @Default(false) bool isFollowing,
-      @Default(false) bool isFollowed,
-      @Default(0) int totalFollower,
-      @Default(0) int totalFollowing,
-      @Default(0) int totalFriend,
-      @Default(0) int old,
-      @Default(false) bool isBlock,
-      bool? isJA,
-      bool? isVShop,
-      bool? isLive,
-      bool? isSupervisor,
-      bool? isModerator,
-      Team? joinedTeam,
-      DateTime? birthday,
-      DateTime? jaAt,
-      String? vShopId,
-      int? vShopPDoneId,
-      UserFanGroupInfo? fanGroup,
-      int? sexCode}) = _User;
+  const factory User({
+    int? id,
+    String? username,
+    String? name,
+    String? nickname,
+    String? email,
+    String? phone,
+    String? avatar,
+    Sex? sex,
+    String? phoneCode,
+    String? address,
+    String? forgotHash,
+    int? status,
+    int? roleId,
+    String? roleMemberCode,
+    int? createdById,
+    String? createdAt,
+    String? updatedAt,
+    String? deletedAt,
+    String? pDoneId,
+    String? displayName,
+    String? fullName,
+    @Default(false) bool isPDone,
+    @Default(false) bool isFriend,
+    @Default(false) bool isFollowing,
+    @Default(false) bool isFollowed,
+    @Default(0) int totalFollower,
+    @Default(0) int totalFollowing,
+    @Default(0) int totalFriend,
+    @Default(0) int old,
+    @Default(false) bool isBlock,
+    List<String>? backgroundImages,
+    String? defaultBackground,
+    bool? isJA,
+    bool? isVShop,
+    bool? isLive,
+    bool? isSupervisor,
+    bool? isModerator,
+    Team? joinedTeam,
+    DateTime? birthday,
+    DateTime? jaAt,
+    String? vShopId,
+    int? vShopPDoneId,
+    UserFanGroupInfo? fanGroup,
+    UserProfileInfo? profile,
+    int? sexCode,
+  }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }
@@ -88,6 +93,18 @@ extension UserExtNull on User? {
 
   }
 
+  int get getAge {
+    final DateTime? birthday = this?.profile?.birthday;
+
+    if (birthday == null) {
+      return 0;
+    }
+
+    final age = calculateAge(birthday);
+
+    return age;
+  }
+
   bool get getIsPDone => this?.isPDone ?? false;
 
   bool get getIsJA => this?.isJA ?? false;
@@ -105,13 +122,32 @@ extension UserExtNull on User? {
     final int age = calculateAge(birthDay);
     return age < 15;
   }
+
+  String get getPDoneId => this?.pDoneId ?? _userDefaultPDoneId;
+  Sex get getSex => this?.sex ?? _userDefaultSex;
+  int get getTotalFollower => this?.totalFollower ?? _userDefaultTotalFollower;
+  int get getTotalFollowing =>
+      this?.totalFollowing ?? _userDefaultTotalFollowing;
+  int get getTotalFriend => this?.totalFriend ?? _userDefaultTotalFriend;
+  String get getBackgroundImage =>
+      this?.backgroundImages?.first ?? _userDefaultBackground;
+  String get getUserAvatar => this?.avatar ?? _userDefaultUserAvatar;
+  bool get getIsPdone => this?.isPDone ?? _userIsPDone;
 }
 
 const _userDefaultName = 'PDone User';
 const _userDefaultEmail = 'pdoneuser@gmail.com';
-const _userDefaultNickname = 'PDone';
-const _userDefaultBirthday = '01-01-2000';
+const _userDefaultNickname = '';
+const _userDefaultBirthday = '01/01/2000';
 const _userDefaultAddress = 'default';
+const _userDefaultPDoneId = '';
+final _userDefaultBackground = ImageConstants.defaultUserBackground;
+final _userDefaultUserAvatar = ImageConstants.defaultUserAvatar;
+const _userDefaultSex = Sex.male;
+const _userDefaultTotalFollower = 0;
+const _userDefaultTotalFollowing = 0;
+const _userDefaultTotalFriend = 0;
+const _userIsPDone = false;
 
 extension UserExtension on User {
   Role role(int? hostUserID) {
@@ -176,9 +212,11 @@ extension SexExt on Sex {
   String getIcon() {
     switch (this) {
       case Sex.female:
-        return IconAppConstants.icFemale;
+        return IconAppConstants.icFeMaleSVG;
       case Sex.male:
-        return IconAppConstants.icMale;
+        return IconAppConstants.icMaleSVG;
+      case Sex.other:
+        return IconAppConstants.icLGBTSVG;
       default:
         return IconAppConstants.icMale;
     }
@@ -214,6 +252,26 @@ extension SexExt on Sex {
         return Colors.white;
       default:
         return const Color(0XFF79B6EF);
+    }
+  }
+
+  Color getTextColor() {
+    switch (this) {
+      case Sex.other:
+      case Sex.female:
+        return AppColors.pink12;
+      default:
+        return AppColors.blueEdit;
+    }
+  }
+
+  Color getBackgroundColor() {
+    switch (this) {
+      case Sex.other:
+      case Sex.female:
+        return AppColors.pink11;
+      default:
+        return AppColors.blue35;
     }
   }
 }

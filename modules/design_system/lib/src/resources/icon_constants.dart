@@ -40,6 +40,7 @@ class IconAppConstants {
   static String icMale = IconApp.icMale.path;
   static String icMaleSVG = IconApp.icMaleSVG.path;
   static String icFeMaleSVG = IconApp.icFeMaleSVG.path;
+  static String icLGBTSVG = IconApp.icLGBT.path;
   static String icUserGroup = IconApp.icUserGroup.path;
   static String icUserAddSolid = IconApp.icUserAddSolid.path;
   static String icUserAddOutline = IconApp.icUserAddOutline.path;
@@ -207,6 +208,7 @@ enum IconApp {
   icMale('assets/icons/ic_male.png'),
   icMaleSVG('assets/icons/ic_male.svg'),
   icFeMaleSVG('assets/icons/ic_female.svg'),
+  icLGBT('assets/icons/ic_lgbt.svg'),
   icWheelOfFortune('assets/icons/wheel_of_fortune.png'),
   icChanel('assets/icons/ic_chanel.png'),
   icBToB('assets/icons/ic_b_to_b.png'),

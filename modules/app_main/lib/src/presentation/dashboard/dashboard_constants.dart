@@ -300,6 +300,7 @@ final personalDefault = {
     id: 'ic_profile',
     title: 'Profile',
     backgroundImage: IconAppConstants.icProfile,
+    path: MyProfileScreen.routeName,
   ),
   // 'ic_setting': DashBoardIconItem(
   //   id: 'ic_setting',

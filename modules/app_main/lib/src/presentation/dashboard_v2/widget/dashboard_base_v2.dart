@@ -8,6 +8,7 @@ import 'package:app_main/src/presentation/dashboard_v2/widget/dash_ecom_leading.
 import 'package:app_main/src/presentation/dashboard_v2/widget/dash_ps_promotion.dart';
 import 'package:app_main/src/presentation/live/presentation/live_home/live_home_screen.dart';
 import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
+import 'package:app_main/src/presentation/social/my_profile/screens/my_profile_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:design_system/generated/assets.gen.dart';
 import 'package:flutter/material.dart';
@@ -304,6 +305,7 @@ final personalItems = <DashBoardItem>[
     id: 'ic_profile',
     title: 'Profile',
     backgroundImage: IconAppConstants.icProfile,
+    path: MyProfileScreen.routeName,
   ),
   DashBoardIconItem(
     id: 'ic_save',
