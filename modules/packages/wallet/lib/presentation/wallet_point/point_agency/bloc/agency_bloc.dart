@@ -46,15 +46,23 @@ class AgencyBloc extends Bloc<AgencyEvent, AgencyState> {
       try {
         emit(const _ExchangeLoading());
         final response = await _walletPointUseCase.exchangeCoin(
-          agencyId: event.id,
-          request: BuyCoinRequest(vnd: event.vnd, pDoneId: event.pDoneId, expectedCoin: event.coin)
-        );
+            agencyId: event.id,
+            request: BuyCoinRequest(
+                vnd: event.vnd,
+                pDoneId: event.pDoneId,
+                expectedCoin: event.coin));
         emit(_ExchangeSuccess(response: response));
       } catch (e) {
+        const errMessage = 'Đã xảy ra lỗi';
+
         if (e is DioException) {
-          emit(_Error(e.response?.data['code'] ?? ''));
+          final errorCode = e.response?.data['code'] ?? '';
+          if (errorCode == 'PROFILE_NOT_FOUND') {
+            emit(const _Error('Người nhận không tồn tại'));
+          } else {
+            emit(const _Error(errMessage));
+          }
         } else {
-          const errMessage = 'Đã xảy ra lỗi';
           emit(const _Error(errMessage));
         }
       }

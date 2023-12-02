@@ -117,4 +117,15 @@ class LiveRepositoryImpl extends LiveRepository {
     return result.data.data;
   }
 
+  @override
+  Future<Live> getListLivefollowing(
+      {required int page,
+        required int pageSize,
+        required bool isFriend}) async {
+    final result = await _liveApi.getListLivefollowing(
+        page: page, pageSize: pageSize, isFriend: isFriend);
+
+    return result.data;
+  }
+
 }

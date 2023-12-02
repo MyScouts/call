@@ -8,7 +8,7 @@ part of 'new_message_payload.dart';
 
 NewMessagePayload _$NewMessagePayloadFromJson(Map<String, dynamic> json) =>
     NewMessagePayload(
-      message: json['message'] as String,
+      message: json['message'] as String?,
       metadata: json['metadata'] == null
           ? null
           : MetaDataDto.fromJson(json['metadata'] as Map<String, dynamic>),

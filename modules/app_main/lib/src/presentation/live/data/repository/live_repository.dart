@@ -46,4 +46,10 @@ abstract class LiveRepository {
   Future<dynamic> inviteFriend(String liveId, InviteFriendReq user);
 
   Future<List<LiveMemberCount>> memberCount(List<int> liveIDs);
+
+  Future<Live> getListLivefollowing({
+    required int page,
+    required int pageSize,
+    required bool isFriend,
+  });
 }

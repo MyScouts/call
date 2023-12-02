@@ -9,9 +9,11 @@ part of 'message_dto.dart';
 MessageDto _$MessageDtoFromJson(Map<String, dynamic> json) => MessageDto(
       conversationId: json['conversationId'] as int,
       createdAt: DateTime.parse(json['createdAt'] as String),
-      message: json['message'] as String,
+      message: json['message'] as String?,
       messageId: json['messageId'] as String,
-      metadata: json['metadata'] as Map<String, dynamic>?,
+      metadata: json['metadata'] == null
+          ? null
+          : MetaDataDto.fromJson(json['metadata'] as Map<String, dynamic>),
       seen: json['seen'] as bool,
       sender: json['sender'] == null
           ? null

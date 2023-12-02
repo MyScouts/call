@@ -8,7 +8,6 @@ import 'package:design_system/design_system.dart';
 import 'package:draggable_float_widget/draggable_float_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
-import 'package:ui/ui.dart';
 
 import '../../../../../app_main.dart';
 import '../../../../blocs/user/user_cubit.dart';
