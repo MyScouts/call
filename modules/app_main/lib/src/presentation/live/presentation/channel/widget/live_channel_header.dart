@@ -37,7 +37,7 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
 
   @override
   void dispose() {
-    if (showPip) {
+    if (showPip && controller.state.value == LiveStreamState.watching) {
       Future.delayed(const Duration(milliseconds: 300), () {
         PipHandler.addOverlay(
           PipView(
@@ -66,7 +66,6 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
     }
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +102,8 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                 ),
                 padding: const EdgeInsets.all(4.0),
                 child: Obx(() {
-                  final host = controller.members.value.firstWhereOrNull((e) => e.isOwner);
+                  final host = controller.members.value
+                      .firstWhereOrNull((e) => e.isOwner);
                   return IntrinsicHeight(
                     child: Row(
                       children: [
