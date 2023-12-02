@@ -7,6 +7,7 @@ import 'package:app_main/src/presentation/live/presentation/channel/widget/live_
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_channel_header.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_end_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/live_message/live_message_input.dart';
+import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,7 +35,11 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
 
   @override
   void initState() {
-    if(!widget.fromPip) controller.join(widget.liveID, context);
+    if(!widget.fromPip) {
+      controller.join(widget.liveID, context);
+    } else {
+      PipHandler.disablePip();
+    }
     super.initState();
   }
 
