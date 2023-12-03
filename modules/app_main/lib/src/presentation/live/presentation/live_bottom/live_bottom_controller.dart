@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
 
@@ -20,6 +21,8 @@ class LiveBottomController {
   final UserUsecase userUsecase;
 
   LiveBottomController(this.useCase, this.userUsecase);
+
+  final textController = TextEditingController();
 
   Future<void> getLeaderBoard(int roomId) async {
     try {
