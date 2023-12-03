@@ -1,10 +1,14 @@
+import 'dart:developer';
+
 import 'package:app_core/app_core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/ui.dart';
 import 'package:wallet/core/core.dart';
+import 'package:wallet/core/utils/date_extension.dart';
 import 'package:wallet/presentation/wallet_constant.dart';
 
+import '../data/datasources/models/response/transactions_response.dart';
 import 'shared/bloc/wallet_bloc.dart';
 
 class TransactionHistoryDetailScreen extends StatefulWidget {
@@ -20,7 +24,6 @@ class TransactionHistoryDetailScreen extends StatefulWidget {
 
 class _TransactionHistoryDetailScreenState
     extends State<TransactionHistoryDetailScreen> {
-
   late final _bloc = injector<WalletBloc>();
 
   @override
@@ -28,6 +31,7 @@ class _TransactionHistoryDetailScreenState
     _bloc.add(WalletEvent.getWalletTransactionDetail(id: widget.id));
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,21 +44,40 @@ class _TransactionHistoryDetailScreenState
         ),
       ),
       backgroundColor: WalletTheme.bgColor,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: context.horizontal),
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            _buildStatusWidget(),
-            const SizedBox(height: 20),
-            _buildInfoWidget(),
-          ],
-        ),
+      body: BlocBuilder<WalletBloc, WalletState>(
+        bloc: _bloc,
+        buildWhen: (previous, current) =>
+            current.whenOrNull(
+              getWalletTransactionDetailSuccess: (info) => true,
+              getWalletTransactionDetailLoading: () => true,
+            ) ??
+            false,
+        builder: (BuildContext context, state) {
+          return state.maybeWhen(getWalletTransactionDetailSuccess: (data) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: context.horizontal),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  _buildStatusWidget(data),
+                  const SizedBox(height: 20),
+                  _buildInfoWidget(data),
+                ],
+              ),
+            );
+          }, getWalletTransactionDetailLoading: () {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }, orElse: () {
+            return Container();
+          });
+        },
       ),
     );
   }
 
-  _buildStatusWidget() {
+  _buildStatusWidget(TransactionItem data) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 20),
@@ -64,30 +87,57 @@ class _TransactionHistoryDetailScreenState
       ),
       child: Column(
         children: [
-          Text(
-            '-6.120.000 đ',
-            style: context.text.titleLarge?.copyWith(
-              fontSize: 24,
-              fontWeight: FontWeight.w700,
-              height: 32 / 24,
-            ),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            'Chờ xác nhận',
-            style: context.text.titleLarge?.copyWith(
-              color: const Color(0xFFFFA41C),
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              height: 20 / 14,
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              RichText(
+                text: TextSpan(
+                  text: '${TransactionType.values.firstWhere(
+                        (type) => type.value == data.transactionType,
+                      ).operator(context, receiverPDoneId: data.receiver?.pDoneId, walletType: TransactionValueType.getInstance(data.toType!).walletType)} ${data.toValue.toAppCurrencyString(
+                    isWithSymbol: false,
+                  )}',
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                        height: 24 / 16,
+                        color: const Color(0xFF4B84F7),
+                      ),
+                  children: <InlineSpan>[
+                    WidgetSpan(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 5, bottom: 6),
+                        child: TransactionValueType.getInstance(data.toType!)
+                            .walletType
+                            .iconTransaction(context),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Text(
+                TransactionResolvedStatus.values
+                    .firstWhere((status) => status.name == data.resolvedStatus)
+                    .text,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      height: 20 / 14,
+                      color: TransactionResolvedStatus.values
+                          .firstWhere(
+                              (status) => status.name == data.resolvedStatus)
+                          .color,
+                    ),
+              )
+            ],
           ),
         ],
       ),
     );
   }
 
-  _buildInfoWidget() {
+  _buildInfoWidget(TransactionItem data) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
@@ -105,18 +155,25 @@ class _TransactionHistoryDetailScreenState
             ),
           ),
           const SizedBox(height: 15),
-          _buildItemInfo(title: 'Tổng tiền rút', content: '6.800.000 vnđ'),
-          _buildItemInfo(title: 'Tổng tiền rút', content: '6.800.000 vnđ'),
-          _buildItemInfo(title: 'Tổng tiền rút', content: '6.800.000 vnđ'),
           _buildItemInfo(
-            title: 'Tổng tiền rút',
-            content: '6.800.000 vnđ',
-            isLastItem: true,
-          ),
+              title: 'Mã giao dịch', content: '#${data.id?.substring(0, 8).toUpperCase()}'),
+          _buildItemInfo(
+              title: 'Loại giao dịch',
+              content: TransactionType.getInstance(data.transactionType!)
+                  .title(context, receiverPDoneId: data.receiver!.pDoneId)),
+          _buildItemInfo(
+              title: 'Tên người tặng', content: data.sender?.fullName ?? ''),
+          _buildItemInfo(
+              title: 'ID người tặng', content: data.sender!.pDoneId!),
+          _buildItemInfo(
+              title: 'Thời gian giao dịch',
+              content: data.createdAt!.toDDMMYYYYHHMM(),
+              isLastItem: true),
         ],
       ),
     );
   }
+
 
   _buildItemInfo({
     required String title,

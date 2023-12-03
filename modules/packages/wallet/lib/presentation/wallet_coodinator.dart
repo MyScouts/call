@@ -164,6 +164,6 @@ extension WalletCoordinator on BuildContext {
 
   Future<T?> startTransactionHistoryDetails<T>(String id) {
     return Navigator.of(this)
-        .pushNamed(TransactionHistoryDetailScreen.routeName);
+        .pushNamed(TransactionHistoryDetailScreen.routeName, arguments: id);
   }
 }
