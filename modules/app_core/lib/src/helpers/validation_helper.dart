@@ -10,7 +10,7 @@ class ValidationHelper {
     if (value == null || value.isEmpty) {
       return S.current.validation_required(S.current.lbl_Phone).capitalize();
     }
-    if (!phoneRegex.hasMatch(value)) {
+    if (int.tryParse(value).toString().length != 9) {
       return S.current.validation_invalid(S.current.lbl_Phone).capitalize();
     }
     return null;
