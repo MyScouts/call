@@ -13,25 +13,25 @@ part 'gifter_info.g.dart';
 
 @freezed
 class GiversInfo with _$GiversInfo {
-  const factory GiversInfo({User? giver, int? coinCount, Festival? festivalUser}) = _GiversInfo;
+  const factory GiversInfo({User? giver, int? diamondCount, Festival? festivalUser}) = _GiversInfo;
 
   factory GiversInfo.fromJson(Map<String, Object?> json) => _$GiversInfoFromJson(json);
 }
 
 extension GiversInfoExt on GiversInfo {
   String get coinSrt {
-    if (coinCount == null) {
+    if (diamondCount == null) {
       return '';
     }
-    if (coinCount == 0) {
+    if (diamondCount == 0) {
       return '';
     }
-    if (coinCount! >= 1000000) {
-      return '${(coinCount! / 1000000).toStringAsFixed(1)}M';
+    if (diamondCount! >= 1000000) {
+      return '${(diamondCount! / 1000000).toStringAsFixed(1)}M';
     }
-    if (coinCount! >= 1000) {
-      return '${(coinCount! / 1000).toStringAsFixed(1)}K';
+    if (diamondCount! >= 1000) {
+      return '${(diamondCount! / 1000).toStringAsFixed(1)}K';
     }
-    return coinCount.toString();
+    return diamondCount.toString();
   }
 }
