@@ -6,6 +6,8 @@ import 'package:imagewidget/imagewidget.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../data/model/response/sent_gift_response.dart';
+import '../live_channel_screen.dart';
+import '../state/live_channel_controller.dart';
 import 'lottie_animation.dart';
 
 class SentGiftPage extends StatelessWidget {
@@ -135,8 +137,10 @@ class FloatingGiftsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeGiftAnimation(Key? key) {
+  void removeGiftAnimation(Key? key, {required BuildContext context}) {
+    final controller = context.findAncestorStateOfType<LiveChannelScreenState>()!.controller;
     _giftAnimations.removeWhere((gif) => gif.key == key);
+    controller.timesAnimation.value--;
     notifyListeners();
   }
 }
@@ -211,14 +215,14 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
       controller.addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           final floatingHeartsProvider = widget.provider;
-          floatingHeartsProvider.removeGiftAnimation(widget.key);
+          floatingHeartsProvider.removeGiftAnimation(widget.key, context: context);
           Lottie.cache.clear();
         }
       });
     } else {
       controller.forward().whenComplete(() {
         final floatingHeartsProvider = widget.provider;
-        floatingHeartsProvider.removeGiftAnimation(widget.key);
+        floatingHeartsProvider.removeGiftAnimation(widget.key, context: context);
         controller.dispose();
       });
     }

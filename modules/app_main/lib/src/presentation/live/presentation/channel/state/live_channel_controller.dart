@@ -344,6 +344,8 @@ class LiveChannelController {
     return user;
   }
 
+  final Rx<int> timesAnimation = 0.obs;
+
   void _onSocketEvent() {
     socketService.on(socketConnectedEvent, (data) {
       debugPrint('kết nối thành công ${socketService.socket.id}');
@@ -378,6 +380,9 @@ class LiveChannelController {
           giftNumber: gift.total ?? 1,
         );
       } else {
+        if (gift.total! > 1 && gift.giver?.id == _me.value.info.userID) {
+          timesAnimation.value = gift.total!;
+        }
         for (int j = 1; j <= gift.total!; j++) {
           floatingGiftsProvider.addGiftAnimation(
             gift: gift,
