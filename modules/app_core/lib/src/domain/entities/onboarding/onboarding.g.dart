@@ -13,6 +13,7 @@ _$OnBoardingImpl _$$OnBoardingImplFromJson(Map<String, dynamic> json) =>
       isMarshopOwner: json['isMarshopOwner'] as bool,
       isMarshopCustomer: json['isMarshopCustomer'] as bool,
       hasDefaultBankAccount: json['hasDefaultBankAccount'] as bool,
+      marshopCustomerId: json['marshopCustomerId'] as int?,
     );
 
 Map<String, dynamic> _$$OnBoardingImplToJson(_$OnBoardingImpl instance) =>
@@ -22,4 +23,5 @@ Map<String, dynamic> _$$OnBoardingImplToJson(_$OnBoardingImpl instance) =>
       'isMarshopOwner': instance.isMarshopOwner,
       'isMarshopCustomer': instance.isMarshopCustomer,
       'hasDefaultBankAccount': instance.hasDefaultBankAccount,
+      'marshopCustomerId': instance.marshopCustomerId,
     };

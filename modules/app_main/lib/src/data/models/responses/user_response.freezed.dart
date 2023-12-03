@@ -25,6 +25,7 @@ mixin _$OnboardingResponse {
   bool get isMarshopOwner => throw _privateConstructorUsedError;
   bool get isMarshopCustomer => throw _privateConstructorUsedError;
   bool get hasDefaultBankAccount => throw _privateConstructorUsedError;
+  int? get marshopCustomerId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +44,8 @@ abstract class $OnboardingResponseCopyWith<$Res> {
       bool isPdone,
       bool isMarshopOwner,
       bool isMarshopCustomer,
-      bool hasDefaultBankAccount});
+      bool hasDefaultBankAccount,
+      int? marshopCustomerId});
 }
 
 /// @nodoc
@@ -64,6 +66,7 @@ class _$OnboardingResponseCopyWithImpl<$Res, $Val extends OnboardingResponse>
     Object? isMarshopOwner = null,
     Object? isMarshopCustomer = null,
     Object? hasDefaultBankAccount = null,
+    Object? marshopCustomerId = freezed,
   }) {
     return _then(_value.copyWith(
       isJA: null == isJA
@@ -86,6 +89,10 @@ class _$OnboardingResponseCopyWithImpl<$Res, $Val extends OnboardingResponse>
           ? _value.hasDefaultBankAccount
           : hasDefaultBankAccount // ignore: cast_nullable_to_non_nullable
               as bool,
+      marshopCustomerId: freezed == marshopCustomerId
+          ? _value.marshopCustomerId
+          : marshopCustomerId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -103,7 +110,8 @@ abstract class _$$OnboardingResponseImplCopyWith<$Res>
       bool isPdone,
       bool isMarshopOwner,
       bool isMarshopCustomer,
-      bool hasDefaultBankAccount});
+      bool hasDefaultBankAccount,
+      int? marshopCustomerId});
 }
 
 /// @nodoc
@@ -122,6 +130,7 @@ class __$$OnboardingResponseImplCopyWithImpl<$Res>
     Object? isMarshopOwner = null,
     Object? isMarshopCustomer = null,
     Object? hasDefaultBankAccount = null,
+    Object? marshopCustomerId = freezed,
   }) {
     return _then(_$OnboardingResponseImpl(
       isJA: null == isJA
@@ -144,6 +153,10 @@ class __$$OnboardingResponseImplCopyWithImpl<$Res>
           ? _value.hasDefaultBankAccount
           : hasDefaultBankAccount // ignore: cast_nullable_to_non_nullable
               as bool,
+      marshopCustomerId: freezed == marshopCustomerId
+          ? _value.marshopCustomerId
+          : marshopCustomerId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -156,7 +169,8 @@ class _$OnboardingResponseImpl implements _OnboardingResponse {
       required this.isPdone,
       required this.isMarshopOwner,
       required this.isMarshopCustomer,
-      required this.hasDefaultBankAccount});
+      required this.hasDefaultBankAccount,
+      this.marshopCustomerId});
 
   factory _$OnboardingResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$OnboardingResponseImplFromJson(json);
@@ -171,10 +185,12 @@ class _$OnboardingResponseImpl implements _OnboardingResponse {
   final bool isMarshopCustomer;
   @override
   final bool hasDefaultBankAccount;
+  @override
+  final int? marshopCustomerId;
 
   @override
   String toString() {
-    return 'OnboardingResponse(isJA: $isJA, isPdone: $isPdone, isMarshopOwner: $isMarshopOwner, isMarshopCustomer: $isMarshopCustomer, hasDefaultBankAccount: $hasDefaultBankAccount)';
+    return 'OnboardingResponse(isJA: $isJA, isPdone: $isPdone, isMarshopOwner: $isMarshopOwner, isMarshopCustomer: $isMarshopCustomer, hasDefaultBankAccount: $hasDefaultBankAccount, marshopCustomerId: $marshopCustomerId)';
   }
 
   @override
@@ -189,13 +205,15 @@ class _$OnboardingResponseImpl implements _OnboardingResponse {
             (identical(other.isMarshopCustomer, isMarshopCustomer) ||
                 other.isMarshopCustomer == isMarshopCustomer) &&
             (identical(other.hasDefaultBankAccount, hasDefaultBankAccount) ||
-                other.hasDefaultBankAccount == hasDefaultBankAccount));
+                other.hasDefaultBankAccount == hasDefaultBankAccount) &&
+            (identical(other.marshopCustomerId, marshopCustomerId) ||
+                other.marshopCustomerId == marshopCustomerId));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, isJA, isPdone, isMarshopOwner,
-      isMarshopCustomer, hasDefaultBankAccount);
+      isMarshopCustomer, hasDefaultBankAccount, marshopCustomerId);
 
   @JsonKey(ignore: true)
   @override
@@ -218,7 +236,8 @@ abstract class _OnboardingResponse implements OnboardingResponse {
       required final bool isPdone,
       required final bool isMarshopOwner,
       required final bool isMarshopCustomer,
-      required final bool hasDefaultBankAccount}) = _$OnboardingResponseImpl;
+      required final bool hasDefaultBankAccount,
+      final int? marshopCustomerId}) = _$OnboardingResponseImpl;
 
   factory _OnboardingResponse.fromJson(Map<String, dynamic> json) =
       _$OnboardingResponseImpl.fromJson;
@@ -233,6 +252,8 @@ abstract class _OnboardingResponse implements OnboardingResponse {
   bool get isMarshopCustomer;
   @override
   bool get hasDefaultBankAccount;
+  @override
+  int? get marshopCustomerId;
   @override
   @JsonKey(ignore: true)
   _$$OnboardingResponseImplCopyWith<_$OnboardingResponseImpl> get copyWith =>

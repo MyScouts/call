@@ -12,63 +12,65 @@ part 'user.g.dart';
 
 @freezed
 class User with _$User {
-  const factory User({int? id,
-    String? username,
-    String? name,
-    String? nickname,
-    String? email,
-    String? phone,
-    String? avatar,
-    Sex? sex,
-    String? phoneCode,
-    String? address,
-    String? forgotHash,
-    int? status,
-    int? roleId,
-    String? roleMemberCode,
-    int? createdById,
-    String? createdAt,
-    String? updatedAt,
-    String? deletedAt,
-    String? pDoneId,
-    String? displayName,
-    String? fullName,
-    @Default(false) bool isPDone,
-    @Default(false) bool isFriend,
-    @Default(false) bool isFollowing,
-    @Default(false) bool isFollowed,
-    @Default(0) int totalFollower,
-    @Default(0) int totalFollowing,
-    @Default(0) int totalFriend,
-    @Default(0) int old,
-    @Default(false) bool isBlock,
-    List<String>? backgroundImages,
-    String? defaultBackground,
-    bool? isJA,
-    bool? isVShop,
-    bool? isLive,
-    bool? isSupervisor,
-    bool? isModerator,
-    Team? joinedTeam,
-    DateTime? birthday,
-    DateTime? jaAt,
-    String? vShopId,
-    int? vShopPDoneId,
-    UserFanGroupInfo? fanGroup,
-    int? sexCode}) = _User;
+  const factory User(
+      {int? id,
+      String? username,
+      String? name,
+      String? nickname,
+      String? email,
+      String? phone,
+      String? avatar,
+      Sex? sex,
+      String? phoneCode,
+      String? address,
+      String? forgotHash,
+      int? status,
+      int? roleId,
+      String? roleMemberCode,
+      int? createdById,
+      String? createdAt,
+      String? updatedAt,
+      String? deletedAt,
+      String? pDoneId,
+      String? displayName,
+      String? fullName,
+      @Default(false) bool isPDone,
+      @Default(false) bool isFriend,
+      @Default(false) bool isFollowing,
+      @Default(false) bool isFollowed,
+      @Default(0) int totalFollower,
+      @Default(0) int totalFollowing,
+      @Default(0) int totalFriend,
+      @Default(0) int old,
+      @Default(false) bool isBlock,
+      bool? isJA,
+      bool? isVShop,
+      bool? isLive,
+      bool? isSupervisor,
+      bool? isModerator,
+      Team? joinedTeam,
+      DateTime? birthday,
+      DateTime? jaAt,
+      String? vShopId,
+      int? vShopPDoneId,
+      UserFanGroupInfo? fanGroup,
+      int? sexCode}) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }
 
 extension UserExtNull on User? {
-  String get getdisplayName =>
-      [this?.displayName, _userDefaultName].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getdisplayName => [this?.displayName, _userDefaultName]
+      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
-  String get getEmail => [this?.email, _userDefaultEmail].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getEmail => [this?.email, _userDefaultEmail]
+      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
-  String get getAddress => [this?.address, _userDefaultAddress].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getAddress => [this?.address, _userDefaultAddress]
+      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
-  String get getNickname => [this?.nickname, _userDefaultNickname].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getNickname => [this?.nickname, _userDefaultNickname]
+      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
   String get getBirthday {
     final DateTime? birthday = this?.birthday;
@@ -80,7 +82,8 @@ extension UserExtNull on User? {
 
   bool get getIsJA => this?.isJA ?? false;
 
-  bool get getIsHasNickname => this?.nickname != null && this!.nickname!.isNotEmpty;
+  bool get getIsHasNickname =>
+      this?.nickname != null && this!.nickname!.isNotEmpty;
 
   bool get getIsHasEmail => this?.email != null && this!.email!.isNotEmpty;
 
@@ -116,7 +119,7 @@ extension UserExtension on User {
 
   Sex get sexCodeValue {
     switch (sexCode) {
-      case 1 :
+      case 1:
         return Sex.male;
       default:
         return Sex.female;
@@ -181,7 +184,6 @@ extension SexExt on Sex {
         return IconAppConstants.icMaleSVG;
     }
   }
-
 
   Color get sexBackGroundColor {
     switch (this) {

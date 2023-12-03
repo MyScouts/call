@@ -6,4 +6,5 @@ abstract class AppCoordinator extends AppCoordinatorShared {
   static GlobalKey<NavigatorState> root = GlobalKey<NavigatorState>();
   static GlobalKey<NavigatorState> exploreKey = GlobalKey<NavigatorState>();
   static GlobalKey<NavigatorState> liveKey = GlobalKey<NavigatorState>();
+  static GlobalKey<OverlayState> overlayKey = GlobalKey<OverlayState>();
 }
