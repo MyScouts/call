@@ -1350,9 +1350,17 @@ class Assets {
   static const SvgGenImage icons_lives_gift_1 =
       SvgGenImage('assets/icons/lives/gift_1.svg');
 
+  /// File path: assets/icons/lives/live.png
+  static const AssetGenImage icons_lives_live =
+      AssetGenImage('assets/icons/lives/live.png');
+
   /// File path: assets/icons/lives/micro.svg
   static const SvgGenImage icons_lives_micro =
       SvgGenImage('assets/icons/lives/micro.svg');
+
+  /// File path: assets/icons/lives/pip_up.svg
+  static const SvgGenImage icons_lives_pip_up =
+      SvgGenImage('assets/icons/lives/pip_up.svg');
 
   /// File path: assets/icons/lives/public.svg
   static const SvgGenImage icons_lives_public =
@@ -2122,7 +2130,9 @@ class Assets {
         icons_lives_edit,
         icons_lives_filter,
         icons_lives_gift_1,
+        icons_lives_live,
         icons_lives_micro,
+        icons_lives_pip_up,
         icons_lives_public,
         icons_lives_video,
         icons_love,

@@ -76,6 +76,8 @@ class LiveChannelController {
 
   AgoraData? _agora;
 
+  AgoraData? get agora => _agora;
+
   late final RxList<LiveMember> _members = <LiveMember>[].obs;
 
   RxList<LiveMember> get members => _members;
@@ -158,7 +160,7 @@ class LiveChannelController {
     _showMessageInput.value = false;
   }
 
-  void join(int id, [String? password, BuildContext? context]) async {
+  void join(int id, BuildContext context, [String? password]) async {
     try {
       final res = await Future.wait([
         repository.joinLive(id: id, password: password),
@@ -180,10 +182,14 @@ class LiveChannelController {
       ).obs;
       await getLeaderBoard(_info.value.id);
     } catch (e) {
-      context?.showToastMessage(
-        'Live không còn tồn tại',
-        ToastMessageType.error,
-      );
+      _state.value = LiveStreamState.stop;
+      if (context.mounted) {
+        Navigator.of(context).pop();
+        context.showToastMessage(
+          'Live không còn tồn tại',
+          ToastMessageType.error,
+        );
+      }
     }
 
     try {

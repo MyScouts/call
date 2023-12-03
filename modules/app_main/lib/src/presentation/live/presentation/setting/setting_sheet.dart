@@ -141,31 +141,35 @@ class _Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 36,
-          width: 36,
-          decoration: const BoxDecoration(
-            color: Color(0xffE8F0FE),
-            shape: BoxShape.circle,
-          ),
-          alignment: Alignment.center,
-          child: icon,
-        ),
-        const SizedBox(height: 4),
-        Flexible(
-          child: Text(
-            title,
-            style: const TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
+    return GestureDetector(
+      onTap: action,
+      behavior: HitTestBehavior.opaque,
+      child: Column(
+        children: [
+          Container(
+            height: 36,
+            width: 36,
+            decoration: const BoxDecoration(
+              color: Color(0xffE8F0FE),
+              shape: BoxShape.circle,
             ),
-            textAlign: TextAlign.center,
+            alignment: Alignment.center,
+            child: icon,
           ),
-        ),
-      ],
+          const SizedBox(height: 4),
+          Flexible(
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -98,6 +98,8 @@ dependencies:
   sa4_migration_kit: ^1.0.0
   device_info_plus: ^9.1.1
   flutter_html: ^3.0.0-beta.2
+  draggable_float_widget: ^0.1.0
+  emoji_picker_flutter: ^1.6.3
 
 dev_dependencies:
   flutter_test:
