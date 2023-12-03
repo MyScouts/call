@@ -30,10 +30,15 @@ class LiveBottomController {
     } catch (e) {}
   }
 
+  Future<void> getDailyDedications(int userId) async {
+    try {
+      giftCardLive.value = await useCase.getDailyDedications(userId);
+    } catch (e) {}
+  }
+
   final listFriends = <User>[].obs;
 
   final listFollow = <FolloweesUser>[].obs;
-
 
   Future<void> getListFriend() async {
     try {

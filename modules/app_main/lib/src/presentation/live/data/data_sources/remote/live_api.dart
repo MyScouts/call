@@ -38,6 +38,8 @@ class LiveApiConstant {
 
   static const String giftCard = '/api/gift-card/live/{liveId}';
 
+  static const String dailyDedications = '/api/gift-card/daily-dedications';
+
   static const String festivalsInfo = '/api/festivals';
 
   static const String festivalsID = '/api/festivals/register-festival/{userId}';
@@ -98,6 +100,9 @@ abstract class LiveApi {
 
   @GET(LiveApiConstant.giftCard)
   Future<ApiResponse<GiftCardLive>> getInfoGiftCard({@Path('liveId') required int liveId});
+
+  @GET(LiveApiConstant.dailyDedications)
+  Future<ApiResponse<GiftCardLive>> getDailyDedications({@Query('userId') required int userId});
 
   @POST(LiveApiConstant.createNewLive)
   Future<ApiResponse<LiveData>> createNewLive(
