@@ -37,7 +37,7 @@ class LiveWidget extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: ImageWidget(
-                  liveDetail.medias![0].link,
+                  liveDetail.medias?.firstOrNull?.link ?? '',
                 ),
               ),
             ),

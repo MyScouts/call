@@ -22,8 +22,8 @@ class _LiveScreenTabState extends State<LiveScreenTab>
 
   @override
   void initState() {
-    liveController.getListLive();
-    liveController.getListLiveForYou();
+    liveController.getListLive(context);
+    liveController.getListLiveForYou(context);
 
     _liveTabController = TabController(length: 2, vsync: this, initialIndex: 0, animationDuration: Duration.zero);
 
@@ -49,13 +49,11 @@ class _LiveScreenTabState extends State<LiveScreenTab>
             controller: _liveTabController,
           ),
           Expanded(
-            child: TabBarView(
-                controller: _liveTabController,
-                children: [
+            child: TabBarView(controller: _liveTabController, children: [
               Obx(() {
                 return RefreshIndicator(
                   onRefresh: () async {
-                    liveController.getListLive();
+                    liveController.getListLive(context);
                   },
                   child: GridView.count(
                     physics: const AlwaysScrollableScrollPhysics(),
@@ -68,8 +66,8 @@ class _LiveScreenTabState extends State<LiveScreenTab>
                       return LiveWidget(
                         liveDetail: live,
                         viewer: liveController.listLiveCount
-                            .firstWhereOrNull((element) => element.liveId == live.id!)
-                            ?.memberCount ??
+                                .firstWhereOrNull((element) => element.liveId == live.id!)
+                                ?.memberCount ??
                             0,
                       );
                     }),
@@ -79,7 +77,7 @@ class _LiveScreenTabState extends State<LiveScreenTab>
               Obx(() {
                 return RefreshIndicator(
                   onRefresh: () async {
-                    liveController.getListLiveForYou();
+                    liveController.getListLiveForYou(context);
                   },
                   child: GridView.count(
                     physics: const AlwaysScrollableScrollPhysics(),
@@ -92,15 +90,14 @@ class _LiveScreenTabState extends State<LiveScreenTab>
                       return LiveWidget(
                         liveDetail: live,
                         viewer: liveController.listLiveCountForYour
-                            .firstWhereOrNull((element) => element.liveId == live.id!)
-                            ?.memberCount ??
+                                .firstWhereOrNull((element) => element.liveId == live.id!)
+                                ?.memberCount ??
                             0,
                       );
                     }),
                   ),
                 );
               }),
-
             ]),
           )
         ],
@@ -180,8 +177,8 @@ class _TabBarGroupsLiveState extends State<TabBarGroupsLive> {
                     'Dành cho bạn',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: (widget.controller.index == 1) ? const Color(0xff4b84f7) : const Color(0xffacacac),
+                          fontWeight: FontWeight.w600,
+                          color: (widget.controller.index == 1) ? const Color(0xff4b84f7) : const Color(0xffacacac),
                         ),
                   ),
                 ),

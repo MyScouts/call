@@ -42,7 +42,7 @@ class _UserLisTileState extends State<UserLisTile> {
                 Row(
                   children: [
                     Flexible(
-                      child: Text(widget.user.fullName ?? '',
+                      child: Text(widget.user.fullNameStr,
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,

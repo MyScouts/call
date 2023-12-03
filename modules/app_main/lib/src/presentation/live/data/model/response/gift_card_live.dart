@@ -17,7 +17,7 @@ class GiftCardLive with _$GiftCardLive {
   const factory GiftCardLive(
       {LiveDetail? live,
       List<GiversInfo>? giversInfo,
-      int? totalCoinCount}) = _GiftCardLive;
+      int? diamondCount}) = _GiftCardLive;
 
   factory GiftCardLive.fromJson(Map<String, Object?> json) =>
       _$GiftCardLiveFromJson(json);
