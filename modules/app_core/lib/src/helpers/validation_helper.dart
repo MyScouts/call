@@ -10,10 +10,12 @@ class ValidationHelper {
     if (value == null || value.isEmpty) {
       return S.current.validation_required(S.current.lbl_Phone).capitalize();
     }
-    if (int.tryParse(value).toString().length != 9) {
-      return S.current.validation_invalid(S.current.lbl_Phone).capitalize();
+    final String phone = int.tryParse(value).toString();
+    if (phone.length == 9 && phone.substring(0, 2) != '12' ||
+        (phone.length == 10 && phone.substring(0, 2) == '12')) {
+      return null;
     }
-    return null;
+    return S.current.validation_invalid(S.current.lbl_Phone).capitalize();
   }
 
   static String? password(String? value) {
