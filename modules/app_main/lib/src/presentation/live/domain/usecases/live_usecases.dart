@@ -47,6 +47,10 @@ class LiveUseCase {
     return _liveRepository.getInfoGiftCard(liveId);
   }
 
+  Future<GiftCardLive> getDailyDedications(int userId) async {
+    return _liveRepository.getDailyDedications(userId);
+  }
+
   Future<DataGetInviteFriend> getListInviteFriend({
     int? page,
     int? pageSize,

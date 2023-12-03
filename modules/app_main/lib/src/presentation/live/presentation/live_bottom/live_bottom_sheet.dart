@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../../di/di.dart';
 import '../channel/state/live_channel_controller.dart';
 import 'leader_board_tab.dart';
+import 'list_friend_tab.dart';
 import 'live_bottom_controller.dart';
 import 'viewer_tab.dart';
 
@@ -59,16 +60,17 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
     if (widget.index != null) {
       liveBottomController.tabIndex.value = widget.index!;
     }
-    liveBottomController.getLeaderBoard(widget.controller.info.id);
-    //liveBottomController.getListFriend();
-    liveBottomController.getListFollow();
+    //liveBottomController.getLeaderBoard(widget.controller.info.id);
+    liveBottomController.getDailyDedications(widget.controller.info.user!.id!);
+    liveBottomController.getListFriend();
+    //liveBottomController.getListFollow();
     super.initState();
   }
 
   List<Widget> get listTab => [
         ViewerTab(controller: widget.controller),
-        //ListFriendTab(controller: liveBottomController, liveData: widget.controller.info),
-        ListFollowTab(controller: liveBottomController, liveData: widget.controller.info),
+        ListFriendTab(controller: liveBottomController, liveData: widget.controller.info),
+        //ListFollowTab(controller: liveBottomController, liveData: widget.controller.info),
         LeaderBoardTab(controller: liveBottomController),
       ];
 

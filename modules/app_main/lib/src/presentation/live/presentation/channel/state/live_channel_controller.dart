@@ -414,7 +414,6 @@ class LiveChannelController {
       );
       _members.value = [..._members, member];
       print('length ===> ${_members.length}');
-
       if (user.id == _me.value.info.userID) {
         NotificationCenter.post(
           channel: receiveMessage,
