@@ -88,7 +88,7 @@ class _MarshopReferralCodeScreenState extends State<MarshopReferralCodeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              item.name,
+                              item.name ?? item.user.displayName,
                               style: context.text.titleMedium,
                             ),
                             Text(

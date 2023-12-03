@@ -26,7 +26,7 @@ _$MarshopResponseImpl _$$MarshopResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$MarshopResponseImpl(
       id: json['id'] as int,
-      name: json['name'] as String,
+      name: json['name'] as String?,
       code: json['code'] as String,
       user: MarshopUserInfo.fromJson(json['user'] as Map<String, dynamic>),
     );

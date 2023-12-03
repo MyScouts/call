@@ -3,6 +3,7 @@ import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/payloads/marshop/marshop_payload.dart';
 import 'package:app_main/src/data/models/responses/marshop_response.dart';
+import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/marshop/marshop_constant.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_coordinator.dart';
@@ -39,7 +40,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
   final TextEditingController _marshopIdCtrl = TextEditingController();
   final _formCtrl = ValueNotifier(false);
   final _acceptTerm = ValueNotifier(false);
-  final _rulesCtrl = ValueNotifier([]);
+  final ValueNotifier<List<RegisterMarshopRule>> _rulesCtrl = ValueNotifier([]);
   final _marshopIdValidCtrl = ValueNotifier(false);
   MarshopResponse? marshop;
   late User _authInfo;
@@ -48,6 +49,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
   void initState() {
     super.initState();
     _authInfo = userCubit.currentUser!;
+    context.read<MarshopCubit>().getMarShopInfo(userId: _authInfo.id!);
     userCubit.onboarding();
     if (widget.marshopId != null) {
       _marshopIdCtrl.text = widget.marshopId!;
@@ -68,7 +70,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
   _handleCheckMarshop() {
     EasyDebounce.debounce(
         "CheckMarshopExits",
-        const Duration(seconds: 2),
+        const Duration(seconds: 1),
         () => _marshopDetailBloc.add(
               GetDetailDataParam1Event(
                 GetMarshopInfoPayload(
@@ -202,36 +204,37 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
   }
 
   _buildRules() {
-    return ValueListenableBuilder(
-        valueListenable: _rulesCtrl,
-        builder: (_, rules, child) {
-          return Column(
-            children: RegisterMarshopRule.values.reversed
-                .map((e) => Container(
-                      margin: const EdgeInsets.symmetric(vertical: 5),
-                      child: Row(
-                        children: [
-                          if (rules.contains(e))
-                            Assets.icons_shape_check_success.image(
-                              width: 25,
-                              fit: BoxFit.cover,
-                            ),
-                          if (!rules.contains(e))
-                            Assets.icons_shape_check_fail.image(
-                              width: 25,
-                              fit: BoxFit.cover,
-                            ),
-                          const SizedBox(width: 5),
-                          Text(
-                            e.getText(),
-                            style: context.textTheme.titleMedium,
-                          ),
-                        ],
-                      ),
-                    ))
-                .toList(),
-          );
-        });
+    return Column(
+      children: RegisterMarshopRule.values.map((e) {
+        return ValueListenableBuilder(
+          valueListenable: _rulesCtrl,
+          builder: (context, rules, child) {
+            return Container(
+              margin: const EdgeInsets.symmetric(vertical: 5),
+              child: Row(
+                children: [
+                  if (rules.contains(e))
+                    Assets.icons_shape_check_success.image(
+                      width: 25,
+                      fit: BoxFit.cover,
+                    ),
+                  if (!rules.contains(e))
+                    Assets.icons_shape_check_fail.image(
+                      width: 25,
+                      fit: BoxFit.cover,
+                    ),
+                  const SizedBox(width: 5),
+                  Text(
+                    e.getText(),
+                    style: context.textTheme.titleMedium,
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      }).toList(),
+    );
   }
 
   void _startQrCodeScan() async {
@@ -258,6 +261,31 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
     if (state is RegisterMarshopFail) {
       hideLoading();
       showToastMessage(state.message, ToastMessageType.error);
+    }
+
+    if (state is OnGetMarShopInfo) {
+      showLoading();
+    }
+
+    if (state is GetMarShopInfoSuccess) {
+      hideLoading();
+      context.pop();
+      showToastMessage("Bạn đã là MarShop");
+    }
+
+    if (state is GetMarShopInfoFail) {
+      hideLoading();
+      switch (state.code) {
+        case "MARSHOP_NOT_APPROVED":
+          context.pop();
+          showToastMessage("Yêu cầu đăng ký MarShop đang được chờ duyệt.");
+          break;
+        case "MARSHOP_NOT_FOUND":
+          break;
+        default:
+          context.pop();
+          showToastMessage("Lỗi hệ thống.");
+      }
     }
   }
 
@@ -308,6 +336,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
   }
 
   void _marshopDetailListener(BuildContext context, GetDetailState state) {
+    final rules = _rulesCtrl.value;
     if (state is GetDetailDataSuccess<MarshopResponse>) {
       onValidation();
       if (_marshopIdCtrl.text.isEmpty) {
@@ -315,19 +344,18 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
       }
       _marshopIdValidCtrl.value = true;
       if (!_rulesCtrl.value.contains(RegisterMarshopRule.isRefIdMarshop)) {
-        final rules = _rulesCtrl.value;
         rules.add(RegisterMarshopRule.isRefIdMarshop);
-        _rulesCtrl.value = rules;
       }
       marshop = state.data;
+      onValidation();
     }
 
     if (state is GetDetailError<MarshopResponse>) {
       _marshopIdValidCtrl.value = false;
-      final rules = _rulesCtrl.value;
       rules.remove(RegisterMarshopRule.isRefIdMarshop);
-      _rulesCtrl.value = [];
-      _rulesCtrl.value = rules;
+      onValidation();
     }
+    _rulesCtrl.value = [];
+    _rulesCtrl.value = rules;
   }
 }

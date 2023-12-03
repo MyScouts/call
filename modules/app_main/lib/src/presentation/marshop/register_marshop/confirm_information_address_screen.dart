@@ -1,4 +1,7 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/marshop/marshop_cubit.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/data/models/payloads/marshop/marshop_payload.dart';
 import 'package:app_main/src/data/models/responses/marshop_response.dart';
 import 'package:app_main/src/domain/entities/update_account/update_place_information_payload.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
@@ -34,74 +37,114 @@ class _ConfirmInfomationAddressScreenState
   UpdatePlaceInformationPayload? address;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const BaseAppBar(
-        title: "Xác nhận thông tin",
-        isClose: false,
-      ),
-      body: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: paddingHorizontal,
-            vertical: 20,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: ExtendedNestedScrollView(
-                  onlyOneScrollInBody: true,
-                  headerSliverBuilder: (context, innerBoxIsScrolled) => [],
-                  body: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildRules(),
-                        const SizedBox(height: 10),
-                        BlocProvider<PlaceInformationBloc>(
-                          create: (context) => injector.get(),
-                          child: PlaceInformationWidget(
-                            title: 'Thêm địa chỉ',
-                            onUpdatePlaceInformation: (value) {
-                              address = value;
-                              setState(() {});
-                            },
-                            addressCtrl: _addressCtrl,
-                            required: true,
+    return BlocListener<MarshopCubit, MarshopState>(
+      listener: (context, state) {
+        if (state is OnRegisterMarshop) {
+          showLoading();
+        }
+
+        if (state is RegisterMarshopFail) {
+          hideLoading();
+          showToastMessage(state.message, ToastMessageType.error);
+        }
+
+        if (state is RegisterMarshopSuccess) {
+          hideLoading();
+          context.startTransactionDetail(
+            pack: widget.pack,
+            authInfo: widget.authInfo,
+            marshop: widget.marshop,
+            address: address!,
+          );
+        }
+      },
+      child: Scaffold(
+        appBar: const BaseAppBar(
+          title: "Xác nhận thông tin",
+          isClose: false,
+        ),
+        body: Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: paddingHorizontal,
+              vertical: 20,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: ExtendedNestedScrollView(
+                    onlyOneScrollInBody: true,
+                    headerSliverBuilder: (context, innerBoxIsScrolled) => [],
+                    body: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildRules(),
+                          const SizedBox(height: 10),
+                          BlocProvider<PlaceInformationBloc>(
+                            create: (context) => injector.get(),
+                            child: PlaceInformationWidget(
+                              title: 'Thêm địa chỉ',
+                              onUpdatePlaceInformation: (value) {
+                                address = value;
+                                setState(() {});
+                              },
+                              addressCtrl: _addressCtrl,
+                              required: true,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              RichText(
-                text: TextSpan(
-                    text: "Tổng tiền: ",
-                    style: context.textTheme.bodyLarge,
-                    children: [
-                      TextSpan(
-                          text: widget.pack.price.toAppCurrencyString(),
-                          style: context.textTheme.titleLarge!.copyWith(
-                            color: context.theme.primaryColor,
-                            fontWeight: FontWeight.w700,
-                          ))
-                    ]),
-              ),
-              const SizedBox(height: 15),
-              PrimaryButton(
-                title: "Tiếp tục",
-                onTap: () => context.startTransactionDetail(
-                  pack: widget.pack,
-                  authInfo: widget.authInfo,
-                  marshop: widget.marshop,
-                  address: address!,
+                RichText(
+                  text: TextSpan(
+                      text: "Tổng tiền: ",
+                      style: context.textTheme.bodyLarge,
+                      children: [
+                        TextSpan(
+                            text: widget.pack.price.toAppCurrencyString(),
+                            style: context.textTheme.titleLarge!.copyWith(
+                              color: context.theme.primaryColor,
+                              fontWeight: FontWeight.w700,
+                            ))
+                      ]),
                 ),
-                disabled: address == null && _addressCtrl.text.isNotEmpty,
-                width: null,
-              ),
-              const SizedBox(height: 15),
-            ],
-          )),
+                const SizedBox(height: 15),
+                PrimaryButton(
+                  title: "Tiếp tục",
+                  onTap: () {
+                    context.read<MarshopCubit>().registerMarshop(
+                          widget.authInfo.id!,
+                          RegisterMarshopPayload(
+                            packId: widget.pack.id,
+                            referralId: widget.marshop.id,
+                            billInfo: RegisterMarshopBillInfo(
+                              addressInfo: RegisterMarshopAddress(
+                                address: _addressCtrl.text.trim(),
+                                countryName: address!.countryName!,
+                                districtName: address!.districtName!,
+                                provinceName: address!.provinceName!,
+                                wardName: address!.wardName!,
+                              ),
+                              priceInfo: RegisterMarshopPrice(
+                                price: widget.pack.price,
+                                shipFee: 0,
+                                tax: 10,
+                              ),
+                              productInfo: [],
+                            ),
+                          ),
+                        );
+                  },
+                  disabled: address == null && _addressCtrl.text.isNotEmpty,
+                  width: null,
+                ),
+                const SizedBox(height: 15),
+              ],
+            )),
+      ),
     );
   }
 

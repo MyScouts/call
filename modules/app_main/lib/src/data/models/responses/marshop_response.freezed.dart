@@ -185,7 +185,7 @@ MarshopResponse _$MarshopResponseFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$MarshopResponse {
   int get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   String get code => throw _privateConstructorUsedError;
   MarshopUserInfo get user => throw _privateConstructorUsedError;
 
@@ -201,7 +201,7 @@ abstract class $MarshopResponseCopyWith<$Res> {
           MarshopResponse value, $Res Function(MarshopResponse) then) =
       _$MarshopResponseCopyWithImpl<$Res, MarshopResponse>;
   @useResult
-  $Res call({int id, String name, String code, MarshopUserInfo user});
+  $Res call({int id, String? name, String code, MarshopUserInfo user});
 
   $MarshopUserInfoCopyWith<$Res> get user;
 }
@@ -220,7 +220,7 @@ class _$MarshopResponseCopyWithImpl<$Res, $Val extends MarshopResponse>
   @override
   $Res call({
     Object? id = null,
-    Object? name = null,
+    Object? name = freezed,
     Object? code = null,
     Object? user = null,
   }) {
@@ -229,10 +229,10 @@ class _$MarshopResponseCopyWithImpl<$Res, $Val extends MarshopResponse>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       code: null == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
@@ -261,7 +261,7 @@ abstract class _$$MarshopResponseImplCopyWith<$Res>
       __$$MarshopResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, String code, MarshopUserInfo user});
+  $Res call({int id, String? name, String code, MarshopUserInfo user});
 
   @override
   $MarshopUserInfoCopyWith<$Res> get user;
@@ -279,7 +279,7 @@ class __$$MarshopResponseImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? name = null,
+    Object? name = freezed,
     Object? code = null,
     Object? user = null,
   }) {
@@ -288,10 +288,10 @@ class __$$MarshopResponseImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       code: null == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
@@ -308,10 +308,7 @@ class __$$MarshopResponseImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$MarshopResponseImpl implements _MarshopResponse {
   const _$MarshopResponseImpl(
-      {required this.id,
-      required this.name,
-      required this.code,
-      required this.user});
+      {required this.id, this.name, required this.code, required this.user});
 
   factory _$MarshopResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$MarshopResponseImplFromJson(json);
@@ -319,7 +316,7 @@ class _$MarshopResponseImpl implements _MarshopResponse {
   @override
   final int id;
   @override
-  final String name;
+  final String? name;
   @override
   final String code;
   @override
@@ -363,7 +360,7 @@ class _$MarshopResponseImpl implements _MarshopResponse {
 abstract class _MarshopResponse implements MarshopResponse {
   const factory _MarshopResponse(
       {required final int id,
-      required final String name,
+      final String? name,
       required final String code,
       required final MarshopUserInfo user}) = _$MarshopResponseImpl;
 
@@ -373,7 +370,7 @@ abstract class _MarshopResponse implements MarshopResponse {
   @override
   int get id;
   @override
-  String get name;
+  String? get name;
   @override
   String get code;
   @override

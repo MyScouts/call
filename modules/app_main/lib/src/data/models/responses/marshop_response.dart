@@ -18,7 +18,7 @@ class ListMarshopResponse with _$ListMarshopResponse {
 class MarshopResponse with _$MarshopResponse {
   const factory MarshopResponse({
     required int id,
-    required String name,
+    String? name,
     required String code,
     required MarshopUserInfo user,
   }) = _MarshopResponse;

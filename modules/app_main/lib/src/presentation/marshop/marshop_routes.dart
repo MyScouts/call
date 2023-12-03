@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/marshop/marshop_cubit.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/presentation/marshop/marshop_bloc.dart';
 import 'package:app_main/src/presentation/marshop/register_customer/register_customer_screen.dart';
@@ -64,10 +65,13 @@ class MarkShopRoutes extends RouteModule {
         },
         ConfirmInfomationAddressScreen.routeName: (context) {
           final args = settings.arguments as Map<String, dynamic>;
-          return ConfirmInfomationAddressScreen(
-            pack: args['pack'],
-            authInfo: args['authInfo'],
-            marshop: args['marshop'],
+          return BlocProvider(
+            create: (context) => injector.get<MarshopCubit>(),
+            child: ConfirmInfomationAddressScreen(
+              pack: args['pack'],
+              authInfo: args['authInfo'],
+              marshop: args['marshop'],
+            ),
           );
         },
         TransactionDetailScreen.routeName: (context) {

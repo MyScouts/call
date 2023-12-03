@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/responses/marshop_response.dart';
 import 'package:app_main/src/domain/entities/update_account/update_place_information_payload.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/ui.dart';
@@ -23,7 +24,8 @@ class TransactionDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0XFFF2F3F4),
-      appBar: const BaseAppBar(
+      appBar: BaseAppBar(
+        onPressed: () => context.startDashboardUtil(),
         backgroundColor: Colors.transparent,
         isClose: false,
         title: "Chi tiết giao dịch",
