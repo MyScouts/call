@@ -15,9 +15,7 @@ mixin NotificationMixin<T extends StatefulWidget> on State<T> {
     notificationService.onListenerAppLife.listen((appState) {
       switch (appState) {
         case AppLifeNotification.init:
-          if (isProduction) {
-            notificationService.onListenerNotification(rootKey.currentContext!);
-          }
+          notificationService.onListenerNotification(rootKey.currentContext!);
           break;
         case AppLifeNotification.authenticated:
           break;
