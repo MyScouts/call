@@ -35,12 +35,15 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
 
   @override
   void initState() {
-    if(!widget.fromPip) {
+    if (!widget.fromPip) {
       controller.join(widget.liveID, context);
-    } else {
-      PipHandler.disablePip();
     }
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!widget.fromPip && PipHandler.showPip.value) {
+        PipHandler.removeOverlay();
+      }
+    });
   }
 
   @override

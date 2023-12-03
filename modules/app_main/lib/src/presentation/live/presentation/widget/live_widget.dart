@@ -10,12 +10,14 @@ class LiveWidget extends StatelessWidget {
   final LiveDetail liveDetail;
   final int viewer;
   final VoidCallback? call;
+  final bool isOwner;
 
   const LiveWidget({
     super.key,
     required this.liveDetail,
     required this.viewer,
     this.call,
+    this.isOwner = false,
   });
 
   @override
@@ -24,7 +26,16 @@ class LiveWidget extends StatelessWidget {
       onTap: () {
         if (liveDetail.id == null) return;
         call?.call();
-        context.joinLive(liveDetail.id!);
+        if (liveDetail.type == "password_locked" && !isOwner) {
+          context.checkPassword(
+            (pass) {
+              context.joinLiveWithPass(liveDetail.id!, pass);
+            },
+            liveDetail.id!,
+          );
+        } else {
+          context.joinLive(liveDetail.id!);
+        }
       },
       child: Container(
         decoration: BoxDecoration(
@@ -112,9 +123,13 @@ class LiveWidget extends StatelessWidget {
                 Visibility(
                   visible: liveDetail.categories?.isNotEmpty == true,
                   child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
-                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(90)),
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5.5),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(90)),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8, vertical: 5.5),
                     child: Text(
                       liveDetail.categories?.firstOrNull?.name ?? '',
                       style: const TextStyle(

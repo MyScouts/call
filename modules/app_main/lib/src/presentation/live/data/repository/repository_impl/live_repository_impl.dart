@@ -128,4 +128,10 @@ class LiveRepositoryImpl extends LiveRepository {
     return result.data;
   }
 
+  @override
+  Future<bool> checkPass(int liveId, String password) async {
+    final res = await  _liveApi.checkPass(liveId, password);
+    return (res as Map)['joinable'] ?? false;
+  }
+
 }

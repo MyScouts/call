@@ -59,6 +59,10 @@ class LiveUseCase {
     );
   }
 
+  Future<bool> checkPass(int liveId, String password) {
+    return _liveRepository.checkPass(liveId, password);
+  }
+
   Future<dynamic> inviteFriend({required String liveId, required InviteFriendReq user}) async {
     return (_liveRepository.inviteFriend(liveId, user));
   }

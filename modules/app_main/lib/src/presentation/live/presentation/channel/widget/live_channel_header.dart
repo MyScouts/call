@@ -61,6 +61,7 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
             //   child: const PipVideoRender(),
             // ),
           ),
+          controller,
         );
       });
     }
