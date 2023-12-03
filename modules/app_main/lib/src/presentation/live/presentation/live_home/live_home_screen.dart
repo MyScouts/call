@@ -83,7 +83,10 @@ class _LiveHomeScreenState extends State<LiveHomeScreen>
                               alignment: Alignment.centerLeft,
                               child: BlocBuilder<UserCubit, UserState>(
                                 builder: (_, state) {
-                                  if (state.currentUser?.avatar?.trim().isEmpty ?? false) {
+                                  if (state.currentUser?.avatar
+                                          ?.trim()
+                                          .isEmpty ??
+                                      false) {
                                     return Container(
                                       height: 40,
                                       width: 40,
@@ -103,7 +106,11 @@ class _LiveHomeScreenState extends State<LiveHomeScreen>
                                     );
                                   }
                                   return CircleNetworkImage(
-                                    url: context.read<UserCubit>().currentUser?.avatar ?? '',
+                                    url: context
+                                            .read<UserCubit>()
+                                            .currentUser
+                                            ?.avatar ??
+                                        '',
                                     size: 40,
                                     defaultImage: ImageWidget(
                                       ImageConstants.defaultUserAvatar,
@@ -115,7 +122,9 @@ class _LiveHomeScreenState extends State<LiveHomeScreen>
                               ),
                             ),
                           ),
-                          Expanded(child: TabBarGroups(controller: _liveTabController)),
+                          Expanded(
+                              child:
+                                  TabBarGroups(controller: _liveTabController)),
                           SizedBox(
                             width: 35,
                             height: 35,
@@ -128,7 +137,8 @@ class _LiveHomeScreenState extends State<LiveHomeScreen>
                               ),
                               highlightColor: Colors.black,
                               onPressed: () {
-                                Navigator.pushNamed(context, LiveStreamSearch.routeName);
+                                Navigator.pushNamed(
+                                    context, LiveStreamSearch.routeName);
                               },
                             ),
                           ),
@@ -139,7 +149,8 @@ class _LiveHomeScreenState extends State<LiveHomeScreen>
                               padding: EdgeInsets.zero,
                               //onPressed: () => context.startCommunityNotification(),
                               icon: ImageWidget(IconAppConstants.bell),
-                              highlightColor: Colors.transparent, onPressed: () {},
+                              highlightColor: Colors.transparent,
+                              onPressed: () {},
                             ),
                           ),
                           SizedBox(
@@ -158,7 +169,11 @@ class _LiveHomeScreenState extends State<LiveHomeScreen>
                     Expanded(
                       child: TabBarView(
                         controller: _liveTabController,
-                        children: [const LiveScreenTab(), Container(), Container()],
+                        children: [
+                          const LiveScreenTab(),
+                          Container(),
+                          Container()
+                        ],
                       ),
                     )
                   ],

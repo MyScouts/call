@@ -11,6 +11,7 @@ class OnBoarding with _$OnBoarding {
     required bool isMarshopOwner,
     required bool isMarshopCustomer,
     required bool hasDefaultBankAccount,
+    int? marshopCustomerId,
   }) = _OnBoarding;
 
   factory OnBoarding.fromJson(Map<String, dynamic> json) =>

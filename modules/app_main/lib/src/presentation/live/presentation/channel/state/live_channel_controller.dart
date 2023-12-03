@@ -183,7 +183,7 @@ class LiveChannelController {
       await getLeaderBoard(_info.value.id);
     } catch (e) {
       _state.value = LiveStreamState.stop;
-      if(context.mounted) {
+      if (context.mounted) {
         Navigator.of(context).pop();
         context.showToastMessage(
           'Live không còn tồn tại',

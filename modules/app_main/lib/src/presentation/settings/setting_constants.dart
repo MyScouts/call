@@ -89,18 +89,7 @@ class Setting {
           Setting(
             text: "Tài khoản MarShop",
             icon: IconAppConstants.icMarshop,
-            onPressed: () {
-              if (onboarding != null && !onboarding.isJA) {
-                context.confirmUpgradeJA(
-                  onConfirm: () {
-                    final bloc = context.read<GetJAStatusBloc>();
-                    bloc.add(GetDetailDataEvent());
-                  },
-                );
-                return;
-              }
-              context.startRegisterMarshop();
-            },
+            onPressed: context.startRegisterMarshop,
           ),
         ],
         [

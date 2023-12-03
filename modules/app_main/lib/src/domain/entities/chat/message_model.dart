@@ -1,4 +1,3 @@
-
 import 'package:app_main/src/domain/entities/chat/member_model.dart';
 
 import 'meta_data_model.dart';
