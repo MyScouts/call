@@ -15,6 +15,7 @@ import 'domain/entities/live_type.dart';
 import 'presentation/channel/state/live_channel_controller.dart';
 import 'presentation/list_gift/gift_bottom_sheet.dart';
 import 'presentation/live_bottom/live_bottom_sheet.dart';
+import 'presentation/live_tab/dialog.dart';
 import 'presentation/live_tab/live_controller.dart';
 
 extension LiveCoordinator on BuildContext {
@@ -54,6 +55,15 @@ extension LiveCoordinator on BuildContext {
     showDialog(
       context: this,
       builder: (_) => LiveTitlePicker(title: title, onChanged: onChanged),
+    );
+  }
+
+  void showNoticeDialog({
+    required String title,
+  }) {
+    showDialog(
+      context: this,
+      builder: (_) => NoticeDialog(title: title),
     );
   }
 
