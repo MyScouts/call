@@ -878,6 +878,10 @@ class Assets {
   static const SvgGenImage icons_ic_chat_ban =
       SvgGenImage('assets/icons/ic_chat_ban.svg');
 
+  /// File path: assets/icons/ic_check.png
+  static const AssetGenImage icons_ic_check =
+      AssetGenImage('assets/icons/ic_check.png');
+
   /// File path: assets/icons/ic_check_circle.png
   static const AssetGenImage icons_ic_check_circle =
       AssetGenImage('assets/icons/ic_check_circle.png');
@@ -2000,6 +2004,7 @@ class Assets {
         icons_ic_care,
         icons_ic_chanel,
         icons_ic_chat_ban,
+        icons_ic_check,
         icons_ic_check_circle,
         icons_ic_chevron_right,
         icons_ic_circle_arrow,

@@ -41,6 +41,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
   final _acceptTerm = ValueNotifier(false);
   final _rulesCtrl = ValueNotifier([]);
   final _marshopIdValidCtrl = ValueNotifier(false);
+  MarshopResponse? marshop;
   late User _authInfo;
 
   @override
@@ -118,7 +119,10 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
                       ),
                       child: PrimaryButton(
                         title: S.current.register,
-                        onTap: () => context.tartRegisterPackScreen(),
+                        onTap: () => context.tartRegisterPackScreen(
+                          authInfo: _authInfo,
+                          marshop: marshop!,
+                        ),
                         disabled: !valid,
                         width: MediaQuery.of(context).size.width,
                       ),
@@ -315,6 +319,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
         rules.add(RegisterMarshopRule.isRefIdMarshop);
         _rulesCtrl.value = rules;
       }
+      marshop = state.data;
     }
 
     if (state is GetDetailError<MarshopResponse>) {
