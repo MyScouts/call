@@ -106,7 +106,7 @@ class AuthenticationUsecase {
   }
 
   Future logout() async {
-    await _notificationService.unsubscribeNotification();
+    _notificationService.unsubscribeNotification();
     await _userSharePreferencesUsecase.clearUserData();
   }
 

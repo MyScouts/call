@@ -115,7 +115,6 @@ class NotificationService {
 
   Future unsubscribeNotification() async {
     final messaging = FirebaseMessaging.instance;
-
     await messaging.unsubscribeFromTopic('vdone');
     await messaging.unsubscribeFromTopic('public');
     await messaging.unsubscribeFromTopic(isIOS ? 'ios' : 'android');
@@ -124,7 +123,7 @@ class NotificationService {
     User? user = userSharePreferencesUsecase.getUserInfo();
     if (user != null && user.id != null) {
       final topic = 'user_${user.id}';
-      messaging.unsubscribeFromTopic(topic);
+      await messaging.unsubscribeFromTopic(topic);
       ;
     }
   }

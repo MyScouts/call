@@ -62,9 +62,9 @@ class UserInfoSharePreferencesUsecase {
   }
 
   Future clearUserData() async {
-    // await _shared.setString(_assessToken, '');
-    // await _shared.setString(_refreshToken, '');
-    // await _shared.setString(_kUserInfo, '{}');
-    await _shared.clear();
+    await _shared.setString(_assessToken, '');
+    await _shared.setString(_refreshToken, '');
+    await _shared.setString(_kUserInfo, '{}');
+    await _shared.setString(_keySubTopic, '');
   }
 }
