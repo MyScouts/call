@@ -134,4 +134,10 @@ class LiveRepositoryImpl extends LiveRepository {
     return result.data;
   }
 
+  @override
+  Future<GiftCardLive> getDedications(int userId) async {
+    final result = await _liveApi.getDedications(userId: userId);
+    return result.data;
+  }
+
 }

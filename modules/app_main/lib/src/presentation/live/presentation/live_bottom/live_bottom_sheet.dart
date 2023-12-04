@@ -62,6 +62,7 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
     }
     //liveBottomController.getLeaderBoard(widget.controller.info.id);
     liveBottomController.getDailyDedications(widget.controller.info.user!.id!);
+    liveBottomController.getDedications(widget.controller.info.user!.id!);
     liveBottomController.getListFriend();
     //liveBottomController.getListFollow();
     super.initState();

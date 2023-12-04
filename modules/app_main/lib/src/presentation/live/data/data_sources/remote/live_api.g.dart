@@ -267,7 +267,38 @@ class _LiveApi implements LiveApi {
     )
             .compose(
               _dio.options,
-              '/api/gift-card/daily-dedications',
+              '/api/gift-card/daily-dedication',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<GiftCardLive>.fromJson(
+      _result.data!,
+      (json) => GiftCardLive.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<GiftCardLive>> getDedications(
+      {required int userId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'userId': userId};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<GiftCardLive>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/gift-card/dedication',
               queryParameters: queryParameters,
               data: _data,
             )
