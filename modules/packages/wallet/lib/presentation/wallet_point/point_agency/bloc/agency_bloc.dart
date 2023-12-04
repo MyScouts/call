@@ -50,7 +50,7 @@ class AgencyBloc extends Bloc<AgencyEvent, AgencyState> {
             request: BuyCoinRequest(
                 vnd: event.vnd,
                 pDoneId: event.pDoneId,
-                expectedCoin: event.coin));
+                expectedCoin: event.coin, bankAccountId: event.bankAccountId));
         emit(_ExchangeSuccess(response: response));
       } catch (e) {
         const errMessage = 'Đã xảy ra lỗi';

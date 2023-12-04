@@ -74,7 +74,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
     } else {
       _agencyBloc.add(
         AgencyEvent.exchange(widget.agencyId, money.toInt(), coin.toInt(),
-            _userIDController.text),
+            _userIDController.text, bankAccount?.id ?? 0),
       );
     }
   }

@@ -21,7 +21,8 @@ mixin _$AgencyEvent {
     required TResult Function() getAllAgency,
     required TResult Function(int id) getAgencyInfo,
     required TResult Function(int id, num vnd, num coin) est,
-    required TResult Function(int id, num vnd, num coin, String pDoneId)
+    required TResult Function(
+            int id, num vnd, num coin, String pDoneId, num bankAccountId)
         exchange,
     required TResult Function(int agencyId, AgencyPaymentInformation request)
         getPaymentInformation,
@@ -32,7 +33,9 @@ mixin _$AgencyEvent {
     TResult? Function()? getAllAgency,
     TResult? Function(int id)? getAgencyInfo,
     TResult? Function(int id, num vnd, num coin)? est,
-    TResult? Function(int id, num vnd, num coin, String pDoneId)? exchange,
+    TResult? Function(
+            int id, num vnd, num coin, String pDoneId, num bankAccountId)?
+        exchange,
     TResult? Function(int agencyId, AgencyPaymentInformation request)?
         getPaymentInformation,
   }) =>
@@ -42,7 +45,9 @@ mixin _$AgencyEvent {
     TResult Function()? getAllAgency,
     TResult Function(int id)? getAgencyInfo,
     TResult Function(int id, num vnd, num coin)? est,
-    TResult Function(int id, num vnd, num coin, String pDoneId)? exchange,
+    TResult Function(
+            int id, num vnd, num coin, String pDoneId, num bankAccountId)?
+        exchange,
     TResult Function(int agencyId, AgencyPaymentInformation request)?
         getPaymentInformation,
     required TResult orElse(),
@@ -138,7 +143,8 @@ class _$GetAllAgencyImpl implements _GetAllAgency {
     required TResult Function() getAllAgency,
     required TResult Function(int id) getAgencyInfo,
     required TResult Function(int id, num vnd, num coin) est,
-    required TResult Function(int id, num vnd, num coin, String pDoneId)
+    required TResult Function(
+            int id, num vnd, num coin, String pDoneId, num bankAccountId)
         exchange,
     required TResult Function(int agencyId, AgencyPaymentInformation request)
         getPaymentInformation,
@@ -152,7 +158,9 @@ class _$GetAllAgencyImpl implements _GetAllAgency {
     TResult? Function()? getAllAgency,
     TResult? Function(int id)? getAgencyInfo,
     TResult? Function(int id, num vnd, num coin)? est,
-    TResult? Function(int id, num vnd, num coin, String pDoneId)? exchange,
+    TResult? Function(
+            int id, num vnd, num coin, String pDoneId, num bankAccountId)?
+        exchange,
     TResult? Function(int agencyId, AgencyPaymentInformation request)?
         getPaymentInformation,
   }) {
@@ -165,7 +173,9 @@ class _$GetAllAgencyImpl implements _GetAllAgency {
     TResult Function()? getAllAgency,
     TResult Function(int id)? getAgencyInfo,
     TResult Function(int id, num vnd, num coin)? est,
-    TResult Function(int id, num vnd, num coin, String pDoneId)? exchange,
+    TResult Function(
+            int id, num vnd, num coin, String pDoneId, num bankAccountId)?
+        exchange,
     TResult Function(int agencyId, AgencyPaymentInformation request)?
         getPaymentInformation,
     required TResult orElse(),
@@ -289,7 +299,8 @@ class _$GetAgencyInfoImpl implements _GetAgencyInfo {
     required TResult Function() getAllAgency,
     required TResult Function(int id) getAgencyInfo,
     required TResult Function(int id, num vnd, num coin) est,
-    required TResult Function(int id, num vnd, num coin, String pDoneId)
+    required TResult Function(
+            int id, num vnd, num coin, String pDoneId, num bankAccountId)
         exchange,
     required TResult Function(int agencyId, AgencyPaymentInformation request)
         getPaymentInformation,
@@ -303,7 +314,9 @@ class _$GetAgencyInfoImpl implements _GetAgencyInfo {
     TResult? Function()? getAllAgency,
     TResult? Function(int id)? getAgencyInfo,
     TResult? Function(int id, num vnd, num coin)? est,
-    TResult? Function(int id, num vnd, num coin, String pDoneId)? exchange,
+    TResult? Function(
+            int id, num vnd, num coin, String pDoneId, num bankAccountId)?
+        exchange,
     TResult? Function(int agencyId, AgencyPaymentInformation request)?
         getPaymentInformation,
   }) {
@@ -316,7 +329,9 @@ class _$GetAgencyInfoImpl implements _GetAgencyInfo {
     TResult Function()? getAllAgency,
     TResult Function(int id)? getAgencyInfo,
     TResult Function(int id, num vnd, num coin)? est,
-    TResult Function(int id, num vnd, num coin, String pDoneId)? exchange,
+    TResult Function(
+            int id, num vnd, num coin, String pDoneId, num bankAccountId)?
+        exchange,
     TResult Function(int agencyId, AgencyPaymentInformation request)?
         getPaymentInformation,
     required TResult orElse(),
@@ -461,7 +476,8 @@ class _$EstCoinEventImpl implements _EstCoinEvent {
     required TResult Function() getAllAgency,
     required TResult Function(int id) getAgencyInfo,
     required TResult Function(int id, num vnd, num coin) est,
-    required TResult Function(int id, num vnd, num coin, String pDoneId)
+    required TResult Function(
+            int id, num vnd, num coin, String pDoneId, num bankAccountId)
         exchange,
     required TResult Function(int agencyId, AgencyPaymentInformation request)
         getPaymentInformation,
@@ -475,7 +491,9 @@ class _$EstCoinEventImpl implements _EstCoinEvent {
     TResult? Function()? getAllAgency,
     TResult? Function(int id)? getAgencyInfo,
     TResult? Function(int id, num vnd, num coin)? est,
-    TResult? Function(int id, num vnd, num coin, String pDoneId)? exchange,
+    TResult? Function(
+            int id, num vnd, num coin, String pDoneId, num bankAccountId)?
+        exchange,
     TResult? Function(int agencyId, AgencyPaymentInformation request)?
         getPaymentInformation,
   }) {
@@ -488,7 +506,9 @@ class _$EstCoinEventImpl implements _EstCoinEvent {
     TResult Function()? getAllAgency,
     TResult Function(int id)? getAgencyInfo,
     TResult Function(int id, num vnd, num coin)? est,
-    TResult Function(int id, num vnd, num coin, String pDoneId)? exchange,
+    TResult Function(
+            int id, num vnd, num coin, String pDoneId, num bankAccountId)?
+        exchange,
     TResult Function(int agencyId, AgencyPaymentInformation request)?
         getPaymentInformation,
     required TResult orElse(),
@@ -559,7 +579,7 @@ abstract class _$$ExchangeImplCopyWith<$Res> {
           _$ExchangeImpl value, $Res Function(_$ExchangeImpl) then) =
       __$$ExchangeImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({int id, num vnd, num coin, String pDoneId});
+  $Res call({int id, num vnd, num coin, String pDoneId, num bankAccountId});
 }
 
 /// @nodoc
@@ -577,6 +597,7 @@ class __$$ExchangeImplCopyWithImpl<$Res>
     Object? vnd = null,
     Object? coin = null,
     Object? pDoneId = null,
+    Object? bankAccountId = null,
   }) {
     return _then(_$ExchangeImpl(
       null == id
@@ -595,6 +616,10 @@ class __$$ExchangeImplCopyWithImpl<$Res>
           ? _value.pDoneId
           : pDoneId // ignore: cast_nullable_to_non_nullable
               as String,
+      null == bankAccountId
+          ? _value.bankAccountId
+          : bankAccountId // ignore: cast_nullable_to_non_nullable
+              as num,
     ));
   }
 }
@@ -602,7 +627,8 @@ class __$$ExchangeImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ExchangeImpl implements _Exchange {
-  const _$ExchangeImpl(this.id, this.vnd, this.coin, this.pDoneId);
+  const _$ExchangeImpl(
+      this.id, this.vnd, this.coin, this.pDoneId, this.bankAccountId);
 
   @override
   final int id;
@@ -612,10 +638,12 @@ class _$ExchangeImpl implements _Exchange {
   final num coin;
   @override
   final String pDoneId;
+  @override
+  final num bankAccountId;
 
   @override
   String toString() {
-    return 'AgencyEvent.exchange(id: $id, vnd: $vnd, coin: $coin, pDoneId: $pDoneId)';
+    return 'AgencyEvent.exchange(id: $id, vnd: $vnd, coin: $coin, pDoneId: $pDoneId, bankAccountId: $bankAccountId)';
   }
 
   @override
@@ -626,11 +654,14 @@ class _$ExchangeImpl implements _Exchange {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.vnd, vnd) || other.vnd == vnd) &&
             (identical(other.coin, coin) || other.coin == coin) &&
-            (identical(other.pDoneId, pDoneId) || other.pDoneId == pDoneId));
+            (identical(other.pDoneId, pDoneId) || other.pDoneId == pDoneId) &&
+            (identical(other.bankAccountId, bankAccountId) ||
+                other.bankAccountId == bankAccountId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, vnd, coin, pDoneId);
+  int get hashCode =>
+      Object.hash(runtimeType, id, vnd, coin, pDoneId, bankAccountId);
 
   @JsonKey(ignore: true)
   @override
@@ -644,12 +675,13 @@ class _$ExchangeImpl implements _Exchange {
     required TResult Function() getAllAgency,
     required TResult Function(int id) getAgencyInfo,
     required TResult Function(int id, num vnd, num coin) est,
-    required TResult Function(int id, num vnd, num coin, String pDoneId)
+    required TResult Function(
+            int id, num vnd, num coin, String pDoneId, num bankAccountId)
         exchange,
     required TResult Function(int agencyId, AgencyPaymentInformation request)
         getPaymentInformation,
   }) {
-    return exchange(id, vnd, coin, pDoneId);
+    return exchange(id, vnd, coin, pDoneId, bankAccountId);
   }
 
   @override
@@ -658,11 +690,13 @@ class _$ExchangeImpl implements _Exchange {
     TResult? Function()? getAllAgency,
     TResult? Function(int id)? getAgencyInfo,
     TResult? Function(int id, num vnd, num coin)? est,
-    TResult? Function(int id, num vnd, num coin, String pDoneId)? exchange,
+    TResult? Function(
+            int id, num vnd, num coin, String pDoneId, num bankAccountId)?
+        exchange,
     TResult? Function(int agencyId, AgencyPaymentInformation request)?
         getPaymentInformation,
   }) {
-    return exchange?.call(id, vnd, coin, pDoneId);
+    return exchange?.call(id, vnd, coin, pDoneId, bankAccountId);
   }
 
   @override
@@ -671,13 +705,15 @@ class _$ExchangeImpl implements _Exchange {
     TResult Function()? getAllAgency,
     TResult Function(int id)? getAgencyInfo,
     TResult Function(int id, num vnd, num coin)? est,
-    TResult Function(int id, num vnd, num coin, String pDoneId)? exchange,
+    TResult Function(
+            int id, num vnd, num coin, String pDoneId, num bankAccountId)?
+        exchange,
     TResult Function(int agencyId, AgencyPaymentInformation request)?
         getPaymentInformation,
     required TResult orElse(),
   }) {
     if (exchange != null) {
-      return exchange(id, vnd, coin, pDoneId);
+      return exchange(id, vnd, coin, pDoneId, bankAccountId);
     }
     return orElse();
   }
@@ -725,14 +761,14 @@ class _$ExchangeImpl implements _Exchange {
 }
 
 abstract class _Exchange implements AgencyEvent {
-  const factory _Exchange(
-          final int id, final num vnd, final num coin, final String pDoneId) =
-      _$ExchangeImpl;
+  const factory _Exchange(final int id, final num vnd, final num coin,
+      final String pDoneId, final num bankAccountId) = _$ExchangeImpl;
 
   int get id;
   num get vnd;
   num get coin;
   String get pDoneId;
+  num get bankAccountId;
   @JsonKey(ignore: true)
   _$$ExchangeImplCopyWith<_$ExchangeImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -816,7 +852,8 @@ class _$GetPaymentInformationImpl implements _GetPaymentInformation {
     required TResult Function() getAllAgency,
     required TResult Function(int id) getAgencyInfo,
     required TResult Function(int id, num vnd, num coin) est,
-    required TResult Function(int id, num vnd, num coin, String pDoneId)
+    required TResult Function(
+            int id, num vnd, num coin, String pDoneId, num bankAccountId)
         exchange,
     required TResult Function(int agencyId, AgencyPaymentInformation request)
         getPaymentInformation,
@@ -830,7 +867,9 @@ class _$GetPaymentInformationImpl implements _GetPaymentInformation {
     TResult? Function()? getAllAgency,
     TResult? Function(int id)? getAgencyInfo,
     TResult? Function(int id, num vnd, num coin)? est,
-    TResult? Function(int id, num vnd, num coin, String pDoneId)? exchange,
+    TResult? Function(
+            int id, num vnd, num coin, String pDoneId, num bankAccountId)?
+        exchange,
     TResult? Function(int agencyId, AgencyPaymentInformation request)?
         getPaymentInformation,
   }) {
@@ -843,7 +882,9 @@ class _$GetPaymentInformationImpl implements _GetPaymentInformation {
     TResult Function()? getAllAgency,
     TResult Function(int id)? getAgencyInfo,
     TResult Function(int id, num vnd, num coin)? est,
-    TResult Function(int id, num vnd, num coin, String pDoneId)? exchange,
+    TResult Function(
+            int id, num vnd, num coin, String pDoneId, num bankAccountId)?
+        exchange,
     TResult Function(int agencyId, AgencyPaymentInformation request)?
         getPaymentInformation,
     required TResult orElse(),
