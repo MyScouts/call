@@ -31,7 +31,7 @@ class PipVideoRender extends StatelessWidget {
             child: GestureDetector(
               onTap: () async {
                 Navigator.push(
-                  AppCoordinator.root.currentContext!,
+                  AppCoordinator.rootNavigator.currentContext!,
                   MaterialPageRoute(
                     builder: (_) => MultiProvider(
                       providers: [

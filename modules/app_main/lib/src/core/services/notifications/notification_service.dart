@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/live/live_coordinator.dart';
+import 'package:app_main/src/presentation/live/presentation/live_home/live_home_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -37,6 +39,8 @@ class NotificationService {
   Stream<Map<String, dynamic>> get onListenerOpenNotification async* {
     yield* _openNotificationController.stream.asBroadcastStream();
   }
+
+  int index = 0;
 
   void openNotification(Map<String, dynamic> payload) {
     _openNotificationController.sink.add(payload);
@@ -79,10 +83,8 @@ class NotificationService {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      _loggerService
-          .d('[fcm] User granted permission: ${settings.authorizationStatus}');
-      final userSharePreferencesUsecase =
-          injector.get<UserSharePreferencesUsecase>();
+      _loggerService.d('[fcm] User granted permission: ${settings.authorizationStatus}');
+      final userSharePreferencesUsecase = injector.get<UserSharePreferencesUsecase>();
       if (userSharePreferencesUsecase.getSubTopicFCM == false) {
         await messaging.subscribeToTopic('vdone');
         await messaging.subscribeToTopic('public');
@@ -91,14 +93,12 @@ class NotificationService {
       }
     }
 
-    unawaited(FirebaseMessaging.instance
-        .getInitialMessage()
-        .then((RemoteMessage? message) {
+    unawaited(FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
       if (message == null) {
         return;
       }
       if (message.data.isNotEmpty) {
-        injector.get<NotificationService>().openNotification(message.data);
+        injector.get<NotificationService>().openNotification(message.toMap());
       }
       updateCount(message.data);
     }));
@@ -109,7 +109,7 @@ class NotificationService {
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      openNotification(message.data);
+      openNotification(message.toMap());
     });
   }
 
@@ -118,8 +118,7 @@ class NotificationService {
     await messaging.unsubscribeFromTopic('vdone');
     await messaging.unsubscribeFromTopic('public');
     await messaging.unsubscribeFromTopic(isIOS ? 'ios' : 'android');
-    final userSharePreferencesUsecase =
-        injector.get<UserSharePreferencesUsecase>();
+    final userSharePreferencesUsecase = injector.get<UserSharePreferencesUsecase>();
     User? user = userSharePreferencesUsecase.getUserInfo();
     if (user != null && user.id != null) {
       final topic = 'user_${user.id}';

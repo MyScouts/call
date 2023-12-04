@@ -6,12 +6,12 @@ import 'package:app_main/src/presentation/live/presentation/create/widget/live_t
 import 'package:app_main/src/presentation/live/presentation/create/widget/live_type_picker.dart';
 import 'package:app_main/src/presentation/live/presentation/live_bottom/live_user_info_bottom_sheet.dart';
 import 'package:app_main/src/presentation/live/presentation/live_tab/filter_bottom.dart';
+import 'package:app_main/src/presentation/live/presentation/widget/live_invite_dialog.dart';
 import 'package:flutter/material.dart';
 
 import '../social/profile/profile_bloc.dart';
 import 'domain/entities/gift_card_list.dart';
 import 'domain/entities/live_category_detail.dart';
-import 'domain/entities/live_detail.dart';
 import 'domain/entities/live_type.dart';
 import 'presentation/channel/state/live_channel_controller.dart';
 import 'presentation/list_gift/gift_bottom_sheet.dart';
@@ -68,8 +68,18 @@ extension LiveCoordinator on BuildContext {
     );
   }
 
-  void joinLive(int liveID) {
-    Navigator.of(this).pushNamed(
+  Future showInviteDialog({required String title, required int liveId}) {
+    return showDialog(
+      context: this,
+      builder: (_) => InviteNoticeDialog(
+        title: title,
+        liveId: liveId,
+      ),
+    );
+  }
+
+  Future<T?> joinLive<T>(int liveID) {
+    return Navigator.of(this).pushNamed<T>(
       JoinChannelProvider.routerName,
       arguments: liveID,
     );
