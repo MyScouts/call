@@ -68,7 +68,7 @@ class _AgencyTabBarWidgetState extends State<AgencyTabBarWidget>
   _buildTab() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-      margin: EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: WalletConstant.borderRadius90,

@@ -36,6 +36,7 @@ class UserApiConstants {
   static const genEmail = "api/v1/user/add-email-otp";
   static const updateAvatar = "api/v1/user";
   static const setConfig = "api/v1/setting/personal/{key}";
+  static const stringeeToken = "api/v1/call/stringee-token";
 }
 
 @RestApi()
@@ -70,7 +71,7 @@ abstract class UserApi {
   );
 
   @POST(UserApiConstants.followUser)
-  Future<ApiResponse<FollowUserResponse>> followUser({
+  Future<FollowUserResponse> followUser({
     @Body() required FollowUserPayload body,
   });
 
@@ -134,4 +135,7 @@ abstract class UserApi {
 
   @GET(UserApiConstants.setConfig)
   Future<dynamic> getConfig(@Path('key') String key);
+
+  @GET(UserApiConstants.stringeeToken)
+  Future getStringeeToken();
 }

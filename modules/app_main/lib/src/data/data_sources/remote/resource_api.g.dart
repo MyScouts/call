@@ -224,6 +224,7 @@ class _ResourceApi implements ResourceApi {
     if (url.isAbsolute) {
       return url.toString();
     }
+
     return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
 

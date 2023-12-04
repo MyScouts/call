@@ -3,11 +3,13 @@
 import 'package:app_core/app_core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
 import '../../../../../wallet.dart';
 import '../../../../core/theme/wallet_theme.dart';
 import '../../../../domain/entities/agency/agency.dart';
+import '../../../../domain/entities/wallet/bank_account.dart';
 import '../../../shared/widgets/app_bar.dart';
 import '../../../shared/widgets/gradiant_button.dart';
 import '../../wallet_point_coodinator.dart';
@@ -28,7 +30,7 @@ class PointAgencyScreen extends StatefulWidget {
 
 class _PointAgencyScreenState extends State<PointAgencyScreen> {
   late final _agencyBloc = context.read<AgencyBloc>();
-  AgencyResponse? agencyResponse;
+  AgencyDetailResponse? agencyResponse;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class _PointAgencyScreenState extends State<PointAgencyScreen> {
           listener: (BuildContext context, AgencyState state) {
             state.whenOrNull(getAgencyInfoSuccess: (agency) {
               agencyResponse = agency;
-              Future.delayed(Duration(milliseconds: 200)).then((value) {
+              Future.delayed(const Duration(milliseconds: 200)).then((value) {
                 setState(() {});
               });
             }, getAgencyInfoLoading: () {
@@ -134,7 +136,7 @@ class _PointAgencyScreenState extends State<PointAgencyScreen> {
       return Container();
     }
 
-    return Container(
+    return Expanded(child: Container(
       margin: const EdgeInsets.only(top: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,13 +145,15 @@ class _PointAgencyScreenState extends State<PointAgencyScreen> {
             textAlign: TextAlign.center,
             text: TextSpan(
               text: 'Kho: ',
-              style: context.textTheme.titleLarge,
+              style: context.textTheme.titleLarge!.copyWith(
+                fontSize: 18,
+              ),
               children: [
                 TextSpan(
                   text:
-                      '${agencyResponse!.availableCoin!.toAppCurrencyString(isWithSymbol: false)} xu',
+                  '${agencyResponse!.coinAgency.availableCoin!.toAppCurrencyString(isWithSymbol: false)} xu',
                   style: context.textTheme.titleLarge!
-                      .copyWith(fontSize: 22, color: const Color(0xFFC6650C)),
+                      .copyWith(fontSize: 18, color: const Color(0xFFC6650C)),
                 ),
               ],
             ),
@@ -157,18 +161,18 @@ class _PointAgencyScreenState extends State<PointAgencyScreen> {
           const SizedBox(
             height: 24,
           ),
-          if ((agencyResponse!.coinDiscounts ?? []).isNotEmpty) ...[
+          if ((agencyResponse!.coinAgency.coinDiscounts ?? []).isNotEmpty) ...[
             Text(
               'Ưu đãi',
               style: context.textTheme.titleLarge!
-                  .copyWith(fontWeight: FontWeight.w500),
+                  .copyWith(fontWeight: FontWeight.w500, fontSize: 18),
             ),
             const SizedBox(
               height: 16,
             ),
             Container(
               decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(16)),
+              BoxDecoration(borderRadius: BorderRadius.circular(16)),
               child: Table(
                 border: TableBorder.all(
                   color: const Color(0xFF4B84F7),
@@ -202,33 +206,87 @@ class _PointAgencyScreenState extends State<PointAgencyScreen> {
                       ),
                     ],
                   ),
-                  ...(agencyResponse!.coinDiscounts ?? [])
+                  ...(agencyResponse!.coinAgency.coinDiscounts ?? [])
                       .map((e) => TableRow(children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: Text(
-                                e.thresholdVnd.toAppCurrencyString(),
-                                style: context.textTheme.titleMedium!.copyWith(
-                                    color: const Color(0xFF6E6E6E),
-                                    fontSize: 16),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: Text(
-                                '${e.discountRate}%',
-                                style: context.textTheme.titleMedium!.copyWith(
-                                    color: const Color(0xFF6E6E6E),
-                                    fontSize: 16),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ]))
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Text(
+                        e.thresholdVnd.toAppCurrencyString(),
+                        style: context.textTheme.titleMedium!.copyWith(
+                            color: const Color(0xFF6E6E6E),
+                            fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Text(
+                        '${e.discountRate}%',
+                        style: context.textTheme.titleMedium!.copyWith(
+                            color: const Color(0xFF6E6E6E),
+                            fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ]))
                 ],
               ),
             ),
-          ]
+          ],
+          _buildAgencyBankAccount(context),
+        ],
+      ),
+    ));
+  }
+
+  Widget _buildAgencyBankAccount(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Phương thức thanh toán',
+            style: context.textTheme.titleLarge!
+                .copyWith(fontWeight: FontWeight.w500, fontSize: 18),
+          ),
+          SizedBox(
+            height: 300,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ...(agencyResponse?.bankAccounts ?? [])
+                      .map((e) => _agencyBankAccElement(context, e))
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _agencyBankAccElement(BuildContext context, BankAccount bankAccount) {
+    return Container(
+      margin: const EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppColors.black10.withOpacity(0.4))),
+      child: Row(
+        children: [
+          ImageWidget(
+            bankAccount.bank?.logo ?? '',
+            fit: BoxFit.cover,
+            height: 40,
+          ),
+          Expanded(
+            child: Text(
+              bankAccount.bank?.name ?? '',
+              style: context.textTheme.titleMedium,
+            ),
+          ),
         ],
       ),
     );

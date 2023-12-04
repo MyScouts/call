@@ -149,6 +149,20 @@ class IconAppConstants {
   static String icBlockChat = IconApp.icBlockChat.path;
   static String icImage = IconApp.icImage.path;
   static String icSmile = IconApp.icSmile.path;
+  static String icUserGroup3 = IconApp.icUserGroup3.path;
+  static String icCallSvg = IconApp.icCallSvg.path;
+  static String icCallVideo = IconApp.icCallVideo.path;
+  static String icAnswer = IconApp.icAnswer.path;
+  static String icEnd = IconApp.icEnd.path;
+  static String icMicro = IconApp.icMicro.path;
+  static String icVideoCall = IconApp.icVideoCall.path;
+  static String icVolume = IconApp.icVolume.path;
+  static String icIncomingCall = IconApp.icIncomingCall.path;
+  static String icSwitchCamera = IconApp.icSwitchCamera.path;
+  static String icCallAway = IconApp.icCallAway.path;
+  static String icVideoOff = IconApp.icVideoOff.path;
+  static String icMicOff = IconApp.icMicOff.path;
+  static String icBackCall = IconApp.icBackCall.path;
 }
 
 enum IconApp {
@@ -305,7 +319,24 @@ enum IconApp {
   ///chat
   icImage('assets/icons/ic_image.svg'),
   icSmile('assets/icons/ic_smile.svg'),
-  icBlockChat('assets/icons/ic_block_chat.svg');
+  icBlockChat('assets/icons/ic_block_chat.svg'),
+  icVideoOff('assets/icons/ic_video_off.svg'),
+  icMicOff('assets/icons/ic_mic_off.svg'),
+
+
+  ///call
+  icUserGroup3('assets/icons/ic_user_group3.svg'),
+  icCallSvg('assets/icons/ic_call.svg'),
+  icCallVideo('assets/icons/ic_call_video.svg'),
+  icAnswer('assets/icons/ic_answer.svg'),
+  icEnd('assets/icons/ic_end.svg'),
+  icMicro('assets/icons/ic_micro.svg'),
+  icVideoCall('assets/icons/ic_video_call.svg'),
+  icVolume('assets/icons/ic_volume.svg'),
+  icIncomingCall('assets/icons/ic_incoming_call.svg'),
+  icSwitchCamera('assets/icons/ic_switch_camera.svg'),
+  icCallAway('assets/icons/ic_call_away.svg'),
+  icBackCall('assets/icons/ic_back_call.svg');
 
   const IconApp(this.path);
 

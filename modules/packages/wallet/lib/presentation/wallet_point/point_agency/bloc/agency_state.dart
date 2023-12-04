@@ -7,7 +7,7 @@ class AgencyState with _$AgencyState {
   const factory AgencyState.error(String err) = _Error;
 
   const factory AgencyState.getAgencyInfoSuccess(
-      {required AgencyResponse agencyInfo}) = _GetAgencyInfoSuccess;
+      {required AgencyDetailResponse agencyInfo}) = _GetAgencyInfoSuccess;
 
   const factory AgencyState.getAgencyInfoLoading() = _GetAgencyInfoLoading;
 

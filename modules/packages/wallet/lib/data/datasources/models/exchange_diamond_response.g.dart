@@ -9,11 +9,11 @@ part of 'exchange_diamond_response.dart';
 ExchangeDiamondResponse _$ExchangeDiamondResponseFromJson(
         Map<String, dynamic> json) =>
     ExchangeDiamondResponse(
-      result: json['result'] as bool,
+      pendingVnd: json['pendingVnd'] as num,
     );
 
 Map<String, dynamic> _$ExchangeDiamondResponseToJson(
         ExchangeDiamondResponse instance) =>
     <String, dynamic>{
-      'result': instance.result,
+      'pendingVnd': instance.pendingVnd,
     };
