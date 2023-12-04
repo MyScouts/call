@@ -39,7 +39,7 @@ class CircleNetworkImage extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(size / 2),
-            child: url.isEmpty
+            child: url.trim().isEmpty
                 ? defaultImage ?? const SizedBox.shrink()
                 : isIgnoreCache
                     ? Image.network(

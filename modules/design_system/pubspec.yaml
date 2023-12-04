@@ -9,11 +9,28 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.1.0
+  lottie: ^2.3.0
+
+dependency_overrides:
+  flutter_svg: ^2.0.7
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.1
+  build_runner:
+  source_gen: ^1.2.7
+
+flutter_gen:
+  output: lib/generated/
+  assets:
+    enabled: true
+    outputs:
+      package_parameter_enabled: true
+      style: snake-case
+  integrations:
+    flutter_svg: true
+    lottie: true
 
 flutter:
   generate: true
@@ -23,6 +40,7 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/fonts/
+    - assets/icons/dashboard/
 
   fonts:
     - family: Inter
