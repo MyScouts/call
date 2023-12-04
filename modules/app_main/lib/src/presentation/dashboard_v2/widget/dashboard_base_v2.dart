@@ -53,6 +53,7 @@ abstract class DashboardBaseV2 extends StatelessWidget {
                         child: Column(
                           children: <Widget>[
                             SizedBox(
+                              width: 259.w,
                               height: 93.h,
                               child: leading,
                             ),
@@ -62,6 +63,7 @@ abstract class DashboardBaseV2 extends StatelessWidget {
                               child: promotion,
                             ),
                             SizedBox(
+                              width: 259.w,
                               height: 239.h,
                               child: center,
                             ),
@@ -100,7 +102,11 @@ abstract class DashboardBaseV2 extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 14.h),
-                SizedBox(height: 109.h, child: bottom),
+                SizedBox(
+                  width: 361.w,
+                  height: 109.h,
+                  child: bottom,
+                ),
                 SizedBox(height: 14.h),
               ],
             ),
@@ -144,7 +150,10 @@ class AppIcon extends StatelessWidget {
                 ),
               ],
             ),
-            child: ImageWidget(app.backgroundImage),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(14),
+              child: ImageWidget(app.backgroundImage),
+            ),
           ),
           const SizedBox(height: 5),
           Text(
@@ -187,19 +196,19 @@ class DashboardCommunity extends DashboardBaseV2 {
           backgroundImage: IconAppConstants.icTeam,
         ),
         DashBoardIconItem(
-          id: 'ic_live',
-          title: 'Live',
-          backgroundImage: IconAppConstants.icLive,
+          id: 'ic_game',
+          title: 'Trò chơi',
+          backgroundImage: Assets.icons_dashboard_game.path,
         ),
         DashBoardIconItem(
-          id: 'ic_wallet',
-          title: 'Ví',
-          backgroundImage: IconAppConstants.icWallet,
+          id: 'ic_donate',
+          title: 'Donate',
+          backgroundImage: Assets.icons_dashboard_donate.path,
         ),
         DashBoardIconItem(
-          id: 'ic_call',
-          title: 'Điện thoại',
-          backgroundImage: IconAppConstants.icCall,
+          id: 'ic_tv_live',
+          title: 'TV Live',
+          backgroundImage: Assets.icons_dashboard_tv_live.path,
         ),
       ];
 
@@ -237,10 +246,9 @@ class DashboardPersonal extends DashboardBaseV2 {
           path: ScanQrCodeScanScreen.routeName,
         ),
         DashBoardIconItem(
-          id: 'ic_scan',
-          title: 'Quét QR',
-          backgroundImage: IconAppConstants.icScan,
-          path: ScanQrCodeScanScreen.routeName,
+          id: 'ic_wallet',
+          title: 'Ví',
+          backgroundImage: IconAppConstants.icWallet,
         ),
         DashBoardIconItem(
           id: 'ic_profile',
@@ -248,14 +256,14 @@ class DashboardPersonal extends DashboardBaseV2 {
           backgroundImage: IconAppConstants.icProfile,
         ),
         DashBoardIconItem(
-          id: 'ic_mess',
-          title: 'Tin nhắn',
-          backgroundImage: IconAppConstants.icMess,
+          id: 'ic_save',
+          title: 'Đã Lưu',
+          backgroundImage: Assets.icons_dashboard_save.path,
         ),
         DashBoardIconItem(
-          id: 'ic_call',
-          title: 'Điện thoại',
-          backgroundImage: IconAppConstants.icCall,
+          id: 'ic_buff',
+          title: 'Nạp xu',
+          backgroundImage: Assets.icons_dashboard_buff.path,
         ),
       ];
 }
@@ -281,30 +289,29 @@ class DashboardEco extends DashboardBaseV2 {
   @override
   List<DashBoardItem> get items => [
         DashBoardIconItem(
+          id: 'ic_khtx',
+          title: 'KHTX',
+          backgroundImage: Assets.icons_dashboard_k_h_t_x.path,
+        ),
+        DashBoardIconItem(
           id: 'ic_marShop',
           title: 'MarShop',
           backgroundImage: IconAppConstants.icMaShop,
         ),
         DashBoardIconItem(
-          id: 'ic_market',
+          id: 'ic_order',
+          title: 'Đơn hàng',
+          backgroundImage: Assets.icons_dashboard_order.path,
+        ),
+        DashBoardIconItem(
+          id: 'ic_ncc',
+          title: 'NCC',
+          backgroundImage: Assets.icons_dashboard_n_c_c.path,
+        ),
+        DashBoardIconItem(
+          id: 'ic_kho',
           title: 'Kho',
-          backgroundImage: IconAppConstants.icMarket,
-        ),
-        DashBoardIconItem(
-          id: 'ic_qr',
-          title: 'QR Code',
-          backgroundImage: IconAppConstants.icQr,
-          path: ScanQrCodeScanScreen.routeName,
-        ),
-        DashBoardIconItem(
-          id: 'ic_wallet',
-          title: 'Ví',
-          backgroundImage: IconAppConstants.icWallet,
-        ),
-        DashBoardIconItem(
-          id: 'ic_call',
-          title: 'Điện thoại',
-          backgroundImage: IconAppConstants.icCall,
+          backgroundImage: Assets.icons_dashboard_kho.path,
         ),
       ];
 }

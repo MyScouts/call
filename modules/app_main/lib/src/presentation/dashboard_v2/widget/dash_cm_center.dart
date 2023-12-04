@@ -25,11 +25,11 @@ class DashCmCenter extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   const _NewCard(),
+                  const _NewCard2(),
                   const _NewCard(),
+                  const _NewCard2(),
                   const _NewCard(),
-                  const _NewCard(),
-                  const _NewCard(),
-                  const _NewCard(),
+                  const _NewCard2(),
                   const _NewCard(),
                 ].separated(const SizedBox(height: 10)),
               ),
@@ -99,6 +99,57 @@ class _NewCard extends StatelessWidget {
                 ),
                 Text(
                   '20 phút trước',
+                  style: TextStyle(
+                    fontSize: 9,
+                    height: 1.2,
+                    color: Color(0xffACACAC),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _NewCard2 extends StatelessWidget {
+  const _NewCard2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicHeight(
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(6.0),
+            child: SizedBox.square(
+              dimension: 50,
+              child: ImageWidget(
+                Assets.icons_dashboard_new_2.path,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          const SizedBox(width: 4),
+          const Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Text(
+                    'Mới được đến một đất nước đầy sự lãng mạn và thật sự...',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    maxLines: 2,
+                  ),
+                ),
+                Text(
+                  '50 phút trước',
                   style: TextStyle(
                     fontSize: 9,
                     height: 1.2,
