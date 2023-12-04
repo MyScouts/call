@@ -56,7 +56,7 @@ class _ApplicationState extends State<Application>
       splitScreenMode: true,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        navigatorKey: AppCoordinator.root,
+        navigatorKey: AppCoordinator.rootNavigator,
         localizationsDelegates: LocalizationFactory.localizationsDelegates,
         supportedLocales: LocalizationFactory.supportedLocales,
         title: widget.title,
