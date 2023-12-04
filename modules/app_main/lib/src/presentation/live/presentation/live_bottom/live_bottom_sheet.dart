@@ -69,7 +69,7 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
   }
 
   List<Widget> get listTab => [
-        ViewerTab(controller: widget.controller),
+        ViewerTab(controller: widget.controller, liveBottomController: liveBottomController,),
         ListFriendTab(controller: liveBottomController, liveData: widget.controller.info),
         //ListFollowTab(controller: liveBottomController, liveData: widget.controller.info),
         LeaderBoardTab(controller: liveBottomController),
