@@ -17,9 +17,8 @@ final class ReportUserFail extends UserActionState {
 final class OnFollowUser extends UserActionState {}
 
 final class FollowUserSuccess extends UserActionState {
-  final bool isFriend;
-  final bool isFollowed;
-  FollowUserSuccess({required this.isFollowed, required this.isFriend});
+  final bool approvalRequired;
+  FollowUserSuccess({required this.approvalRequired});
 }
 
 final class FollowUserFail extends UserActionState {
@@ -45,4 +44,17 @@ final class BlockUserSuccess extends UserActionState {}
 final class BlockUserFail extends UserActionState {
   final String message;
   BlockUserFail({required this.message});
+}
+
+// Block user
+final class OnGetFollowUser extends UserActionState {}
+
+final class GetFollowUserSuccess extends UserActionState {
+  final GetUserFollowDetailResponse followDetail;
+  GetFollowUserSuccess({required this.followDetail});
+}
+
+final class GetFollowUserFail extends UserActionState {
+  final String message;
+  GetFollowUserFail({required this.message});
 }

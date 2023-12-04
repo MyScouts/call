@@ -1,9 +1,12 @@
 import 'dart:async';
 
+import 'package:app_core/app_core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
+import '../../../data/datasources/models/response/wallet_info_response.dart';
 import '../../../domain/domain.dart';
 import '../screens/screens.dart';
 import '../wallet_diamond_screen.dart';
@@ -36,6 +39,7 @@ class WalletDiamondNestedRoute {
   }
 }
 
+@injectable
 class WalletDiamondBloc extends Bloc<WalletDiamondEvent, WalletDiamondState> {
   final WalletDiamondUseCase _walletDiamondUseCase;
 
@@ -96,7 +100,14 @@ class WalletDiamondBloc extends Bloc<WalletDiamondEvent, WalletDiamondState> {
 
       emit(ExchangeDiamondSuccess());
     } catch (e) {
-      emit(ExchangeDiamondFailure('Có lỗi xảy ra, vui lòng thử lại'));
+      if(e is DioException){
+        final errorCode = e.response?.data['code'];
+        if(errorCode == 'NOT_JA'){
+          emit(ExchangeDiamondFailure('Bạn không phải JA'));
+        }
+      }else{
+        emit(ExchangeDiamondFailure('Có lỗi xảy ra, vui lòng thử lại'));
+      }
     }
   }
 }

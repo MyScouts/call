@@ -2,17 +2,12 @@ import 'dart:io';
 
 import 'package:injectable/injectable.dart';
 
-import '../../../wallet.dart';
 import '../../data/data.dart';
 import '../entities/bank/bank.dart';
 import '../entities/otp/otp.dart';
-import '../entities/transaction_history/transaction_history.dart';
-import '../entities/transaction_history/transaction_history_detail.dart';
 import '../entities/wallet/bank_account.dart';
 import '../entities/wallet/vnd_wallet_info/vnd_wallet_info.dart';
 import '../repository/wallet_vnd_repository.dart';
-import '../specs/filters/transaction_history.dart';
-import '../specs/pagination/pagination.dart';
 
 @injectable
 class WalletVndUseCase {
@@ -22,33 +17,6 @@ class WalletVndUseCase {
 
   Future<List<Bank>> getBanks() async {
     return <Bank>[];
-  }
-
-  Future<List<TransactionHistory>> getTransactionHistories(
-    String fromSource,
-    TransactionHistoryFilter filter,
-    Pagination paginate,
-  ) async {
-    // return fakeData
-    //     .map(TransactionHistory.fromJson)
-    //     .skip(paginate.pageSize * (paginate.page - 1))
-    //     .take(paginate.pageSize)
-    //     .toList();
-
-    final body = {
-      'fromSource': fromSource,
-      ...paginate.toJson(),
-      ...filter.toJson(),
-    };
-
-    return _walletVndRepository.getTransactionHistories(body);
-  }
-
-  Future<TransactionHistoryDetail> getTransactionHistoryDetail(int id) async {
-    // FakeData
-    // return TransactionHistoryDetail.fromJson(fakeDataDetail);
-
-    return _walletVndRepository.getTransactionHistoryDetail(id);
   }
 
   Future<VndWalletInfo> getVndWalletInfo() async {

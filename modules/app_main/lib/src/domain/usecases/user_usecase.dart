@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
+import 'package:app_main/src/data/models/responses/follow_response.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
-import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../data/models/responses/list_followees_response.dart';
 import '../../data/models/responses/update_none_pdone_profile_response.dart';
 import '../../data/repositories/user_repository.dart';
 
@@ -69,8 +70,16 @@ class UserUsecase {
     return response.searchUsers;
   }
 
-  Future<OnboardingResponse> onboarding() {
-    return _userRepository.onboarding();
+  Future<OnBoarding> onboarding() async {
+    final response = await _userRepository.onboarding();
+    return OnBoarding(
+      isJA: response.isJA,
+      isPdone: response.isPdone,
+      isMarshopOwner: response.isMarshopOwner,
+      isMarshopCustomer: response.isMarshopCustomer,
+      hasDefaultBankAccount: response.hasDefaultBankAccount,
+      marshopCustomerId: response.marshopCustomerId,
+    );
   }
 
   Future<UpdateNonePDoneProfileReponse> updatePDoneProfile(
@@ -80,8 +89,7 @@ class UserUsecase {
 
   Future<UpdateNonePDoneProfileReponse> updateNonePNoneDoneProfile(
       Map<String, dynamic> data) {
-    return _userRepository
-        .updateNonePDoneProfile(data);
+    return _userRepository.updateNonePDoneProfile(data);
   }
 
   Future<UpdateNonePDoneProfileReponse> getPDoneProfile() {
@@ -90,6 +98,10 @@ class UserUsecase {
 
   Future<List<User>> listFriends() {
     return _userRepository.listFriends();
+  }
+
+  Future<List<FolloweesUser>> listFollowees() {
+    return _userRepository.listFollowees();
   }
 
   Future invite(String teamID, Map<String, dynamic> json) {
@@ -114,5 +126,14 @@ class UserUsecase {
 
   Future<Map<String, dynamic>> getConfig(String key) {
     return _userRepository.getConfig(key);
+  }
+
+  Future<GetUserFollowDetailResponse> getFollowUser(int userId) {
+    return _userRepository.getFollowUser(userId);
+  }
+
+  Future<List<ApprovedRequestDetail>> approvedRequests() async {
+    final response = await _userRepository.approvedRequests();
+    return response.approvals;
   }
 }

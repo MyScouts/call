@@ -40,10 +40,11 @@ mixin _$User {
   String? get deletedAt => throw _privateConstructorUsedError;
   String? get pDoneId => throw _privateConstructorUsedError;
   String? get displayName => throw _privateConstructorUsedError;
-  bool? get isPDone => throw _privateConstructorUsedError;
-  bool? get isFriend => throw _privateConstructorUsedError;
-  bool? get isFollowing => throw _privateConstructorUsedError;
-  bool? get isFollowed => throw _privateConstructorUsedError;
+  String? get fullName => throw _privateConstructorUsedError;
+  bool get isPDone => throw _privateConstructorUsedError;
+  bool get isFriend => throw _privateConstructorUsedError;
+  bool get isFollowing => throw _privateConstructorUsedError;
+  bool get isFollowed => throw _privateConstructorUsedError;
   int get totalFollower => throw _privateConstructorUsedError;
   int get totalFollowing => throw _privateConstructorUsedError;
   int get totalFriend => throw _privateConstructorUsedError;
@@ -62,6 +63,7 @@ mixin _$User {
   String? get vShopId => throw _privateConstructorUsedError;
   int? get vShopPDoneId => throw _privateConstructorUsedError;
   UserFanGroupInfo? get fanGroup => throw _privateConstructorUsedError;
+  int? get sexCode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -94,10 +96,11 @@ abstract class $UserCopyWith<$Res> {
       String? deletedAt,
       String? pDoneId,
       String? displayName,
-      bool? isPDone,
-      bool? isFriend,
-      bool? isFollowing,
-      bool? isFollowed,
+      String? fullName,
+      bool isPDone,
+      bool isFriend,
+      bool isFollowing,
+      bool isFollowed,
       int totalFollower,
       int totalFollowing,
       int totalFriend,
@@ -115,7 +118,8 @@ abstract class $UserCopyWith<$Res> {
       DateTime? jaAt,
       String? vShopId,
       int? vShopPDoneId,
-      UserFanGroupInfo? fanGroup});
+      UserFanGroupInfo? fanGroup,
+      int? sexCode});
 
   $TeamCopyWith<$Res>? get joinedTeam;
   $UserFanGroupInfoCopyWith<$Res>? get fanGroup;
@@ -154,10 +158,11 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? deletedAt = freezed,
     Object? pDoneId = freezed,
     Object? displayName = freezed,
-    Object? isPDone = freezed,
-    Object? isFriend = freezed,
-    Object? isFollowing = freezed,
-    Object? isFollowed = freezed,
+    Object? fullName = freezed,
+    Object? isPDone = null,
+    Object? isFriend = null,
+    Object? isFollowing = null,
+    Object? isFollowed = null,
     Object? totalFollower = null,
     Object? totalFollowing = null,
     Object? totalFriend = null,
@@ -176,6 +181,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? vShopId = freezed,
     Object? vShopPDoneId = freezed,
     Object? fanGroup = freezed,
+    Object? sexCode = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -258,22 +264,26 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
               as String?,
-      isPDone: freezed == isPDone
+      fullName: freezed == fullName
+          ? _value.fullName
+          : fullName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isPDone: null == isPDone
           ? _value.isPDone
           : isPDone // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isFriend: freezed == isFriend
+              as bool,
+      isFriend: null == isFriend
           ? _value.isFriend
           : isFriend // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isFollowing: freezed == isFollowing
+              as bool,
+      isFollowing: null == isFollowing
           ? _value.isFollowing
           : isFollowing // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isFollowed: freezed == isFollowed
+              as bool,
+      isFollowed: null == isFollowed
           ? _value.isFollowed
           : isFollowed // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as bool,
       totalFollower: null == totalFollower
           ? _value.totalFollower
           : totalFollower // ignore: cast_nullable_to_non_nullable
@@ -346,6 +356,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.fanGroup
           : fanGroup // ignore: cast_nullable_to_non_nullable
               as UserFanGroupInfo?,
+      sexCode: freezed == sexCode
+          ? _value.sexCode
+          : sexCode // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 
@@ -402,10 +416,11 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       String? deletedAt,
       String? pDoneId,
       String? displayName,
-      bool? isPDone,
-      bool? isFriend,
-      bool? isFollowing,
-      bool? isFollowed,
+      String? fullName,
+      bool isPDone,
+      bool isFriend,
+      bool isFollowing,
+      bool isFollowed,
       int totalFollower,
       int totalFollowing,
       int totalFriend,
@@ -423,7 +438,8 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       DateTime? jaAt,
       String? vShopId,
       int? vShopPDoneId,
-      UserFanGroupInfo? fanGroup});
+      UserFanGroupInfo? fanGroup,
+      int? sexCode});
 
   @override
   $TeamCopyWith<$Res>? get joinedTeam;
@@ -461,10 +477,11 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? deletedAt = freezed,
     Object? pDoneId = freezed,
     Object? displayName = freezed,
-    Object? isPDone = freezed,
-    Object? isFriend = freezed,
-    Object? isFollowing = freezed,
-    Object? isFollowed = freezed,
+    Object? fullName = freezed,
+    Object? isPDone = null,
+    Object? isFriend = null,
+    Object? isFollowing = null,
+    Object? isFollowed = null,
     Object? totalFollower = null,
     Object? totalFollowing = null,
     Object? totalFriend = null,
@@ -483,6 +500,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? vShopId = freezed,
     Object? vShopPDoneId = freezed,
     Object? fanGroup = freezed,
+    Object? sexCode = freezed,
   }) {
     return _then(_$UserImpl(
       id: freezed == id
@@ -565,22 +583,26 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
               as String?,
-      isPDone: freezed == isPDone
+      fullName: freezed == fullName
+          ? _value.fullName
+          : fullName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isPDone: null == isPDone
           ? _value.isPDone
           : isPDone // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isFriend: freezed == isFriend
+              as bool,
+      isFriend: null == isFriend
           ? _value.isFriend
           : isFriend // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isFollowing: freezed == isFollowing
+              as bool,
+      isFollowing: null == isFollowing
           ? _value.isFollowing
           : isFollowing // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      isFollowed: freezed == isFollowed
+              as bool,
+      isFollowed: null == isFollowed
           ? _value.isFollowed
           : isFollowed // ignore: cast_nullable_to_non_nullable
-              as bool?,
+              as bool,
       totalFollower: null == totalFollower
           ? _value.totalFollower
           : totalFollower // ignore: cast_nullable_to_non_nullable
@@ -653,6 +675,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.fanGroup
           : fanGroup // ignore: cast_nullable_to_non_nullable
               as UserFanGroupInfo?,
+      sexCode: freezed == sexCode
+          ? _value.sexCode
+          : sexCode // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -681,10 +707,11 @@ class _$UserImpl implements _User {
       this.deletedAt,
       this.pDoneId,
       this.displayName,
-      this.isPDone,
-      this.isFriend,
-      this.isFollowing,
-      this.isFollowed,
+      this.fullName,
+      this.isPDone = false,
+      this.isFriend = false,
+      this.isFollowing = false,
+      this.isFollowed = false,
       this.totalFollower = 0,
       this.totalFollowing = 0,
       this.totalFriend = 0,
@@ -702,7 +729,8 @@ class _$UserImpl implements _User {
       this.jaAt,
       this.vShopId,
       this.vShopPDoneId,
-      this.fanGroup})
+      this.fanGroup,
+      this.sexCode})
       : _backgroundImages = backgroundImages;
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
@@ -749,13 +777,19 @@ class _$UserImpl implements _User {
   @override
   final String? displayName;
   @override
-  final bool? isPDone;
+  final String? fullName;
   @override
-  final bool? isFriend;
+  @JsonKey()
+  final bool isPDone;
   @override
-  final bool? isFollowing;
+  @JsonKey()
+  final bool isFriend;
   @override
-  final bool? isFollowed;
+  @JsonKey()
+  final bool isFollowing;
+  @override
+  @JsonKey()
+  final bool isFollowed;
   @override
   @JsonKey()
   final int totalFollower;
@@ -806,10 +840,12 @@ class _$UserImpl implements _User {
   final int? vShopPDoneId;
   @override
   final UserFanGroupInfo? fanGroup;
+  @override
+  final int? sexCode;
 
   @override
   String toString() {
-    return 'User(id: $id, username: $username, name: $name, nickname: $nickname, email: $email, phone: $phone, avatar: $avatar, sex: $sex, phoneCode: $phoneCode, address: $address, forgotHash: $forgotHash, status: $status, roleId: $roleId, roleMemberCode: $roleMemberCode, createdById: $createdById, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, pDoneId: $pDoneId, displayName: $displayName, isPDone: $isPDone, isFriend: $isFriend, isFollowing: $isFollowing, isFollowed: $isFollowed, totalFollower: $totalFollower, totalFollowing: $totalFollowing, totalFriend: $totalFriend, old: $old, isBlock: $isBlock, backgroundImages: $backgroundImages, defaultBackground: $defaultBackground, isJA: $isJA, isVShop: $isVShop, isLive: $isLive, isSupervisor: $isSupervisor, isModerator: $isModerator, joinedTeam: $joinedTeam, birthday: $birthday, jaAt: $jaAt, vShopId: $vShopId, vShopPDoneId: $vShopPDoneId, fanGroup: $fanGroup)';
+    return 'User(id: $id, username: $username, name: $name, nickname: $nickname, email: $email, phone: $phone, avatar: $avatar, sex: $sex, phoneCode: $phoneCode, address: $address, forgotHash: $forgotHash, status: $status, roleId: $roleId, roleMemberCode: $roleMemberCode, createdById: $createdById, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, pDoneId: $pDoneId, displayName: $displayName, fullName: $fullName, isPDone: $isPDone, isFriend: $isFriend, isFollowing: $isFollowing, isFollowed: $isFollowed, totalFollower: $totalFollower, totalFollowing: $totalFollowing, totalFriend: $totalFriend, old: $old, isBlock: $isBlock, backgroundImages: $backgroundImages, defaultBackground: $defaultBackground, isJA: $isJA, isVShop: $isVShop, isLive: $isLive, isSupervisor: $isSupervisor, isModerator: $isModerator, joinedTeam: $joinedTeam, birthday: $birthday, jaAt: $jaAt, vShopId: $vShopId, vShopPDoneId: $vShopPDoneId, fanGroup: $fanGroup, sexCode: $sexCode)';
   }
 
   @override
@@ -847,6 +883,8 @@ class _$UserImpl implements _User {
             (identical(other.pDoneId, pDoneId) || other.pDoneId == pDoneId) &&
             (identical(other.displayName, displayName) ||
                 other.displayName == displayName) &&
+            (identical(other.fullName, fullName) ||
+                other.fullName == fullName) &&
             (identical(other.isPDone, isPDone) || other.isPDone == isPDone) &&
             (identical(other.isFriend, isFriend) ||
                 other.isFriend == isFriend) &&
@@ -882,7 +920,8 @@ class _$UserImpl implements _User {
             (identical(other.vShopPDoneId, vShopPDoneId) ||
                 other.vShopPDoneId == vShopPDoneId) &&
             (identical(other.fanGroup, fanGroup) ||
-                other.fanGroup == fanGroup));
+                other.fanGroup == fanGroup) &&
+            (identical(other.sexCode, sexCode) || other.sexCode == sexCode));
   }
 
   @JsonKey(ignore: true)
@@ -909,6 +948,7 @@ class _$UserImpl implements _User {
         deletedAt,
         pDoneId,
         displayName,
+        fullName,
         isPDone,
         isFriend,
         isFollowing,
@@ -930,7 +970,8 @@ class _$UserImpl implements _User {
         jaAt,
         vShopId,
         vShopPDoneId,
-        fanGroup
+        fanGroup,
+        sexCode
       ]);
 
   @JsonKey(ignore: true)
@@ -969,10 +1010,11 @@ abstract class _User implements User {
       final String? deletedAt,
       final String? pDoneId,
       final String? displayName,
-      final bool? isPDone,
-      final bool? isFriend,
-      final bool? isFollowing,
-      final bool? isFollowed,
+      final String? fullName,
+      final bool isPDone,
+      final bool isFriend,
+      final bool isFollowing,
+      final bool isFollowed,
       final int totalFollower,
       final int totalFollowing,
       final int totalFriend,
@@ -990,7 +1032,8 @@ abstract class _User implements User {
       final DateTime? jaAt,
       final String? vShopId,
       final int? vShopPDoneId,
-      final UserFanGroupInfo? fanGroup}) = _$UserImpl;
+      final UserFanGroupInfo? fanGroup,
+      final int? sexCode}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -1035,13 +1078,15 @@ abstract class _User implements User {
   @override
   String? get displayName;
   @override
-  bool? get isPDone;
+  String? get fullName;
   @override
-  bool? get isFriend;
+  bool get isPDone;
   @override
-  bool? get isFollowing;
+  bool get isFriend;
   @override
-  bool? get isFollowed;
+  bool get isFollowing;
+  @override
+  bool get isFollowed;
   @override
   int get totalFollower;
   @override
@@ -1078,6 +1123,8 @@ abstract class _User implements User {
   int? get vShopPDoneId;
   @override
   UserFanGroupInfo? get fanGroup;
+  @override
+  int? get sexCode;
   @override
   @JsonKey(ignore: true)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>

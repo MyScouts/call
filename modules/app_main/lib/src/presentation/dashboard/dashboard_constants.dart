@@ -1,9 +1,12 @@
+import 'package:app_main/src/presentation/chat/conversation/conversation_page.dart';
 import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/dashboard/system_setting/system_setting.dart';
 import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:equatable/equatable.dart';
 import 'package:staggered_reorderable/staggered_reorderable.dart';
+
+import '../live/presentation/live_home/live_home_screen.dart';
 
 enum DashboardType { community, personal, ecommerce }
 
@@ -143,9 +146,7 @@ class DashBoardGroupItem extends DashBoardItem {
       title: json['title'],
       backgroundImage: json['background_image'],
       path: json['path'],
-      items: List.from(json['items'] ?? [])
-          .map((e) => DashBoardIconItem.fromJson(e))
-          .toList(),
+      items: List.from(json['items'] ?? []).map((e) => DashBoardIconItem.fromJson(e)).toList(),
     );
   }
 
@@ -172,10 +173,7 @@ final Map<String, DashBoardItem> mapItems = {
     height: 2,
   ),
   'ic_live': DashBoardIconItem(
-    id: 'ic_live',
-    title: 'Live',
-    backgroundImage: IconAppConstants.icLive,
-  ),
+      id: 'ic_live', title: 'Live', backgroundImage: IconAppConstants.icLive, path: LiveHomeScreen.routeName),
   'ic_wallet': DashBoardIconItem(
     id: 'ic_wallet',
     title: 'Ví',
@@ -225,6 +223,7 @@ final communityDefault = {
     id: 'ic_live',
     title: 'Live',
     backgroundImage: IconAppConstants.icLive,
+    path: LiveHomeScreen.routeName,
   ),
   'ic_wallet': DashBoardIconItem(
     id: 'ic_wallet',
@@ -293,6 +292,7 @@ final personalDefault = {
     id: 'ic_mess',
     title: 'Tin nhắn',
     backgroundImage: IconAppConstants.icMess,
+    path: ConversationPage.routeName,
   ),
   'ic_call': DashBoardIconItem(
     id: 'ic_call',

@@ -22,3 +22,16 @@ final class RegisterMarshopFail extends MarshopState {
   final String message;
   RegisterMarshopFail({required this.message});
 }
+
+final class OnGetMarShopInfo extends MarshopState {}
+
+final class GetMarShopInfoSuccess extends MarshopState {
+  final MarshopResponse marshop;
+  GetMarShopInfoSuccess({required this.marshop});
+}
+
+final class GetMarShopInfoFail extends MarshopState {
+  final String message;
+  final String code;
+  GetMarShopInfoFail({required this.message, required this.code});
+}

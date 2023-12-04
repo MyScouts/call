@@ -1,13 +1,15 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/data_sources/remote/user_api.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
+import 'package:app_main/src/data/models/responses/follow_response.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
 import 'package:app_main/src/data/models/responses/update_none_pdone_profile_response.dart';
-import 'package:app_main/src/data/models/responses/update_pdone_profile_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/data/repositories/user_repository.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../models/responses/list_followees_response.dart';
 
 @Injectable(as: UserRepository)
 class AuthRepositoryImpl extends UserRepository {
@@ -98,6 +100,12 @@ class AuthRepositoryImpl extends UserRepository {
   }
 
   @override
+  Future<List<FolloweesUser>> listFollowees() async {
+    final res = await _userAPI.listFollowees();
+    return res.followees ?? [];
+  }
+
+  @override
   Future invite(String teamID, Map<String, dynamic> json) {
     return _userAPI.invite(json, teamID);
   }
@@ -135,4 +143,16 @@ class AuthRepositoryImpl extends UserRepository {
     final res = await _userAPI.getConfig(key);
     return Map<String, dynamic>.from(res);
   }
+
+  @override
+  Future<GetUserFollowDetailResponse> getFollowUser(int userId) {
+    return _userAPI.getFollowUser(userId);
+  }
+
+  @override
+  Future<ApprovedRequestResponse> approvedRequests() {
+    return _userAPI.approvedRequest();
+  }
+
+
 }

@@ -1,10 +1,12 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/data/models/responses/follow_response.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
 import 'package:app_main/src/data/models/responses/update_none_pdone_profile_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 
 import '../models/payloads/user/user_action_payload.dart';
+import '../models/responses/list_followees_response.dart';
 
 abstract class UserRepository {
   Future<User?> getProfile();
@@ -47,6 +49,8 @@ abstract class UserRepository {
 
   Future<List<User>> listFriends();
 
+  Future<List<FolloweesUser>> listFollowees();
+
   Future invite(String teamID, Map<String, dynamic> json);
 
   Future<User> updateEmail(Map<String, dynamic> json);
@@ -58,4 +62,7 @@ abstract class UserRepository {
   Future setConfig(String key, Map<String, dynamic> json);
 
   Future<Map<String, dynamic>> getConfig(String key);
+
+  Future<GetUserFollowDetailResponse> getFollowUser(int userId);
+  Future<ApprovedRequestResponse> approvedRequests();
 }

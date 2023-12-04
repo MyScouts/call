@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../domain/domain.dart';
 import '../datasources/models/exchange_diamond_response.dart';
+import '../datasources/models/response/wallet_info_response.dart';
 import '../datasources/remote/remote.dart';
 
 @Injectable(as: WalletDiamondRepository)
@@ -11,23 +12,7 @@ class WalletDiamondRepositoryImpl implements WalletDiamondRepository {
   WalletDiamondRepositoryImpl(this._diamondWalletApi);
 
   @override
-  Future<List<DiamondTransactionHistory>> getTransactionHistories(
-      Map<String, dynamic> body) async {
-    final response = await _diamondWalletApi.getTransactionList(body: body);
-
-    return response.data.transactions;
-  }
-
-  @override
-  Future<DiamondTransactionHistoryDetail> getTransactionHistoryDetail(
-      int id) async {
-    final response = await _diamondWalletApi.getTransactionDetail(id: id);
-
-    return response.data;
-  }
-
-  @override
-  Future<DiamondWalletInfo> getWalletInfo() async {
+  Future<WalletInfoResponse> getWalletInfo() async {
     final response = await _diamondWalletApi.getDiamondWalletInfo();
 
     return response.data;

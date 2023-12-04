@@ -7,6 +7,7 @@ import 'package:wallet/presentation/shared/widgets/toast_message/toast_message.d
 import 'package:wallet/presentation/wallet_coodinator.dart';
 
 import '../../../core/core.dart';
+import '../../../data/datasources/models/response/wallet_info_response.dart';
 import '../../../domain/domain.dart';
 import '../../shared/bloc/wallet_bloc.dart';
 import '../../shared/shared.dart';
@@ -17,7 +18,7 @@ import '../dialogs/dialogs.dart';
 import '../wallet_diamond_constant.dart';
 
 class WalletDiamondInputForm extends StatefulWidget {
-  final DiamondWalletInfo vndWalletInfo;
+  final WalletInfoResponse vndWalletInfo;
 
   const WalletDiamondInputForm({
     Key? key,
@@ -43,8 +44,8 @@ class _WalletDiamondInputFormState extends State<WalletDiamondInputForm>
       return 'Số kim cương không hợp lệ';
     }
 
-    if (valueInt > (widget.vndWalletInfo.available ?? 0)) {
-      return 'Số kim cương trong ví không đủ. Vui lòng nhập lại';
+    if (valueInt > (widget.vndWalletInfo.userWallet?.availableDiamond ?? 0)) {
+      return 'Số dư kim cương không đủ. Vui lòng thu thập thêm\nhoặc giảm số kim cương muốn đổi!';
     }
 
     if (valueInt < 100) {
@@ -79,7 +80,7 @@ class _WalletDiamondInputFormState extends State<WalletDiamondInputForm>
     }
 
     if ((int.tryParse(_diamondController.text) ?? 0) >
-        (widget.vndWalletInfo.totalDiamond ?? 0)) {
+        (widget.vndWalletInfo.userWallet?.availableDiamond ?? 0)) {
       // showToastMessage('Số kim cương quy đổi vượt quá số lượng bạn đang có', ToastMessageType.warning);
       return;
     }
@@ -101,7 +102,7 @@ class _WalletDiamondInputFormState extends State<WalletDiamondInputForm>
   }
 
   void handleTapMaxButton() {
-    final diamond = widget.vndWalletInfo.available ?? 0;
+    final diamond = widget.vndWalletInfo.userWallet?.availableDiamond ?? 0;
     _diamondController.text = diamond.toAppCurrencyString(isWithSymbol: false);
     _diamondController.selection = TextSelection.fromPosition(
       TextPosition(offset: _diamondController.text.length),
@@ -135,29 +136,38 @@ class _WalletDiamondInputFormState extends State<WalletDiamondInputForm>
           vertical: 15,
           horizontal: context.horizontal,
         ),
-        child: Column(
+        child: Stack(
           children: [
-            diamondForm(),
-            const SizedBox(height: 24),
-            GradiantButton(
-              borderRadius: WalletConstant.borderRadius10,
-              gradient: const LinearGradient(
-                colors: [AppColors.blue30, AppColors.blue20],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
-              onPressed: () {
-                handleTapExchangeButton(context);
-              },
-              child: Text(
-                'Đổi'.toUpperCase(),
-                style: context.text.bodyMedium!.copyWith(
-                  color: AppColors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
+            Container(
+              height: MediaQuery.of(context).size.height-280,
+            ),
+            Positioned.fill(child: Align(
+              child: diamondForm(),
+              alignment: Alignment.topCenter,
+            )),
+            Positioned.fill(child: Align(
+              alignment: Alignment.bottomCenter,
+              child: GradiantButton(
+                borderRadius: WalletConstant.borderRadius10,
+                gradient: const LinearGradient(
+                  colors: [AppColors.blue30, AppColors.blue20],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                ),
+                onPressed: () {
+                  handleTapExchangeButton(context);
+                },
+                child: Text(
+                  'Đổi'.toUpperCase(),
+                  style: context.text.bodyMedium!.copyWith(
+                    color: AppColors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
-            ),
+            )),
+
           ],
         ),
       ),
@@ -182,8 +192,8 @@ class _WalletDiamondInputFormState extends State<WalletDiamondInputForm>
                     'Số kim cương cần đổi',
                     style: context.text.titleMedium?.copyWith(
                       color: WalletTheme.greyTextColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
@@ -197,10 +207,21 @@ class _WalletDiamondInputFormState extends State<WalletDiamondInputForm>
               controller: _diamondController,
               validator: _validateDiamond,
               decoration: InputDecoration(
-                  // border: InputBorder.none,
-                  // focusedBorder: InputBorder.none,
+                // border: InputBorder.none,
+                // focusedBorder: InputBorder.none,
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        color: AppColors.black10.withOpacity(0.6), width: 1),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        color: AppColors.black10.withOpacity(0.6), width: 1),
+                  ),
                   // enabledBorder: InputBorder.none,
-                  // errorBorder: InputBorder.none,
+                  errorBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        color: AppColors.black10.withOpacity(0.6), width: 1),
+                  ),
                   // disabledBorder: InputBorder.none,
                   hintText: 'Nhập số kim cương muốn đổi sang VNĐ',
                   hintStyle: TextStyle(

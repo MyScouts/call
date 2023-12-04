@@ -19,42 +19,6 @@ class _VndWalletApi implements VndWalletApi {
   String? baseUrl;
 
   @override
-  Future<ApiResponse<TransactionResponse<TransactionHistory>>>
-      getTransactionList({required Map<String, dynamic> body}) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body);
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<TransactionResponse<TransactionHistory>>>(
-            Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-                .compose(
-                  _dio.options,
-                  'api/vnd-wallet/transaction/list',
-                  queryParameters: queryParameters,
-                  data: _data,
-                )
-                .copyWith(
-                    baseUrl: _combineBaseUrls(
-                  _dio.options.baseUrl,
-                  baseUrl,
-                ))));
-    final value = ApiResponse<TransactionResponse<TransactionHistory>>.fromJson(
-      _result.data!,
-      (json) => TransactionResponse<TransactionHistory>.fromJson(
-        json as Map<String, dynamic>,
-        (json) => TransactionHistory.fromJson(json as Map<String, dynamic>),
-      ),
-    );
-    return value;
-  }
-
-  @override
   Future<ApiResponse<VndWalletInfo>> getVndWalletInfo() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -208,37 +172,6 @@ class _VndWalletApi implements VndWalletApi {
     final value = ApiResponse<dynamic>.fromJson(
       _result.data!,
       (json) => json as dynamic,
-    );
-    return value;
-  }
-
-  @override
-  Future<ApiResponse<TransactionHistoryDetail>> getTransactionDetail(
-      {required int id}) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<TransactionHistoryDetail>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/api/vnd-wallet/transaction/${id}',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = ApiResponse<TransactionHistoryDetail>.fromJson(
-      _result.data!,
-      (json) => TransactionHistoryDetail.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

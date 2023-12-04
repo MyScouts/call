@@ -6,12 +6,19 @@ const String changeBg = 'changeBg';
 const String cancelEditMode = 'cancelEditMode';
 const String showEditMode = 'showEditMode';
 const String showAppStore = 'showAppStore';
+const String disposeCameraPreview = 'disposeCameraPreview';
 const String refreshUser = 'refreshUser';
+const String reactionEvent = 'reaction';
+
+///live
+const String receiveMessage = 'receiveMessage';
+const String sendMessage = 'sendMessage';
 const String dashboardPageChange = 'dashboardPageChange';
+const String refreshLive = 'refreshLive';
 
 typedef ObserverCallback = void Function(dynamic options);
 
-class NotificationCenter {
+class NotificationCenter<T> {
   final Map<String, Map<int, ObserverCallback>> _channelObservers = {};
 
   static final NotificationCenter _sharedCenter = NotificationCenter._();
@@ -28,8 +35,8 @@ class NotificationCenter {
     }
 
     assert(
-    _sharedCenter._channelObservers[channel]?[observer.hashCode] == null,
-    'Observer $observer ${observer.hashCode} is already subscribed to the channel $channel',
+      _sharedCenter._channelObservers[channel]?[observer.hashCode] == null,
+      'Observer $observer ${observer.hashCode} is already subscribed to the channel $channel',
     );
 
     _sharedCenter._channelObservers[channel]?[observer.hashCode] =
@@ -49,8 +56,8 @@ class NotificationCenter {
     if (_sharedCenter._channelObservers[channel] == null) return;
 
     assert(
-    _sharedCenter._channelObservers[channel]![observer.hashCode] != null,
-    'Observer $observer ${observer.hashCode} is not subscribed to channel $channel',
+      _sharedCenter._channelObservers[channel]![observer.hashCode] != null,
+      'Observer $observer ${observer.hashCode} is not subscribed to channel $channel',
     );
 
     _sharedCenter._channelObservers[channel]!.remove(observer.hashCode);

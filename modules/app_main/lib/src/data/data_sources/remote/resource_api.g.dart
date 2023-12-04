@@ -224,13 +224,11 @@ class _ResourceApi implements ResourceApi {
     if (url.isAbsolute) {
       return url.toString();
     }
-
     return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
 
   @override
   Future<String> storageUploadUrl(XFile file, String prefix) async {
-    // TODO: implement storageUploadUrl
     final resource = '$prefix${file.name}';
     final _responseGetUrlUpload = StorageUploadUrlResponse.fromJson(
         (await _dio.get('api/v1/storage/upload-url?filepath=${resource}'))

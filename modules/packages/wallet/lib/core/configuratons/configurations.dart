@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 
+import '../../data/datasources/models/response/wallet_info_response.dart';
 import '../../domain/domain.dart' hide User;
 
 class WalletConfigurations {
@@ -14,6 +15,10 @@ class WalletInjectedData {
 
   static set setUser(User value) => user = value;
 
+  static UserWallet userWallet = UserWallet();
+
+  static set setUserWallet(UserWallet value) => userWallet = value;
+
   static VndWalletInfo vndWalletInfo = const VndWalletInfo();
 
   static set setVndWalletInfo(VndWalletInfo value) => vndWalletInfo = value;
@@ -22,8 +27,4 @@ class WalletInjectedData {
 
   static set setDiamondWalletInfo(DiamondWalletInfo value) =>
       diamondWalletInfo = value;
-
-  static CoinWalletInfo coinWalletInfo = const CoinWalletInfo();
-
-  static set setCoinWalletInfo(CoinWalletInfo value) => coinWalletInfo = value;
 }

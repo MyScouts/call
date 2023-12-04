@@ -12,14 +12,6 @@ class WalletVndRepositoryImpl implements WalletVndRepository {
   WalletVndRepositoryImpl(this._vndWalletApi);
 
   @override
-  Future<List<TransactionHistory>> getTransactionHistories(
-      Map<String, dynamic> body) async {
-    final response = await _vndWalletApi.getTransactionList(body: body);
-
-    return response.data.transactions;
-  }
-
-  @override
   Future<VndWalletInfo> getVndWalletInfo() async {
     final response = await _vndWalletApi.getVndWalletInfo();
     return response.data;
@@ -41,12 +33,6 @@ class WalletVndRepositoryImpl implements WalletVndRepository {
   Future<Otp> getOtp() async {
     final response = await _vndWalletApi.getOtp();
     return response.data.otp;
-  }
-
-  @override
-  Future<TransactionHistoryDetail> getTransactionHistoryDetail(int id) async {
-    final response = await _vndWalletApi.getTransactionDetail(id: id);
-    return response.data;
   }
 
   @override

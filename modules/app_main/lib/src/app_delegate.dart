@@ -7,6 +7,8 @@ import 'package:app_main/src/blocs/marshop/marshop_cubit.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/presentation/authentication/splash/splash_screen.dart';
+import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
+import 'package:app_main/src/presentation/live/presentation/live_message/state/live_message_bloc.dart';
 import 'package:app_main/src/presentation/shared/user/bloc/user_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -14,17 +16,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:app_core/app_core.dart';
+import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'application.dart';
+import 'core/services/notifications/notification_service.dart';
 import 'core/services/notifications/push_notification_service.dart';
 import 'di/di.dart';
 
 abstract class IAppDelegate {
   Future<Widget> build(Map<String, dynamic> env);
+
   Future<void> run(Map<String, dynamic> env);
+
   UserSharePreferencesUsecase get userSharePreferencesUsecase => injector.get();
+
   DeviceService get deviceService => injector.get();
-  GlobalKey<NavigatorState> get root => AppCoordinator.root;
+
+  GlobalKey<NavigatorState> get root => AppCoordinatorCore.root;
+
   void reset() {
     injector.reset();
   }
@@ -53,14 +62,18 @@ class AppDelegate extends IAppDelegate {
     final savedThemeMode = await AdaptiveTheme.getThemeMode();
 
     if (isMobile) {
+
       /// CONFIG NOTIFICATION
       /// Set the background messaging handler early on,
       /// as a named top-level function
-      if (Configurations.isProduction) {
-        FirebaseMessaging.onBackgroundMessage(
-            firebaseMessagingBackgroundHandler);
-        await setupFlutterNotifications();
-      }
+      FirebaseMessaging.onBackgroundMessage(
+          firebaseMessagingBackgroundHandler);
+      await setupFlutterNotifications();
+      // if (Configurations.isProduction) {
+      //   FirebaseMessaging.onBackgroundMessage(
+      //       firebaseMessagingBackgroundHandler);
+      //   await setupFlutterNotifications();
+      // }
 
       unawaited(SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp]));
@@ -88,10 +101,12 @@ class AppDelegate extends IAppDelegate {
         BlocProvider<MarshopCubit>(create: (_) => injector.get()),
         BlocProvider<AuthCubit>(create: (_) => injector.get()),
         BlocProvider<AppCubit>(create: (_) => injector.get()),
+        Provider<LiveChannelController>(create: (_) => getIt()),
+        BlocProvider<LiveMessageBloc>(create: (_) => getIt()),
       ],
       savedThemeMode: savedThemeMode,
       initialRoute: initialRoute,
-      notificationService: injector.get(),
+      notificationService: injector.get<NotificationService>(),
     );
   }
 

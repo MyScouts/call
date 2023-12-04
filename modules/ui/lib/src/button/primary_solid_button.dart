@@ -31,44 +31,55 @@ class PrimarySolidButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: isLoading || disabled ? null : onTap,
-      child: Container(
-        width: width,
-        height: height ?? 48,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: (color ?? context.theme.primaryColor)
-              .withOpacity(disabled ? .2 : 1),
-        ),
-        child: isLoading
-            ? const SizedBox(
-                width: 16,
-                height: 16,
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                ),
-              )
-            : Center(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (prefix != null)
-                      Container(
-                        margin: const EdgeInsets.only(right: 8),
-                        child: prefix,
-                      ),
-                    Text(
-                      title,
-                      style: context.text.bodyLarge!.copyWith(
-                        color: disabled
-                            ? AppColors.grey72
-                            : (textColor ?? AppColors.white),
-                      ),
+      child: Stack(
+        children: [
+          Container(
+            width: width,
+            height: height ?? 48,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: (color ?? context.theme.primaryColor)
+                  .withOpacity(disabled ? .2 : 1),
+            ),
+            child: Center(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (prefix != null)
+                    Container(
+                      margin: const EdgeInsets.only(right: 8),
+                      child: prefix,
                     ),
-                  ],
+                  Text(
+                    title,
+                    style: context.text.bodyLarge!.copyWith(
+                      color: disabled
+                          ? AppColors.grey72
+                          : (textColor ?? AppColors.white),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          if (isLoading)
+            const Positioned(
+              right: 20,
+              top: 0,
+              bottom: 0,
+              child: Center(
+                child: SizedBox(
+                  width: 16,
+                  height: 16,
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
                 ),
               ),
+            )
+        ],
       ),
     );
   }

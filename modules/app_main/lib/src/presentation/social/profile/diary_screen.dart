@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/blocs/user_action/user_action_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/data/models/responses/follow_response.dart';
 import 'package:app_main/src/presentation/social/profile/profile_bloc.dart';
 import 'package:app_main/src/presentation/social/profile/widgets/user_info_header.dart';
 import 'package:design_system/design_system.dart';
@@ -36,12 +37,15 @@ class DiaryScreen extends StatefulWidget {
 }
 
 class _DiaryScreenState extends State<DiaryScreen> {
+  late int _userId;
   final ValueNotifier<bool> _friendStatus = ValueNotifier(false);
-  UserActionCubit get _actionBloc => injector.get<UserActionCubit>();
+  final UserActionCubit _actionBloc = injector.get<UserActionCubit>();
   GetUserByIdBloc get _userByIdBloc => context.read<GetUserByIdBloc>();
   final ValueNotifier<DiaryCategory> _categoryCtrl = ValueNotifier(
     DiaryCategory.personal,
   );
+  final ValueNotifier<GetUserFollowDetailResponse?> _followInfo =
+      ValueNotifier(null);
   late final _userCubit = context.read<UserCubit>();
   late User _authInfo;
 
@@ -51,63 +55,68 @@ class _DiaryScreenState extends State<DiaryScreen> {
   void initState() {
     super.initState();
     _authInfo = _userCubit.currentUser!;
-    _userByIdBloc.add(GetDetailDataParam1Event(int.parse(
-      widget.userId ?? _authInfo.id.toString(),
-    )));
+    _userCubit.onboarding();
+    _userId = int.parse(widget.userId ?? _authInfo.id.toString());
+    _userByIdBloc.add(GetDetailDataParam1Event(_userId));
+    _actionBloc.getFollowUser(userId: _userId);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0XFFF3F8FF),
-      body: BlocProvider(
-        create: (context) => _actionBloc,
-        child: BlocListener<UserActionCubit, UserActionState>(
-          listener: (context, state) {
-            if (state is OnFollowUser || state is OnUnFollow) {
-              showLoading();
-            }
-            if (state is FollowUserSuccess) {
-              hideLoading();
-              _friendStatus.value = true;
+    return BlocProvider(
+      create: (context) => _actionBloc,
+      child: BlocListener<UserActionCubit, UserActionState>(
+        listener: (context, state) {
+          if (state is GetFollowUserSuccess) {
+            _followInfo.value = state.followDetail;
+          }
+
+          if (state is OnFollowUser || state is OnUnFollow) {
+            showLoading();
+          }
+          if (state is FollowUserSuccess) {
+            hideLoading();
+            _friendStatus.value = true;
+            if (state.approvalRequired) {
+              showToastMessage(
+                  "Yêu cầu theo dõi đã được gởi đến người bảo hộ.");
+            } else {
               showToastMessage("Theo dõi người dùng thành công.");
             }
+          }
 
-            if (state is FollowUserFail) {
-              hideLoading();
-              showToastMessage(
-                "Theo dõi người dùng thất bại.",
-                ToastMessageType.error,
-              );
-            }
+          if (state is FollowUserFail) {
+            hideLoading();
+            showToastMessage(state.message, ToastMessageType.error);
+          }
 
-            if (state is UnFollowSuccess) {
-              hideLoading();
-              _friendStatus.value = false;
-              showToastMessage("Bỏ theo dõi người dùng thành công.");
-            }
+          if (state is UnFollowSuccess) {
+            hideLoading();
+            _friendStatus.value = false;
+            showToastMessage("Bỏ theo dõi người dùng thành công.");
+          }
 
-            if (state is UnFollowFail) {
-              hideLoading();
-              _friendStatus.value = false;
-              
-              showToastMessage(
-                "Bỏ theo dõi người dùng thất bại.",
-                ToastMessageType.error,
-              );
-            }
-          },
-          child: BlocBuilder<GetUserByIdBloc, GetDetailState>(
-            builder: (context, state) {
-              debugPrint("$state");
-              if (state is GetDetailDataLoading) {
+          if (state is UnFollowFail) {
+            hideLoading();
+            _friendStatus.value = false;
+
+            showToastMessage(state.message, ToastMessageType.error);
+          }
+        },
+        child: Scaffold(
+          backgroundColor: const Color(0XFFF3F8FF),
+          body: Builder(
+            builder: (context) {
+              final useByIdrBloc = context.watch<GetUserByIdBloc>().state;
+              final userBloc = context.watch<UserCubit>().state;
+              if (useByIdrBloc is GetDetailDataLoading) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
 
-              if (state is GetDetailDataSuccess) {
-                final userInfo = state.data;
+              if (useByIdrBloc is GetDetailDataSuccess) {
+                final userInfo = useByIdrBloc.data;
 
                 return Column(
                   children: [
@@ -115,6 +124,11 @@ class _DiaryScreenState extends State<DiaryScreen> {
                       userInfo: userInfo,
                       friendStatusCtrl: _friendStatus,
                       isMe: isMe,
+                      followInfoCtrl: _followInfo,
+                      authInfo: _authInfo,
+                      onBoarding: userBloc is OnboardingSuccess
+                          ? userBloc.onboarding
+                          : null,
                     ),
                     const SizedBox(height: 10),
                     Expanded(

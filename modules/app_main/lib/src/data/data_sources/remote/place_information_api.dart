@@ -6,7 +6,6 @@ import '../../../core/networking/api_response.dart';
 import '../../../domain/entities/update_account/place/district.dart';
 import '../../../domain/entities/update_account/place/province.dart';
 import '../../../domain/entities/update_account/place/ward.dart';
-import 'place_information_provider.dart';
 
 part 'place_information_api.g.dart';
 

@@ -1,7 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/app/app_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
-import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/dashboard/system_setting/system_setting.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
@@ -30,7 +29,7 @@ class Setting {
   static List<List<Setting>> session1Menus(
     BuildContext context, {
     User? user,
-    OnboardingResponse? onboarding,
+    OnBoarding? onboarding,
     required Function() onUpdate,
     required String osType,
     required bool isProduction,
@@ -72,10 +71,8 @@ class Setting {
           Setting(
             text: "P-Done",
             icon: IconAppConstants.icUpgrade,
-            onPressed: () => context.startPDoneInformation().then((value) {
-              print(value);
-              onUpdate();
-            }),
+            onPressed: () =>
+                context.startPDoneInformation().then((value) => onUpdate()),
           ),
           Setting(
             text: "JA",
@@ -99,18 +96,7 @@ class Setting {
           Setting(
             text: "Tài khoản MarShop",
             icon: IconAppConstants.icMarshop,
-            onPressed: () {
-              if (onboarding != null && !onboarding.isJA) {
-                context.confirmUpgradeJA(
-                  onConfirm: () {
-                    final bloc = context.read<GetJAStatusBloc>();
-                    bloc.add(GetDetailDataEvent());
-                  },
-                );
-                return;
-              }
-              context.startRegisterMarshop();
-            },
+            onPressed: context.startRegisterMarshop,
           ),
         ],
         [

@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:design_system/design_system.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../community/team.dart';
@@ -11,50 +12,49 @@ part 'user.g.dart';
 
 @freezed
 class User with _$User {
-  const factory User({
-    int? id,
-    String? username,
-    String? name,
-    String? nickname,
-    String? email,
-    String? phone,
-    String? avatar,
-    Sex? sex,
-    String? phoneCode,
-    String? address,
-    String? forgotHash,
-    int? status,
-    int? roleId,
-    String? roleMemberCode,
-    int? createdById,
-    String? createdAt,
-    String? updatedAt,
-    String? deletedAt,
-    String? pDoneId,
-    String? displayName,
-    bool? isPDone,
-    bool? isFriend,
-    bool? isFollowing,
-    bool? isFollowed,
-    @Default(0) int totalFollower,
-    @Default(0) int totalFollowing,
-    @Default(0) int totalFriend,
-    @Default(0) int old,
-    @Default(false) bool isBlock,
-    List<String>? backgroundImages,
-    String? defaultBackground,
-    bool? isJA,
-    bool? isVShop,
-    bool? isLive,
-    bool? isSupervisor,
-    bool? isModerator,
-    Team? joinedTeam,
-    DateTime? birthday,
-    DateTime? jaAt,
-    String? vShopId,
-    int? vShopPDoneId,
-    UserFanGroupInfo? fanGroup,
-  }) = _User;
+  const factory User(
+      {int? id,
+      String? username,
+      String? name,
+      String? nickname,
+      String? email,
+      String? phone,
+      String? avatar,
+      Sex? sex,
+      String? phoneCode,
+      String? address,
+      String? forgotHash,
+      int? status,
+      int? roleId,
+      String? roleMemberCode,
+      int? createdById,
+      String? createdAt,
+      String? updatedAt,
+      String? deletedAt,
+      String? pDoneId,
+      String? displayName,
+      String? fullName,
+      @Default(false) bool isPDone,
+      @Default(false) bool isFriend,
+      @Default(false) bool isFollowing,
+      @Default(false) bool isFollowed,
+      @Default(0) int totalFollower,
+      @Default(0) int totalFollowing,
+      @Default(0) int totalFriend,
+      @Default(0) int old,
+      @Default(false) bool isBlock,
+      bool? isJA,
+      bool? isVShop,
+      bool? isLive,
+      bool? isSupervisor,
+      bool? isModerator,
+      Team? joinedTeam,
+      DateTime? birthday,
+      DateTime? jaAt,
+      String? vShopId,
+      int? vShopPDoneId,
+      UserFanGroupInfo? fanGroup,
+      int? sexCode}) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }
@@ -63,19 +63,23 @@ extension UserExtNull on User? {
   String get getdisplayName =>
       [this?.displayName, _userDefaultName].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
-  String get getEmail =>
-      [this?.email, _userDefaultEmail].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getEmail => [this?.email, _userDefaultEmail].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
-  String get getAddress =>
-      [this?.address, _userDefaultAddress].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getAddress => [this?.address, _userDefaultAddress].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
-  String get getNickname =>
-      [this?.nickname, _userDefaultNickname].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getNickname => [this?.nickname, _userDefaultNickname].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
   String get getBirthday {
     final DateTime? birthday = this?.birthday;
 
     return birthday != null ? birthday.toString() : _userDefaultBirthday;
+  }
+
+  String get fullNameStr {
+    if (this?.fullName != null && this!.fullName!.isNotEmpty) {
+      return this!.fullName!;
+    }
+    return this!.displayName!.replaceRange(this!.displayName!.length - 3, this!.displayName!.length, '***');
   }
 
   bool get getIsPDone => this?.isPDone ?? false;
@@ -114,6 +118,15 @@ extension UserExtension on User {
       return Role.supervisor;
     }
     return Role.viewer;
+  }
+
+  Sex get sexCodeValue {
+    switch (sexCode) {
+      case 1:
+        return Sex.male;
+      default:
+        return Sex.female;
+    }
   }
 }
 
@@ -161,6 +174,39 @@ extension SexExt on Sex {
         return IconAppConstants.icMale;
       default:
         return IconAppConstants.icMale;
+    }
+  }
+
+  String getIcon1() {
+    switch (this) {
+      case Sex.female:
+        return IconAppConstants.icFeMaleSVG;
+      case Sex.male:
+        return IconAppConstants.icMaleSVG;
+      default:
+        return IconAppConstants.icMaleSVG;
+    }
+  }
+
+  Color get sexBackGroundColor {
+    switch (this) {
+      case Sex.female:
+        return const Color(0XFFFFEDF8);
+      case Sex.male:
+        return const Color(0XFF79B6EF);
+      default:
+        return const Color(0XFF79B6EF);
+    }
+  }
+
+  Color get sexColor {
+    switch (this) {
+      case Sex.female:
+        return const Color(0XFFE495DA);
+      case Sex.male:
+        return Colors.white;
+      default:
+        return const Color(0XFF79B6EF);
     }
   }
 }

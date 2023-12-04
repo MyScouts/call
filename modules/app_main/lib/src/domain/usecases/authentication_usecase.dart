@@ -1,10 +1,10 @@
 import 'package:app_main/app_main.dart';
 import 'package:app_main/src/core/services/notifications/notification_service.dart';
+import 'package:app_main/src/core/socket/chat_socket.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payload.dart';
 import 'package:app_main/src/data/repositories/user_repository.dart';
 import 'package:app_main/src/domain/entities/change_password_payload.dart';
-import 'package:app_main/src/domain/usecases/notification_usecase.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
@@ -19,14 +19,14 @@ class AuthenticationUsecase {
   final UserRepository _userRepository;
   final UserSharePreferencesUsecase _userSharePreferencesUsecase;
   final NotificationService _notificationService;
-  final NotificationUsecase _notificationUsecase;
+  final ChatSocket _chatSocket;
 
   AuthenticationUsecase(
     this._authRepository,
     this._userSharePreferencesUsecase,
     this._userRepository,
     this._notificationService,
-    this._notificationUsecase,
+    this._chatSocket,
   );
 
   Future<void> signOut([bool forceLogout = false]) async {
@@ -106,10 +106,12 @@ class AuthenticationUsecase {
   }
 
   Future logout() async {
+    _notificationService.unsubscribeNotification();
     await _userSharePreferencesUsecase.clearUserData();
   }
 
   Future syncUser() async {
+    _chatSocket.connect();
     final user = await _userRepository.getProfile();
     _userSharePreferencesUsecase.saveUserInfo(user!);
     isAuthenticate.add(true);
@@ -133,13 +135,6 @@ class AuthenticationUsecase {
     debugPrint("fcmToken: $fcmToken");
     if (fcmToken?.isNotEmpty ?? false) {
       await _userSharePreferencesUsecase.saveFCMToken(fcmToken!);
-      try {
-        await _notificationUsecase.register(fcmToken);
-      } catch (e) {
-        if (kDebugMode) {
-          // throw Exception(e.toString());
-        }
-      }
     }
   }
 }

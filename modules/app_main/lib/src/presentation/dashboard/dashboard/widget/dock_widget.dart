@@ -1,7 +1,9 @@
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/usecases/dashboard_share_preferences_usecase.dart';
+import 'package:app_main/src/presentation/chat/conversation/conversation_page.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
+import 'package:app_main/src/presentation/live/presentation/live_home/live_home_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
@@ -52,6 +54,7 @@ class _DockWidgetState extends State<DockWidget> {
       backgroundImage: IconAppConstants.icLive,
       title: "",
       id: "ic_live",
+      path: LiveHomeScreen.routeName,
     ),
     DashBoardIconItem(
       backgroundImage: IconAppConstants.icVDone,
@@ -70,6 +73,7 @@ class _DockWidgetState extends State<DockWidget> {
       backgroundImage: IconAppConstants.icMess,
       title: "",
       id: "message",
+      path: ConversationPage.routeName,
     ),
     DashBoardIconItem(
       backgroundImage: IconAppConstants.icVDone,

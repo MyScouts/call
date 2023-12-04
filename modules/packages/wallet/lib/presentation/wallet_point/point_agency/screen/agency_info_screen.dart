@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app_core/app_core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -5,13 +7,19 @@ import 'package:flutter/services.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
+import 'package:wallet/data/datasources/models/request/agency_get_payment_information_request.dart';
 import 'package:wallet/presentation/shared/bloc/wallet_bloc.dart';
+import 'package:wallet/presentation/shared/widgets/toast_message/toast_message.dart';
 import 'package:wallet/presentation/wallet_point/wallet_point_coodinator.dart';
-
+import 'package:wallet/presentation/wallet_point/point_agency/bloc/agency_bloc.dart';
 import '../../../../../wallet.dart';
 import '../../../../core/theme/wallet_theme.dart';
 import '../../../../core/utils/deboun_callback.dart';
 import '../../../../core/utils/input_formatter.dart';
+import '../../../../data/datasources/models/est_coin_response.dart';
+import '../../../../data/datasources/models/exchange_coin_response.dart';
+import '../../../../data/datasources/models/wallet_coin_payment_information_response.dart';
+import '../../../../domain/entities/agency/agency.dart';
 import '../../../../domain/entities/agency/agency_info.dart';
 import '../../../shared/widgets/app_bar.dart';
 import '../../../shared/widgets/form_element.dart';
@@ -39,6 +47,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
   final _moneyController = TextEditingController();
   final _coinController = TextEditingController();
   final _userIDController = TextEditingController();
+  Timer? _debounce;
 
   @override
   void initState() {
@@ -55,13 +64,22 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
   }
 
   void handleExchangeTap() {
-    final money = num.tryParse(_moneyController.text.replaceAll('.', ''));
-    if (money != null) {
-      _agencyBloc
-          .add(AgencyEvent.exchange(agencyId: widget.agencyId, value: money));
+    final money = num.tryParse(_moneyController.text.replaceAll('.', '')) ?? 0;
+    final coin = num.tryParse(_coinController.text.replaceAll('.', '')) ?? 0;
+
+    if (money + coin == 0) {
+      showToastMessage('Số quy đổi không hợp lệ', ToastMessageType.warning);
+    } else {
+      _agencyBloc.add(
+        AgencyEvent.exchange(widget.agencyId, money.toInt(), coin.toInt(),
+            _userIDController.text),
+      );
     }
-    onValidation();
   }
+
+  late AgencyResponse agency;
+  num exchangeVND = 0;
+  ExchangeCoinResponse? exchangeCoinResponse;
 
   @override
   Widget build(BuildContext context) {
@@ -70,68 +88,127 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: context.hideKeyboard,
-      child: Container(
-        color: ResourceTypeExt.blueBackgroundColor,
-        padding: const EdgeInsets.fromLTRB(
-          0,
-          44,
-          0,
-          0,
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: WalletTypeExt.blueBackgroundColor,
+          title: Text(
+            'Thông tin Đại lý',
+            style:
+                context.textTheme.titleLarge!.copyWith(color: AppColors.white),
+          ),
+          leading: IconButton(
+            onPressed: Navigator.of(context).pop,
+            icon: const Icon(
+              Icons.arrow_back,
+              color: AppColors.white,
+            ),
+          ),
         ),
-        margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-        child: BlocBuilder<AgencyBloc, AgencyState>(
-          buildWhen: (previous, current) =>
-              current.whenOrNull(
-                getAgencyInfoSuccess: (info) => true,
-                getAgencyInfoLoading: () => true,
-              ) ??
-              false,
-          builder: (context, state) {
-            return state.maybeWhen(
-              orElse: () => const LoadingWidget(),
-              getAgencyInfoSuccess: (agencyInfo) {
-                return Column(
-                  children: [
-                    _buildAgencyInformation(context),
-                    AgencyTabBarWidget(
-                      widgetByMoney: _buildEnterByMoney(context),
-                      widgetByCoin: _buildEnterNumberCoins(context),
+        body: BlocListener<AgencyBloc, AgencyState>(
+          listener: (BuildContext context, AgencyState state) {
+            state.whenOrNull(
+                initial: () {},
+                error: (msg) {
+                  // if (msg == "PROFILE_NOT_FOUND") {
+                  //
+                  // } else {
+                  //   showToastMessage(msg, ToastMessageType.error);
+                  // }
+                  showToastMessage(msg, ToastMessageType.error);
+                },
+                estCoin: (EstCoinResponse response) {
+                  exchangeVND = response.vnd;
+                  _moneyController.text = response.vnd != 0
+                      ? (response.vnd).toAppCurrencyString(isWithSymbol: false)
+                      : '';
+                  _coinController.text =
+                      (response.coin + response.bonusCoin) != 0
+                          ? (response.coin + response.bonusCoin)
+                              .toAppCurrencyString(isWithSymbol: false)
+                          : '';
+                },
+                exchangeSuccess: (ExchangeCoinResponse response) {
+                  exchangeCoinResponse = response;
+                  _agencyBloc.add(
+                    AgencyEvent.getPaymentInformation(
+                      widget.agencyId,
+                      AgencyPaymentInformation(
+                          vnd: exchangeVND, pDoneId: _userIDController.text),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      color: AppColors.white,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildCouponCoins(context),
-                          Visibility(
-                            visible: !isShowKeyboard,
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: GradiantButton(
-                                onPressed: () {
-                                  if (agencyInfo.agency?.id != null) {
-                                    context.pointTransactionHistoryDetail(21);
-                                  }
-                                },
-                                child: const Text('Xác nhận'),
-                              ),
+                  );
+                },
+                paymentInformation: (WalletCoinPaymentInformation paymentInfo) {
+                  // context.pointTransactionHistoryDetail(userId);
+                  context.coinPaymentInformation(paymentInfo, agency,
+                      _userIDController.text, exchangeCoinResponse!);
+                });
+          },
+          child: Container(
+            color: WalletTypeExt.blueBackgroundColor,
+            padding: const EdgeInsets.fromLTRB(
+              0,
+              44,
+              0,
+              0,
+            ),
+            margin:
+                EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+            child: BlocBuilder<AgencyBloc, AgencyState>(
+              buildWhen: (previous, current) =>
+                  current.whenOrNull(
+                    getAgencyInfoSuccess: (info) => true,
+                    getAgencyInfoLoading: () => true,
+                  ) ??
+                  false,
+              builder: (context, state) {
+                return state.maybeWhen(
+                  orElse: () => const LoadingWidget(),
+                  getAgencyInfoSuccess: (agencyInfo) {
+                    agency = agencyInfo;
+                    return SingleChildScrollView(
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height - 180,
+                        child: Column(
+                          children: [
+                            _buildAgencyInformation(context, agencyInfo),
+                            AgencyTabBarWidget(
+                              widgetByMoney: _buildEnterByMoney(context),
+                              widgetByCoin: _buildEnterNumberCoins(context),
                             ),
-                          )
-                        ],
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              color: AppColors.white,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  _buildCouponCoins(context),
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: GradiantButton(
+                                      onPressed: handleExchangeTap,
+                                      child: const Text('Xác nhận'),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    )
-                  ],
+                    );
+                  },
                 );
               },
-            );
-          },
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildAgencyInformation(BuildContext context) {
+  Widget _buildAgencyInformation(
+      BuildContext context, AgencyResponse agencyInfo) {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.white,
@@ -143,7 +220,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
         mainAxisSize: MainAxisSize.max,
         children: [
           Text(
-            'ĐẠI LÝ THANH HẢI',
+            agencyInfo.name?.toUpperCase() ?? '',
             style:
                 context.textTheme.titleLarge!.copyWith(color: AppColors.blue33),
           ),
@@ -161,15 +238,20 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                 width: 6,
               ),
               Text(
-                '162.000.000.000',
-                style: context.textTheme.titleLarge!
-                    .copyWith(color: AppColors.blue33),
+                agencyInfo.availableCoin
+                        ?.toAppCurrencyString(isWithSymbol: false) ??
+                    '',
+                style: context.textTheme.titleLarge!.copyWith(
+                  color: AppColors.blue33,
+                ),
               ),
             ],
           ),
-          _agencyInformationRow(context, 'ID P-DONE', 'ID142987'),
-          _agencyInformationRow(context, 'Số điện thoại', '0912345678'),
-          _agencyInformationRow(context, 'Email', 'thanhhaikhoxu@gmail.com'),
+          _agencyInformationRow(
+              context, 'ID P-DONE', agencyInfo.user?.pDoneId ?? ''),
+          _agencyInformationRow(context, 'Số điện thoại',
+              '${agencyInfo.user?.phoneCode} ${agencyInfo.user?.phone}'),
+          _agencyInformationRow(context, 'Email', agencyInfo.user?.email ?? ''),
         ],
       ),
     );
@@ -187,10 +269,15 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
             style: context.textTheme.titleMedium!
                 .copyWith(fontWeight: FontWeight.normal, fontSize: 16),
           ),
-          Text(
-            content,
-            style: context.textTheme.titleMedium!
-                .copyWith(color: AppColors.black, fontSize: 16),
+          Expanded(
+            child: Text(
+              content,
+              style: context.textTheme.titleMedium!.copyWith(
+                  color: AppColors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16),
+              textAlign: TextAlign.right,
+            ),
           ),
         ],
       ),
@@ -207,6 +294,9 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
             height: 24,
           ),
           _buildInputMoney(context),
+          SizedBox(
+            height: MediaQuery.of(context).padding.bottom,
+          ),
         ],
       ),
     );
@@ -297,7 +387,6 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
         TextFormField(
           controller: _coinController,
           onChanged: (val) {
-            _moneyController.clear();
             _onEstCoin();
           },
           style: context.textTheme.titleLarge!.copyWith(
@@ -306,11 +395,38 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
           ),
           decoration: InputDecoration(
               border: InputBorder.none,
-              focusedBorder: InputBorder.none,
-              enabledBorder: InputBorder.none,
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: AppColors.black10.withOpacity(0.6), width: 1),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: AppColors.black10.withOpacity(0.6), width: 1),
+              ),
               errorBorder: InputBorder.none,
               disabledBorder: InputBorder.none,
               hintText: 'Nhập số xu muốn mua',
+              suffixIcon: IconButton(
+                splashColor: Colors.transparent,
+                onPressed: () {
+                  _coinController.clear();
+                  _moneyController.clear();
+                  _onEstCoin();
+                },
+                icon: Container(
+                  margin: const EdgeInsets.only(top: 12),
+                  padding: const EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    color: const Color(0XFFACACAC),
+                    borderRadius: BorderRadius.circular(90),
+                  ),
+                  child: const Icon(
+                    Icons.clear,
+                    size: 12,
+                    color: AppColors.white,
+                  ),
+                ),
+              ),
               hintStyle: TextStyle(
                   fontSize: 16,
                   color: AppColors.black10.withOpacity(0.6),
@@ -371,7 +487,6 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
         TextFormField(
           controller: _moneyController,
           onChanged: (value) {
-            _coinController.clear();
             _onEstCoin();
           },
           style: context.textTheme.titleLarge!.copyWith(
@@ -380,8 +495,14 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
           ),
           decoration: InputDecoration(
             border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  color: AppColors.black10.withOpacity(0.6), width: 1),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  color: AppColors.black10.withOpacity(0.6), width: 1),
+            ),
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
             hintText: 'Nhập số tiền',
@@ -389,16 +510,31 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                 fontSize: 16,
                 color: AppColors.black10.withOpacity(0.6),
                 fontWeight: FontWeight.normal),
+            suffixIcon: IconButton(
+              splashColor: Colors.transparent,
+              onPressed: () {
+                _moneyController.clear();
+                _coinController.clear();
+                _onEstCoin();
+              },
+              icon: Container(
+                margin: const EdgeInsets.only(top: 12),
+                padding: const EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  color: const Color(0XFFACACAC),
+                  borderRadius: BorderRadius.circular(90),
+                ),
+                child: const Icon(
+                  Icons.clear,
+                  size: 12,
+                  color: AppColors.white,
+                ),
+              ),
+            ),
           ),
           inputFormatters: [
             ThousandsFormatter(),
           ],
-        ),
-        Container(
-          height: 0.5,
-          width: 400,
-          color: AppColors.black10.withOpacity(0.6),
-          margin: const EdgeInsets.symmetric(horizontal: 8),
         ),
         BlocBuilder<AgencyBloc, AgencyState>(builder: (context, state) {
           return state.maybeWhen(
@@ -416,7 +552,8 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                       width: 8,
                     ),
                     Text(
-                      estCoin.coin.toAppCurrencyString(isWithSymbol: false),
+                      (estCoin.coin + estCoin.bonusCoin)
+                          .toAppCurrencyString(isWithSymbol: false),
                       style:
                           context.textTheme.titleMedium!.copyWith(fontSize: 16),
                     )
@@ -454,7 +591,8 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
   }
 
   void _onEstCoin() {
-    Debouncer(milliseconds: 1200).run(() {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 1200), () {
       _agencyBloc.add(AgencyEvent.est(
           widget.agencyId,
           int.tryParse(_moneyController.text.replaceAll('.', '')) ?? 0,
