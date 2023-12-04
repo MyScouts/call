@@ -1,5 +1,5 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/domain/entities/friend/friend_model.dart';
+import 'package:app_main/src/domain/entities/chat/member_model.dart';
 import 'package:app_main/src/presentation/call/call_1v1/call_1v1_page.dart';
 import 'package:app_main/src/presentation/call/phone_book_detail/phone_book_detail_page.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class CallRoutes extends RouteModule {
         },
         PhoneBookDetailPage.routeName: (context) {
           return PhoneBookDetailPage(
-            data: settings.arguments as FriendModel,
+            data: settings.arguments as MemberModel,
           );
         },
       };

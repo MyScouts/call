@@ -7,8 +7,8 @@ abstract class CallHistoryModel {
   int get status;
   int get type;
   int get callerId;
-  String? get calledAt;
-  String? get endedAt;
+  DateTime? get calledAt;
+  DateTime? get endedAt;
   CallGroupModel get callGroup;
   bool get isCaller;
   String get des;

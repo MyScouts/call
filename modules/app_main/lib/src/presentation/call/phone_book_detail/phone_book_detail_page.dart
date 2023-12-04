@@ -1,7 +1,7 @@
 //import 'dart:developer' as developer;
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/di/di.dart';
-import 'package:app_main/src/domain/entities/friend/friend_model.dart';
+import 'package:app_main/src/domain/entities/chat/member_model.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/presentation/call/call_1v1/call_1v1_coordinator.dart';
 import 'package:app_main/src/presentation/call/phone_book_detail/cubit/phone_book_detail_cubit.dart';
@@ -9,7 +9,6 @@ import 'package:app_main/src/presentation/call/phone_book_detail/cubit/phone_boo
 import 'package:app_main/src/presentation/call/widgets/avatar_caller_widget.dart';
 import 'package:app_main/src/presentation/call/widgets/call_button_widget.dart';
 import 'package:app_main/src/presentation/call/widgets/call_history_detail_widget.dart';
-import 'package:app_main/src/presentation/call/widgets/call_history_widget.dart';
 import 'package:app_main/src/presentation/call/widgets/no_data_widget.dart';
 import 'package:app_main/src/presentation/call/widgets/video_call_button_widget.dart';
 import 'package:design_system/design_system.dart';
@@ -18,7 +17,7 @@ import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
 
 class PhoneBookDetailPage extends StatefulWidget {
-  final FriendModel data;
+  final MemberModel data;
   static const routeName = 'PhoneBookDetailPage';
 
   const PhoneBookDetailPage({super.key, required this.data});
@@ -46,14 +45,14 @@ class PhoneBookDetailPageState extends State<PhoneBookDetailPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
-              child: AvatarCallerWidget(
+              child: AvatarWidget(
                 avatar: widget.data.avatar ?? '',
                 size: 100,
               ),
             ),
-            kSpacingWidth12,
+            kSpacingHeight12,
             Text(
-              widget.data.displayName ?? '',
+              widget.data.fullName ?? '',
               style: context.textTheme.titleMedium!.copyWith(
                 fontSize: 16,
                 color: AppColors.black,
@@ -65,6 +64,7 @@ class PhoneBookDetailPageState extends State<PhoneBookDetailPage> {
               widget.data.pDoneId ?? '',
               style: context.textTheme.titleMedium!.copyWith(
                 fontSize: 12,
+                fontWeight: FontWeight.w400,
                 color: AppColors.grey14,
               ),
             ),

@@ -83,7 +83,7 @@ class IOSCallManager with WidgetsBindingObserver {
 
     callKeep.setup(<String, dynamic>{
       'ios': {
-        'appName': 'Stringee',
+        'appName': 'VDone',
       },
       'android': {
         'alertTitle': 'Permissions required',

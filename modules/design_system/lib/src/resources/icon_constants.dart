@@ -158,6 +158,9 @@ class IconAppConstants {
   static String icIncomingCall = IconApp.icIncomingCall.path;
   static String icSwitchCamera = IconApp.icSwitchCamera.path;
   static String icCallAway = IconApp.icCallAway.path;
+  static String icVideoOff = IconApp.icVideoOff.path;
+  static String icMicOff = IconApp.icMicOff.path;
+  static String icBackCall = IconApp.icBackCall.path;
 }
 
 enum IconApp {
@@ -310,8 +313,9 @@ enum IconApp {
   icLeaveTeam('assets/icons/ic_leave_team.svg'),
   icDeleteChat('assets/icons/ic_delete_chat.svg'),
   icReportChat('assets/icons/ic_report_chat.svg'),
-  icBlockChat('assets/icons/ic_block_chat.svg');
-  icLeaveTeam('assets/icons/ic_leave_team.svg'),
+  icBlockChat('assets/icons/ic_block_chat.svg'),
+  icVideoOff('assets/icons/ic_video_off.svg'),
+  icMicOff('assets/icons/ic_mic_off.svg'),
 
 
   ///call
@@ -325,7 +329,8 @@ enum IconApp {
   icVolume('assets/icons/ic_volume.svg'),
   icIncomingCall('assets/icons/ic_incoming_call.svg'),
   icSwitchCamera('assets/icons/ic_switch_camera.svg'),
-  icCallAway('assets/icons/ic_call_away.svg');
+  icCallAway('assets/icons/ic_call_away.svg'),
+  icBackCall('assets/icons/ic_back_call.svg');
 
   const IconApp(this.path);
 

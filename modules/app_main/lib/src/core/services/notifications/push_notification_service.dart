@@ -159,6 +159,7 @@ void showFlutterNotification(RemoteMessage message) {
             channelDescription: channel.description,
             icon: '@drawable/icon_notify',
             priority: Priority.high,
+            fullScreenIntent: true
           ),
         ),
         payload: jsonEncode(payload),
@@ -209,6 +210,7 @@ void showFlutterNotification(RemoteMessage message) {
             channelDescription: channel.description,
             icon: '@drawable/icon_notify',
             priority: Priority.high,
+            fullScreenIntent: true
           ),
         ),
         payload: jsonEncode(payload),

@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AllFriendsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(List<FriendModel> data, bool canLoadMore, int page)
+    TResult Function(List<MemberModel> data, bool canLoadMore, int page)
         $default, {
     required TResult Function() loading,
     required TResult Function(dynamic error) error,
@@ -26,7 +26,7 @@ mixin _$AllFriendsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(List<FriendModel> data, bool canLoadMore, int page)?
+    TResult? Function(List<MemberModel> data, bool canLoadMore, int page)?
         $default, {
     TResult? Function()? loading,
     TResult? Function(dynamic error)? error,
@@ -34,7 +34,7 @@ mixin _$AllFriendsState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(List<FriendModel> data, bool canLoadMore, int page)?
+    TResult Function(List<MemberModel> data, bool canLoadMore, int page)?
         $default, {
     TResult Function()? loading,
     TResult Function(dynamic error)? error,
@@ -89,7 +89,7 @@ abstract class _$$AllFriendsStateDataImplCopyWith<$Res> {
           $Res Function(_$AllFriendsStateDataImpl) then) =
       __$$AllFriendsStateDataImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<FriendModel> data, bool canLoadMore, int page});
+  $Res call({List<MemberModel> data, bool canLoadMore, int page});
 }
 
 /// @nodoc
@@ -111,7 +111,7 @@ class __$$AllFriendsStateDataImplCopyWithImpl<$Res>
       data: null == data
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<FriendModel>,
+              as List<MemberModel>,
       canLoadMore: null == canLoadMore
           ? _value.canLoadMore
           : canLoadMore // ignore: cast_nullable_to_non_nullable
@@ -128,14 +128,14 @@ class __$$AllFriendsStateDataImplCopyWithImpl<$Res>
 
 class _$AllFriendsStateDataImpl implements AllFriendsStateData {
   const _$AllFriendsStateDataImpl(
-      {required final List<FriendModel> data,
+      {required final List<MemberModel> data,
       required this.canLoadMore,
       required this.page})
       : _data = data;
 
-  final List<FriendModel> _data;
+  final List<MemberModel> _data;
   @override
-  List<FriendModel> get data {
+  List<MemberModel> get data {
     if (_data is EqualUnmodifiableListView) return _data;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_data);
@@ -176,7 +176,7 @@ class _$AllFriendsStateDataImpl implements AllFriendsStateData {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(List<FriendModel> data, bool canLoadMore, int page)
+    TResult Function(List<MemberModel> data, bool canLoadMore, int page)
         $default, {
     required TResult Function() loading,
     required TResult Function(dynamic error) error,
@@ -187,7 +187,7 @@ class _$AllFriendsStateDataImpl implements AllFriendsStateData {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(List<FriendModel> data, bool canLoadMore, int page)?
+    TResult? Function(List<MemberModel> data, bool canLoadMore, int page)?
         $default, {
     TResult? Function()? loading,
     TResult? Function(dynamic error)? error,
@@ -198,7 +198,7 @@ class _$AllFriendsStateDataImpl implements AllFriendsStateData {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(List<FriendModel> data, bool canLoadMore, int page)?
+    TResult Function(List<MemberModel> data, bool canLoadMore, int page)?
         $default, {
     TResult Function()? loading,
     TResult Function(dynamic error)? error,
@@ -247,11 +247,11 @@ class _$AllFriendsStateDataImpl implements AllFriendsStateData {
 
 abstract class AllFriendsStateData implements AllFriendsState {
   const factory AllFriendsStateData(
-      {required final List<FriendModel> data,
+      {required final List<MemberModel> data,
       required final bool canLoadMore,
       required final int page}) = _$AllFriendsStateDataImpl;
 
-  List<FriendModel> get data;
+  List<MemberModel> get data;
   bool get canLoadMore;
   int get page;
   @JsonKey(ignore: true)
@@ -300,7 +300,7 @@ class _$AllFriendsStateLoadingImpl implements AllFriendsStateLoading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(List<FriendModel> data, bool canLoadMore, int page)
+    TResult Function(List<MemberModel> data, bool canLoadMore, int page)
         $default, {
     required TResult Function() loading,
     required TResult Function(dynamic error) error,
@@ -311,7 +311,7 @@ class _$AllFriendsStateLoadingImpl implements AllFriendsStateLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(List<FriendModel> data, bool canLoadMore, int page)?
+    TResult? Function(List<MemberModel> data, bool canLoadMore, int page)?
         $default, {
     TResult? Function()? loading,
     TResult? Function(dynamic error)? error,
@@ -322,7 +322,7 @@ class _$AllFriendsStateLoadingImpl implements AllFriendsStateLoading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(List<FriendModel> data, bool canLoadMore, int page)?
+    TResult Function(List<MemberModel> data, bool canLoadMore, int page)?
         $default, {
     TResult Function()? loading,
     TResult Function(dynamic error)? error,
@@ -440,7 +440,7 @@ class _$AllFriendsStateErrorImpl implements AllFriendsStateError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(List<FriendModel> data, bool canLoadMore, int page)
+    TResult Function(List<MemberModel> data, bool canLoadMore, int page)
         $default, {
     required TResult Function() loading,
     required TResult Function(dynamic error) error,
@@ -451,7 +451,7 @@ class _$AllFriendsStateErrorImpl implements AllFriendsStateError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(List<FriendModel> data, bool canLoadMore, int page)?
+    TResult? Function(List<MemberModel> data, bool canLoadMore, int page)?
         $default, {
     TResult? Function()? loading,
     TResult? Function(dynamic error)? error,
@@ -462,7 +462,7 @@ class _$AllFriendsStateErrorImpl implements AllFriendsStateError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(List<FriendModel> data, bool canLoadMore, int page)?
+    TResult Function(List<MemberModel> data, bool canLoadMore, int page)?
         $default, {
     TResult Function()? loading,
     TResult Function(dynamic error)? error,

@@ -26,10 +26,10 @@ class CallHistoryDto extends CallHistoryModel {
   final CallGroupDto callGroup;
 
   @override
-  final String? calledAt;
+  final DateTime? calledAt;
 
   @override
-  final String? endedAt;
+  final DateTime? endedAt;
 
   @override
   final int id;

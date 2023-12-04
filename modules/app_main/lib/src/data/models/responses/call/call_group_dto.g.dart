@@ -9,7 +9,7 @@ part of 'call_group_dto.dart';
 CallGroupDto _$CallGroupDtoFromJson(Map<String, dynamic> json) => CallGroupDto(
       id: json['id'] as int,
       members: (json['members'] as List<dynamic>)
-          .map((e) => MemberDto.fromJson(e as Map<String, dynamic>))
+          .map((e) => MemberResponseDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       name: json['name'] as String?,
       type: json['type'] as int,

@@ -162,7 +162,6 @@ enum ImageApp {
   loading('assets/images/loading.json'),
   imgChargeDiamond('assets/images/imgChargeDiamond.png'),
   imgTransactionEmpty('assets/images/imgTransactionEmpty.png'),
-  imgChargeDiamond('assets/images/imgChargeDiamond.png'),
   imgNoResults('assets/images/img_no_results.svg');
 
   const ImageApp(this.path);

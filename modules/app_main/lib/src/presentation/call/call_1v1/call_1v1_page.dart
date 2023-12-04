@@ -8,10 +8,10 @@ import 'package:app_main/src/domain/entities/call/call_info.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/presentation/call/call_1v1/cubit/call_state.dart';
 import 'package:app_main/src/presentation/call/call_1v1/managers/call_manager.dart';
-import 'package:app_main/src/presentation/call/widgets/avatar_caller_widget.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:pulsator/pulsator.dart';
 import 'package:stringee_flutter_plugin/stringee_flutter_plugin.dart';
 import 'package:ui/ui.dart';
 
@@ -48,7 +48,6 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
   bool _isVideoEnable = false;
   bool _hasLocalStream = false;
   bool _hasRemoteStream = false;
-  bool _showProfile = true;
   String _status = '';
   StringeeSignalingState callState = StringeeSignalingState.calling;
   @override
@@ -126,7 +125,7 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
                 width: 150.0,
                 scalingType: ScalingType.fill,
               )
-            : const Placeholder();
+            : const SizedBox.shrink();
 
     Widget remoteView = (isAndroid
             ? _hasRemoteStream
@@ -139,7 +138,7 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
             isMirror: false,
             scalingType: ScalingType.fill,
           )
-        : const Placeholder();
+        : const SizedBox.shrink();
 
     return Scaffold(
       backgroundColor: AppColors.blueEdit,
@@ -158,12 +157,24 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        AvatarCallerWidget(
-                          size: 120,
-                          avatar: state.participant?.avatar ?? '',
+                      children: [
+                        SizedBox(
+                          height: 200,
+                          width: 200,
+                          child: Pulsator(
+                            style: const PulseStyle(color: Colors.white),
+                            count: 3,
+                            duration: const Duration(seconds: 4),
+                            repeat: 0,
+                            startFromScratch: false,
+                            autoStart: true,
+                            fit: PulseFit.contain,
+                            child: AvatarWidget(
+                              size: 120,
+                              avatar: state.participant?.avatar ?? '',
+                            ),
+                          ),
                         ),
-                        kSpacingHeight64,
                         Text(
                           state.participant?.getdisplayName ?? '',
                           style: context.textTheme.displayMedium
@@ -215,39 +226,55 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
-                                  ButtonSpeaker(
-                                    cubit: _callCubit,
-                                    isSpeakerOn: _isSpeakerOn,
+                                  if (!widget.isVideo)
+                                    ButtonSpeaker(
+                                      cubit: _callCubit,
+                                      isSpeakerOn: _isSpeakerOn,
+                                    ),
+                                  if (widget.isVideo)
+                                    ButtonVideo(
+                                      isVideo: widget.isVideo,
+                                      cubit: _callCubit,
+                                      isVideoEnable: _isVideoEnable,
+                                    ),
+                                  Container(
+                                    padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                                    child: GestureDetector(
+                                      onTap: endCallTapped,
+                                      child: ImageWidget(
+                                        IconAppConstants.icEnd,
+                                        height: 72,
+                                        width: 72,
+                                      ),
+                                    ),
                                   ),
                                   ButtonMicro(
                                     cubit: _callCubit,
                                     isMute: _isMute,
                                   ),
-                                  ButtonVideo(
-                                    isVideo: widget.isVideo,
-                                    cubit: _callCubit,
-                                    isVideoEnable: _isVideoEnable,
-                                  ),
                                 ],
                               ),
-                              Container(
-                                padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-                                child: GestureDetector(
-                                  onTap: endCallTapped,
-                                  child: ImageWidget(
-                                    IconAppConstants.icEnd,
-                                    height: 72,
-                                    width: 72,
-                                  ),
-                                ),
-                              )
                             ]),
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16, top: 62),
+                    child: GestureDetector(
+                      onTap: endCallTapped,
+                      child: ImageWidget(
+                        IconAppConstants.icBackCall,
+                        height: 40,
+                        width: 40,
+                      ),
+                    ),
+                  ),
                 ),
                 widget.isVideo
                     ? ButtonSwitchCamera(
                         cubit: _callCubit,
                       )
-                    : const Placeholder(),
+                    : const SizedBox.shrink(),
               ],
             );
           }),
@@ -356,7 +383,6 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
     _isVideoEnable = false;
     _hasLocalStream = false;
     _hasRemoteStream = false;
-    _showProfile = true;
     _status = '';
     callState = StringeeSignalingState.calling;
     if (isAndroid) {
@@ -449,9 +475,9 @@ class _ButtonSwitchCameraState extends State<ButtonSwitchCamera> {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.topLeft,
+      alignment: Alignment.topRight,
       child: Padding(
-        padding: const EdgeInsets.only(left: 32, top: 50.0),
+        padding: const EdgeInsets.only(right: 16, top: 62),
         child: GestureDetector(
           onTap: _toggleSwitchCamera,
           child: ImageWidget(
@@ -546,10 +572,9 @@ class _ButtonMicroState extends State<ButtonMicro> {
     return GestureDetector(
       onTap: _toggleMicro,
       child: ImageWidget(
-        IconAppConstants.icMicro,
-        color: (isAndroid ? widget.isMute : widget.cubit.iOSCallManager?.syncCall?.isMute ?? false)
-            ? AppColors.greyLightTextColor
-            : null,
+        (isAndroid ? widget.isMute : widget.cubit.iOSCallManager?.syncCall?.isMute ?? false)
+            ? IconAppConstants.icMicro
+            : IconAppConstants.icMicOff,
         height: 72,
         width: 72,
       ),
@@ -592,12 +617,11 @@ class _ButtonVideoState extends State<ButtonVideo> {
         ? GestureDetector(
             onTap: widget.isVideo ? _toggleVideo : null,
             child: ImageWidget(
-              IconAppConstants.icVideoCall,
-              color: (isAndroid
+              (isAndroid
                       ? widget.isVideoEnable
                       : widget.cubit.iOSCallManager?.syncCall?.videoEnabled ?? false)
-                  ? null
-                  : AppColors.greyLightTextColor,
+                  ? IconAppConstants.icVideoCall
+                  : IconAppConstants.icVideoOff,
               height: 72,
               width: 72,
             ),

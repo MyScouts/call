@@ -1,10 +1,11 @@
 
 
-import 'package:app_main/src/domain/entities/call/member_model.dart';
+import 'package:app_main/src/domain/entities/chat/member_response_model.dart';
 
 abstract class CallGroupModel {
   int get id;
   String? get name;
   int get type;
-  List<MemberModel> get members;
+  List<MemberResponseModel> get members;
+  List<MemberResponseModel> get membersNotMe;
 }

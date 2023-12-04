@@ -316,6 +316,7 @@ final personalDefault = {
     id: 'ic_call',
     title: 'Điện thoại',
     backgroundImage: IconAppConstants.icCall,
+    path: PhoneBookPage.routeName,
   ),
   'ic_qr': DashBoardIconItem(
     id: 'ic_qr',

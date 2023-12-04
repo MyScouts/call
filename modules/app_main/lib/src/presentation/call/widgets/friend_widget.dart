@@ -1,17 +1,15 @@
 //import 'dart:developer' as developer;
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/domain/entities/friend/friend_model.dart';
+import 'package:app_main/src/domain/entities/chat/member_model.dart';
 import 'package:app_main/src/presentation/call/phone_book_detail/phone_book_detail_coordinator.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:imagewidget/imagewidget.dart';
 import 'package:ui/ui.dart';
 
 import 'avatar_caller_widget.dart';
 
 class FriendWidget extends StatelessWidget {
-  final FriendModel data;
+  final MemberModel data;
   const FriendWidget({super.key, required this.data});
 
   @override
@@ -33,7 +31,7 @@ class FriendWidget extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    data.displayName ?? '',
+                    data.fullName ?? '',
                     style: context.textTheme.titleMedium!.copyWith(
                       fontSize: 16,
                       color: AppColors.black,

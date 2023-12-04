@@ -80,7 +80,7 @@ class PhoneBookPageState extends State<PhoneBookPage> {
                         Row(
                           children: [
                             Text(
-                              _authInfo.getdisplayName,
+                              _authInfo.fullName ?? '',
                               style: context.textTheme.titleMedium!.copyWith(
                                 fontSize: 16,
                                 color: AppColors.black,
@@ -151,12 +151,12 @@ class PhoneBookPageState extends State<PhoneBookPage> {
                         ),
                       ),
                     ),
-                    TextFieldSearch(
-                      radius: 32,
-                      enabled: false,
-                      suggestions: [],
-                      contentPadding: const EdgeInsets.all(8),
-                    ),
+                    // const TextFieldSearch(
+                    //   radius: 32,
+                    //   enabled: false,
+                    //   suggestions: [],
+                    //   contentPadding: EdgeInsets.all(8),
+                    // ),
                     kSpacingHeight18,
                     if (_pageState == 0)
                       GestureDetector(
