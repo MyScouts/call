@@ -60,15 +60,13 @@ class UserInfoCard extends StatelessWidget {
                             fontSize: 16,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Text(
-                            'Hạng vàng',
-                            style: context.text.labelSmall?.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: WalletTheme.goldColor,
-                              fontSize: 14,
-                            ),
+                        const SizedBox(height: 2),
+                        Text(
+                          'Hạng vàng',
+                          style: context.text.labelSmall?.copyWith(
+                            fontWeight: FontWeight.w400,
+                            color: WalletTheme.goldColor,
+                            fontSize: 14,
                           ),
                         ),
                       ],
@@ -177,6 +175,7 @@ class UserInfoCard extends StatelessWidget {
         borderRadius: WalletConstant.borderRadius6,
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           WalletType.icon,
           const SizedBox(width: 5),

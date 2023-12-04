@@ -59,16 +59,20 @@ class _WalletScreenState extends State<WalletScreen> {
                         ImageWidget(ImageConstants.imgWalletHeader),
                         Positioned(
                           top: MediaQuery.of(context).padding.top + 50,
-                          child: Text(
-                            'Ví của tôi',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(
-                                  color: AppColors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                          left: 0,
+                          right: 0,
+                          child: Center(
+                            child: Text(
+                              'Ví của tôi',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    color: AppColors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                            ),
                           ),
                         ),
                         Positioned(

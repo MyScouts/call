@@ -139,7 +139,7 @@ enum MessageTypeFB {
 void _onDidReceiveLocalNotification(int id, String? title, String? body, String? payload) {}
 
 const AndroidNotificationDetails _androidNotificationDetails = AndroidNotificationDetails('channelId', 'channelName',
-    channelDescription: 'channelDescription', playSound: true, priority: Priority.high, importance: Importance.high);
+    channelDescription: 'channelDescription', playSound: true, priority: Priority.high, importance: Importance.high, fullScreenIntent: true);
 
 void showFlutterNotification(RemoteMessage message) {
   // if (isIOS) {

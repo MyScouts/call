@@ -41,6 +41,7 @@ flutter:
     - assets/images/
     - assets/fonts/
     - assets/icons/lives/
+    - assets/icons/dashboard/
 
   fonts:
     - family: Inter
