@@ -25,6 +25,7 @@ class FriendWidget extends StatelessWidget {
         getIt.get<ConversationCubit>().init();
       },
       child: SizedBox(
+        width: MediaQuery.of(context).size.width,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

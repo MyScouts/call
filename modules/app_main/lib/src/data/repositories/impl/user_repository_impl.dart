@@ -41,8 +41,7 @@ class AuthRepositoryImpl extends UserRepository {
   Future<FollowUserResponse> followUser({
     required FollowUserPayload payload,
   }) async {
-    final res = await _userAPI.followUser(body: payload);
-    return res.data;
+    return _userAPI.followUser(body: payload);
   }
 
   @override
@@ -154,5 +153,7 @@ class AuthRepositoryImpl extends UserRepository {
     return _userAPI.approvedRequest();
   }
 
-
+  Future<void> getStringgeToken() {
+    return _userAPI.getStringeeToken();
+  }
 }

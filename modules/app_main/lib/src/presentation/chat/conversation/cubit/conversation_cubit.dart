@@ -26,7 +26,9 @@ class ConversationCubit extends Cubit<ConversationState> {
           pageConversation: 1,
           canLoadMoreFriend: friendResponse.friends.length == kPageSize,
           canLoadMoreConversation: conversationResponse.items?.length == kPageSize));
-    } catch (e) {
+    } catch (e,s) {
+      print(e);
+      print(s);
       emit(ConversationState.error(e));
     }
   }
