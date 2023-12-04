@@ -271,7 +271,7 @@ final personalDefault = {
   //   width: 2,
   //   height: 2,
   // ),
-  // 'ic_tv': DashBoardIconItem(
+  'ic_tv': DashBoardIconItem(
     id: 'ic_tv',
     title: 'Kênh',
     backgroundImage: IconAppConstants.icTv,
@@ -288,7 +288,7 @@ final personalDefault = {
     backgroundImage: IconAppConstants.icCall,
     path: PhoneBookPage.routeName,
   ),
-  'wg_weather_banner': DashBoardWidgetItem(
+  // 'wg_weather_banner': DashBoardWidgetItem(
   //   id: 'wg_weather_banner',
   //   title: 'Thời gian và thời tiết',
   //   backgroundImage: IconAppConstants.icClock,

@@ -10,8 +10,12 @@ CallHistoryDto _$CallHistoryDtoFromJson(Map<String, dynamic> json) =>
     CallHistoryDto(
       callGroup:
           CallGroupDto.fromJson(json['callGroup'] as Map<String, dynamic>),
-      calledAt: DateTime.tryParse(json['calledAt'] as String? ?? ''),
-      endedAt: DateTime.tryParse(json['endedAt'] as String? ?? ''),
+      calledAt: json['calledAt'] == null
+          ? null
+          : DateTime.parse(json['calledAt'] as String),
+      endedAt: json['endedAt'] == null
+          ? null
+          : DateTime.parse(json['endedAt'] as String),
       id: json['id'] as int,
       status: json['status'] as int,
       type: json['type'] as int,
@@ -21,8 +25,8 @@ CallHistoryDto _$CallHistoryDtoFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$CallHistoryDtoToJson(CallHistoryDto instance) =>
     <String, dynamic>{
       'callGroup': instance.callGroup,
-      'calledAt': instance.calledAt,
-      'endedAt': instance.endedAt,
+      'calledAt': instance.calledAt?.toIso8601String(),
+      'endedAt': instance.endedAt?.toIso8601String(),
       'id': instance.id,
       'status': instance.status,
       'type': instance.type,
