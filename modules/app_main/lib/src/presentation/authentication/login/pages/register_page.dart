@@ -30,7 +30,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   final ValueNotifier<bool> _phoneValidCtrl = ValueNotifier(false);
   final ValueNotifier<bool> _confirmPasswordValidCtrl = ValueNotifier(false);
 
-  final ValueNotifier<String?> _birthDateError = ValueNotifier("");
+  final ValueNotifier<String?> _birthDateError = ValueNotifier(null);
   final ValueNotifier<List<PasswordRules>> _passwordRuleCtrl =
       ValueNotifier([]);
   final _phoneCtrl = TextEditingController();
@@ -38,7 +38,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   final _rePasswordCtrl = TextEditingController();
   final genderCtrl = TextEditingController();
   DateTime? birthDay;
-  int _gender = 1;
+  int? _gender;
   String _phoneCode = "+84";
 
   @override
@@ -79,9 +79,6 @@ class _RegisterWidgetState extends State<RegisterWidget> {
         _passwordRuleCtrl.value.length == PasswordRules.values.length &&
         _confirmPasswordValidCtrl.value &&
         _birthDateError.value == null;
-
-    print(
-        "_formValidCtrl.value: ${_phoneValidCtrl.value} ${_confirmPasswordValidCtrl.value} ${_birthDateError.value} ${_passwordRuleCtrl.value.length}");
   }
 
   @override
@@ -94,8 +91,8 @@ class _RegisterWidgetState extends State<RegisterWidget> {
             phoneCode: _phoneCode,
             phoneNumber: _phoneCtrl.text.trim(),
             password: _passwordCtrl.text,
-            birthDay: birthDay!.toYYYYmmdd,
-            sex: _gender,
+            birthDay: birthDay?.toYYYYmmdd ?? '1999-01-01',
+            sex: _gender ?? 2,
           );
         }
 
@@ -185,71 +182,71 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                   ),
                   isPassword: true,
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Expanded(
-                        child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        InformationLayoutFieldWidget(
-                          required: false,
-                          label: "Ngày sinh",
-                          child: InputDateTimeWidget(
-                            hintText: 'Ngày sinh',
-                            useHorizontalLayout: true,
-                            radius: 17,
-                            date: birthDay,
-                            formatText: (date) => S
-                                .of(context)
-                                .formatDateDDmmYYYYhhMM(date, date)
-                                .split('|')
-                                .first,
-                            max: DateTime.now(),
-                            onChange: (dateTime) {
-                              birthDay = dateTime;
-                              if (birthDay != null) {
-                                if (birthDay!.isUnder18yearsAgo()) {
-                                  _birthDateError.value =
-                                      "Yêu cầu trên 18 tuổi.";
-                                } else {
-                                  _birthDateError.value = null;
-                                }
-                              } else {
-                                _birthDateError.value = "Nhập ngày sinh.";
-                              }
-                            },
-                          ),
-                        ),
-                        Positioned(
-                            bottom: -18,
-                            child: ValueListenableBuilder(
-                              valueListenable: _birthDateError,
-                              builder: (context, value, child) {
-                                return value != null
-                                    ? Text(
-                                        value,
-                                        style: context.textTheme.bodySmall!
-                                            .copyWith(
-                                          color: AppColors.red10,
-                                        ),
-                                      )
-                                    : const SizedBox();
-                              },
-                            ))
-                      ],
-                    )),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: GenderInput(
-                        onChange: (sex) {
-                          _gender = sex;
-                          setState(() {});
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   crossAxisAlignment: CrossAxisAlignment.end,
+                //   children: [
+                //     Expanded(
+                //         child: Stack(
+                //       clipBehavior: Clip.none,
+                //       children: [
+                //         InformationLayoutFieldWidget(
+                //           required: false,
+                //           label: "Ngày sinh",
+                //           child: InputDateTimeWidget(
+                //             hintText: 'Ngày sinh',
+                //             useHorizontalLayout: true,
+                //             radius: 17,
+                //             date: birthDay,
+                //             formatText: (date) => S
+                //                 .of(context)
+                //                 .formatDateDDmmYYYYhhMM(date, date)
+                //                 .split('|')
+                //                 .first,
+                //             max: DateTime.now(),
+                //             onChange: (dateTime) {
+                //               birthDay = dateTime;
+                //               if (birthDay != null) {
+                //                 if (birthDay!.isUnder18yearsAgo()) {
+                //                   _birthDateError.value =
+                //                       "Yêu cầu trên 18 tuổi.";
+                //                 } else {
+                //                   _birthDateError.value = null;
+                //                 }
+                //               } else {
+                //                 _birthDateError.value = "Nhập ngày sinh.";
+                //               }
+                //             },
+                //           ),
+                //         ),
+                //         Positioned(
+                //             bottom: -18,
+                //             child: ValueListenableBuilder(
+                //               valueListenable: _birthDateError,
+                //               builder: (context, value, child) {
+                //                 return value != null
+                //                     ? Text(
+                //                         value,
+                //                         style: context.textTheme.bodySmall!
+                //                             .copyWith(
+                //                           color: AppColors.red10,
+                //                         ),
+                //                       )
+                //                     : const SizedBox();
+                //               },
+                //             ))
+                //       ],
+                //     )),
+                //     const SizedBox(width: 10),
+                //     Expanded(
+                //       child: GenderInput(
+                //         onChange: (sex) {
+                //           _gender = sex;
+                //           setState(() {});
+                //         },
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 const SizedBox(height: 30),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -355,17 +352,13 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   }
 
   _onRegister() {
-    if (birthDay == null) {
-      _birthDateError.value = "Vui lòng nhập ngày sinh";
-      return;
-    }
     showLoading();
     context.read<UserCubit>().phoneRegister(
           phone: _phoneCtrl.text.trim(),
           password: _passwordCtrl.text,
           phoneCode: _phoneCode.replaceAll("+", ""),
-          birthday: birthDay!.toYYYYmmdd,
-          sex: _gender,
+          birthday: birthDay?.toYYYYmmdd ?? '1999-01-01',
+          sex: _gender ?? 2,
         );
   }
 }

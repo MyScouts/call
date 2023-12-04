@@ -218,10 +218,10 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       final postCode = eKycData['post_code'][0];
       nickNameCtrl.text = eKycData['name'] ?? '';
       if (GenderType.female.getText() == eKycData['gender']) {
-        gender = GenderType.female.toValue();
+        gender = GenderType.female.toValue()!;
       }
       if (GenderType.male.getText() == eKycData['gender']) {
-        gender = GenderType.male.toValue();
+        gender = GenderType.male.toValue()!;
       }
 
       supplyAddressCtrl.text = eKycData['issue_place'];
@@ -368,8 +368,10 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                     /// Giới tính - Ngày sinh
                     GenderInput(
                       onChange: (sex) {
-                        gender = sex;
-                        setState(() {});
+                        if (sex != null) {
+                          gender = sex;
+                          setState(() {});
+                        }
                       },
                     ),
 
