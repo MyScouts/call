@@ -59,7 +59,6 @@ class _WalletScreenState extends State<WalletScreen> {
                         ImageWidget(ImageConstants.imgWalletHeader),
                         Positioned(
                           top: MediaQuery.of(context).padding.top + 50,
-                          left: 20,
                           child: Text(
                             'Ví của tôi',
                             style: Theme.of(context)

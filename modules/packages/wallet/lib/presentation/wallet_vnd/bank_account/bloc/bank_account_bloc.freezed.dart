@@ -20,6 +20,7 @@ mixin _$BankAccountEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() getBankAccounts,
     required TResult Function() getAllBanksInfo,
+    required TResult Function(String search) searchBank,
     required TResult Function(bool isResend) getOtp,
     required TResult Function(AddBankAccountRequest request) addBankAccount,
     required TResult Function(File file) uploadImage,
@@ -35,6 +36,7 @@ mixin _$BankAccountEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getBankAccounts,
     TResult? Function()? getAllBanksInfo,
+    TResult? Function(String search)? searchBank,
     TResult? Function(bool isResend)? getOtp,
     TResult? Function(AddBankAccountRequest request)? addBankAccount,
     TResult? Function(File file)? uploadImage,
@@ -49,6 +51,7 @@ mixin _$BankAccountEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getBankAccounts,
     TResult Function()? getAllBanksInfo,
+    TResult Function(String search)? searchBank,
     TResult Function(bool isResend)? getOtp,
     TResult Function(AddBankAccountRequest request)? addBankAccount,
     TResult Function(File file)? uploadImage,
@@ -64,6 +67,7 @@ mixin _$BankAccountEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetBankAccounts value) getBankAccounts,
     required TResult Function(_GetAllBanksInfo value) getAllBanksInfo,
+    required TResult Function(_SearchBank value) searchBank,
     required TResult Function(_GetOtp value) getOtp,
     required TResult Function(_AddBankAccount value) addBankAccount,
     required TResult Function(_UploadImage value) uploadImage,
@@ -79,6 +83,7 @@ mixin _$BankAccountEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetBankAccounts value)? getBankAccounts,
     TResult? Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult? Function(_SearchBank value)? searchBank,
     TResult? Function(_GetOtp value)? getOtp,
     TResult? Function(_AddBankAccount value)? addBankAccount,
     TResult? Function(_UploadImage value)? uploadImage,
@@ -93,6 +98,7 @@ mixin _$BankAccountEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetBankAccounts value)? getBankAccounts,
     TResult Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult Function(_SearchBank value)? searchBank,
     TResult Function(_GetOtp value)? getOtp,
     TResult Function(_AddBankAccount value)? addBankAccount,
     TResult Function(_UploadImage value)? uploadImage,
@@ -164,6 +170,7 @@ class _$GetBankAccountsImpl implements _GetBankAccounts {
   TResult when<TResult extends Object?>({
     required TResult Function() getBankAccounts,
     required TResult Function() getAllBanksInfo,
+    required TResult Function(String search) searchBank,
     required TResult Function(bool isResend) getOtp,
     required TResult Function(AddBankAccountRequest request) addBankAccount,
     required TResult Function(File file) uploadImage,
@@ -182,6 +189,7 @@ class _$GetBankAccountsImpl implements _GetBankAccounts {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getBankAccounts,
     TResult? Function()? getAllBanksInfo,
+    TResult? Function(String search)? searchBank,
     TResult? Function(bool isResend)? getOtp,
     TResult? Function(AddBankAccountRequest request)? addBankAccount,
     TResult? Function(File file)? uploadImage,
@@ -199,6 +207,7 @@ class _$GetBankAccountsImpl implements _GetBankAccounts {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getBankAccounts,
     TResult Function()? getAllBanksInfo,
+    TResult Function(String search)? searchBank,
     TResult Function(bool isResend)? getOtp,
     TResult Function(AddBankAccountRequest request)? addBankAccount,
     TResult Function(File file)? uploadImage,
@@ -220,6 +229,7 @@ class _$GetBankAccountsImpl implements _GetBankAccounts {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetBankAccounts value) getBankAccounts,
     required TResult Function(_GetAllBanksInfo value) getAllBanksInfo,
+    required TResult Function(_SearchBank value) searchBank,
     required TResult Function(_GetOtp value) getOtp,
     required TResult Function(_AddBankAccount value) addBankAccount,
     required TResult Function(_UploadImage value) uploadImage,
@@ -238,6 +248,7 @@ class _$GetBankAccountsImpl implements _GetBankAccounts {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetBankAccounts value)? getBankAccounts,
     TResult? Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult? Function(_SearchBank value)? searchBank,
     TResult? Function(_GetOtp value)? getOtp,
     TResult? Function(_AddBankAccount value)? addBankAccount,
     TResult? Function(_UploadImage value)? uploadImage,
@@ -255,6 +266,7 @@ class _$GetBankAccountsImpl implements _GetBankAccounts {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetBankAccounts value)? getBankAccounts,
     TResult Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult Function(_SearchBank value)? searchBank,
     TResult Function(_GetOtp value)? getOtp,
     TResult Function(_AddBankAccount value)? addBankAccount,
     TResult Function(_UploadImage value)? uploadImage,
@@ -316,6 +328,7 @@ class _$GetAllBanksInfoImpl implements _GetAllBanksInfo {
   TResult when<TResult extends Object?>({
     required TResult Function() getBankAccounts,
     required TResult Function() getAllBanksInfo,
+    required TResult Function(String search) searchBank,
     required TResult Function(bool isResend) getOtp,
     required TResult Function(AddBankAccountRequest request) addBankAccount,
     required TResult Function(File file) uploadImage,
@@ -334,6 +347,7 @@ class _$GetAllBanksInfoImpl implements _GetAllBanksInfo {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getBankAccounts,
     TResult? Function()? getAllBanksInfo,
+    TResult? Function(String search)? searchBank,
     TResult? Function(bool isResend)? getOtp,
     TResult? Function(AddBankAccountRequest request)? addBankAccount,
     TResult? Function(File file)? uploadImage,
@@ -351,6 +365,7 @@ class _$GetAllBanksInfoImpl implements _GetAllBanksInfo {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getBankAccounts,
     TResult Function()? getAllBanksInfo,
+    TResult Function(String search)? searchBank,
     TResult Function(bool isResend)? getOtp,
     TResult Function(AddBankAccountRequest request)? addBankAccount,
     TResult Function(File file)? uploadImage,
@@ -372,6 +387,7 @@ class _$GetAllBanksInfoImpl implements _GetAllBanksInfo {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetBankAccounts value) getBankAccounts,
     required TResult Function(_GetAllBanksInfo value) getAllBanksInfo,
+    required TResult Function(_SearchBank value) searchBank,
     required TResult Function(_GetOtp value) getOtp,
     required TResult Function(_AddBankAccount value) addBankAccount,
     required TResult Function(_UploadImage value) uploadImage,
@@ -390,6 +406,7 @@ class _$GetAllBanksInfoImpl implements _GetAllBanksInfo {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetBankAccounts value)? getBankAccounts,
     TResult? Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult? Function(_SearchBank value)? searchBank,
     TResult? Function(_GetOtp value)? getOtp,
     TResult? Function(_AddBankAccount value)? addBankAccount,
     TResult? Function(_UploadImage value)? uploadImage,
@@ -407,6 +424,7 @@ class _$GetAllBanksInfoImpl implements _GetAllBanksInfo {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetBankAccounts value)? getBankAccounts,
     TResult Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult Function(_SearchBank value)? searchBank,
     TResult Function(_GetOtp value)? getOtp,
     TResult Function(_AddBankAccount value)? addBankAccount,
     TResult Function(_UploadImage value)? uploadImage,
@@ -426,6 +444,195 @@ class _$GetAllBanksInfoImpl implements _GetAllBanksInfo {
 
 abstract class _GetAllBanksInfo implements BankAccountEvent {
   const factory _GetAllBanksInfo() = _$GetAllBanksInfoImpl;
+}
+
+/// @nodoc
+abstract class _$$SearchBankImplCopyWith<$Res> {
+  factory _$$SearchBankImplCopyWith(
+          _$SearchBankImpl value, $Res Function(_$SearchBankImpl) then) =
+      __$$SearchBankImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String search});
+}
+
+/// @nodoc
+class __$$SearchBankImplCopyWithImpl<$Res>
+    extends _$BankAccountEventCopyWithImpl<$Res, _$SearchBankImpl>
+    implements _$$SearchBankImplCopyWith<$Res> {
+  __$$SearchBankImplCopyWithImpl(
+      _$SearchBankImpl _value, $Res Function(_$SearchBankImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? search = null,
+  }) {
+    return _then(_$SearchBankImpl(
+      search: null == search
+          ? _value.search
+          : search // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SearchBankImpl implements _SearchBank {
+  const _$SearchBankImpl({required this.search});
+
+  @override
+  final String search;
+
+  @override
+  String toString() {
+    return 'BankAccountEvent.searchBank(search: $search)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SearchBankImpl &&
+            (identical(other.search, search) || other.search == search));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, search);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SearchBankImplCopyWith<_$SearchBankImpl> get copyWith =>
+      __$$SearchBankImplCopyWithImpl<_$SearchBankImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getBankAccounts,
+    required TResult Function() getAllBanksInfo,
+    required TResult Function(String search) searchBank,
+    required TResult Function(bool isResend) getOtp,
+    required TResult Function(AddBankAccountRequest request) addBankAccount,
+    required TResult Function(File file) uploadImage,
+    required TResult Function(int bankId) deleteBankAccount,
+    required TResult Function() getVndWalletInfo,
+    required TResult Function(num value) estimateTax,
+    required TResult Function(WithdrawRequest request) withdraw,
+    required TResult Function(int bankAccountId, bool isDefault)
+        setDefaultBankAccount,
+  }) {
+    return searchBank(search);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getBankAccounts,
+    TResult? Function()? getAllBanksInfo,
+    TResult? Function(String search)? searchBank,
+    TResult? Function(bool isResend)? getOtp,
+    TResult? Function(AddBankAccountRequest request)? addBankAccount,
+    TResult? Function(File file)? uploadImage,
+    TResult? Function(int bankId)? deleteBankAccount,
+    TResult? Function()? getVndWalletInfo,
+    TResult? Function(num value)? estimateTax,
+    TResult? Function(WithdrawRequest request)? withdraw,
+    TResult? Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
+  }) {
+    return searchBank?.call(search);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getBankAccounts,
+    TResult Function()? getAllBanksInfo,
+    TResult Function(String search)? searchBank,
+    TResult Function(bool isResend)? getOtp,
+    TResult Function(AddBankAccountRequest request)? addBankAccount,
+    TResult Function(File file)? uploadImage,
+    TResult Function(int bankId)? deleteBankAccount,
+    TResult Function()? getVndWalletInfo,
+    TResult Function(num value)? estimateTax,
+    TResult Function(WithdrawRequest request)? withdraw,
+    TResult Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
+    required TResult orElse(),
+  }) {
+    if (searchBank != null) {
+      return searchBank(search);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetBankAccounts value) getBankAccounts,
+    required TResult Function(_GetAllBanksInfo value) getAllBanksInfo,
+    required TResult Function(_SearchBank value) searchBank,
+    required TResult Function(_GetOtp value) getOtp,
+    required TResult Function(_AddBankAccount value) addBankAccount,
+    required TResult Function(_UploadImage value) uploadImage,
+    required TResult Function(_DeleteBankAccount value) deleteBankAccount,
+    required TResult Function(_GetVndWalletInfo value) getVndWalletInfo,
+    required TResult Function(_EstimateTax value) estimateTax,
+    required TResult Function(_Withdraw value) withdraw,
+    required TResult Function(_SetDefaultBankAccount value)
+        setDefaultBankAccount,
+  }) {
+    return searchBank(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetBankAccounts value)? getBankAccounts,
+    TResult? Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult? Function(_SearchBank value)? searchBank,
+    TResult? Function(_GetOtp value)? getOtp,
+    TResult? Function(_AddBankAccount value)? addBankAccount,
+    TResult? Function(_UploadImage value)? uploadImage,
+    TResult? Function(_DeleteBankAccount value)? deleteBankAccount,
+    TResult? Function(_GetVndWalletInfo value)? getVndWalletInfo,
+    TResult? Function(_EstimateTax value)? estimateTax,
+    TResult? Function(_Withdraw value)? withdraw,
+    TResult? Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
+  }) {
+    return searchBank?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetBankAccounts value)? getBankAccounts,
+    TResult Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult Function(_SearchBank value)? searchBank,
+    TResult Function(_GetOtp value)? getOtp,
+    TResult Function(_AddBankAccount value)? addBankAccount,
+    TResult Function(_UploadImage value)? uploadImage,
+    TResult Function(_DeleteBankAccount value)? deleteBankAccount,
+    TResult Function(_GetVndWalletInfo value)? getVndWalletInfo,
+    TResult Function(_EstimateTax value)? estimateTax,
+    TResult Function(_Withdraw value)? withdraw,
+    TResult Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
+    required TResult orElse(),
+  }) {
+    if (searchBank != null) {
+      return searchBank(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SearchBank implements BankAccountEvent {
+  const factory _SearchBank({required final String search}) = _$SearchBankImpl;
+
+  String get search;
+  @JsonKey(ignore: true)
+  _$$SearchBankImplCopyWith<_$SearchBankImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -496,6 +703,7 @@ class _$GetOtpImpl implements _GetOtp {
   TResult when<TResult extends Object?>({
     required TResult Function() getBankAccounts,
     required TResult Function() getAllBanksInfo,
+    required TResult Function(String search) searchBank,
     required TResult Function(bool isResend) getOtp,
     required TResult Function(AddBankAccountRequest request) addBankAccount,
     required TResult Function(File file) uploadImage,
@@ -514,6 +722,7 @@ class _$GetOtpImpl implements _GetOtp {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getBankAccounts,
     TResult? Function()? getAllBanksInfo,
+    TResult? Function(String search)? searchBank,
     TResult? Function(bool isResend)? getOtp,
     TResult? Function(AddBankAccountRequest request)? addBankAccount,
     TResult? Function(File file)? uploadImage,
@@ -531,6 +740,7 @@ class _$GetOtpImpl implements _GetOtp {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getBankAccounts,
     TResult Function()? getAllBanksInfo,
+    TResult Function(String search)? searchBank,
     TResult Function(bool isResend)? getOtp,
     TResult Function(AddBankAccountRequest request)? addBankAccount,
     TResult Function(File file)? uploadImage,
@@ -552,6 +762,7 @@ class _$GetOtpImpl implements _GetOtp {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetBankAccounts value) getBankAccounts,
     required TResult Function(_GetAllBanksInfo value) getAllBanksInfo,
+    required TResult Function(_SearchBank value) searchBank,
     required TResult Function(_GetOtp value) getOtp,
     required TResult Function(_AddBankAccount value) addBankAccount,
     required TResult Function(_UploadImage value) uploadImage,
@@ -570,6 +781,7 @@ class _$GetOtpImpl implements _GetOtp {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetBankAccounts value)? getBankAccounts,
     TResult? Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult? Function(_SearchBank value)? searchBank,
     TResult? Function(_GetOtp value)? getOtp,
     TResult? Function(_AddBankAccount value)? addBankAccount,
     TResult? Function(_UploadImage value)? uploadImage,
@@ -587,6 +799,7 @@ class _$GetOtpImpl implements _GetOtp {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetBankAccounts value)? getBankAccounts,
     TResult Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult Function(_SearchBank value)? searchBank,
     TResult Function(_GetOtp value)? getOtp,
     TResult Function(_AddBankAccount value)? addBankAccount,
     TResult Function(_UploadImage value)? uploadImage,
@@ -680,6 +893,7 @@ class _$AddBankAccountImpl implements _AddBankAccount {
   TResult when<TResult extends Object?>({
     required TResult Function() getBankAccounts,
     required TResult Function() getAllBanksInfo,
+    required TResult Function(String search) searchBank,
     required TResult Function(bool isResend) getOtp,
     required TResult Function(AddBankAccountRequest request) addBankAccount,
     required TResult Function(File file) uploadImage,
@@ -698,6 +912,7 @@ class _$AddBankAccountImpl implements _AddBankAccount {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getBankAccounts,
     TResult? Function()? getAllBanksInfo,
+    TResult? Function(String search)? searchBank,
     TResult? Function(bool isResend)? getOtp,
     TResult? Function(AddBankAccountRequest request)? addBankAccount,
     TResult? Function(File file)? uploadImage,
@@ -715,6 +930,7 @@ class _$AddBankAccountImpl implements _AddBankAccount {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getBankAccounts,
     TResult Function()? getAllBanksInfo,
+    TResult Function(String search)? searchBank,
     TResult Function(bool isResend)? getOtp,
     TResult Function(AddBankAccountRequest request)? addBankAccount,
     TResult Function(File file)? uploadImage,
@@ -736,6 +952,7 @@ class _$AddBankAccountImpl implements _AddBankAccount {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetBankAccounts value) getBankAccounts,
     required TResult Function(_GetAllBanksInfo value) getAllBanksInfo,
+    required TResult Function(_SearchBank value) searchBank,
     required TResult Function(_GetOtp value) getOtp,
     required TResult Function(_AddBankAccount value) addBankAccount,
     required TResult Function(_UploadImage value) uploadImage,
@@ -754,6 +971,7 @@ class _$AddBankAccountImpl implements _AddBankAccount {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetBankAccounts value)? getBankAccounts,
     TResult? Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult? Function(_SearchBank value)? searchBank,
     TResult? Function(_GetOtp value)? getOtp,
     TResult? Function(_AddBankAccount value)? addBankAccount,
     TResult? Function(_UploadImage value)? uploadImage,
@@ -771,6 +989,7 @@ class _$AddBankAccountImpl implements _AddBankAccount {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetBankAccounts value)? getBankAccounts,
     TResult Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult Function(_SearchBank value)? searchBank,
     TResult Function(_GetOtp value)? getOtp,
     TResult Function(_AddBankAccount value)? addBankAccount,
     TResult Function(_UploadImage value)? uploadImage,
@@ -864,6 +1083,7 @@ class _$UploadImageImpl implements _UploadImage {
   TResult when<TResult extends Object?>({
     required TResult Function() getBankAccounts,
     required TResult Function() getAllBanksInfo,
+    required TResult Function(String search) searchBank,
     required TResult Function(bool isResend) getOtp,
     required TResult Function(AddBankAccountRequest request) addBankAccount,
     required TResult Function(File file) uploadImage,
@@ -882,6 +1102,7 @@ class _$UploadImageImpl implements _UploadImage {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getBankAccounts,
     TResult? Function()? getAllBanksInfo,
+    TResult? Function(String search)? searchBank,
     TResult? Function(bool isResend)? getOtp,
     TResult? Function(AddBankAccountRequest request)? addBankAccount,
     TResult? Function(File file)? uploadImage,
@@ -899,6 +1120,7 @@ class _$UploadImageImpl implements _UploadImage {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getBankAccounts,
     TResult Function()? getAllBanksInfo,
+    TResult Function(String search)? searchBank,
     TResult Function(bool isResend)? getOtp,
     TResult Function(AddBankAccountRequest request)? addBankAccount,
     TResult Function(File file)? uploadImage,
@@ -920,6 +1142,7 @@ class _$UploadImageImpl implements _UploadImage {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetBankAccounts value) getBankAccounts,
     required TResult Function(_GetAllBanksInfo value) getAllBanksInfo,
+    required TResult Function(_SearchBank value) searchBank,
     required TResult Function(_GetOtp value) getOtp,
     required TResult Function(_AddBankAccount value) addBankAccount,
     required TResult Function(_UploadImage value) uploadImage,
@@ -938,6 +1161,7 @@ class _$UploadImageImpl implements _UploadImage {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetBankAccounts value)? getBankAccounts,
     TResult? Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult? Function(_SearchBank value)? searchBank,
     TResult? Function(_GetOtp value)? getOtp,
     TResult? Function(_AddBankAccount value)? addBankAccount,
     TResult? Function(_UploadImage value)? uploadImage,
@@ -955,6 +1179,7 @@ class _$UploadImageImpl implements _UploadImage {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetBankAccounts value)? getBankAccounts,
     TResult Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult Function(_SearchBank value)? searchBank,
     TResult Function(_GetOtp value)? getOtp,
     TResult Function(_AddBankAccount value)? addBankAccount,
     TResult Function(_UploadImage value)? uploadImage,
@@ -1048,6 +1273,7 @@ class _$DeleteBankAccountImpl implements _DeleteBankAccount {
   TResult when<TResult extends Object?>({
     required TResult Function() getBankAccounts,
     required TResult Function() getAllBanksInfo,
+    required TResult Function(String search) searchBank,
     required TResult Function(bool isResend) getOtp,
     required TResult Function(AddBankAccountRequest request) addBankAccount,
     required TResult Function(File file) uploadImage,
@@ -1066,6 +1292,7 @@ class _$DeleteBankAccountImpl implements _DeleteBankAccount {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getBankAccounts,
     TResult? Function()? getAllBanksInfo,
+    TResult? Function(String search)? searchBank,
     TResult? Function(bool isResend)? getOtp,
     TResult? Function(AddBankAccountRequest request)? addBankAccount,
     TResult? Function(File file)? uploadImage,
@@ -1083,6 +1310,7 @@ class _$DeleteBankAccountImpl implements _DeleteBankAccount {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getBankAccounts,
     TResult Function()? getAllBanksInfo,
+    TResult Function(String search)? searchBank,
     TResult Function(bool isResend)? getOtp,
     TResult Function(AddBankAccountRequest request)? addBankAccount,
     TResult Function(File file)? uploadImage,
@@ -1104,6 +1332,7 @@ class _$DeleteBankAccountImpl implements _DeleteBankAccount {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetBankAccounts value) getBankAccounts,
     required TResult Function(_GetAllBanksInfo value) getAllBanksInfo,
+    required TResult Function(_SearchBank value) searchBank,
     required TResult Function(_GetOtp value) getOtp,
     required TResult Function(_AddBankAccount value) addBankAccount,
     required TResult Function(_UploadImage value) uploadImage,
@@ -1122,6 +1351,7 @@ class _$DeleteBankAccountImpl implements _DeleteBankAccount {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetBankAccounts value)? getBankAccounts,
     TResult? Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult? Function(_SearchBank value)? searchBank,
     TResult? Function(_GetOtp value)? getOtp,
     TResult? Function(_AddBankAccount value)? addBankAccount,
     TResult? Function(_UploadImage value)? uploadImage,
@@ -1139,6 +1369,7 @@ class _$DeleteBankAccountImpl implements _DeleteBankAccount {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetBankAccounts value)? getBankAccounts,
     TResult Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult Function(_SearchBank value)? searchBank,
     TResult Function(_GetOtp value)? getOtp,
     TResult Function(_AddBankAccount value)? addBankAccount,
     TResult Function(_UploadImage value)? uploadImage,
@@ -1206,6 +1437,7 @@ class _$GetVndWalletInfoImpl implements _GetVndWalletInfo {
   TResult when<TResult extends Object?>({
     required TResult Function() getBankAccounts,
     required TResult Function() getAllBanksInfo,
+    required TResult Function(String search) searchBank,
     required TResult Function(bool isResend) getOtp,
     required TResult Function(AddBankAccountRequest request) addBankAccount,
     required TResult Function(File file) uploadImage,
@@ -1224,6 +1456,7 @@ class _$GetVndWalletInfoImpl implements _GetVndWalletInfo {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getBankAccounts,
     TResult? Function()? getAllBanksInfo,
+    TResult? Function(String search)? searchBank,
     TResult? Function(bool isResend)? getOtp,
     TResult? Function(AddBankAccountRequest request)? addBankAccount,
     TResult? Function(File file)? uploadImage,
@@ -1241,6 +1474,7 @@ class _$GetVndWalletInfoImpl implements _GetVndWalletInfo {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getBankAccounts,
     TResult Function()? getAllBanksInfo,
+    TResult Function(String search)? searchBank,
     TResult Function(bool isResend)? getOtp,
     TResult Function(AddBankAccountRequest request)? addBankAccount,
     TResult Function(File file)? uploadImage,
@@ -1262,6 +1496,7 @@ class _$GetVndWalletInfoImpl implements _GetVndWalletInfo {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetBankAccounts value) getBankAccounts,
     required TResult Function(_GetAllBanksInfo value) getAllBanksInfo,
+    required TResult Function(_SearchBank value) searchBank,
     required TResult Function(_GetOtp value) getOtp,
     required TResult Function(_AddBankAccount value) addBankAccount,
     required TResult Function(_UploadImage value) uploadImage,
@@ -1280,6 +1515,7 @@ class _$GetVndWalletInfoImpl implements _GetVndWalletInfo {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetBankAccounts value)? getBankAccounts,
     TResult? Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult? Function(_SearchBank value)? searchBank,
     TResult? Function(_GetOtp value)? getOtp,
     TResult? Function(_AddBankAccount value)? addBankAccount,
     TResult? Function(_UploadImage value)? uploadImage,
@@ -1297,6 +1533,7 @@ class _$GetVndWalletInfoImpl implements _GetVndWalletInfo {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetBankAccounts value)? getBankAccounts,
     TResult Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult Function(_SearchBank value)? searchBank,
     TResult Function(_GetOtp value)? getOtp,
     TResult Function(_AddBankAccount value)? addBankAccount,
     TResult Function(_UploadImage value)? uploadImage,
@@ -1384,6 +1621,7 @@ class _$EstimateTaxImpl implements _EstimateTax {
   TResult when<TResult extends Object?>({
     required TResult Function() getBankAccounts,
     required TResult Function() getAllBanksInfo,
+    required TResult Function(String search) searchBank,
     required TResult Function(bool isResend) getOtp,
     required TResult Function(AddBankAccountRequest request) addBankAccount,
     required TResult Function(File file) uploadImage,
@@ -1402,6 +1640,7 @@ class _$EstimateTaxImpl implements _EstimateTax {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getBankAccounts,
     TResult? Function()? getAllBanksInfo,
+    TResult? Function(String search)? searchBank,
     TResult? Function(bool isResend)? getOtp,
     TResult? Function(AddBankAccountRequest request)? addBankAccount,
     TResult? Function(File file)? uploadImage,
@@ -1419,6 +1658,7 @@ class _$EstimateTaxImpl implements _EstimateTax {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getBankAccounts,
     TResult Function()? getAllBanksInfo,
+    TResult Function(String search)? searchBank,
     TResult Function(bool isResend)? getOtp,
     TResult Function(AddBankAccountRequest request)? addBankAccount,
     TResult Function(File file)? uploadImage,
@@ -1440,6 +1680,7 @@ class _$EstimateTaxImpl implements _EstimateTax {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetBankAccounts value) getBankAccounts,
     required TResult Function(_GetAllBanksInfo value) getAllBanksInfo,
+    required TResult Function(_SearchBank value) searchBank,
     required TResult Function(_GetOtp value) getOtp,
     required TResult Function(_AddBankAccount value) addBankAccount,
     required TResult Function(_UploadImage value) uploadImage,
@@ -1458,6 +1699,7 @@ class _$EstimateTaxImpl implements _EstimateTax {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetBankAccounts value)? getBankAccounts,
     TResult? Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult? Function(_SearchBank value)? searchBank,
     TResult? Function(_GetOtp value)? getOtp,
     TResult? Function(_AddBankAccount value)? addBankAccount,
     TResult? Function(_UploadImage value)? uploadImage,
@@ -1475,6 +1717,7 @@ class _$EstimateTaxImpl implements _EstimateTax {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetBankAccounts value)? getBankAccounts,
     TResult Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult Function(_SearchBank value)? searchBank,
     TResult Function(_GetOtp value)? getOtp,
     TResult Function(_AddBankAccount value)? addBankAccount,
     TResult Function(_UploadImage value)? uploadImage,
@@ -1567,6 +1810,7 @@ class _$WithdrawImpl implements _Withdraw {
   TResult when<TResult extends Object?>({
     required TResult Function() getBankAccounts,
     required TResult Function() getAllBanksInfo,
+    required TResult Function(String search) searchBank,
     required TResult Function(bool isResend) getOtp,
     required TResult Function(AddBankAccountRequest request) addBankAccount,
     required TResult Function(File file) uploadImage,
@@ -1585,6 +1829,7 @@ class _$WithdrawImpl implements _Withdraw {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getBankAccounts,
     TResult? Function()? getAllBanksInfo,
+    TResult? Function(String search)? searchBank,
     TResult? Function(bool isResend)? getOtp,
     TResult? Function(AddBankAccountRequest request)? addBankAccount,
     TResult? Function(File file)? uploadImage,
@@ -1602,6 +1847,7 @@ class _$WithdrawImpl implements _Withdraw {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getBankAccounts,
     TResult Function()? getAllBanksInfo,
+    TResult Function(String search)? searchBank,
     TResult Function(bool isResend)? getOtp,
     TResult Function(AddBankAccountRequest request)? addBankAccount,
     TResult Function(File file)? uploadImage,
@@ -1623,6 +1869,7 @@ class _$WithdrawImpl implements _Withdraw {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetBankAccounts value) getBankAccounts,
     required TResult Function(_GetAllBanksInfo value) getAllBanksInfo,
+    required TResult Function(_SearchBank value) searchBank,
     required TResult Function(_GetOtp value) getOtp,
     required TResult Function(_AddBankAccount value) addBankAccount,
     required TResult Function(_UploadImage value) uploadImage,
@@ -1641,6 +1888,7 @@ class _$WithdrawImpl implements _Withdraw {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetBankAccounts value)? getBankAccounts,
     TResult? Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult? Function(_SearchBank value)? searchBank,
     TResult? Function(_GetOtp value)? getOtp,
     TResult? Function(_AddBankAccount value)? addBankAccount,
     TResult? Function(_UploadImage value)? uploadImage,
@@ -1658,6 +1906,7 @@ class _$WithdrawImpl implements _Withdraw {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetBankAccounts value)? getBankAccounts,
     TResult Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult Function(_SearchBank value)? searchBank,
     TResult Function(_GetOtp value)? getOtp,
     TResult Function(_AddBankAccount value)? addBankAccount,
     TResult Function(_UploadImage value)? uploadImage,
@@ -1764,6 +2013,7 @@ class _$SetDefaultBankAccountImpl implements _SetDefaultBankAccount {
   TResult when<TResult extends Object?>({
     required TResult Function() getBankAccounts,
     required TResult Function() getAllBanksInfo,
+    required TResult Function(String search) searchBank,
     required TResult Function(bool isResend) getOtp,
     required TResult Function(AddBankAccountRequest request) addBankAccount,
     required TResult Function(File file) uploadImage,
@@ -1782,6 +2032,7 @@ class _$SetDefaultBankAccountImpl implements _SetDefaultBankAccount {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getBankAccounts,
     TResult? Function()? getAllBanksInfo,
+    TResult? Function(String search)? searchBank,
     TResult? Function(bool isResend)? getOtp,
     TResult? Function(AddBankAccountRequest request)? addBankAccount,
     TResult? Function(File file)? uploadImage,
@@ -1799,6 +2050,7 @@ class _$SetDefaultBankAccountImpl implements _SetDefaultBankAccount {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getBankAccounts,
     TResult Function()? getAllBanksInfo,
+    TResult Function(String search)? searchBank,
     TResult Function(bool isResend)? getOtp,
     TResult Function(AddBankAccountRequest request)? addBankAccount,
     TResult Function(File file)? uploadImage,
@@ -1820,6 +2072,7 @@ class _$SetDefaultBankAccountImpl implements _SetDefaultBankAccount {
   TResult map<TResult extends Object?>({
     required TResult Function(_GetBankAccounts value) getBankAccounts,
     required TResult Function(_GetAllBanksInfo value) getAllBanksInfo,
+    required TResult Function(_SearchBank value) searchBank,
     required TResult Function(_GetOtp value) getOtp,
     required TResult Function(_AddBankAccount value) addBankAccount,
     required TResult Function(_UploadImage value) uploadImage,
@@ -1838,6 +2091,7 @@ class _$SetDefaultBankAccountImpl implements _SetDefaultBankAccount {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_GetBankAccounts value)? getBankAccounts,
     TResult? Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult? Function(_SearchBank value)? searchBank,
     TResult? Function(_GetOtp value)? getOtp,
     TResult? Function(_AddBankAccount value)? addBankAccount,
     TResult? Function(_UploadImage value)? uploadImage,
@@ -1855,6 +2109,7 @@ class _$SetDefaultBankAccountImpl implements _SetDefaultBankAccount {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_GetBankAccounts value)? getBankAccounts,
     TResult Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult Function(_SearchBank value)? searchBank,
     TResult Function(_GetOtp value)? getOtp,
     TResult Function(_AddBankAccount value)? addBankAccount,
     TResult Function(_UploadImage value)? uploadImage,
