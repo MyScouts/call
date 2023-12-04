@@ -11,6 +11,7 @@ BuyCoinRequest _$BuyCoinRequestFromJson(Map<String, dynamic> json) =>
       vnd: json['vnd'] as num,
       pDoneId: json['pDoneId'] as String,
       expectedCoin: json['expectedCoin'] as num,
+      bankAccountId: json['bankAccountId'] as num,
     );
 
 Map<String, dynamic> _$BuyCoinRequestToJson(BuyCoinRequest instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$BuyCoinRequestToJson(BuyCoinRequest instance) =>
       'vnd': instance.vnd,
       'expectedCoin': instance.expectedCoin,
       'pDoneId': instance.pDoneId,
+      'bankAccountId': instance.bankAccountId,
     };

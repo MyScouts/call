@@ -129,6 +129,9 @@ class _WalletDiamondInputFormState extends State<WalletDiamondInputForm>
           hideLoading();
           showToastMessage('Quy đổi thành công, vui lòng xem lịch sử',
               ToastMessageType.success);
+
+          context.read<WalletDiamondBloc>().add(LoadWalletDiamondInfo());
+          _diamondController.clear();
         }
       },
       child: Padding(
@@ -142,8 +145,8 @@ class _WalletDiamondInputFormState extends State<WalletDiamondInputForm>
               height: MediaQuery.of(context).size.height-280,
             ),
             Positioned.fill(child: Align(
-              child: diamondForm(),
               alignment: Alignment.topCenter,
+              child: diamondForm(),
             )),
             Positioned.fill(child: Align(
               alignment: Alignment.bottomCenter,
@@ -222,12 +225,32 @@ class _WalletDiamondInputFormState extends State<WalletDiamondInputForm>
                     borderSide: BorderSide(
                         color: AppColors.black10.withOpacity(0.6), width: 1),
                   ),
+                  suffixIcon: IconButton(
+                    splashColor: Colors.transparent,
+                    onPressed: () {
+                      _diamondController.clear();
+                    },
+                    icon: Container(
+                      margin: const EdgeInsets.only(top: 12),
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: const Color(0XFFACACAC),
+                        borderRadius: BorderRadius.circular(90),
+                      ),
+                      child: const Icon(
+                        Icons.clear,
+                        size: 12,
+                        color: AppColors.white,
+                      ),
+                    ),
+                  ),
                   // disabledBorder: InputBorder.none,
                   hintText: 'Nhập số kim cương muốn đổi sang VNĐ',
                   hintStyle: TextStyle(
                       fontSize: 16,
                       color: AppColors.black10.withOpacity(0.6),
                       fontWeight: FontWeight.normal)),
+
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
                 AppTextInputFormatter.currency,

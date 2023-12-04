@@ -3,13 +3,19 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:wallet/data/datasources/models/exchange_coin_response.dart';
 
+import '../wallet/bank_account.dart';
+
 part 'agency.g.dart';
 
 @JsonSerializable()
 class AgencyDetailResponse {
   final AgencyResponse coinAgency;
+  final List<BankAccount>? bankAccounts;
 
-  AgencyDetailResponse({required this.coinAgency});
+  AgencyDetailResponse({
+    required this.coinAgency,
+    required this.bankAccounts,
+  });
 
   factory AgencyDetailResponse.fromJson(Map<String, dynamic> json) =>
       _$AgencyDetailResponseFromJson(json);

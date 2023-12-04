@@ -4,9 +4,9 @@ part  'exchange_diamond_response.g.dart';
 
 @JsonSerializable()
 class ExchangeDiamondResponse {
-  final bool result;
+  final num pendingVnd;
   ExchangeDiamondResponse({
-    required this.result,
+    required this.pendingVnd,
   });
 
   factory ExchangeDiamondResponse.fromJson(Map<String, dynamic> json) =>
