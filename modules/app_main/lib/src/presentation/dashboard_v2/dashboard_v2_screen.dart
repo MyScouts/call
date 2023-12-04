@@ -24,10 +24,10 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2> {
 
   @override
   Widget build(BuildContext context) {
-    const List<Widget> children = [
-      DashboardCommunity(),
-      DashboardPersonal(),
-      DashboardEco()
+    List<Widget> children = [
+      DashboardCommunity(context: context),
+      const DashboardPersonal(),
+      const DashboardEco()
     ];
 
     return AnnotatedRegion<SystemUiOverlayStyle>(

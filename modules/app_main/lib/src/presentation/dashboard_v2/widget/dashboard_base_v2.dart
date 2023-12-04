@@ -6,6 +6,7 @@ import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard_v2/widget/dash_ecom_leading.dart';
 import 'package:app_main/src/presentation/dashboard_v2/widget/dash_ps_promotion.dart';
+import 'package:app_main/src/presentation/live/presentation/live_home/live_home_screen.dart';
 import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:design_system/generated/assets.gen.dart';
@@ -171,7 +172,8 @@ class AppIcon extends StatelessWidget {
 }
 
 class DashboardCommunity extends DashboardBaseV2 {
-  const DashboardCommunity({super.key});
+  final BuildContext context;
+  const DashboardCommunity({super.key, required this.context});
 
   @override
   Widget get leading => const DashBoardCommunityLeading();
@@ -213,9 +215,27 @@ class DashboardCommunity extends DashboardBaseV2 {
       ];
 
   @override
-  Widget get bottom => ImageWidget(
-        Assets.icons_dashboard_live_mock.path,
-        fit: BoxFit.fill,
+  Widget get bottom => Stack(
+        children: [
+          ImageWidget(
+            Assets.icons_dashboard_live_mock.path,
+            fit: BoxFit.fill,
+          ),
+          Positioned.fill(
+              child: Row(
+            children: [
+              Expanded(child: Container()),
+              const SizedBox(width: 5),
+              Expanded(child: Container()),
+              const SizedBox(width: 5),
+              Expanded(
+                  child: GestureDetector(
+                onTap: () =>
+                    Navigator.pushNamed(context, LiveHomeScreen.routeName),
+              )),
+            ],
+          ))
+        ],
       );
 }
 
