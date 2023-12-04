@@ -914,7 +914,8 @@ mixin _$AgencyState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String err) error,
-    required TResult Function(AgencyResponse agencyInfo) getAgencyInfoSuccess,
+    required TResult Function(AgencyDetailResponse agencyInfo)
+        getAgencyInfoSuccess,
     required TResult Function() getAgencyInfoLoading,
     required TResult Function() exchangeLoading,
     required TResult Function(ExchangeCoinResponse response) exchangeSuccess,
@@ -929,7 +930,7 @@ mixin _$AgencyState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String err)? error,
-    TResult? Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult? Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult? Function()? getAgencyInfoLoading,
     TResult? Function()? exchangeLoading,
     TResult? Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -944,7 +945,7 @@ mixin _$AgencyState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String err)? error,
-    TResult Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult Function()? getAgencyInfoLoading,
     TResult Function()? exchangeLoading,
     TResult Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -1059,7 +1060,8 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String err) error,
-    required TResult Function(AgencyResponse agencyInfo) getAgencyInfoSuccess,
+    required TResult Function(AgencyDetailResponse agencyInfo)
+        getAgencyInfoSuccess,
     required TResult Function() getAgencyInfoLoading,
     required TResult Function() exchangeLoading,
     required TResult Function(ExchangeCoinResponse response) exchangeSuccess,
@@ -1077,7 +1079,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String err)? error,
-    TResult? Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult? Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult? Function()? getAgencyInfoLoading,
     TResult? Function()? exchangeLoading,
     TResult? Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -1095,7 +1097,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String err)? error,
-    TResult Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult Function()? getAgencyInfoLoading,
     TResult Function()? exchangeLoading,
     TResult Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -1238,7 +1240,8 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String err) error,
-    required TResult Function(AgencyResponse agencyInfo) getAgencyInfoSuccess,
+    required TResult Function(AgencyDetailResponse agencyInfo)
+        getAgencyInfoSuccess,
     required TResult Function() getAgencyInfoLoading,
     required TResult Function() exchangeLoading,
     required TResult Function(ExchangeCoinResponse response) exchangeSuccess,
@@ -1256,7 +1259,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String err)? error,
-    TResult? Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult? Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult? Function()? getAgencyInfoLoading,
     TResult? Function()? exchangeLoading,
     TResult? Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -1274,7 +1277,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String err)? error,
-    TResult Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult Function()? getAgencyInfoLoading,
     TResult Function()? exchangeLoading,
     TResult Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -1362,7 +1365,7 @@ abstract class _$$GetAgencyInfoSuccessImplCopyWith<$Res> {
           $Res Function(_$GetAgencyInfoSuccessImpl) then) =
       __$$GetAgencyInfoSuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({AgencyResponse agencyInfo});
+  $Res call({AgencyDetailResponse agencyInfo});
 }
 
 /// @nodoc
@@ -1382,7 +1385,7 @@ class __$$GetAgencyInfoSuccessImplCopyWithImpl<$Res>
       agencyInfo: null == agencyInfo
           ? _value.agencyInfo
           : agencyInfo // ignore: cast_nullable_to_non_nullable
-              as AgencyResponse,
+              as AgencyDetailResponse,
     ));
   }
 }
@@ -1393,7 +1396,7 @@ class _$GetAgencyInfoSuccessImpl implements _GetAgencyInfoSuccess {
   const _$GetAgencyInfoSuccessImpl({required this.agencyInfo});
 
   @override
-  final AgencyResponse agencyInfo;
+  final AgencyDetailResponse agencyInfo;
 
   @override
   String toString() {
@@ -1425,7 +1428,8 @@ class _$GetAgencyInfoSuccessImpl implements _GetAgencyInfoSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String err) error,
-    required TResult Function(AgencyResponse agencyInfo) getAgencyInfoSuccess,
+    required TResult Function(AgencyDetailResponse agencyInfo)
+        getAgencyInfoSuccess,
     required TResult Function() getAgencyInfoLoading,
     required TResult Function() exchangeLoading,
     required TResult Function(ExchangeCoinResponse response) exchangeSuccess,
@@ -1443,7 +1447,7 @@ class _$GetAgencyInfoSuccessImpl implements _GetAgencyInfoSuccess {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String err)? error,
-    TResult? Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult? Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult? Function()? getAgencyInfoLoading,
     TResult? Function()? exchangeLoading,
     TResult? Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -1461,7 +1465,7 @@ class _$GetAgencyInfoSuccessImpl implements _GetAgencyInfoSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String err)? error,
-    TResult Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult Function()? getAgencyInfoLoading,
     TResult Function()? exchangeLoading,
     TResult Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -1536,9 +1540,10 @@ class _$GetAgencyInfoSuccessImpl implements _GetAgencyInfoSuccess {
 
 abstract class _GetAgencyInfoSuccess implements AgencyState {
   const factory _GetAgencyInfoSuccess(
-      {required final AgencyResponse agencyInfo}) = _$GetAgencyInfoSuccessImpl;
+          {required final AgencyDetailResponse agencyInfo}) =
+      _$GetAgencyInfoSuccessImpl;
 
-  AgencyResponse get agencyInfo;
+  AgencyDetailResponse get agencyInfo;
   @JsonKey(ignore: true)
   _$$GetAgencyInfoSuccessImplCopyWith<_$GetAgencyInfoSuccessImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -1585,7 +1590,8 @@ class _$GetAgencyInfoLoadingImpl implements _GetAgencyInfoLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String err) error,
-    required TResult Function(AgencyResponse agencyInfo) getAgencyInfoSuccess,
+    required TResult Function(AgencyDetailResponse agencyInfo)
+        getAgencyInfoSuccess,
     required TResult Function() getAgencyInfoLoading,
     required TResult Function() exchangeLoading,
     required TResult Function(ExchangeCoinResponse response) exchangeSuccess,
@@ -1603,7 +1609,7 @@ class _$GetAgencyInfoLoadingImpl implements _GetAgencyInfoLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String err)? error,
-    TResult? Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult? Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult? Function()? getAgencyInfoLoading,
     TResult? Function()? exchangeLoading,
     TResult? Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -1621,7 +1627,7 @@ class _$GetAgencyInfoLoadingImpl implements _GetAgencyInfoLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String err)? error,
-    TResult Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult Function()? getAgencyInfoLoading,
     TResult Function()? exchangeLoading,
     TResult Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -1738,7 +1744,8 @@ class _$ExchangeLoadingImpl implements _ExchangeLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String err) error,
-    required TResult Function(AgencyResponse agencyInfo) getAgencyInfoSuccess,
+    required TResult Function(AgencyDetailResponse agencyInfo)
+        getAgencyInfoSuccess,
     required TResult Function() getAgencyInfoLoading,
     required TResult Function() exchangeLoading,
     required TResult Function(ExchangeCoinResponse response) exchangeSuccess,
@@ -1756,7 +1763,7 @@ class _$ExchangeLoadingImpl implements _ExchangeLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String err)? error,
-    TResult? Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult? Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult? Function()? getAgencyInfoLoading,
     TResult? Function()? exchangeLoading,
     TResult? Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -1774,7 +1781,7 @@ class _$ExchangeLoadingImpl implements _ExchangeLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String err)? error,
-    TResult Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult Function()? getAgencyInfoLoading,
     TResult Function()? exchangeLoading,
     TResult Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -1919,7 +1926,8 @@ class _$ExchangeSuccessImpl implements _ExchangeSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String err) error,
-    required TResult Function(AgencyResponse agencyInfo) getAgencyInfoSuccess,
+    required TResult Function(AgencyDetailResponse agencyInfo)
+        getAgencyInfoSuccess,
     required TResult Function() getAgencyInfoLoading,
     required TResult Function() exchangeLoading,
     required TResult Function(ExchangeCoinResponse response) exchangeSuccess,
@@ -1937,7 +1945,7 @@ class _$ExchangeSuccessImpl implements _ExchangeSuccess {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String err)? error,
-    TResult? Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult? Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult? Function()? getAgencyInfoLoading,
     TResult? Function()? exchangeLoading,
     TResult? Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -1955,7 +1963,7 @@ class _$ExchangeSuccessImpl implements _ExchangeSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String err)? error,
-    TResult Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult Function()? getAgencyInfoLoading,
     TResult Function()? exchangeLoading,
     TResult Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -2079,7 +2087,8 @@ class _$GetAllAgencyLoadingImpl implements _GetAllAgencyLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String err) error,
-    required TResult Function(AgencyResponse agencyInfo) getAgencyInfoSuccess,
+    required TResult Function(AgencyDetailResponse agencyInfo)
+        getAgencyInfoSuccess,
     required TResult Function() getAgencyInfoLoading,
     required TResult Function() exchangeLoading,
     required TResult Function(ExchangeCoinResponse response) exchangeSuccess,
@@ -2097,7 +2106,7 @@ class _$GetAllAgencyLoadingImpl implements _GetAllAgencyLoading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String err)? error,
-    TResult? Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult? Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult? Function()? getAgencyInfoLoading,
     TResult? Function()? exchangeLoading,
     TResult? Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -2115,7 +2124,7 @@ class _$GetAllAgencyLoadingImpl implements _GetAllAgencyLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String err)? error,
-    TResult Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult Function()? getAgencyInfoLoading,
     TResult Function()? exchangeLoading,
     TResult Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -2266,7 +2275,8 @@ class _$GetAllAgencyLoadedImpl implements _GetAllAgencyLoaded {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String err) error,
-    required TResult Function(AgencyResponse agencyInfo) getAgencyInfoSuccess,
+    required TResult Function(AgencyDetailResponse agencyInfo)
+        getAgencyInfoSuccess,
     required TResult Function() getAgencyInfoLoading,
     required TResult Function() exchangeLoading,
     required TResult Function(ExchangeCoinResponse response) exchangeSuccess,
@@ -2284,7 +2294,7 @@ class _$GetAllAgencyLoadedImpl implements _GetAllAgencyLoaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String err)? error,
-    TResult? Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult? Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult? Function()? getAgencyInfoLoading,
     TResult? Function()? exchangeLoading,
     TResult? Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -2302,7 +2312,7 @@ class _$GetAllAgencyLoadedImpl implements _GetAllAgencyLoaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String err)? error,
-    TResult Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult Function()? getAgencyInfoLoading,
     TResult Function()? exchangeLoading,
     TResult Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -2453,7 +2463,8 @@ class _$EstCoinSuccessImpl implements _EstCoinSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String err) error,
-    required TResult Function(AgencyResponse agencyInfo) getAgencyInfoSuccess,
+    required TResult Function(AgencyDetailResponse agencyInfo)
+        getAgencyInfoSuccess,
     required TResult Function() getAgencyInfoLoading,
     required TResult Function() exchangeLoading,
     required TResult Function(ExchangeCoinResponse response) exchangeSuccess,
@@ -2471,7 +2482,7 @@ class _$EstCoinSuccessImpl implements _EstCoinSuccess {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String err)? error,
-    TResult? Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult? Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult? Function()? getAgencyInfoLoading,
     TResult? Function()? exchangeLoading,
     TResult? Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -2489,7 +2500,7 @@ class _$EstCoinSuccessImpl implements _EstCoinSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String err)? error,
-    TResult Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult Function()? getAgencyInfoLoading,
     TResult Function()? exchangeLoading,
     TResult Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -2644,7 +2655,8 @@ class _$GetPaymentInformationSuccessImpl
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(String err) error,
-    required TResult Function(AgencyResponse agencyInfo) getAgencyInfoSuccess,
+    required TResult Function(AgencyDetailResponse agencyInfo)
+        getAgencyInfoSuccess,
     required TResult Function() getAgencyInfoLoading,
     required TResult Function() exchangeLoading,
     required TResult Function(ExchangeCoinResponse response) exchangeSuccess,
@@ -2662,7 +2674,7 @@ class _$GetPaymentInformationSuccessImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(String err)? error,
-    TResult? Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult? Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult? Function()? getAgencyInfoLoading,
     TResult? Function()? exchangeLoading,
     TResult? Function(ExchangeCoinResponse response)? exchangeSuccess,
@@ -2680,7 +2692,7 @@ class _$GetPaymentInformationSuccessImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(String err)? error,
-    TResult Function(AgencyResponse agencyInfo)? getAgencyInfoSuccess,
+    TResult Function(AgencyDetailResponse agencyInfo)? getAgencyInfoSuccess,
     TResult Function()? getAgencyInfoLoading,
     TResult Function()? exchangeLoading,
     TResult Function(ExchangeCoinResponse response)? exchangeSuccess,

@@ -10,8 +10,12 @@ part 'agency.g.dart';
 @JsonSerializable()
 class AgencyDetailResponse {
   final AgencyResponse coinAgency;
+  final List<BankAccount>? bankAccounts;
 
-  AgencyDetailResponse({required this.coinAgency});
+  AgencyDetailResponse({
+    required this.coinAgency,
+    required this.bankAccounts,
+  });
 
   factory AgencyDetailResponse.fromJson(Map<String, dynamic> json) =>
       _$AgencyDetailResponseFromJson(json);
@@ -26,13 +30,11 @@ class AgencyResponse {
   final num? availableCoin;
   final AgencyUser? user;
   final List<CoinDiscountResponse>? coinDiscounts;
-  final List<BankAccount> bankAccounts;
 
   AgencyResponse(
       {required this.id,
       required this.coinDiscounts,
       required this.name,
-      required this.bankAccounts,
       required this.availableCoin,
       required this.user});
 
