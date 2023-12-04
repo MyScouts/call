@@ -1,6 +1,8 @@
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:ui/ui.dart';
@@ -19,6 +21,7 @@ class LiveScreenTab extends StatefulWidget {
 class _LiveScreenTabState extends State<LiveScreenTab>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   final liveController = getIt<LiveController>();
+  late final userId = context.read<UserCubit>().currentUser?.id;
 
   @override
   void initState() {
@@ -69,6 +72,7 @@ class _LiveScreenTabState extends State<LiveScreenTab>
                                 .firstWhereOrNull((element) => element.liveId == live.id!)
                                 ?.memberCount ??
                             0,
+                        isOwner: userId == live.user?.id,
                       );
                     }),
                   ),
@@ -93,6 +97,7 @@ class _LiveScreenTabState extends State<LiveScreenTab>
                                 .firstWhereOrNull((element) => element.liveId == live.id!)
                                 ?.memberCount ??
                             0,
+                        isOwner: userId == live.user?.id,
                       );
                     }),
                   ),

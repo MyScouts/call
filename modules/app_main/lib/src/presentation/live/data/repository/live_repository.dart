@@ -56,4 +56,6 @@ abstract class LiveRepository {
     required int pageSize,
     required bool isFriend,
   });
+
+  Future<bool> checkPass(int liveId, String password);
 }
