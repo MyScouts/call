@@ -5,6 +5,7 @@ import 'package:app_main/src/presentation/dashboard/search/search_screen.dart';
 import 'package:app_main/src/presentation/dashboard/system_setting/background_picker.dart';
 import 'package:app_main/src/presentation/dashboard/system_setting/change_password_screen.dart';
 import 'package:app_main/src/presentation/dashboard/system_setting/system_setting.dart';
+import 'package:app_main/src/presentation/dashboard_v2/dashboard_v2_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
@@ -16,8 +17,8 @@ import '../notification/notification_screen.dart';
 class DashboardRoutes extends RouteModule {
   @override
   Map<String, WidgetBuilder> getAll(RouteSettings settings) => {
-        DashBoardScreen.routeName: (context) {
-          return const DashBoardScreen();
+        DashBoardScreenV2.routeName: (context) {
+          return const DashBoardScreenV2();
         },
         SearchScreen.routeName: (context) {
           return const SearchScreen();

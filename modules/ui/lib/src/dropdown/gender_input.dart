@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 enum GenderType { male, female, other }
 
-extension GenderTypeExt on GenderType {
-  String getText() {
+extension GenderTypeExt on GenderType? {
+  String? getText() {
     switch (this) {
       case GenderType.male:
         return 'Nam';
@@ -12,10 +12,12 @@ extension GenderTypeExt on GenderType {
         return 'Nữ';
       case GenderType.other:
         return 'Khác';
+      default:
+        return null;
     }
   }
 
-  int toValue() {
+  int? toValue() {
     switch (this) {
       case GenderType.male:
         return 1;
@@ -23,12 +25,14 @@ extension GenderTypeExt on GenderType {
         return 0;
       case GenderType.other:
         return 2;
+      default:
+        return null;
     }
   }
 }
 
 class GenderInput extends StatefulWidget {
-  final Function(int) onChange;
+  final Function(int?) onChange;
   final bool required;
   const GenderInput({
     super.key,
@@ -41,7 +45,7 @@ class GenderInput extends StatefulWidget {
 }
 
 class _GenderInputState extends State<GenderInput> {
-  GenderType value = GenderType.male;
+  GenderType? value;
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +88,7 @@ class _GenderInputState extends State<GenderInput> {
               .map((item) => DropdownMenuItem<GenderType>(
                     value: item,
                     child: Text(
-                      item.getText(),
+                      item.getText() ?? '',
                       style: const TextStyle(
                         fontSize: 14,
                       ),

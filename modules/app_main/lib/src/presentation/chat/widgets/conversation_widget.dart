@@ -25,7 +25,7 @@ class ConversationWidget extends StatelessWidget {
       },
       child: Container(
         height: 60,
-        width: double.infinity,
+        width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
           children: [
@@ -35,7 +35,7 @@ class ConversationWidget extends StatelessWidget {
             kSpacingWidth16,
             Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     data.membersNotMe.first.member.fullName ?? '',

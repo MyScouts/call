@@ -8,6 +8,8 @@ import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart
 import 'package:app_main/src/presentation/routes.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
@@ -48,21 +50,26 @@ class _ApplicationState extends State<Application>
     ThemeData? light,
     ThemeData? dark,
   }) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      navigatorKey: AppCoordinator.rootNavigator,
-      localizationsDelegates: LocalizationFactory.localizationsDelegates,
-      supportedLocales: LocalizationFactory.supportedLocales,
-      title: widget.title,
-      theme: light,
-      darkTheme: dark,
-      locale: locale,
-      navigatorObservers: [
-        MyNavigatorObserver(),
-      ],
-      builder: _materialBuilder,
-      onGenerateRoute: getIt.get<Routes>().generateRoute,
-      initialRoute: widget.initialRoute,
+    return ScreenUtilInit(
+      designSize: const Size(393, 852),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        navigatorKey: AppCoordinator.rootNavigator,
+        localizationsDelegates: LocalizationFactory.localizationsDelegates,
+        supportedLocales: LocalizationFactory.supportedLocales,
+        title: widget.title,
+        theme: light,
+        darkTheme: dark,
+        locale: locale,
+        navigatorObservers: [
+          MyNavigatorObserver(),
+        ],
+        builder: _materialBuilder,
+        onGenerateRoute: getIt.get<Routes>().generateRoute,
+        initialRoute: widget.initialRoute,
+      ),
     );
   }
 
