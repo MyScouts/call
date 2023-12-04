@@ -91,6 +91,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   FutureOr<void> _mapLoadUserEvent(LoadUserEvent event, Emitter<UserState> emit) async {
+    print('stringgee token ${event.stringeeToken}');
     // await _userSharePreferencesUsecase.saveToken(event.token);
     // emit(Authenticated(event.user, DateTime.now().microsecondsSinceEpoch));
   }
