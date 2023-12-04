@@ -51,105 +51,107 @@ class _DashBoardBottomBarState extends State<DashBoardBottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      child: Container(
-        height: kBottomNavigationBarHeight,
-        color: Colors.white,
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Row(
-          children: [
-            Expanded(
-              child: GestureDetector(
-                onTap: () => widget.onChanged(widget.type.begin),
-                behavior: HitTestBehavior.opaque,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    ImageWidget(
-                      Assets.icons_dashboard_bottom_bg.path,
-                    ),
-                    Text(
-                      widget.type.begin.name.toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800,
-                        color: Color(0xff4B84F7),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: GestureDetector(
-                onTap: () {},
-                behavior: HitTestBehavior.opaque,
-                child: Center(
-                  child: ImageWidget(Assets.icons_dashboard_call.path),
-                ),
-              ),
-            ),
-            Expanded(
-              child: GestureDetector(
-                onTap: () {},
-                behavior: HitTestBehavior.opaque,
-                child: Center(
-                  child: ImageWidget(Assets.icons_dashboard_message.path),
-                ),
-              ),
-            ),
-            Expanded(
-              child: GestureDetector(
-                onTap: () {},
-                behavior: HitTestBehavior.opaque,
-                child: Center(
-                  child: ImageWidget(
-                    Assets.icons_dashboard_plus.path,
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: GestureDetector(
-                onTap: () {},
-                behavior: HitTestBehavior.opaque,
-                child: Center(
-                  child: ImageWidget(
-                    Assets.icons_dashboard_setting_bottom.path,
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: GestureDetector(
-                onTap: () => widget.onChanged(widget.type.end),
-                behavior: HitTestBehavior.opaque,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    RotatedBox(
-                      quarterTurns: 2,
-                      child: ImageWidget(
+    return ColoredBox(
+      color: Colors.white,
+      child: SafeArea(
+        top: false,
+        child: Container(
+          height: kBottomNavigationBarHeight,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => widget.onChanged(widget.type.begin),
+                  behavior: HitTestBehavior.opaque,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      ImageWidget(
                         Assets.icons_dashboard_bottom_bg.path,
                       ),
-                    ),
-                    Text(
-                      widget.type.end.name.toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800,
-                        color: Color(0xff4B84F7),
+                      Text(
+                        widget.type.begin.name.toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800,
+                          color: Color(0xff4B84F7),
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {},
+                  behavior: HitTestBehavior.opaque,
+                  child: Center(
+                    child: ImageWidget(Assets.icons_dashboard_call.path),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {},
+                  behavior: HitTestBehavior.opaque,
+                  child: Center(
+                    child: ImageWidget(Assets.icons_dashboard_message.path),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {},
+                  behavior: HitTestBehavior.opaque,
+                  child: Center(
+                    child: ImageWidget(
+                      Assets.icons_dashboard_setting_bottom.path,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {},
+                  behavior: HitTestBehavior.opaque,
+                  child: Center(
+                    child: ImageWidget(
+                      Assets.icons_dashboard_plus.path,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => widget.onChanged(widget.type.end),
+                  behavior: HitTestBehavior.opaque,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      RotatedBox(
+                        quarterTurns: 2,
+                        child: ImageWidget(
+                          Assets.icons_dashboard_bottom_bg.path,
+                        ),
+                      ),
+                      Text(
+                        widget.type.end.name.toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800,
+                          color: Color(0xff4B84F7),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

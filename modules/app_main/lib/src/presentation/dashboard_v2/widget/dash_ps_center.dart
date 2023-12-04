@@ -7,17 +7,12 @@ class DashboardPsCenter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(14.0),
-          child: ImageWidget(
-            Assets.icons_dashboard_weather.path,
-            fit: BoxFit.cover,
-          ),
-        )
-      ],
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(14.0),
+      child: ImageWidget(
+        Assets.icons_dashboard_weather.path,
+        fit: BoxFit.fill,
+      ),
     );
   }
 }

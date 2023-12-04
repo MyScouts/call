@@ -10,6 +10,7 @@ import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:design_system/generated/assets.gen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 import 'dash_cm_center.dart';
@@ -38,31 +39,39 @@ abstract class DashboardBaseV2 extends StatelessWidget {
       builder: (context, constrain) {
         return Container(
           constraints: constrain,
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 259,
-                      child: Column(
-                        children: <Widget>[
-                          AspectRatio(aspectRatio: 259 / 93, child: leading),
-                          AspectRatio(
-                            aspectRatio: 259 / 118,
-                            child: promotion,
-                          ),
-                          Expanded(flex: 239, child: center),
-                        ].separated(const SizedBox(height: 14)),
+          padding: EdgeInsets.all(16.w),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 478.h,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 259.w,
+                        height: 478.h,
+                        child: Column(
+                          children: <Widget>[
+                            SizedBox(
+                              height: 93.h,
+                              child: leading,
+                            ),
+                            SizedBox(
+                              height: 118.h,
+                              width: 259.w,
+                              child: promotion,
+                            ),
+                            SizedBox(
+                              height: 239.h,
+                              child: center,
+                            ),
+                          ].separated(SizedBox(height: 14.h)),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      flex: 92,
-                      child: Container(
-                        height: double.infinity,
-                        width: double.infinity,
+                      SizedBox(width: 10.w),
+                      Container(
+                        width: 92.w,
+                        height: 478.h,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(14),
@@ -73,18 +82,28 @@ abstract class DashboardBaseV2 extends StatelessWidget {
                         ),
                         child: Column(
                           children: items
-                              .map<Widget>(
-                                  (e) => Expanded(child: AppIcon(app: e)))
-                              .toList(),
+                              .map<Widget>((e) => Expanded(
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Center(
+                                        child: AppIcon(app: e),
+                                      ),
+                                    ),
+                                  ))
+                              .toList()
+                              .separated(
+                                const SizedBox(height: 10),
+                              ),
                         ),
                       ),
-                    )
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 14),
-              SizedBox(height: 109, child: bottom),
-            ],
+                SizedBox(height: 14.h),
+                SizedBox(height: 109.h, child: bottom),
+                SizedBox(height: 14.h),
+              ],
+            ),
           ),
         );
       },
@@ -187,7 +206,7 @@ class DashboardCommunity extends DashboardBaseV2 {
   @override
   Widget get bottom => ImageWidget(
         Assets.icons_dashboard_live_mock.path,
-        fit: BoxFit.contain,
+        fit: BoxFit.fill,
       );
 }
 
@@ -205,9 +224,9 @@ class DashboardPersonal extends DashboardBaseV2 {
 
   @override
   Widget get bottom => ImageWidget(
-    Assets.icons_dashboard_live_mock_2.path,
-    fit: BoxFit.contain,
-  );
+        Assets.icons_dashboard_live_mock_2.path,
+        fit: BoxFit.fill,
+      );
 
   @override
   List<DashBoardItem> get items => [
@@ -255,10 +274,9 @@ class DashboardEco extends DashboardBaseV2 {
 
   @override
   Widget get bottom => ImageWidget(
-    Assets.icons_dashboard_live_mock_3.path,
-    fit: BoxFit.contain,
-  );
-
+        Assets.icons_dashboard_live_mock_3.path,
+        fit: BoxFit.fill,
+      );
 
   @override
   List<DashBoardItem> get items => [

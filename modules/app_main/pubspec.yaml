@@ -87,6 +87,7 @@ dependencies:
   pdf: ^3.10.6
   printing: ^5.11.1
   flutter_slidable: ^3.0.1
+  flutter_screenutil: ^5.9.0
 
 dev_dependencies:
   flutter_test:

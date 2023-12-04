@@ -1,6 +1,7 @@
 import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 class DashBoardPsLeading extends StatelessWidget {
@@ -13,23 +14,25 @@ class DashBoardPsLeading extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(14.0),
       ),
-      padding: const EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(10.0.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
           const _LiveHeader(),
-          const SizedBox(height: 12),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: <Widget>[
-                _Image(path: ImageConstants.defaultUserAvatar),
-                _Image(path: ImageConstants.defaultUserAvatar),
-                _Image(path: ImageConstants.defaultUserAvatar),
-                _Image(path: ImageConstants.defaultUserAvatar),
-                _Image(path: ImageConstants.defaultUserAvatar),
-              ].separated(const SizedBox(width: 6)),
+          SizedBox(height: 12.h),
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: <Widget>[
+                  _Image(path: ImageConstants.defaultUserAvatar),
+                  _Image(path: ImageConstants.defaultUserAvatar),
+                  _Image(path: ImageConstants.defaultUserAvatar),
+                  _Image(path: ImageConstants.defaultUserAvatar),
+                  _Image(path: ImageConstants.defaultUserAvatar),
+                ].separated(const SizedBox(width: 6)),
+              ),
             ),
           ),
         ],
@@ -46,24 +49,23 @@ class _Image extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
-      width: 40,
+      height: 40.w,
+      width: 40.w,
       decoration: const BoxDecoration(shape: BoxShape.circle),
       child: Stack(
+        alignment: Alignment.center,
         children: [
-          ClipOval(
-            child: ImageWidget(path),
-          ),
+          ImageWidget(path, borderRadius: 20.w),
           Positioned(
-            bottom: 1,
-            right: 2,
+            bottom: 1.w,
+            right: 2.w,
             child: Container(
-              height: 10,
-              width: 10,
+              height: 10.w,
+              width: 10.w,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: const Color(0xff00DD58),
-                border: Border.all(color: Colors.white, width: 1.5)
+                border: Border.all(color: Colors.white, width: 1.5),
               ),
             ),
           ),
@@ -81,8 +83,8 @@ class _LiveHeader extends StatelessWidget {
     return Row(
       children: [
         Container(
-          height: 8,
-          width: 8,
+          height: 8.w,
+          width: 8.w,
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
             color: Color(0xff00DD58),

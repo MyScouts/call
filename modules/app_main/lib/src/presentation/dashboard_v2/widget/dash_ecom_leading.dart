@@ -1,7 +1,7 @@
 import 'package:app_main/src/core/extensions/list_extension.dart';
-import 'package:design_system/design_system.dart';
 import 'package:design_system/generated/assets.gen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 class DashBoardEcoLeading extends StatelessWidget {
@@ -20,17 +20,19 @@ class DashBoardEcoLeading extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const _LiveHeader(),
-          const SizedBox(height: 12),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: <Widget>[
-                _Image(path: Assets.icons_dashboard_mar_1.path),
-                _Image(path: Assets.icons_dashboard_mar_2.path),
-                _Image(path: Assets.icons_dashboard_mar_3.path),
-                _Image(path: Assets.icons_dashboard_mar_4.path),
-                _Image(path: Assets.icons_dashboard_mar_5.path),
-              ].separated(const SizedBox(width: 6)),
+          SizedBox(height: 7.h),
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: <Widget>[
+                  _Image(path: Assets.icons_dashboard_mar_1.path),
+                  _Image(path: Assets.icons_dashboard_mar_2.path),
+                  _Image(path: Assets.icons_dashboard_mar_3.path),
+                  _Image(path: Assets.icons_dashboard_mar_4.path),
+                  _Image(path: Assets.icons_dashboard_mar_5.path),
+                ].separated(SizedBox(width: 6.w)),
+              ),
             ),
           ),
         ],
@@ -47,12 +49,13 @@ class _Image extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
-      width: 40,
-      decoration: const BoxDecoration(shape: BoxShape.circle),
-      child: ClipOval(
-        child: ImageWidget(path),
+      height: 40.w,
+      width: 40.w,
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
       ),
+      alignment: Alignment.center,
+      child: ImageWidget(path, borderRadius: 20.w),
     );
   }
 }
@@ -64,12 +67,12 @@ class _LiveHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-       ImageWidget(Assets.icons_dashboard_trend_up.path),
-        const SizedBox(width: 6),
-        const Text(
+        ImageWidget(Assets.icons_dashboard_trend_up.path),
+        SizedBox(width: 6.w),
+        Text(
           'MarShop bán chạy nhất',
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w600,
             color: Colors.black,
           ),
