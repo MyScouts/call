@@ -6,6 +6,7 @@ import 'package:app_main/src/data/models/responses/user_action_response.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 
 import '../models/payloads/user/user_action_payload.dart';
+import '../models/responses/list_followees_response.dart';
 
 abstract class UserRepository {
   Future<User?> getProfile();
@@ -47,6 +48,8 @@ abstract class UserRepository {
   Future<UpdateNonePDoneProfileReponse> getPDoneProfile();
 
   Future<List<User>> listFriends();
+
+  Future<List<FolloweesUser>> listFollowees();
 
   Future<void> getStringgeToken();
 

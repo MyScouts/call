@@ -1,12 +1,13 @@
+
 import 'package:app_main/src/data/models/responses/friend/friend_response_dto.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:retrofit/retrofit.dart';
+import 'package:retrofit/http.dart';
 
 part 'friend_api.g.dart';
 
 class FriendApiConstant {
-  static const String getListFiend = "api/v1/following/friend";
+  static const String getFriend = 'api/v1/following/friend';
 }
 
 @RestApi()
@@ -15,8 +16,10 @@ abstract class FriendApi {
   @factoryMethod
   factory FriendApi(Dio dio) = _FriendApi;
 
-
-  @GET(FriendApiConstant.getListFiend)
-  Future<FriendResponseDto> getFriend(@Query('page') int page,@Query('pageSize') int pageSize);
+  @GET(FriendApiConstant.getFriend)
+  Future<FriendResponseDto> getConversations({
+    @Query('page') required int page,
+    @Query('pageSize') required int pageSize,
+  });
 
 }

@@ -1,8 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../../../wallet.dart';
-import '../entities/diamond_transaction_history/diamond_transaction_history.dart';
-import '../entities/diamond_transaction_history/diamond_transaction_history_detail.dart';
+import '../../data/datasources/models/response/wallet_info_response.dart';
 import '../entities/wallet/diamond_wallet/diamond_wallet_info.dart';
 import '../../data/datasources/models/exchange_diamond_response.dart';
 import '../repository/wallet_diamond_repository.dart';
@@ -15,24 +13,19 @@ class WalletDiamondUseCase {
 
   WalletDiamondUseCase(this._walletDiamondRepository);
 
-  Future<List<DiamondTransactionHistory>> getTransactionHistories(
-    DiamondTransactionHistoryFilter filter,
-    Pagination paginate,
-  ) async {
-    final body = {
-      ...paginate.toJson(),
-      ...filter.toJson(),
-    };
+  // Future<List<DiamondTransactionHistory>> getTransactionHistories(
+  //   DiamondTransactionHistoryFilter filter,
+  //   Pagination paginate,
+  // ) async {
+  //   final body = {
+  //     ...paginate.toJson(),
+  //     ...filter.toJson(),
+  //   };
+  //
+  //   return _walletDiamondRepository.getTransactionHistories(body);
+  // }
 
-    return _walletDiamondRepository.getTransactionHistories(body);
-  }
-
-  Future<DiamondTransactionHistoryDetail> getTransactionHistoryDetail(
-      int id) async {
-    return _walletDiamondRepository.getTransactionHistoryDetail(id);
-  }
-
-  Future<DiamondWalletInfo> getWalletInfo() =>
+  Future<WalletInfoResponse> getWalletInfo() =>
       _walletDiamondRepository.getWalletInfo();
 
   Future<ExchangeDiamondResponse> exchangeDiamond(

@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:design_system/design_system.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../community/team.dart';
@@ -11,8 +12,7 @@ part 'user.g.dart';
 
 @freezed
 class User with _$User {
-  const factory User({
-    int? id,
+  const factory User({int? id,
     String? username,
     String? name,
     String? nickname,
@@ -32,6 +32,7 @@ class User with _$User {
     String? deletedAt,
     String? pDoneId,
     String? displayName,
+    String? fullName,
     @Default(false) bool isPDone,
     @Default(false) bool isFriend,
     @Default(false) bool isFollowing,
@@ -54,23 +55,20 @@ class User with _$User {
     String? vShopId,
     int? vShopPDoneId,
     UserFanGroupInfo? fanGroup,
-  }) = _User;
+    int? sexCode}) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }
 
 extension UserExtNull on User? {
-  String get getdisplayName => [this?.displayName, _userDefaultName]
-      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getdisplayName =>
+      [this?.displayName, _userDefaultName].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
-  String get getEmail => [this?.email, _userDefaultEmail]
-      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getEmail => [this?.email, _userDefaultEmail].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
-  String get getAddress => [this?.address, _userDefaultAddress]
-      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getAddress => [this?.address, _userDefaultAddress].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
-  String get getNickname => [this?.nickname, _userDefaultNickname]
-      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getNickname => [this?.nickname, _userDefaultNickname].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
   String get getBirthday {
     final DateTime? birthday = this?.birthday;
@@ -82,8 +80,7 @@ extension UserExtNull on User? {
 
   bool get getIsJA => this?.isJA ?? false;
 
-  bool get getIsHasNickname =>
-      this?.nickname != null && this!.nickname!.isNotEmpty;
+  bool get getIsHasNickname => this?.nickname != null && this!.nickname!.isNotEmpty;
 
   bool get getIsHasEmail => this?.email != null && this!.email!.isNotEmpty;
 
@@ -115,6 +112,15 @@ extension UserExtension on User {
       return Role.supervisor;
     }
     return Role.viewer;
+  }
+
+  Sex get sexCodeValue {
+    switch (sexCode) {
+      case 1 :
+        return Sex.male;
+      default:
+        return Sex.female;
+    }
   }
 }
 
@@ -162,6 +168,40 @@ extension SexExt on Sex {
         return IconAppConstants.icMale;
       default:
         return IconAppConstants.icMale;
+    }
+  }
+
+  String getIcon1() {
+    switch (this) {
+      case Sex.female:
+        return IconAppConstants.icFeMaleSVG;
+      case Sex.male:
+        return IconAppConstants.icMaleSVG;
+      default:
+        return IconAppConstants.icMaleSVG;
+    }
+  }
+
+
+  Color get sexBackGroundColor {
+    switch (this) {
+      case Sex.female:
+        return const Color(0XFFFFEDF8);
+      case Sex.male:
+        return const Color(0XFF79B6EF);
+      default:
+        return const Color(0XFF79B6EF);
+    }
+  }
+
+  Color get sexColor {
+    switch (this) {
+      case Sex.female:
+        return const Color(0XFFE495DA);
+      case Sex.male:
+        return Colors.white;
+      default:
+        return const Color(0XFF79B6EF);
     }
   }
 }

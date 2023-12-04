@@ -41,23 +41,23 @@ class DiamondTransactionHistoryBloc
     GetTransactionHistoryEvent event,
     Emitter<TransactionHistoryState> emit,
   ) async {
-    try {
-      emit(TransactionHistoryStateLoading());
-      final filter = event.filter;
-      final paginate = event.paginate;
-
-      final data = await _walletDiamondUseCase.getTransactionHistories(
-        filter,
-        paginate,
-      );
-
-      dataState.setFilter = event.filter;
-      dataState.setPaginate = event.paginate;
-
-      emit(TransactionHistoryLoaded(data));
-    } catch (e) {
-      emit(TransactionHistoryStateError(e.toString()));
-    }
+    // try {
+    //   emit(TransactionHistoryStateLoading());
+    //   final filter = event.filter;
+    //   final paginate = event.paginate;
+    //
+    //   final data = await _walletDiamondUseCase.getTransactionHistories(
+    //     filter,
+    //     paginate,
+    //   );
+    //
+    //   dataState.setFilter = event.filter;
+    //   dataState.setPaginate = event.paginate;
+    //
+    //   emit(TransactionHistoryLoaded(data));
+    // } catch (e) {
+    //   emit(TransactionHistoryStateError(e.toString()));
+    // }
   }
 
   void onRefresh() {

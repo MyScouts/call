@@ -1,7 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/domain/entities/open_weather/open_weather_current.dart';
 import 'package:app_main/src/domain/usecases/open_weather_usecase.dart';
-import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -23,13 +22,13 @@ class OpenWeatherBloc extends Bloc<FetchWeather, OpenWeatherState> {
     FetchWeather event,
     Emitter<OpenWeatherState> emit,
   ) async {
-    if(_state != null) {
-      emit(OpenWeatherState(
-        openWeatherCurrent: _state!.openWeatherCurrent,
-        list: List.from(_state!.list),
-      ));
-      return;
-    }
+    // if(_state != null) {
+    //   emit(OpenWeatherState(
+    //     openWeatherCurrent: _state!.openWeatherCurrent,
+    //     list: List.from(_state!.list),
+    //   ));
+    //   return;
+    // }
     final res = await Future.wait([
       openWeatherUseCase.get(lat: event.lat, lon: event.lon),
       openWeatherUseCase.getFeature(lat: event.lat, lon: event.lon),

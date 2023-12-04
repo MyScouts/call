@@ -20,15 +20,26 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(field) => "${field} invalid.";
+  static String m0(date, time) => "${date} | ${time} ";
 
-  static String m1(field) => "${field} is required.";
+  static String m1(field) => "${field} invalid.";
+
+  static String m2(field) => "${field} is required.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "account_profile":
             MessageLookupByLibrary.simpleMessage("Account profile"),
         "by_vdone": MessageLookupByLibrary.simpleMessage("by VDONE"),
+        "community": MessageLookupByLibrary.simpleMessage("Cộng đồng"),
+        "community_charity":
+            MessageLookupByLibrary.simpleMessage("Từ thiện cộng đồng"),
+        "community_group":
+            MessageLookupByLibrary.simpleMessage("Nhóm cộng đồng"),
+        "community_survey":
+            MessageLookupByLibrary.simpleMessage("Khảo sát cộng đồng"),
+        "community_training":
+            MessageLookupByLibrary.simpleMessage("Đào tạo cộng đồng"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "confirmation_code_has_been_sent": MessageLookupByLibrary.simpleMessage(
             "Confirmation code has been sent"),
@@ -39,8 +50,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter the verification code"),
         "forgot_password":
             MessageLookupByLibrary.simpleMessage("Forgot password?"),
+        "formatDateDDmmYYYYhhMM": m0,
+        "gift": MessageLookupByLibrary.simpleMessage("Gift"),
+        "gift_hint": MessageLookupByLibrary.simpleMessage(
+            "Cổ vũ cho chủ phòng để tăng exp"),
         "has_one_1_digit":
             MessageLookupByLibrary.simpleMessage("Has at least 1 digit"),
+        "latest": MessageLookupByLibrary.simpleMessage("Mới nhất"),
+        "lbl_Camera": MessageLookupByLibrary.simpleMessage("Camera"),
+        "lbl_File": MessageLookupByLibrary.simpleMessage("File"),
+        "lbl_Gallery": MessageLookupByLibrary.simpleMessage("Gallery"),
         "lbl_Phone": MessageLookupByLibrary.simpleMessage("phone number"),
         "lbl_continue": MessageLookupByLibrary.simpleMessage("Continue"),
         "lbl_password": MessageLookupByLibrary.simpleMessage("password"),
@@ -48,7 +67,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Password Confirm"),
         "least_one_uppercase_character": MessageLookupByLibrary.simpleMessage(
             "Contains at least one uppercase character"),
+        "live": MessageLookupByLibrary.simpleMessage("Live"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
+        "marShop": MessageLookupByLibrary.simpleMessage("MarShop"),
         "message_otp_not_match":
             MessageLookupByLibrary.simpleMessage("OTP invalid."),
         "message_password_invalid":
@@ -77,8 +98,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Register JA"),
         "pdoneAction_registerPDone":
             MessageLookupByLibrary.simpleMessage("Register P-Done"),
+        "pdoneAction_registerVShop":
+            MessageLookupByLibrary.simpleMessage("Đăng ký V-Shop"),
         "phone_placeholder":
             MessageLookupByLibrary.simpleMessage("enter phone number"),
+        "popular": MessageLookupByLibrary.simpleMessage("Phổ biến"),
         "register": MessageLookupByLibrary.simpleMessage("Register"),
         "registration_is_consent_to":
             MessageLookupByLibrary.simpleMessage("Registration is consent to"),
@@ -89,12 +113,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "setting": MessageLookupByLibrary.simpleMessage("setting"),
         "terms_of_service_and_policies": MessageLookupByLibrary.simpleMessage(
             "terms_of_service_and_policies"),
+        "tv_live": MessageLookupByLibrary.simpleMessage("TV Live"),
         "validate_PleaseEnterInfo":
             MessageLookupByLibrary.simpleMessage("Please enter info"),
-        "validation_invalid": m0,
+        "validation_invalid": m1,
         "validation_password_match":
             MessageLookupByLibrary.simpleMessage("Password confirm not match"),
-        "validation_required": m1,
+        "validation_required": m2,
+        "vip": MessageLookupByLibrary.simpleMessage("VIP"),
+        "vote": MessageLookupByLibrary.simpleMessage("Vote"),
         "wish_you_have_great_experiences_on_our_products":
             MessageLookupByLibrary.simpleMessage(
                 "Wish you have great experiences on our products")

@@ -9,6 +9,8 @@ import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/data/repositories/user_repository.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../models/responses/list_followees_response.dart';
+
 @Injectable(as: UserRepository)
 class AuthRepositoryImpl extends UserRepository {
   final UserApi _userAPI;
@@ -94,6 +96,12 @@ class AuthRepositoryImpl extends UserRepository {
   Future<List<User>> listFriends() async {
     final res = await _userAPI.listFriends();
     return res.friends ?? [];
+  }
+
+  @override
+  Future<List<FolloweesUser>> listFollowees() async {
+    final res = await _userAPI.listFollowees();
+    return res.followees ?? [];
   }
 
   @override

@@ -35,4 +35,7 @@ class UserSharePreferencesUsecase extends UserInfoSharePreferencesUsecase {
   bool get getSubTopicFCM => _shared.getBool(_keySubTopic) ?? false;
 
   Future<bool> saveSubTopicFCM() => _shared.setBool(_keySubTopic, true);
+
+  bool isMe(int? id) => getUserInfo()?.id == id;
+
 }

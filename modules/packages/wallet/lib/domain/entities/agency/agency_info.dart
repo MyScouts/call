@@ -5,29 +5,15 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../../wallet.dart';
 import 'agency.dart';
 
-part 'agency_info.freezed.dart';
-
 part 'agency_info.g.dart';
 
-@freezed
-class AgencyInfo with _$AgencyInfo {
-  const factory AgencyInfo({
-    Agency? agency,
-    List<AgencyPrice>? listPrice,
-  }) = _AgencyInfo;
+@JsonSerializable()
+class AgencyListResponse {
+  List<AgencyResponse> coinAgencies;
 
-  factory AgencyInfo.fromJson(Map<String, dynamic> json) =>
-      _$AgencyInfoFromJson(json);
-}
+  AgencyListResponse(
+      {required this.coinAgencies});
 
-@freezed
-class AgencyPrice with _$AgencyPrice {
-  const factory AgencyPrice({
-    int? id,
-    int? vndFrom,
-    String? pointPrice,
-  }) = _AgencyPrice;
-
-  factory AgencyPrice.fromJson(Map<String, dynamic> json) =>
-      _$AgencyPriceFromJson(json);
+  factory AgencyListResponse.fromJson(Map<String, dynamic> json) =>
+      _$AgencyListResponseFromJson(json);
 }

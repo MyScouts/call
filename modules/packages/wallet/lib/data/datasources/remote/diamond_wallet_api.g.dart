@@ -19,58 +19,20 @@ class _DiamondWalletApi implements DiamondWalletApi {
   String? baseUrl;
 
   @override
-  Future<ApiResponse<TransactionResponse<DiamondTransactionHistory>>>
-      getTransactionList({required Map<String, dynamic> body}) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body);
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<
-        ApiResponse<TransactionResponse<DiamondTransactionHistory>>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '/api/diamond-wallet/transaction/list',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
-    final value =
-        ApiResponse<TransactionResponse<DiamondTransactionHistory>>.fromJson(
-      _result.data!,
-      (json) => TransactionResponse<DiamondTransactionHistory>.fromJson(
-        json as Map<String, dynamic>,
-        (json) =>
-            DiamondTransactionHistory.fromJson(json as Map<String, dynamic>),
-      ),
-    );
-    return value;
-  }
-
-  @override
-  Future<ApiResponse<DiamondTransactionHistoryDetail>> getTransactionDetail(
-      {required int id}) async {
+  Future<ApiResponse<WalletInfoResponse>> getDiamondWalletInfo() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<DiamondTransactionHistoryDetail>>(Options(
+        _setStreamType<ApiResponse<WalletInfoResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/api/diamond-wallet/transaction/${id}',
+              'api/v1/wallet',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -79,40 +41,9 @@ class _DiamondWalletApi implements DiamondWalletApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<DiamondTransactionHistoryDetail>.fromJson(
+    final value = ApiResponse<WalletInfoResponse>.fromJson(
       _result.data!,
-      (json) => DiamondTransactionHistoryDetail.fromJson(
-          json as Map<String, dynamic>),
-    );
-    return value;
-  }
-
-  @override
-  Future<ApiResponse<DiamondWalletInfo>> getDiamondWalletInfo() async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<DiamondWalletInfo>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/api/diamond-wallet/info',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = ApiResponse<DiamondWalletInfo>.fromJson(
-      _result.data!,
-      (json) => DiamondWalletInfo.fromJson(json as Map<String, dynamic>),
+      (json) => WalletInfoResponse.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

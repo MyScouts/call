@@ -4,18 +4,17 @@ export 'src/appbar/base_appbar.dart';
 export 'src/button/common_outline_button.dart';
 export 'src/button/custom_back_button.dart';
 export 'src/button/custom_close_button.dart';
-
 /// button
 export 'src/button/icon_vertical_button.dart';
 export 'src/button/primary_button.dart';
 export 'src/button/primary_solid_button.dart';
 
 export 'src/const/constains.dart';
-
 /// decoration
 export 'src/decoration/tab_indicator_decoration.dart';
 export 'src/dialog/action_dialog.dart';
 export 'src/dialog/approve_dialog.dart';
+export 'src/dialog/chat_dialog.dart';
 export 'src/dialog/confirm_dialog.dart';
 export 'src/dialog/congratulation_dialog.dart';
 export 'src/dialog/request_permission_dialog_widget.dart';
@@ -29,8 +28,6 @@ export 'src/dropdown/dropdown_widget.dart';
 export 'src/dropdown/gender_input.dart';
 export 'src/dropdown/items/dropdown_item_widget.dart';
 export 'src/expandable_fab/expandable_fab.dart';
-export 'src/skeleton/app_circle_indicator.dart';
-
 /// extensions
 export 'src/extensions/device_media/device_image_extension.dart';
 export 'src/extensions/device_media/picked_file.dart';
@@ -48,6 +45,7 @@ export 'src/keyboard/auto_hide_keyboard.dart';
 export 'src/otp/otp_screen.dart';
 export 'src/otp/otp_widget.dart';
 export 'src/segment_picker/segment_picker.dart';
+export 'src/skeleton/app_circle_indicator.dart';
 export 'src/skeleton/box_skeleton.dart';
 export 'src/slider/carousel_slider_widget.dart';
 export 'src/slider/page_indicator_widget.dart';

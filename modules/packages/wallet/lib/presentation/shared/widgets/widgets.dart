@@ -1,10 +1,9 @@
 export 'app_bar.dart';
-export 'bank_accounts_widget.dart';
 export 'contact_widget.dart';
 export 'dropdown_button.dart';
 export 'form_element.dart';
 export 'multiple_choice_button.dart';
-export 'no_data_widget.dart';
+export 'transactions_empty_widget.dart';
 export 'select_bank_widget.dart';
 export 'time_filter.dart';
 export 'user_icon_asset.dart';

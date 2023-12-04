@@ -9,7 +9,7 @@ part of 'friend_response_dto.dart';
 FriendResponseDto _$FriendResponseDtoFromJson(Map<String, dynamic> json) =>
     FriendResponseDto(
       friends: (json['friends'] as List<dynamic>)
-          .map((e) => FriendDto.fromJson(e as Map<String, dynamic>))
+          .map((e) => MemberDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       total: json['total'] as int,
     );

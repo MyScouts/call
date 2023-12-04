@@ -19,10 +19,10 @@ class _FriendApi implements FriendApi {
   String? baseUrl;
 
   @override
-  Future<FriendResponseDto> getFriend(
-    int page,
-    int pageSize,
-  ) async {
+  Future<FriendResponseDto> getConversations({
+    required int page,
+    required int pageSize,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,

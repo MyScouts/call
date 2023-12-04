@@ -8,9 +8,9 @@ extension WalletVndCoordinator on BuildContext {
         DiamondTransactionHistoryScreen.routeName,
       );
 
-  Future<T?> diamondTransactionHistoryDetail<T>(int id) =>
-      Navigator.of(this).pushNamed(
-        DiamondTransactionHistoryDetailScreen.routeName,
-        arguments: id,
-      );
+  // Future<T?> diamondTransactionHistoryDetail<T>(int id) =>
+  //     Navigator.of(this).pushNamed(
+  //       DiamondTransactionHistoryDetailScreen.routeName,
+  //       arguments: id,
+  //     );
 }

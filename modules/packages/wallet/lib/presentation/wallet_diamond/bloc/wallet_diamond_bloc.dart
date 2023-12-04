@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
+import '../../../data/datasources/models/response/wallet_info_response.dart';
 import '../../../domain/domain.dart';
 import '../screens/screens.dart';
 import '../wallet_diamond_screen.dart';
@@ -36,6 +38,7 @@ class WalletDiamondNestedRoute {
   }
 }
 
+@injectable
 class WalletDiamondBloc extends Bloc<WalletDiamondEvent, WalletDiamondState> {
   final WalletDiamondUseCase _walletDiamondUseCase;
 

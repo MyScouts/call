@@ -1,13 +1,10 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wallet/presentation/shared/widgets/toast_message/toast_message.dart';
+import 'package:wallet/presentation/wallet_coodinator.dart';
 
 import '../../../core/core.dart';
-import '../../../di/wallet_micro.dart';
-import '../../presentation.dart';
 import '../../wallet_constant.dart';
-import '../../wallet_vnd/bank_account/bloc/bank_account_bloc.dart';
-import '../bloc/wallet_bloc.dart';
 
 class WalletVNDActions extends StatefulWidget {
   const WalletVNDActions({super.key});
@@ -67,16 +64,23 @@ class _WalletVNDActionsState extends State<WalletVNDActions> {
   void onTap(WalletVNDActionType type) {
     switch (type) {
       case WalletVNDActionType.bankAccountInfo:
-        context.bankAccounts(
-          vndWalletInfo: context.read<WalletBloc>().vndWalletInfo,
-        );
+        // showToastMessage(
+        //   'Tính năng này đang được phát triển.',
+        //   ToastMessageType.warning,
+        // );
+        context.bankAccounts();
         break;
       case WalletVNDActionType.withdrawalOrder:
-        context.showChooseBankAccountDialog(
-          bankAccountBloc: BankAccountBloc(injector()),
+        // context.showChooseBankAccountDialog(
+        //   bankAccountBloc: BankAccountBloc(injector()),
+        // );
+        showToastMessage(
+          'Tính năng này đang được phát triển.',
+          ToastMessageType.warning,
         );
         break;
       case WalletVNDActionType.transactionHistory:
+        context.startTransactionHistory(walletType: WalletType.vnd);
         break;
     }
   }

@@ -73,8 +73,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   //   return result.userInfo!;
   // }
 
-  FutureOr<void> _mapLoginEvent(
-      LoginEvent event, Emitter<UserState> emit) async {
+  FutureOr<void> _mapLoginEvent(LoginEvent event, Emitter<UserState> emit) async {
     // try {
     //   final result = await _loginWith(event.payload, event.type, true);
     //
@@ -91,15 +90,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     // }
   }
 
-  FutureOr<void> _mapLoadUserEvent(
-      LoadUserEvent event, Emitter<UserState> emit) async {
+  FutureOr<void> _mapLoadUserEvent(LoadUserEvent event, Emitter<UserState> emit) async {
     print('stringgee token ${event.stringeeToken}');
     // await _userSharePreferencesUsecase.saveToken(event.token);
     // emit(Authenticated(event.user, DateTime.now().microsecondsSinceEpoch));
   }
 
-  FutureOr<void> _mapLogOutEvent(
-      LogOutEvent event, Emitter<UserState> emit) async {
+  FutureOr<void> _mapLogOutEvent(LogOutEvent event, Emitter<UserState> emit) async {
     try {
       emit(UserLogoutOutSuccess());
     } on Exception catch (e) {
@@ -109,8 +106,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     }
   }
 
-  FutureOr<void> _mapAutoLoginEvent(
-      AutoLoginEvent event, Emitter<UserState> emit) async {
+  FutureOr<void> _mapAutoLoginEvent(AutoLoginEvent event, Emitter<UserState> emit) async {
     final userInfo = _userSharePreferencesUsecase.getUserInfo();
     if (userInfo != null) {
       emit(Authenticated(userInfo, DateTime.now().microsecondsSinceEpoch));
@@ -125,8 +121,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     }
   }
 
-  FutureOr<void> _mapRegisterEvent(
-      RegisterEvent event, Emitter<UserState> emit) async {
+  FutureOr<void> _mapRegisterEvent(RegisterEvent event, Emitter<UserState> emit) async {
     // try {
     //   if (event.type == CredentialType.phone) {
     //     final result =
@@ -155,8 +150,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     // }
   }
 
-  FutureOr<void> _mapUserUpdateInfoEvent(
-      UserUpdateAvatarEvent event, Emitter<UserState> emit) async {
+  FutureOr<void> _mapUserUpdateInfoEvent(UserUpdateAvatarEvent event, Emitter<UserState> emit) async {
     final currentState = state;
     if (currentState is Authenticated) {
       final newUser = currentState.userInfo.copyWith(avatar: event.imgUrl);
@@ -166,20 +160,17 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     }
   }
 
-  FutureOr<void> _mapUserUpdateBgImageEvent(
-      UserUpdateBgImageEvent event, Emitter<UserState> emit) async {
+  FutureOr<void> _mapUserUpdateBgImageEvent(UserUpdateBgImageEvent event, Emitter<UserState> emit) async {
     final currentState = state;
     if (currentState is Authenticated) {
-      final newUser = currentState.userInfo
-          .copyWith(backgroundImages: event.user.backgroundImages);
+      final newUser = currentState.userInfo.copyWith(backgroundImages: event.user.backgroundImages);
 
       await _userSharePreferencesUsecase.saveUserInfo(newUser);
       emit(Authenticated(newUser, DateTime.now().microsecondsSinceEpoch));
     }
   }
 
-  FutureOr<void> _mapUserUpgradeAccountEvent(
-      UserUpgradeAccountEvent event, Emitter<UserState> emit) async {
+  FutureOr<void> _mapUserUpgradeAccountEvent(UserUpgradeAccountEvent event, Emitter<UserState> emit) async {
     final currentState = state;
     if (currentState is Authenticated) {
       final newUser = event.type == PDoneActionType.registerJA
@@ -191,14 +182,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
       await _userSharePreferencesUsecase.saveUserInfo(newUser);
       emit(
-        UpgradeAccountSuccess(
-            newUser, DateTime.now().microsecondsSinceEpoch, event.type),
+        UpgradeAccountSuccess(newUser, DateTime.now().microsecondsSinceEpoch, event.type),
       );
     }
   }
 
-  FutureOr<void> _mapAddFollowEvent(
-      AddFollowEvent event, Emitter<UserState> emit) async {
+  FutureOr<void> _mapAddFollowEvent(AddFollowEvent event, Emitter<UserState> emit) async {
     final currentState = state;
     bool? isUnfollow;
     // try {
@@ -271,8 +260,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     // }
   }
 
-  FutureOr<void> _mapDeleteAccountEvent(
-      DeleteAccountEvent event, Emitter<UserState> emit) async {
+  FutureOr<void> _mapDeleteAccountEvent(DeleteAccountEvent event, Emitter<UserState> emit) async {
     try {
       // await _userSharePreferencesUsecase.logout();
 
@@ -285,8 +273,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     }
   }
 
-  FutureOr<void> _mapFetchUserInfoEvent(
-      FetchUserInfoEvent event, Emitter<UserState> emit) async {
+  FutureOr<void> _mapFetchUserInfoEvent(FetchUserInfoEvent event, Emitter<UserState> emit) async {
     final userInfo = _userSharePreferencesUsecase.getUserInfo();
     final id = userInfo?.id;
 
@@ -300,20 +287,17 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     }
   }
 
-  FutureOr<void> _mapUserSetDefaultBgImageEvent(
-      UserSetDefaultBgImageEvent event, Emitter<UserState> emit) async {
+  FutureOr<void> _mapUserSetDefaultBgImageEvent(UserSetDefaultBgImageEvent event, Emitter<UserState> emit) async {
     final currentState = state;
     if (currentState is Authenticated) {
-      final newUser = currentState.userInfo
-          .copyWith(defaultBackground: event.user.defaultBackground);
+      final newUser = currentState.userInfo.copyWith(defaultBackground: event.user.defaultBackground);
 
       await _userSharePreferencesUsecase.saveUserInfo(newUser);
       emit(Authenticated(newUser, DateTime.now().microsecondsSinceEpoch));
     }
   }
 
-  FutureOr<void> _mapUserUpdateBirthDayEvent(
-      UserUpdateBirthDayEvent event, Emitter<UserState> emit) async {
+  FutureOr<void> _mapUserUpdateBirthDayEvent(UserUpdateBirthDayEvent event, Emitter<UserState> emit) async {
     final currentState = state;
     if (currentState is Authenticated) {
       // final newUser = currentState.userInfo.copyWith(birthday: event.birthDay);

@@ -1,9 +1,7 @@
 import 'package:design_system/design_system.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:imagewidget/imagewidget.dart';
 
-import '../../../../wallet.dart';
 import '../../../core/theme/wallet_theme.dart';
 import '../../wallet_constant.dart';
 import 'form_element.dart';
@@ -21,7 +19,7 @@ class SearchableDropdownButton<T> extends StatefulWidget {
   final DropdownButtonBuilder? selectedBuilder;
 
   const SearchableDropdownButton({
-    Key? key,
+    super.key,
     required this.items,
     this.value,
     required this.builderItem,
@@ -30,7 +28,7 @@ class SearchableDropdownButton<T> extends StatefulWidget {
     this.onSearch,
     required this.onSearchFn,
     this.selectedBuilder,
-  }) : super(key: key);
+  });
 
   @override
   State<SearchableDropdownButton<T>> createState() =>
@@ -87,9 +85,9 @@ class _SearchableDropdownButtonState<T>
                 ),
               )
               .toList(),
-          iconStyleData: IconStyleData(
-            icon: ImageWidget(IconAppConstants.icArrowLeft),
-          ),
+          // iconStyleData: IconStyleData(
+          //   icon: ImageWidget(IconAppConstants.icArrowLeft),
+          // ),
           menuItemStyleData: const MenuItemStyleData(
             padding: EdgeInsets.zero,
           ),
@@ -126,9 +124,9 @@ class _SearchableDropdownButtonState<T>
               child: FormElement(
                 name: 'searchBank',
                 hintText: 'Tìm kiếm tên ngân hàng',
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: ImageWidget(IconAppConstants.icArrowLeft),
+                prefixIcon: const Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Icon(Icons.search),
                 ),
                 controller: searchController,
               ),
