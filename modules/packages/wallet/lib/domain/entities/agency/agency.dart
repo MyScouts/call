@@ -3,6 +3,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:wallet/data/datasources/models/exchange_coin_response.dart';
 
+import '../wallet/bank_account.dart';
+
 part 'agency.g.dart';
 
 @JsonSerializable()
@@ -24,11 +26,13 @@ class AgencyResponse {
   final num? availableCoin;
   final AgencyUser? user;
   final List<CoinDiscountResponse>? coinDiscounts;
+  final List<BankAccount> bankAccounts;
 
   AgencyResponse(
       {required this.id,
       required this.coinDiscounts,
       required this.name,
+      required this.bankAccounts,
       required this.availableCoin,
       required this.user});
 
