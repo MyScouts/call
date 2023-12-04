@@ -21,7 +21,7 @@ class PipVideoRender extends StatelessWidget {
     final controller = context.read<LiveChannelController>();
     final commentController = context.read<LiveMessageBloc>();
     return Material(
-      color: Colors.white,
+      color: Colors.black,
       child: Stack(
         fit: StackFit.expand,
         children: [
@@ -29,7 +29,7 @@ class PipVideoRender extends StatelessWidget {
           Align(
             alignment: Alignment.topRight,
             child: GestureDetector(
-              onTap: () async {
+              onTap: () {
                 Navigator.push(
                   AppCoordinator.rootNavigator.currentContext!,
                   MaterialPageRoute(
@@ -49,6 +49,24 @@ class PipVideoRender extends StatelessWidget {
                     ),
                   ),
                 );
+                PipHandler.removeOverlay();
+              },
+              behavior: HitTestBehavior.opaque,
+              child: Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: SizedBox.square(
+                  dimension: 30,
+                  child: Center(
+                    child: ImageWidget(Assets.icons_lives_pip_up.path),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: GestureDetector(
+              onTap: () async {
                 PipHandler.removeOverlay();
               },
               behavior: HitTestBehavior.opaque,
