@@ -1,4 +1,6 @@
+import 'package:app_main/src/presentation/live/domain/entities/gifter_info.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
+import 'package:app_main/src/presentation/live/presentation/live_bottom/live_bottom_controller.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,8 +11,9 @@ import '../channel/state/live_channel_controller.dart';
 
 class ViewerTab extends StatefulWidget {
   final LiveChannelController controller;
+  final LiveBottomController liveBottomController;
 
-  const ViewerTab({super.key, required this.controller});
+  const ViewerTab({super.key, required this.controller, required this.liveBottomController});
 
   @override
   State<ViewerTab> createState() => _ViewerTabState();
@@ -25,7 +28,7 @@ class _ViewerTabState extends State<ViewerTab> {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                context.startSelectUser(userId:  widget.controller.members[index].info.userID);
+                context.startSelectUser(userId: widget.controller.members[index].info.userID);
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 9),
@@ -82,6 +85,28 @@ class _ViewerTabState extends State<ViewerTab> {
                         ],
                       ),
                     ),
+                    Obx(() {
+                      final count = widget.liveBottomController.giftCardLive.value.giversInfo?.firstWhereOrNull(
+                          (element) => element.giver?.id == widget.controller.members[index].info.userID);
+                      return Visibility(
+                        visible: !widget.controller.members[index].isOwner,
+                        child: Row(
+                          children: [
+                            Text(count?.coinSrt ?? '',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                )),
+                            const SizedBox(width: 4),
+                            ImageWidget(
+                              IconAppConstants.icDiamond,
+                              width: 16,
+                              height: 16,
+                            )
+                          ],
+                        ),
+                      );
+                    })
                   ],
                 ),
               ),

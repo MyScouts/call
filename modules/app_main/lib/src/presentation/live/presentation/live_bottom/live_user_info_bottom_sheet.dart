@@ -1,6 +1,5 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
-import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
 import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -12,14 +11,8 @@ import '../../../../blocs/user/user_cubit.dart';
 import '../../../../blocs/user_action/user_action_cubit.dart';
 import '../../../../data/models/payloads/user/user_action_payload.dart';
 import '../../../../data/models/responses/follow_response.dart';
-import '../../../../di/di.dart';
-import '../../../../domain/usecases/user_share_preferences_usecase.dart';
-import '../../../marshop/widgets/gradiant_button.dart';
-import '../../../shared/user/bloc/user_bloc.dart';
 import '../../../social/profile/profile_bloc.dart';
-import '../../../social/profile/widgets/user_info_header.dart';
 import '../../../social/social_constants.dart';
-import 'user_detail_intarctive.dart';
 
 class LiveUserInfoBottomView extends StatefulWidget {
   const LiveUserInfoBottomView({super.key, required this.userId});
