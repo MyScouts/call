@@ -45,6 +45,14 @@ class LiveCreateController {
 
   int? get id => _id;
 
+  String? _password;
+
+  String? get password => _password;
+
+  void setPass(String value) {
+    _password = value;
+  }
+
   void _initRtc() async {
     try {
       await [Permission.microphone, Permission.camera].request();

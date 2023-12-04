@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
@@ -17,6 +18,7 @@ import 'package:app_main/src/domain/usecases/user_usecase.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
@@ -65,6 +67,12 @@ class LiveChannelController {
         socketService.sendMessage({'type': 'raw', 'rawContent': msg});
       },
     );
+  }
+
+  String? _password;
+
+  void setPassword(String pass) {
+    _password = pass;
   }
 
   final Rx<LiveStreamState> _state = LiveStreamState.loading.obs;
@@ -160,10 +168,10 @@ class LiveChannelController {
     _showMessageInput.value = false;
   }
 
-  void join(int id, BuildContext context, [String? password]) async {
+  void join(int id, BuildContext context) async {
     try {
       final res = await Future.wait([
-        repository.joinLive(id: id, password: password),
+        repository.joinLive(id: id, password: _password),
         userUseCase.getProfile(),
       ]);
       _info = (res.first as JoinLiveResponse).data.obs;

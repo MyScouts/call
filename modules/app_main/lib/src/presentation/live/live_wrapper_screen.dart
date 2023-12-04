@@ -54,7 +54,13 @@ class _LiveWrapperScreenState extends State<LiveWrapperScreen> {
           return Stack(
             fit: StackFit.expand,
             children: [
-              JoinChannelProvider(liveID: controller.id!),
+              if (controller.password != null)
+                JoinChannelPasswordProvider(
+                  liveID: controller.id!,
+                  password: controller.password!,
+                )
+              else
+                JoinChannelProvider(liveID: controller.id!),
               if (controller.isStartStream.value)
                 _StartLive(
                   onEnd: () {
