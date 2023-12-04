@@ -182,71 +182,71 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                   ),
                   isPassword: true,
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Expanded(
-                        child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        InformationLayoutFieldWidget(
-                          required: false,
-                          label: "Ngày sinh",
-                          child: InputDateTimeWidget(
-                            hintText: 'Ngày sinh',
-                            useHorizontalLayout: true,
-                            radius: 17,
-                            date: birthDay,
-                            formatText: (date) => S
-                                .of(context)
-                                .formatDateDDmmYYYYhhMM(date, date)
-                                .split('|')
-                                .first,
-                            max: DateTime.now(),
-                            onChange: (dateTime) {
-                              birthDay = dateTime;
-                              if (birthDay != null) {
-                                if (birthDay!.isUnder18yearsAgo()) {
-                                  _birthDateError.value =
-                                      "Yêu cầu trên 18 tuổi.";
-                                } else {
-                                  _birthDateError.value = null;
-                                }
-                              } else {
-                                _birthDateError.value = "Nhập ngày sinh.";
-                              }
-                            },
-                          ),
-                        ),
-                        Positioned(
-                            bottom: -18,
-                            child: ValueListenableBuilder(
-                              valueListenable: _birthDateError,
-                              builder: (context, value, child) {
-                                return value != null
-                                    ? Text(
-                                        value,
-                                        style: context.textTheme.bodySmall!
-                                            .copyWith(
-                                          color: AppColors.red10,
-                                        ),
-                                      )
-                                    : const SizedBox();
-                              },
-                            ))
-                      ],
-                    )),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: GenderInput(
-                        onChange: (sex) {
-                          _gender = sex;
-                          setState(() {});
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   crossAxisAlignment: CrossAxisAlignment.end,
+                //   children: [
+                //     Expanded(
+                //         child: Stack(
+                //       clipBehavior: Clip.none,
+                //       children: [
+                //         InformationLayoutFieldWidget(
+                //           required: false,
+                //           label: "Ngày sinh",
+                //           child: InputDateTimeWidget(
+                //             hintText: 'Ngày sinh',
+                //             useHorizontalLayout: true,
+                //             radius: 17,
+                //             date: birthDay,
+                //             formatText: (date) => S
+                //                 .of(context)
+                //                 .formatDateDDmmYYYYhhMM(date, date)
+                //                 .split('|')
+                //                 .first,
+                //             max: DateTime.now(),
+                //             onChange: (dateTime) {
+                //               birthDay = dateTime;
+                //               if (birthDay != null) {
+                //                 if (birthDay!.isUnder18yearsAgo()) {
+                //                   _birthDateError.value =
+                //                       "Yêu cầu trên 18 tuổi.";
+                //                 } else {
+                //                   _birthDateError.value = null;
+                //                 }
+                //               } else {
+                //                 _birthDateError.value = "Nhập ngày sinh.";
+                //               }
+                //             },
+                //           ),
+                //         ),
+                //         Positioned(
+                //             bottom: -18,
+                //             child: ValueListenableBuilder(
+                //               valueListenable: _birthDateError,
+                //               builder: (context, value, child) {
+                //                 return value != null
+                //                     ? Text(
+                //                         value,
+                //                         style: context.textTheme.bodySmall!
+                //                             .copyWith(
+                //                           color: AppColors.red10,
+                //                         ),
+                //                       )
+                //                     : const SizedBox();
+                //               },
+                //             ))
+                //       ],
+                //     )),
+                //     const SizedBox(width: 10),
+                //     Expanded(
+                //       child: GenderInput(
+                //         onChange: (sex) {
+                //           _gender = sex;
+                //           setState(() {});
+                //         },
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 const SizedBox(height: 30),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
