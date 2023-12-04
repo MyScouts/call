@@ -103,8 +103,7 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                 ),
                 padding: const EdgeInsets.all(4.0),
                 child: Obx(() {
-                  final host = controller.members.value
-                      .firstWhereOrNull((e) => e.isOwner);
+                  final host = controller.members.value.firstWhereOrNull((e) => e.isOwner);
                   return IntrinsicHeight(
                     child: Row(
                       children: [

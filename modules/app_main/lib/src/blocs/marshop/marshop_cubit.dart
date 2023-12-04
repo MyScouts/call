@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/marshop/marshop_payload.dart';
+import 'package:app_main/src/data/models/responses/marshop_response.dart';
 import 'package:app_main/src/domain/usecases/marshop_usecase.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
@@ -60,6 +61,9 @@ class MarshopCubit extends Cubit<MarshopState> {
         case "NOT_JA":
           message = "Bạn chưa là JA.";
           break;
+        case "HAS_BEEN_MARSHOP_REQUEST_PENDING":
+          message = "Bạn đã đăng ký MarShop, vui lòng chờ xác nhận.";
+          break;
         case "OTP_NOT_MATCH":
           message = S.current.message_otp_not_match.capitalize();
           break;
@@ -69,5 +73,23 @@ class MarshopCubit extends Cubit<MarshopState> {
       debugPrint("phoneRegister: $error");
     }
     emit(RegisterMarshopFail(message: message));
+  }
+
+  Future getMarShopInfo({required int userId}) async {
+    if (state is OnGetMarShopInfo) return;
+    String message = S.current.messages_server_internal_error.capitalize();
+    try {
+      emit(OnGetMarShopInfo());
+      final response = await _marshopUsecase
+          .getMarShop(GetMarshopInfoPayload(userId: userId));
+      emit(GetMarShopInfoSuccess(marshop: response));
+      return;
+    } on DioException catch (error) {
+      final data = error.response!.data;
+      emit(GetMarShopInfoFail(message: message, code: data['code']));
+    } catch (error) {
+      print(error);
+      emit(GetMarShopInfoFail(message: message, code: message));
+    }
   }
 }

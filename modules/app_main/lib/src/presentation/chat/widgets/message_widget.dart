@@ -17,11 +17,12 @@ class MessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isSender =
-        message.sender?.id == getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id;
+    final bool isSender = message.sender?.id ==
+        getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id;
     return Row(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
+      mainAxisAlignment:
+          isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (!isSender) ...[
@@ -37,12 +38,17 @@ class MessageWidget extends StatelessWidget {
         ],
         Container(
           alignment: isSender ? Alignment.topRight : Alignment.topLeft,
-          padding: EdgeInsets.all(message.metadata?.images?.isNotEmpty ?? false ? 0 : 12),
+          padding: EdgeInsets.all(
+              message.metadata?.images?.isNotEmpty ?? false ? 0 : 12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
-              topRight: isSender ? const Radius.circular(0) : const Radius.circular(16),
+              topRight: isSender
+                  ? const Radius.circular(0)
+                  : const Radius.circular(16),
               topLeft: const Radius.circular(16),
-              bottomLeft: isSender ? const Radius.circular(16) : const Radius.circular(0),
+              bottomLeft: isSender
+                  ? const Radius.circular(16)
+                  : const Radius.circular(0),
               bottomRight: const Radius.circular(16),
             ),
             color: message.metadata?.images?.isNotEmpty ?? false
@@ -52,14 +58,16 @@ class MessageWidget extends StatelessWidget {
                     : AppColors.white,
           ),
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.6),
+            constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.6),
             child: message.metadata?.images?.isNotEmpty ?? false
                 ? Wrap(
                     children: List.generate(
                       message.metadata?.images?.length ?? 0,
                       (index) => CachedNetworkImage(
                         imageUrl: message.metadata?.images?[index] ?? '',
-                        progressIndicatorBuilder: (_, __, ___) => const LoadingWidget(),
+                        progressIndicatorBuilder: (_, __, ___) =>
+                            const LoadingWidget(),
                         errorWidget: (_, __, ___) => const Center(
                           child: Icon(Icons.error),
                         ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app_core/app_core.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -99,7 +100,14 @@ class WalletDiamondBloc extends Bloc<WalletDiamondEvent, WalletDiamondState> {
 
       emit(ExchangeDiamondSuccess());
     } catch (e) {
-      emit(ExchangeDiamondFailure('Có lỗi xảy ra, vui lòng thử lại'));
+      if(e is DioException){
+        final errorCode = e.response?.data['code'];
+        if(errorCode == 'NOT_JA'){
+          emit(ExchangeDiamondFailure('Bạn không phải JA'));
+        }
+      }else{
+        emit(ExchangeDiamondFailure('Có lỗi xảy ra, vui lòng thử lại'));
+      }
     }
   }
 }

@@ -166,34 +166,36 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                   orElse: () => const LoadingWidget(),
                   getAgencyInfoSuccess: (agencyInfo) {
                     agency = agencyInfo;
-                    return Column(
-                      children: [
-                        _buildAgencyInformation(context, agencyInfo),
-                        AgencyTabBarWidget(
-                          widgetByMoney: _buildEnterByMoney(context),
-                          widgetByCoin: _buildEnterNumberCoins(context),
+                    return SingleChildScrollView(
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height - 180,
+                        child: Column(
+                          children: [
+                            _buildAgencyInformation(context, agencyInfo),
+                            AgencyTabBarWidget(
+                              widgetByMoney: _buildEnterByMoney(context),
+                              widgetByCoin: _buildEnterNumberCoins(context),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              color: AppColors.white,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  _buildCouponCoins(context),
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: GradiantButton(
+                                      onPressed: handleExchangeTap,
+                                      child: const Text('Xác nhận'),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          color: AppColors.white,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildCouponCoins(context),
-                              Visibility(
-                                visible: !isShowKeyboard,
-                                child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: GradiantButton(
-                                    onPressed: handleExchangeTap,
-                                    child: const Text('Xác nhận'),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
+                      ),
                     );
                   },
                 );
@@ -292,6 +294,9 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
             height: 24,
           ),
           _buildInputMoney(context),
+          SizedBox(
+            height: MediaQuery.of(context).padding.bottom,
+          ),
         ],
       ),
     );

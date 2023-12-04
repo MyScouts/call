@@ -66,6 +66,11 @@ class ThemeText {
         fontWeight: FontWeight.w400,
       ),
 
+      bodyLarge: styleByFontFamily(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+
       //Tag Design_design Figma-->
 
       /// Text in Button
@@ -85,15 +90,10 @@ class ThemeText {
         fontWeight: FontWeight.w600,
       ),
 
-      bodyLarge: styleByFontFamily(
-        fontSize: 14,
-        fontWeight: FontWeight.w500,
-      ),
-
       /// Text in TextField, Title of Listile
       titleMedium: styleByFontFamily(
         fontSize: 14,
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w600,
       ),
     );
   }

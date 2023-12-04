@@ -9,6 +9,7 @@ const _kUserInfo = '_kUserInfo';
 const _assessToken = '_assessToken';
 const _refreshToken = '_refreshToken';
 const _onboarding = '_onboarding';
+const _keySubTopic = '_keySubTopicFcm';
 
 @injectable
 class UserInfoSharePreferencesUsecase {
@@ -64,5 +65,6 @@ class UserInfoSharePreferencesUsecase {
     await _shared.setString(_assessToken, '');
     await _shared.setString(_refreshToken, '');
     await _shared.setString(_kUserInfo, '{}');
+    await _shared.setString(_keySubTopic, '');
   }
 }

@@ -5,13 +5,15 @@ import 'package:get/get.dart';
 import '../../../../di/di.dart';
 import '../channel/state/live_channel_controller.dart';
 import 'leader_board_tab.dart';
+import 'list_friend_tab.dart';
 import 'live_bottom_controller.dart';
 import 'viewer_tab.dart';
 
 class LiveBottomSheet extends StatefulWidget {
   final LiveChannelController controller;
+  final int? index;
 
-  const LiveBottomSheet({super.key, required this.controller});
+  const LiveBottomSheet({super.key, required this.controller, this.index});
 
   @override
   State<LiveBottomSheet> createState() => _LiveBottomSheetState();
@@ -29,8 +31,8 @@ extension TabLiveBottomExt on TabLiveBottom {
     switch (this) {
       case TabLiveBottom.viewer:
         return 'Số người xem';
-    // case TabLiveBottom.follow:
-    //   return 'Người follow';
+      // case TabLiveBottom.follow:
+      //   return 'Người follow';
       case TabLiveBottom.rank:
         return 'Bảng cống hiến';
       case TabLiveBottom.invite:
@@ -55,17 +57,20 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
 
   @override
   void initState() {
-    liveBottomController.getLeaderBoard(widget.controller.info.id);
-    //liveBottomController.getListFriend();
-    liveBottomController.getListFollow();
+    if (widget.index != null) {
+      liveBottomController.tabIndex.value = widget.index!;
+    }
+    //liveBottomController.getLeaderBoard(widget.controller.info.id);
+    liveBottomController.getDailyDedications(widget.controller.info.user!.id!);
+    liveBottomController.getListFriend();
+    //liveBottomController.getListFollow();
     super.initState();
   }
 
-  List<Widget> get listTab =>
-      [
+  List<Widget> get listTab => [
         ViewerTab(controller: widget.controller),
-        //ListFriendTab(controller: liveBottomController, liveData: widget.controller.info),
-        ListFollowTab(controller: liveBottomController, liveData: widget.controller.info),
+        ListFriendTab(controller: liveBottomController, liveData: widget.controller.info),
+        //ListFollowTab(controller: liveBottomController, liveData: widget.controller.info),
         LeaderBoardTab(controller: liveBottomController),
       ];
 
@@ -103,8 +108,7 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
         child: Row(
           children: List<Widget>.generate(
               TabLiveBottom.values.length,
-                  (index) =>
-                  GestureDetector(
+              (index) => GestureDetector(
                     onTap: () {
                       liveBottomController.tabIndex.value = index;
                     },

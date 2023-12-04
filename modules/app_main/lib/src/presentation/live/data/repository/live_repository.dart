@@ -29,6 +29,8 @@ abstract class LiveRepository {
 
   Future<GiftCardLive> getInfoGiftCard(int liveID);
 
+  Future<GiftCardLive> getDailyDedications(int userId);
+
   Future<UserPointResponse> getUserPoint();
 
   Future<List<LiveCategoryDetail>> listCategory();

@@ -11,12 +11,14 @@ import 'package:app_main/src/presentation/live/presentation/widget/check_passwor
 import 'package:flutter/material.dart';
 
 import '../social/profile/profile_bloc.dart';
+import 'domain/entities/gift_card_list.dart';
 import 'domain/entities/live_category_detail.dart';
 import 'domain/entities/live_detail.dart';
 import 'domain/entities/live_type.dart';
 import 'presentation/channel/state/live_channel_controller.dart';
 import 'presentation/list_gift/gift_bottom_sheet.dart';
 import 'presentation/live_bottom/live_bottom_sheet.dart';
+import 'presentation/live_tab/dialog.dart';
 import 'presentation/live_tab/live_controller.dart';
 
 extension LiveCoordinator on BuildContext {
@@ -66,6 +68,15 @@ extension LiveCoordinator on BuildContext {
     );
   }
 
+  void showNoticeDialog({
+    required String title,
+  }) {
+    showDialog(
+      context: this,
+      builder: (_) => NoticeDialog(title: title),
+    );
+  }
+
   void joinLive(int liveID) {
     Navigator.of(this).pushNamed(
       JoinChannelProvider.routerName,
@@ -83,14 +94,14 @@ extension LiveCoordinator on BuildContext {
     );
   }
 
-  void showBottomGift(LiveChannelController controller) {
-    showModalBottomSheet(
+  Future<GiftCard?> showBottomGift(LiveChannelController controller) {
+    return showModalBottomSheet<GiftCard?>(
         context: this,
         isScrollControlled: true,
         builder: (context) => GiftCardBottomSheet(controller: controller));
   }
 
-  void showBottomSheetLive(LiveChannelController controller) {
+  void showBottomSheetLive(LiveChannelController controller, {int? index}) {
     showModalBottomSheet(
         context: this,
         isScrollControlled: true,

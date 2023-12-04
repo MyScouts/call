@@ -237,9 +237,7 @@ class LiveChannelController {
         _agora?.token ?? '',
         _agora?.channel ?? '',
         _me.value.info.userID,
-        role: _me.value.isOwner
-            ? ClientRoleType.clientRoleBroadcaster
-            : ClientRoleType.clientRoleAudience,
+        role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
       );
 
       _hostOffline.value = !hostInLive;
@@ -322,8 +320,7 @@ class LiveChannelController {
       androidNotificationOptions: AndroidNotificationOptions(
         channelId: 'notification_channel_id',
         channelName: 'Foreground Notification',
-        channelDescription:
-            'This notification appears when the foreground service is running.',
+        channelDescription: 'This notification appears when the foreground service is running.',
         channelImportance: NotificationChannelImportance.LOW,
         priority: NotificationPriority.LOW,
         iconData: const NotificationIconData(
@@ -354,6 +351,8 @@ class LiveChannelController {
     final user = _members.firstWhereOrNull((e) => e.info.userID == id);
     return user;
   }
+
+  final Rx<int> timesAnimation = 0.obs;
 
   void _onSocketEvent() {
     socketService.on(socketConnectedEvent, (data) {
@@ -389,13 +388,24 @@ class LiveChannelController {
           giftNumber: gift.total ?? 1,
         );
       } else {
-        for (int j = 1; j <= (gift.total! > 3 ? 3 : gift.total!); j++) {
+        if (gift.total! > 1 && gift.giver?.id == _me.value.info.userID) {
+          timesAnimation.value = gift.total!;
+        }
+        for (int j = 1; j <= gift.total!; j++) {
           floatingGiftsProvider.addGiftAnimation(
             gift: gift,
             giftNumber: gift.total ?? 1,
           );
         }
       }
+      final message = UserMessage(
+        member: LiveMember(
+            info: LiveMemberInfo(
+                userID: gift.giver!.id!, name: gift.giver!.displayName!, avatar: gift.giver?.avatar ?? '')),
+        message: 'đã tặng ${gift.giftCard?.name} x${gift.total}',
+        createdAt: DateTime.now(),
+      );
+      NotificationCenter.post(channel: receiveMessage, options: message);
     });
 
     socketService.on(socketUserJoinEvent, (Map data) {
@@ -412,7 +422,6 @@ class LiveChannelController {
       );
       _members.value = [..._members, member];
       print('length ===> ${_members.length}');
-
       if (user.id == _me.value.info.userID) {
         NotificationCenter.post(
           channel: receiveMessage,
@@ -497,18 +506,13 @@ class LiveChannelController {
 }
 
 extension RemoteVideoStateReasonX on RemoteVideoStateReason {
-  bool get isNetworkCongestion =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
+  bool get isNetworkCongestion => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
 
-  bool get isNetworkRecovery =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
+  bool get isNetworkRecovery => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
 
-  bool get isRemoteOffline =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
+  bool get isRemoteOffline => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
 
-  bool get isRemoteUnmuted =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
+  bool get isRemoteUnmuted => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
 
-  bool get isRemoteInBackground =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
+  bool get isRemoteInBackground => this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
 }

@@ -84,6 +84,7 @@ class NotificationService {
       final userSharePreferencesUsecase =
           injector.get<UserSharePreferencesUsecase>();
       if (userSharePreferencesUsecase.getSubTopicFCM == false) {
+        await messaging.subscribeToTopic('vdone');
         await messaging.subscribeToTopic('public');
         await messaging.subscribeToTopic(isIOS ? 'ios' : 'android');
         await userSharePreferencesUsecase.saveSubTopicFCM();
@@ -96,11 +97,9 @@ class NotificationService {
       if (message == null) {
         return;
       }
-
       if (message.data.isNotEmpty) {
         injector.get<NotificationService>().openNotification(message.data);
       }
-
       updateCount(message.data);
     }));
 
@@ -112,5 +111,20 @@ class NotificationService {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       openNotification(message.data);
     });
+  }
+
+  Future unsubscribeNotification() async {
+    final messaging = FirebaseMessaging.instance;
+    await messaging.unsubscribeFromTopic('vdone');
+    await messaging.unsubscribeFromTopic('public');
+    await messaging.unsubscribeFromTopic(isIOS ? 'ios' : 'android');
+    final userSharePreferencesUsecase =
+        injector.get<UserSharePreferencesUsecase>();
+    User? user = userSharePreferencesUsecase.getUserInfo();
+    if (user != null && user.id != null) {
+      final topic = 'user_${user.id}';
+      await messaging.unsubscribeFromTopic(topic);
+      ;
+    }
   }
 }

@@ -4,9 +4,11 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
 
 import 'live_bottom_controller.dart';
+import 'time_count_down.dart';
 
 class LeaderBoardTab extends StatefulWidget {
   final LiveBottomController controller;
@@ -111,9 +113,41 @@ class _LeaderBoardTabState extends State<LeaderBoardTab> {
   Widget build(BuildContext context) {
     return Obx(() {
       final list = widget.controller.giftCardLive.value.giversInfo ?? [];
+      final duration = widget.controller.giftCardLive.value.refreshAt?.toUtc().difference(DateTime.now());
       return Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 5),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TimeCountDownWidget(
+                  duration: duration!,
+                  textStyle: const TextStyle(),
+                  voidCallback: () {},
+                ),
+                Container(
+                  padding: const EdgeInsets.all(5.5),
+                  decoration: BoxDecoration(
+                    color: const Color(0xffFDF6E6),
+                    borderRadius: BorderRadius.circular(90),
+                  ),
+                  child: Row(
+                    children: [
+                      ImageWidget(IconAppConstants.icCrown),
+                      SizedBox(width: 4),
+                      const Text('Lịch sử xếp hạng',
+                          style: TextStyle(fontSize: 9, fontWeight: FontWeight.w500, color: Color(0xffDB9440)))
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 5),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: SizedBox(
@@ -352,9 +386,7 @@ class _LeaderBoardTabState extends State<LeaderBoardTab> {
                   );
                 },
                 separatorBuilder: (context, index) {
-                  return Visibility(
-                      visible: index> 2,
-                      child: const SizedBox(height: 0));
+                  return Visibility(visible: index > 2, child: const SizedBox(height: 0));
                 },
                 itemCount: list.length),
           ),

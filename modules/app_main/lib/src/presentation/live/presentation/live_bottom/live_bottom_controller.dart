@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
 
@@ -21,16 +22,23 @@ class LiveBottomController {
 
   LiveBottomController(this.useCase, this.userUsecase);
 
+  final textController = TextEditingController();
+
   Future<void> getLeaderBoard(int roomId) async {
     try {
       giftCardLive.value = await useCase.getInfoGiftCard(roomId);
     } catch (e) {}
   }
 
+  Future<void> getDailyDedications(int userId) async {
+    try {
+      giftCardLive.value = await useCase.getDailyDedications(userId);
+    } catch (e) {}
+  }
+
   final listFriends = <User>[].obs;
 
   final listFollow = <FolloweesUser>[].obs;
-
 
   Future<void> getListFriend() async {
     try {
