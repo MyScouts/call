@@ -3,6 +3,7 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:wallet/data/datasources/models/request/wallet_transactions_request.dart';
+import 'package:wallet/presentation/presentation.dart';
 import 'package:wallet/presentation/shared/widgets/datetime_filter_sheet.dart';
 import 'package:wallet/presentation/shared/widgets/transaction_filter_sheet.dart';
 import 'package:wallet/presentation/shared/widgets/wallet_transaction_item_widget.dart';
@@ -239,9 +240,9 @@ class _WalletTransactionHistoryScreenState
                     (item) => WalletTransactionItemWidget(
                       transactionItem: item,
                       walletType: widget.walletType,
-                      // onTap: () => context.startTransactionHistoryDetails(
-                      //   '${item.id}',
-                      // ),
+                      onTap: () => context.startTransactionHistoryDetails(
+                        '${item.id}',
+                      ),
                     ),
                   )
                   .toList(),

@@ -63,7 +63,7 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
     );
 
     final wi = context.findAncestorWidgetOfExactType<DashBoardInheritedData>();
-    if(wi == null) throw Exception('DashBoardInheritedData is not null');
+    if (wi == null) throw Exception('DashBoardInheritedData is not null');
     dashBoardController = wi.dashBoardController;
   }
 
@@ -137,10 +137,12 @@ abstract class DashBoardBaseState<T extends DashboardBaseBloc,
             builder: (context, constraints) {
               return GestureDetector(
                 onTap: () {
-                  dashBoardController.enableEditMode = false;
+                  // TODO: un-comment affter submit
+                  // dashBoardController.enableEditMode = false;
                 },
                 onLongPress: () {
-                  dashBoardController.enableEditMode = true;
+                  // TODO: un-comment affter submit
+                  // dashBoardController.enableEditMode = true;
                 },
                 child: SizedBox(
                   height: constraints.maxHeight,

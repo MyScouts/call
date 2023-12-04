@@ -31,18 +31,24 @@ class LiveApiConstant {
   static const String getListLiveMember = 'api/live/{id}/members';
   static const String kickMember = '/api/live/{id}/kick';
   static const String banMember = '/api/live/{id}/ban';
-  static const String getListLivefollowing = 'api/live/following?page={page}&pageSize={pageSize}';
+  static const String getListLivefollowing =
+      'api/live/following?page={page}&pageSize={pageSize}';
   static const String getListTopLive = 'api/top-live/list';
 
   static const String rbContest = '/api/rb-contest/active';
 
   static const String giftCard = '/api/gift-card/live/{liveId}';
 
+  static const String dailyDedications = '/api/gift-card/daily-dedication';
+
+  static const String getDedications = '/api/gift-card/dedication';
+
   static const String festivalsInfo = '/api/festivals';
 
   static const String festivalsID = '/api/festivals/register-festival/{userId}';
 
-  static const String voteForUser = '/api/gift-card/user/{userId}/report?contestId={contestId}';
+  static const String voteForUser =
+      '/api/gift-card/user/{userId}/report?contestId={contestId}';
 
   static const String defaultConfig = '/api/live/default-config';
 
@@ -55,6 +61,8 @@ class LiveApiConstant {
   static const String getListInviteFriend = '/api/users/list-friends';
 
   static const String inviteFriend = '/api/live/{id}/invite';
+
+  static const String joinable = '/api/live/{id}/joinable';
 }
 
 @RestApi()
@@ -97,7 +105,14 @@ abstract class LiveApi {
   );
 
   @GET(LiveApiConstant.giftCard)
-  Future<ApiResponse<GiftCardLive>> getInfoGiftCard({@Path('liveId') required int liveId});
+  Future<ApiResponse<GiftCardLive>> getInfoGiftCard(
+      {@Path('liveId') required int liveId});
+
+  @GET(LiveApiConstant.dailyDedications)
+  Future<ApiResponse<GiftCardLive>> getDailyDedications({@Query('userId') required int userId});
+
+  @GET(LiveApiConstant.getDedications)
+  Future<ApiResponse<GiftCardLive>> getDedications({@Query('userId') required int userId});
 
   @POST(LiveApiConstant.createNewLive)
   Future<ApiResponse<LiveData>> createNewLive(
@@ -116,10 +131,12 @@ abstract class LiveApi {
 
   @POST(LiveApiConstant.inviteFriend)
   Future<ApiResponse<dynamic>> inviteFriend(
-      {@Path('id') required String liveId, @Body() required InviteFriendReq user});
+      {@Path('id') required String liveId,
+      @Body() required InviteFriendReq user});
 
   @GET(LiveApiConstant.memberCount)
-  Future<ApiResponse<MemberCountData>> memberCount({@Query('liveIds') required List<int> liveIds});
+  Future<ApiResponse<MemberCountData>> memberCount(
+      {@Query('liveIds') required List<int> liveIds});
 
   @GET(LiveApiConstant.getAllCateGory)
   Future<ApiResponse<LiveStreamCategoryResponse>> getAllCateGory();
@@ -130,6 +147,12 @@ abstract class LiveApi {
     @Path('pageSize') required int pageSize,
     @Path('isFriend') required bool isFriend,
   });
+
+  @POST(LiveApiConstant.joinable)
+  Future<Object> checkPass(
+    @Path('id') int liveId,
+    @Field('password') String password,
+  );
 
 //
 // @POST(LiveApiConstant.joinLive)

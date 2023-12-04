@@ -4,6 +4,7 @@ import 'package:app_main/src/domain/entities/chat/message_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'member_dto.dart';
+import 'meta_data_dto.dart';
 part 'message_dto.g.dart';
 
 @JsonSerializable()
@@ -22,13 +23,13 @@ class MessageDto extends MessageModel {
   final DateTime createdAt;
 
   @override
-  final String message;
+  final String? message;
 
   @override
   final String messageId;
 
   @override
-  final Map? metadata;
+  final MetaDataDto? metadata;
 
   @override
   final bool seen;

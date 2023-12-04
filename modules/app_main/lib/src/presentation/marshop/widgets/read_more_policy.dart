@@ -22,9 +22,17 @@ class _ReadMorePolicyState extends State<ReadMorePolicy> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Center(
+                child: Text(
+                  "Điều khoản và chính sách",
+                  textAlign: TextAlign.center,
+                  style: context.text.titleLarge,
+                ),
+              ),
+              const SizedBox(height: 10),
               Text(
                 policyContents.first['title'].toString(),
-                style: Theme.of(context).textTheme.headlineLarge,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               Text(
                 policyContents.first['content'].toString(),

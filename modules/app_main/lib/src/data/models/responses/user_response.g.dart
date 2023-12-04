@@ -14,6 +14,7 @@ _$OnboardingResponseImpl _$$OnboardingResponseImplFromJson(
       isMarshopOwner: json['isMarshopOwner'] as bool,
       isMarshopCustomer: json['isMarshopCustomer'] as bool,
       hasDefaultBankAccount: json['hasDefaultBankAccount'] as bool,
+      marshopCustomerId: json['marshopCustomerId'] as int?,
     );
 
 Map<String, dynamic> _$$OnboardingResponseImplToJson(
@@ -24,4 +25,5 @@ Map<String, dynamic> _$$OnboardingResponseImplToJson(
       'isMarshopOwner': instance.isMarshopOwner,
       'isMarshopCustomer': instance.isMarshopCustomer,
       'hasDefaultBankAccount': instance.hasDefaultBankAccount,
+      'marshopCustomerId': instance.marshopCustomerId,
     };

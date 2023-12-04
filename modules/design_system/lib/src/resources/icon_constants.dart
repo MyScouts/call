@@ -147,6 +147,8 @@ class IconAppConstants {
   static String icDeleteChat = IconApp.icDeleteChat.path;
   static String icReportChat = IconApp.icReportChat.path;
   static String icBlockChat = IconApp.icBlockChat.path;
+  static String icImage = IconApp.icImage.path;
+  static String icSmile = IconApp.icSmile.path;
   static String icUserGroup3 = IconApp.icUserGroup3.path;
   static String icCallSvg = IconApp.icCallSvg.path;
   static String icCallVideo = IconApp.icCallVideo.path;
@@ -313,6 +315,10 @@ enum IconApp {
   icLeaveTeam('assets/icons/ic_leave_team.svg'),
   icDeleteChat('assets/icons/ic_delete_chat.svg'),
   icReportChat('assets/icons/ic_report_chat.svg'),
+
+  ///chat
+  icImage('assets/icons/ic_image.svg'),
+  icSmile('assets/icons/ic_smile.svg'),
   icBlockChat('assets/icons/ic_block_chat.svg'),
   icVideoOff('assets/icons/ic_video_off.svg'),
   icMicOff('assets/icons/ic_mic_off.svg'),

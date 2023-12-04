@@ -18,6 +18,7 @@ import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_e
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_personal_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dock_widget.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/statusbar_widget.dart';
+import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
 import 'package:app_main/src/presentation/notification/notification_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';

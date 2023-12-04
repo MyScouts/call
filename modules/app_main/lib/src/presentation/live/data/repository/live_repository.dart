@@ -29,6 +29,10 @@ abstract class LiveRepository {
 
   Future<GiftCardLive> getInfoGiftCard(int liveID);
 
+  Future<GiftCardLive> getDailyDedications(int userId);
+
+  Future<GiftCardLive> getDedications(int userId);
+
   Future<UserPointResponse> getUserPoint();
 
   Future<List<LiveCategoryDetail>> listCategory();
@@ -52,4 +56,6 @@ abstract class LiveRepository {
     required int pageSize,
     required bool isFriend,
   });
+
+  Future<bool> checkPass(int liveId, String password);
 }

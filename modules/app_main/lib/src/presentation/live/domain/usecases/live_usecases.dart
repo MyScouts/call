@@ -47,6 +47,14 @@ class LiveUseCase {
     return _liveRepository.getInfoGiftCard(liveId);
   }
 
+  Future<GiftCardLive> getDailyDedications(int userId) async {
+    return _liveRepository.getDailyDedications(userId);
+  }
+
+  Future<GiftCardLive> getDedications(int userId) async {
+    return _liveRepository.getDedications(userId);
+  }
+
   Future<DataGetInviteFriend> getListInviteFriend({
     int? page,
     int? pageSize,
@@ -57,6 +65,10 @@ class LiveUseCase {
       pageSize: pageSize,
       isFriend: isFriend,
     );
+  }
+
+  Future<bool> checkPass(int liveId, String password) {
+    return _liveRepository.checkPass(liveId, password);
   }
 
   Future<dynamic> inviteFriend({required String liveId, required InviteFriendReq user}) async {

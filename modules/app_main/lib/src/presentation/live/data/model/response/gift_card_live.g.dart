@@ -14,12 +14,20 @@ _$GiftCardLiveImpl _$$GiftCardLiveImplFromJson(Map<String, dynamic> json) =>
       giversInfo: (json['giversInfo'] as List<dynamic>?)
           ?.map((e) => GiversInfo.fromJson(e as Map<String, dynamic>))
           .toList(),
-      totalCoinCount: json['totalCoinCount'] as int?,
+      caculateFrom: json['caculateFrom'] == null
+          ? null
+          : DateTime.parse(json['caculateFrom'] as String),
+      refreshAt: json['refreshAt'] == null
+          ? null
+          : DateTime.parse(json['refreshAt'] as String),
+      diamondCount: json['diamondCount'] as int?,
     );
 
 Map<String, dynamic> _$$GiftCardLiveImplToJson(_$GiftCardLiveImpl instance) =>
     <String, dynamic>{
       'live': instance.live,
       'giversInfo': instance.giversInfo,
-      'totalCoinCount': instance.totalCoinCount,
+      'caculateFrom': instance.caculateFrom?.toIso8601String(),
+      'refreshAt': instance.refreshAt?.toIso8601String(),
+      'diamondCount': instance.diamondCount,
     };

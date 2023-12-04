@@ -23,6 +23,11 @@ class LiveRoutes extends RouteModule {
         JoinChannelProvider.routerName: (context) {
           final id = settings.arguments as int;
           return JoinChannelProvider(liveID: id);
-        }
+        },
+        JoinChannelPasswordProvider.routerName: (context) {
+          final id = (settings.arguments as Map)['liveID'];
+          final pass = (settings.arguments as Map)['password'];
+          return JoinChannelPasswordProvider(liveID: id, password: pass);
+        },
       };
 }

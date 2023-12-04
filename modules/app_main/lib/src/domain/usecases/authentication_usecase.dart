@@ -26,7 +26,7 @@ class AuthenticationUsecase {
     this._authRepository,
     this._userSharePreferencesUsecase,
     this._userRepository,
-    this._notificationService, 
+    this._notificationService,
     this._chatSocket,
   );
 
@@ -107,6 +107,7 @@ class AuthenticationUsecase {
   }
 
   Future logout() async {
+    _notificationService.unsubscribeNotification();
     await _userSharePreferencesUsecase.clearUserData();
   }
 

@@ -89,7 +89,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   )
                 : _isError
                     ? const Icon(Icons.error, color: Colors.red)
-                    : null,
+                    : widget.suffixIcon,
             // widget.suffixIcon
             hintText: widget.hintText,
             hintStyle: widget.hintStyle,

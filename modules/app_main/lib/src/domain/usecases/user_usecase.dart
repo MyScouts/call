@@ -78,6 +78,7 @@ class UserUsecase {
       isMarshopOwner: response.isMarshopOwner,
       isMarshopCustomer: response.isMarshopCustomer,
       hasDefaultBankAccount: response.hasDefaultBankAccount,
+      marshopCustomerId: response.marshopCustomerId,
     );
   }
 
@@ -86,7 +87,8 @@ class UserUsecase {
     return _userRepository.updatePDoneProfile(updateNonePDoneProfilePayload);
   }
 
-  Future<UpdateNonePDoneProfileReponse> updateNonePNoneDoneProfile(Map<String, dynamic> data) {
+  Future<UpdateNonePDoneProfileReponse> updateNonePNoneDoneProfile(
+      Map<String, dynamic> data) {
     return _userRepository.updateNonePDoneProfile(data);
   }
 
