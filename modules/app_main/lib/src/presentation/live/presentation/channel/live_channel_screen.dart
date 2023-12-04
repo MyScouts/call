@@ -63,7 +63,7 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              //const _RtcRender(),
+              const _RtcRender(),
               const Align(
                 alignment: Alignment.topCenter,
                 child: SafeArea(
