@@ -16,6 +16,8 @@ class LiveBottomController {
 
   final tabIndex = 0.obs;
 
+  final giftCardLiveDaily = const GiftCardLive().obs;
+
   final giftCardLive = const GiftCardLive().obs;
 
   final UserUsecase userUsecase;
@@ -26,13 +28,19 @@ class LiveBottomController {
 
   Future<void> getLeaderBoard(int roomId) async {
     try {
-      giftCardLive.value = await useCase.getInfoGiftCard(roomId);
+      giftCardLiveDaily.value = await useCase.getInfoGiftCard(roomId);
     } catch (e) {}
   }
 
   Future<void> getDailyDedications(int userId) async {
     try {
-      giftCardLive.value = await useCase.getDailyDedications(userId);
+      giftCardLiveDaily.value = await useCase.getDailyDedications(userId);
+    } catch (e) {}
+  }
+
+  Future<void> getDedications(int userId) async {
+    try {
+      giftCardLive.value = await useCase.getDedications(userId);
     } catch (e) {}
   }
 
