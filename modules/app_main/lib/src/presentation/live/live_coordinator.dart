@@ -77,12 +77,13 @@ extension LiveCoordinator on BuildContext {
     );
   }
 
-  Future showInviteDialog({required String title, required int liveId}) {
+  Future showInviteDialog({required String title, required int liveId, required String liveType}) {
     return showDialog(
       context: this,
       builder: (_) => InviteNoticeDialog(
         title: title,
         liveId: liveId,
+        liveType: liveType,
       ),
     );
   }
@@ -106,22 +107,16 @@ extension LiveCoordinator on BuildContext {
 
   Future<GiftCard?> showBottomGift(LiveChannelController controller) {
     return showModalBottomSheet<GiftCard?>(
-        context: this,
-        isScrollControlled: true,
-        builder: (context) => GiftCardBottomSheet(controller: controller));
+        context: this, isScrollControlled: true, builder: (context) => GiftCardBottomSheet(controller: controller));
   }
 
   void showBottomSheetLive(LiveChannelController controller, {int? index}) {
     showModalBottomSheet(
-        context: this,
-        isScrollControlled: true,
-        builder: (context) => LiveBottomSheet(controller: controller));
+        context: this, isScrollControlled: true, builder: (context) => LiveBottomSheet(controller: controller));
   }
 
   Future showFilterSearchLive(LiveController controller) {
-    return showModalBottomSheet(
-        context: this,
-        builder: (context) => FilterBottom(controller: controller));
+    return showModalBottomSheet(context: this, builder: (context) => FilterBottom(controller: controller));
   }
 
   Future<T?> startSelectUser<T>({required int userId}) {
@@ -136,11 +131,11 @@ extension LiveCoordinator on BuildContext {
     );
   }
 
-  void checkPassword(
+  Future<T?> checkPassword<T>(
     Function(String) onChanged,
     int id,
   ) {
-    showDialog(
+    return showDialog(
       context: this,
       builder: (_) => LiveCheckPassword(
         onPass: onChanged,

@@ -154,13 +154,13 @@ void showFlutterNotification(RemoteMessage message) {
   final title = notification?.title ?? 'Tin nhắn mới';
   final body = notification?.body ?? '';
   if (type == MessageTypeFB.inviteToLive) {
-    //join_live
+    //join_live ['password_locked'] ['public']
     // nếu đang trong phòng live thì k hiện thông báo nữa
     if (MyNavigatorObserver.listRoute.contains('/join_live')) {
       return;
     }
     final liveData = jsonDecode(payload['data']);
-    AppCoordinator.rootNavigator.currentContext!.showInviteDialog(title: body, liveId: liveData['liveId']);
+    AppCoordinator.rootNavigator.currentContext!.showInviteDialog(title: body, liveId: liveData['liveId'], liveType: liveData['liveType']);
     return;
   }
   flutterLocalNotificationsPlugin.show(

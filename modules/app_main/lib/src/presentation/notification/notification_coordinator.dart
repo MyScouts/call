@@ -23,7 +23,13 @@ extension NotificationCoordinator on BuildContext {
         return null;
       }
       final liveData = jsonDecode(payload['data']);
-     return AppCoordinator.rootNavigator.currentContext!.joinLive(liveData['liveId']);
+
+      if (liveData['liveType'] == 'password_locked') {
+        return AppCoordinator.rootNavigator.currentContext!.checkPassword((pass) {
+          AppCoordinator.rootNavigator.currentContext!.joinLiveWithPass(liveData['liveId'], pass);
+        }, liveData['liveId']);
+      }
+      return AppCoordinator.rootNavigator.currentContext!.joinLive(liveData['liveId']);
     }
     // final dataModelDetail = notification['data'];
     //

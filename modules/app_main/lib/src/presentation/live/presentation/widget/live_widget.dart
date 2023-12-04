@@ -1,6 +1,5 @@
 import 'package:app_main/src/presentation/live/domain/entities/live_detail.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
-import 'package:app_main/src/presentation/live/presentation/list_gift/gift_bottom_sheet.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';

@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 class InviteNoticeDialog extends StatefulWidget {
   final String title;
   final int liveId;
+  final String liveType;
 
-  const InviteNoticeDialog({super.key, required this.title, required this.liveId});
+  const InviteNoticeDialog({super.key, required this.title, required this.liveId, required this.liveType});
 
   @override
   State<InviteNoticeDialog> createState() => _NoticeDialogState();
@@ -71,6 +72,12 @@ class _NoticeDialogState extends State<InviteNoticeDialog> {
                             backgroundColor: const Color(0xff4B84F7), foregroundColor: Colors.white),
                         onPressed: () {
                           Navigator.pop(context);
+                          if (widget.liveType == 'password_locked') {
+                            context.checkPassword((pass) {
+                              context.joinLiveWithPass(widget.liveId, pass);
+                            }, widget.liveId);
+                            return;
+                          }
                           context.joinLive(widget.liveId);
                         },
                         child: const Text('Xác nhận')),
