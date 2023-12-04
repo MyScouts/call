@@ -50,7 +50,7 @@ class _ApplicationState extends State<Application>
   }) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      navigatorKey: AppCoordinator.root,
+      navigatorKey: AppCoordinator.rootNavigator,
       localizationsDelegates: LocalizationFactory.localizationsDelegates,
       supportedLocales: LocalizationFactory.supportedLocales,
       title: widget.title,
@@ -149,11 +149,11 @@ class _ApplicationState extends State<Application>
 
   @override
   void onListenerOpenNotification(Map<String, dynamic> notification) {
-    AppCoordinator.root.currentContext?.startOpenNotification(notification);
+    AppCoordinator.rootNavigator.currentContext?.startOpenNotification(notification);
   }
 
   @override
-  GlobalKey<NavigatorState> get rootKey => AppCoordinator.root;
+  GlobalKey<NavigatorState> get rootKey => AppCoordinator.rootNavigator;
 }
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();

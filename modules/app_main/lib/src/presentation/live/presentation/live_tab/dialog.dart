@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class NoticeDialog extends StatefulWidget {
   final String title;
+  final VoidCallback? onTap;
 
-  const NoticeDialog({super.key, required this.title});
+  const NoticeDialog({super.key, required this.title, this.onTap});
 
   @override
   State<NoticeDialog> createState() => _NoticeDialogState();
@@ -41,28 +42,30 @@ class _NoticeDialogState extends State<NoticeDialog> {
               ),
             ),
             const SizedBox(height: 14),
-            Text(
-              widget.title,
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xff6E6E6E)),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                widget.title,
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xff6E6E6E)),
+              ),
             ),
             const SizedBox(height: 14),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: ElevatedButton(
-
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xff4B84F7),
-                    foregroundColor: Colors.white
-                  ),
+                  style:
+                      ElevatedButton.styleFrom(backgroundColor: const Color(0xff4B84F7), foregroundColor: Colors.white),
                   onPressed: () {
-                Navigator.pop(context);
-              }, child: const Text('Xác nhận')),
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Xác nhận')),
             ),
             const SizedBox(height: 14),
-
           ],
         ),
       ),
     );
   }
 }
+
+
