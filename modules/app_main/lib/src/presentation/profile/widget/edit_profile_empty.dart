@@ -30,7 +30,6 @@ import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/bloc/upg
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:localization/generated/l10n.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
 
@@ -394,11 +393,9 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                             enabled: !widget.isPDone,
                             radius: 17,
                             date: date,
-                            formatText: (date) => S
-                                .of(context)
-                                .formatDateDDmmYYYYhhMM(date, date)
-                                .split('|')
-                                .first,
+                            formatText: (date) {
+                              return DateFormat('dd/MM/yyyy').format(date);
+                            },
                             max: DateTime.now(),
                             onChange: (dateTime) {
                               onValidation();
@@ -812,11 +809,9 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                     enabled: !widget.isPDone,
                     radius: 17,
                     date: subDate,
-                    formatText: (date) => S
-                        .of(context)
-                        .formatDateDDmmYYYYhhMM(date, date)
-                        .split('|')
-                        .first,
+                    formatText: (date) {
+                      return DateFormat('dd/MM/yyyy').format(date);
+                    },
                     max: DateTime.now(),
                     onChange: (dateTime) {
                       supplyDateX = DateFormat('dd/MM/yyyy').format(dateTime!);
