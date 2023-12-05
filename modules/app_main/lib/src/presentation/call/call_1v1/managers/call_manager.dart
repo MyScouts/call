@@ -1,7 +1,6 @@
+
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/socket/chat_socket.dart';
-import 'package:app_main/src/di/di.dart';
-import 'package:app_main/src/presentation/call/call_1v1/cubit/call_cubit.dart';
 import 'package:app_main/src/presentation/call/call_1v1/managers/android_call_manager.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -20,8 +19,8 @@ const String kCustomData = 'customData';
 const String kVideoQuality = 'videoQuality';
 
 class CallManager {
-  final AndroidCallManager? _androidCallManager = getIt.get<CallCubit>().androidCallManager;
-  final IOSCallManager? _iOSCallManager = getIt.get<CallCubit>().iOSCallManager;
+  final AndroidCallManager? _androidCallManager = AndroidCallManager.shared;
+  final IOSCallManager? _iOSCallManager = IOSCallManager.shared;
   final StringeeClient client = StringeeClient();
   final FlutterLocalNotificationsPlugin localNotifications = FlutterLocalNotificationsPlugin();
 
@@ -95,7 +94,7 @@ class CallManager {
     if (androidInfo.version.sdkInt >= 31) {
       permissions.add(Permission.bluetoothConnect);
     }
-
+    await permissions.request();
     if (androidInfo.version.sdkInt >= 33) {
       // Register permission for show notification in android 13
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =

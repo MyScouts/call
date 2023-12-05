@@ -12,6 +12,7 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:pulsator/pulsator.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:stringee_flutter_plugin/stringee_flutter_plugin.dart';
 import 'package:ui/ui.dart';
 
@@ -40,6 +41,7 @@ class Call1V1Page extends StatefulWidget {
 
 class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
   final CallCubit _callCubit = getIt.get();
+  final BehaviorSubject<StringeeSignalingState> _callState = BehaviorSubject.seeded(StringeeSignalingState.calling);
   bool showIncomingUI = false;
   bool dismissFuncCalled = false;
   bool isAndroid = Platform.isAndroid;
@@ -49,11 +51,30 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
   bool _hasLocalStream = false;
   bool _hasRemoteStream = false;
   String _status = '';
-  StringeeSignalingState callState = StringeeSignalingState.calling;
   @override
   void initState() {
     super.initState();
     _bind();
+    _callState.listen((value) async {
+      switch (value) {
+        case StringeeSignalingState.busy:
+          break;
+        case StringeeSignalingState.calling:
+          // TODO: Handle this case.
+        case StringeeSignalingState.ringing:
+          // TODO: Handle this case.
+        case StringeeSignalingState.answered:
+          // TODO: Handle this case.
+        case StringeeSignalingState.ended:
+          // TODO: Handle this case.
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _callState.close();
+    super.dispose();
   }
 
   void _bind() {
@@ -92,12 +113,14 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
 
   String status() {
     if (isAndroid) {
-      callState = _callCubit.androidCallManager!.callState;
+      _callState.add(_callCubit.androidCallManager!.callState);
     } else {
-      callState = _callCubit.iOSCallManager!.syncCall!.callState;
+      _callState.add(_callCubit.iOSCallManager!.syncCall!.callState);
     }
     String status = '';
-    if (_status.isEmpty || (_callCubit.iOSCallManager?.syncCall?.status.isEmpty ?? false)) {
+    if(_status == 'busy') {
+      status = 'Người nhận từ chối cuộc gọi';
+    } else if (_status.isEmpty || (_callCubit.iOSCallManager?.syncCall?.status.isEmpty ?? false)) {
       isAndroid
           ? status =
               '${widget.isVideo ? 'Cuộc gọi video đến từ ' : 'Cuộc gọi thường đến từ '}${_callCubit.state.participant.getdisplayName}'
@@ -149,7 +172,7 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
               children: <Widget>[
                 remoteView,
                 localView,
-                if ((widget.isVideo && callState != StringeeSignalingState.answered) ||
+                if ((widget.isVideo && _callState.value != StringeeSignalingState.answered) ||
                     !widget.isVideo)
                   Container(
                     alignment: Alignment.topCenter,
@@ -181,7 +204,7 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
                               ?.copyWith(fontWeight: FontWeight.w500, color: AppColors.white),
                         ),
                         kSpacingHeight10,
-                        if (callState != StringeeSignalingState.answered)
+                        if (_callState.value != StringeeSignalingState.answered)
                           Text(
                             status(),
                             style: const TextStyle(
@@ -384,7 +407,7 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
     _hasLocalStream = false;
     _hasRemoteStream = false;
     _status = '';
-    callState = StringeeSignalingState.calling;
+    _callState.add(StringeeSignalingState.calling);
     if (isAndroid) {
       Navigator.pop(context);
     } else {
