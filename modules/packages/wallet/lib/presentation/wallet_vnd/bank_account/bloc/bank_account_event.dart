@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 part of 'bank_account_bloc.dart';
 
 @freezed
@@ -5,6 +7,9 @@ class BankAccountEvent with _$BankAccountEvent {
   const factory BankAccountEvent.getBankAccounts() = _GetBankAccounts;
 
   const factory BankAccountEvent.getAllBanksInfo() = _GetAllBanksInfo;
+
+  const factory BankAccountEvent.searchBank({required String search}) =
+      _SearchBank;
 
   const factory BankAccountEvent.getOtp({@Default(false) bool isResend}) =
       _GetOtp;
