@@ -35,7 +35,8 @@ class ConversationWidget extends StatelessWidget {
             kSpacingWidth16,
             Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     data.membersNotMe.first.member.fullName ?? '',
