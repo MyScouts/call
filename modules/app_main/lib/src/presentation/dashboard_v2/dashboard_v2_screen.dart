@@ -1,3 +1,4 @@
+import 'package:app_main/src/presentation/call/call_1v1/managers/call_manager.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_store_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard_v2/widget/dash_bottom_bar.dart';
@@ -21,13 +22,18 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2> {
   final PageController pageController = PageController();
   final GlobalKey<NotificationScreenState> notificationKey = GlobalKey();
   bool _showAppStore = false;
+  @override
+  void initState() {
+    super.initState();
+    CallManager.shared.initCallL(context);
+  }
 
   @override
   Widget build(BuildContext context) {
-    const List<Widget> children = [
-      DashboardCommunity(),
-      DashboardPersonal(),
-      DashboardEco()
+    List<Widget> children = [
+      DashboardCommunity(context: context),
+      const DashboardPersonal(),
+      const DashboardEco()
     ];
 
     return AnnotatedRegion<SystemUiOverlayStyle>(

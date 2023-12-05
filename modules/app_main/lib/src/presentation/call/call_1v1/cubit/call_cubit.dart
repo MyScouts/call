@@ -10,14 +10,15 @@ import 'package:app_main/src/presentation/call/call_1v1/managers/android_call_ma
 import 'package:app_main/src/presentation/call/call_1v1/managers/ios_call_manager.dart';
 import 'package:injectable/injectable.dart';
 
-@injectable
+@singleton
 class CallCubit extends Cubit<CallState> {
-  final CallUseCase _callUseCase = getIt.get();
-  final UserUsecase _userUseCase = getIt.get();
+  final CallUseCase _callUseCase;
+  final UserUsecase _userUseCase;
 
   AndroidCallManager? androidCallManager = AndroidCallManager.shared;
   IOSCallManager? iOSCallManager = IOSCallManager.shared;
-  CallCubit() : super(const CallStateData(callId: 0, isVideo: false));
+  CallCubit(this._callUseCase, this._userUseCase)
+      : super(const CallStateData(callId: 0, isVideo: false));
 
   Future<void> init({required NewCallPayload payload, required bool isVideo}) async {
     final ResultResponseModel response = await _callUseCase.newCall(payload: payload);
@@ -33,5 +34,4 @@ class CallCubit extends Cubit<CallState> {
     await _callUseCase.updateCall(
         payload: UpdateCallPayload(type: state.isVideo ? 2 : 1), callId: state.callId);
   }
-
 }

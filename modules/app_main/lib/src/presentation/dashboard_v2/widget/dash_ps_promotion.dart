@@ -11,6 +11,7 @@ class DashboardPsPromotion extends StatelessWidget {
       borderRadius: BorderRadius.circular(14.0),
       child: ImageWidget(
         Assets.icons_dashboard_banner_2.path,
+        fit: BoxFit.fill,
       ),
     );
   }

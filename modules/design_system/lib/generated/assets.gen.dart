@@ -806,6 +806,18 @@ class Assets {
   static const SvgGenImage icons_community_training =
       SvgGenImage('assets/icons/community_training.svg');
 
+  /// File path: assets/icons/dashboard/KHTX.png
+  static const AssetGenImage icons_dashboard_k_h_t_x =
+      AssetGenImage('assets/icons/dashboard/KHTX.png');
+
+  /// File path: assets/icons/dashboard/Kho.png
+  static const AssetGenImage icons_dashboard_kho =
+      AssetGenImage('assets/icons/dashboard/Kho.png');
+
+  /// File path: assets/icons/dashboard/NCC.png
+  static const AssetGenImage icons_dashboard_n_c_c =
+      AssetGenImage('assets/icons/dashboard/NCC.png');
+
   /// File path: assets/icons/dashboard/banner.png
   static const AssetGenImage icons_dashboard_banner =
       AssetGenImage('assets/icons/dashboard/banner.png');
@@ -818,9 +830,17 @@ class Assets {
   static const SvgGenImage icons_dashboard_bottom_bg =
       SvgGenImage('assets/icons/dashboard/bottom_bg.svg');
 
+  /// File path: assets/icons/dashboard/buff.png
+  static const AssetGenImage icons_dashboard_buff =
+      AssetGenImage('assets/icons/dashboard/buff.png');
+
   /// File path: assets/icons/dashboard/call.svg
   static const SvgGenImage icons_dashboard_call =
       SvgGenImage('assets/icons/dashboard/call.svg');
+
+  /// File path: assets/icons/dashboard/donate.png
+  static const AssetGenImage icons_dashboard_donate =
+      AssetGenImage('assets/icons/dashboard/donate.png');
 
   /// File path: assets/icons/dashboard/eco_1.png
   static const AssetGenImage icons_dashboard_eco_1 =
@@ -849,6 +869,10 @@ class Assets {
   /// File path: assets/icons/dashboard/fire.svg
   static const SvgGenImage icons_dashboard_fire =
       SvgGenImage('assets/icons/dashboard/fire.svg');
+
+  /// File path: assets/icons/dashboard/game.png
+  static const AssetGenImage icons_dashboard_game =
+      AssetGenImage('assets/icons/dashboard/game.png');
 
   /// File path: assets/icons/dashboard/ic_menu.svg
   static const SvgGenImage icons_dashboard_ic_menu =
@@ -890,6 +914,10 @@ class Assets {
   static const SvgGenImage icons_dashboard_message =
       SvgGenImage('assets/icons/dashboard/message.svg');
 
+  /// File path: assets/icons/dashboard/new_2.png
+  static const AssetGenImage icons_dashboard_new_2 =
+      AssetGenImage('assets/icons/dashboard/new_2.png');
+
   /// File path: assets/icons/dashboard/news.png
   static const AssetGenImage icons_dashboard_news =
       AssetGenImage('assets/icons/dashboard/news.png');
@@ -898,9 +926,17 @@ class Assets {
   static const SvgGenImage icons_dashboard_notification =
       SvgGenImage('assets/icons/dashboard/notification.svg');
 
+  /// File path: assets/icons/dashboard/order.jpg
+  static const AssetGenImage icons_dashboard_order =
+      AssetGenImage('assets/icons/dashboard/order.jpg');
+
   /// File path: assets/icons/dashboard/plus.svg
   static const SvgGenImage icons_dashboard_plus =
       SvgGenImage('assets/icons/dashboard/plus.svg');
+
+  /// File path: assets/icons/dashboard/save.png
+  static const AssetGenImage icons_dashboard_save =
+      AssetGenImage('assets/icons/dashboard/save.png');
 
   /// File path: assets/icons/dashboard/setting.svg
   static const SvgGenImage icons_dashboard_setting =
@@ -918,6 +954,10 @@ class Assets {
   static const SvgGenImage icons_dashboard_trend_up =
       SvgGenImage('assets/icons/dashboard/trend_up.svg');
 
+  /// File path: assets/icons/dashboard/tv_live.png
+  static const AssetGenImage icons_dashboard_tv_live =
+      AssetGenImage('assets/icons/dashboard/tv_live.png');
+
   /// File path: assets/icons/dashboard/weather.svg
   static const SvgGenImage icons_dashboard_weather =
       SvgGenImage('assets/icons/dashboard/weather.svg');
@@ -929,6 +969,10 @@ class Assets {
   /// File path: assets/icons/icFilter.svg
   static const SvgGenImage icons_ic_filter =
       SvgGenImage('assets/icons/icFilter.svg');
+
+  /// File path: assets/icons/ic_answer.svg
+  static const SvgGenImage icons_ic_answer =
+      SvgGenImage('assets/icons/ic_answer.svg');
 
   /// File path: assets/icons/ic_app_calenda.png
   static const AssetGenImage icons_ic_app_calenda =
@@ -958,6 +1002,10 @@ class Assets {
   static const AssetGenImage icons_ic_b_to_b =
       AssetGenImage('assets/icons/ic_b_to_b.png');
 
+  /// File path: assets/icons/ic_back_call.svg
+  static const SvgGenImage icons_ic_back_call =
+      SvgGenImage('assets/icons/ic_back_call.svg');
+
   /// File path: assets/icons/ic_bag-2.svg
   static const SvgGenImage icons_ic_bag_2 =
       SvgGenImage('assets/icons/ic_bag-2.svg');
@@ -975,8 +1023,20 @@ class Assets {
       SvgGenImage('assets/icons/ic_block_chat.svg');
 
   /// File path: assets/icons/ic_call.png
-  static const AssetGenImage icons_ic_call =
+  static const AssetGenImage icons_ic_call_png =
       AssetGenImage('assets/icons/ic_call.png');
+
+  /// File path: assets/icons/ic_call.svg
+  static const SvgGenImage icons_ic_call_svg =
+      SvgGenImage('assets/icons/ic_call.svg');
+
+  /// File path: assets/icons/ic_call_away.svg
+  static const SvgGenImage icons_ic_call_away =
+      SvgGenImage('assets/icons/ic_call_away.svg');
+
+  /// File path: assets/icons/ic_call_video.svg
+  static const SvgGenImage icons_ic_call_video =
+      SvgGenImage('assets/icons/ic_call_video.svg');
 
   /// File path: assets/icons/ic_camera_round.png
   static const AssetGenImage icons_ic_camera_round =
@@ -1070,6 +1130,10 @@ class Assets {
   static const SvgGenImage icons_ic_edit_2 =
       SvgGenImage('assets/icons/ic_edit_2.svg');
 
+  /// File path: assets/icons/ic_end.svg
+  static const SvgGenImage icons_ic_end =
+      SvgGenImage('assets/icons/ic_end.svg');
+
   /// File path: assets/icons/ic_error_circle.png
   static const AssetGenImage icons_ic_error_circle =
       AssetGenImage('assets/icons/ic_error_circle.png');
@@ -1113,6 +1177,10 @@ class Assets {
   /// File path: assets/icons/ic_image.svg
   static const SvgGenImage icons_ic_image =
       SvgGenImage('assets/icons/ic_image.svg');
+
+  /// File path: assets/icons/ic_incoming_call.svg
+  static const SvgGenImage icons_ic_incoming_call =
+      SvgGenImage('assets/icons/ic_incoming_call.svg');
 
   /// File path: assets/icons/ic_invite_team_member.svg
   static const SvgGenImage icons_ic_invite_team_member =
@@ -1185,6 +1253,14 @@ class Assets {
   /// File path: assets/icons/ic_messages.png
   static const AssetGenImage icons_ic_messages =
       AssetGenImage('assets/icons/ic_messages.png');
+
+  /// File path: assets/icons/ic_mic_off.svg
+  static const SvgGenImage icons_ic_mic_off =
+      SvgGenImage('assets/icons/ic_mic_off.svg');
+
+  /// File path: assets/icons/ic_micro.svg
+  static const SvgGenImage icons_ic_micro =
+      SvgGenImage('assets/icons/ic_micro.svg');
 
   /// File path: assets/icons/ic_monitor.svg
   static const SvgGenImage icons_ic_monitor =
@@ -1298,6 +1374,10 @@ class Assets {
   static const SvgGenImage icons_ic_sun =
       SvgGenImage('assets/icons/ic_sun.svg');
 
+  /// File path: assets/icons/ic_switch_camera.svg
+  static const SvgGenImage icons_ic_switch_camera =
+      SvgGenImage('assets/icons/ic_switch_camera.svg');
+
   /// File path: assets/icons/ic_team.png
   static const AssetGenImage icons_ic_team_png =
       AssetGenImage('assets/icons/ic_team.png');
@@ -1366,6 +1446,10 @@ class Assets {
   static const SvgGenImage icons_ic_user_group =
       SvgGenImage('assets/icons/ic_user_group.svg');
 
+  /// File path: assets/icons/ic_user_group3.svg
+  static const SvgGenImage icons_ic_user_group3 =
+      SvgGenImage('assets/icons/ic_user_group3.svg');
+
   /// File path: assets/icons/ic_user_remove.svg
   static const SvgGenImage icons_ic_user_remove =
       SvgGenImage('assets/icons/ic_user_remove.svg');
@@ -1390,9 +1474,21 @@ class Assets {
   static const SvgGenImage icons_ic_video =
       SvgGenImage('assets/icons/ic_video.svg');
 
+  /// File path: assets/icons/ic_video_call.svg
+  static const SvgGenImage icons_ic_video_call =
+      SvgGenImage('assets/icons/ic_video_call.svg');
+
   /// File path: assets/icons/ic_video_oc.svg
   static const SvgGenImage icons_ic_video_oc =
       SvgGenImage('assets/icons/ic_video_oc.svg');
+
+  /// File path: assets/icons/ic_video_off.svg
+  static const SvgGenImage icons_ic_video_off =
+      SvgGenImage('assets/icons/ic_video_off.svg');
+
+  /// File path: assets/icons/ic_volume.svg
+  static const SvgGenImage icons_ic_volume =
+      SvgGenImage('assets/icons/ic_volume.svg');
 
   /// File path: assets/icons/ic_vstore.png
   static const AssetGenImage icons_ic_vstore =
@@ -1635,6 +1731,10 @@ class Assets {
   static const AssetGenImage images_bg_upgrade =
       AssetGenImage('assets/images/bg_upgrade.png');
 
+  /// File path: assets/images/bg_waiting.png
+  static const AssetGenImage images_bg_waiting =
+      AssetGenImage('assets/images/bg_waiting.png');
+
   /// File path: assets/images/birth_cer_background_confirm.jpg
   static const AssetGenImage images_birth_cer_background_confirm =
       AssetGenImage('assets/images/birth_cer_background_confirm.jpg');
@@ -1746,6 +1846,10 @@ class Assets {
   /// File path: assets/images/img_empty.png
   static const AssetGenImage images_img_empty =
       AssetGenImage('assets/images/img_empty.png');
+
+  /// File path: assets/images/img_no_results.svg
+  static const SvgGenImage images_img_no_results =
+      SvgGenImage('assets/images/img_no_results.svg');
 
   /// File path: assets/images/instagram.webp
   static const AssetGenImage images_instagram =
@@ -2118,10 +2222,15 @@ class Assets {
         icons_community_group,
         icons_community_survey,
         icons_community_training,
+        icons_dashboard_k_h_t_x,
+        icons_dashboard_kho,
+        icons_dashboard_n_c_c,
         icons_dashboard_banner,
         icons_dashboard_banner_2,
         icons_dashboard_bottom_bg,
+        icons_dashboard_buff,
         icons_dashboard_call,
+        icons_dashboard_donate,
         icons_dashboard_eco_1,
         icons_dashboard_eco_2,
         icons_dashboard_eco_3,
@@ -2129,6 +2238,7 @@ class Assets {
         icons_dashboard_eco_5,
         icons_dashboard_eco_6,
         icons_dashboard_fire,
+        icons_dashboard_game,
         icons_dashboard_ic_menu,
         icons_dashboard_live_mock,
         icons_dashboard_live_mock_2,
@@ -2139,16 +2249,21 @@ class Assets {
         icons_dashboard_mar_4,
         icons_dashboard_mar_5,
         icons_dashboard_message,
+        icons_dashboard_new_2,
         icons_dashboard_news,
         icons_dashboard_notification,
+        icons_dashboard_order,
         icons_dashboard_plus,
+        icons_dashboard_save,
         icons_dashboard_setting,
         icons_dashboard_setting_bottom,
         icons_dashboard_shop,
         icons_dashboard_trend_up,
+        icons_dashboard_tv_live,
         icons_dashboard_weather,
         icons_diamond,
         icons_ic_filter,
+        icons_ic_answer,
         icons_ic_app_calenda,
         icons_ic_approved,
         icons_ic_approved_tick,
@@ -2156,11 +2271,15 @@ class Assets {
         icons_ic_arrow_left,
         icons_ic_arrow_top,
         icons_ic_b_to_b,
+        icons_ic_back_call,
         icons_ic_bag_2,
         icons_ic_bell,
         icons_ic_bird,
         icons_ic_block_chat,
-        icons_ic_call,
+        icons_ic_call_png,
+        icons_ic_call_svg,
+        icons_ic_call_away,
+        icons_ic_call_video,
         icons_ic_camera_round,
         icons_ic_care,
         icons_ic_chanel,
@@ -2184,6 +2303,7 @@ class Assets {
         icons_ic_dots_horizontal,
         icons_ic_ecommerce,
         icons_ic_edit_2,
+        icons_ic_end,
         icons_ic_error_circle,
         icons_ic_female_png,
         icons_ic_female_svg,
@@ -2195,6 +2315,7 @@ class Assets {
         icons_ic_hamburger,
         icons_ic_humidity,
         icons_ic_image,
+        icons_ic_incoming_call,
         icons_ic_invite_team_member,
         icons_ic_ja,
         icons_ic_leave_team,
@@ -2213,6 +2334,8 @@ class Assets {
         icons_ic_menu,
         icons_ic_mess,
         icons_ic_messages,
+        icons_ic_mic_off,
+        icons_ic_micro,
         icons_ic_monitor,
         icons_ic_news,
         icons_ic_newspaper_ban,
@@ -2241,6 +2364,7 @@ class Assets {
         icons_ic_shop_live,
         icons_ic_smile,
         icons_ic_sun,
+        icons_ic_switch_camera,
         icons_ic_team_png,
         icons_ic_team_svg,
         icons_ic_top1_back,
@@ -2258,13 +2382,17 @@ class Assets {
         icons_ic_user_add_outline,
         icons_ic_user_add_solid,
         icons_ic_user_group,
+        icons_ic_user_group3,
         icons_ic_user_remove,
         icons_ic_users,
         icons_ic_v_done,
         icons_ic_vdone,
         icons_ic_version,
         icons_ic_video,
+        icons_ic_video_call,
         icons_ic_video_oc,
+        icons_ic_video_off,
+        icons_ic_volume,
         icons_ic_vstore,
         icons_ic_waiting,
         icons_ic_wallet,
@@ -2326,6 +2454,7 @@ class Assets {
         images_bg_diary,
         images_bg_qrcode,
         images_bg_upgrade,
+        images_bg_waiting,
         images_birth_cer_background_confirm,
         images_birth_cer_capture,
         images_celebrate,
@@ -2354,6 +2483,7 @@ class Assets {
         images_img_camera,
         images_img_default_team_banner,
         images_img_empty,
+        images_img_no_results,
         images_instagram,
         images_live,
         images_loading,

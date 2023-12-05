@@ -7,11 +7,13 @@ class BuyCoinRequest {
   final num vnd;
   final num expectedCoin;
   final String pDoneId;
+  final num bankAccountId;
 
   BuyCoinRequest({
     required this.vnd,
     required this.pDoneId,
-    required this.expectedCoin
+    required this.expectedCoin,
+    required this.bankAccountId
   });
 
   factory BuyCoinRequest.fromJson(Map<String, dynamic> json) =>
