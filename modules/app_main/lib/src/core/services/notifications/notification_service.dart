@@ -97,6 +97,7 @@ class NotificationService {
       if (message == null) {
         return;
       }
+      _loggerService.d('[fcm] getInitialMessage ${message.toMap()}');
       if (message.data.isNotEmpty) {
         injector.get<NotificationService>().openNotification(message.toMap());
       }

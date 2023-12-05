@@ -34,6 +34,15 @@ class _ViewerTabState extends State<ViewerTab> {
                 padding: const EdgeInsets.symmetric(vertical: 9),
                 child: Row(
                   children: [
+                    Text(
+                        (index+1).toString(),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xff8B8E9A)
+                        )
+                    ),
+                    const SizedBox(width: 10),
                     AvatarWidget(
                       avatar: widget.controller.members[index].info.avatar,
                       size: 36,

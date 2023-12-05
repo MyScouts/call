@@ -33,7 +33,7 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
   late final _userCubit = context.read<UserCubit>();
   late User _authInfo;
 
-  bool get isMe => _authInfo.id.toString() == widget.userId;
+  bool get isMe => _authInfo.id.toString() == widget.userId.toString();
 
   @override
   void initState() {

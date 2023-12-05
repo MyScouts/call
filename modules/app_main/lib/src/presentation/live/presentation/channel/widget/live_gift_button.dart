@@ -4,6 +4,7 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import '../live_channel_screen.dart';
 import '../state/live_channel_controller.dart';
@@ -18,19 +19,20 @@ class LiveGiftButton extends StatefulWidget {
 class _LiveGiftButtonState extends State<LiveGiftButton> {
   String isIcon = IconAppConstants.icLiveGift;
 
-  @override
-  Widget build(BuildContext context) {
+  GiftCard? giftCard;
+
+  Widget bodyGitf() {
     final controller = context.findAncestorStateOfType<LiveChannelScreenState>()!.controller;
 
     return Obx(() {
       final times = controller.timesAnimation.value;
-
       return IgnorePointer(
         ignoring: times > 0,
         child: InkWell(
           onTap: () {
             context.showBottomGift(controller).then((value) {
               if (value is GiftCard) {
+                giftCard = value;
                 setState(() {
                   isIcon = value.imageGift!;
                 });
@@ -71,5 +73,59 @@ class _LiveGiftButtonState extends State<LiveGiftButton> {
         ),
       );
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = context.findAncestorStateOfType<LiveChannelScreenState>()!.controller;
+
+    return Obx(() {
+      final times = controller.timesAnimation.value;
+      if (times == 1) {
+        return CircleAnimation(
+          duration: Duration(seconds: int.parse(giftCard!.metadata!.displayTime!.toString())),
+          child: bodyGitf(),
+        );
+      }
+      return bodyGitf();
+    });
+  }
+}
+
+class CircleAnimation extends StatefulWidget {
+  final Widget child;
+  final Duration duration;
+
+  const CircleAnimation({super.key, required this.child, required this.duration});
+
+  @override
+  State<CircleAnimation> createState() => _CircleAnimationState();
+}
+
+class _CircleAnimationState extends State<CircleAnimation> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    _controller = AnimationController(vsync: this, duration: widget.duration);
+    _controller.forward();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      builder: (BuildContext context, Widget? child) {
+        return CircularPercentIndicator(
+          lineWidth: 2,
+          percent: _controller.value,
+          radius: 25,
+          progressColor: Colors.white,
+          backgroundColor: Colors.black.withOpacity(0.4),
+          center: widget.child,
+        );
+      },
+      animation: _controller,
+    );
   }
 }
