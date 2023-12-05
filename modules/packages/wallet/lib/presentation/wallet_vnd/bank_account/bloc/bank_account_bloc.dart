@@ -172,7 +172,8 @@ class BankAccountBloc extends Bloc<BankAccountEvent, BankAccountState> {
         if (event.search.isNotEmpty) {
           banks = banks.where((element) {
             return '${element.name}${element.code}${element.shortName}'
-                .contains(event.search);
+                .toLowerCase()
+                .contains(event.search.trim().toLowerCase());
           }).toList();
         } else {
           banks = cloneBanks;

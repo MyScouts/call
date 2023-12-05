@@ -58,9 +58,9 @@ class UserInfoCard extends StatelessWidget {
                             color: WalletTheme.textColor,
                             fontWeight: FontWeight.w600,
                             fontSize: 16,
+                            height: 1,
                           ),
                         ),
-                        const SizedBox(height: 2),
                         Text(
                           'Hạng vàng',
                           style: context.text.labelSmall?.copyWith(
