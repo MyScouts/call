@@ -7,6 +7,7 @@ import 'package:ui/ui.dart';
 import 'package:wallet/core/core.dart';
 import 'package:wallet/presentation/presentation.dart';
 import 'package:wallet/presentation/shared/widgets/wallet_diamond_actions.dart';
+import '../data/datasources/models/response/wallet_info_response.dart';
 import 'shared/bloc/wallet_bloc.dart';
 import 'shared/widgets/tab_bar_widget.dart';
 import 'shared/widgets/wallet_coin_actions.dart';
@@ -31,6 +32,11 @@ class _WalletScreenState extends State<WalletScreen> {
   void initState() {
     bloc.add(const WalletEvent.getWalletInfo());
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -104,7 +110,8 @@ class _WalletScreenState extends State<WalletScreen> {
                         child: Text('Tính năng này đang được phát triển'),
                       ),
                       walletCoinComponent: walletCoinComponent(context),
-                      walletDiamondComponent: walletDiamondComponent(context),
+                      walletDiamondComponent:
+                          walletDiamondComponent(context, walletInfo!),
                       walletVndComponent: walletVndComponent(context),
                     )
                   ],
@@ -118,23 +125,25 @@ class _WalletScreenState extends State<WalletScreen> {
   }
 
   Widget walletCoinComponent(BuildContext context) {
-    return const SingleChildScrollView(
+    return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: 12),
-          WalletCoinActions(),
+          const SizedBox(height: 12),
+          WalletCoinActions(walletBloc: bloc),
         ],
       ),
     );
   }
 
-  Widget walletDiamondComponent(BuildContext context) {
-    return const SingleChildScrollView(
+  Widget walletDiamondComponent(BuildContext context, UserWallet userWallet) {
+    return SingleChildScrollView(
       child: Column(
         children: [
-          WalletDiamondResourceBuilder(),
-          SizedBox(height: 12),
-          WalletDiamondActions(),
+          WalletDiamondResourceBuilder(userWallet: userWallet),
+          const SizedBox(height: 12),
+          WalletDiamondActions(
+            walletBloc: bloc,
+          ),
         ],
       ),
     );
