@@ -32,11 +32,6 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
   void initState() {
     super.initState();
     CallManager.shared.initCallL(context);
-  }
-
-  @override
-  void initState() {
-    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       late final userId = context.read<UserCubit>().currentUser?.id ?? '';
       final id =
@@ -53,10 +48,10 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    const List<Widget> children = [
+    final List<Widget> children = [
       DashboardCommunity(context: context),
-      DashboardPersonal(),
-      DashboardEco()
+      const DashboardPersonal(),
+      const DashboardEco()
     ];
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
