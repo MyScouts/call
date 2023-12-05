@@ -12,10 +12,10 @@ CallHistoryDto _$CallHistoryDtoFromJson(Map<String, dynamic> json) =>
           CallGroupDto.fromJson(json['callGroup'] as Map<String, dynamic>),
       calledAt: json['calledAt'] == null
           ? null
-          : DateTime.parse(json['calledAt'] as String),
+          : DateTime.tryParse(json['calledAt'] as String),
       endedAt: json['endedAt'] == null
           ? null
-          : DateTime.parse(json['endedAt'] as String),
+          : DateTime.tryParse(json['endedAt'] as String),
       id: json['id'] as int,
       status: json['status'] as int,
       type: json['type'] as int,
