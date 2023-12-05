@@ -139,7 +139,11 @@ enum MessageTypeFB {
 void _onDidReceiveLocalNotification(int id, String? title, String? body, String? payload) {}
 
 const AndroidNotificationDetails _androidNotificationDetails = AndroidNotificationDetails('channelId', 'channelName',
-    channelDescription: 'channelDescription', playSound: true, priority: Priority.high, importance: Importance.high);
+    channelDescription: 'channelDescription',
+    playSound: true,
+    priority: Priority.high,
+    importance: Importance.high,
+    fullScreenIntent: true);
 
 void showFlutterNotification(RemoteMessage message) {
   // if (isIOS) {
@@ -160,8 +164,14 @@ void showFlutterNotification(RemoteMessage message) {
       return;
     }
     final liveData = jsonDecode(payload['data']);
-    AppCoordinator.rootNavigator.currentContext!.showInviteDialog(title: body, liveId: liveData['liveId'], liveType: liveData['liveType']);
+    AppCoordinator.rootNavigator.currentContext!
+        .showInviteDialog(title: body, liveId: liveData['liveId'], liveType: liveData['liveType']);
     return;
+  }
+  if (type == MessageTypeFB.liveCreated) {
+    if (MyNavigatorObserver.listRoute.contains('/join_live')) {
+      return;
+    }
   }
   flutterLocalNotificationsPlugin.show(
     notification?.hashCode ?? 0,

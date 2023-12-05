@@ -78,6 +78,19 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     );
   }
 
+  // void enableEditMode() {
+  //   setState(() {
+  //     _showEditMode = true;
+  //   });
+  // }
+
+  // void disableEditMode() {
+  //   setState(() {
+  //     _showEditMode = false;
+  //   });
+  // }
+
+
   @override
   void initState() {
     super.initState();

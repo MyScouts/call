@@ -8,7 +8,6 @@ import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart
 import 'package:app_main/src/presentation/routes.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:localization/localization.dart';

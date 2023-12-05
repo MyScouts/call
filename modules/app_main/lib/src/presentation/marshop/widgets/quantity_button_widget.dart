@@ -31,15 +31,10 @@ class QuantityButtonWidget extends StatelessWidget {
                         value == 0 ? Colors.grey : context.theme.primaryColor,
                   ),
                 ),
-                child: Center(
-                  child: Text(
-                    "-",
-                    style: context.textTheme.titleLarge!.copyWith(
-                      height: 1,
-                      color:
-                          value == 0 ? Colors.grey : context.theme.primaryColor,
-                    ),
-                  ),
+                child: Icon(
+                  Icons.horizontal_rule,
+                  size: 15,
+                  color: value == 0 ? Colors.grey : context.theme.primaryColor,
                 ),
               ),
             ),
@@ -61,12 +56,10 @@ class QuantityButtonWidget extends StatelessWidget {
                   border: Border.all(color: context.theme.primaryColor),
                 ),
                 child: Center(
-                  child: Text(
-                    "+",
-                    style: context.textTheme.titleLarge!.copyWith(
-                      height: 1,
-                      color: context.theme.primaryColor,
-                    ),
+                  child: Icon(
+                    Icons.add,
+                    size: 15,
+                    color: context.theme.primaryColor,
                   ),
                 ),
               ),

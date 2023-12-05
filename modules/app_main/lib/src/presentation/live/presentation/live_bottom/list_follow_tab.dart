@@ -72,7 +72,7 @@ class _ListFollowTabState extends State<ListFollowTab> with AutomaticKeepAliveCl
               GestureDetector(
                 onTap: () {
                   unawaited(widget.controller.inviteFriend(widget.liveData.id.toString(),
-                      widget.controller.listFollow.map((element) => element.followee.id!).toList()));
+                      widget.controller.listFollow.map((element) => element.id!).toList()));
                   setState(() {
                     isInvited = true;
                   });
@@ -99,12 +99,12 @@ class _ListFollowTabState extends State<ListFollowTab> with AutomaticKeepAliveCl
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      context.startSelectUser(userId: list[index].followee.id!);
+                      context.startSelectUser(userId: list[index].id!);
                     },
                     child: UserLisTile(
                       key: GlobalKey(),
                       isInvited: isInvited,
-                      user: list[index].followee,
+                      user: list[index],
                       onChanged: (User value) {
                         widget.controller.inviteFriend(widget.liveData.id.toString(), [value.id!]);
                       },

@@ -32,6 +32,17 @@ dependencies:
   wallet:
     path: ../packages/wallet
 
+  #for ios
+  uuid: ^3.0.7
+
+  #for android
+  device_info_plus: ^9.1.1
+
+  callkeep:
+    git:
+      url: https://github.com/stringeecom/callkeep.git
+      ref: master
+
   intl: ^0.18.1
   http_parser: ^4.0.2
   freezed_annotation: ^2.4.1
@@ -96,11 +107,15 @@ dependencies:
   flutter_slidable: ^3.0.1
   provider: ^6.1.1
   sa4_migration_kit: ^1.0.0
-  device_info_plus: ^9.1.1
   flutter_html: ^3.0.0-beta.2
   draggable_float_widget: ^0.1.0
   emoji_picker_flutter: ^1.6.3
   flutter_screenutil: ^5.9.0
+  stringee_flutter_plugin:
+    git:
+      url: https://github.com/stringeecom/stringee_flutter_plugin.git
+  pulsator: ^1.0.0+2
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:

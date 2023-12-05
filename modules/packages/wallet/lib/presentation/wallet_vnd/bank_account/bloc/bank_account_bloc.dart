@@ -17,6 +17,7 @@ part 'bank_account_state.dart';
 class BankAccountBloc extends Bloc<BankAccountEvent, BankAccountState> {
   final WalletVndUseCase _walletVndUseCase;
 
+  List<Bank> cloneBanks = [];
   List<Bank> banks = [];
   late String qrImage;
   late Otp otp;
@@ -36,6 +37,7 @@ class BankAccountBloc extends Bloc<BankAccountEvent, BankAccountState> {
       try {
         emit(const _GetAllBanksInfoLoading());
         banks = await _walletVndUseCase.getAllBanksInfo();
+        cloneBanks = banks;
         emit(const _GetAllBanksInfoSuccess());
       } catch (e) {
         const errMessage = 'Đã xảy ra lỗi';
@@ -158,6 +160,25 @@ class BankAccountBloc extends Bloc<BankAccountEvent, BankAccountState> {
           isDefault: event.isDefault,
         );
         emit(const _SetDefaultBankAccountSuccess());
+      } catch (e) {
+        const errMessage = 'Đã xảy ra lỗi';
+        emit(const _Error(errMessage));
+      }
+    });
+
+    on<_SearchBank>((event, emit) async {
+      try {
+        emit(const _GetAllBanksInfoLoading());
+        if (event.search.isNotEmpty) {
+          banks = banks.where((element) {
+            return '${element.name}${element.code}${element.shortName}'
+                .toLowerCase()
+                .contains(event.search.trim().toLowerCase());
+          }).toList();
+        } else {
+          banks = cloneBanks;
+        }
+        emit(const _GetAllBanksInfoSuccess());
       } catch (e) {
         const errMessage = 'Đã xảy ra lỗi';
         emit(const _Error(errMessage));

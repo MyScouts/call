@@ -39,17 +39,19 @@ abstract class UserRepository {
 
   Future<OnboardingResponse> onboarding();
 
-  Future<UpdateNonePDoneProfileReponse> updatePDoneProfile(
-      UpdateNonePDoneProfilePayload updatePDoneProfilePayload);
+  Future<UpdateNonePDoneProfileReponse> updatePDoneProfile(UpdateNonePDoneProfilePayload updatePDoneProfilePayload);
 
-  Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(
-      Map<String, dynamic> data);
+  Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(Map<String, dynamic> data);
 
   Future<UpdateNonePDoneProfileReponse> getPDoneProfile();
 
   Future<List<User>> listFriends();
 
+  Future<List<User>> listFollower();
+
   Future<List<FolloweesUser>> listFollowees();
+
+  Future<void> getStringgeToken();
 
   Future invite(String teamID, Map<String, dynamic> json);
 
@@ -64,5 +66,6 @@ abstract class UserRepository {
   Future<Map<String, dynamic>> getConfig(String key);
 
   Future<GetUserFollowDetailResponse> getFollowUser(int userId);
+
   Future<ApprovedRequestResponse> approvedRequests();
 }

@@ -16,7 +16,7 @@ class ConversationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () async {
         await context.startChatRoom(
           conversationId: data.id,
@@ -25,7 +25,7 @@ class ConversationWidget extends StatelessWidget {
       },
       child: Container(
         height: 60,
-        width: double.infinity,
+        width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
           children: [
@@ -36,6 +36,7 @@ class ConversationWidget extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     data.membersNotMe.first.member.fullName ?? '',

@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/responses/marshop_response.dart';
 import 'package:app_main/src/domain/entities/update_account/update_place_information_payload.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/marshop/register_customer/register_customer_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/%20marshop_referral_code_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/confirm_infomation_screen.dart';
@@ -10,7 +11,9 @@ import 'package:app_main/src/presentation/marshop/register_marshop/register_mars
 import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/register_pack_detail_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/transaction_detail_screen.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/ui.dart';
 
 extension UpgradeMarshopCoordinator on BuildContext {
   Future<T?> startRegisterCustomer<T>({String? marshopId}) {
@@ -108,4 +111,23 @@ extension UpgradeMarshopCoordinator on BuildContext {
       'address': address,
     });
   }
+
+  Future<T?> startWaitingDialog<T>() {
+    return showGeneralDialog<T>(
+        context: this,
+        barrierDismissible: false,
+        barrierLabel: '',
+        pageBuilder: (context, animation1, animation2) {
+          return NotificationDialog(
+            onPressed: () => context.startDashboardUtil(),
+            title: "Chờ xác nhận",
+            btnText: "Xác nhận",
+            image: Assets.images_bg_waiting.path,
+            summary:
+                "Bạn sẽ nhận được thông báo ngay khi yêu cầu được xác nhận",
+          );
+        });
+  }
 }
+
+// NotificationDialog
