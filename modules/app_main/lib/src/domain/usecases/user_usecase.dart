@@ -100,6 +100,10 @@ class UserUsecase {
     return _userRepository.listFriends();
   }
 
+  Future<List<User>> listFollower() {
+    return _userRepository.listFollower();
+  }
+
   Future<List<FolloweesUser>> listFollowees() {
     return _userRepository.listFollowees();
   }

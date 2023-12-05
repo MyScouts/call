@@ -470,6 +470,33 @@ class _UserApi implements UserApi {
   }
 
   @override
+  Future<ListFollowerUserResponse> listFollower() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ListFollowerUserResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/v1/following/followers',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ListFollowerUserResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<ListFolloweesResponse> listFollowees() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
