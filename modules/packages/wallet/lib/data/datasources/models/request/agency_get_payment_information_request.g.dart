@@ -11,6 +11,7 @@ AgencyPaymentInformation _$AgencyPaymentInformationFromJson(
     AgencyPaymentInformation(
       vnd: json['vnd'] as num,
       pDoneId: json['pDoneId'] as String,
+      bankAccountId: json['bankAccountId'] as num,
     );
 
 Map<String, dynamic> _$AgencyPaymentInformationToJson(
@@ -18,4 +19,5 @@ Map<String, dynamic> _$AgencyPaymentInformationToJson(
     <String, dynamic>{
       'vnd': instance.vnd,
       'pDoneId': instance.pDoneId,
+      'bankAccountId': instance.bankAccountId,
     };

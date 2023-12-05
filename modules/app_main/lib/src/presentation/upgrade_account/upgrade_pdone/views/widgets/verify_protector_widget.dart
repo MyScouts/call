@@ -214,7 +214,7 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
           },
           onPhoneCodeChange: (val) {
             // _phoneCode.text = val.code.toString();
-            protectorRequest.phoneCode = val.code;
+            protectorRequest.phoneCode = val.dialCode;
             widget.onUpdatePlaceInformation(protectorRequest);
           },
         ),
