@@ -64,12 +64,15 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
     liveBottomController.getDailyDedications(widget.controller.info.user!.id!);
     liveBottomController.getDedications(widget.controller.info.user!.id!);
     liveBottomController.getListFriend();
-    //liveBottomController.getListFollow();
+    liveBottomController.getListFollow();
     super.initState();
   }
 
   List<Widget> get listTab => [
-        ViewerTab(controller: widget.controller, liveBottomController: liveBottomController,),
+        ViewerTab(
+          controller: widget.controller,
+          liveBottomController: liveBottomController,
+        ),
         ListFriendTab(controller: liveBottomController, liveData: widget.controller.info),
         //ListFollowTab(controller: liveBottomController, liveData: widget.controller.info),
         LeaderBoardTab(controller: liveBottomController),

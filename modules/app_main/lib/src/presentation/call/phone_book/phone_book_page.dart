@@ -157,7 +157,7 @@ class PhoneBookPageState extends State<PhoneBookPage> {
                     //   suggestions: [],
                     //   contentPadding: EdgeInsets.all(8),
                     // ),
-                    kSpacingHeight18,
+                    // kSpacingHeight18,
                     if (_pageState == 0)
                       GestureDetector(
                         onTap: () {

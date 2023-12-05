@@ -17,7 +17,7 @@ class FriendWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () async {
         await context.startChatRoom(
           memberId: data.id,

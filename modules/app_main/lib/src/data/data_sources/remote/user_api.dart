@@ -12,6 +12,7 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../models/responses/api_response.dart';
 import '../../models/responses/list_followees_response.dart';
+import '../../models/responses/list_follower_user_response.dart';
 
 part 'user_api.g.dart';
 
@@ -30,6 +31,7 @@ class UserApiConstants {
   static const updatePDoneProfile = "api/v1/p-done/profile";
   static const updateNonePDoneProfile = "api/v1/p-done/non-p-done-profile";
   static const listFriends = "/api/v1/following/friend";
+  static const listFollowers = '/api/v1/following/followers';
   static const listFollowees = "/api/v1/following/followees";
   static const invite = "api/v1/team/{id}/invite";
   static const email = "api/v1/user/email";
@@ -103,11 +105,13 @@ abstract class UserApi {
   Future<UpdateNonePDoneProfileReponse> getPDoneProfile();
 
   @PATCH(UserApiConstants.updateNonePDoneProfile)
-  Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(
-      @Body() Map<String, dynamic> data);
+  Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(@Body() Map<String, dynamic> data);
 
   @GET(UserApiConstants.listFriends)
   Future<ListFriendUserResponse> listFriends();
+
+  @GET(UserApiConstants.listFollowers)
+  Future<ListFollowerUserResponse> listFollower();
 
   @GET(UserApiConstants.listFollowees)
   Future<ListFolloweesResponse> listFollowees();
