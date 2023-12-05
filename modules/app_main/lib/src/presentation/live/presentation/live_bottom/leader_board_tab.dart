@@ -45,7 +45,7 @@ class _LeaderBoardTabState extends State<LeaderBoardTab> {
       height: 32,
       width: 32,
       child: Text(
-        index.toString(),
+        (index + 1).toString(),
         style: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w700,
