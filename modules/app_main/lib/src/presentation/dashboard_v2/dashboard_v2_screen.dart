@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/usecases/dashboard_share_preferences_usecase.dart';
+import 'package:app_main/src/presentation/call/call_1v1/managers/call_manager.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_store_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_drawer.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
@@ -27,6 +28,11 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
   final PageController pageController = PageController();
   final GlobalKey<NotificationScreenState> notificationKey = GlobalKey();
   bool _showAppStore = false;
+  @override
+  void initState() {
+    super.initState();
+    CallManager.shared.initCallL(context);
+  }
 
   @override
   void initState() {
@@ -48,7 +54,7 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
   Widget build(BuildContext context) {
     super.build(context);
     const List<Widget> children = [
-      DashboardCommunity(),
+      DashboardCommunity(context: context),
       DashboardPersonal(),
       DashboardEco()
     ];

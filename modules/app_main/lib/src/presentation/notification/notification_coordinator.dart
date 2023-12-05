@@ -16,7 +16,7 @@ extension NotificationCoordinator on BuildContext {
 
     final payload = notification['data'];
     final type = MessageTypeFB.values.firstWhereOrNull((element) => element.type == payload['type']);
-    if (type == MessageTypeFB.inviteToLive) {
+    if (type == MessageTypeFB.inviteToLive || type == MessageTypeFB.liveCreated) {
       //join_live
       // nếu đang trong phòng live thì k hiện thông báo nữa
       if (MyNavigatorObserver.listRoute.contains('/join_live')) {

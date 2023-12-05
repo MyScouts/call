@@ -56,6 +56,8 @@ class UserActionCubit extends Cubit<UserActionState> {
           err = "Người theo dõi không phải là P-Done.";
         case "PROTECTOR_NOT_FOUND":
           err = "Không tìm thấy thông tin người bảo hộ để xác nhận.";
+        case "ALREADY_FOLLOWED":
+          err = "Bạn đã theo dõi người dùng trước đó.";
         default:
           err = S.current.message_otp_not_match;
           break;
@@ -63,6 +65,7 @@ class UserActionCubit extends Cubit<UserActionState> {
       emit(FollowUserFail(message: err));
       // REQUEST_ALREADY_SENT
     } catch (e) {
+      print(e);
       emit(
         FollowUserFail(
           message: S.current.messages_server_internal_error.capitalize(),

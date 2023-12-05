@@ -11,12 +11,16 @@ AgencyDetailResponse _$AgencyDetailResponseFromJson(
     AgencyDetailResponse(
       coinAgency:
           AgencyResponse.fromJson(json['coinAgency'] as Map<String, dynamic>),
+      bankAccounts: (json['bankAccounts'] as List<dynamic>?)
+          ?.map((e) => BankAccount.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$AgencyDetailResponseToJson(
         AgencyDetailResponse instance) =>
     <String, dynamic>{
       'coinAgency': instance.coinAgency,
+      'bankAccounts': instance.bankAccounts,
     };
 
 AgencyResponse _$AgencyResponseFromJson(Map<String, dynamic> json) =>

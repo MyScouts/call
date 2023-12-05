@@ -1,3 +1,5 @@
+import 'package:app_main/src/presentation/call/phone_book/phone_book_page.dart';
+import 'package:app_main/src/presentation/chat/conversation/conversation_page.dart';
 import 'package:design_system/generated/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -86,7 +88,8 @@ class _DashBoardBottomBarState extends State<DashBoardBottomBar> {
               ),
               Expanded(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () =>
+                      Navigator.pushNamed(context, PhoneBookPage.routeName),
                   behavior: HitTestBehavior.opaque,
                   child: Center(
                     child: ImageWidget(Assets.icons_dashboard_call.path),
@@ -95,7 +98,8 @@ class _DashBoardBottomBarState extends State<DashBoardBottomBar> {
               ),
               Expanded(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () =>
+                      Navigator.pushNamed(context, ConversationPage.routeName),
                   behavior: HitTestBehavior.opaque,
                   child: Center(
                     child: ImageWidget(Assets.icons_dashboard_message.path),

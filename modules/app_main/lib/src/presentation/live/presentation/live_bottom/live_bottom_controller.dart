@@ -46,7 +46,7 @@ class LiveBottomController {
 
   final listFriends = <User>[].obs;
 
-  final listFollow = <FolloweesUser>[].obs;
+  final listFollow = <User>[].obs;
 
   Future<void> getListFriend() async {
     try {
@@ -56,7 +56,8 @@ class LiveBottomController {
 
   Future<void> getListFollow() async {
     try {
-      listFollow.value = await userUsecase.listFollowees();
+      final list = await userUsecase.listFollower();
+      listFollow.value = list;
     } catch (e) {}
   }
 

@@ -12,6 +12,7 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../models/responses/api_response.dart';
 import '../../models/responses/list_followees_response.dart';
+import '../../models/responses/list_follower_user_response.dart';
 
 part 'user_api.g.dart';
 
@@ -30,12 +31,14 @@ class UserApiConstants {
   static const updatePDoneProfile = "api/v1/p-done/profile";
   static const updateNonePDoneProfile = "api/v1/p-done/non-p-done-profile";
   static const listFriends = "/api/v1/following/friend";
+  static const listFollowers = '/api/v1/following/followers';
   static const listFollowees = "/api/v1/following/followees";
   static const invite = "api/v1/team/{id}/invite";
   static const email = "api/v1/user/email";
   static const genEmail = "api/v1/user/add-email-otp";
   static const updateAvatar = "api/v1/user";
   static const setConfig = "api/v1/setting/personal/{key}";
+  static const stringeeToken = "api/v1/call/stringee-token";
 }
 
 @RestApi()
@@ -70,7 +73,7 @@ abstract class UserApi {
   );
 
   @POST(UserApiConstants.followUser)
-  Future<ApiResponse<FollowUserResponse>> followUser({
+  Future<FollowUserResponse> followUser({
     @Body() required FollowUserPayload body,
   });
 
@@ -102,11 +105,13 @@ abstract class UserApi {
   Future<UpdateNonePDoneProfileReponse> getPDoneProfile();
 
   @PATCH(UserApiConstants.updateNonePDoneProfile)
-  Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(
-      @Body() Map<String, dynamic> data);
+  Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(@Body() Map<String, dynamic> data);
 
   @GET(UserApiConstants.listFriends)
   Future<ListFriendUserResponse> listFriends();
+
+  @GET(UserApiConstants.listFollowers)
+  Future<ListFollowerUserResponse> listFollower();
 
   @GET(UserApiConstants.listFollowees)
   Future<ListFolloweesResponse> listFollowees();
@@ -134,4 +139,7 @@ abstract class UserApi {
 
   @GET(UserApiConstants.setConfig)
   Future<dynamic> getConfig(@Path('key') String key);
+
+  @GET(UserApiConstants.stringeeToken)
+  Future getStringeeToken();
 }

@@ -17,7 +17,7 @@ class FriendWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () async {
         await context.startChatRoom(
           memberId: data.id,
@@ -25,6 +25,7 @@ class FriendWidget extends StatelessWidget {
         getIt.get<ConversationCubit>().init();
       },
       child: SizedBox(
+        width: MediaQuery.of(context).size.width,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -89,7 +89,7 @@ class LiveServiceImpl extends LiveService {
       _enableMic = enableMic;
       _enableWebCam = enableWebCam;
       await _engine!.enableAudio();
-      if(_enableMic) {
+      if (_enableMic) {
         await _engine!.enableAudioVolumeIndication(
           interval: 400,
           smooth: 3,
@@ -161,4 +161,15 @@ class LiveServiceImpl extends LiveService {
 
   @override
   bool get isInitial => _engine != null;
+
+  @override
+  Future<void> rejoinChannel(
+    String token,
+    String channelName,
+    int uid, {
+    ClientRoleType role = ClientRoleType.clientRoleBroadcaster,
+  }) async {
+    await _engine!.leaveChannel();
+    await joinChannel(token, channelName, uid, role: role);
+  }
 }

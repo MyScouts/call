@@ -112,7 +112,9 @@ extension LiveCoordinator on BuildContext {
 
   void showBottomSheetLive(LiveChannelController controller, {int? index}) {
     showModalBottomSheet(
-        context: this, isScrollControlled: true, builder: (context) => LiveBottomSheet(controller: controller));
+        context: this,
+        isScrollControlled: true,
+        builder: (context) => LiveBottomSheet(controller: controller, index: index));
   }
 
   Future showFilterSearchLive(LiveController controller) {

@@ -6,6 +6,7 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../di/di.dart';
 import '../../domain/entities/live_data.dart';
 import 'live_bottom_controller.dart';
 import 'user_listile.dart';
@@ -22,6 +23,14 @@ class ListFriendTab extends StatefulWidget {
 
 class _ListFriendTabState extends State<ListFriendTab> {
   bool isInvited = false;
+  final userMe = getIt.get<UserInfoSharePreferencesUsecase>().getUserInfo();
+
+  List<User> get listUser {
+    if (widget.liveData.userID == userMe?.id) {
+      return widget.controller.listFollow;
+    }
+    return widget.controller.listFriends;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,8 +78,8 @@ class _ListFriendTabState extends State<ListFriendTab> {
               ),
               GestureDetector(
                 onTap: () {
-                  unawaited(widget.controller.inviteFriend(widget.liveData.id.toString(),
-                      widget.controller.listFriends.map((element) => element.id!).toList()));
+                  unawaited(widget.controller
+                      .inviteFriend(widget.liveData.id.toString(), listUser.map((element) => element.id!).toList()));
                   setState(() {
                     isInvited = true;
                   });
@@ -86,7 +95,7 @@ class _ListFriendTabState extends State<ListFriendTab> {
         const SizedBox(height: 5),
         Expanded(
           child: Obx(() {
-            final list = widget.controller.listFriends;
+            final list = listUser;
             if (list.isEmpty) {
               return const Center(
                 child: Text("Bạn không có bạn bè"),
