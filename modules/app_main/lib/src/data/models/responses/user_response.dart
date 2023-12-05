@@ -11,6 +11,7 @@ class OnboardingResponse with _$OnboardingResponse {
     required bool isMarshopOwner,
     required bool isMarshopCustomer,
     required bool hasDefaultBankAccount,
+    int? marshopCustomerId,
   }) = _OnboardingResponse;
 
   factory OnboardingResponse.fromJson(Map<String, dynamic> json) =>

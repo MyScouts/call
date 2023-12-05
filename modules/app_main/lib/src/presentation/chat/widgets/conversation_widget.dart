@@ -25,7 +25,7 @@ class ConversationWidget extends StatelessWidget {
       },
       child: Container(
         height: 60,
-        width: double.infinity,
+        width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
           children: [
@@ -35,7 +35,7 @@ class ConversationWidget extends StatelessWidget {
             kSpacingWidth16,
             Expanded(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     data.membersNotMe.first.member.fullName ?? '',
@@ -44,6 +44,7 @@ class ConversationWidget extends StatelessWidget {
                     ),
                   ),
                   kSpacingHeight6,
+                  if(data.latestMessage?.message != null)
                   Text(
                     data.latestMessage?.message ?? '',
                     maxLines: 1,
@@ -55,7 +56,20 @@ class ConversationWidget extends StatelessWidget {
                           ? AppColors.greyLightTextColor
                           : AppColors.black,
                     ),
-                  ),
+                  )
+                  else if (data.latestMessage?.metadata != null)
+                    Text(
+                      '[Hình ảnh]',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.textTheme.bodyMedium?.copyWith(
+                        fontWeight:
+                        data.latestMessage?.seen ?? true ? FontWeight.w400 : FontWeight.w600,
+                        color: data.latestMessage?.seen ?? true
+                            ? AppColors.greyLightTextColor
+                            : AppColors.black,
+                      ),
+                    )
                 ],
               ),
             ),

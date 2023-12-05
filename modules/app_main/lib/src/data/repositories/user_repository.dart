@@ -51,6 +51,8 @@ abstract class UserRepository {
 
   Future<List<FolloweesUser>> listFollowees();
 
+  Future<void> getStringgeToken();
+
   Future invite(String teamID, Map<String, dynamic> json);
 
   Future<User> updateEmail(Map<String, dynamic> json);

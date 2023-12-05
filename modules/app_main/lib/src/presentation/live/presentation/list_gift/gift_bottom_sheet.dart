@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:localization/localization.dart';
-import 'package:wallet/core/core.dart';
-import 'package:wallet/domain/repository/wallet_repository.dart';
 
 import '../../../../blocs/user/user_cubit.dart';
 import '../../../../di/di.dart';
@@ -37,6 +35,7 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
 
   @override
   void initState() {
+    GiftCardBottomSheet.isShowBottom = true;
     _authInfo = userCubit.currentUser!;
     giftController.getListGiftCard();
     giftController.getUserPoint();
@@ -118,9 +117,15 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                   GestureDetector(
                     onTap: () async {
                       if (selectedGift.value == null) return;
+
                       if ((selectedGift.value?.coinValue ?? 0) * giftController.amount.value >
                           giftController.userWallet.value.availableCoin!) {
                         return context.showToastText('Bạn không đủ xu');
+                      }
+                      if (GiftCardBottomSheet.isShowBottom) {
+                        if (context.mounted) {
+                          Navigator.pop(context, selectedGift.value);
+                        }
                       }
                       await giftController.sentGift(
                           userId: widget.controller.info.user!.id!,
@@ -137,10 +142,12 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                       child: const Text("Ủng hộ",
                           style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white)),
                     ),
-                  )
+                  ),
                 ],
               ),
-            )
+            ),
+            const SizedBox(height: 16),
+            SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
           ],
         ),
       ),

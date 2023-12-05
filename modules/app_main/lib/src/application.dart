@@ -4,9 +4,13 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:app_main/src/core/services/notifications/mixins/notification_mixin.dart';
 import 'package:app_main/src/core/services/notifications/notification_service.dart';
 import 'package:app_main/src/di/di.dart';
+import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
 import 'package:app_main/src/presentation/routes.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -46,21 +50,26 @@ class _ApplicationState extends State<Application>
     ThemeData? light,
     ThemeData? dark,
   }) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      navigatorKey: AppCoordinator.root,
-      localizationsDelegates: LocalizationFactory.localizationsDelegates,
-      supportedLocales: LocalizationFactory.supportedLocales,
-      title: widget.title,
-      theme: light,
-      darkTheme: dark,
-      locale: locale,
-      navigatorObservers: [
-        MyNavigatorObserver(),
-      ],
-      builder: _materialBuilder,
-      onGenerateRoute: getIt.get<Routes>().generateRoute,
-      initialRoute: widget.initialRoute,
+    return ScreenUtilInit(
+      designSize: const Size(393, 852),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        navigatorKey: AppCoordinator.rootNavigator,
+        localizationsDelegates: LocalizationFactory.localizationsDelegates,
+        supportedLocales: LocalizationFactory.supportedLocales,
+        title: widget.title,
+        theme: light,
+        darkTheme: dark,
+        locale: locale,
+        navigatorObservers: [
+          MyNavigatorObserver(),
+        ],
+        builder: _materialBuilder,
+        onGenerateRoute: getIt.get<Routes>().generateRoute,
+        initialRoute: widget.initialRoute,
+      ),
     );
   }
 
@@ -71,11 +80,22 @@ class _ApplicationState extends State<Application>
     return MediaQuery(
       data: data,
       child: Overlay(
+        key: AppCoordinator.overlayKey,
         initialEntries: [
           OverlayEntry(
             builder: (context) {
               return Material(
-                child: toastBuilder(context, child!),
+                child: Stack(
+                  children: [
+                    toastBuilder(context, child!),
+                    Obx(() {
+                      if(PipHandler.showPip.value) {
+                        return PipHandler.pipView;
+                      }
+                      return const SizedBox.shrink();
+                    }),
+                  ],
+                ),
               );
             },
           ),
@@ -136,11 +156,11 @@ class _ApplicationState extends State<Application>
 
   @override
   void onListenerOpenNotification(Map<String, dynamic> notification) {
-    AppCoordinator.root.currentContext?.startOpenNotification(notification);
+    AppCoordinator.rootNavigator.currentContext?.startOpenNotification(notification);
   }
 
   @override
-  GlobalKey<NavigatorState> get rootKey => AppCoordinator.root;
+  GlobalKey<NavigatorState> get rootKey => AppCoordinator.rootNavigator;
 }
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();

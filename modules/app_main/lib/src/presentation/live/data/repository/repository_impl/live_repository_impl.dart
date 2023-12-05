@@ -3,7 +3,6 @@ import 'package:app_main/src/presentation/live/data/data_sources/remote/live_api
 import 'package:app_main/src/presentation/live/data/model/request/invite_friend_req.dart';
 import 'package:app_main/src/presentation/live/data/model/response/data_get_invite_friend.dart';
 import 'package:app_main/src/presentation/live/data/model/response/gift_card_live.dart';
-import 'package:app_main/src/presentation/live/data/model/response/live_stream_category_response.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_category_detail.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_member_count.dart';
@@ -59,7 +58,11 @@ class LiveRepositoryImpl extends LiveRepository {
   }
 
   @override
-  Future sendGift({required int userId, required int liveId, required int giftId, required int total}) async {
+  Future sendGift(
+      {required int userId,
+      required int liveId,
+      required int giftId,
+      required int total}) async {
     return _liveApi.sendGift(userId, liveId, giftId, total);
   }
 
@@ -100,7 +103,8 @@ class LiveRepositoryImpl extends LiveRepository {
     int? pageSize,
     required bool isFriend,
   }) async {
-    final result = await _liveApi.getListInviteFriend(page: page, pageSize: pageSize, isFriend: isFriend);
+    final result = await _liveApi.getListInviteFriend(
+        page: page, pageSize: pageSize, isFriend: isFriend);
 
     return result.data;
   }
@@ -117,4 +121,31 @@ class LiveRepositoryImpl extends LiveRepository {
     return result.data.data;
   }
 
+  @override
+  Future<Live> getListLivefollowing(
+      {required int page,
+      required int pageSize,
+      required bool isFriend}) async {
+    final result = await _liveApi.getListLivefollowing(
+        page: page, pageSize: pageSize, isFriend: isFriend);
+
+    return result.data;
+  }
+
+  @override
+  Future<bool> checkPass(int liveId, String password) async {
+    final res = await _liveApi.checkPass(liveId, password);
+    return (res as Map)['joinable'] ?? false;
+  }
+
+  Future<GiftCardLive> getDailyDedications(int userId) async {
+    final result = await _liveApi.getDailyDedications(userId: userId);
+    return result.data;
+  }
+
+  @override
+  Future<GiftCardLive> getDedications(int userId) async {
+    final result = await _liveApi.getDedications(userId: userId);
+    return result.data;
+  }
 }

@@ -29,6 +29,10 @@ abstract class LiveRepository {
 
   Future<GiftCardLive> getInfoGiftCard(int liveID);
 
+  Future<GiftCardLive> getDailyDedications(int userId);
+
+  Future<GiftCardLive> getDedications(int userId);
+
   Future<UserPointResponse> getUserPoint();
 
   Future<List<LiveCategoryDetail>> listCategory();
@@ -46,4 +50,12 @@ abstract class LiveRepository {
   Future<dynamic> inviteFriend(String liveId, InviteFriendReq user);
 
   Future<List<LiveMemberCount>> memberCount(List<int> liveIDs);
+
+  Future<Live> getListLivefollowing({
+    required int page,
+    required int pageSize,
+    required bool isFriend,
+  });
+
+  Future<bool> checkPass(int liveId, String password);
 }

@@ -6,6 +6,7 @@ import 'package:app_main/src/data/models/payloads/auth/authentication_phone_payl
 import 'package:app_main/src/data/repositories/user_repository.dart';
 import 'package:app_main/src/domain/entities/change_password_payload.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
+import 'package:app_main/src/presentation/call/call_1v1/managers/call_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -25,7 +26,7 @@ class AuthenticationUsecase {
     this._authRepository,
     this._userSharePreferencesUsecase,
     this._userRepository,
-    this._notificationService, 
+    this._notificationService,
     this._chatSocket,
   );
 
@@ -106,12 +107,16 @@ class AuthenticationUsecase {
   }
 
   Future logout() async {
+    _notificationService.unsubscribeNotification();
     await _userSharePreferencesUsecase.clearUserData();
   }
 
   Future syncUser() async {
     _chatSocket.connect();
     final user = await _userRepository.getProfile();
+    String stringeeToken = (await _userRepository.getStringgeToken() as Map)['result'];
+    _userSharePreferencesUsecase.saveStringeeToken(stringeeToken);
+    CallManager.shared.client.connect(stringeeToken);
     _userSharePreferencesUsecase.saveUserInfo(user!);
     isAuthenticate.add(true);
     await _syncFCMToken();

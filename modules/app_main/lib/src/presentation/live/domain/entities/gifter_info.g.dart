@@ -11,7 +11,7 @@ _$GiversInfoImpl _$$GiversInfoImplFromJson(Map<String, dynamic> json) =>
       giver: json['giver'] == null
           ? null
           : User.fromJson(json['giver'] as Map<String, dynamic>),
-      coinCount: json['coinCount'] as int?,
+      diamondCount: json['diamondCount'] as int?,
       festivalUser: json['festivalUser'] == null
           ? null
           : Festival.fromJson(json['festivalUser'] as Map<String, dynamic>),
@@ -20,6 +20,6 @@ _$GiversInfoImpl _$$GiversInfoImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$GiversInfoImplToJson(_$GiversInfoImpl instance) =>
     <String, dynamic>{
       'giver': instance.giver,
-      'coinCount': instance.coinCount,
+      'diamondCount': instance.diamondCount,
       'festivalUser': instance.festivalUser,
     };

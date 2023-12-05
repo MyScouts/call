@@ -222,6 +222,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  callkeep:
+    dependency: transitive
+    description:
+      path: "."
+      ref: master
+      resolved-ref: "9242bc44b48774b25c0a3504692ad77d6ec6dbfa"
+      url: "https://github.com/stringeecom/callkeep.git"
+    source: git
+    version: "0.3.0"
   camera:
     dependency: transitive
     description:
@@ -358,6 +367,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
+  csslib:
+    dependency: transitive
+    description:
+      name: csslib
+      sha256: "831883fb353c8bdc1d71979e5b342c7d88acfbc643113c14ae51e2442ea0f20f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.17.3"
   cupertino_icons:
     dependency: transitive
     description:
@@ -421,6 +438,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  draggable_float_widget:
+    dependency: transitive
+    description:
+      name: draggable_float_widget
+      sha256: "075675c56f6b2bfc9f972a3937dc1b59838489a312f75fe7e90ba6844a84dce4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   dropdown_button2:
     dependency: transitive
     description:
@@ -453,6 +478,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.1"
+  emoji_picker_flutter:
+    dependency: transitive
+    description:
+      name: emoji_picker_flutter
+      sha256: "009c51efc763d5a6ba05a5628b8b2184c327cd117d66ea9c3e7edf2ff269c423"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.6.3"
   environments:
     dependency: "direct main"
     description:
@@ -673,6 +706,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "9.1.1"
+  flutter_html:
+    dependency: transitive
+    description:
+      name: flutter_html
+      sha256: "02ad69e813ecfc0728a455e4bf892b9379983e050722b1dce00192ee2e41d1ee"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0-beta.2"
   flutter_image_compress:
     dependency: transitive
     description:
@@ -806,6 +847,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.17"
+  flutter_screenutil:
+    dependency: transitive
+    description:
+      name: flutter_screenutil
+      sha256: "8cf100b8e4973dc570b6415a2090b0bfaa8756ad333db46939efc3e774ee100d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.9.0"
   flutter_slidable:
     dependency: transitive
     description:
@@ -916,10 +965,10 @@ packages:
     dependency: transitive
     description:
       name: geolocator_android
-      sha256: "741579fa6c9e412984d2bdb2fbaa54e3c3f7587c60aeacfe6e058358a11f40f8"
+      sha256: "93906636752ea4d4e778afa981fdfe7409f545b3147046300df194330044d349"
       url: "https://pub.dev"
     source: hosted
-    version: "4.4.0"
+    version: "4.3.1"
   geolocator_apple:
     dependency: transitive
     description:
@@ -1112,6 +1161,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
+  html:
+    dependency: transitive
+    description:
+      name: html
+      sha256: "3a7812d5bcd2894edf53dfaf8cd640876cf6cef50a8f238745c8b8120ea74d3a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.15.4"
   http:
     dependency: transitive
     description:
@@ -1336,6 +1393,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  list_counter:
+    dependency: transitive
+    description:
+      name: list_counter
+      sha256: c447ae3dfcd1c55f0152867090e67e219d42fe6d4f2807db4bbe8b8d69912237
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   localization:
     dependency: transitive
     description:
@@ -1528,10 +1593,10 @@ packages:
     dependency: transitive
     description:
       name: pdf
-      sha256: aa8835fcb9cfaf57ab2f1970e8548ceed3d0cb53eda7da906648f8153eaf37c9
+      sha256: "93cbb2c06de9bab91844550f19896b2373e7a5ce25173995e7e5ec5e1741429d"
       url: "https://pub.dev"
     source: hosted
-    version: "3.10.6"
+    version: "3.10.7"
   permission_handler:
     dependency: transitive
     description:
@@ -1684,6 +1749,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  pulsator:
+    dependency: transitive
+    description:
+      name: pulsator
+      sha256: "34258bf5cacfccfa5f0506293449e7e14d12611e9c96cc79c72859ab323a140c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0+2"
   qr:
     dependency: transitive
     description:
@@ -1953,14 +2026,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
-  sprintf:
-    dependency: transitive
-    description:
-      name: sprintf
-      sha256: "1fc9ffe69d4df602376b52949af107d8f5703b77cda567c4d7d86a0693120f23"
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.0.0"
   sqflite:
     dependency: transitive
     description:
@@ -2016,6 +2081,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  stringee_flutter_plugin:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: d20033a8a7aba065042a19e33e68f5bb80477ff9
+      url: "https://github.com/stringeecom/stringee_flutter_plugin.git"
+    source: git
+    version: "1.2.11"
   synchronized:
     dependency: transitive
     description:
@@ -2171,10 +2245,10 @@ packages:
     dependency: transitive
     description:
       name: uuid
-      sha256: df5a4d8f22ee4ccd77f8839ac7cb274ebc11ef9adcce8b92be14b797fe889921
+      sha256: "648e103079f7c64a36dc7d39369cabb358d377078a051d6ae2ad3aa539519313"
       url: "https://pub.dev"
     source: hosted
-    version: "4.2.1"
+    version: "3.0.7"
   vector_graphics:
     dependency: transitive
     description:

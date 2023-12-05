@@ -22,7 +22,9 @@ GiftCardLive _$GiftCardLiveFromJson(Map<String, dynamic> json) {
 mixin _$GiftCardLive {
   LiveDetail? get live => throw _privateConstructorUsedError;
   List<GiversInfo>? get giversInfo => throw _privateConstructorUsedError;
-  int? get totalCoinCount => throw _privateConstructorUsedError;
+  DateTime? get caculateFrom => throw _privateConstructorUsedError;
+  DateTime? get refreshAt => throw _privateConstructorUsedError;
+  int? get diamondCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +39,11 @@ abstract class $GiftCardLiveCopyWith<$Res> {
       _$GiftCardLiveCopyWithImpl<$Res, GiftCardLive>;
   @useResult
   $Res call(
-      {LiveDetail? live, List<GiversInfo>? giversInfo, int? totalCoinCount});
+      {LiveDetail? live,
+      List<GiversInfo>? giversInfo,
+      DateTime? caculateFrom,
+      DateTime? refreshAt,
+      int? diamondCount});
 
   $LiveDetailCopyWith<$Res>? get live;
 }
@@ -57,7 +63,9 @@ class _$GiftCardLiveCopyWithImpl<$Res, $Val extends GiftCardLive>
   $Res call({
     Object? live = freezed,
     Object? giversInfo = freezed,
-    Object? totalCoinCount = freezed,
+    Object? caculateFrom = freezed,
+    Object? refreshAt = freezed,
+    Object? diamondCount = freezed,
   }) {
     return _then(_value.copyWith(
       live: freezed == live
@@ -68,9 +76,17 @@ class _$GiftCardLiveCopyWithImpl<$Res, $Val extends GiftCardLive>
           ? _value.giversInfo
           : giversInfo // ignore: cast_nullable_to_non_nullable
               as List<GiversInfo>?,
-      totalCoinCount: freezed == totalCoinCount
-          ? _value.totalCoinCount
-          : totalCoinCount // ignore: cast_nullable_to_non_nullable
+      caculateFrom: freezed == caculateFrom
+          ? _value.caculateFrom
+          : caculateFrom // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      refreshAt: freezed == refreshAt
+          ? _value.refreshAt
+          : refreshAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      diamondCount: freezed == diamondCount
+          ? _value.diamondCount
+          : diamondCount // ignore: cast_nullable_to_non_nullable
               as int?,
     ) as $Val);
   }
@@ -97,7 +113,11 @@ abstract class _$$GiftCardLiveImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {LiveDetail? live, List<GiversInfo>? giversInfo, int? totalCoinCount});
+      {LiveDetail? live,
+      List<GiversInfo>? giversInfo,
+      DateTime? caculateFrom,
+      DateTime? refreshAt,
+      int? diamondCount});
 
   @override
   $LiveDetailCopyWith<$Res>? get live;
@@ -116,7 +136,9 @@ class __$$GiftCardLiveImplCopyWithImpl<$Res>
   $Res call({
     Object? live = freezed,
     Object? giversInfo = freezed,
-    Object? totalCoinCount = freezed,
+    Object? caculateFrom = freezed,
+    Object? refreshAt = freezed,
+    Object? diamondCount = freezed,
   }) {
     return _then(_$GiftCardLiveImpl(
       live: freezed == live
@@ -127,9 +149,17 @@ class __$$GiftCardLiveImplCopyWithImpl<$Res>
           ? _value._giversInfo
           : giversInfo // ignore: cast_nullable_to_non_nullable
               as List<GiversInfo>?,
-      totalCoinCount: freezed == totalCoinCount
-          ? _value.totalCoinCount
-          : totalCoinCount // ignore: cast_nullable_to_non_nullable
+      caculateFrom: freezed == caculateFrom
+          ? _value.caculateFrom
+          : caculateFrom // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      refreshAt: freezed == refreshAt
+          ? _value.refreshAt
+          : refreshAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      diamondCount: freezed == diamondCount
+          ? _value.diamondCount
+          : diamondCount // ignore: cast_nullable_to_non_nullable
               as int?,
     ));
   }
@@ -139,7 +169,11 @@ class __$$GiftCardLiveImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$GiftCardLiveImpl implements _GiftCardLive {
   const _$GiftCardLiveImpl(
-      {this.live, final List<GiversInfo>? giversInfo, this.totalCoinCount})
+      {this.live,
+      final List<GiversInfo>? giversInfo,
+      this.caculateFrom,
+      this.refreshAt,
+      this.diamondCount})
       : _giversInfo = giversInfo;
 
   factory _$GiftCardLiveImpl.fromJson(Map<String, dynamic> json) =>
@@ -158,11 +192,15 @@ class _$GiftCardLiveImpl implements _GiftCardLive {
   }
 
   @override
-  final int? totalCoinCount;
+  final DateTime? caculateFrom;
+  @override
+  final DateTime? refreshAt;
+  @override
+  final int? diamondCount;
 
   @override
   String toString() {
-    return 'GiftCardLive(live: $live, giversInfo: $giversInfo, totalCoinCount: $totalCoinCount)';
+    return 'GiftCardLive(live: $live, giversInfo: $giversInfo, caculateFrom: $caculateFrom, refreshAt: $refreshAt, diamondCount: $diamondCount)';
   }
 
   @override
@@ -173,14 +211,23 @@ class _$GiftCardLiveImpl implements _GiftCardLive {
             (identical(other.live, live) || other.live == live) &&
             const DeepCollectionEquality()
                 .equals(other._giversInfo, _giversInfo) &&
-            (identical(other.totalCoinCount, totalCoinCount) ||
-                other.totalCoinCount == totalCoinCount));
+            (identical(other.caculateFrom, caculateFrom) ||
+                other.caculateFrom == caculateFrom) &&
+            (identical(other.refreshAt, refreshAt) ||
+                other.refreshAt == refreshAt) &&
+            (identical(other.diamondCount, diamondCount) ||
+                other.diamondCount == diamondCount));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, live,
-      const DeepCollectionEquality().hash(_giversInfo), totalCoinCount);
+  int get hashCode => Object.hash(
+      runtimeType,
+      live,
+      const DeepCollectionEquality().hash(_giversInfo),
+      caculateFrom,
+      refreshAt,
+      diamondCount);
 
   @JsonKey(ignore: true)
   @override
@@ -200,7 +247,9 @@ abstract class _GiftCardLive implements GiftCardLive {
   const factory _GiftCardLive(
       {final LiveDetail? live,
       final List<GiversInfo>? giversInfo,
-      final int? totalCoinCount}) = _$GiftCardLiveImpl;
+      final DateTime? caculateFrom,
+      final DateTime? refreshAt,
+      final int? diamondCount}) = _$GiftCardLiveImpl;
 
   factory _GiftCardLive.fromJson(Map<String, dynamic> json) =
       _$GiftCardLiveImpl.fromJson;
@@ -210,7 +259,11 @@ abstract class _GiftCardLive implements GiftCardLive {
   @override
   List<GiversInfo>? get giversInfo;
   @override
-  int? get totalCoinCount;
+  DateTime? get caculateFrom;
+  @override
+  DateTime? get refreshAt;
+  @override
+  int? get diamondCount;
   @override
   @JsonKey(ignore: true)
   _$$GiftCardLiveImplCopyWith<_$GiftCardLiveImpl> get copyWith =>

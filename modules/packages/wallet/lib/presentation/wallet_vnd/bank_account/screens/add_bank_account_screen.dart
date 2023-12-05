@@ -157,18 +157,13 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
                 isRequired: true,
                 hintText: 'Nhập tên ngân hàng cần tìm',
                 onChanged: (value) {
-                  // if (value != '' && value != null) {
-                  //   EasyDebounce.debounce(
-                  //     'SEARCH_BANK',
-                  //     debounce,
-                  //     () {
-                  //       banks = banks.where((element) {
-                  //         return '${element.name}${element.code}${element.shortName}'
-                  //             .contains(value);
-                  //       }).toList();
-                  //     },
-                  //   );
-                  // }
+                  EasyDebounce.debounce(
+                    'SEARCH_BANK',
+                    debounce,
+                    () => _bloc.add(
+                      BankAccountEvent.searchBank(search: value ?? ''),
+                    ),
+                  );
                 },
                 prefixIcon: const Padding(
                   padding: EdgeInsets.all(15),
@@ -252,6 +247,9 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
                   title: BankAccountField.bankAccountHolder.title,
                   hintText: BankAccountField.bankAccountHolder.hintText,
                   controller: _bankAccountHolderCtrl,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]"))
+                  ],
                   keyBoardType: TextInputType.text,
                   onChanged: (value) {
                     setState(() {});
