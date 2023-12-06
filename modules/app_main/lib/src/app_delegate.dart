@@ -60,16 +60,13 @@ class AppDelegate extends IAppDelegate {
     await Firebase.initializeApp();
     Configurations().setConfigurationValues(env);
     await configureDependencies(environment: Environment.prod);
-    await AppConfigService.init();
     final savedThemeMode = await AdaptiveTheme.getThemeMode();
 
     if (isMobile) {
-
       /// CONFIG NOTIFICATION
       /// Set the background messaging handler early on,
       /// as a named top-level function
-      FirebaseMessaging.onBackgroundMessage(
-          firebaseMessagingBackgroundHandler);
+      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
       await setupFlutterNotifications();
       // if (Configurations.isProduction) {
       //   FirebaseMessaging.onBackgroundMessage(
@@ -85,6 +82,7 @@ class AppDelegate extends IAppDelegate {
 
     String initialRoute = SplashScreen.routeName;
     if (userSharePreferencesUsecase.isAuthenticated) {
+      await AppConfigService.init();
       isAuthenticate.add(true);
       // initialRoute = DashBoardScreen.routeName;
     }

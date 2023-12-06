@@ -5,11 +5,14 @@ class AppConfigService {
   static String agoraAppID = '';
 
   static Future init() async {
-
-    ///init agora appID
-    final useCase = getIt<UserUsecase>();
-    final config = await useCase.getConfig('agoraAppId');
-    AppConfigService.agoraAppID =
-        config['value'] ?? '9b59830124f54de6b93f0140e88188d9';
+    String defaultToken = '9b59830124f54de6b93f0140e88188d9';
+    try {
+      ///init agora appID
+      final useCase = getIt<UserUsecase>();
+      final config = await useCase.getConfig('agoraAppId');
+      AppConfigService.agoraAppID = config['value'] ?? defaultToken;
+    } catch (e) {
+      AppConfigService.agoraAppID = defaultToken;
+    }
   }
 }
