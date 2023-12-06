@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/approved_request/approved_request_cubit.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/ui.dart';
@@ -23,15 +24,38 @@ class _ListFollowRequestTabState extends State<ListFollowRequestTab> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => _cubit,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text("Danh sách yêu cầu theo dõi"),
-            const SizedBox(height: 10),
-            Expanded(child: _buildContent()),
-          ],
+      child: BlocListener<ApprovedRequestCubit, ApprovedRequestState>(
+        listener: (context, state) {
+          if (state is OnReplyRequest) {
+            showLoading();
+          }
+
+          if (state is ReplyRequestSuccess) {
+            hideLoading();
+            if (state.isApproved) {
+              showToastMessage("Đồng ý yêu cầu theo dõi thành công");
+            } else {
+              showToastMessage("Từ chối yêu cầu theo dõi thành công");
+            }
+          }
+
+          if (state is ReplyRequestFail) {
+            hideLoading();
+
+            showToastMessage("Thao tác không thành công, vui lòng thử lại sau.",
+                ToastMessageType.error);
+          }
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text("Danh sách yêu cầu theo dõi"),
+              const SizedBox(height: 10),
+              Expanded(child: _buildContent()),
+            ],
+          ),
         ),
       ),
     );
@@ -53,6 +77,7 @@ class _ListFollowRequestTabState extends State<ListFollowRequestTab> {
                 itemBuilder: (context, index) {
                   final request = requests[index];
                   final user = request.followee;
+                  final follower = request.follower;
                   return Container(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Row(
@@ -92,19 +117,42 @@ class _ListFollowRequestTabState extends State<ListFollowRequestTab> {
                                 ],
                               ),
                               const SizedBox(height: 4),
-                              Text(
-                                'yêu cầu theo dõi',
-                                style: context.textTheme.titleSmall!
-                                    .copyWith(color: const Color(0xffACACAC)),
+                              Row(
+                                children: [
+                                  Text(
+                                    'yêu cầu theo dõi',
+                                    style: context.textTheme.titleSmall!
+                                        .copyWith(
+                                            color: const Color(0xffACACAC)),
+                                  ),
+                                  const SizedBox(width: 2),
+                                  const AppAvatarWidget(width: 20, height: 20),
+                                  const SizedBox(width: 2),
+                                  Flexible(
+                                    child: Text(
+                                      follower?.displayName ??
+                                          follower?.fullName ??
+                                          '',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: context.textTheme.titleSmall!
+                                          .copyWith(
+                                              color: const Color(0xffACACAC)),
+                                    ),
+                                  )
+                                ],
                               ),
                               const SizedBox(height: 15),
                               Row(
                                 children: [
                                   Expanded(
                                     child: PrimarySolidButton(
-                                      title: "Đồng ý",
+                                      title: "Từ chối",
                                       height: 40,
-                                      onTap: () {},
+                                      onTap: () => _cubit.replyFollow(
+                                        requestId: request.id,
+                                        isApproved: false,
+                                      ),
                                       disabled: false,
                                       width: null,
                                       color: const Color(0XFFF4F4F4),
@@ -116,7 +164,10 @@ class _ListFollowRequestTabState extends State<ListFollowRequestTab> {
                                     child: PrimarySolidButton(
                                       title: "Đồng ý",
                                       height: 40,
-                                      onTap: () {},
+                                      onTap: () => _cubit.replyFollow(
+                                        requestId: request.id,
+                                        isApproved: true,
+                                      ),
                                       disabled: false,
                                       width: null,
                                     ),

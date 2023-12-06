@@ -370,8 +370,8 @@ class UserInfoHeader extends StatelessWidget {
                 height: 40,
                 title: friendStatusStr(
                   isFriend: relation.isFriend,
-                  isFollowed: relation.isFollower,
-                  isFollowing: false,
+                  isFollower: relation.isFollower,
+                  isFollowee: relation.isFollowee,
                   isBlocked: userInfo.isBlock,
                 ),
                 onTap: () => _onFriendAction(context, relation),

@@ -1,3 +1,4 @@
+import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/follow_response.dart';
 import 'package:app_main/src/domain/usecases/user_usecase.dart';
 import 'package:bloc/bloc.dart';
@@ -21,8 +22,22 @@ class ApprovedRequestCubit extends Cubit<ApprovedRequestState> {
       _approvedRequest.addAll(response);
       emit(GetApprovedRequestSuccess(approvedRequest: _approvedRequest));
     } catch (e) {
-      print(e);
       emit(GetApprovedRequestFail(approvedRequest: _approvedRequest));
+    }
+  }
+
+  replyFollow({required int requestId, required bool isApproved}) async {
+    if (state is OnReplyRequest) return;
+    try {
+      emit(OnReplyRequest(approvedRequest: _approvedRequest));
+      await _usecase.replyFollow(
+        ReplyFollowPayload(requestId: requestId, isApproved: isApproved),
+      );
+      _approvedRequest.removeWhere((element) => element.id == requestId);
+      emit(ReplyRequestSuccess(
+          approvedRequest: _approvedRequest, isApproved: isApproved));
+    } catch (e) {
+      emit(ReplyRequestFail(approvedRequest: _approvedRequest));
     }
   }
 }

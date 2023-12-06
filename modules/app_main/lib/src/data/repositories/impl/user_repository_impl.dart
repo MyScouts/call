@@ -163,5 +163,8 @@ class AuthRepositoryImpl extends UserRepository {
     return _userAPI.getStringeeToken();
   }
 
-
+  @override
+  Future replyFollowRequest(ReplyFollowPayload payload) {
+    return _userAPI.replyRequest(payload);
+  }
 }
