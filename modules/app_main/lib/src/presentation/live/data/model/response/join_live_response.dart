@@ -12,6 +12,8 @@ class JoinLiveResponse {
   @JsonKey(name: 'userAgoras')
   final List<AgoraData> agoraData;
 
+
+
   JoinLiveResponse({
     required this.data,
     required this.isModerator,

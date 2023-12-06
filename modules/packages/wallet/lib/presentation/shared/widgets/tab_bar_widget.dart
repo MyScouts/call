@@ -25,7 +25,6 @@ class TabBarViewWidget extends StatefulWidget {
 
 class _TabBarViewWidgetState extends State<TabBarViewWidget>
     with TickerProviderStateMixin {
-
   late final PageController _pageCtrl = PageController(
     initialPage: widget.initialIndex,
   );
@@ -76,6 +75,8 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget>
 
   _buildTab() {
     return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       decoration: BoxDecoration(
           color: AppColors.white,
@@ -89,42 +90,47 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget>
             ),
           ]),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: WalletType.values.map((type) => _tabButton(type)).toList(),
+        children: WalletType.values
+            .map((type) => Expanded(child: _tabButton(type)))
+            .toList(),
       ),
     );
   }
 
   Widget _tabButton(WalletType resourceType) {
-    final index =
-        WalletType.values.indexWhere((type) => type == resourceType);
-    return InkWell(
-      onTap: () {
-        _pageCtrl.animateToPage(
-          index,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.ease,
-        );
-        _page = index;
-        setState(() {});
-      },
-      child: Container(
-        width: MediaQuery.of(context).size.width / 5,
-        margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        decoration: BoxDecoration(
-          borderRadius: WalletConstant.borderRadius90,
-          color: _page == index ? const Color(0xFF4B84F7) : Colors.white,
-        ),
-        child: Center(
-          child: Text(
-            resourceType.resourceTabText,
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
-              height: 20 / 14,
-              leadingDistribution: TextLeadingDistribution.even,
-              color: _page == index ? AppColors.white : const Color(0xFF6E6E6E),
+    final index = WalletType.values.indexWhere((type) => type == resourceType);
+    return Expanded(
+      child: InkWell(
+        onTap: () {
+          _pageCtrl.animateToPage(
+            index,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.ease,
+          );
+          _page = index;
+          setState(() {});
+        },
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+          decoration: BoxDecoration(
+            borderRadius: WalletConstant.borderRadius90,
+            color: _page == index ? const Color(0xFF4B84F7) : Colors.white,
+          ),
+          child: Center(
+            child: Text(
+              resourceType.resourceTabText,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                height: 1,
+                leadingDistribution: TextLeadingDistribution.even,
+                color:
+                    _page == index ? AppColors.white : const Color(0xFF6E6E6E),
+              ),
             ),
           ),
         ),

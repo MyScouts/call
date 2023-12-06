@@ -20,7 +20,7 @@ class FriendWidget extends StatelessWidget {
       },
       child: Row(
         children: [
-          AvatarCallerWidget(
+          AvatarWidget(
             avatar: data.avatar,
             size: 40,
           ),

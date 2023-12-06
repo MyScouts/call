@@ -140,7 +140,9 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                     AgencyEvent.getPaymentInformation(
                       widget.agencyId,
                       AgencyPaymentInformation(
-                          vnd: exchangeVND, pDoneId: _userIDController.text),
+                          vnd: exchangeVND,
+                          pDoneId: _userIDController.text,
+                          bankAccountId: bankAccount!.id!),
                     ),
                   );
                 },
