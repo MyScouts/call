@@ -184,14 +184,14 @@ class LiveChannelController {
     final result = <LiveMember>[];
     for (final i in users) {
       if (i.id == _me.value.info.userID) continue;
-      _me = LiveMember(
+      result.add(LiveMember(
         info: LiveMemberInfo(
           userID: i.id ?? 0,
           name: i.nickname ?? i.fullName ?? i.displayName ?? '',
           avatar: i.avatar ?? '',
         ),
         isOwner: _info.value.user?.id == i.id,
-      ).obs;
+      ));
     }
     return result;
   }
@@ -499,6 +499,10 @@ class LiveChannelController {
         createdAt: DateTime.tryParse(data['createdAt'] ?? '') ?? DateTime.now(),
       );
       NotificationCenter.post(channel: receiveMessage, options: message);
+    });
+
+    socketService.on(socketPkStartEvent, (data) {
+
     });
   }
 
