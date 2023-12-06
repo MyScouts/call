@@ -1,4 +1,5 @@
 //import 'dart:developer' as developer;
+import 'dart:async';
 import 'dart:io';
 
 import 'package:app_core/app_core.dart';
@@ -41,7 +42,9 @@ class Call1V1Page extends StatefulWidget {
 
 class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
   final CallCubit _callCubit = getIt.get();
-  final BehaviorSubject<StringeeSignalingState> _callState = BehaviorSubject.seeded(StringeeSignalingState.calling);
+  final BehaviorSubject<StringeeSignalingState> _callState =
+      BehaviorSubject.seeded(StringeeSignalingState.calling);
+  final BehaviorSubject<String> _statusState = BehaviorSubject.seeded('');
   bool showIncomingUI = false;
   bool dismissFuncCalled = false;
   bool isAndroid = Platform.isAndroid;
@@ -50,34 +53,42 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
   bool _isVideoEnable = false;
   bool _hasLocalStream = false;
   bool _hasRemoteStream = false;
-  String _status = '';
+  Stopwatch? _stopwatch;
+  Timer? _timer;
+  String _callDuration = '00:00';
   @override
   void initState() {
     super.initState();
+    _stopwatch = Stopwatch();
     _bind();
-    _callState.listen((value) async {
-      switch (value) {
-        case StringeeSignalingState.busy:
-          break;
-        case StringeeSignalingState.calling:
-          // TODO: Handle this case.
-        case StringeeSignalingState.ringing:
-          // TODO: Handle this case.
-        case StringeeSignalingState.answered:
-          // TODO: Handle this case.
-        case StringeeSignalingState.ended:
-          // TODO: Handle this case.
-      }
-    });
   }
 
   @override
   void dispose() {
     _callState.close();
+    _statusState.close();
+    _stopwatch?.stop();
+    _timer?.cancel();
     super.dispose();
   }
 
-  void _bind() {
+  void _startTimer() {
+    _stopwatch!.start();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        _callDuration = _formatDuration(_stopwatch!.elapsed);
+      });
+    });
+  }
+
+  String _formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "$twoDigitMinutes:$twoDigitSeconds";
+  }
+
+  void _bind() async {
     _callCubit.init(
         payload: NewCallPayload(
           receiverId: int.tryParse(widget.toUserId ?? '') ?? 0,
@@ -109,28 +120,48 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
         showIncomingUI = _callCubit.iOSCallManager!.syncCall!.userAnswered;
       }
     }
-  }
 
-  String status() {
-    if (isAndroid) {
-      _callState.add(_callCubit.androidCallManager!.callState);
-    } else {
-      _callState.add(_callCubit.iOSCallManager!.syncCall!.callState);
-    }
-    String status = '';
-    if(_status == 'busy') {
-      status = 'Người nhận từ chối cuộc gọi';
-    } else if (_status.isEmpty || (_callCubit.iOSCallManager?.syncCall?.status.isEmpty ?? false)) {
-      isAndroid
-          ? status =
-              '${widget.isVideo ? 'Cuộc gọi video đến từ ' : 'Cuộc gọi thường đến từ '}${_callCubit.state.participant.getdisplayName}'
-          : status =
-              '${_callCubit.iOSCallManager?.syncCall?.status ?? ''}${_callCubit.state.participant.getdisplayName}';
-    } else {
-      status = 'Đang nối máy đến ${_callCubit.state.participant.getdisplayName}';
-    }
+    _callState.listen((value) async {
+      print('statee ${value.toString()}');
+      switch (value) {
+        case StringeeSignalingState.busy:
+          if (widget.toUserId ==
+              getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id.toString()) {
+            print('widget.fromUserId  ${widget.fromUserId}');
+            print(
+                'fromUserId  ${getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id.toString()}');
+            _statusState.add('Người nhận từ chối cuộc gọi');
+            Future.delayed(const Duration(seconds: 2)).then((value) {
+              if (isAndroid) {
+                _callCubit.androidCallManager!.clearDataEndDismiss();
+              } else {
+                _callCubit.iOSCallManager!.clearDataEndDismiss();
+              }
+              dismiss();
+            });
+          }
 
-    return status;
+          break;
+        case StringeeSignalingState.calling:
+          if (widget.toUserId ==
+              getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id.toString()) {
+            _statusState.add('Đang nối máy đến ${_callCubit.state.participant.getdisplayName}');
+          } else {
+            _statusState.add(
+                '${widget.isVideo ? 'Cuộc gọi video đến từ ' : 'Cuộc gọi thường đến từ '}${_callCubit.state.participant.getdisplayName}');
+          }
+          break;
+        case StringeeSignalingState.ringing:
+          _statusState.add('Đang đổ chuông');
+          break;
+        case StringeeSignalingState.answered:
+          _startTimer();
+          break;
+        case StringeeSignalingState.ended:
+          dismiss();
+          break;
+      }
+    });
   }
 
   @override
@@ -143,9 +174,10 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
                     : _callCubit.iOSCallManager!.syncCall!.callId,
                 true,
                 alignment: Alignment.topRight,
-                margin: const EdgeInsets.only(top: 100.0, right: 25.0),
-                height: 200.0,
-                width: 150.0,
+                borderRadius: BorderRadius.circular(12),
+                margin: const EdgeInsets.only(top: 128, right: 16),
+                height: 195,
+                width: 136,
                 scalingType: ScalingType.fill,
               )
             : const SizedBox.shrink();
@@ -172,112 +204,136 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
               children: <Widget>[
                 remoteView,
                 localView,
-                if ((widget.isVideo && _callState.value != StringeeSignalingState.answered) ||
-                    !widget.isVideo)
-                  Container(
-                    alignment: Alignment.topCenter,
-                    padding: const EdgeInsets.only(top: 150),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 200,
-                          width: 200,
-                          child: Pulsator(
-                            style: const PulseStyle(color: Colors.white),
-                            count: 3,
-                            duration: const Duration(seconds: 4),
-                            repeat: 0,
-                            startFromScratch: false,
-                            autoStart: true,
-                            fit: PulseFit.contain,
-                            child: AvatarWidget(
-                              size: 120,
-                              avatar: state.participant?.avatar ?? '',
+                StreamBuilder<StringeeSignalingState>(
+                  stream: _callState,
+                  builder: (_, data) {
+                    if ((widget.isVideo && _callState.value != StringeeSignalingState.answered) ||
+                        !widget.isVideo) {
+                      return Container(
+                        alignment: Alignment.topCenter,
+                        padding: const EdgeInsets.only(top: 150),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 200,
+                              width: 200,
+                              child: Pulsator(
+                                style: const PulseStyle(color: Colors.white),
+                                count: 3,
+                                duration: const Duration(seconds: 4),
+                                repeat: 0,
+                                startFromScratch: false,
+                                autoStart: true,
+                                fit: PulseFit.contain,
+                                child: AvatarWidget(
+                                  size: 120,
+                                  avatar: state.participant?.avatar ?? '',
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        Text(
-                          state.participant?.getdisplayName ?? '',
-                          style: context.textTheme.displayMedium
-                              ?.copyWith(fontWeight: FontWeight.w500, color: AppColors.white),
-                        ),
-                        kSpacingHeight10,
-                        if (_callState.value != StringeeSignalingState.answered)
-                          Text(
-                            status(),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
+                            Text(
+                              state.participant?.getdisplayName ?? '',
+                              style: context.textTheme.displayMedium
+                                  ?.copyWith(fontWeight: FontWeight.w500, color: AppColors.white),
                             ),
-                          )
-                      ],
-                    ),
-                  ),
+                            kSpacingHeight10,
+                            if (_callState.value != StringeeSignalingState.answered)
+                              StreamBuilder<String>(
+                                stream: _statusState,
+                                builder: (context, snapshot) {
+                                  return Text(
+                                    _statusState.value,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                    ),
+                                  );
+                                },
+                              ),
+                            if (!widget.isVideo &&
+                                _callState.value == StringeeSignalingState.answered)
+                              Text(
+                                _callDuration,
+                                style: context.textTheme.bodySmall?.copyWith(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                    color: const Color(0xff00ff92)),
+                              ),
+                          ],
+                        ),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
                 Container(
                   padding: const EdgeInsets.only(bottom: 24),
                   alignment: Alignment.bottomCenter,
                   child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: showIncomingUI
-                          ? <Widget>[
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: <Widget>[
-                                  GestureDetector(
-                                    onTap: rejectCallTapped,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: showIncomingUI
+                        ? <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                GestureDetector(
+                                  onTap: rejectCallTapped,
+                                  child: ImageWidget(
+                                    IconAppConstants.icEnd,
+                                    height: 72,
+                                    width: 72,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: acceptCallTapped,
+                                  child: ImageWidget(
+                                    widget.isVideo
+                                        ? IconAppConstants.icVideoAnswer
+                                        : IconAppConstants.icAnswer,
+                                    height: 72,
+                                    width: 72,
+                                  ),
+                                ),
+                              ],
+                            )
+                          ]
+                        : <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                if (!widget.isVideo)
+                                  ButtonSpeaker(
+                                    cubit: _callCubit,
+                                    isSpeakerOn: _isSpeakerOn,
+                                  ),
+                                if (widget.isVideo)
+                                  ButtonVideo(
+                                    isVideo: widget.isVideo,
+                                    cubit: _callCubit,
+                                    isVideoEnable: _isVideoEnable,
+                                  ),
+                                Container(
+                                  padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                                  child: GestureDetector(
+                                    onTap: endCallTapped,
                                     child: ImageWidget(
                                       IconAppConstants.icEnd,
                                       height: 72,
                                       width: 72,
                                     ),
                                   ),
-                                  GestureDetector(
-                                    onTap: acceptCallTapped,
-                                    child: ImageWidget(
-                                      IconAppConstants.icAnswer,
-                                      height: 72,
-                                      width: 72,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ]
-                          : <Widget>[
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  if (!widget.isVideo)
-                                    ButtonSpeaker(
-                                      cubit: _callCubit,
-                                      isSpeakerOn: _isSpeakerOn,
-                                    ),
-                                  if (widget.isVideo)
-                                    ButtonVideo(
-                                      isVideo: widget.isVideo,
-                                      cubit: _callCubit,
-                                      isVideoEnable: _isVideoEnable,
-                                    ),
-                                  Container(
-                                    padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-                                    child: GestureDetector(
-                                      onTap: endCallTapped,
-                                      child: ImageWidget(
-                                        IconAppConstants.icEnd,
-                                        height: 72,
-                                        width: 72,
-                                      ),
-                                    ),
-                                  ),
-                                  ButtonMicro(
-                                    cubit: _callCubit,
-                                    isMute: _isMute,
-                                  ),
-                                ],
-                              ),
-                            ]),
+                                ),
+                                ButtonMicro(
+                                  cubit: _callCubit,
+                                  isMute: _isMute,
+                                ),
+                              ],
+                            ),
+                          ],
+                  ),
                 ),
                 Align(
                   alignment: Alignment.topLeft,
@@ -291,6 +347,39 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
                         width: 40,
                       ),
                     ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 62),
+                    child: StreamBuilder<StringeeSignalingState>(
+                        stream: _callState,
+                        builder: (context, snapshot) {
+                          if (_callState.value == StringeeSignalingState.answered) {
+                            return Column(
+                              children: [
+                                Text(
+                                  'VDONE',
+                                  style: context.text.bodyMedium?.copyWith(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.white,
+                                  ),
+                                ),
+                                if (widget.isVideo)
+                                  Text(
+                                    _callDuration,
+                                    style: context.textTheme.bodySmall?.copyWith(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                        color: const Color(0xff00ff92)),
+                                  ),
+                              ],
+                            );
+                          }
+                          return const SizedBox.shrink();
+                        }),
                   ),
                 ),
                 widget.isVideo
@@ -367,6 +456,7 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
   void acceptCallTapped() {
     if (isAndroid) {
       _callCubit.androidCallManager!.answer().then((result) {
+        _callState.add(StringeeSignalingState.answered);
         if (result['status']) {
           setState(() {
             showIncomingUI = !showIncomingUI;
@@ -381,6 +471,7 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
       }
 
       _callCubit.iOSCallManager!.syncCall!.answerCallkitCall();
+      _callState.add(StringeeSignalingState.answered);
     }
   }
 
@@ -406,7 +497,7 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
     _isVideoEnable = false;
     _hasLocalStream = false;
     _hasRemoteStream = false;
-    _status = '';
+    _statusState.add('');
     _callState.add(StringeeSignalingState.calling);
     if (isAndroid) {
       Navigator.pop(context);
@@ -457,9 +548,12 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
 
   @override
   void onStatusChange(String status) {
-    setState(() {
-      _status = status;
-    });
+    print('stata $status');
+    if (isAndroid) {
+      _callState.add(_callCubit.androidCallManager!.callState);
+    } else {
+      _callState.add(_callCubit.iOSCallManager!.syncCall!.callState);
+    }
   }
 
   @override
@@ -596,8 +690,8 @@ class _ButtonMicroState extends State<ButtonMicro> {
       onTap: _toggleMicro,
       child: ImageWidget(
         (isAndroid ? widget.isMute : widget.cubit.iOSCallManager?.syncCall?.isMute ?? false)
-            ? IconAppConstants.icMicro
-            : IconAppConstants.icMicOff,
+            ? IconAppConstants.icMicOff
+            : IconAppConstants.icMicro,
         height: 72,
         width: 72,
       ),

@@ -25,6 +25,7 @@ class ChatSocket {
   bool _forceDisconnect = false;
 
   void connect() async {
+    destroy();
     _forceDisconnect = false;
     await _initSocket();
     _connect();

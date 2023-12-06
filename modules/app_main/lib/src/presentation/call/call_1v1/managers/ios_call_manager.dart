@@ -449,10 +449,6 @@ class IOSCallManager with WidgetsBindingObserver {
     }
     endCallkit();
     deleteSyncCallIfNeed();
-    if (callScreenKey != null && callScreenKey!.currentState != null) {
-      callScreenKey!.currentState!.dismiss();
-      callScreenKey = null;
-    }
   }
 
   /*
