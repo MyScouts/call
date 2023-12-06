@@ -19,6 +19,7 @@ import 'package:app_core/app_core.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'application.dart';
+import 'config/app_config_service.dart';
 import 'core/services/notifications/notification_service.dart';
 import 'core/services/notifications/push_notification_service.dart';
 import 'di/di.dart';
@@ -59,6 +60,7 @@ class AppDelegate extends IAppDelegate {
     await Firebase.initializeApp();
     Configurations().setConfigurationValues(env);
     await configureDependencies(environment: Environment.prod);
+    await AppConfigService.init();
     final savedThemeMode = await AdaptiveTheme.getThemeMode();
 
     if (isMobile) {
