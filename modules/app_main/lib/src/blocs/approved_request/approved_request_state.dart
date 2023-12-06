@@ -23,3 +23,19 @@ final class GetApprovedRequestSuccess extends ApprovedRequestState {
 final class GetApprovedRequestFail extends ApprovedRequestState {
   const GetApprovedRequestFail({required super.approvedRequest});
 }
+
+final class OnReplyRequest extends ApprovedRequestState {
+  const OnReplyRequest({required super.approvedRequest});
+}
+
+final class ReplyRequestSuccess extends ApprovedRequestState {
+  final bool isApproved;
+  const ReplyRequestSuccess({
+    required super.approvedRequest,
+    required this.isApproved,
+  });
+}
+
+final class ReplyRequestFail extends ApprovedRequestState {
+  const ReplyRequestFail({required super.approvedRequest});
+}

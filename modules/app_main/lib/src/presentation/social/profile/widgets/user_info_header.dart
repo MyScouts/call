@@ -41,12 +41,12 @@ class UserInfoHeader extends StatelessWidget {
 
     // if (followInfo.isFollowee || followInfo.isFriend) return false;
 
-    // if (onBoarding != null) {
-    //   if (onBoarding!.isPdone && authInfo.old > 15) return false;
-    //   if (onBoarding!.isPdone && authInfo.old <= 15) {
-    //     return false;
-    //   }
-    // }
+    if (onBoarding != null) {
+      if (onBoarding!.isPdone && authInfo.old <= 15) {
+        // print(authInfo.old);
+        // return true;
+      }
+    }
 
     return false;
   }
@@ -370,8 +370,8 @@ class UserInfoHeader extends StatelessWidget {
                 height: 40,
                 title: friendStatusStr(
                   isFriend: relation.isFriend,
-                  isFollowed: relation.isFollower,
-                  isFollowing: false,
+                  isFollower: relation.isFollower,
+                  isFollowee: relation.isFollowee,
                   isBlocked: userInfo.isBlock,
                 ),
                 onTap: () => _onFriendAction(context, relation),

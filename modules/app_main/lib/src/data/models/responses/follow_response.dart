@@ -66,6 +66,7 @@ class ApprovedRequestUser with _$ApprovedRequestUser {
   const factory ApprovedRequestUser({
     required int id,
     required String displayName,
+    String? avatar,
     required String pDoneId,
     required String fullName,
     required String birthday,

@@ -151,17 +151,6 @@ class _SettingScreenState extends State<SettingScreen> {
 
   void _onListenerConfirmJABloc(BuildContext context, GetDetailState state) {
     if (state is GetDetailDataSuccess<ConfirmRegisterJAResponse>) {
-      // if (state.data.result == true) {
-      //   showToastMessage(
-      //     'Bạn đã đăng ký JA thành công!',
-      //     ToastMessageType.success,
-      //   );
-      // } else {
-      //   showToastMessage(
-      //     'Bạn đã huỷ đăng ký JA!',
-      //     ToastMessageType.success,
-      //   );
-      // }
     } else if (state is GetDetailError) {
       final e = state.error;
       if (e is DioError) {

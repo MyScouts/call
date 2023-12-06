@@ -24,6 +24,7 @@ class UserApiConstants {
   static const followUser = 'api/v1/following/follow';
   static const unFollow = 'api/v1/following/unfollow';
   static const approvedRequests = "api/v1/following/approval-requests";
+  static const replyFollow = "api/v1/following/reply-follow-request";
   static const blockUser = 'api/users/block-user/{userId}';
   static const authOTP = 'api/v1/auth/otp';
   static const search = "api/v1/user/search";
@@ -85,6 +86,9 @@ abstract class UserApi {
   @GET(UserApiConstants.approvedRequests)
   Future<ApprovedRequestResponse> approvedRequest();
 
+  @POST(UserApiConstants.replyFollow)
+  Future replyRequest(@Body() ReplyFollowPayload payload);
+
   @POST(UserApiConstants.blockUser)
   Future blockUser(@Path() int userId);
 
@@ -105,7 +109,8 @@ abstract class UserApi {
   Future<UpdateNonePDoneProfileReponse> getPDoneProfile();
 
   @PATCH(UserApiConstants.updateNonePDoneProfile)
-  Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(@Body() Map<String, dynamic> data);
+  Future<UpdateNonePDoneProfileReponse> updateNonePDoneProfile(
+      @Body() Map<String, dynamic> data);
 
   @GET(UserApiConstants.listFriends)
   Future<ListFriendUserResponse> listFriends();

@@ -140,4 +140,8 @@ class UserUsecase {
     final response = await _userRepository.approvedRequests();
     return response.approvals;
   }
+
+  Future replyFollow(ReplyFollowPayload payload) {
+    return _userRepository.replyFollowRequest(payload);
+  }
 }
