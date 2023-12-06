@@ -64,7 +64,7 @@ class Setting {
         [
           Setting(
             text: "Team",
-            icon: IconAppConstants.icTeamProfile,
+            icon: Assets.icons_ic_team_png.path,
             onPressed: () =>
                 Navigator.pushNamed(context, CommunityWidget.routeName),
           ),

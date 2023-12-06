@@ -23,6 +23,13 @@ abstract class LiveService {
     ClientRoleType role = ClientRoleType.clientRoleBroadcaster,
   });
 
+  Future<void> rejoinChannel(
+    String token,
+    String channelName,
+    int uid, {
+    ClientRoleType role = ClientRoleType.clientRoleBroadcaster,
+  });
+
   Future<void> leaveChannel();
 
   Future<void> enableAudioStream();

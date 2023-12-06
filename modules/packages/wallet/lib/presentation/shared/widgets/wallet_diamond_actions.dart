@@ -1,12 +1,15 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:wallet/presentation/shared/bloc/wallet_bloc.dart';
 import '../../../core/core.dart';
 import '../../presentation.dart';
 import '../../wallet_constant.dart';
 import '../../wallet_diamond/wallet_diamond_constant.dart';
 
 class WalletDiamondActions extends StatefulWidget {
-  const WalletDiamondActions({super.key});
+  const WalletDiamondActions({super.key, required this.walletBloc});
+
+  final WalletBloc walletBloc;
 
   @override
   State<WalletDiamondActions> createState() => _WalletDiamondActionsState();
@@ -32,7 +35,11 @@ class _WalletDiamondActionsState extends State<WalletDiamondActions> {
         ...WalletDiamondActionType.values.map(
           (type) {
             return ListTile(
-              onTap: () => onTap(type),
+              onTap: () {
+                onTap(type).then((value) {
+                  widget.walletBloc.add(const WalletEvent.getWalletInfo());
+                });
+              },
               leading: type.icon,
               title: Text(
                 type.text,
@@ -60,14 +67,12 @@ class _WalletDiamondActionsState extends State<WalletDiamondActions> {
     );
   }
 
-  void onTap(WalletDiamondActionType type) {
+  Future<void> onTap(WalletDiamondActionType type) {
     switch (type) {
       case WalletDiamondActionType.chargeDiamondToVnd:
-          context.navigateCharDiamondToVND();
-        break;
+        return context.navigateCharDiamondToVND();
       case WalletDiamondActionType.transactionHistory:
-        context.startTransactionHistory(walletType: WalletType.diamond);
-        break;
+        return context.startTransactionHistory(walletType: WalletType.diamond);
     }
   }
 }
