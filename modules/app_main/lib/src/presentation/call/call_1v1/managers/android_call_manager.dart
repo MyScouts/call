@@ -415,11 +415,7 @@ class AndroidCallManager with WidgetsBindingObserver {
           clearDataEndDismiss();
         }
 
-      },onError: (e,s) {
-        print(e);
-        print(s);
-      }
-      );
+      });
     } else {
       _call?.makeCall(parameters).then((result) {
         _callId = _call?.id;
@@ -431,9 +427,6 @@ class AndroidCallManager with WidgetsBindingObserver {
         if (!status) {
           clearDataEndDismiss();
         }
-      },onError: (e,s) {
-        print(e);
-        print(s);
       });
     }
   }
@@ -485,11 +478,6 @@ class AndroidCallManager with WidgetsBindingObserver {
     _isInCall = false;
 
     _callId = "";
-
-    if (callScreenKey != null && callScreenKey?.currentState != null) {
-      callScreenKey?.currentState?.dismiss();
-      callScreenKey = null;
-    }
   }
 
   void switchCamera() {
