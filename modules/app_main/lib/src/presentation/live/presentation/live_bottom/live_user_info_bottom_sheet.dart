@@ -29,7 +29,8 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
   final UserActionCubit _actionBloc = injector.get<UserActionCubit>();
 
   GetUserByIdBloc get _userByIdBloc => context.read<GetUserByIdBloc>();
-  final ValueNotifier<GetUserFollowDetailResponse?> _followInfo = ValueNotifier(null);
+  final ValueNotifier<GetUserFollowDetailResponse?> _followInfo =
+      ValueNotifier(null);
   late final _userCubit = context.read<UserCubit>();
   late User _authInfo;
 
@@ -64,7 +65,8 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
             hideLoading();
             _friendStatus.value = true;
             if (state.approvalRequired) {
-              showToastMessage("Yêu cầu theo dõi đã được gởi đến người bảo hộ.");
+              showToastMessage(
+                  "Yêu cầu theo dõi đã được gởi đến người bảo hộ.");
             } else {
               showToastMessage("Theo dõi người dùng thành công.");
             }
@@ -94,7 +96,9 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
             final userInfo = useByIdrBloc.data;
             return Container(
                 decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(topRight: Radius.circular(16), topLeft: Radius.circular(16)),
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(16),
+                      topLeft: Radius.circular(16)),
                   color: Colors.white,
                 ),
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -158,7 +162,8 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
               )
           ],
         ),
-        if (userInfo.username != null && userInfo.username!.isNotEmpty) const SizedBox(height: 3),
+        if (userInfo.username != null && userInfo.username!.isNotEmpty)
+          const SizedBox(height: 3),
         if (userInfo.username != null && userInfo.username!.isNotEmpty)
           Text(
             "(${userInfo.username})",
@@ -213,8 +218,11 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
                   ),
                   Text(
                     userInfo.old.toString(),
-                    style: context.text.titleMedium
-                        ?.copyWith(fontSize: 14, height: 1, color: userInfo.sex!.sexColor, fontWeight: FontWeight.w600),
+                    style: context.text.titleMedium?.copyWith(
+                        fontSize: 14,
+                        height: 1,
+                        color: userInfo.sex!.sexColor,
+                        fontWeight: FontWeight.w600),
                   ),
                 ],
               ),
@@ -231,8 +239,11 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
               children: [
                 Text(
                   "LV.1",
-                  style: context.text.titleMedium
-                      ?.copyWith(fontSize: 14, height: 1, color: Colors.white, fontWeight: FontWeight.w600),
+                  style: context.text.titleMedium?.copyWith(
+                      fontSize: 14,
+                      height: 1,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -242,7 +253,8 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
             Flexible(
               child: Container(
                 height: 25,
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
                   color: const Color(0XFFECF5FE),
                   borderRadius: BorderRadius.circular(10),
@@ -374,12 +386,13 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
                 height: 40,
                 title: friendStatusStr(
                   isFriend: relation.isFriend,
-                  isFollowed: relation.isFollower,
-                  isFollowing: false,
+                  isFollower: relation.isFollower,
+                  isFollowee: false,
                   isBlocked: userInfo.isBlock,
                 ),
                 onTap: () => _onFriendAction(userInfo, relation),
-                disabled: _getButtonStatus(userBloc is OnboardingSuccess ? userBloc.onboarding : null),
+                disabled: _getButtonStatus(
+                    userBloc is OnboardingSuccess ? userBloc.onboarding : null),
                 width: null,
               ),
             );

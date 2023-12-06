@@ -994,6 +994,7 @@ ApprovedRequestUser _$ApprovedRequestUserFromJson(Map<String, dynamic> json) {
 mixin _$ApprovedRequestUser {
   int get id => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
+  String? get avatar => throw _privateConstructorUsedError;
   String get pDoneId => throw _privateConstructorUsedError;
   String get fullName => throw _privateConstructorUsedError;
   String get birthday => throw _privateConstructorUsedError;
@@ -1014,6 +1015,7 @@ abstract class $ApprovedRequestUserCopyWith<$Res> {
   $Res call(
       {int id,
       String displayName,
+      String? avatar,
       String pDoneId,
       String fullName,
       String birthday,
@@ -1035,6 +1037,7 @@ class _$ApprovedRequestUserCopyWithImpl<$Res, $Val extends ApprovedRequestUser>
   $Res call({
     Object? id = null,
     Object? displayName = null,
+    Object? avatar = freezed,
     Object? pDoneId = null,
     Object? fullName = null,
     Object? birthday = null,
@@ -1049,6 +1052,10 @@ class _$ApprovedRequestUserCopyWithImpl<$Res, $Val extends ApprovedRequestUser>
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
               as String,
+      avatar: freezed == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as String?,
       pDoneId: null == pDoneId
           ? _value.pDoneId
           : pDoneId // ignore: cast_nullable_to_non_nullable
@@ -1080,6 +1087,7 @@ abstract class _$$ApprovedRequestUserImplCopyWith<$Res>
   $Res call(
       {int id,
       String displayName,
+      String? avatar,
       String pDoneId,
       String fullName,
       String birthday,
@@ -1099,6 +1107,7 @@ class __$$ApprovedRequestUserImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? displayName = null,
+    Object? avatar = freezed,
     Object? pDoneId = null,
     Object? fullName = null,
     Object? birthday = null,
@@ -1113,6 +1122,10 @@ class __$$ApprovedRequestUserImplCopyWithImpl<$Res>
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
               as String,
+      avatar: freezed == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as String?,
       pDoneId: null == pDoneId
           ? _value.pDoneId
           : pDoneId // ignore: cast_nullable_to_non_nullable
@@ -1139,6 +1152,7 @@ class _$ApprovedRequestUserImpl implements _ApprovedRequestUser {
   const _$ApprovedRequestUserImpl(
       {required this.id,
       required this.displayName,
+      this.avatar,
       required this.pDoneId,
       required this.fullName,
       required this.birthday,
@@ -1152,6 +1166,8 @@ class _$ApprovedRequestUserImpl implements _ApprovedRequestUser {
   @override
   final String displayName;
   @override
+  final String? avatar;
+  @override
   final String pDoneId;
   @override
   final String fullName;
@@ -1162,7 +1178,7 @@ class _$ApprovedRequestUserImpl implements _ApprovedRequestUser {
 
   @override
   String toString() {
-    return 'ApprovedRequestUser(id: $id, displayName: $displayName, pDoneId: $pDoneId, fullName: $fullName, birthday: $birthday, sexCode: $sexCode)';
+    return 'ApprovedRequestUser(id: $id, displayName: $displayName, avatar: $avatar, pDoneId: $pDoneId, fullName: $fullName, birthday: $birthday, sexCode: $sexCode)';
   }
 
   @override
@@ -1173,6 +1189,7 @@ class _$ApprovedRequestUserImpl implements _ApprovedRequestUser {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.displayName, displayName) ||
                 other.displayName == displayName) &&
+            (identical(other.avatar, avatar) || other.avatar == avatar) &&
             (identical(other.pDoneId, pDoneId) || other.pDoneId == pDoneId) &&
             (identical(other.fullName, fullName) ||
                 other.fullName == fullName) &&
@@ -1183,8 +1200,8 @@ class _$ApprovedRequestUserImpl implements _ApprovedRequestUser {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, displayName, pDoneId, fullName, birthday, sexCode);
+  int get hashCode => Object.hash(runtimeType, id, displayName, avatar, pDoneId,
+      fullName, birthday, sexCode);
 
   @JsonKey(ignore: true)
   @override
@@ -1205,6 +1222,7 @@ abstract class _ApprovedRequestUser implements ApprovedRequestUser {
   const factory _ApprovedRequestUser(
       {required final int id,
       required final String displayName,
+      final String? avatar,
       required final String pDoneId,
       required final String fullName,
       required final String birthday,
@@ -1217,6 +1235,8 @@ abstract class _ApprovedRequestUser implements ApprovedRequestUser {
   int get id;
   @override
   String get displayName;
+  @override
+  String? get avatar;
   @override
   String get pDoneId;
   @override

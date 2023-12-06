@@ -89,16 +89,34 @@ class ConversationPageState extends State<ConversationPage> {
                                 ),
                               ),
                               kSpacingWidth12,
-                              Container(
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: AppColors.grey71,
+                              GestureDetector(
+                                onTap: () {
+                                },
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: AppColors.grey71,
+                                  ),
+                                  padding: const EdgeInsets.all(8),
+                                  child: const Icon(
+                                    Icons.more_vert,
+                                    color: AppColors.black,
+                                    size: 28,
+                                  ),
                                 ),
-                                padding: const EdgeInsets.all(8),
-                                child: const Icon(
-                                  Icons.more_vert,
-                                  color: AppColors.black,
-                                  size: 28,
+                              ),
+                              kSpacingWidth12,
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  child: const Icon(
+                                    Icons.close,
+                                    color: AppColors.black,
+                                    size: 28,
+                                  ),
                                 ),
                               ),
                             ],

@@ -97,6 +97,7 @@ _$ApprovedRequestUserImpl _$$ApprovedRequestUserImplFromJson(
     _$ApprovedRequestUserImpl(
       id: json['id'] as int,
       displayName: json['displayName'] as String,
+      avatar: json['avatar'] as String?,
       pDoneId: json['pDoneId'] as String,
       fullName: json['fullName'] as String,
       birthday: json['birthday'] as String,
@@ -108,6 +109,7 @@ Map<String, dynamic> _$$ApprovedRequestUserImplToJson(
     <String, dynamic>{
       'id': instance.id,
       'displayName': instance.displayName,
+      'avatar': instance.avatar,
       'pDoneId': instance.pDoneId,
       'fullName': instance.fullName,
       'birthday': instance.birthday,

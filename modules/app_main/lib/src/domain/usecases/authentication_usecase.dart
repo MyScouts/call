@@ -108,6 +108,7 @@ class AuthenticationUsecase {
   }
 
   Future logout() async {
+    _chatSocket.destroy();
     _notificationService.unsubscribeNotification();
     await _userSharePreferencesUsecase.clearUserData();
   }
