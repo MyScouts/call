@@ -264,7 +264,7 @@ class _UserApi implements UserApi {
     )
         .compose(
           _dio.options,
-          'v1/following/reply-follow-request',
+          'api/v1/following/reply-follow-request',
           queryParameters: queryParameters,
           data: _data,
         )

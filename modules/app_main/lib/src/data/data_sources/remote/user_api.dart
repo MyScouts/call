@@ -24,7 +24,7 @@ class UserApiConstants {
   static const followUser = 'api/v1/following/follow';
   static const unFollow = 'api/v1/following/unfollow';
   static const approvedRequests = "api/v1/following/approval-requests";
-  static const replyFollow = "v1/following/reply-follow-request";
+  static const replyFollow = "api/v1/following/reply-follow-request";
   static const blockUser = 'api/users/block-user/{userId}';
   static const authOTP = 'api/v1/auth/otp';
   static const search = "api/v1/user/search";

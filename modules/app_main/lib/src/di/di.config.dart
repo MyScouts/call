@@ -51,23 +51,23 @@ import '../data/data_sources/remote/upgrade_account_api.dart' as _i80;
 import '../data/data_sources/remote/user_api.dart' as _i85;
 import '../data/models/payloads/community/reply_give_up_boss_team_role_payload.dart'
     as _i132;
-import '../data/models/payloads/marshop/marshop_payload.dart' as _i126;
+import '../data/models/payloads/marshop/marshop_payload.dart' as _i122;
 import '../data/models/payloads/upgrade_account/upgrade_ja/confirm_register_ja_payload.dart'
-    as _i124;
+    as _i126;
 import '../data/models/payloads/upgrade_account/upgrade_ja/update_bank_account_payload.dart'
-    as _i121;
-import '../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart'
     as _i129;
-import '../data/models/responses/boss_community_status_response.dart' as _i127;
+import '../data/models/payloads/upgrade_account/upgrade_ja/verify_phone_otp.dart'
+    as _i124;
+import '../data/models/responses/boss_community_status_response.dart' as _i123;
 import '../data/models/responses/boss_team_relinquish_status_response.dart'
-    as _i122;
-import '../data/models/responses/confirm_register_ja_response.dart' as _i123;
+    as _i128;
+import '../data/models/responses/confirm_register_ja_response.dart' as _i125;
 import '../data/models/responses/confirm_response.dart' as _i130;
 import '../data/models/responses/ecom/product_detail_response.dart' as _i47;
 import '../data/models/responses/group_request_response.dart' as _i134;
-import '../data/models/responses/ja_status_response.dart' as _i118;
-import '../data/models/responses/marshop_response.dart' as _i125;
-import '../data/models/responses/upgrade_account_response.dart' as _i119;
+import '../data/models/responses/ja_status_response.dart' as _i119;
+import '../data/models/responses/marshop_response.dart' as _i121;
+import '../data/models/responses/upgrade_account_response.dart' as _i120;
 import '../data/repositories/auth_repository.dart' as _i93;
 import '../data/repositories/ecom_repository.dart' as _i39;
 import '../data/repositories/impl/auth_repository_impl.dart' as _i94;
@@ -92,9 +92,9 @@ import '../data/repositories/notification_repository.dart' as _i60;
 import '../data/repositories/protector_repository.dart' as _i73;
 import '../data/repositories/user_repository.dart' as _i86;
 import '../domain/entities/bank.dart' as _i133;
-import '../domain/entities/commity_action_type.dart' as _i128;
+import '../domain/entities/commity_action_type.dart' as _i127;
 import '../domain/entities/update_account/bank_acount/bank_account.dart'
-    as _i120;
+    as _i118;
 import '../domain/repository/call_repository.dart' as _i97;
 import '../domain/repository/chat_repository.dart' as _i103;
 import '../domain/repository/community_repository.dart' as _i107;
@@ -161,7 +161,7 @@ import '../presentation/dashboard/search/blocs/search/search_cubit.dart'
     as _i153;
 import '../presentation/dashboard/system_setting/change_password_screen.dart'
     as _i101;
-import '../presentation/general_setting/general_routes.dart' as _i14;
+import '../presentation/general_setting/general_routes.dart' as _i13;
 import '../presentation/information_profile/bloc/bloc/information_update_profil_bloc.dart'
     as _i138;
 import '../presentation/information_profile/bloc/cubit/information_pdone_profile_cubit.dart'
@@ -199,7 +199,7 @@ import '../presentation/live/presentation/widget/check_password_enable.dart'
 import '../presentation/marshop/marshop_bloc.dart' as _i170;
 import '../presentation/marshop/marshop_routes.dart' as _i22;
 import '../presentation/marshop/widgets/general_setting/general_routes.dart'
-    as _i13;
+    as _i14;
 import '../presentation/notification/deeplink/bloc/deeplink_bloc.dart' as _i11;
 import '../presentation/notification/notification_routes.dart' as _i25;
 import '../presentation/notification/state/notification_bloc.dart' as _i147;
@@ -445,45 +445,45 @@ Future<_i1.GetIt> init(
       () => _i117.FanGroupDetailBloc(gh<_i109.CommunityUsecase>()));
   gh.factory<_i46.GetDetailBloc<_i3.FanGroup>>(() =>
       communityModule.createGetFanGroupBloc(gh<_i109.CommunityUsecase>()));
-  gh.factory<_i46.GetDetailBloc<_i118.JAStatusResponse>>(() =>
-      upgradeAgreePolicyBlocFactory
-          .createGetJAStatusBloc(gh<_i83.UpgradeAccountUsecase>()));
-  gh.factory<_i46.GetDetailBloc<_i119.UpgradeAccountResponse>>(() =>
-      upgradeAgreePolicyBlocFactory
-          .createUpgradeAccountBloc(gh<_i83.UpgradeAccountUsecase>()));
-  gh.factory<_i46.GetDetailBloc<_i120.BankAccount>>(() =>
+  gh.factory<_i46.GetDetailBloc<_i118.BankAccount>>(() =>
       upgradeAgreePolicyBlocFactory
           .createGetDefaultBankBloc(gh<_i83.UpgradeAccountUsecase>()));
+  gh.factory<_i46.GetDetailBloc<_i119.JAStatusResponse>>(() =>
+      upgradeAgreePolicyBlocFactory
+          .createGetJAStatusBloc(gh<_i83.UpgradeAccountUsecase>()));
+  gh.factory<_i46.GetDetailBloc<_i120.UpgradeAccountResponse>>(() =>
+      upgradeAgreePolicyBlocFactory
+          .createUpgradeAccountBloc(gh<_i83.UpgradeAccountUsecase>()));
   gh.factory<
-      _i46.GetDetailBlocParam1<_i120.BankAccount,
-          _i121.UpdateBankAccountPayload>>(() => upgradeAgreePolicyBlocFactory
-      .createUpdateBankAccountBloc(gh<_i83.UpgradeAccountUsecase>()));
-  gh.factory<
-          _i46
-          .GetDetailBlocParam1<_i122.BossTeamRelinquishStatusResponse, String>>(
-      () => communityModule
-          .createGetBossTeamRelinquishStatusBloc(gh<_i109.CommunityUsecase>()));
-  gh.factory<
-      _i46.GetDetailBlocParam1<_i123.ConfirmRegisterJAResponse,
-          _i124.ConfirmRegisterJAPayload>>(() => upgradeAgreePolicyBlocFactory
-      .createConfirmRegisterJABloc(gh<_i83.UpgradeAccountUsecase>()));
-  gh.factory<
-          _i46.GetDetailBlocParam1<_i125.MarshopResponse,
-              _i126.GetMarshopInfoPayload>>(
+          _i46.GetDetailBlocParam1<_i121.MarshopResponse,
+              _i122.GetMarshopInfoPayload>>(
       () => marshopBlocFactory.getMarshopInfo(gh<_i58.MarshopUsecase>()));
+  gh.factory<
+          _i46.GetDetailBlocParam1<_i123.BossCommunityStatusResponse, String>>(
+      () => communityModule
+          .createGetBossStatusBloc(gh<_i109.CommunityUsecase>()));
+  gh.factory<_i46.GetDetailBlocParam1<dynamic, _i124.VerifyPhoneOtpPayload>>(
+      () => upgradeAgreePolicyBlocFactory.createUpgradeAccountVerifyPhoneBloc(
+          gh<_i83.UpgradeAccountUsecase>()));
+  gh.factory<
+      _i46.GetDetailBlocParam1<_i125.ConfirmRegisterJAResponse,
+          _i126.ConfirmRegisterJAPayload>>(() => upgradeAgreePolicyBlocFactory
+      .createConfirmRegisterJABloc(gh<_i83.UpgradeAccountUsecase>()));
   gh.factory<_i46.GetDetailBlocParam1<_i3.User?, int>>(
       () => diaryBlocFactory.getUserDetailBloc(gh<_i88.UserUsecase>()));
   gh.factory<
-          _i46.GetDetailBlocParam1<_i127.BossCommunityStatusResponse, String>>(
-      () => communityModule
-          .createGetBossStatusBloc(gh<_i109.CommunityUsecase>()));
-  gh.factory<
-      _i46.GetDetailBlocParam1<_i119.UpgradeAccountResponse,
-          _i128.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
+      _i46.GetDetailBlocParam1<_i120.UpgradeAccountResponse,
+          _i127.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
       .createResendOTPPhoneBloc(gh<_i83.UpgradeAccountUsecase>()));
-  gh.factory<_i46.GetDetailBlocParam1<dynamic, _i129.VerifyPhoneOtpPayload>>(
-      () => upgradeAgreePolicyBlocFactory.createUpgradeAccountVerifyPhoneBloc(
-          gh<_i83.UpgradeAccountUsecase>()));
+  gh.factory<
+          _i46
+          .GetDetailBlocParam1<_i128.BossTeamRelinquishStatusResponse, String>>(
+      () => communityModule
+          .createGetBossTeamRelinquishStatusBloc(gh<_i109.CommunityUsecase>()));
+  gh.factory<
+      _i46.GetDetailBlocParam1<_i118.BankAccount,
+          _i129.UpdateBankAccountPayload>>(() => upgradeAgreePolicyBlocFactory
+      .createUpdateBankAccountBloc(gh<_i83.UpgradeAccountUsecase>()));
   gh.factory<
       _i46.GetDetailBlocParam2<_i130.ConfirmResponse, String,
           _i131.CommunityType>>(() => communityModule
@@ -494,20 +494,20 @@ Future<_i1.GetIt> init(
       .createReplyGiveUpBossTeamBloc(gh<_i109.CommunityUsecase>()));
   gh.factory<_i46.GetListBloc<_i133.Bank>>(() => upgradeAgreePolicyBlocFactory
       .createGetListBanksBloc(gh<_i83.UpgradeAccountUsecase>()));
-  gh.factory<_i46.GetListBloc<_i3.Team>>(
-      () => dashBoardModule.getMyTeams(gh<_i109.CommunityUsecase>()));
-  gh.factory<_i46.GetListBloc<_i125.MarshopRegisterPackResponse>>(
-      () => marshopBlocFactory.getMarshopPack(gh<_i58.MarshopUsecase>()));
-  gh.factory<_i46.GetListBloc<_i3.Group>>(() =>
-      communityModule.createGetListGroupsBloc(gh<_i109.CommunityUsecase>()));
   gh.factory<_i46.GetListBloc<_i134.GroupRequest>>(() =>
       communityModule.createGetGroupRequestsBloc(gh<_i109.CommunityUsecase>()));
-  gh.factory<
-          _i46.GetListBlocParam1<_i125.MarshopResponse,
-              _i126.GetListMarshopPayload>>(
-      () => marshopBlocFactory.listMarshopBloc(gh<_i58.MarshopUsecase>()));
+  gh.factory<_i46.GetListBloc<_i3.Group>>(() =>
+      communityModule.createGetListGroupsBloc(gh<_i109.CommunityUsecase>()));
+  gh.factory<_i46.GetListBloc<_i121.MarshopRegisterPackResponse>>(
+      () => marshopBlocFactory.getMarshopPack(gh<_i58.MarshopUsecase>()));
+  gh.factory<_i46.GetListBloc<_i3.Team>>(
+      () => dashBoardModule.getMyTeams(gh<_i109.CommunityUsecase>()));
   gh.factory<_i46.GetListBlocParam1<_i3.Team, String>>(() =>
       communityModule.createGetListTeamsBloc(gh<_i109.CommunityUsecase>()));
+  gh.factory<
+          _i46.GetListBlocParam1<_i121.MarshopResponse,
+              _i122.GetListMarshopPayload>>(
+      () => marshopBlocFactory.listMarshopBloc(gh<_i58.MarshopUsecase>()));
   gh.factory<_i135.GiftController>(
       () => _i135.GiftController(gh<_i54.LiveUseCase>()));
   gh.factory<_i136.GroupDetailBloc>(
