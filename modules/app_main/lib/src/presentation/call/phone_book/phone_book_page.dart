@@ -99,6 +99,20 @@ class PhoneBookPageState extends State<PhoneBookPage> {
                         ),
                       ],
                     ),
+                    kSpacer,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        child: const Icon(
+                          Icons.close,
+                          color: AppColors.black,
+                          size: 28,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

@@ -144,6 +144,9 @@ class IconAppConstants {
   static String icLive2 = IconApp.icLive2.path;
   static String widgetTeam = IconApp.widgetTeam.path;
   static String icSettingHome = IconApp.icSettingHome.path;
+  static String icP = IconApp.icP.path;
+  static String icC = IconApp.icC.path;
+  static String icE = IconApp.icE.path;
   static String icDeleteChat = IconApp.icDeleteChat.path;
   static String icReportChat = IconApp.icReportChat.path;
   static String icBlockChat = IconApp.icBlockChat.path;
@@ -162,6 +165,8 @@ class IconAppConstants {
   static String icCallAway = IconApp.icCallAway.path;
   static String icVideoOff = IconApp.icVideoOff.path;
   static String icMicOff = IconApp.icMicOff.path;
+  static String icDeleteCall = IconApp.icDeleteCall.path;
+  static String icVideoAnswer = IconApp.icVideoAnswer.path;
   static String icBackCall = IconApp.icBackCall.path;
 }
 
@@ -312,6 +317,9 @@ enum IconApp {
   icLive2('assets/icons/ic_live_2.png'),
   widgetTeam('assets/icons/widget_team.png'),
   icSettingHome('assets/icons/ic_setting_home.png'),
+  icP('assets/icons/ic_p.png'),
+  icC('assets/icons/ic_c.png'),
+  icE('assets/icons/ic_e.png'),
   icLeaveTeam('assets/icons/ic_leave_team.svg'),
   icDeleteChat('assets/icons/ic_delete_chat.svg'),
   icReportChat('assets/icons/ic_report_chat.svg'),
@@ -336,6 +344,8 @@ enum IconApp {
   icIncomingCall('assets/icons/ic_incoming_call.svg'),
   icSwitchCamera('assets/icons/ic_switch_camera.svg'),
   icCallAway('assets/icons/ic_call_away.svg'),
+  icDeleteCall('assets/icons/ic_delete.svg'),
+  icVideoAnswer('assets/icons/ic_video_answer.svg'),
   icBackCall('assets/icons/ic_back_call.svg');
 
   const IconApp(this.path);

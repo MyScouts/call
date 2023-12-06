@@ -150,7 +150,7 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
       useCase.getProfile(),
     ]);
 
-    final onBoarding = res.first as OnboardingResponse;
+    final onBoarding = res.first as OnBoarding;
     final profile = res.last as User?;
 
     emit(state.copyWith(user: profile, isPDone: onBoarding.isPdone));

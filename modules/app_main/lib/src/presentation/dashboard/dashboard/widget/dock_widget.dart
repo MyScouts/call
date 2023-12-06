@@ -23,7 +23,6 @@ class _DockWidgetState extends State<DockWidget> {
   @override
   void initState() {
     super.initState();
-    _page = getIt<DashboardSharePreferenceUseCase>().getPageInitial();
     NotificationCenter.subscribe(
       channel: dashboardPageChange,
       observer: this,

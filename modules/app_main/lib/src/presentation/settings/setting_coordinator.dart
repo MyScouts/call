@@ -3,6 +3,7 @@ import 'package:app_main/app_main.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
+import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
 import 'package:app_main/src/presentation/settings/setting_screen.dart';
 import 'package:app_main/src/presentation/settings/widget/confirm_delete_modal.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,10 @@ extension SettingCoordinator on BuildContext {
             if (state is LogoutSuccess) {
               hideLoading();
               isAuthenticate.add(false);
+              if(PipHandler.showPip.value) {
+                PipHandler.disposeController();
+                PipHandler.removeOverlay();
+              }
               showToastMessage("Đăng xuất thành công");
               context.startLoginUtil();
             }

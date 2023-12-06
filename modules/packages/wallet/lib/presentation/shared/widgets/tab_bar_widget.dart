@@ -99,17 +99,17 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget>
 
   Widget _tabButton(WalletType resourceType) {
     final index = WalletType.values.indexWhere((type) => type == resourceType);
-    return InkWell(
-      onTap: () {
-        _pageCtrl.animateToPage(
-          index,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.ease,
-        );
-        _page = index;
-        setState(() {});
-      },
-      child: Expanded(
+    return Expanded(
+      child: InkWell(
+        onTap: () {
+          _pageCtrl.animateToPage(
+            index,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.ease,
+          );
+          _page = index;
+          setState(() {});
+        },
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),

@@ -2,14 +2,16 @@ import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
 import 'package:wallet/core/core.dart';
 
+import '../../../data/datasources/models/response/wallet_info_response.dart';
 import 'resource_widget.dart';
 
 class WalletDiamondResourceBuilder extends StatelessWidget {
-  const WalletDiamondResourceBuilder({super.key});
+  const WalletDiamondResourceBuilder({super.key, required this.userWallet});
+  final UserWallet userWallet;
+
 
   @override
   Widget build(BuildContext context) {
-    final userWallet = WalletInjectedData.userWallet;
 
     return Column(
       children: [

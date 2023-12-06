@@ -161,7 +161,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
                         children: [
                           CustomTextField(
                             controller: _marshopIdCtrl,
-                            hintText: "Nhập ID Marshop giới thiệu",
+                            hintText: "Nhập ID MarShop giới thiệu",
                             suffixIcon: Icon(
                               valid ? Icons.check : Icons.error,
                               color: valid
