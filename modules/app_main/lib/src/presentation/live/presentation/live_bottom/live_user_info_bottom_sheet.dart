@@ -403,9 +403,7 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
 
   _onFriendAction(User userInfo, GetUserFollowRelationResponse relation) async {
     if (!relation.isFollower) {
-      context.read<UserActionCubit>().followUser(
-            payload: FollowUserPayload(followeeId: userInfo.id!),
-          );
+      _actionBloc.followUser(payload: FollowUserPayload(followeeId: userInfo.id!));
     } else {
       context
           .showFriendActions(
@@ -416,7 +414,7 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
       )
           .then((value) {
         if (value != null && value is User) {
-          context.read<UserActionCubit>().getFollowUser(userId: userInfo.id!);
+          _actionBloc.getFollowUser(userId: userInfo.id!);
         }
       });
     }
