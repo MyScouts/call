@@ -1,13 +1,13 @@
 String friendStatusStr({
   required bool isFriend,
-  required bool isFollowed,
-  required bool isFollowing,
+  required bool isFollower,
+  required bool isFollowee,
   required bool isBlocked,
 }) {
-  if (isFollowing && !isFollowed) {
+  if (!isFriend && isFollowee) {
     return "Theo dõi lại";
   }
-  if (isFollowed) {
+  if (isFollower) {
     if (isFriend) {
       return "Bạn bè";
     } else {

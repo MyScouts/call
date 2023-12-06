@@ -159,3 +159,19 @@ class UpdateNonePDoneProfilePayload {
 
   Map<String, dynamic> toJson() => _$UpdateNonePDoneProfilePayloadToJson(this);
 }
+
+@JsonSerializable()
+class ReplyFollowPayload {
+  final int requestId;
+  final bool isApproved;
+
+  const ReplyFollowPayload({
+    required this.requestId,
+    required this.isApproved,
+  });
+
+  factory ReplyFollowPayload.fromJson(Map<String, dynamic> json) =>
+      _$ReplyFollowPayloadFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ReplyFollowPayloadToJson(this);
+}
