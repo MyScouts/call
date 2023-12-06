@@ -1,4 +1,5 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:app_main/src/config/app_config_service.dart';
 import 'package:app_main/src/core/services/live_service/live_service.dart';
 import 'package:injectable/injectable.dart';
 
@@ -82,8 +83,8 @@ class LiveServiceImpl extends LiveService {
   }) async {
     try {
       _engine = createAgoraRtcEngine();
-      await _engine!.initialize(const RtcEngineContext(
-        appId: '9b59830124f54de6b93f0140e88188d9',
+      await _engine!.initialize(RtcEngineContext(
+        appId: AppConfigService.agoraAppID,
         channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
       ));
       _enableMic = enableMic;
