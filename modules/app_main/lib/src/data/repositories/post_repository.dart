@@ -1,11 +1,11 @@
-
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/data/models/payloads/social/new_post_payload.dart';
 import 'package:app_main/src/data/models/payloads/social/react_payload.dart';
 
 abstract class PostRepository {
   Future<List<Post>> getPostsByType({
-    required int id, 
-    required int page, 
+    required int id,
+    required int page,
     required String type,
     int pageSize = 10,
   });
@@ -15,4 +15,5 @@ abstract class PostRepository {
     required ReactPayload reactPayload,
   });
 
+  Future<Post> createPost(NewPostPayload newPostPayload);
 }

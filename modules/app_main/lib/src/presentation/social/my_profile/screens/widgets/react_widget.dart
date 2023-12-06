@@ -9,8 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 class ReactWidget extends StatefulWidget {
-  const ReactWidget({required this.post, super.key});
+  const ReactWidget({required this.post, this.isNewPost = false, super.key});
   final Post post;
+  final bool isNewPost;
 
   @override
   State<ReactWidget> createState() => _ReactWidgetState();
@@ -30,7 +31,6 @@ class _ReactWidgetState extends State<ReactWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     final hasShowTotalReact = totalReaction != 0;
     final reactText = MyProfileConstant.reactText(
       totalReact: totalReaction,
@@ -79,7 +79,7 @@ class _ReactWidgetState extends State<ReactWidget> {
         ),
         const SizedBox(height: 10),
         _buildInteract(
-          postId: widget.post.id!,
+          postId: widget.post.id ?? -1,
         ),
       ],
     );

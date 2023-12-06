@@ -26,19 +26,21 @@ class MyProfileBloc extends CoreBloc<MyProfileEvent, MyProfileState> {
   ) : super(MyProfileState()) {
     on<MyProfileInitiated>(onMyProfileInitiated);
     on<MyProfileLoadMore>(onMyProfileLoadmore);
-    on<MyProfileRefreshed>(onMyProfileInitiated);
+    on<MyProfileRefreshed>(onMyProfileRefreshed);
     on<ReactPostTapped>(
       onReactPostTapped,
       transformer: (event, mapper) => event
-          .debounceTime(const Duration(milliseconds: 300))
+          .debounceTime(const Duration(milliseconds: 150))
           .switchMap(mapper),
     );
-     on<ReactLatestCommentTapped>(
+    on<ReactLatestCommentTapped>(
       onReactLatestCommentTapped,
       transformer: (event, mapper) => event
-          .debounceTime(const Duration(milliseconds: 300))
+          .debounceTime(const Duration(milliseconds: 150))
           .switchMap(mapper),
     );
+    on<CreateNewPost>(onCreateNewPost);
+    on<IndividualSwitchTab>(onIndividualSwitchTab);
 
     // on<Search>(
     //   onSearch,
@@ -46,20 +48,27 @@ class MyProfileBloc extends CoreBloc<MyProfileEvent, MyProfileState> {
     //       .debounceTime(const Duration(milliseconds: 150))
     //       .switchMap(mapper),
     // );
-    add(MyProfileInitiated());
   }
 
-  int _page = 1;
+  int _textPage = 1;
+  int _videoPage = 1;
+
+  late StreamController<bool> isScrolledController =
+      StreamController.broadcast();
+  late StreamController<int> switchTabController =
+      StreamController.broadcast();
 
   void onMyProfileInitiated(_, Emitter<MyProfileState> emit) async {
-    _page = 1;
+    _textPage = 1;
+    _videoPage = 1;
+
     emit(state.copyWith(
-      hasLoadMore: true,
-      comments: [],
+      hasVideoPostLoadMore: true,
+      hasTextPostLoadMore: true,
     ));
 
     await getProfile(emit);
-    await getPosts(emit);
+    await getPosts(state.currentPostType, emit);
   }
 
   FutureOr<void> getProfile(Emitter<MyProfileState> emit) async {
@@ -69,67 +78,155 @@ class MyProfileBloc extends CoreBloc<MyProfileEvent, MyProfileState> {
     ));
   }
 
-  FutureOr<void> getPosts(Emitter<MyProfileState> emit) async {
+  FutureOr<void> getPosts(
+      PostType postType, Emitter<MyProfileState> emit) async {
     final postsText = await _postUsecase.getPostsByType(
       id: state.userInfo!.id!,
-      page: _page,
-      type: PostType.text.name,
+      page: _textPage,
+      type: postType.name,
     );
 
-    emit(state.copyWith(
-      posts: postsText,
-    ));
+    switch (postType) {
+      case PostType.text:
+        emit(state.copyWith(
+          textPosts: postsText,
+        ));
+      case PostType.video:
+        emit(state.copyWith(
+          videoPosts: postsText,
+        ));
+      default:
+        return;
+    }
   }
 
   void onMyProfileLoadmore(_, Emitter<MyProfileState> emit) async {
-    _page++;
-    final postsText = await _postUsecase.getPostsByType(
+    int _page = 0;
+    if (state.currentPostType.isText) {
+      _page = ++_textPage;
+    }
+    if (state.currentPostType.isVideo) {
+      _page = ++_videoPage;
+    }
+
+    final posts = await _postUsecase.getPostsByType(
       id: state.userInfo!.id!,
       page: _page,
-      type: PostType.text.name,
+      type: state.currentPostType.name,
     );
-    bool hasLoadMore = true;
-    if (postsText.length < MyProfileConstant.textPostPageSize) {
-      hasLoadMore = false;
+
+    switch (state.currentPostType) {
+      case PostType.text:
+        bool hasLoadMore = true;
+        if (posts.length < MyProfileConstant.textPostPageSize) {
+          hasLoadMore = false;
+        }
+        emit(state.copyWith(
+          textPosts: [...state.textPosts, ...posts],
+          hasTextPostLoadMore: hasLoadMore,
+        ));
+      case PostType.video:
+        bool hasLoadMore = true;
+        if (posts.length < MyProfileConstant.textPostPageSize) {
+          hasLoadMore = false;
+        }
+        emit(state.copyWith(
+          videoPosts: [...state.videoPosts, ...posts],
+          hasTextPostLoadMore: hasLoadMore,
+        ));
+      default:
+        return;
     }
-    emit(state.copyWith(
-      posts: [...state.posts, ...postsText],
-      hasLoadMore: hasLoadMore,
-    ));
   }
 
   void onReactPostTapped(
       ReactPostTapped event, Emitter<MyProfileState> emit) async {
     await _postUsecase.react(
       postId: event.postId,
-      reactPayload: ReactPayload(isHearted: event.isHearted, type: 'HEART'),
+      reactPayload: ReactPayload(
+          isHearted: event.isHearted, type: ReactType.heart.getName),
+    );
+  }
+
+  Future<void> onCreateNewPost(
+      CreateNewPost event, Emitter<MyProfileState> emit) async {
+    var newPost = Post(
+      subject: event.createPostPayload.subject,
+      content: event.createPostPayload.content,
+      user: state.userInfo,
     );
 
-    // List<Post> newPosts = [];
-    // for (final post in state.posts) {
-    //   if (post.id == event.postId) {
-    //     final newPost = post.copyWith(
-    //       isHearted: event.isHearted,
-    //       totalReaction: event.isHearted
-    //           ? post.getTotalReaction + 1
-    //           : post.getTotalReaction - 1,
-    //     );
-    //     newPosts.add(newPost);
-    //   } else {
-    //     newPosts.add(post);
-    //   }
-    // }
-    // emit(state.copyWith(
-    //   posts: newPosts,
-    // ));
+    switch (state.currentPostType) {
+      case PostType.text:
+        emit(state.copyWith(
+          newTextPost: newPost,
+          textPostMediaFiles: event.createPostPayload.mediaFiles,
+        ));
+
+        newPost = await _postUsecase.createPost(event.createPostPayload);
+        newPost = newPost.copyWith(user: state.userInfo);
+
+        emit(state.copyWith(
+          newTextPost: null,
+          textPosts: [newPost, ...state.textPosts],
+          textPostMediaFiles: [],
+        ));
+      case PostType.video:
+        emit(state.copyWith(
+          newVideoPost: newPost,
+          videoPostMediaFiles: event.createPostPayload.mediaFiles,
+        ));
+
+        newPost = await _postUsecase.createPost(event.createPostPayload);
+        newPost = newPost.copyWith(user: state.userInfo);
+
+        emit(state.copyWith(
+          newVideoPost: null,
+          videoPosts: [newPost, ...state.videoPosts],
+          videoPostMediaFiles: [],
+        ));
+      default:
+        break;
+    }
+  }
+
+  Future<void> onIndividualSwitchTab(
+      IndividualSwitchTab event, Emitter<MyProfileState> emit) async {
+    PostType postType = PostType.getTypeByIndex(event.index);
+
+    emit(state.copyWith(currentPostType: postType));
+
+    switch (postType) {
+      case PostType.video:
+        if (state.videoPosts.isEmpty) {
+          await getPosts(postType, emit);
+        }
+
+      default:
+        break;
+    }
   }
 
   void onReactLatestCommentTapped(
       ReactLatestCommentTapped event, Emitter<MyProfileState> emit) async {
     await _commentUsecase.react(
       commentId: event.commentId,
-      reactPayload: ReactPayload(isHearted: event.isHearted, type: 'HEART'),
+      reactPayload: ReactPayload(
+          isHearted: event.isHearted, type: ReactType.heart.getName),
     );
+  }
 
+  void onMyProfileRefreshed(_, Emitter<MyProfileState> emit) async {
+    _textPage = 1;
+    _videoPage = 1;
+
+    emit(state.copyWith(
+      hasVideoPostLoadMore: true,
+      hasTextPostLoadMore: true,
+    ));
+
+    await getProfile(emit);
+
+    getPosts(state.currentPostType, emit);
   }
 }

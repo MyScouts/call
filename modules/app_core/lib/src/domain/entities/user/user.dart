@@ -74,11 +74,10 @@ extension UserExtNull on User? {
   String get getAddress => [this?.address, _userDefaultAddress]
       .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
-  String get getNickname => [this?.nickname, _userDefaultNickname]
-      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
-
   String get getAvatar => this?.avatar ?? Assets.images_avatar.path;
 
+  String get getNickname => this?.nickname ?? _userDefaultNickname;
+  
   String get getBirthday {
     final DateTime? birthday = this?.birthday;
 

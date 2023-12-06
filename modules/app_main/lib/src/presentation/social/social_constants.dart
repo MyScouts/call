@@ -18,7 +18,7 @@ extension DiaryCategoryExt on DiaryCategory {
 enum MedialEnum {
   post(text: 'Bài viết'),
   video(text: 'Video'),
-  reels(text: 'Reels');
+  reels(text: 'Thước phim');
 
   final String text;
   const MedialEnum({required this.text});

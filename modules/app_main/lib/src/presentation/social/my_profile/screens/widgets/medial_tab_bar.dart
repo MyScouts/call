@@ -1,3 +1,4 @@
+
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -5,11 +6,13 @@ import 'package:imagewidget/imagewidget.dart';
 import '../../../social_constants.dart';
 
 class MedialTabBar extends StatefulWidget {
-  final TabController controller;
+  final int index;
+  final Function(int) onChange;
 
   const MedialTabBar({
     super.key,
-    required this.controller,
+    required this.index,
+    required this.onChange,
   });
 
   @override
@@ -50,17 +53,16 @@ class _MedialTabBarState extends State<MedialTabBar> {
     required String text,
     double iconSize = 21,
   }) {
-    final bool selected = widget.controller.index == index;
+    final bool selected = widget.index == index;
 
     return Expanded(
       child: InkWell(
         onTap: () {
-          setState(() {
-            widget.controller.animateTo(index);
-          });
+          widget.onChange(index);
+        
         },
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          padding: const EdgeInsets.symmetric(vertical: 20),
           alignment: Alignment.center,
           decoration: BoxDecoration(
             border: Border(
@@ -79,16 +81,14 @@ class _MedialTabBarState extends State<MedialTabBar> {
                 width: iconSize,
                 height: iconSize,
               ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: selected ? AppColors.blueEdit : AppColors.grey78,
-                  ),
-                  overflow: TextOverflow.ellipsis,
+              const SizedBox(width: 4),
+              Text(
+                text,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: selected ? AppColors.blueEdit : AppColors.grey78,
                 ),
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),

@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 
-enum ImageInputType { asset, network }
+enum ImageInputType { asset, network, file }
 
 typedef SizeMoreBuilder = Widget Function(int sizeMore);
 
@@ -48,6 +50,25 @@ class CommonMultiImageView extends StatelessWidget {
           key: key,
           images: listNetwork,
           imageInputType: ImageInputType.network,
+          width: width,
+          height: height,
+          boxShape: boxShape,
+          radius: radius,
+          sizeMoreBuilder: sizeMoreBuilder,
+        );
+
+  const CommonMultiImageView.multiFile({
+    required List<String> listFile,
+    double? width,
+    double? height,
+    BoxShape? boxShape,
+    double? radius,
+    SizeMoreBuilder? sizeMoreBuilder,
+    Key? key,
+  }) : this._(
+          key: key,
+          images: listFile,
+          imageInputType: ImageInputType.file,
           width: width,
           height: height,
           boxShape: boxShape,
@@ -253,6 +274,18 @@ class CommonMultiImageView extends StatelessWidget {
     required BoxFit fit,
     required ImageInputType imageInputType,
   }) {
+    if (imageInputType == ImageInputType.file) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(radius ?? 0),
+        child: Image.file(
+          File(image as String),
+          fit: fit,
+          width: width,
+          height: height,
+        ),
+      );
+    }
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(radius ?? 0),
       child: ImageWidget(

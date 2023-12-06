@@ -183,6 +183,15 @@ class IconAppConstants {
   static String icComment = IconApp.icComment.path;
   static String icShare = IconApp.icShare.path;
   static String icHeartActive = IconApp.icHeartActive.path;
+  static String icFriend = IconApp.icFriend.path;
+  static String icGalleryBg = IconApp.icGalleryBg.path;
+  static String icSmileBg = IconApp.icSmileBg.path;
+  static String icPositionBg = IconApp.icPositionBg.path;
+  static String icTagBg = IconApp.icTagBg.path;
+  static String icVideoBg = IconApp.icVideoBg.path;
+  static String icOnly = IconApp.icOnly.path;
+  static String icPublic = IconApp.icPublic.path;
+  static String icFan = IconApp.icFan.path;
 }
 
 enum IconApp {
@@ -376,7 +385,16 @@ enum IconApp {
   icHeartRd('assets/icons/ic_heart_rd.svg'),
   icComment('assets/icons/ic_comment.svg'),
   icShare('assets/icons/ic_share.svg'),
-  icHeartActive('assets/icons/ic_heart_active.svg');
+  icHeartActive('assets/icons/ic_heart_active.svg'),
+  icFriend('assets/icons/ic_friend.svg'),
+  icGalleryBg('assets/icons/ic_gallery_bg.svg'),
+  icSmileBg('assets/icons/ic_smile_bg.svg'),
+  icPositionBg('assets/icons/ic_position_bg.svg'),
+  icTagBg('assets/icons/ic_tag_bg.svg'),
+  icVideoBg('assets/icons/ic_video_bg.svg'),
+  icOnly('assets/icons/ic_only.svg'),
+  icPublic('assets/icons/ic_public.svg'),
+  icFan('assets/icons/ic_fan.svg');
 
 
   const IconApp(this.path);

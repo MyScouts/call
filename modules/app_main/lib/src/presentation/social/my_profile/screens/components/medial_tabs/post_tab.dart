@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/di/di.dart';
-import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_bloc.dart';
+import 'package:app_main/src/domain/entities/media/media_file.dart';
+import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
+import 'package:app_main/src/presentation/social/my_profile/screens/common/subordinate_scroll.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/react_comment_widget.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/profile_avatar.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/react_widget.dart';
@@ -12,24 +13,34 @@ import 'package:ui/ui.dart';
 import '../../widgets/multiple_image.dart';
 
 class PostTab extends StatefulWidget {
-  const PostTab({required this.posts, required this.onLoadMore, super.key});
+  const PostTab({
+    required this.posts,
+    required this.onLoadMore,
+    required this.postType,
+    required this.controller,
+    this.newPost,
+    this.mediaFiles,
+    super.key,
+  });
   final List<Post> posts;
   final Function onLoadMore;
+  final Post? newPost;
+  final List<MediaFile?>? mediaFiles;
+  final PostType postType;
+  final SubordinateScrollController controller;
 
   @override
   State<PostTab> createState() => _PostTabState();
 }
 
 class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
-  final myProfileBloc = getIt<MyProfileBloc>();
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    var controller = PrimaryScrollController.of(context);
-    controller.addListener(() {
-      if (controller.position.pixels >= controller.position.maxScrollExtent) {
+    widget.controller.addListener(() {
+      if (widget.controller.position.pixels >=
+          widget.controller.position.maxScrollExtent) {
         widget.onLoadMore();
       }
     });
@@ -43,23 +54,54 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
       shrinkWrap: true,
       key: widget.key,
       physics: const ClampingScrollPhysics(),
+      controller: widget.controller,
       slivers: [
         SliverToBoxAdapter(
           child: Container(
             color: AppColors.white,
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children:
-                    widget.posts.map((post) => _buildPost(post)).toList()),
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (widget.newPost != null)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding:
+                            EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                        child: LinearProgressIndicator(
+                          value: null,
+                        ),
+                      ),
+                      IgnorePointer(
+                        child: ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Colors.white.withOpacity(0.5),
+                            BlendMode.hardLight,
+                          ),
+                          child: _buildPost(
+                            widget.newPost!,
+                            isNewPost: true,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ...widget.posts.map((post) => _buildPost(post)),
+              ],
+            ),
           ),
         )
       ],
     );
   }
 
-  Widget _buildPost(Post post) {
-    final hasMedia = post.getListMedia.isNotEmpty;
+  Widget _buildPost(Post post, {bool isNewPost = false}) {
+    bool hasMedia = post.getListMedia.isNotEmpty;
+    if (isNewPost) {
+      hasMedia = widget.mediaFiles != null && widget.mediaFiles!.isNotEmpty;
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,12 +141,10 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
               if (hasMedia)
                 SizedBox(
                   height: 172,
-                  child: CommonMultiImageView.multiAsset(
-                    listAssetPath: post.getListMedia
-                        .map((media) => media.link ?? '')
-                        .toList(),
-                    width: double.infinity,
-                    radius: 12,
+                  child: _buildShowMedia(
+                    isNewPost: isNewPost,
+                    postType: widget.postType,
+                    medias: post.getListMedia,
                   ),
                 ),
               const SizedBox(height: 12),
@@ -128,7 +168,7 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
                 colorHighlightDetectedText: AppColors.blue34,
               ),
               const SizedBox(height: 12),
-              ReactWidget(post: post),
+              ReactWidget(post: post, isNewPost: isNewPost),
               _buildLatestComment(post.latestComment),
             ],
           ),
@@ -245,6 +285,58 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
         ),
       ],
     );
+  }
+
+  Widget _buildShowMedia({
+    required bool isNewPost,
+    required PostType postType,
+    required List<Media> medias,
+  }) {
+    if (isNewPost) {
+      switch (postType) {
+        case PostType.text:
+          return CommonMultiImageView.multiFile(
+            listFile: widget.mediaFiles!.map((media) {
+              if (media != null) return media.path;
+              return '';
+            }).toList(),
+            width: double.infinity,
+            radius: 12,
+          );
+        case PostType.video:
+          return SizedBox(
+            width: double.infinity,
+            child: CommonVideoPlayer(
+              videoType: VideoType.file,
+              source: widget.mediaFiles!.first!.path,
+            ),
+          );
+        default:
+          break;
+      }
+    } else {
+      switch (postType) {
+        case PostType.text:
+          return CommonMultiImageView.multiNetwork(
+            listNetwork:
+                medias.map((media) => media.link ?? '').toList(),
+            width: double.infinity,
+            radius: 12,
+          );
+        case PostType.video:
+          return SizedBox(
+            width: double.infinity,
+            child: CommonVideoPlayer(
+              videoType: VideoType.network,
+              source: medias.first.link!,
+            ),
+          );
+        default:
+          break;
+      }
+    }
+
+    return const SizedBox.shrink();
   }
 
   Widget _buildPostTime(String time) {

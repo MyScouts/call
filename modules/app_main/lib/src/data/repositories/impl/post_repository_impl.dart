@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/data_sources/remote/post_api.dart';
+import 'package:app_main/src/data/models/payloads/social/new_post_payload.dart';
 import 'package:app_main/src/data/models/payloads/social/react_payload.dart';
 import 'package:app_main/src/data/repositories/post_repository.dart';
 import 'package:injectable/injectable.dart';
@@ -28,5 +29,14 @@ class PostRepositoryImpl extends PostRepository {
   }) async {
     await _postApi.react(postId, reactPayload);
   }
-  
+
+  @override
+  Future<Post> createPost(NewPostPayload newPostPayload)async {
+    final response = await _postApi.createPost(newPostPayload);
+    return response.data;
+  }
 }
+
+  
+  
+

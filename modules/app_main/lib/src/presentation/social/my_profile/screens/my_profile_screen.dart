@@ -2,9 +2,13 @@ import 'dart:async';
 
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/app_dimens.dart';
+import 'package:app_main/src/data/models/payloads/social/create_post_payload.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_event.dart';
 import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_state.dart';
+import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
+import 'package:app_main/src/presentation/social/my_profile/my_profile_coordinator.dart';
+import 'package:app_main/src/presentation/social/my_profile/screens/common/subordinate_scroll.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
@@ -12,10 +16,9 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 import '../blocs/my_profile_bloc.dart';
-import 'components/create_post.dart';
+import 'widgets/my_profile_create_post.dart';
 import 'components/medial_tabs/post_tab.dart';
 import 'components/medial_tabs/reels_tab.dart';
-import 'components/medial_tabs/video_tab.dart';
 import 'widgets/medial_tab_bar.dart';
 import 'widgets/profile_avatar.dart';
 
@@ -33,8 +36,9 @@ class _MyProfileScreenState extends State<MyProfileScreen>
   final bloc = getIt<MyProfileBloc>();
 
   late TabController _medialTabController;
+  final scrollControllers = <SubordinateScrollController?>[null, null, null];
+
   bool isScrolled = false;
-  late StreamController<bool> _isScrolledController;
 
   @override
   void initState() {
@@ -44,14 +48,19 @@ class _MyProfileScreenState extends State<MyProfileScreen>
       length: 3,
       vsync: this,
     );
-    _isScrolledController = StreamController.broadcast();
+
+    bloc.add(MyProfileInitiated());
   }
 
   @override
   void dispose() {
     super.dispose();
     _medialTabController.dispose();
-    _isScrolledController.close();
+    bloc.isScrolledController.close();
+    for (final scrollController in scrollControllers) {
+      scrollController?.dispose();
+    }
+    bloc.switchTabController.close();
   }
 
   @override
@@ -78,6 +87,7 @@ class _MyProfileScreenState extends State<MyProfileScreen>
             },
             onRefresh: () {
               bloc.add(MyProfileRefreshed());
+
               return Future.value(null);
             },
             child: ExtendedNestedScrollView(
@@ -110,22 +120,70 @@ class _MyProfileScreenState extends State<MyProfileScreen>
                 children: [
                   BlocBuilder<MyProfileBloc, MyProfileState>(
                       buildWhen: (previous, current) =>
-                          previous.posts != current.posts ||
-                          previous.hasLoadMore != current.hasLoadMore,
+                          previous.textPosts != current.textPosts ||
+                          previous.hasTextPostLoadMore !=
+                              current.hasTextPostLoadMore ||
+                          previous.newTextPost != current.newTextPost ||
+                          previous.textPostMediaFiles !=
+                              current.textPostMediaFiles,
                       builder: (context, state) {
+                        final parentController =
+                            PrimaryScrollController.of(context);
+                        const postType = PostType.text;
+
+                        if (scrollControllers[postType.index]?.parent !=
+                            parentController) {
+                          scrollControllers[postType.index]?.dispose();
+                          scrollControllers[postType.index] =
+                              SubordinateScrollController(parentController);
+                        }
+
                         return PostTab(
-                          posts: state.posts,
+                          controller: scrollControllers[0]!,
+                          postType: PostType.text,
+                          posts: state.textPosts,
+                          newPost: state.newTextPost,
+                          mediaFiles: state.textPostMediaFiles,
                           key: const PageStorageKey('post-tab'),
                           onLoadMore: () {
-                            if (!state.hasLoadMore) return;
+                            if (!state.hasTextPostLoadMore) return;
 
                             bloc.add(MyProfileLoadMore());
                           },
                         );
                       }),
-                  const VideoTab(
-                    key: PageStorageKey('video-tab'),
-                  ),
+                  BlocBuilder<MyProfileBloc, MyProfileState>(
+                      buildWhen: (previous, current) =>
+                          previous.videoPosts != current.videoPosts ||
+                          previous.hasVideoPostLoadMore !=
+                              current.hasVideoPostLoadMore ||
+                          previous.newVideoPost != current.newVideoPost ||
+                          previous.videoPostMediaFiles !=
+                              current.videoPostMediaFiles,
+                      builder: (context, state) {
+                        final parentController =
+                            PrimaryScrollController.of(context);
+                        const postType = PostType.video;
+                        if (scrollControllers[postType.index]?.parent !=
+                            parentController) {
+                          scrollControllers[postType.index]?.dispose();
+                          scrollControllers[postType.index] =
+                              SubordinateScrollController(parentController);
+                        }
+                        return PostTab(
+                          controller: scrollControllers[postType.index]!,
+                          postType: PostType.video,
+                          posts: state.videoPosts,
+                          newPost: state.newVideoPost,
+                          mediaFiles: state.videoPostMediaFiles,
+                          key: const PageStorageKey('video-tab'),
+                          onLoadMore: () {
+                            if (!state.hasVideoPostLoadMore) return;
+
+                            bloc.add(MyProfileLoadMore());
+                          },
+                        );
+                      }),
                   const ReelsTab(
                     key: PageStorageKey('reels-tab'),
                   ),
@@ -142,7 +200,18 @@ class _MyProfileScreenState extends State<MyProfileScreen>
       pinned: true,
       automaticallyImplyLeading: false,
       titleSpacing: 0,
-      title: MedialTabBar(controller: _medialTabController),
+      title: StreamBuilder<int>(
+          stream: bloc.switchTabController.stream,
+          builder: (context, snapshot) {
+            return MedialTabBar(
+              index: _medialTabController.index,
+              onChange: (index) {
+                _medialTabController.animateTo(index);
+                bloc.switchTabController.add(index);
+                bloc.add(IndividualSwitchTab(index: index));
+              },
+            );
+          }),
       centerTitle: false,
       elevation: 0,
       leadingWidth: 0,
@@ -164,7 +233,38 @@ class _MyProfileScreenState extends State<MyProfileScreen>
       title: Container(
         height: 56,
         padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
-        child: const CreatePost(),
+        child: BlocBuilder<MyProfileBloc, MyProfileState>(
+            buildWhen: (previous, current) =>
+                previous.userInfo != current.userInfo ||
+                previous.currentPostType != current.currentPostType,
+            builder: (context, state) {
+              return MyProfileCreatePost(
+                user: state.userInfo,
+                onTapCreatePost: () {
+                  _onTapCreatePost(
+                    userInfo: state.userInfo,
+                    postType: state.currentPostType,
+                    isShowMedia: false,
+                  );
+                },
+                onTapImage: () {
+                  const postType = PostType.text;
+                  _onTapCreatePost(
+                    userInfo: state.userInfo,
+                    postType: postType,
+                    isShowMedia: true,
+                  );
+                },
+                onTapVideo: () {
+                  const postType = PostType.video;
+                  _onTapCreatePost(
+                    userInfo: state.userInfo,
+                    postType: postType,
+                    isShowMedia: true,
+                  );
+                },
+              );
+            }),
       ),
       centerTitle: false,
       elevation: 0,
@@ -175,6 +275,27 @@ class _MyProfileScreenState extends State<MyProfileScreen>
         borderSide: BorderSide(color: Colors.transparent),
       ),
     );
+  }
+
+  Future<void> _onTapCreatePost({
+    required User? userInfo,
+    required PostType postType,
+    required bool isShowMedia,
+  }) async {
+    final index = postType.index;
+    _medialTabController.animateTo(index);
+    bloc.switchTabController.add(index);
+    bloc.add(IndividualSwitchTab(index: index));
+
+    final data = await context.startCreatePost(
+      postType: postType,
+      user: userInfo,
+      isShowMedia: isShowMedia,
+    );
+    if (data != null) {
+      final post = data as CreatePostPayload;
+      bloc.add(CreateNewPost(createPostPayload: post));
+    }
   }
 
   Widget _buildUltility({
@@ -464,7 +585,7 @@ class _MyProfileScreenState extends State<MyProfileScreen>
       elevation: 0,
       centerTitle: false,
       leading: StreamBuilder<bool>(
-          stream: _isScrolledController.stream,
+          stream: bloc.isScrolledController.stream,
           initialData: isScrolled,
           builder: (context, snapshot) {
             return IconButton(
@@ -479,7 +600,7 @@ class _MyProfileScreenState extends State<MyProfileScreen>
           children: [
             Expanded(
               child: StreamBuilder<bool>(
-                  stream: _isScrolledController.stream,
+                  stream: bloc.isScrolledController.stream,
                   initialData: isScrolled,
                   builder: (context, snapshot) {
                     const outlineBorderRadius = OutlineInputBorder(
@@ -535,7 +656,7 @@ class _MyProfileScreenState extends State<MyProfileScreen>
       flexibleSpace: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           isScrolled = constraints.maxHeight <= imageAvatar;
-          _isScrolledController.add(isScrolled);
+          bloc.isScrolledController.add(isScrolled);
 
           return SizedBox(
             height: expandedHeight,

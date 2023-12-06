@@ -239,7 +239,7 @@ class _ResourceApi implements ResourceApi {
       _responseGetUrlUpload.uploadUrl,
       options: Options(
         method: 'PUT',
-        headers: {'Content-Type': 'image/jpeg'},
+        headers: {'Content-Type': 'image/jpeg, video/mp4'},
       ),
       data: imageData,
     );

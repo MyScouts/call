@@ -82,4 +82,22 @@ class MediaPickerImpl implements MediaPicker {
       return null;
     }
   }
+
+  @override
+  Future<MediaFile?> pickVideoFromGallery() async {
+    try {
+      final xFile = await ImagePicker().pickVideo(
+        source: ImageSource.gallery,
+      );
+
+      if (xFile == null) return null;
+
+      return MediaFile(
+        path: xFile.path,
+      );
+    } catch (error) {
+      if (error is PlatformException) rethrow;
+      return null;
+    }
+  }
 }
