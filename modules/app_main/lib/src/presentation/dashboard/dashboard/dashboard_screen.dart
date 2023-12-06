@@ -309,7 +309,7 @@ class DashBoardScreenController extends ChangeNotifier {
   final DashboardSharePreferenceUseCase useCase;
 
   DashBoardScreenController(this.useCase) {
-    mainPage = useCase.getPageInitial();
+    mainPage = useCase.getPageInitial('');
     capture();
   }
 
@@ -330,7 +330,7 @@ class DashBoardScreenController extends ChangeNotifier {
   ScreenshotController screenshotController = ScreenshotController();
 
   void save(int page) {
-    useCase.savePage(page);
+    useCase.savePage('', page);
   }
 
   void capture() async {

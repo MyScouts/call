@@ -44,12 +44,16 @@ class DashboardSharePreferenceUseCase {
     return _shared.setString('$key $_dashboardItems', path);
   }
 
-  int getPageInitial() {
-    return _shared.getInt(_dashboardPage) ?? 0;
+  int? getPageInitial(String key) {
+    return _shared.getInt('$key $_dashboardPage');
   }
 
-  void savePage(int page) {
-    _shared.setInt(_dashboardPage, page);
+  void savePage(String key, int page) {
+    _shared.setInt('$key $_dashboardPage', page);
+  }
+
+  void removePage(String key) {
+    _shared.remove('$key $_dashboardPage');
   }
 
   Future<bool> saveDashboardItemsFav(List<DashBoardItem> items) async {
@@ -78,6 +82,10 @@ class DashboardSharePreferenceUseCase {
   }
 
   String? getInitPath(String key) {
-   return _shared.getString('$key $_dashboardPath');
+    return _shared.getString('$key $_dashboardPath');
+  }
+
+  void removeInitPath(String key) {
+    _shared.remove('$key $_dashboardPath');
   }
 }

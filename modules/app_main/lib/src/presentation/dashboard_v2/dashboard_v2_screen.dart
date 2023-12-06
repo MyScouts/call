@@ -28,14 +28,22 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
   final PageController pageController = PageController();
   final GlobalKey<NotificationScreenState> notificationKey = GlobalKey();
   bool _showAppStore = false;
+
+  DashboardSharePreferenceUseCase get useCase =>
+      getIt<DashboardSharePreferenceUseCase>();
+
   @override
   void initState() {
     super.initState();
     CallManager.shared.initCallL(context);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       late final userId = context.read<UserCubit>().currentUser?.id ?? '';
-      final id =
-          getIt<DashboardSharePreferenceUseCase>().getInitPath('$userId') ?? '';
+      final page = useCase.getPageInitial('$userId');
+      if(page != null) {
+        pageController.jumpToPage(page);
+        return;
+      }
+      final id = useCase.getInitPath('$userId') ?? '';
       if (id.trim().isEmpty) return;
       final item = [...communityItems, ...personalItems, ...ecoItems]
           .firstWhereOrNull((e) => e.id == id);
@@ -73,9 +81,6 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
                           notificationKey.currentState?.forward();
                         },
                         openAppStore: () {
-                          // setState(() {
-                          //   _showAppStore = true;
-                          // });
                           Scaffold.of(ctx).openEndDrawer();
                         },
                         openSetting: () {

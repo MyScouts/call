@@ -36,20 +36,39 @@ class DashboardDrawer extends StatefulWidget {
 }
 
 class _DashboardDrawerState extends State<DashboardDrawer> {
-  _ScreenType _type = _ScreenType.c;
+  _ScreenType? _type;
   String id = '';
   late final userId = context.read<UserCubit>().currentUser?.id ?? '';
 
+  List<DashBoardItem> items = communityItems;
+
   @override
   void initState() {
-    id = getIt<DashboardSharePreferenceUseCase>().getInitPath('$userId') ?? '';
+    final page = useCase.getPageInitial('$userId');
+    if (page != null) {
+      _type = _ScreenType.values[page];
+    }
+    if (_type == null) {
+      id = useCase.getInitPath('$userId') ?? '';
+    }
     super.initState();
   }
 
+  DashboardSharePreferenceUseCase get useCase =>
+      getIt<DashboardSharePreferenceUseCase>();
+
   @override
   void dispose() {
-    if(id.trim().isNotEmpty) {
-      getIt<DashboardSharePreferenceUseCase>().saveInitPath('$userId', id);
+    if (id.trim().isNotEmpty) {
+      useCase.saveInitPath('$userId', id);
+    } else {
+      useCase.removeInitPath('$userId');
+    }
+    if (_type != null) {
+      final index = _ScreenType.values.indexOf(_type!);
+      useCase.savePage('$userId', index);
+    } else {
+      useCase.removePage('$userId');
     }
     super.dispose();
   }
@@ -93,6 +112,14 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                             onChanged: (_) {
                               setState(() {
                                 _type = e;
+                                id = '';
+                                if (_type == _ScreenType.c) {
+                                  items = communityItems;
+                                } else if (_type == _ScreenType.p) {
+                                  items = personalItems;
+                                } else {
+                                  items = ecoItems;
+                                }
                               });
                             },
                           ),
@@ -132,45 +159,19 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                if (_type == _ScreenType.c)
-                  ...communityItems
-                      .map<Widget>((e) => _Items(
-                            item: e,
-                            onChanged: () {
-                              setState(() {
-                                id = e.id;
-                              });
-                            },
-                            active: id == e.id,
-                          ))
-                      .toList()
-                      .separated(const SizedBox(height: 8)),
-                if (_type == _ScreenType.p)
-                  ...personalItems
-                      .map<Widget>((e) => _Items(
-                            item: e,
-                            onChanged: () {
-                              setState(() {
-                                id = e.id;
-                              });
-                            },
-                            active: id == e.id,
-                          ))
-                      .toList()
-                      .separated(const SizedBox(height: 8)),
-                if (_type == _ScreenType.e)
-                  ...ecoItems
-                      .map<Widget>((e) => _Items(
-                            item: e,
-                            onChanged: () {
-                              setState(() {
-                                id = e.id;
-                              });
-                            },
-                            active: id == e.id,
-                          ))
-                      .toList()
-                      .separated(const SizedBox(height: 8)),
+                ...items
+                    .map<Widget>((e) => _Items(
+                          item: e,
+                          onChanged: () {
+                            setState(() {
+                              id = e.id;
+                              _type = null;
+                            });
+                          },
+                          active: id == e.id,
+                        ))
+                    .toList()
+                    .separated(const SizedBox(height: 8)),
               ],
             ),
           ),
