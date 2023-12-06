@@ -43,6 +43,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
   final ValueNotifier<List<RegisterMarshopRule>> _rulesCtrl = ValueNotifier([]);
   final _marshopIdValidCtrl = ValueNotifier(false);
   MarshopResponse? marshop;
+  bool _hasMarshop = false;
   late User _authInfo;
 
   @override
@@ -151,15 +152,16 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
-                      onDoubleTap: _startQrCodeScan,
+                      onTap: _startQrCodeScan,
                       child: Assets.icons_ic_qrcode_png.image(width: 50),
                     ),
                     const SizedBox(width: 15),
                     Expanded(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           CustomTextField(
+                            readOnly: _hasMarshop,
                             controller: _marshopIdCtrl,
                             hintText: "Nhập ID MarShop giới thiệu",
                             suffixIcon: Icon(
@@ -171,32 +173,38 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
                           ),
                           const SizedBox(height: 5),
                           if (!valid && _marshopIdCtrl.text.isNotEmpty)
-                            Text(
-                              "ID MarShop không tồn tại!",
-                              style: context.textTheme.titleSmall!.copyWith(
-                                color: Colors.red,
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "ID MarShop không tồn tại!",
+                                style: context.textTheme.titleSmall!.copyWith(
+                                  color: Colors.red,
+                                ),
                               ),
-                            )
+                            ),
+                          if (!_hasMarshop) const SizedBox(height: 5),
+                          if (!_hasMarshop)
+                            GestureDetector(
+                              onTap: () => context
+                                  .startMarshopReferralScreen()
+                                  .then((value) {
+                                if (value != null && value is String) {
+                                  _marshopIdCtrl.text = value;
+                                }
+                              }),
+                              child: Text(
+                                "Bạn chưa có MarShop giới thiệu ?",
+                                style: context.text.bodyMedium!.copyWith(
+                                  color: context.theme.primaryColor,
+                                ),
+                              ),
+                            ),
                         ],
                       ),
                     ),
                   ],
                 );
               }),
-          const SizedBox(height: 5),
-          GestureDetector(
-            onTap: () => context.startMarshopReferralScreen().then((value) {
-              if (value != null && value is String) {
-                _marshopIdCtrl.text = value;
-              }
-            }),
-            child: Text(
-              "Bạn chưa có MarShop giới thiệu ?",
-              style: context.text.bodyMedium!.copyWith(
-                color: context.theme.primaryColor,
-              ),
-            ),
-          ),
           const SizedBox(height: 10),
         ],
       ),
@@ -237,7 +245,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
     );
   }
 
-  void _startQrCodeScan() async {
+  void _startQrCodeScan() {
     context
         .startScanQrCode(
       showMyQr: false,
@@ -299,6 +307,8 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
 
       if (onboarding.marshopCustomerId != null) {
         rules.add(RegisterMarshopRule.isRefIdMarshop);
+        _hasMarshop = true;
+        setState(() {});
         _marshopDetailBloc.add(
           GetDetailDataParam1Event(
             GetMarshopInfoPayload(

@@ -41,12 +41,12 @@ class UserInfoHeader extends StatelessWidget {
 
     // if (followInfo.isFollowee || followInfo.isFriend) return false;
 
-    // if (onBoarding != null) {
-    //   if (onBoarding!.isPdone && authInfo.old > 15) return false;
-    //   if (onBoarding!.isPdone && authInfo.old <= 15) {
-    //     return false;
-    //   }
-    // }
+    if (onBoarding != null) {
+      if (onBoarding!.isPdone && authInfo.old <= 15) {
+        // print(authInfo.old);
+        // return true;
+      }
+    }
 
     return false;
   }
