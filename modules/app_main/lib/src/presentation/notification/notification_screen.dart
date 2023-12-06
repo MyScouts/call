@@ -27,7 +27,7 @@ class NotificationScreenState extends State<NotificationScreen>
     with SingleTickerProviderStateMixin {
   final bloc = getIt<NotificationBloc>();
   late AnimationController controller;
-  late final Animation<Offset> animation;
+  late Animation<Offset> animation;
 
   @override
   void initState() {
