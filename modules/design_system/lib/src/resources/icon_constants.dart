@@ -162,6 +162,8 @@ class IconAppConstants {
   static String icCallAway = IconApp.icCallAway.path;
   static String icVideoOff = IconApp.icVideoOff.path;
   static String icMicOff = IconApp.icMicOff.path;
+  static String icDeleteCall = IconApp.icDeleteCall.path;
+  static String icVideoAnswer = IconApp.icVideoAnswer.path;
   static String icBackCall = IconApp.icBackCall.path;
 }
 
@@ -336,6 +338,8 @@ enum IconApp {
   icIncomingCall('assets/icons/ic_incoming_call.svg'),
   icSwitchCamera('assets/icons/ic_switch_camera.svg'),
   icCallAway('assets/icons/ic_call_away.svg'),
+  icDeleteCall('assets/icons/ic_delete.svg'),
+  icVideoAnswer('assets/icons/ic_video_answer.svg'),
   icBackCall('assets/icons/ic_back_call.svg');
 
   const IconApp(this.path);
