@@ -48,9 +48,7 @@ class SettingSheet extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: Theme
-                              .of(context)
-                              .primaryColor,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                     ),
@@ -67,33 +65,33 @@ class SettingSheet extends StatelessWidget {
                 children: [
                   Obx(() {
                     final action = controller.enableAudio;
-                    if(controller.mic.value) {
+                    if (controller.mic.value) {
                       return _Item(
-                        title: 'Gọi âm thanh',
-                        icon: Assets.icons_lives_micro.svg(),
+                        title: 'Tắt tiếng',
+                        icon: Assets.icons_lives_turn_off_mic.svg(),
                         action: action,
                       );
                     }
 
                     return _Item(
-                      title: 'Gọi âm thanh',
-                      icon: Assets.icons_lives_micro.svg(),
+                      title: 'Bật tiếng',
+                      icon: Assets.icons_lives_turn_on_mic.svg(),
                       action: action,
                     );
                   }),
                   Obx(() {
                     final action = controller.enableVideo;
-                    if(controller.mic.value) {
-                      return  _Item(
-                        title: 'Gọi video',
-                        icon: Assets.icons_lives_video.svg(),
+                    if (controller.video.value) {
+                      return _Item(
+                        title: 'Tắt hình',
+                        icon: Assets.icons_lives_turn_off_video.svg(),
                         action: action,
                       );
                     }
 
-                    return  _Item(
-                      title: 'Gọi video',
-                      icon: Assets.icons_lives_video.svg(),
+                    return _Item(
+                      title: 'Bật hình',
+                      icon: Assets.icons_lives_turn_on_video.svg(),
                       action: action,
                     );
                   }),

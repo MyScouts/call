@@ -22,7 +22,7 @@ class FriendWidget extends StatelessWidget {
         await context.startChatRoom(
           memberId: data.id,
         );
-        getIt.get<ConversationCubit>().init();
+        getIt.get<ConversationCubit>().loadNewConversation();
       },
       child: SizedBox(
         width: MediaQuery.of(context).size.width,

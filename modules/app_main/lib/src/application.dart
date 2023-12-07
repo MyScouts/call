@@ -3,7 +3,10 @@ import 'dart:async';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:app_main/src/core/services/notifications/mixins/notification_mixin.dart';
 import 'package:app_main/src/core/services/notifications/notification_service.dart';
+import 'package:app_main/src/core/socket/chat_socket.dart';
 import 'package:app_main/src/di/di.dart';
+import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_cubit.dart';
+import 'package:app_main/src/presentation/chat/conversation/cubit/conversation_cubit.dart';
 import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
 import 'package:app_main/src/presentation/routes.dart';
 import 'package:design_system/design_system.dart';
@@ -43,8 +46,7 @@ class Application extends StatefulWidget {
   State<Application> createState() => _ApplicationState();
 }
 
-class _ApplicationState extends State<Application>
-    with WidgetsBindingObserver, NotificationMixin {
+class _ApplicationState extends State<Application> with WidgetsBindingObserver, NotificationMixin {
   Widget _buildMaterialApp({
     required Locale? locale,
     ThemeData? light,
@@ -89,7 +91,7 @@ class _ApplicationState extends State<Application>
                   children: [
                     toastBuilder(context, child!),
                     Obx(() {
-                      if(PipHandler.showPip.value) {
+                      if (PipHandler.showPip.value) {
                         return PipHandler.pipView;
                       }
                       return const SizedBox.shrink();
@@ -124,14 +126,19 @@ class _ApplicationState extends State<Application>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      // updateStatusBarColor();
-    }
+    // if (state == AppLifecycleState.resumed) {
+    //   ChatSocket().connect();
+    //   getIt.get<ConversationCubit>().loadNewConversation();
+    //   getIt.get<ChatRoomCubit>().loadMessages();
+    // } else if (state == AppLifecycleState.paused) {
+    //   ChatSocket().disconnect();
+    // }
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    ChatSocket().disconnect();
     super.dispose();
   }
 
@@ -168,8 +175,7 @@ final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 class MyNavigatorObserver extends NavigatorObserver {
   static List<Route<dynamic>> routeStack = [];
 
-  static List<String> get listRoute =>
-      routeStack.map((e) => e.settings.name ?? 'null').toList();
+  static List<String> get listRoute => routeStack.map((e) => e.settings.name ?? 'null').toList();
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {

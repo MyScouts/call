@@ -19,7 +19,7 @@ class UserActiveWidget extends StatelessWidget {
         await context.startChatRoom(
           memberId: data.id,
         );
-        getIt.get<ConversationCubit>().init();
+        getIt.get<ConversationCubit>().loadNewConversation();
       },
       child: SizedBox(
         width: 70,

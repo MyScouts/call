@@ -5,7 +5,7 @@
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
+// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -866,6 +866,10 @@ class Assets {
   static const AssetGenImage icons_dashboard_eco_6 =
       AssetGenImage('assets/icons/dashboard/eco_6.png');
 
+  /// File path: assets/icons/dashboard/edit.svg
+  static const SvgGenImage icons_dashboard_edit =
+      SvgGenImage('assets/icons/dashboard/edit.svg');
+
   /// File path: assets/icons/dashboard/fire.svg
   static const SvgGenImage icons_dashboard_fire =
       SvgGenImage('assets/icons/dashboard/fire.svg');
@@ -958,6 +962,14 @@ class Assets {
   static const AssetGenImage icons_dashboard_tv_live =
       AssetGenImage('assets/icons/dashboard/tv_live.png');
 
+  /// File path: assets/icons/dashboard/video.svg
+  static const SvgGenImage icons_dashboard_video =
+      SvgGenImage('assets/icons/dashboard/video.svg');
+
+  /// File path: assets/icons/dashboard/video_play.svg
+  static const SvgGenImage icons_dashboard_video_play =
+      SvgGenImage('assets/icons/dashboard/video_play.svg');
+
   /// File path: assets/icons/dashboard/weather.svg
   static const SvgGenImage icons_dashboard_weather =
       SvgGenImage('assets/icons/dashboard/weather.svg');
@@ -1021,6 +1033,10 @@ class Assets {
   /// File path: assets/icons/ic_block_chat.svg
   static const SvgGenImage icons_ic_block_chat =
       SvgGenImage('assets/icons/ic_block_chat.svg');
+
+  /// File path: assets/icons/ic_c.png
+  static const AssetGenImage icons_ic_c =
+      AssetGenImage('assets/icons/ic_c.png');
 
   /// File path: assets/icons/ic_call.png
   static const AssetGenImage icons_ic_call_png =
@@ -1107,8 +1123,12 @@ class Assets {
       SvgGenImage('assets/icons/ic_default_team_avt.svg');
 
   /// File path: assets/icons/ic_delete.png
-  static const AssetGenImage icons_ic_delete =
+  static const AssetGenImage icons_ic_delete_png =
       AssetGenImage('assets/icons/ic_delete.png');
+
+  /// File path: assets/icons/ic_delete.svg
+  static const SvgGenImage icons_ic_delete_svg =
+      SvgGenImage('assets/icons/ic_delete.svg');
 
   /// File path: assets/icons/ic_delete_chat.svg
   static const SvgGenImage icons_ic_delete_chat =
@@ -1121,6 +1141,10 @@ class Assets {
   /// File path: assets/icons/ic_dots-horizontal.svg
   static const SvgGenImage icons_ic_dots_horizontal =
       SvgGenImage('assets/icons/ic_dots-horizontal.svg');
+
+  /// File path: assets/icons/ic_e.png
+  static const AssetGenImage icons_ic_e =
+      AssetGenImage('assets/icons/ic_e.png');
 
   /// File path: assets/icons/ic_ecommerce.png
   static const AssetGenImage icons_ic_ecommerce =
@@ -1273,6 +1297,10 @@ class Assets {
   /// File path: assets/icons/ic_newspaper_ban.svg
   static const SvgGenImage icons_ic_newspaper_ban =
       SvgGenImage('assets/icons/ic_newspaper_ban.svg');
+
+  /// File path: assets/icons/ic_p.png
+  static const AssetGenImage icons_ic_p =
+      AssetGenImage('assets/icons/ic_p.png');
 
   /// File path: assets/icons/ic_pack.png
   static const AssetGenImage icons_ic_pack =
@@ -1474,6 +1502,10 @@ class Assets {
   static const SvgGenImage icons_ic_video =
       SvgGenImage('assets/icons/ic_video.svg');
 
+  /// File path: assets/icons/ic_video_answer.svg
+  static const SvgGenImage icons_ic_video_answer =
+      SvgGenImage('assets/icons/ic_video_answer.svg');
+
   /// File path: assets/icons/ic_video_call.svg
   static const SvgGenImage icons_ic_video_call =
       SvgGenImage('assets/icons/ic_video_call.svg');
@@ -1574,21 +1606,61 @@ class Assets {
   static const AssetGenImage icons_lives_live =
       AssetGenImage('assets/icons/lives/live.png');
 
+  /// File path: assets/icons/lives/marshop.svg
+  static const SvgGenImage icons_lives_marshop =
+      SvgGenImage('assets/icons/lives/marshop.svg');
+
   /// File path: assets/icons/lives/micro.svg
   static const SvgGenImage icons_lives_micro =
       SvgGenImage('assets/icons/lives/micro.svg');
+
+  /// File path: assets/icons/lives/mirror.svg
+  static const SvgGenImage icons_lives_mirror =
+      SvgGenImage('assets/icons/lives/mirror.svg');
 
   /// File path: assets/icons/lives/pip_up.svg
   static const SvgGenImage icons_lives_pip_up =
       SvgGenImage('assets/icons/lives/pip_up.svg');
 
+  /// File path: assets/icons/lives/pk.svg
+  static const SvgGenImage icons_lives_pk =
+      SvgGenImage('assets/icons/lives/pk.svg');
+
   /// File path: assets/icons/lives/public.svg
   static const SvgGenImage icons_lives_public =
       SvgGenImage('assets/icons/lives/public.svg');
 
+  /// File path: assets/icons/lives/share.svg
+  static const SvgGenImage icons_lives_share =
+      SvgGenImage('assets/icons/lives/share.svg');
+
+  /// File path: assets/icons/lives/switch_came.svg
+  static const SvgGenImage icons_lives_switch_came =
+      SvgGenImage('assets/icons/lives/switch_came.svg');
+
+  /// File path: assets/icons/lives/turn_off_mic.svg
+  static const SvgGenImage icons_lives_turn_off_mic =
+      SvgGenImage('assets/icons/lives/turn_off_mic.svg');
+
+  /// File path: assets/icons/lives/turn_off_video.svg
+  static const SvgGenImage icons_lives_turn_off_video =
+      SvgGenImage('assets/icons/lives/turn_off_video.svg');
+
+  /// File path: assets/icons/lives/turn_on_mic.svg
+  static const SvgGenImage icons_lives_turn_on_mic =
+      SvgGenImage('assets/icons/lives/turn_on_mic.svg');
+
+  /// File path: assets/icons/lives/turn_on_video.svg
+  static const SvgGenImage icons_lives_turn_on_video =
+      SvgGenImage('assets/icons/lives/turn_on_video.svg');
+
   /// File path: assets/icons/lives/video.svg
   static const SvgGenImage icons_lives_video =
       SvgGenImage('assets/icons/lives/video.svg');
+
+  /// File path: assets/icons/lives/zoom_in.svg
+  static const SvgGenImage icons_lives_zoom_in =
+      SvgGenImage('assets/icons/lives/zoom_in.svg');
 
   /// File path: assets/icons/love.png
   static const AssetGenImage icons_love =
@@ -1860,8 +1932,7 @@ class Assets {
       AssetGenImage('assets/images/live.png');
 
   /// File path: assets/images/loading.json
-  static const String images_loading =
-      'packages/design_system/assets/images/loading.json';
+  static const String images_loading = 'assets/images/loading.json';
 
   /// File path: assets/images/locket.webp
   static const AssetGenImage images_locket =
@@ -2237,6 +2308,7 @@ class Assets {
         icons_dashboard_eco_4,
         icons_dashboard_eco_5,
         icons_dashboard_eco_6,
+        icons_dashboard_edit,
         icons_dashboard_fire,
         icons_dashboard_game,
         icons_dashboard_ic_menu,
@@ -2260,6 +2332,8 @@ class Assets {
         icons_dashboard_shop,
         icons_dashboard_trend_up,
         icons_dashboard_tv_live,
+        icons_dashboard_video,
+        icons_dashboard_video_play,
         icons_dashboard_weather,
         icons_diamond,
         icons_ic_filter,
@@ -2276,6 +2350,7 @@ class Assets {
         icons_ic_bell,
         icons_ic_bird,
         icons_ic_block_chat,
+        icons_ic_c,
         icons_ic_call_png,
         icons_ic_call_svg,
         icons_ic_call_away,
@@ -2297,10 +2372,12 @@ class Assets {
         icons_ic_dashboard_contact_png,
         icons_ic_dashboard_contact_svg,
         icons_ic_default_team_avt,
-        icons_ic_delete,
+        icons_ic_delete_png,
+        icons_ic_delete_svg,
         icons_ic_delete_chat,
         icons_ic_doc,
         icons_ic_dots_horizontal,
+        icons_ic_e,
         icons_ic_ecommerce,
         icons_ic_edit_2,
         icons_ic_end,
@@ -2339,6 +2416,7 @@ class Assets {
         icons_ic_monitor,
         icons_ic_news,
         icons_ic_newspaper_ban,
+        icons_ic_p,
         icons_ic_pack,
         icons_ic_payment,
         icons_ic_phone,
@@ -2389,6 +2467,7 @@ class Assets {
         icons_ic_vdone,
         icons_ic_version,
         icons_ic_video,
+        icons_ic_video_answer,
         icons_ic_video_call,
         icons_ic_video_oc,
         icons_ic_video_off,
@@ -2414,10 +2493,20 @@ class Assets {
         icons_lives_filter,
         icons_lives_gift_1,
         icons_lives_live,
+        icons_lives_marshop,
         icons_lives_micro,
+        icons_lives_mirror,
         icons_lives_pip_up,
+        icons_lives_pk,
         icons_lives_public,
+        icons_lives_share,
+        icons_lives_switch_came,
+        icons_lives_turn_off_mic,
+        icons_lives_turn_off_video,
+        icons_lives_turn_on_mic,
+        icons_lives_turn_on_video,
         icons_lives_video,
+        icons_lives_zoom_in,
         icons_love,
         icons_newspaper,
         icons_pro,
@@ -2572,16 +2661,7 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider({
-    AssetBundle? bundle,
-    String? package = 'design_system',
-  }) {
-    return AssetImage(
-      _assetName,
-      bundle: bundle,
-      package: package,
-    );
-  }
+  ImageProvider provider() => AssetImage(_assetName);
 
   String get path => _assetName;
 
@@ -2604,14 +2684,13 @@ class SvgGenImage {
     AlignmentGeometry alignment = Alignment.center,
     bool allowDrawingOutsideViewBox = false,
     WidgetBuilder? placeholderBuilder,
+    Color? color,
+    BlendMode colorBlendMode = BlendMode.srcIn,
     String? semanticsLabel,
     bool excludeFromSemantics = false,
-    SvgTheme theme = const SvgTheme(),
-    ColorFilter? colorFilter,
     Clip clipBehavior = Clip.hardEdge,
-    @deprecated Color? color,
-    @deprecated BlendMode colorBlendMode = BlendMode.srcIn,
-    @deprecated bool cacheColorFilter = false,
+    bool cacheColorFilter = false,
+    SvgTheme? theme,
   }) {
     return SvgPicture.asset(
       _assetName,
@@ -2625,14 +2704,13 @@ class SvgGenImage {
       alignment: alignment,
       allowDrawingOutsideViewBox: allowDrawingOutsideViewBox,
       placeholderBuilder: placeholderBuilder,
-      semanticsLabel: semanticsLabel,
-      excludeFromSemantics: excludeFromSemantics,
-      theme: theme,
-      colorFilter: colorFilter,
       color: color,
       colorBlendMode: colorBlendMode,
+      semanticsLabel: semanticsLabel,
+      excludeFromSemantics: excludeFromSemantics,
       clipBehavior: clipBehavior,
       cacheColorFilter: cacheColorFilter,
+      theme: theme,
     );
   }
 

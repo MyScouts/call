@@ -193,7 +193,9 @@ class IconAppConstants {
   static String icPublic = IconApp.icPublic.path;
   static String icFan = IconApp.icFan.path;
   static String icDoubleImage = IconApp.icDoubleImage.path;
-  
+
+  static String icRadioButtonCheck = IconApp.icRadioButtonCheck.path;
+  static String icRadioButton = IconApp.icRadioButton.path;
 }
 
 enum IconApp {
@@ -357,7 +359,8 @@ enum IconApp {
   icBlockChat('assets/icons/ic_block_chat.svg'),
   icVideoOff('assets/icons/ic_video_off.svg'),
   icMicOff('assets/icons/ic_mic_off.svg'),
-
+  icRadioButton('assets/icons/ic_radio_button.svg'),
+  icRadioButtonCheck('assets/icons/ic_radio_button_check.svg'),
 
   ///call
   icUserGroup3('assets/icons/ic_user_group3.svg'),
@@ -398,7 +401,6 @@ enum IconApp {
   icPublic('assets/icons/ic_public.svg'),
   icFan('assets/icons/ic_fan.svg'),
   icDoubleImage('assets/icons/ic_double_image.svg');
-
 
   const IconApp(this.path);
 

@@ -31,7 +31,8 @@ class CommonVideoPlayerState extends State<CommonVideoPlayer> {
   Future<void> initialController() async {
     switch (widget.videoType) {
       case VideoType.network:
-        videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(widget.source));
+        videoPlayerController =
+            VideoPlayerController.networkUrl(Uri.parse(widget.source));
         break;
       case VideoType.file:
         videoPlayerController = VideoPlayerController.file(File(widget.source));
