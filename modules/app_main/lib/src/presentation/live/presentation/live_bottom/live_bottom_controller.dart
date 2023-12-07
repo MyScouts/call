@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
 
@@ -15,22 +16,37 @@ class LiveBottomController {
 
   final tabIndex = 0.obs;
 
+  final giftCardLiveDaily = const GiftCardLive().obs;
+
   final giftCardLive = const GiftCardLive().obs;
 
   final UserUsecase userUsecase;
 
   LiveBottomController(this.useCase, this.userUsecase);
 
+  final textController = TextEditingController();
+
   Future<void> getLeaderBoard(int roomId) async {
     try {
-      giftCardLive.value = await useCase.getInfoGiftCard(roomId);
+      giftCardLiveDaily.value = await useCase.getInfoGiftCard(roomId);
+    } catch (e) {}
+  }
+
+  Future<void> getDailyDedications(int userId) async {
+    try {
+      giftCardLiveDaily.value = await useCase.getDailyDedications(userId);
+    } catch (e) {}
+  }
+
+  Future<void> getDedications(int userId) async {
+    try {
+      giftCardLive.value = await useCase.getDedications(userId);
     } catch (e) {}
   }
 
   final listFriends = <User>[].obs;
 
-  final listFollow = <FolloweesUser>[].obs;
-
+  final listFollow = <User>[].obs;
 
   Future<void> getListFriend() async {
     try {
@@ -40,7 +56,8 @@ class LiveBottomController {
 
   Future<void> getListFollow() async {
     try {
-      listFollow.value = await userUsecase.listFollowees();
+      final list = await userUsecase.listFollower();
+      listFollow.value = list;
     } catch (e) {}
   }
 

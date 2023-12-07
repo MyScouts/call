@@ -117,13 +117,6 @@ final class GetOTPFail extends UserState {
   GetOTPFail({required this.message});
 }
 
-// Logout
-final class OnLogout extends UserState {}
-
-final class LogoutSuccess extends UserState {}
-
-final class LogoutFail extends UserState {}
-
 // Get user info
 final class OnGetUserInfo extends UserState {}
 

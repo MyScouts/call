@@ -1,8 +1,10 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/app_main.dart';
+import 'package:app_main/src/blocs/app/app_cubit.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
+import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
 import 'package:app_main/src/presentation/settings/setting_screen.dart';
 import 'package:app_main/src/presentation/settings/widget/confirm_delete_modal.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +24,7 @@ extension SettingCoordinator on BuildContext {
       barrierDismissible: true,
       barrierLabel: '',
       pageBuilder: (context, animation1, animation2) {
-        return BlocListener<UserCubit, UserState>(
+        return BlocListener<AppCubit, AppState>(
           listener: (context, state) {
             if (state is OnLogout) {
               showLoading();
@@ -31,6 +33,10 @@ extension SettingCoordinator on BuildContext {
             if (state is LogoutSuccess) {
               hideLoading();
               isAuthenticate.add(false);
+              if (PipHandler.showPip.value) {
+                PipHandler.disposeController();
+                PipHandler.removeOverlay();
+              }
               showToastMessage("Đăng xuất thành công");
               context.startLoginUtil();
             }
@@ -43,7 +49,7 @@ extension SettingCoordinator on BuildContext {
           child: ActionDialog(
             title: "Bạn có muốn đăng xuất?",
             actionTitle: S.current.confirm.capitalize(),
-            onAction: () => context.read<UserCubit>().onLogout(),
+            onAction: () => context.read<AppCubit>().logout(),
           ),
         );
       },

@@ -21,7 +21,7 @@ GiversInfo _$GiversInfoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$GiversInfo {
   User? get giver => throw _privateConstructorUsedError;
-  int? get coinCount => throw _privateConstructorUsedError;
+  int? get diamondCount => throw _privateConstructorUsedError;
   Festival? get festivalUser => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ abstract class $GiversInfoCopyWith<$Res> {
           GiversInfo value, $Res Function(GiversInfo) then) =
       _$GiversInfoCopyWithImpl<$Res, GiversInfo>;
   @useResult
-  $Res call({User? giver, int? coinCount, Festival? festivalUser});
+  $Res call({User? giver, int? diamondCount, Festival? festivalUser});
 
   $UserCopyWith<$Res>? get giver;
   $FestivalCopyWith<$Res>? get festivalUser;
@@ -56,7 +56,7 @@ class _$GiversInfoCopyWithImpl<$Res, $Val extends GiversInfo>
   @override
   $Res call({
     Object? giver = freezed,
-    Object? coinCount = freezed,
+    Object? diamondCount = freezed,
     Object? festivalUser = freezed,
   }) {
     return _then(_value.copyWith(
@@ -64,9 +64,9 @@ class _$GiversInfoCopyWithImpl<$Res, $Val extends GiversInfo>
           ? _value.giver
           : giver // ignore: cast_nullable_to_non_nullable
               as User?,
-      coinCount: freezed == coinCount
-          ? _value.coinCount
-          : coinCount // ignore: cast_nullable_to_non_nullable
+      diamondCount: freezed == diamondCount
+          ? _value.diamondCount
+          : diamondCount // ignore: cast_nullable_to_non_nullable
               as int?,
       festivalUser: freezed == festivalUser
           ? _value.festivalUser
@@ -108,7 +108,7 @@ abstract class _$$GiversInfoImplCopyWith<$Res>
       __$$GiversInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({User? giver, int? coinCount, Festival? festivalUser});
+  $Res call({User? giver, int? diamondCount, Festival? festivalUser});
 
   @override
   $UserCopyWith<$Res>? get giver;
@@ -128,7 +128,7 @@ class __$$GiversInfoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? giver = freezed,
-    Object? coinCount = freezed,
+    Object? diamondCount = freezed,
     Object? festivalUser = freezed,
   }) {
     return _then(_$GiversInfoImpl(
@@ -136,9 +136,9 @@ class __$$GiversInfoImplCopyWithImpl<$Res>
           ? _value.giver
           : giver // ignore: cast_nullable_to_non_nullable
               as User?,
-      coinCount: freezed == coinCount
-          ? _value.coinCount
-          : coinCount // ignore: cast_nullable_to_non_nullable
+      diamondCount: freezed == diamondCount
+          ? _value.diamondCount
+          : diamondCount // ignore: cast_nullable_to_non_nullable
               as int?,
       festivalUser: freezed == festivalUser
           ? _value.festivalUser
@@ -151,7 +151,7 @@ class __$$GiversInfoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$GiversInfoImpl implements _GiversInfo {
-  const _$GiversInfoImpl({this.giver, this.coinCount, this.festivalUser});
+  const _$GiversInfoImpl({this.giver, this.diamondCount, this.festivalUser});
 
   factory _$GiversInfoImpl.fromJson(Map<String, dynamic> json) =>
       _$$GiversInfoImplFromJson(json);
@@ -159,13 +159,13 @@ class _$GiversInfoImpl implements _GiversInfo {
   @override
   final User? giver;
   @override
-  final int? coinCount;
+  final int? diamondCount;
   @override
   final Festival? festivalUser;
 
   @override
   String toString() {
-    return 'GiversInfo(giver: $giver, coinCount: $coinCount, festivalUser: $festivalUser)';
+    return 'GiversInfo(giver: $giver, diamondCount: $diamondCount, festivalUser: $festivalUser)';
   }
 
   @override
@@ -174,15 +174,16 @@ class _$GiversInfoImpl implements _GiversInfo {
         (other.runtimeType == runtimeType &&
             other is _$GiversInfoImpl &&
             (identical(other.giver, giver) || other.giver == giver) &&
-            (identical(other.coinCount, coinCount) ||
-                other.coinCount == coinCount) &&
+            (identical(other.diamondCount, diamondCount) ||
+                other.diamondCount == diamondCount) &&
             (identical(other.festivalUser, festivalUser) ||
                 other.festivalUser == festivalUser));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, giver, coinCount, festivalUser);
+  int get hashCode =>
+      Object.hash(runtimeType, giver, diamondCount, festivalUser);
 
   @JsonKey(ignore: true)
   @override
@@ -201,7 +202,7 @@ class _$GiversInfoImpl implements _GiversInfo {
 abstract class _GiversInfo implements GiversInfo {
   const factory _GiversInfo(
       {final User? giver,
-      final int? coinCount,
+      final int? diamondCount,
       final Festival? festivalUser}) = _$GiversInfoImpl;
 
   factory _GiversInfo.fromJson(Map<String, dynamic> json) =
@@ -210,7 +211,7 @@ abstract class _GiversInfo implements GiversInfo {
   @override
   User? get giver;
   @override
-  int? get coinCount;
+  int? get diamondCount;
   @override
   Festival? get festivalUser;
   @override

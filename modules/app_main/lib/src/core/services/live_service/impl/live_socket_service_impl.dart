@@ -13,6 +13,8 @@ const socketKickFromLiveEvent = 'userKickedFromLive';
 const socketBannedEvent = 'userBannedFromReaction';
 const socketMessageEvent = 'message';
 const socketReactionEvent = 'reaction';
+const socketPkStartEvent = 'pkStart';
+const socketPkEndEvent = 'pkEnd';
 
 @Injectable(as: LiveSocketService)
 class LiveSocketServiceImpl extends LiveSocketService {
@@ -24,7 +26,7 @@ class LiveSocketServiceImpl extends LiveSocketService {
     required String token,
     String? deviceId,
   }) async {
-    if(_socket != null) disconnect();
+    if (_socket != null) disconnect();
     _socket = io.io(
       url,
       io.OptionBuilder()
@@ -44,9 +46,12 @@ class LiveSocketServiceImpl extends LiveSocketService {
       ..on(socketGiftGiven, (data) => emit(socketGiftGiven, data))
       ..on(socketUserLeaveEvent, (data) => emit(socketUserLeaveEvent, data))
       ..on(socketMessageEvent, (data) => emit(socketMessageEvent, data))
-      ..on(socketKickFromLiveEvent, (data) => emit(socketKickFromLiveEvent, data))
+      ..on(socketKickFromLiveEvent,
+          (data) => emit(socketKickFromLiveEvent, data))
       ..on(socketBannedEvent, (data) => emit(socketBannedEvent, data))
       ..on(socketReactionEvent, (data) => emit(socketReactionEvent, data))
+      ..on(socketPkStartEvent, (data) => emit(socketPkStartEvent, data))
+      ..on(socketPkEndEvent, (data) => emit(socketPkEndEvent, data))
       ..onConnect(_handleConnect)
       ..onConnectError(_handleConnectionFailure)
       ..onConnectTimeout(_handleConnectionTimeout)
@@ -73,7 +78,6 @@ class LiveSocketServiceImpl extends LiveSocketService {
     if (_socket == null) return;
     _socket?.emit(socketMessageEvent, data);
   }
-
 
   @override
   Future<void> disconnect() async {

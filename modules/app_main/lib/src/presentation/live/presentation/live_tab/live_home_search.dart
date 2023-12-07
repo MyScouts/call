@@ -1,3 +1,5 @@
+import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +21,11 @@ class LiveStreamSearch extends StatefulWidget {
 
 class _LiveStreamSearchState extends State<LiveStreamSearch> {
   final liveController = getIt<LiveController>();
+  late final userId = context.read<UserCubit>().currentUser?.id;
 
   @override
   void initState() {
-    liveController.getListLive();
+    liveController.getListLive(context);
     liveController.getListCategory();
     super.initState();
   }
@@ -54,11 +57,13 @@ class _LiveStreamSearchState extends State<LiveStreamSearch> {
           child: GestureDetector(
             onTap: () async {
               await context.showFilterSearchLive(liveController);
-              liveController.getListLive();
+              liveController.getListLive(context);
             },
             child: Obx(() {
               return ImageWidget(
-                liveController.listCategorySelect.isEmpty ? IconAppConstants.icFilter : IconAppConstants.icFilterTick,
+                liveController.listCategorySelect.isEmpty
+                    ? IconAppConstants.icFilter
+                    : IconAppConstants.icFilterTick,
                 color: const Color(0xff4B84F7),
                 height: 30,
                 width: 30,
@@ -112,7 +117,7 @@ class _LiveStreamSearchState extends State<LiveStreamSearch> {
             child: Obx(() {
               return RefreshIndicator(
                 onRefresh: () async {
-                  liveController.getListLive();
+                  liveController.getListLive(context);
                 },
                 child: GridView.count(
                   physics: const AlwaysScrollableScrollPhysics(),
@@ -120,14 +125,17 @@ class _LiveStreamSearchState extends State<LiveStreamSearch> {
                   crossAxisCount: 2,
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 7,
-                  children: List.generate(liveController.live.value.lives?.length ?? 0, (index) {
+                  children: List.generate(
+                      liveController.live.value.lives?.length ?? 0, (index) {
                     final live = liveController.live.value.lives![index];
                     return LiveWidget(
                       liveDetail: live,
                       viewer: liveController.listLiveCount
-                              .firstWhereOrNull((element) => element.liveId == live.id!)
+                              .firstWhereOrNull(
+                                  (element) => element.liveId == live.id!)
                               ?.memberCount ??
                           0,
+                      isOwner: userId == live.user?.id,
                     );
                   }),
                 ),

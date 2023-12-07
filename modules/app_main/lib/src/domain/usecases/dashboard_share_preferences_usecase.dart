@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 const _dashboardItems = '_dashboardItems';
 const _dashboardPage = '_dashboardPage';
 const _dashboardFav = '_dashboardFav';
+const _dashboardPath = '_dashboardPath';
 
 @injectable
 class DashboardSharePreferenceUseCase {
@@ -43,12 +44,16 @@ class DashboardSharePreferenceUseCase {
     return _shared.setString('$key $_dashboardItems', path);
   }
 
-  int getPageInitial() {
-    return _shared.getInt(_dashboardPage) ?? 0;
+  int? getPageInitial(String key) {
+    return _shared.getInt('$key $_dashboardPage');
   }
 
-  void savePage(int page) {
-    _shared.setInt(_dashboardPage, page);
+  void savePage(String key, int page) {
+    _shared.setInt('$key $_dashboardPage', page);
+  }
+
+  void removePage(String key) {
+    _shared.remove('$key $_dashboardPage');
   }
 
   Future<bool> saveDashboardItemsFav(List<DashBoardItem> items) async {
@@ -70,5 +75,17 @@ class DashboardSharePreferenceUseCase {
       }
       return DashBoardGroupItem.fromJson(e);
     }).toList();
+  }
+
+  void saveInitPath(String key, String id) {
+    _shared.setString('$key $_dashboardPath', id);
+  }
+
+  String? getInitPath(String key) {
+    return _shared.getString('$key $_dashboardPath');
+  }
+
+  void removeInitPath(String key) {
+    _shared.remove('$key $_dashboardPath');
   }
 }

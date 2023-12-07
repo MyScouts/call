@@ -78,6 +78,7 @@ class UserUsecase {
       isMarshopOwner: response.isMarshopOwner,
       isMarshopCustomer: response.isMarshopCustomer,
       hasDefaultBankAccount: response.hasDefaultBankAccount,
+      marshopCustomerId: response.marshopCustomerId,
     );
   }
 
@@ -86,7 +87,8 @@ class UserUsecase {
     return _userRepository.updatePDoneProfile(updateNonePDoneProfilePayload);
   }
 
-  Future<UpdateNonePDoneProfileReponse> updateNonePNoneDoneProfile(Map<String, dynamic> data) {
+  Future<UpdateNonePDoneProfileReponse> updateNonePNoneDoneProfile(
+      Map<String, dynamic> data) {
     return _userRepository.updateNonePDoneProfile(data);
   }
 
@@ -96,6 +98,10 @@ class UserUsecase {
 
   Future<List<User>> listFriends() {
     return _userRepository.listFriends();
+  }
+
+  Future<List<User>> listFollower() {
+    return _userRepository.listFollower();
   }
 
   Future<List<FolloweesUser>> listFollowees() {
@@ -133,5 +139,9 @@ class UserUsecase {
   Future<List<ApprovedRequestDetail>> approvedRequests() async {
     final response = await _userRepository.approvedRequests();
     return response.approvals;
+  }
+
+  Future replyFollow(ReplyFollowPayload payload) {
+    return _userRepository.replyFollowRequest(payload);
   }
 }

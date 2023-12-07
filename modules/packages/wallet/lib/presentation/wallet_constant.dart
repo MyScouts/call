@@ -238,12 +238,60 @@ enum TransactionValueType {
 
   final int value;
 
+  static TransactionValueType getInstance(int val) {
+    return TransactionValueType.values
+        .firstWhere((element) => val == element.value);
+  }
+
   const TransactionValueType(this.value);
 }
 
-enum TransactionResolvedStatus { failed, succeed, pending }
+extension TransactionValueTypeExt on TransactionValueType {
+  WalletType get walletType {
+    switch (this) {
+      case TransactionValueType.COIN:
+        return WalletType.coin;
+      case TransactionValueType.DIAMOND:
+        return WalletType.diamond;
+      case TransactionValueType.VND:
+        return WalletType.vnd;
+      case TransactionValueType.D_ONE:
+        return WalletType.diamond;
+      case TransactionValueType.PENDING_DIAMOND:
+        return WalletType.diamond;
+      case TransactionValueType.PENDING_VND:
+        return WalletType.vnd;
+      case TransactionValueType.WITHDRAWING_VND:
+        return WalletType.vnd;
+      case TransactionValueType.CASH:
+        return WalletType.vnd;
+    }
+  }
+}
+
+enum TransactionResolvedStatus {
+  failed,
+  succeed,
+  pending;
+
+  static TransactionResolvedStatus getInstance(int val) {
+    return TransactionResolvedStatus.values
+        .firstWhere((element) => val == element.valInt);
+  }
+}
 
 extension TransactionStatusExt on TransactionResolvedStatus {
+  int get valInt {
+    switch (this) {
+      case TransactionResolvedStatus.pending:
+        return 0;
+      case TransactionResolvedStatus.succeed:
+        return 1;
+      case TransactionResolvedStatus.failed:
+        return 2;
+    }
+  }
+
   String get text {
     switch (this) {
       case TransactionResolvedStatus.pending:
@@ -281,6 +329,10 @@ enum TransactionType {
   VND_AVAILABLE('VND_AVAILABLE'),
   REQUEST_WITHDRAW_VND('REQUEST_WITHDRAW_VND'),
   WITHDRAW_VND_COMPLETED('WITHDRAW_VND_COMPLETED');
+
+  static TransactionType getInstance(String val) {
+    return TransactionType.values.firstWhere((element) => val == element.value);
+  }
 
   final String value;
 
@@ -384,6 +436,70 @@ extension TransactionTypeExt on TransactionType {
       case TransactionType.WITHDRAW_FROM_MARSHOP:
       case TransactionType.REQUEST_WITHDRAW_VND:
         return '-';
+      case TransactionType.WITHDRAW_VND_COMPLETED:
+        return '';
+    }
+  }
+
+  String titleSender(BuildContext context) {
+    switch (this) {
+      case TransactionType.LIVE_GIFT:
+        return 'Tên người tặng';
+      case TransactionType.LIVE_VOTE:
+        return '';
+      case TransactionType.DIAMOND_TO_VND:
+        return '';
+      case TransactionType.BUY_COIN_FROM_AGENCY:
+        return '';
+      case TransactionType.GROUP_INCOME:
+        return '';
+      case TransactionType.TEAM_INCOME:
+        return '';
+      case TransactionType.DIAMOND_AVAILABLE:
+        return 'ID người tặng';
+      case TransactionType.VND_AVAILABLE:
+        return '';
+      case TransactionType.MARSHOP_COMMISSION:
+        return '';
+      case TransactionType.WITHDRAW_FROM_LIVE:
+        return '';
+      case TransactionType.WITHDRAW_FROM_MARSHOP:
+        return '';
+
+      case TransactionType.REQUEST_WITHDRAW_VND:
+        return '';
+      case TransactionType.WITHDRAW_VND_COMPLETED:
+        return '';
+    }
+  }
+
+  String titleReceiver(BuildContext context) {
+    switch (this) {
+      case TransactionType.LIVE_GIFT:
+        return '';
+      case TransactionType.LIVE_VOTE:
+        return '';
+      case TransactionType.DIAMOND_TO_VND:
+        return '';
+      case TransactionType.BUY_COIN_FROM_AGENCY:
+        return 'ID người nạp';
+      case TransactionType.GROUP_INCOME:
+        return '';
+      case TransactionType.TEAM_INCOME:
+        return '';
+      case TransactionType.DIAMOND_AVAILABLE:
+        return '';
+      case TransactionType.VND_AVAILABLE:
+        return '';
+      case TransactionType.MARSHOP_COMMISSION:
+        return '';
+      case TransactionType.WITHDRAW_FROM_LIVE:
+        return '';
+      case TransactionType.WITHDRAW_FROM_MARSHOP:
+        return '';
+
+      case TransactionType.REQUEST_WITHDRAW_VND:
+        return '';
       case TransactionType.WITHDRAW_VND_COMPLETED:
         return '';
     }

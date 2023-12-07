@@ -33,6 +33,7 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
   String _title = '';
   List<LiveCategoryDetail> _cates = [];
   MediaFile? _file;
+  String? _password;
 
   @override
   void didChangeDependencies() {
@@ -55,14 +56,16 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
         if (_type.isPasswordLocked) 'password': "haha",
         'categoryIds': _cates.map((e) => e.id).toList(),
         'medias': [update],
+        if (_password != null) 'password': _password,
       });
       if (mounted) {
         context.hideLoading();
       }
       if (data != null) {
+        if (_password != null) controller.setPass(_password!);
         controller.startStream();
       }
-    } catch(e) {
+    } catch (e) {
       if (mounted) {
         context.hideLoading();
         showToastMessage('Bạn chưa phải là P-Done', ToastMessageType.error);
@@ -208,6 +211,20 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
                                                     setState(() {
                                                       _type = type;
                                                     });
+                                                    if (_type ==
+                                                        LiveType
+                                                            .password_locked) {
+                                                      Future.delayed(
+                                                          const Duration(
+                                                              seconds: 1), () {
+                                                        context.showSetPassword(
+                                                            (p0) {
+                                                          _password = p0;
+                                                        });
+                                                      });
+                                                    } else {
+                                                      _password = null;
+                                                    }
                                                   },
                                                   type: _type,
                                                 );
@@ -330,16 +347,34 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
                       return;
                     }
 
+                    if (_type == LiveType.password_locked &&
+                        _password == null) {
+                      context.showSetPassword((p0) => _password = p0);
+                      return;
+                    }
+
                     createLive();
                   },
                   behavior: HitTestBehavior.opaque,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      SizedBox.square(
-                        dimension: 70,
-                        child: ImageWidget(IconAppConstants.icCreateLive),
+                      Container(
+                        height: 70,
+                        width: 70,
+                        decoration: BoxDecoration(
+                          color: const Color(0xff4B84F7),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: const Color(0xffF0F0F0)),
+                        ),
+                        alignment: Alignment.center,
+                        child: const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 40,
+                        ),
                       ),
+                      const SizedBox(height: 12),
                       const Text(
                         'Tạo Live',
                         style: TextStyle(

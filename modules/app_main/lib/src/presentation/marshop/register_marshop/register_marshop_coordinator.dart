@@ -1,6 +1,5 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/marshop/marshop_cubit.dart';
-import 'package:app_main/src/data/models/payloads/marshop/marshop_payload.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/ui.dart';
@@ -24,18 +23,7 @@ extension RegisterMarshopCoordinator on BuildContext {
           child: AutoHideKeyboard(
             child: DialogContainerWidget(
               child: VerifyPhoneOTPDialogWidget(
-                  phone: phone,
-                  onVerify: (otpCode) {
-                    context.read<MarshopCubit>().registerMarshop(
-                          userId,
-                          RegisterMarshopPayload(
-                            name: name,
-                            referralId:
-                                marshopId != null ? int.parse(marshopId) : null,
-                            otp: otpCode,
-                          ),
-                        );
-                  }),
+                  phone: phone, onVerify: (otpCode) {}),
             ),
           ),
         );

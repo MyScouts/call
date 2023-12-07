@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/app/app_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/community/community.component.dart';
+import 'package:app_main/src/presentation/dashboard/system_setting/system_setting.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
 import 'package:app_main/src/presentation/profile/user_profile_screen.dart';
 import 'package:app_main/src/presentation/protector/manage_protector_screen.dart';
@@ -36,6 +37,12 @@ class Setting {
       [
         [
           Setting(
+            text: "Cài đặt chung",
+            icon: IconAppConstants.icSettingHome,
+            onPressed: () =>
+                Navigator.of(context).pushNamed(SystemSetting.routerName),
+          ),
+          Setting(
             text: "Cài đặt tài khoản",
             icon: IconAppConstants.icSettingAccount,
             onPressed: () =>
@@ -57,7 +64,7 @@ class Setting {
         [
           Setting(
             text: "Team",
-            icon: IconAppConstants.icTeamProfile,
+            icon: Assets.icons_ic_team_png.path,
             onPressed: () =>
                 Navigator.pushNamed(context, CommunityWidget.routeName),
           ),
@@ -89,18 +96,7 @@ class Setting {
           Setting(
             text: "Tài khoản MarShop",
             icon: IconAppConstants.icMarshop,
-            onPressed: () {
-              if (onboarding != null && !onboarding.isJA) {
-                context.confirmUpgradeJA(
-                  onConfirm: () {
-                    final bloc = context.read<GetJAStatusBloc>();
-                    bloc.add(GetDetailDataEvent());
-                  },
-                );
-                return;
-              }
-              context.startRegisterMarshop();
-            },
+            onPressed: context.startRegisterMarshop,
           ),
         ],
         [

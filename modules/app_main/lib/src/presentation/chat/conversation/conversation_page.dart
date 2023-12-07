@@ -24,7 +24,7 @@ class ConversationPageState extends State<ConversationPage> {
   final ConversationCubit _cubit = getIt.get();
   @override
   void initState() {
-    _cubit.init();
+    _cubit.init(loading: true);
     super.initState();
   }
 
@@ -72,8 +72,9 @@ class ConversationPageState extends State<ConversationPage> {
                               ),
                               kSpacingWidth12,
                               GestureDetector(
-                                onTap: () {
-                                  context.startNewMessage();
+                                onTap: () async {
+                                  await context.startNewMessage();
+                                  _cubit.loadNewConversation();
                                 },
                                 child: Container(
                                   decoration: const BoxDecoration(
@@ -89,16 +90,34 @@ class ConversationPageState extends State<ConversationPage> {
                                 ),
                               ),
                               kSpacingWidth12,
-                              Container(
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: AppColors.grey71,
+                              GestureDetector(
+                                onTap: () {
+                                },
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: AppColors.grey71,
+                                  ),
+                                  padding: const EdgeInsets.all(8),
+                                  child: const Icon(
+                                    Icons.more_vert,
+                                    color: AppColors.black,
+                                    size: 28,
+                                  ),
                                 ),
-                                padding: const EdgeInsets.all(8),
-                                child: const Icon(
-                                  Icons.more_vert,
-                                  color: AppColors.black,
-                                  size: 28,
+                              ),
+                              kSpacingWidth12,
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  child: const Icon(
+                                    Icons.close,
+                                    color: AppColors.black,
+                                    size: 28,
+                                  ),
                                 ),
                               ),
                             ],
@@ -124,10 +143,10 @@ class ConversationPageState extends State<ConversationPage> {
                               separatorBuilder: (_, __) => kSpacingWidth16,
                               itemCount: canLoadMoreFriend ? friends.length + 1 : friends.length),
                         ),
+                        kSpacingHeight16,
                         Expanded(
                           child: ListView.separated(
                             shrinkWrap: true,
-                              padding: const EdgeInsets.symmetric(vertical: 16),
                               itemBuilder: (_, index) {
                                 if (index == conversations.length) {
                                   _cubit.loadMoreConversation();

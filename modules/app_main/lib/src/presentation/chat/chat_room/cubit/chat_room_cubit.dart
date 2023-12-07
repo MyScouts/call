@@ -91,7 +91,9 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
 
   void updateMessage(MessageModel message) {
     state.mapOrNull((value) async {
-      if (_conversationId == message.conversationId) {
+      if (_conversationId == message.conversationId &&
+          value.messages.firstWhereOrNull((element) => element.messageId == message.messageId) ==
+              null) {
         emit(value.copyWith(messages: [message, ...value.messages]));
       }
     });
@@ -115,17 +117,36 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
 
   Future<void> sendImage() async {
     final files = await mediaPicker.pickImagesFromGallery();
+    List<String> uploadImages = [];
     if (files == null) return;
-    final file = files.first;
+    for (final file in files) {
+      if (file != null) {
+        final uploadImage = await upgradeAccountUsecase.uploadBirthCer(
+          XFile(file.path),
+          'image',
+        );
+        uploadImages.add(uploadImage);
+      }
+    }
 
-    if (file == null) return;
-
-    final uploadImage = await upgradeAccountUsecase.uploadBirthCer(
-      XFile(file.path),
-      'image',
-    );
     await _chatUseCase.newMessage(
         conversationId: _conversationId,
-        payload: NewMessagePayload(metadata: MetaDataDto(images: [uploadImage])));
+        payload: NewMessagePayload(metadata: MetaDataDto(images: uploadImages)));
+  }
+
+  Future<void> loadMessages() async {
+    state.mapOrNull(
+      (value) async {
+        final response = await _chatUseCase.getMessages(
+            conversationId: _conversationId, page: 1, pageSize: kPageSize);
+        emit(
+          value.copyWith(
+            page: 1,
+            messages: response.items ?? [],
+            canLoadMore: response.items?.length == kPageSize,
+          ),
+        );
+      },
+    );
   }
 }

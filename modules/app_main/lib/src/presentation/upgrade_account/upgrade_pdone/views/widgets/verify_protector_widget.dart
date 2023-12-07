@@ -147,10 +147,12 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
 
   Widget _buildForm(BuildContext context) {
     Protector? protector;
-
-    if (protectors.isNotEmpty) {
-      protector = protectors[0];
+    if(protectorRequest.protector == null){
+      if (protectors.isNotEmpty) {
+        protector = protectors[0];
+      }
     }
+
 
     if (protectorRequested != null) {
       final filterProtector = protectors
@@ -214,7 +216,7 @@ class _VerifyProtectorWidgetState extends State<VerifyProtectorWidget> {
           },
           onPhoneCodeChange: (val) {
             // _phoneCode.text = val.code.toString();
-            protectorRequest.phoneCode = val.code;
+            protectorRequest.phoneCode = val.dialCode;
             widget.onUpdatePlaceInformation(protectorRequest);
           },
         ),

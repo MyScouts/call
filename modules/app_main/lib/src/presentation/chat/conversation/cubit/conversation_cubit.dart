@@ -12,9 +12,11 @@ class ConversationCubit extends Cubit<ConversationState> {
   final int kPageSize = 20;
   final ChatUseCase _chatUseCase;
 
-  Future<void> init() async {
+  Future<void> init({bool loading = false}) async {
     try {
-      emit(const ConversationState.loading());
+      if(loading) {
+        emit(const ConversationState.loading());
+      }
       final FriendResponseModel friendResponse =
           await _chatUseCase.getFriends(page: 1, pageSize: kPageSize);
       final ItemsResponse<ConversationModel> conversationResponse =
@@ -26,6 +28,23 @@ class ConversationCubit extends Cubit<ConversationState> {
           pageConversation: 1,
           canLoadMoreFriend: friendResponse.friends.length == kPageSize,
           canLoadMoreConversation: conversationResponse.items?.length == kPageSize));
+    } catch (e) {
+      emit(ConversationState.error(e));
+    }
+  }
+
+  Future<void> loadNewConversation() async {
+    try {
+      state.mapOrNull((value) async {
+        final ItemsResponse<ConversationModel> conversationResponse =
+            await _chatUseCase.getConversations(page: 1, pageSize: kPageSize);
+        emit(value.copyWith(
+          pageConversation: 1,
+          conversations: conversationResponse.items ?? [],
+          canLoadMoreConversation: conversationResponse.items?.length == kPageSize
+        ));
+      });
+
     } catch (e) {
       emit(ConversationState.error(e));
     }

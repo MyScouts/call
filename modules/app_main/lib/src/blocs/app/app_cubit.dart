@@ -86,7 +86,9 @@ class AppCubit extends Cubit<AppState> {
 
   Future logout() async {
     try {
+      emit(OnLogout());
       await _authUsecase.logout();
+      emit(LogoutSuccess());
       emit(ForceLogoutSuccess());
     } catch (e) {
       if (kDebugMode) {

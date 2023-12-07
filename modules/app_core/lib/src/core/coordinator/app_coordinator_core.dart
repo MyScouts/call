@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
 
-abstract class AppCoordinatorCore {
+abstract class AppCoordinatorCoreContext {
   BuildContext? get context;
 }

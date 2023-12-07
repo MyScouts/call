@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
@@ -14,6 +15,8 @@ import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_member.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/domain/usecases/user_usecase.dart';
+import 'package:app_main/src/presentation/live/live_coordinator.dart';
+import 'package:app_main/src/presentation/live/live_magane_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:get/get.dart';
@@ -67,6 +70,12 @@ class LiveChannelController {
     );
   }
 
+  String? _password;
+
+  void setPassword(String pass) {
+    _password = pass;
+  }
+
   final Rx<LiveStreamState> _state = LiveStreamState.loading.obs;
 
   Rx<LiveStreamState> get state => _state;
@@ -75,6 +84,8 @@ class LiveChannelController {
   late Rx<LiveMember> _me;
 
   AgoraData? _agora;
+
+  AgoraData? get agora => _agora;
 
   late final RxList<LiveMember> _members = <LiveMember>[].obs;
 
@@ -97,6 +108,10 @@ class LiveChannelController {
   RxBool get roomInfoFetching => _roomInfoFetching;
 
   RxBool get showMessageInput => _showMessageInput;
+
+  final RxBool _enablePk = false.obs;
+
+  RxBool get enablePk => _enablePk;
 
   bool get hostInLive {
     if (_me.value.isOwner) return true;
@@ -158,10 +173,51 @@ class LiveChannelController {
     _showMessageInput.value = false;
   }
 
-  void join(int id, [String? password, BuildContext? context]) async {
+  void joinPk(int id) async {
+    _roomInfoFetching.value = true;
+    final res = await repository.joinLive(id: id, password: _password);
+    _info.value = res.data;
+    _agora = res.agoraData.first;
+    _roomInfoFetching.value = false;
+
+    getLeaderBoard(_info.value.id);
+    final members = await getMembers();
+    _members.value = [...members, _me.value];
+
+    await service.rejoinChannel(
+      _agora?.token ?? '',
+      _agora?.channel ?? '',
+      _me.value.info.userID,
+      role: _me.value.isOwner
+          ? ClientRoleType.clientRoleBroadcaster
+          : ClientRoleType.clientRoleAudience,
+    );
+
+    _enablePk.value = true;
+  }
+
+  Future<List<LiveMember>> getMembers() async {
+    final users = await repository.listMembers(_info.value.id);
+    final result = <LiveMember>[];
+    for (final i in users) {
+      if (i.id == _me.value.info.userID) continue;
+      result.add(LiveMember(
+        info: LiveMemberInfo(
+          userID: i.id ?? 0,
+          name: i.nickname ?? i.fullName ?? i.displayName ?? '',
+          avatar: i.avatar ?? '',
+        ),
+        isOwner: _info.value.user?.id == i.id,
+      ));
+    }
+    return result;
+  }
+
+  void join(int id, BuildContext context) async {
+    LiveManageState.join(id, this);
     try {
       final res = await Future.wait([
-        repository.joinLive(id: id, password: password),
+        repository.joinLive(id: id, password: _password),
         userUseCase.getProfile(),
       ]);
       _info = (res.first as JoinLiveResponse).data.obs;
@@ -173,17 +229,22 @@ class LiveChannelController {
       _me = LiveMember(
         info: LiveMemberInfo(
           userID: user.id ?? 0,
-          name: user.name ?? '',
+          name: user.nickname ?? user.fullName ?? user.displayName ?? '',
           avatar: user.avatar ?? '',
         ),
         isOwner: _info.value.user?.id == user.id,
       ).obs;
-      await getLeaderBoard(_info.value.id);
+
+      getLeaderBoard(_info.value.id);
     } catch (e) {
-      context?.showToastMessage(
-        'Live không còn tồn tại',
-        ToastMessageType.error,
-      );
+      _state.value = LiveStreamState.stop;
+      if (context.mounted) {
+        Navigator.of(context).pop();
+        context.showToastMessage(
+          'Live không còn tồn tại',
+          ToastMessageType.error,
+        );
+      }
     }
 
     try {
@@ -194,23 +255,11 @@ class LiveChannelController {
         await service.initEngine(enableMic: false, enableWebCam: false);
       }
 
-      ///get members
-      final users = await repository.listMembers(_info.value.id);
-      final result = <LiveMember>[];
-      for (final i in users) {
-        if (i.id == _me.value.info.userID) continue;
-        result.add(LiveMember(
-          info: LiveMemberInfo(
-            userID: i.id!,
-            avatar: i.avatar ?? '',
-            name: i.displayName ?? '',
-          ),
-          isOwner: _info.value.user?.id == i.id,
-        ));
-      }
-      _members.value = result;
+      final members = await getMembers();
 
-      _onSocketEvent();
+      _members.value = [...members, _me.value];
+
+      _onSocketEvent(context);
 
       socketService.connect(
         '${Configurations.baseUrl}live?id=${_info.value.id}',
@@ -341,7 +390,9 @@ class LiveChannelController {
     return user;
   }
 
-  void _onSocketEvent() {
+  final Rx<int> timesAnimation = 0.obs;
+
+  void _onSocketEvent(BuildContext context) {
     socketService.on(socketConnectedEvent, (data) {
       debugPrint('kết nối thành công ${socketService.socket.id}');
     });
@@ -375,13 +426,24 @@ class LiveChannelController {
           giftNumber: gift.total ?? 1,
         );
       } else {
-        for (int j = 1; j <= (gift.total! > 3 ? 3 : gift.total!); j++) {
+        if (gift.giver?.id.toString() == _me.value.info.userID.toString()) {
+          timesAnimation.value = gift.total!;
+        }
+        for (int j = 1; j <= gift.total!; j++) {
           floatingGiftsProvider.addGiftAnimation(
             gift: gift,
             giftNumber: gift.total ?? 1,
           );
         }
       }
+      final message = UserMessage(
+        member: LiveMember(
+            info: LiveMemberInfo(
+                userID: gift.giver!.id!, name: gift.giver!.displayName!, avatar: gift.giver?.avatar ?? '')),
+        message: 'đã tặng ${gift.giftCard?.name} x${gift.total}',
+        createdAt: DateTime.now(),
+      );
+      NotificationCenter.post(channel: receiveMessage, options: message);
     });
 
     socketService.on(socketUserJoinEvent, (Map data) {
@@ -391,14 +453,14 @@ class LiveChannelController {
       final member = LiveMember(
         info: LiveMemberInfo(
           userID: user.id!,
-          name: user.displayName ?? '',
+          name: user.nickname ?? user.fullName ?? user.displayName ?? '',
           avatar: user.avatar ?? '',
         ),
         isOwner: user.id == _info.value.user?.id,
       );
       _members.value = [..._members, member];
-      print('length ===> ${_members.length}');
 
+      print('length ===> ${_members.length}');
       if (user.id == _me.value.info.userID) {
         NotificationCenter.post(
           channel: receiveMessage,
@@ -428,6 +490,8 @@ class LiveChannelController {
       if (!isMemberInLive(user.id!)) return;
       if (getMember(user.id!)?.isOwner ?? false) {
         _state.value = LiveStreamState.stop;
+        NotificationCenter.post(channel: refreshLive);
+        return;
       }
       _members.value = _members.where((e) => e.info.userID != user.id).toList();
     });
@@ -454,9 +518,18 @@ class LiveChannelController {
       );
       NotificationCenter.post(channel: receiveMessage, options: message);
     });
+
+    socketService.on(socketPkStartEvent, (data) {
+      joinPk(_info.value.id);
+    });
+
+    socketService.on(socketPkEndEvent, (data) {
+      join(_info.value.id, context);
+    });
   }
 
   void leaveLive() async {
+    LiveManageState.disable();
     socketService.disconnect();
     service.leaveChannel();
     _state.value = LiveStreamState.loading;

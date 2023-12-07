@@ -32,12 +32,11 @@ class UserCubit extends Cubit<UserState> {
     this._userUsecase,
   ) : super(UserInitial()) {
     NotificationCenter.subscribe(
-      channel: refreshUser,
-      observer: this,
-      onNotification: (_) {
-        fetchUser();
-      }
-    );
+        channel: refreshUser,
+        observer: this,
+        onNotification: (_) {
+          fetchUser();
+        });
   }
 
   Future phoneRegister({
@@ -310,17 +309,6 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-  Future<void> onLogout() async {
-    try {
-      emit(OnLogout());
-      await _authenticationUsecase.logout();
-      emit(LogoutSuccess());
-    } catch (error) {
-      String err = S.current.messages_server_internal_error.capitalize();
-      emit(ResetPasswordFail(message: err));
-    }
-  }
-
   Future<void> getUserById({String? userId}) async {
     if (state is OnGetUserInfo) return;
     try {
@@ -448,7 +436,6 @@ class UserCubit extends Cubit<UserState> {
       emit(UpdatePDoneProfileFailed(message: error.toString()));
     }
   }
-
 }
 
 enum AuthClaimType { v1, v2 }

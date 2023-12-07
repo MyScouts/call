@@ -106,12 +106,16 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                       children: [
                         AvatarChatWidget(
                           members: conversation.conversation.membersNotMe,
+                          type: conversation.conversation.type,
                         ),
                         kSpacingWidth8,
                         Column(
                           children: [
                             Text(
-                              conversation.conversation.membersNotMe.first.member.fullName ?? '',
+                              conversation.conversation.type == 1
+                                  ? conversation.conversation.membersNotMe.first.member.fullName ??
+                                      ''
+                                  : conversation.conversation.name ?? '',
                               style: context.textTheme.labelLarge?.copyWith(
                                 fontSize: 16,
                               ),
@@ -123,6 +127,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                       ],
                     ),
                     actions: [
+                      if(conversation.conversation.type == 1)
                       PopupMenuButton<int>(
                         icon: const Icon(
                           Icons.more_vert,
@@ -457,7 +462,15 @@ class ChatRoomPageState extends State<ChatRoomPage> {
               );
             },
             loading: () => const LoadingWidget(),
-            error: (e) => const SizedBox(),
+            error: (e) => const Center(
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Text(
+                  'Vui lòng mở chặn để có thể trò chuyện với người này',
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
           );
         });
   }

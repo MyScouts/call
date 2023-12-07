@@ -16,16 +16,16 @@ class ConversationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () async {
         await context.startChatRoom(
           conversationId: data.id,
         );
-        getIt.get<ConversationCubit>().init();
+        getIt.get<ConversationCubit>().loadNewConversation();
       },
       child: Container(
         height: 60,
-        width: double.infinity,
+        width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
           children: [
@@ -36,27 +36,30 @@ class ConversationWidget extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    data.membersNotMe.first.member.fullName ?? '',
+                    data.type == 1
+                        ? data.membersNotMe.first.member.fullName ?? ''
+                        : data.name ?? '',
                     style: context.textTheme.labelLarge?.copyWith(
                       fontSize: 16,
                     ),
                   ),
                   kSpacingHeight6,
-                  if(data.latestMessage?.message != null)
-                  Text(
-                    data.latestMessage?.message ?? '',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: context.textTheme.bodyMedium?.copyWith(
-                      fontWeight:
-                          data.latestMessage?.seen ?? true ? FontWeight.w400 : FontWeight.w600,
-                      color: data.latestMessage?.seen ?? true
-                          ? AppColors.greyLightTextColor
-                          : AppColors.black,
-                    ),
-                  )
+                  if (data.latestMessage?.message != null)
+                    Text(
+                      data.latestMessage?.message ?? '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.textTheme.bodyMedium?.copyWith(
+                        fontWeight:
+                            data.latestMessage?.seen ?? true ? FontWeight.w400 : FontWeight.w600,
+                        color: data.latestMessage?.seen ?? true
+                            ? AppColors.greyLightTextColor
+                            : AppColors.black,
+                      ),
+                    )
                   else if (data.latestMessage?.metadata != null)
                     Text(
                       '[Hình ảnh]',
@@ -64,7 +67,7 @@ class ConversationWidget extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.bodyMedium?.copyWith(
                         fontWeight:
-                        data.latestMessage?.seen ?? true ? FontWeight.w400 : FontWeight.w600,
+                            data.latestMessage?.seen ?? true ? FontWeight.w400 : FontWeight.w600,
                         color: data.latestMessage?.seen ?? true
                             ? AppColors.greyLightTextColor
                             : AppColors.black,

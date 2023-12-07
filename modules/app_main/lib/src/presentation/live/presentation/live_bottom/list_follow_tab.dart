@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,32 +20,61 @@ class ListFollowTab extends StatefulWidget {
   State<ListFollowTab> createState() => _ListFollowTabState();
 }
 
-class _ListFollowTabState extends State<ListFollowTab> {
+class _ListFollowTabState extends State<ListFollowTab> with AutomaticKeepAliveClientMixin {
   bool isInvited = false;
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: SizedBox(
+            height: 40,
+            child: TextField(
+              controller: widget.controller.textController,
+              style: context.text.titleMedium!.copyWith(color: Colors.grey),
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.zero,
+                isDense: false,
+                hintText: "Nhập ID tài khoản muốn tìm",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: Color(0xffE9E9E9)),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: Color(0xffE9E9E9)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: Colors.blue),
+                ),
+                prefixIcon: const Icon(Icons.search, color: AppColors.grey14),
+                // fillColor: const Color(0XFFF2F2F2),
+                // filled: true,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'Danh sách người hâm mộ của bạn',
+                'Nhập ID tài khoản muốn tìm',
                 style: TextStyle(color: Color(0xff8C8C8C), fontWeight: FontWeight.w400, fontSize: 14),
               ),
               GestureDetector(
                 onTap: () {
-                  widget.controller
-                      .inviteFriend(widget.liveData.id.toString(),
-                          widget.controller.listFollow.map((element) => element.followee.id!).toList())
-                      .then((value) {
-                    setState(() {
-                      isInvited = true;
-                    });
+                  unawaited(widget.controller.inviteFriend(widget.liveData.id.toString(),
+                      widget.controller.listFollow.map((element) => element.id!).toList()));
+                  setState(() {
+                    isInvited = true;
                   });
                 },
                 child: const Text(
@@ -67,12 +99,12 @@ class _ListFollowTabState extends State<ListFollowTab> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      context.startSelectUser(userId: list[index].followee.id!);
+                      context.startSelectUser(userId: list[index].id!);
                     },
                     child: UserLisTile(
                       key: GlobalKey(),
                       isInvited: isInvited,
-                      user: list[index].followee,
+                      user: list[index],
                       onChanged: (User value) {
                         widget.controller.inviteFriend(widget.liveData.id.toString(), [value.id!]);
                       },
@@ -88,4 +120,8 @@ class _ListFollowTabState extends State<ListFollowTab> {
       ],
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

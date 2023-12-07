@@ -3,10 +3,17 @@ import 'dart:async';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:app_main/src/core/services/notifications/mixins/notification_mixin.dart';
 import 'package:app_main/src/core/services/notifications/notification_service.dart';
+import 'package:app_main/src/core/socket/chat_socket.dart';
 import 'package:app_main/src/di/di.dart';
+import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_cubit.dart';
+import 'package:app_main/src/presentation/chat/conversation/cubit/conversation_cubit.dart';
+import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
 import 'package:app_main/src/presentation/routes.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -39,28 +46,32 @@ class Application extends StatefulWidget {
   State<Application> createState() => _ApplicationState();
 }
 
-class _ApplicationState extends State<Application>
-    with WidgetsBindingObserver, NotificationMixin {
+class _ApplicationState extends State<Application> with WidgetsBindingObserver, NotificationMixin {
   Widget _buildMaterialApp({
     required Locale? locale,
     ThemeData? light,
     ThemeData? dark,
   }) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      navigatorKey: AppCoordinator.root,
-      localizationsDelegates: LocalizationFactory.localizationsDelegates,
-      supportedLocales: LocalizationFactory.supportedLocales,
-      title: widget.title,
-      theme: light,
-      darkTheme: dark,
-      locale: locale,
-      navigatorObservers: [
-        MyNavigatorObserver(),
-      ],
-      builder: _materialBuilder,
-      onGenerateRoute: getIt.get<Routes>().generateRoute,
-      initialRoute: widget.initialRoute,
+    return ScreenUtilInit(
+      designSize: const Size(393, 852),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        navigatorKey: AppCoordinator.rootNavigator,
+        localizationsDelegates: LocalizationFactory.localizationsDelegates,
+        supportedLocales: LocalizationFactory.supportedLocales,
+        title: widget.title,
+        theme: light,
+        darkTheme: dark,
+        locale: locale,
+        navigatorObservers: [
+          MyNavigatorObserver(),
+        ],
+        builder: _materialBuilder,
+        onGenerateRoute: getIt.get<Routes>().generateRoute,
+        initialRoute: widget.initialRoute,
+      ),
     );
   }
 
@@ -71,11 +82,22 @@ class _ApplicationState extends State<Application>
     return MediaQuery(
       data: data,
       child: Overlay(
+        key: AppCoordinator.overlayKey,
         initialEntries: [
           OverlayEntry(
             builder: (context) {
               return Material(
-                child: toastBuilder(context, child!),
+                child: Stack(
+                  children: [
+                    toastBuilder(context, child!),
+                    Obx(() {
+                      if (PipHandler.showPip.value) {
+                        return PipHandler.pipView;
+                      }
+                      return const SizedBox.shrink();
+                    }),
+                  ],
+                ),
               );
             },
           ),
@@ -104,14 +126,19 @@ class _ApplicationState extends State<Application>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      // updateStatusBarColor();
-    }
+    // if (state == AppLifecycleState.resumed) {
+    //   ChatSocket().connect();
+    //   getIt.get<ConversationCubit>().loadNewConversation();
+    //   getIt.get<ChatRoomCubit>().loadMessages();
+    // } else if (state == AppLifecycleState.paused) {
+    //   ChatSocket().disconnect();
+    // }
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    ChatSocket().disconnect();
     super.dispose();
   }
 
@@ -136,11 +163,11 @@ class _ApplicationState extends State<Application>
 
   @override
   void onListenerOpenNotification(Map<String, dynamic> notification) {
-    AppCoordinator.root.currentContext?.startOpenNotification(notification);
+    AppCoordinator.rootNavigator.currentContext?.startOpenNotification(notification);
   }
 
   @override
-  GlobalKey<NavigatorState> get rootKey => AppCoordinator.root;
+  GlobalKey<NavigatorState> get rootKey => AppCoordinator.rootNavigator;
 }
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
@@ -148,8 +175,7 @@ final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 class MyNavigatorObserver extends NavigatorObserver {
   static List<Route<dynamic>> routeStack = [];
 
-  static List<String> get listRoute =>
-      routeStack.map((e) => e.settings.name ?? 'null').toList();
+  static List<String> get listRoute => routeStack.map((e) => e.settings.name ?? 'null').toList();
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {

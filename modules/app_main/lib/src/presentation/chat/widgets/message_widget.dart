@@ -2,6 +2,7 @@
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/entities/chat/message_model.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
+import 'package:app_main/src/presentation/chat/chat_coordinator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -57,11 +58,16 @@ class MessageWidget extends StatelessWidget {
                 ? Wrap(
                     children: List.generate(
                       message.metadata?.images?.length ?? 0,
-                      (index) => CachedNetworkImage(
-                        imageUrl: message.metadata?.images?[index] ?? '',
-                        progressIndicatorBuilder: (_, __, ___) => const LoadingWidget(),
-                        errorWidget: (_, __, ___) => const Center(
-                          child: Icon(Icons.error),
+                      (index) => GestureDetector(
+                        onTap: () {
+                          context.startViewImage(message.metadata?.images?[index] ?? '');
+                        },
+                        child: CachedNetworkImage(
+                          imageUrl: message.metadata?.images?[index] ?? '',
+                          progressIndicatorBuilder: (_, __, ___) => const LoadingWidget(),
+                          errorWidget: (_, __, ___) => const Center(
+                            child: Icon(Icons.error),
+                          ),
                         ),
                       ),
                     ),

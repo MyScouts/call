@@ -100,18 +100,18 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
     SubmitDataPDone event,
     Emitter<UserProfileState> emit,
   ) async {
-    AppCoordinator.root.currentContext?.showLoading();
+    AppCoordinatorCore.root.currentContext?.showLoading();
     try {
       final res = await useCase.updatePDoneProfile(event.payload);
-      AppCoordinator.root.currentContext?.hideLoading();
-      AppCoordinator.root.currentContext?.showToastMessage(
+      AppCoordinatorCore.root.currentContext?.hideLoading();
+      AppCoordinatorCore.root.currentContext?.showToastMessage(
         'Cập nhật thông tin thành công',
       );
       emit(state.copyWith(pDoneProfile: res.profile));
       add(RefreshUser());
     } catch (e) {
-      AppCoordinator.root.currentContext?.hideLoading();
-      AppCoordinator.root.currentContext?.showToastMessage(
+      AppCoordinatorCore.root.currentContext?.hideLoading();
+      AppCoordinatorCore.root.currentContext?.showToastMessage(
         'Cập nhật thông tin không thành công',
         ToastMessageType.error,
       );
@@ -122,18 +122,18 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
     SubmitDataNonePDone event,
     Emitter<UserProfileState> emit,
   ) async {
-    AppCoordinator.root.currentContext?.showLoading();
+    AppCoordinatorCore.root.currentContext?.showLoading();
     try {
       final res = await useCase.updateNonePNoneDoneProfile(event.data);
-      AppCoordinator.root.currentContext?.hideLoading();
-      AppCoordinator.root.currentContext?.showToastMessage(
+      AppCoordinatorCore.root.currentContext?.hideLoading();
+      AppCoordinatorCore.root.currentContext?.showToastMessage(
         'Cập nhật thông tin thành công',
       );
       emit(state.copyWith(pDoneProfile: res.profile));
       add(RefreshUser());
     } catch (e) {
-      AppCoordinator.root.currentContext?.hideLoading();
-      AppCoordinator.root.currentContext?.showToastMessage(
+      AppCoordinatorCore.root.currentContext?.hideLoading();
+      AppCoordinatorCore.root.currentContext?.showToastMessage(
         'Cập nhật thông tin không thành công',
         ToastMessageType.error,
       );
@@ -150,7 +150,7 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
       useCase.getProfile(),
     ]);
 
-    final onBoarding = res.first as OnboardingResponse;
+    final onBoarding = res.first as OnBoarding;
     final profile = res.last as User?;
 
     emit(state.copyWith(user: profile, isPDone: onBoarding.isPdone));

@@ -49,7 +49,11 @@ abstract class UserRepository {
 
   Future<List<User>> listFriends();
 
+  Future<List<User>> listFollower();
+
   Future<List<FolloweesUser>> listFollowees();
+
+  Future<void> getStringgeToken();
 
   Future invite(String teamID, Map<String, dynamic> json);
 
@@ -64,5 +68,7 @@ abstract class UserRepository {
   Future<Map<String, dynamic>> getConfig(String key);
 
   Future<GetUserFollowDetailResponse> getFollowUser(int userId);
+
   Future<ApprovedRequestResponse> approvedRequests();
+  Future replyFollowRequest(ReplyFollowPayload payload);
 }

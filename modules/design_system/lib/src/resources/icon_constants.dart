@@ -144,11 +144,32 @@ class IconAppConstants {
   static String icLive2 = IconApp.icLive2.path;
   static String widgetTeam = IconApp.widgetTeam.path;
   static String icSettingHome = IconApp.icSettingHome.path;
+  static String icP = IconApp.icP.path;
+  static String icC = IconApp.icC.path;
+  static String icE = IconApp.icE.path;
   static String icDeleteChat = IconApp.icDeleteChat.path;
   static String icReportChat = IconApp.icReportChat.path;
   static String icBlockChat = IconApp.icBlockChat.path;
   static String icImage = IconApp.icImage.path;
   static String icSmile = IconApp.icSmile.path;
+  static String icUserGroup3 = IconApp.icUserGroup3.path;
+  static String icCallSvg = IconApp.icCallSvg.path;
+  static String icCallVideo = IconApp.icCallVideo.path;
+  static String icAnswer = IconApp.icAnswer.path;
+  static String icEnd = IconApp.icEnd.path;
+  static String icMicro = IconApp.icMicro.path;
+  static String icVideoCall = IconApp.icVideoCall.path;
+  static String icVolume = IconApp.icVolume.path;
+  static String icIncomingCall = IconApp.icIncomingCall.path;
+  static String icSwitchCamera = IconApp.icSwitchCamera.path;
+  static String icCallAway = IconApp.icCallAway.path;
+  static String icVideoOff = IconApp.icVideoOff.path;
+  static String icMicOff = IconApp.icMicOff.path;
+  static String icDeleteCall = IconApp.icDeleteCall.path;
+  static String icVideoAnswer = IconApp.icVideoAnswer.path;
+  static String icBackCall = IconApp.icBackCall.path;
+  static String icRadioButtonCheck = IconApp.icRadioButtonCheck.path;
+  static String icRadioButton = IconApp.icRadioButton.path;
 }
 
 enum IconApp {
@@ -298,14 +319,38 @@ enum IconApp {
   icLive2('assets/icons/ic_live_2.png'),
   widgetTeam('assets/icons/widget_team.png'),
   icSettingHome('assets/icons/ic_setting_home.png'),
+  icP('assets/icons/ic_p.png'),
+  icC('assets/icons/ic_c.png'),
+  icE('assets/icons/ic_e.png'),
   icLeaveTeam('assets/icons/ic_leave_team.svg'),
-
-  ///chat
   icDeleteChat('assets/icons/ic_delete_chat.svg'),
   icReportChat('assets/icons/ic_report_chat.svg'),
+
+  ///chat
   icImage('assets/icons/ic_image.svg'),
   icSmile('assets/icons/ic_smile.svg'),
-  icBlockChat('assets/icons/ic_block_chat.svg');
+  icBlockChat('assets/icons/ic_block_chat.svg'),
+  icVideoOff('assets/icons/ic_video_off.svg'),
+  icMicOff('assets/icons/ic_mic_off.svg'),
+  icRadioButton('assets/icons/ic_radio_button.svg'),
+  icRadioButtonCheck('assets/icons/ic_radio_button_check.svg'),
+
+
+  ///call
+  icUserGroup3('assets/icons/ic_user_group3.svg'),
+  icCallSvg('assets/icons/ic_call.svg'),
+  icCallVideo('assets/icons/ic_call_video.svg'),
+  icAnswer('assets/icons/ic_answer.svg'),
+  icEnd('assets/icons/ic_end.svg'),
+  icMicro('assets/icons/ic_micro.svg'),
+  icVideoCall('assets/icons/ic_video_call.svg'),
+  icVolume('assets/icons/ic_volume.svg'),
+  icIncomingCall('assets/icons/ic_incoming_call.svg'),
+  icSwitchCamera('assets/icons/ic_switch_camera.svg'),
+  icCallAway('assets/icons/ic_call_away.svg'),
+  icDeleteCall('assets/icons/ic_delete.svg'),
+  icVideoAnswer('assets/icons/ic_video_answer.svg'),
+  icBackCall('assets/icons/ic_back_call.svg');
 
   const IconApp(this.path);
 

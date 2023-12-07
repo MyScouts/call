@@ -19,6 +19,8 @@ import 'package:app_core/app_core.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'application.dart';
+import 'config/app_config_service.dart';
+import 'core/services/notifications/notification_service.dart';
 import 'core/services/notifications/push_notification_service.dart';
 import 'di/di.dart';
 
@@ -31,7 +33,7 @@ abstract class IAppDelegate {
 
   DeviceService get deviceService => injector.get();
 
-  GlobalKey<NavigatorState> get root => AppCoordinator.root;
+  GlobalKey<NavigatorState> get root => AppCoordinatorCore.root;
 
   void reset() {
     injector.reset();
@@ -64,11 +66,13 @@ class AppDelegate extends IAppDelegate {
       /// CONFIG NOTIFICATION
       /// Set the background messaging handler early on,
       /// as a named top-level function
-      if (Configurations.isProduction) {
-        FirebaseMessaging.onBackgroundMessage(
-            firebaseMessagingBackgroundHandler);
-        await setupFlutterNotifications();
-      }
+      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+      await setupFlutterNotifications();
+      // if (Configurations.isProduction) {
+      //   FirebaseMessaging.onBackgroundMessage(
+      //       firebaseMessagingBackgroundHandler);
+      //   await setupFlutterNotifications();
+      // }
 
       unawaited(SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp]));
@@ -78,6 +82,7 @@ class AppDelegate extends IAppDelegate {
 
     String initialRoute = SplashScreen.routeName;
     if (userSharePreferencesUsecase.isAuthenticated) {
+      await AppConfigService.init();
       isAuthenticate.add(true);
       // initialRoute = DashBoardScreen.routeName;
     }
@@ -101,7 +106,7 @@ class AppDelegate extends IAppDelegate {
       ],
       savedThemeMode: savedThemeMode,
       initialRoute: initialRoute,
-      notificationService: injector.get(),
+      notificationService: injector.get<NotificationService>(),
     );
   }
 

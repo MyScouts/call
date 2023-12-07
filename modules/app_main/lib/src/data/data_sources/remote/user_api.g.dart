@@ -168,15 +168,15 @@ class _UserApi implements UserApi {
   }
 
   @override
-  Future<ApiResponse<FollowUserResponse>> followUser(
+  Future<FollowUserResponse> followUser(
       {required FollowUserPayload body}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<FollowUserResponse>>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<FollowUserResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -192,10 +192,7 @@ class _UserApi implements UserApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<FollowUserResponse>.fromJson(
-      _result.data!,
-      (json) => FollowUserResponse.fromJson(json as Map<String, dynamic>),
-    );
+    final value = FollowUserResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -250,6 +247,33 @@ class _UserApi implements UserApi {
               baseUrl,
             ))));
     final value = ApprovedRequestResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<dynamic> replyRequest(ReplyFollowPayload payload) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(payload.toJson());
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'api/v1/following/reply-follow-request',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = _result.data;
     return value;
   }
 
@@ -473,6 +497,33 @@ class _UserApi implements UserApi {
   }
 
   @override
+  Future<ListFollowerUserResponse> listFollower() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ListFollowerUserResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/api/v1/following/followers',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ListFollowerUserResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<ListFolloweesResponse> listFollowees() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -655,6 +706,32 @@ class _UserApi implements UserApi {
         .compose(
           _dio.options,
           'api/v1/setting/personal/${key}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<dynamic> getStringeeToken() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'api/v1/call/stringee-token',
           queryParameters: queryParameters,
           data: _data,
         )

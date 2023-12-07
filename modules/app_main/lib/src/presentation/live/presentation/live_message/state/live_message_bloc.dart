@@ -42,6 +42,12 @@ class LiveMessageBloc extends CoreBloc<LiveMessageEvent, LiveMessageState> {
       comments: [...state.comments, event.comment],
     ));
   }
+
+  @override
+  Future<void> close() {
+    NotificationCenter.unsubscribe(channel: receiveMessage, observer: this);
+    return super.close();
+  }
 }
 
 class LiveMessageState extends CoreState {

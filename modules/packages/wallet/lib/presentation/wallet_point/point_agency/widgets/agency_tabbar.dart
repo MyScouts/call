@@ -30,35 +30,34 @@ class _AgencyTabBarWidgetState extends State<AgencyTabBarWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Stack(
-        children: [
-          Container(
-            height: double.infinity,
-            margin: const EdgeInsets.only(top: 30),
-            width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(18))),
-          ),
-          Column(
-            children: [
-              _buildTab(),
-              const SizedBox(height: 22),
-              Expanded(
-                child: PageView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  controller: _pageCtrl,
-                  children: [
-                    widget.widgetByMoney,
-                    widget.widgetByCoin,
-                  ],
-                ),
+    return Stack(
+      children: [
+        Container(
+          height: double.infinity,
+          margin: const EdgeInsets.only(top: 30),
+          width: MediaQuery.of(context).size.width,
+          decoration: const BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(18))),
+        ),
+        Column(
+          children: [
+            _buildTab(),
+            const SizedBox(height: 22),
+            Container(
+              height: 250,
+              child: PageView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: _pageCtrl,
+                children: [
+                  widget.widgetByMoney,
+                  widget.widgetByCoin,
+                ],
               ),
-            ],
-          ),
-        ],
-      ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -68,7 +67,7 @@ class _AgencyTabBarWidgetState extends State<AgencyTabBarWidget>
   _buildTab() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-      margin: EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: WalletConstant.borderRadius90,

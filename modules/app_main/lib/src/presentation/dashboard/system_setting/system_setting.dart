@@ -46,9 +46,7 @@ class SystemSetting extends StatelessWidget {
           ),
         ),
         actions: const [
-          Center(
-            child: CloseButton(),
-          ),
+          Center(child: CloseButton()),
         ],
       ),
       body: SafeArea(
@@ -57,37 +55,37 @@ class SystemSetting extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const MainViewSetting(),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                decoration: BoxDecoration(
-                  color: const Color(0xffE8EFFB),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                padding: const EdgeInsets.all(10.0),
-                child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      'Màn hình chính',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      'Việc lựa chọn một trong ba màn C, P, E để làm màn'
-                      ' hình chính sẽ giúp bạn có thể truy cập vào danh mục'
-                      ' bạn muốn một cách nhanh chóng.',
-                      style: TextStyle(
-                        color: Color(0xff7F7E83),
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // const MainViewSetting(),
+              // Container(
+              //   margin: const EdgeInsets.symmetric(horizontal: 16.0),
+              //   decoration: BoxDecoration(
+              //     color: const Color(0xffE8EFFB),
+              //     borderRadius: BorderRadius.circular(10),
+              //   ),
+              //   padding: const EdgeInsets.all(10.0),
+              //   child: const Column(
+              //     crossAxisAlignment: CrossAxisAlignment.stretch,
+              //     children: [
+              //       Text(
+              //         'Màn hình chính',
+              //         style: TextStyle(
+              //           fontSize: 16,
+              //           fontWeight: FontWeight.w600,
+              //         ),
+              //       ),
+              //       SizedBox(height: 4),
+              //       Text(
+              //         'Việc lựa chọn một trong ba màn C, P, E để làm màn'
+              //         ' hình chính sẽ giúp bạn có thể truy cập vào danh mục'
+              //         ' bạn muốn một cách nhanh chóng.',
+              //         style: TextStyle(
+              //           color: Color(0xff7F7E83),
+              //           fontSize: 14,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -97,23 +95,27 @@ class SystemSetting extends StatelessWidget {
                   child: Column(
                     children: [
                       _ItemView(
+                        onClick: () {
+
+                        },
                         path: IconAppConstants.icTranslate,
                         title: 'Cài đặt ngôn ngữ',
                       ),
+                      // _ItemView(
+                      //   path: IconAppConstants.icPicture,
+                      //   title: 'Cài đặt hình nền',
+                      //   onClick: () => Navigator.of(context).pushNamed(
+                      //     BackgroundPicker.routerName,
+                      //   ),
+                      // ),
                       _ItemView(
-                        path: IconAppConstants.icPicture,
-                        title: 'Cài đặt hình nền',
-                        onClick: () => Navigator.of(context).pushNamed(
-                          BackgroundPicker.routerName,
-                        ),
+                        path: IconAppConstants.icSettingApp,
+                        title: 'Cài đặt ứng dụng nhanh',
+                        onClick: () {
+                          NotificationCenter.post(channel: showAppStore);
+                          Navigator.of(context).pop();
+                        },
                       ),
-                      _ItemView(
-                          path: IconAppConstants.icSettingApp,
-                          title: 'Cài đặt ứng dụng nhanh',
-                          onClick: () {
-                            NotificationCenter.post(channel: showAppStore);
-                            Navigator.of(context).pop();
-                          }),
                       _ItemView(
                         path: IconAppConstants.icSecurity,
                         title: 'Cài đặt bảo mật',

@@ -1,10 +1,12 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/extensions/list_extension.dart';
+import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:app_main/src/presentation/live/presentation/live_reaction/live_reaction_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/setting/setting_sheet.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +51,7 @@ class LiveBottomAction extends StatelessWidget {
                         child: LiveCommentWidget(),
                       ),
                       SizedBox(
-                        width: 60,
+                        width: 104.w,
                         child: GestureDetector(
                           onDoubleTap: controller.reaction,
                           behavior: HitTestBehavior.opaque,
@@ -84,7 +86,9 @@ class LiveBottomAction extends StatelessWidget {
                             if (!controller.me.value.isOwner)
                               LiveButtonAction(
                                 icon: ImageWidget(IconAppConstants.icLive2User),
-                                onPressed: () {},
+                                onPressed: () {
+                                  context.showBottomSheetLive(controller, index: 1);
+                                },
                               ),
                             if (controller.me.value.isOwner)
                               LiveButtonAction(
@@ -107,8 +111,7 @@ class LiveBottomAction extends StatelessWidget {
                                 onPressed: () {},
                               ),
                             const Spacer(),
-                            if (!controller.me.value.isOwner)
-                              const LiveRoseButton(),
+                            if (!controller.me.value.isOwner) const LiveRoseButton(),
                           ].separated(const SizedBox(width: 10)),
                         ),
                       ),

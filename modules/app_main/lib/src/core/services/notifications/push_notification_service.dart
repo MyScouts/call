@@ -3,13 +3,16 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-import '../../../domain/entities/notification/notification_type.dart';
+import '../../../application.dart';
+import '../../coordinator/app_coordinator.dart';
 import 'notification_service.dart';
 
 class PushNotificationService {}
@@ -35,7 +38,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
   debugPrint('[Push] Handling a background message ${message.messageId}');
-  debugPrint('[Push] Background message ${message.data}');
+  debugPrint('[Push] Background message $message');
 
   final pnType = message.data['type'];
   if (pnType is String && pnType == 'CALL_EVENT') {}
@@ -65,8 +68,7 @@ Future<void> setupFlutterNotifications() async {
   channel = const AndroidNotificationChannel(
     'high_importance_channel', // id
     'High Importance Notifications', // title
-    description:
-        'This channel is used for important notifications.', // description
+    description: 'This channel is used for important notifications.', // description
     importance: Importance.high,
     enableLights: true,
   );
@@ -76,13 +78,10 @@ Future<void> setupFlutterNotifications() async {
   await flutterLocalNotificationsPlugin.initialize(
     const InitializationSettings(
       android: AndroidInitializationSettings('@drawable/icon_notify'),
-      iOS: DarwinInitializationSettings(
-          onDidReceiveLocalNotification: _onDidReceiveLocalNotification),
+      iOS: DarwinInitializationSettings(onDidReceiveLocalNotification: _onDidReceiveLocalNotification),
     ),
-    onDidReceiveNotificationResponse:
-        _onDidReceiveBackgroundNotificationResponse,
-    onDidReceiveBackgroundNotificationResponse:
-        onDidReceiveBackgroundNotificationResponse,
+    onDidReceiveNotificationResponse: _onDidReceiveBackgroundNotificationResponse,
+    onDidReceiveBackgroundNotificationResponse: onDidReceiveBackgroundNotificationResponse,
   );
 
   /// Create an Android Notification Channel.
@@ -90,8 +89,7 @@ Future<void> setupFlutterNotifications() async {
   /// We use this channel in the `AndroidManifest.xml` file to override the
   /// default FCM channel to enable heads up notifications.
   await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
+      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
 
   /// Update the iOS foreground notification presentation options to allow
@@ -105,116 +103,164 @@ Future<void> setupFlutterNotifications() async {
 }
 
 @pragma('vm:entry-point')
-void _onDidReceiveBackgroundNotificationResponse(
-    NotificationResponse notificationResponse) {
+void _onDidReceiveBackgroundNotificationResponse(NotificationResponse notificationResponse) {
   debugPrint('[_onDidReceiveBackgroundNotificationResponse]: '
       '${notificationResponse.payload}');
-
-  if (notificationResponse.payload?.isNotEmpty ?? false) {
-    final remoteNoti = jsonDecode(notificationResponse.payload!);
+  if (notificationResponse.payload?.isNotEmpty == true) {
+    var remoteNoti = jsonDecode(notificationResponse.payload!);
+    if (remoteNoti is String) {
+      remoteNoti = jsonDecode(remoteNoti);
+    }
     injector.get<NotificationService>().openNotification(remoteNoti);
     updateCount(remoteNoti);
   }
 }
 
 @pragma('vm:entry-point')
-void onDidReceiveBackgroundNotificationResponse(
-    NotificationResponse notificationResponse) {
+void onDidReceiveBackgroundNotificationResponse(NotificationResponse notificationResponse) {
   debugPrint('[onDidReceiveBackgroundNotificationResponse]: '
       '${notificationResponse.payload}');
 }
 
+enum MessageTypeFB {
+  becomeFriend('BECOME_FRIEND'),
+  newFollower('NEW_FOLLOWER'),
+  followRequest('FOLLOW_REQUEST'),
+  liveCreated('LIVE_CREATED'),
+  inviteToLive('INVITE_TO_LIVE'),
+  protectorRequestReply('PROTECTOR_REQUEST_REPLY');
+
+  final String type;
+
+  const MessageTypeFB(this.type);
+}
+
 @pragma('vm:entry-point')
-void _onDidReceiveLocalNotification(
-    int id, String? title, String? body, String? payload) {}
+void _onDidReceiveLocalNotification(int id, String? title, String? body, String? payload) {}
+
+const AndroidNotificationDetails _androidNotificationDetails = AndroidNotificationDetails('channelId', 'channelName',
+    channelDescription: 'channelDescription',
+    playSound: true,
+    priority: Priority.high,
+    importance: Importance.high,
+    fullScreenIntent: true);
 
 void showFlutterNotification(RemoteMessage message) {
-  if (isIOS) {
-    return;
-  }
+  // if (isIOS) {
+  //   return;
+  // }
 
   final RemoteNotification? notification = message.notification;
-  var payload = message.data;
-  final type = intPareSafe(payload['type']);
+  final payload = message.data;
+  final type = MessageTypeFB.values.firstWhereOrNull((element) => element.type == payload['type']);
   debugPrint('[FCM]: forground $type');
 
-  if (type != null) {
-    final typeNotification = convertToNotificationType(type);
-    if (typeNotification != null) {
-      final id = payload['id'];
-      payload = {
-        'data': {
-          'type': '$type',
-          'id': '$id',
-        }
-      };
-      flutterLocalNotificationsPlugin.show(
-        notification?.hashCode ?? 0,
-        'Thông báo mới',
-        '',
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-            channel.id,
-            channel.name,
-            channelDescription: channel.description,
-            icon: '@drawable/icon_notify',
-            priority: Priority.high,
-          ),
-        ),
-        payload: jsonEncode(payload),
-      );
+  final title = notification?.title ?? 'Tin nhắn mới';
+  final body = notification?.body ?? '';
+  if (type == MessageTypeFB.inviteToLive) {
+    //join_live ['password_locked'] ['public']
+    // nếu đang trong phòng live thì k hiện thông báo nữa
+    if (MyNavigatorObserver.listRoute.contains('/join_live')) {
       return;
     }
-  } else {
-    final notiData = payload['data'];
-    LoggerService.print("notiData: $notiData");
-    if (payload.isNotEmpty) {
-      String? title;
-      String? body;
-      if (notiData != null) {
-        if (payload.isNotEmpty) {
-          final content = jsonDecode(payload['data']);
-          title = 'Tin nhắn mới';
-          body = content?['message']?['content'];
-        } else {
-          title = notification?.title;
-          body = notification?.body;
-        }
-
-        flutterLocalNotificationsPlugin.show(
-          notification?.hashCode ?? 0,
-          title,
-          body,
-          NotificationDetails(
-            android: AndroidNotificationDetails(
-              channel.id,
-              channel.name,
-              channelDescription: channel.description,
-              icon: '@drawable/icon_notify',
-              priority: Priority.high,
-            ),
-          ),
-          payload: jsonEncode(payload),
-        );
-      }
-    } else {
-      flutterLocalNotificationsPlugin.show(
-        notification?.hashCode ?? 0,
-        notification!.title ?? "",
-        notification.body,
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-            channel.id,
-            channel.name,
-            channelDescription: channel.description,
-            icon: '@drawable/icon_notify',
-            priority: Priority.high,
-          ),
-        ),
-        payload: jsonEncode(payload),
-      );
+    final liveData = jsonDecode(payload['data']);
+    AppCoordinator.rootNavigator.currentContext!
+        .showInviteDialog(title: body, liveId: liveData['liveId'], liveType: liveData['liveType']);
+    return;
+  }
+  if (type == MessageTypeFB.liveCreated) {
+    if (MyNavigatorObserver.listRoute.contains('/join_live')) {
+      return;
     }
   }
+  flutterLocalNotificationsPlugin.show(
+    notification?.hashCode ?? 0,
+    title,
+    body,
+    const NotificationDetails(
+      android: _androidNotificationDetails,
+    ),
+    payload: jsonEncode(message.toMap()),
+  );
+
+  /// tôi comment lại đoạn cũ nhé
+  // if (type != null) {
+  //   final typeNotification = convertToNotificationType(type);
+  //   if (typeNotification != null) {
+  //     final id = payload['id'];
+  //     payload = {
+  //       'data': {
+  //         'type': '$type',
+  //         'id': '$id',
+  //       }
+  //     };
+  //     flutterLocalNotificationsPlugin.show(
+  //       notification?.hashCode ?? 0,
+  //       'Thông báo mới',
+  //       '',
+  //       NotificationDetails(
+  //         android: AndroidNotificationDetails(
+  //           channel.id,
+  //           channel.name,
+  //           channelDescription: channel.description,
+  //           icon: '@drawable/icon_notify',
+  //           priority: Priority.high,
+  //         ),
+  //       ),
+  //       payload: jsonEncode(payload),
+  //     );
+  //     return;
+  //   }
+  // } else {
+  //   final notiData = payload['data'];
+  //   LoggerService.print("notiData: $notiData");
+  //   if (payload.isNotEmpty) {
+  //     String? title;
+  //     String? body;
+  //     if (notiData != null) {
+  //       if (payload.isNotEmpty) {
+  //         final content = jsonDecode(payload['data']);
+  //         title = 'Tin nhắn mới';
+  //         body = content?['message']?['content'];
+  //       } else {
+  //         title = notification?.title ?? 'Tin nhắn mới';
+  //         body = notification?.body;
+  //       }
+  //
+  //       flutterLocalNotificationsPlugin.show(
+  //         notification?.hashCode ?? 0,
+  //         title,
+  //         body,
+  //         NotificationDetails(
+  //           android: AndroidNotificationDetails(
+  //             channel.id,
+  //             channel.name,
+  //             channelDescription: channel.description,
+  //             icon: '@drawable/icon_notify',
+  //             priority: Priority.high,
+  //           ),
+  //         ),
+  //         payload: jsonEncode(payload),
+  //       );
+  //     }
+  //   } else {
+  //     flutterLocalNotificationsPlugin.show(
+  //       notification?.hashCode ?? 0,
+  //       notification!.title ?? "",
+  //       notification.body,
+  //       NotificationDetails(
+  //         android: AndroidNotificationDetails(
+  //           channel.id,
+  //           channel.name,
+  //           channelDescription: channel.description,
+  //           icon: '@drawable/icon_notify',
+  //           priority: Priority.high,
+  //         ),
+  //       ),
+  //       payload: jsonEncode(payload),
+  //     );
+  //   }
+  // }
 }
 
 void showNotificationLocal({required Map<String, dynamic> payload}) {

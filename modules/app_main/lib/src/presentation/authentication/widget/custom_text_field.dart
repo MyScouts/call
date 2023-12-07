@@ -16,6 +16,7 @@ class CustomTextField extends StatefulWidget {
     this.label,
     this.node,
     this.onError,
+    this.readOnly = false,
   });
   final TextEditingController controller;
   final Widget? prefixIcon;
@@ -24,6 +25,7 @@ class CustomTextField extends StatefulWidget {
   final TextStyle? hintStyle;
   final ValueChanged<String>? onChange;
   final bool isPassword;
+  final bool readOnly;
   final TextInputType? textInputType;
   final String? Function(String?)? validator;
   final Function(String?)? onError;
@@ -63,6 +65,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           Text(widget.label!, style: context.text.titleMedium),
         if (widget.label != null) const SizedBox(height: 3),
         TextFormField(
+          readOnly: widget.readOnly,
           focusNode: widget.node,
           key: widget.key,
           controller: widget.controller,
@@ -89,7 +92,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   )
                 : _isError
                     ? const Icon(Icons.error, color: Colors.red)
-                    : null,
+                    : widget.suffixIcon,
             // widget.suffixIcon
             hintText: widget.hintText,
             hintStyle: widget.hintStyle,
