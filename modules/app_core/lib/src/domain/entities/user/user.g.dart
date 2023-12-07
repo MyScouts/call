@@ -59,6 +59,9 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       fanGroup: json['fanGroup'] == null
           ? null
           : UserFanGroupInfo.fromJson(json['fanGroup'] as Map<String, dynamic>),
+      profile: json['profile'] == null
+          ? null
+          : UserProfileInfo.fromJson(json['profile'] as Map<String, dynamic>),
       sexCode: json['sexCode'] as int?,
     );
 
@@ -107,6 +110,7 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'vShopId': instance.vShopId,
       'vShopPDoneId': instance.vShopPDoneId,
       'fanGroup': instance.fanGroup,
+      'profile': instance.profile,
       'sexCode': instance.sexCode,
     };
 

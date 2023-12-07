@@ -150,6 +150,7 @@ extension DurationByStringExt on String {
 extension StringCheck on String {
   bool get hasNumber => RegExp(r'\d+').hasMatch(this);
   bool get hasUppercase => RegExp(r'[A-Z]').hasMatch(this);
+  bool get hasAlphanumeric => RegExp(r'^[a-zA-Z0-9]+$').hasMatch(this);
 }
 
 extension CheckIsNumber on String {
