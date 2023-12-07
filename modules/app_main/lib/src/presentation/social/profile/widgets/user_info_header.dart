@@ -35,7 +35,10 @@ class UserInfoHeader extends StatelessWidget {
     required this.onBoarding,
   });
 
-  bool _getButtonStatus() {
+  bool _getButtonStatus({required GetUserFollowRelationResponse relation}) {
+    if (relation.hasPendingApproval != null && relation.hasPendingApproval!) {
+      return true;
+    }
     // if (followInfoCtrl.value == null) return true;
     // final followInfo = followInfoCtrl.value!.relation;
 
@@ -375,7 +378,7 @@ class UserInfoHeader extends StatelessWidget {
                   isBlocked: userInfo.isBlock,
                 ),
                 onTap: () => _onFriendAction(context, relation),
-                disabled: _getButtonStatus(),
+                disabled: _getButtonStatus(relation: relation),
                 width: null,
               ),
             );

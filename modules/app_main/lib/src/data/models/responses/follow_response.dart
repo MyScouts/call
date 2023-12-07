@@ -32,6 +32,7 @@ class GetUserFollowRelationResponse with _$GetUserFollowRelationResponse {
     required bool isFriend,
     required bool isFollower,
     required bool isFollowee,
+    bool? hasPendingApproval,
   }) = _GetUserFollowRelationResponse;
 
   factory GetUserFollowRelationResponse.fromJson(Map<String, dynamic> json) =>

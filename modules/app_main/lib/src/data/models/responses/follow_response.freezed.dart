@@ -409,6 +409,7 @@ mixin _$GetUserFollowRelationResponse {
   bool get isFriend => throw _privateConstructorUsedError;
   bool get isFollower => throw _privateConstructorUsedError;
   bool get isFollowee => throw _privateConstructorUsedError;
+  bool? get hasPendingApproval => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -424,7 +425,11 @@ abstract class $GetUserFollowRelationResponseCopyWith<$Res> {
       _$GetUserFollowRelationResponseCopyWithImpl<$Res,
           GetUserFollowRelationResponse>;
   @useResult
-  $Res call({bool isFriend, bool isFollower, bool isFollowee});
+  $Res call(
+      {bool isFriend,
+      bool isFollower,
+      bool isFollowee,
+      bool? hasPendingApproval});
 }
 
 /// @nodoc
@@ -444,6 +449,7 @@ class _$GetUserFollowRelationResponseCopyWithImpl<$Res,
     Object? isFriend = null,
     Object? isFollower = null,
     Object? isFollowee = null,
+    Object? hasPendingApproval = freezed,
   }) {
     return _then(_value.copyWith(
       isFriend: null == isFriend
@@ -458,6 +464,10 @@ class _$GetUserFollowRelationResponseCopyWithImpl<$Res,
           ? _value.isFollowee
           : isFollowee // ignore: cast_nullable_to_non_nullable
               as bool,
+      hasPendingApproval: freezed == hasPendingApproval
+          ? _value.hasPendingApproval
+          : hasPendingApproval // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -471,7 +481,11 @@ abstract class _$$GetUserFollowRelationResponseImplCopyWith<$Res>
       __$$GetUserFollowRelationResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isFriend, bool isFollower, bool isFollowee});
+  $Res call(
+      {bool isFriend,
+      bool isFollower,
+      bool isFollowee,
+      bool? hasPendingApproval});
 }
 
 /// @nodoc
@@ -490,6 +504,7 @@ class __$$GetUserFollowRelationResponseImplCopyWithImpl<$Res>
     Object? isFriend = null,
     Object? isFollower = null,
     Object? isFollowee = null,
+    Object? hasPendingApproval = freezed,
   }) {
     return _then(_$GetUserFollowRelationResponseImpl(
       isFriend: null == isFriend
@@ -504,6 +519,10 @@ class __$$GetUserFollowRelationResponseImplCopyWithImpl<$Res>
           ? _value.isFollowee
           : isFollowee // ignore: cast_nullable_to_non_nullable
               as bool,
+      hasPendingApproval: freezed == hasPendingApproval
+          ? _value.hasPendingApproval
+          : hasPendingApproval // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -515,7 +534,8 @@ class _$GetUserFollowRelationResponseImpl
   const _$GetUserFollowRelationResponseImpl(
       {required this.isFriend,
       required this.isFollower,
-      required this.isFollowee});
+      required this.isFollowee,
+      this.hasPendingApproval});
 
   factory _$GetUserFollowRelationResponseImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -527,10 +547,12 @@ class _$GetUserFollowRelationResponseImpl
   final bool isFollower;
   @override
   final bool isFollowee;
+  @override
+  final bool? hasPendingApproval;
 
   @override
   String toString() {
-    return 'GetUserFollowRelationResponse(isFriend: $isFriend, isFollower: $isFollower, isFollowee: $isFollowee)';
+    return 'GetUserFollowRelationResponse(isFriend: $isFriend, isFollower: $isFollower, isFollowee: $isFollowee, hasPendingApproval: $hasPendingApproval)';
   }
 
   @override
@@ -543,13 +565,15 @@ class _$GetUserFollowRelationResponseImpl
             (identical(other.isFollower, isFollower) ||
                 other.isFollower == isFollower) &&
             (identical(other.isFollowee, isFollowee) ||
-                other.isFollowee == isFollowee));
+                other.isFollowee == isFollowee) &&
+            (identical(other.hasPendingApproval, hasPendingApproval) ||
+                other.hasPendingApproval == hasPendingApproval));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, isFriend, isFollower, isFollowee);
+  int get hashCode => Object.hash(
+      runtimeType, isFriend, isFollower, isFollowee, hasPendingApproval);
 
   @JsonKey(ignore: true)
   @override
@@ -572,7 +596,8 @@ abstract class _GetUserFollowRelationResponse
   const factory _GetUserFollowRelationResponse(
       {required final bool isFriend,
       required final bool isFollower,
-      required final bool isFollowee}) = _$GetUserFollowRelationResponseImpl;
+      required final bool isFollowee,
+      final bool? hasPendingApproval}) = _$GetUserFollowRelationResponseImpl;
 
   factory _GetUserFollowRelationResponse.fromJson(Map<String, dynamic> json) =
       _$GetUserFollowRelationResponseImpl.fromJson;
@@ -583,6 +608,8 @@ abstract class _GetUserFollowRelationResponse
   bool get isFollower;
   @override
   bool get isFollowee;
+  @override
+  bool? get hasPendingApproval;
   @override
   @JsonKey(ignore: true)
   _$$GetUserFollowRelationResponseImplCopyWith<
