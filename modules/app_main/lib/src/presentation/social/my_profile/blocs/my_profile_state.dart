@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/data/models/responses/follow_response.dart';
 import 'package:app_main/src/domain/entities/media/media_file.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:equatable/equatable.dart';
@@ -19,6 +20,7 @@ class MyProfileState extends CoreState with EquatableMixin {
   final List<MediaFile?>? videoPostMediaFiles;
 
   final PostType currentPostType;
+  final GetUserFollowDetailResponse? userFollowDetail;
 
   MyProfileState({
     this.userInfo,
@@ -31,6 +33,7 @@ class MyProfileState extends CoreState with EquatableMixin {
     this.newVideoPost,
     this.videoPostMediaFiles = const [],
     this.currentPostType = PostType.text,
+    this.userFollowDetail,
     super.status,
   });
 
@@ -47,6 +50,7 @@ class MyProfileState extends CoreState with EquatableMixin {
     Post? newVideoPost,
     List<MediaFile?>? videoPostMediaFiles,
     PostType? currentPostType,
+    GetUserFollowDetailResponse? userFollowDetail,
   }) {
     return MyProfileState(
       userInfo: userInfo ?? this.userInfo,
@@ -60,11 +64,13 @@ class MyProfileState extends CoreState with EquatableMixin {
       newVideoPost: newVideoPost,
       videoPostMediaFiles: videoPostMediaFiles,
       currentPostType: currentPostType ?? this.currentPostType,
+      userFollowDetail: userFollowDetail ?? this.userFollowDetail,
     );
   }
 
   @override
   List<Object?> get props => [
+        userFollowDetail,
         currentPostType,
         videoPosts,
         hasVideoPostLoadMore,

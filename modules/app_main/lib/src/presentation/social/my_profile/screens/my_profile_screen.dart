@@ -4,6 +4,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/app_dimens.dart';
 import 'package:app_main/src/data/models/payloads/social/create_post_payload.dart';
 import 'package:app_main/src/di/di.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_event.dart';
 import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_state.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
@@ -115,79 +116,82 @@ class _MyProfileScreenState extends State<MyProfileScreen>
                 return pinnedHeaderSliverHeightBuilder;
               },
               onlyOneScrollInBody: true,
-              body: TabBarView(
-                controller: _medialTabController,
-                children: [
-                  BlocBuilder<MyProfileBloc, MyProfileState>(
-                      buildWhen: (previous, current) =>
-                          previous.textPosts != current.textPosts ||
-                          previous.hasTextPostLoadMore !=
-                              current.hasTextPostLoadMore ||
-                          previous.newTextPost != current.newTextPost ||
-                          previous.textPostMediaFiles !=
-                              current.textPostMediaFiles,
-                      builder: (context, state) {
-                        final parentController =
-                            PrimaryScrollController.of(context);
-                        const postType = PostType.text;
+              body: Container(
+                color: AppColors.white,
+                child: TabBarView(
+                  controller: _medialTabController,
+                  children: [
+                    BlocBuilder<MyProfileBloc, MyProfileState>(
+                        buildWhen: (previous, current) =>
+                            previous.textPosts != current.textPosts ||
+                            previous.hasTextPostLoadMore !=
+                                current.hasTextPostLoadMore ||
+                            previous.newTextPost != current.newTextPost ||
+                            previous.textPostMediaFiles !=
+                                current.textPostMediaFiles,
+                        builder: (context, state) {
+                          final parentController =
+                              PrimaryScrollController.of(context);
+                          const postType = PostType.text;
 
-                        if (scrollControllers[postType.index]?.parent !=
-                            parentController) {
-                          scrollControllers[postType.index]?.dispose();
-                          scrollControllers[postType.index] =
-                              SubordinateScrollController(parentController);
-                        }
+                          if (scrollControllers[postType.index]?.parent !=
+                              parentController) {
+                            scrollControllers[postType.index]?.dispose();
+                            scrollControllers[postType.index] =
+                                SubordinateScrollController(parentController);
+                          }
 
-                        return PostTab(
-                          controller: scrollControllers[0]!,
-                          postType: PostType.text,
-                          posts: state.textPosts,
-                          newPost: state.newTextPost,
-                          mediaFiles: state.textPostMediaFiles,
-                          key: const PageStorageKey('post-tab'),
-                          onLoadMore: () {
-                            if (!state.hasTextPostLoadMore) return;
+                          return PostTab(
+                            controller: scrollControllers[0]!,
+                            postType: PostType.text,
+                            posts: state.textPosts,
+                            newPost: state.newTextPost,
+                            mediaFiles: state.textPostMediaFiles,
+                            key: const PageStorageKey('post-tab'),
+                            onLoadMore: () {
+                              if (!state.hasTextPostLoadMore) return;
 
-                            bloc.add(MyProfileLoadMore());
-                          },
-                        );
-                      }),
-                  BlocBuilder<MyProfileBloc, MyProfileState>(
-                      buildWhen: (previous, current) =>
-                          previous.videoPosts != current.videoPosts ||
-                          previous.hasVideoPostLoadMore !=
-                              current.hasVideoPostLoadMore ||
-                          previous.newVideoPost != current.newVideoPost ||
-                          previous.videoPostMediaFiles !=
-                              current.videoPostMediaFiles,
-                      builder: (context, state) {
-                        final parentController =
-                            PrimaryScrollController.of(context);
-                        const postType = PostType.video;
-                        if (scrollControllers[postType.index]?.parent !=
-                            parentController) {
-                          scrollControllers[postType.index]?.dispose();
-                          scrollControllers[postType.index] =
-                              SubordinateScrollController(parentController);
-                        }
-                        return PostTab(
-                          controller: scrollControllers[postType.index]!,
-                          postType: PostType.video,
-                          posts: state.videoPosts,
-                          newPost: state.newVideoPost,
-                          mediaFiles: state.videoPostMediaFiles,
-                          key: const PageStorageKey('video-tab'),
-                          onLoadMore: () {
-                            if (!state.hasVideoPostLoadMore) return;
+                              bloc.add(MyProfileLoadMore());
+                            },
+                          );
+                        }),
+                    BlocBuilder<MyProfileBloc, MyProfileState>(
+                        buildWhen: (previous, current) =>
+                            previous.videoPosts != current.videoPosts ||
+                            previous.hasVideoPostLoadMore !=
+                                current.hasVideoPostLoadMore ||
+                            previous.newVideoPost != current.newVideoPost ||
+                            previous.videoPostMediaFiles !=
+                                current.videoPostMediaFiles,
+                        builder: (context, state) {
+                          final parentController =
+                              PrimaryScrollController.of(context);
+                          const postType = PostType.video;
+                          if (scrollControllers[postType.index]?.parent !=
+                              parentController) {
+                            scrollControllers[postType.index]?.dispose();
+                            scrollControllers[postType.index] =
+                                SubordinateScrollController(parentController);
+                          }
+                          return PostTab(
+                            controller: scrollControllers[postType.index]!,
+                            postType: PostType.video,
+                            posts: state.videoPosts,
+                            newPost: state.newVideoPost,
+                            mediaFiles: state.videoPostMediaFiles,
+                            key: const PageStorageKey('video-tab'),
+                            onLoadMore: () {
+                              if (!state.hasVideoPostLoadMore) return;
 
-                            bloc.add(MyProfileLoadMore());
-                          },
-                        );
-                      }),
-                  const ReelsTab(
-                    key: PageStorageKey('reels-tab'),
-                  ),
-                ],
+                              bloc.add(MyProfileLoadMore());
+                            },
+                          );
+                        }),
+                    const ReelsTab(
+                      key: PageStorageKey('reels-tab'),
+                    ),
+                  ],
+                ),
               ),
             ),
           )),
@@ -370,9 +374,6 @@ class _MyProfileScreenState extends State<MyProfileScreen>
             final age = state.userInfo.getAge;
             final joinedteamAvatar = state.userInfo?.joinedTeam?.avatar ?? '';
             final joinedteamName = state.userInfo?.joinedTeam?.name ?? '';
-            final totalFollower = state.userInfo.getTotalFollower.toString();
-            final totalFollowing = state.userInfo.getTotalFollowing.toString();
-            final totalFriend = state.userInfo.getTotalFriend.toString();
 
             return Column(
               children: [
@@ -521,35 +522,51 @@ class _MyProfileScreenState extends State<MyProfileScreen>
                         ],
                       ),
                       const SizedBox(height: 16),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Row(
-                          children: [
-                            _buildPeopleInfo(
-                              data: totalFollower,
-                              title: 'Người hâm mộ',
-                            ),
-                            Container(
-                              height: 20,
-                              width: 1,
-                              color: Colors.grey,
-                            ),
-                            _buildPeopleInfo(
-                              data: totalFollowing,
-                              title: 'Đang theo dõi',
-                            ),
-                            Container(
-                              height: 20,
-                              width: 1,
-                              color: Colors.grey,
-                            ),
-                            _buildPeopleInfo(
-                              data: totalFriend,
-                              title: 'Bạn bè',
-                            ),
-                          ],
-                        ),
-                      ),
+                      BlocBuilder<MyProfileBloc, MyProfileState>(
+                          buildWhen: (previous, current) =>
+                              previous.userFollowDetail !=
+                              current.userFollowDetail,
+                          builder: (context, state) {
+                            final totalFollower =
+                                state.userFollowDetail?.stats.followerCount ??
+                                    0;
+                            final totalFollowing =
+                                state.userFollowDetail?.stats.followeeCount ??
+                                    0;
+                            final totalFriend =
+                                state.userFollowDetail?.stats.friendCount ?? 0;
+
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: Row(
+                                children: [
+                                  _buildPeopleInfo(
+                                    data: totalFollower,
+                                    title: 'Người hâm mộ',
+                                  ),
+                                  Container(
+                                    height: 20,
+                                    width: 1,
+                                    color: Colors.grey,
+                                  ),
+                                  _buildPeopleInfo(
+                                    data: totalFollowing,
+                                    title: 'Đang theo dõi',
+                                  ),
+                                  Container(
+                                    height: 20,
+                                    width: 1,
+                                    color: Colors.grey,
+                                  ),
+                                  _buildPeopleInfo(
+                                    data: totalFriend,
+                                    title: 'Bạn bè',
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
                     ],
                   ),
                 ),
@@ -639,12 +656,17 @@ class _MyProfileScreenState extends State<MyProfileScreen>
                     );
                   }),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Icon(
-                Icons.close,
-                color: AppColors.black,
-                size: 24,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: InkWell(
+                onTap: () {
+                  context.startDashboardUtil();
+                },
+                child: const Icon(
+                  Icons.close,
+                  color: AppColors.black,
+                  size: 24,
+                ),
               ),
             ),
           ],
@@ -712,13 +734,13 @@ class _MyProfileScreenState extends State<MyProfileScreen>
         });
   }
 
-  Widget _buildPeopleInfo({required String data, required String title}) {
+  Widget _buildPeopleInfo({required int data, required String title}) {
     return Expanded(
       flex: 1,
       child: Column(
         children: [
           Text(
-            data,
+            data.toString(),
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w700,

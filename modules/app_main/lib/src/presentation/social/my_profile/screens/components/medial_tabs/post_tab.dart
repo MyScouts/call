@@ -48,6 +48,8 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
+    final paddingLineBottom = MediaQuery.viewPaddingOf(context).bottom;
+
     super.build(context);
 
     return CustomScrollView(
@@ -59,10 +61,10 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
         SliverToBoxAdapter(
           child: Container(
             color: AppColors.white,
-            padding: const EdgeInsets.symmetric(vertical: 16),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                if (widget.posts.isNotEmpty) const SizedBox(height: 16),
                 if (widget.newPost != null)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,11 +90,37 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
                       ),
                     ],
                   ),
-                ...widget.posts.map((post) => _buildPost(post)),
+                if (widget.posts.isNotEmpty)
+                  ...widget.posts.map((post) => _buildPost(post)),
               ],
             ),
           ),
-        )
+        ),
+        SliverFillRemaining(
+            hasScrollBody: false,
+            child: widget.posts.isEmpty && widget.newPost == null
+                ? Padding(
+                    padding: EdgeInsets.only(bottom: paddingLineBottom),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 10),
+                        ImageWidget(
+                          IconAppConstants.icDoubleImage,
+                          width: 80,
+                          height: 80,
+                        ),
+                        const Text(
+                          'Chưa có bài viết nào',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: AppColors.grey76,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : const SizedBox.shrink()),
       ],
     );
   }
@@ -318,8 +346,7 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
       switch (postType) {
         case PostType.text:
           return CommonMultiImageView.multiNetwork(
-            listNetwork:
-                medias.map((media) => media.link ?? '').toList(),
+            listNetwork: medias.map((media) => media.link ?? '').toList(),
             width: double.infinity,
             radius: 12,
           );

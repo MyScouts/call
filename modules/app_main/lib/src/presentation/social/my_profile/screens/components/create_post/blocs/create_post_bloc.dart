@@ -3,6 +3,7 @@ import 'package:app_main/src/core/bloc/core_bloc.dart';
 import 'package:app_main/src/data/repositories/media_picker.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
 
 import 'create_post_event.dart';
 import 'create_post_state.dart';
@@ -16,8 +17,18 @@ class CreatePostBloc extends CoreBloc<CreatePostEvent, CreatePostState> {
   ) : super(CreatePostState()) {
     on<CreatePostInitiated>(onCreatePostInitiated);
     on<PostButtonTapped>(onPostButtonTapped);
-    on<SubjectTextFieldChanged>(onSubjectTextFieldChanged);
-    on<ContentTextFieldChanged>(onContentTextFieldChanged);
+    on<SubjectTextFieldChanged>(
+      onSubjectTextFieldChanged,
+      transformer: (event, mapper) => event
+          .debounceTime(const Duration(milliseconds: 150))
+          .switchMap(mapper),
+    );
+    on<ContentTextFieldChanged>(
+      onContentTextFieldChanged,
+      transformer: (event, mapper) => event
+          .debounceTime(const Duration(milliseconds: 150))
+          .switchMap(mapper),
+    );
     on<FilesChanged>(onFilesChanged);
     on<MediaTapped>(onMediaTapped);
     on<RemoveMediaTapped>(onRemoveMediaTapped);

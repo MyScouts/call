@@ -192,6 +192,8 @@ class IconAppConstants {
   static String icOnly = IconApp.icOnly.path;
   static String icPublic = IconApp.icPublic.path;
   static String icFan = IconApp.icFan.path;
+  static String icDoubleImage = IconApp.icDoubleImage.path;
+  
 }
 
 enum IconApp {
@@ -394,7 +396,8 @@ enum IconApp {
   icVideoBg('assets/icons/ic_video_bg.svg'),
   icOnly('assets/icons/ic_only.svg'),
   icPublic('assets/icons/ic_public.svg'),
-  icFan('assets/icons/ic_fan.svg');
+  icFan('assets/icons/ic_fan.svg'),
+  icDoubleImage('assets/icons/ic_double_image.svg');
 
 
   const IconApp(this.path);

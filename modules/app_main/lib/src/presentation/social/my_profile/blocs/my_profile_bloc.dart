@@ -18,11 +18,13 @@ class MyProfileBloc extends CoreBloc<MyProfileEvent, MyProfileState> {
   final UserUsecase _userUsecase;
   final PostUsecase _postUsecase;
   final CommentUsecase _commentUsecase;
+  final UserUsecase _userRepository;
 
   MyProfileBloc(
     this._userUsecase,
     this._postUsecase,
     this._commentUsecase,
+    this._userRepository,
   ) : super(MyProfileState()) {
     on<MyProfileInitiated>(onMyProfileInitiated);
     on<MyProfileLoadMore>(onMyProfileLoadmore);
@@ -55,8 +57,7 @@ class MyProfileBloc extends CoreBloc<MyProfileEvent, MyProfileState> {
 
   late StreamController<bool> isScrolledController =
       StreamController.broadcast();
-  late StreamController<int> switchTabController =
-      StreamController.broadcast();
+  late StreamController<int> switchTabController = StreamController.broadcast();
 
   void onMyProfileInitiated(_, Emitter<MyProfileState> emit) async {
     _textPage = 1;
@@ -76,6 +77,14 @@ class MyProfileBloc extends CoreBloc<MyProfileEvent, MyProfileState> {
     emit(state.copyWith(
       userInfo: userInfo,
     ));
+    if (userInfo != null) {
+      final userFollowDetail =
+          await _userRepository.getFollowUser(userInfo.id!);
+      emit(state.copyWith(
+        userInfo: userInfo,
+        userFollowDetail: userFollowDetail,
+      ));
+    }
   }
 
   FutureOr<void> getPosts(
@@ -227,6 +236,6 @@ class MyProfileBloc extends CoreBloc<MyProfileEvent, MyProfileState> {
 
     await getProfile(emit);
 
-    getPosts(state.currentPostType, emit);
+    await getPosts(state.currentPostType, emit);
   }
 }

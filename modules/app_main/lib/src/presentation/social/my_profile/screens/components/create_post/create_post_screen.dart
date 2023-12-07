@@ -9,6 +9,7 @@ import 'package:app_main/src/presentation/social/my_profile/screens/components/c
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/multiple_image.dart';
 import 'package:app_main/src/data/models/payloads/social/create_post_payload.dart';
 import 'package:design_system/design_system.dart';
+import 'package:detectable_text_field/widgets/detectable_text_editing_controller.dart';
 import 'package:detectable_text_field/widgets/detectable_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -33,14 +34,44 @@ class CreatePostScreen extends StatefulWidget {
 
 class _CreatePostScreenState extends State<CreatePostScreen> {
   final bloc = getIt<CreatePostBloc>();
+  final FocusNode contentFocusNode = FocusNode();
+
+  late DetectableTextEditingController contentController;
+  late DetectableTextEditingController subjectController;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
+    initTextController();
 
-    if (widget.isShowMedia) {
-      bloc.add(MediaTapped(widget.postType));
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.isShowMedia) {
+        bloc.add(MediaTapped(widget.postType));
+      }
+    });
+  }
+
+  void initTextController() {
+    contentController = DetectableTextEditingController(
+      detectedStyle: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        color: AppColors.blue34,
+      ),
+    );
+    subjectController = DetectableTextEditingController(
+      detectedStyle: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    contentController.dispose();
+    subjectController.dispose();
   }
 
   @override
@@ -50,6 +81,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     const minLinesSubject = 3;
     final keyBoardHeight = MediaQuery.of(context).viewInsets.bottom;
     const padding = 16.0;
+    final paddingLineBottom = MediaQuery.viewPaddingOf(context).bottom;
 
     return GestureDetector(
       onTap: () {
@@ -58,96 +90,124 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       child: BlocProvider(
         create: (_) => bloc,
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true,
           appBar: _buildAppBar(),
           body: Container(
               padding: const EdgeInsets.symmetric(vertical: padding),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: padding),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
+              child: CustomScrollView(
+                slivers: [
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: padding),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                width: avatarSize,
-                                height: avatarSize,
-                                child: CircleAvatar(
-                                  radius: avatarSize,
-                                  child: ClipOval(
-                                    child: ImageWidget(
-                                      widget.user?.getUserAvatar ??
-                                          ImageConstants.defaultUserAvatar,
-                                      width: avatarSize,
-                                      fit: BoxFit.cover,
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: avatarSize,
+                                    height: avatarSize,
+                                    child: CircleAvatar(
+                                      radius: avatarSize,
+                                      child: ClipOval(
+                                        child: ImageWidget(
+                                          widget.user?.getUserAvatar ??
+                                              ImageConstants.defaultUserAvatar,
+                                          width: avatarSize,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        widget.user?.getdisplayName ?? '',
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      _buildTypeScope(),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 24),
+                              _buildInput(
+                                controller: subjectController,
+                                text: 'Viết một dòng mở đầu',
+                                onChanged: (text) =>
+                                    bloc.add(SubjectTextFieldChanged(text)),
+                                hintStyle: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.grey76,
+                                ),
+                                textStyle: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.black,
+                                ),
+                                minLines: minLinesSubject,
+                                maxLines: maxLinesSubject,
+                                isShowDetectedStyle: false,
+                              ),
+                              const SizedBox(height: 6),
+                            ],
+                          ),
+                        ),
+                        BlocBuilder<CreatePostBloc, CreatePostState>(
+                            buildWhen: (previous, current) =>
+                                previous.files != current.files,
+                            builder: (context, state) {
+                              final flex = state.files.isEmpty ? 1 : 0;
+                              return Expanded(
+                                flex: flex,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    contentFocusNode.requestFocus();
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: padding),
+                                    child: _buildInput(
+                                      controller: contentController,
+                                      text: 'Bạn đang nghĩ gì ?',
+                                      onChanged: (text) => bloc
+                                          .add(ContentTextFieldChanged(text)),
+                                      hintStyle: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.grey76,
+                                      ),
+                                      textStyle: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      focusNode: contentFocusNode,
                                     ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(width: 12),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    widget.user?.getdisplayName ?? '',
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 5),
-                                  _buildTypeScope(),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 24),
-                          _buildInput(
-                            text: 'Viết một dòng mở đầu',
-                            onChanged: (text) =>
-                                bloc.add(SubjectTextFieldChanged(text)),
-                            hintStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.grey76,
-                            ),
-                            textStyle: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.black,
-                            ),
-                            minLines: minLinesSubject,
-                            maxLines: maxLinesSubject,
-                            isShowDetectedStyle: false,
-                          ),
-                          const SizedBox(height: 6),
-                          _buildInput(
-                            text: 'Bạn đang nghĩ gì ?',
-                            onChanged: (text) =>
-                                bloc.add(ContentTextFieldChanged(text)),
-                            hintStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.grey76,
-                            ),
-                            textStyle: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
+                              );
+                            }),
+                        const SizedBox(height: 12),
+                        _buildMedia(),
+                      ],
                     ),
-                    const SizedBox(height: 12),
-                    _buildMedia(),
-                  ],
-                ),
+                  ),
+                ],
               )),
-          bottomSheet: BlocBuilder<CreatePostBloc, CreatePostState>(
+          bottomNavigationBar: BlocBuilder<CreatePostBloc, CreatePostState>(
               buildWhen: (previous, current) => previous.files != current.files,
               builder: (context, state) {
                 bool isShowKeyBoard = keyBoardHeight != 0;
@@ -155,13 +215,13 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 bool isVerticleAction = !isShowKeyBoard && isFilesEmpty;
                 double paddingBottom = isVerticleAction
                     ? keyBoardHeight
-                    : (isShowKeyBoard ? keyBoardHeight : 32);
+                    : (isShowKeyBoard ? keyBoardHeight : paddingLineBottom);
 
                 return Container(
                   padding: EdgeInsets.only(bottom: paddingBottom),
                   color: AppColors.white,
                   child: isVerticleAction
-                      ? _buildVerticleAction()
+                      ? _buildVerticleAction(paddingLineBottom)
                       : _buildHorizontalAction(),
                 );
               }),
@@ -207,32 +267,41 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   }
 
   Widget _buildHorizontalAction() {
+    const iconHorizontalSize = 36.0;
+    const iconVerticlePadding = 12.0;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: iconVerticlePadding),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildHorizontalFirstAction(),
-          ImageWidget(IconAppConstants.icSmileBg, width: 36, height: 36),
-          ImageWidget(IconAppConstants.icPositionBg, width: 36, height: 36),
-          ImageWidget(IconAppConstants.icTagBg, width: 36, height: 36),
+          _buildHorizontalFirstAction(iconHorizontalSize),
+          ImageWidget(IconAppConstants.icSmileBg,
+              width: iconHorizontalSize, height: iconHorizontalSize),
+          ImageWidget(IconAppConstants.icPositionBg,
+              width: iconHorizontalSize, height: iconHorizontalSize),
+          ImageWidget(IconAppConstants.icTagBg,
+              width: iconHorizontalSize, height: iconHorizontalSize),
         ],
       ),
     );
   }
 
-  Widget _buildHorizontalFirstAction() {
+  Widget _buildHorizontalFirstAction(double iconHorizontalSize) {
     var iconName = IconAppConstants.icGalleryBg;
+
     if (widget.postType.isVideo) {
       iconName = IconAppConstants.icVideoBg;
     }
 
-    return ImageWidget(iconName, width: 36, height: 36);
+    return InkWell(
+      onTap: () => bloc.add(MediaTapped(widget.postType)),
+      child: ImageWidget(iconName,
+          width: iconHorizontalSize, height: iconHorizontalSize),
+    );
   }
 
-  Widget _buildVerticleAction() {
-    final paddingBottom = MediaQuery.viewPaddingOf(context).bottom;
-
+  Widget _buildVerticleAction(double paddingLineBottom) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
@@ -262,7 +331,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             text: 'Gắn thẻ',
             isShowDivider: false,
           ),
-          SizedBox(height: paddingBottom),
+          SizedBox(height: paddingLineBottom),
         ],
       ),
     );
@@ -379,25 +448,30 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     required TextStyle textStyle,
     required TextStyle hintStyle,
     required Function(String) onChanged,
+    required DetectableTextEditingController controller,
     int? maxLines,
     int? minLines,
     bool isShowDetectedStyle = true,
+    FocusNode? focusNode,
   }) {
     const outlineBorderRadius = OutlineInputBorder(
       borderSide: BorderSide.none,
     );
-
     return DetectableTextField(
+      controller: controller,
+      focusNode: focusNode,
       keyboardType: TextInputType.multiline,
       maxLines: maxLines,
       minLines: minLines,
       style: textStyle,
       onChanged: onChanged,
-      detectedStyle: isShowDetectedStyle ?  const TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.w600,
-        color: AppColors.blue34,
-      ) : textStyle,
+      // detectedStyle: isShowDetectedStyle
+      //     ? const TextStyle(
+      //         fontSize: 14,
+      //         fontWeight: FontWeight.w600,
+      //         color: AppColors.blue34,
+      //       )
+      //     : textStyle,
       decoration: InputDecoration(
         isDense: true,
         contentPadding: EdgeInsets.zero,
