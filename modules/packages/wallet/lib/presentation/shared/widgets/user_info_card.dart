@@ -88,7 +88,7 @@ class UserInfoCard extends StatelessWidget {
                 child: _resourceWidget(
                   context,
                   WalletType: WalletType.ddone,
-                  resourceValue: '254',
+                  resourceValue: '0',
                 ),
               ),
               const SizedBox(width: 20),
