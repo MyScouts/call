@@ -4,6 +4,7 @@ import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:app_main/src/presentation/live/presentation/live_reaction/live_reaction_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/setting/setting_sheet.dart';
+import 'package:app_main/src/presentation/live/presentation/tool/live_tools_sheet.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,6 +26,16 @@ class LiveBottomAction extends StatelessWidget {
       builder: (_) => Provider.value(
         value: context.read<LiveChannelController>(),
         child: const SettingSheet(),
+      ),
+    );
+  }
+
+  void liveTool(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) => Provider.value(
+        value: context.read<LiveChannelController>(),
+        child: const LiveToolsSheet(),
       ),
     );
   }
@@ -101,7 +112,9 @@ class LiveBottomAction extends StatelessWidget {
                               LiveButtonAction(
                                 bgColor: const Color(0xff4B84F7),
                                 icon: ImageWidget(IconAppConstants.icLiveQr),
-                                onPressed: () {},
+                                onPressed: () {
+                                  liveTool(context);
+                                },
                               ),
                             if (!controller.me.value.isOwner)
                               LiveButtonAction(

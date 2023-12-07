@@ -25,7 +25,7 @@ class _LiveStreamSearchState extends State<LiveStreamSearch> {
 
   @override
   void initState() {
-    liveController.getListLive(context);
+    liveController.getListLive();
     liveController.getListCategory();
     super.initState();
   }
@@ -57,7 +57,7 @@ class _LiveStreamSearchState extends State<LiveStreamSearch> {
           child: GestureDetector(
             onTap: () async {
               await context.showFilterSearchLive(liveController);
-              liveController.getListLive(context);
+              liveController.getListLive();
             },
             child: Obx(() {
               return ImageWidget(
@@ -117,7 +117,7 @@ class _LiveStreamSearchState extends State<LiveStreamSearch> {
             child: Obx(() {
               return RefreshIndicator(
                 onRefresh: () async {
-                  liveController.getListLive(context);
+                  liveController.getListLive();
                 },
                 child: GridView.count(
                   physics: const AlwaysScrollableScrollPhysics(),

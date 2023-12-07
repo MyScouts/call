@@ -17,3 +17,5 @@ class AgoraData {
   factory AgoraData.fromJson(Map<String, dynamic> json) =>
       _$AgoraDataFromJson(json);
 }
+
+

@@ -1,11 +1,11 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
+import 'package:app_main/src/presentation/live/presentation/live_home/live_home_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-class SettingSheet extends StatelessWidget {
-  const SettingSheet({super.key});
+class LiveToolsSheet extends StatelessWidget {
+  const LiveToolsSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class SettingSheet extends StatelessWidget {
                 leading: const CloseButton(),
                 centerTitle: true,
                 title: const Text(
-                  'Cài đặt livestream',
+                  'Thanh công cụ',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -63,57 +63,39 @@ class SettingSheet extends StatelessWidget {
                 crossAxisSpacing: 24,
                 childAspectRatio: 2 / 3,
                 children: [
-                  Obx(() {
-                    final action = controller.enableAudio;
-                    if (controller.mic.value) {
-                      return _Item(
-                        title: 'Tắt tiếng',
-                        icon: Assets.icons_lives_turn_off_mic.svg(),
-                        action: action,
+                  _Item(
+                    title: 'Chia sẻ',
+                    icon: Assets.icons_lives_share.svg(),
+                    action: () {},
+                  ),
+                  _Item(
+                    title: 'Thu nhỏ',
+                    icon: Assets.icons_lives_zoom_in.svg(),
+                    action: () {
+                      Navigator.of(context).popUntil(
+                        (route) =>
+                            route.settings.name == LiveHomeScreen.routeName,
                       );
-                    }
+                    },
+                  ),
+                  _Item(
+                    title: 'Xoay Cam',
+                    icon: Assets.icons_lives_switch_came.svg(),
+                    action: controller.switchCamera,
+                  ),
+                  _Item(
+                    title: 'Mời PK',
+                    icon: Assets.icons_lives_pk.svg(),
+                    action: () {
 
-                    return _Item(
-                      title: 'Bật tiếng',
-                      icon: Assets.icons_lives_turn_on_mic.svg(),
-                      action: action,
-                    );
-                  }),
-                  Obx(() {
-                    final action = controller.enableVideo;
-                    if (controller.video.value) {
-                      return _Item(
-                        title: 'Tắt hình',
-                        icon: Assets.icons_lives_turn_off_video.svg(),
-                        action: action,
-                      );
-                    }
+                    },
+                  ),
+                  _Item(
+                    title: 'MarShop',
+                    icon: Assets.icons_lives_marshop.svg(),
+                    action: () {
 
-                    return _Item(
-                      title: 'Bật hình',
-                      icon: Assets.icons_lives_turn_on_video.svg(),
-                      action: action,
-                    );
-                  }),
-                  _Item(
-                    title: 'Filter',
-                    icon: Assets.icons_lives_filter.svg(),
-                    action: () {},
-                  ),
-                  _Item(
-                    title: 'Quà tặng nhanh',
-                    icon: Assets.icons_lives_gift_1.svg(),
-                    action: () {},
-                  ),
-                  _Item(
-                    title: 'Sửa tiêu đề',
-                    icon: Assets.icons_lives_edit.svg(),
-                    action: () {},
-                  ),
-                  _Item(
-                    title: 'Sửa chế độ',
-                    icon: Assets.icons_lives_public.svg(),
-                    action: () {},
+                    },
                   ),
                 ],
               ),
