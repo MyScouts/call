@@ -37,7 +37,7 @@ class AvatarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final image =
-        (avatar?.isNotEmpty ?? false) ? avatar! : ImageConstants.defaultAvatar;
+        (avatar?.isNotEmpty ?? false) ? avatar! : Assets.images_avatar.path;
     final paddingRight = isStar ? 3.0 : 0.0;
     final paddingTop = isStar ? 6.0 : 0.0;
 

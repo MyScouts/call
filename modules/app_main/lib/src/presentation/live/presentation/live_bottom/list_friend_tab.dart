@@ -12,10 +12,11 @@ import 'live_bottom_controller.dart';
 import 'user_listile.dart';
 
 class ListFriendTab extends StatefulWidget {
+  final bool isHost;
   final LiveBottomController controller;
   final LiveData liveData;
 
-  const ListFriendTab({super.key, required this.controller, required this.liveData});
+  const ListFriendTab({super.key, required this.controller, required this.liveData, required this.isHost});
 
   @override
   State<ListFriendTab> createState() => _ListFriendTabState();
@@ -26,7 +27,7 @@ class _ListFriendTabState extends State<ListFriendTab> {
   final userMe = getIt.get<UserInfoSharePreferencesUsecase>().getUserInfo();
 
   List<User> get listUser {
-    if (widget.liveData.userID == userMe?.id) {
+    if (widget.isHost) {
       return widget.controller.listFollow;
     }
     return widget.controller.listFriends;

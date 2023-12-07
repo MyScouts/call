@@ -81,11 +81,11 @@ extension UserExtNull on User? {
   }
 
   String get fullNameStr {
-    if (this?.fullName != null && this!.fullName!.isNotEmpty) {
+    if (this?.fullName != null && this?.fullName?.isNotEmpty == true) {
       return this!.fullName!;
     }
-    return this!.displayName!.replaceRange(
-        this!.displayName!.length - 3, this!.displayName!.length, '***');
+    return this?.displayName?.replaceRange(this!.displayName!.length - 3, this!.displayName!.length, '***') ?? '';
+
   }
 
   bool get getIsPDone => this?.isPDone ?? false;
