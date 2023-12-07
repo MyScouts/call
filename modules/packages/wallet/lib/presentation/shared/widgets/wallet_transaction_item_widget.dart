@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:wallet/presentation/wallet_constant.dart';
 
 import '../../../data/datasources/models/response/transactions_response.dart';
@@ -19,6 +20,8 @@ class WalletTransactionItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formatterDate = DateFormat('dd/MM/yyyy - HH:mm');
+
     return GestureDetector(
       onTap: onTap?.call,
       child: IntrinsicHeight(
@@ -54,7 +57,7 @@ class WalletTransactionItemWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${transactionItem.createdAt?.datePreOrder}',
+                    formatterDate.format(transactionItem.createdAt!.toLocal()),
                     style: context.text.titleMedium?.copyWith(
                       color: const Color(0xFF667385),
                       fontSize: 12,
@@ -74,7 +77,7 @@ class WalletTransactionItemWidget extends StatelessWidget {
                       text: '${TransactionType.values.firstWhere(
                             (type) =>
                                 type.value == transactionItem.transactionType,
-                          ).operator(context, receiverPDoneId: transactionItem.receiver?.pDoneId, walletType: walletType)} ${transactionItem.toValue.toAppCurrencyString(
+                          ).operator(context, receiverPDoneId: transactionItem.receiver?.pDoneId, walletType: walletType)} ${transactionItem.fromValue.toAppCurrencyString(
                         isWithSymbol: false,
                       )}',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(

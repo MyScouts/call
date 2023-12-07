@@ -1,21 +1,28 @@
-import 'dart:developer';
-
 import 'package:app_core/app_core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/ui.dart';
 import 'package:wallet/core/core.dart';
-import 'package:wallet/core/utils/date_extension.dart';
 import 'package:wallet/presentation/wallet_constant.dart';
 
 import '../data/datasources/models/response/transactions_response.dart';
 import 'shared/bloc/wallet_bloc.dart';
 
-class TransactionHistoryDetailScreen extends StatefulWidget {
+class TransactionHistoryDetailParams {
   final String id;
+  final WalletType walletType;
+
+  TransactionHistoryDetailParams({
+    required this.id,
+    required this.walletType,
+  });
+}
+
+class TransactionHistoryDetailScreen extends StatefulWidget {
+  final TransactionHistoryDetailParams params;
   static const String routeName = '/transaction-history-detail';
 
-  const TransactionHistoryDetailScreen({super.key, required this.id});
+  const TransactionHistoryDetailScreen({super.key, required this.params});
 
   @override
   State<TransactionHistoryDetailScreen> createState() =>
@@ -26,9 +33,11 @@ class _TransactionHistoryDetailScreenState
     extends State<TransactionHistoryDetailScreen> {
   late final _bloc = injector<WalletBloc>();
 
+  late final walletType = widget.params.walletType;
+
   @override
   void initState() {
-    _bloc.add(WalletEvent.getWalletTransactionDetail(id: widget.id));
+    _bloc.add(WalletEvent.getWalletTransactionDetail(id: widget.params.id));
     super.initState();
   }
 
@@ -53,25 +62,29 @@ class _TransactionHistoryDetailScreenState
             ) ??
             false,
         builder: (BuildContext context, state) {
-          return state.maybeWhen(getWalletTransactionDetailSuccess: (data) {
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: context.horizontal),
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  _buildStatusWidget(data),
-                  const SizedBox(height: 20),
-                  _buildInfoWidget(data),
-                ],
-              ),
-            );
-          }, getWalletTransactionDetailLoading: () {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }, orElse: () {
-            return Container();
-          });
+          return state.maybeWhen(
+            getWalletTransactionDetailSuccess: (data) {
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: context.horizontal),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 20),
+                    _buildStatusWidget(data),
+                    const SizedBox(height: 20),
+                    _buildInfoWidget(data),
+                  ],
+                ),
+              );
+            },
+            getWalletTransactionDetailLoading: () {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+            orElse: () {
+              return Container();
+            },
+          );
         },
       ),
     );
@@ -95,7 +108,7 @@ class _TransactionHistoryDetailScreenState
                 text: TextSpan(
                   text: '${TransactionType.values.firstWhere(
                         (type) => type.value == data.transactionType,
-                      ).operator(context, receiverPDoneId: data.receiver?.pDoneId, walletType: TransactionValueType.getInstance(data.toType!).walletType)} ${data.toValue.toAppCurrencyString(
+                      ).operator(context, receiverPDoneId: data.receiver?.pDoneId, walletType: widget.params.walletType)} ${data.fromValue.toAppCurrencyString(
                     isWithSymbol: false,
                   )}',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -106,11 +119,14 @@ class _TransactionHistoryDetailScreenState
                       ),
                   children: <InlineSpan>[
                     WidgetSpan(
+                      alignment: PlaceholderAlignment.middle,
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 5, bottom: 6),
-                        child: TransactionValueType.getInstance(data.toType!)
-                            .walletType
-                            .iconTransaction(context),
+                        padding: const EdgeInsets.only(left: 5),
+                        child: widget.params.walletType.iconTransaction(
+                          context,
+                          size: 25,
+                          textSize: 24,
+                        ),
                       ),
                     ),
                   ],
@@ -129,7 +145,7 @@ class _TransactionHistoryDetailScreenState
                               (status) => status.name == data.resolvedStatus)
                           .color,
                     ),
-              )
+              ),
             ],
           ),
         ],
@@ -156,24 +172,41 @@ class _TransactionHistoryDetailScreenState
           ),
           const SizedBox(height: 15),
           _buildItemInfo(
-              title: 'Mã giao dịch', content: '#${data.id?.substring(0, 8).toUpperCase()}'),
+              title: 'Mã giao dịch',
+              content: '#${data.id?.substring(0, 8).toUpperCase()}'),
           _buildItemInfo(
               title: 'Loại giao dịch',
               content: TransactionType.getInstance(data.transactionType!)
                   .title(context, receiverPDoneId: data.receiver!.pDoneId)),
+          if (data.transactionType == TransactionType.LIVE_GIFT.name &&
+              walletType == WalletType.diamond)
+            _buildItemInfo(
+              title: 'Tên người tặng',
+              content: data.sender?.fullName ?? '',
+            ),
+          if (data.transactionType == TransactionType.LIVE_GIFT.name &&
+              walletType == WalletType.diamond)
+            _buildItemInfo(
+                title: 'ID người tặng', content: data.sender!.pDoneId!),
+          if (data.transactionType == TransactionType.LIVE_GIFT.name &&
+              walletType == WalletType.coin)
+            _buildItemInfo(
+              title: 'Tên người nhận',
+              content: data.receiver?.fullName ?? '',
+            ),
+          if (data.transactionType == TransactionType.LIVE_GIFT.name &&
+              walletType == WalletType.coin)
+            _buildItemInfo(
+                title: 'ID người nhận', content: data.receiver!.pDoneId!),
           _buildItemInfo(
-              title: 'Tên người tặng', content: data.sender?.fullName ?? ''),
-          _buildItemInfo(
-              title: 'ID người tặng', content: data.sender!.pDoneId!),
-          _buildItemInfo(
-              title: 'Thời gian giao dịch',
-              content: data.createdAt!.toDDMMYYYYHHMM(),
-              isLastItem: true),
+            title: 'Thời gian giao dịch',
+            content: data.createdAt!.toLocal().datePreOrder,
+            isLastItem: true,
+          ),
         ],
       ),
     );
   }
-
 
   _buildItemInfo({
     required String title,
@@ -205,11 +238,7 @@ class _TransactionHistoryDetailScreenState
           ],
         ),
         const SizedBox(height: 15),
-        if (!isLastItem)
-          const Divider(
-            color: Color(0xFFEAEDF0),
-            thickness: 1.5,
-          )
+        if (!isLastItem) const Divider(color: Color(0xFFEAEDF0), thickness: 1.5)
       ],
     );
   }

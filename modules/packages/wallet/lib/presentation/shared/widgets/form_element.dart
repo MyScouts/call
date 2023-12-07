@@ -112,7 +112,7 @@ class _FormElementState extends State<FormElement> {
             borderSide: BorderSide(color: widget.enableBorderColor),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: widget.focusedBorderColor),
+            borderSide: BorderSide(color: widget.focusedBorderColor, width: 2),
             borderRadius: borderRadius,
           ),
           filled: widget.filled,
