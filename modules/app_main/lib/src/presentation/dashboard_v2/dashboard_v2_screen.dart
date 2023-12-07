@@ -7,11 +7,13 @@ import 'package:app_main/src/presentation/call/call_1v1/managers/call_manager.da
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_drawer.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard_v2/widget/dash_bottom_bar.dart';
+import 'package:app_main/src/presentation/dashboard_v2/widget/dash_bottom_fab.dart';
 import 'package:app_main/src/presentation/dashboard_v2/widget/dashboard_base_v2.dart';
 import 'package:app_main/src/presentation/dashboard_v2/widget/dashboard_header_v2.dart';
 import 'package:app_main/src/presentation/notification/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DashBoardScreenV2 extends StatefulWidget {
   static const String routeName = "dashboard";
@@ -28,6 +30,7 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
   final PageController pageController = PageController();
   final GlobalKey<NotificationScreenState> notificationKey = GlobalKey();
   final GlobalKey<ScaffoldState> drawKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<DashBottomFabState> fabKey = GlobalKey<DashBottomFabState>();
 
   DashboardSharePreferenceUseCase get useCase =>
       getIt<DashboardSharePreferenceUseCase>();
@@ -80,33 +83,43 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
                 page: BottomBarType.values.indexOf(_type),
               ),
               backgroundColor: const Color(0xffF4F4F4),
-              body: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              body: Stack(
+                fit: StackFit.expand,
                 children: [
-                  DashBoardV2Header(
-                    onNotification: () {
-                      notificationKey.currentState?.forward();
-                    },
-                    openAppStore: () {
-                      drawKey.currentState?.openEndDrawer();
-                    },
-                    openSetting: () {
-                      context.startSystemSetting(0);
-                    },
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      DashBoardV2Header(
+                        onNotification: () {
+                          notificationKey.currentState?.forward();
+                        },
+                        openAppStore: () {
+                          drawKey.currentState?.openEndDrawer();
+                        },
+                        openSetting: () {
+                          context.startSystemSetting(0);
+                        },
+                      ),
+                      Expanded(
+                        child: PageView.builder(
+                          controller: pageController,
+                          itemCount: children.length,
+                          itemBuilder: (context, index) => children[index],
+                          onPageChanged: (page) {
+                            if (mounted) {
+                              setState(() {
+                                _type = BottomBarType.fromIndex(page);
+                              });
+                            }
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                  Expanded(
-                    child: PageView.builder(
-                      controller: pageController,
-                      itemCount: children.length,
-                      itemBuilder: (context, index) => children[index],
-                      onPageChanged: (page) {
-                        if (mounted) {
-                          setState(() {
-                            _type = BottomBarType.fromIndex(page);
-                          });
-                        }
-                      },
-                    ),
+                  Positioned(
+                    bottom: 0,
+                    left: (ScreenUtil().screenWidth - 32) / 2 + 8,
+                    child: DashBottomFab(key: fabKey),
                   ),
                 ],
               ),
@@ -118,6 +131,13 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeIn,
                   );
+                },
+                onFabChange: (value) {
+                  if(value) {
+                    fabKey.currentState?.forward();
+                  } else {
+                    fabKey.currentState?.revert();
+                  }
                 },
               ),
             ),
