@@ -14,6 +14,7 @@ const socketBannedEvent = 'userBannedFromReaction';
 const socketMessageEvent = 'message';
 const socketReactionEvent = 'reaction';
 const socketPkStartEvent = 'pkStart';
+const socketPkEndEvent = 'pkEnd';
 
 @Injectable(as: LiveSocketService)
 class LiveSocketServiceImpl extends LiveSocketService {
@@ -50,6 +51,7 @@ class LiveSocketServiceImpl extends LiveSocketService {
       ..on(socketBannedEvent, (data) => emit(socketBannedEvent, data))
       ..on(socketReactionEvent, (data) => emit(socketReactionEvent, data))
       ..on(socketPkStartEvent, (data) => emit(socketPkStartEvent, data))
+      ..on(socketPkEndEvent, (data) => emit(socketPkEndEvent, data))
       ..onConnect(_handleConnect)
       ..onConnectError(_handleConnectionFailure)
       ..onConnectTimeout(_handleConnectionTimeout)

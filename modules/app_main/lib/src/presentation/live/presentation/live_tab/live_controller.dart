@@ -39,14 +39,19 @@ class LiveController {
   Future<void> getListLive(BuildContext context) async {
     try {
       live.value = await _useCase.getListLive(
-          page: 1, pageSize: 20, types: [], categoryId: listCategorySelect.map((element) => element.id!).toList());
+        page: 1,
+        pageSize: 20,
+        types: ['public'],
+        categoryId: listCategorySelect.map((element) => element.id!).toList(),
+      );
       if (live.value.lives?.isNotEmpty == true) {
-        listLiveCount.value = await _useCase.memberCount(live.value.lives!.map((e) => e.id!).toList());
+        listLiveCount.value = await _useCase
+            .memberCount(live.value.lives!.map((e) => e.id!).toList());
       }
-      if(live.value.lives?.isEmpty == true){
-        if(context.mounted){
-          context.showNoticeDialog(title: 'Không có live nào phù hợp với yêu cầu');
-
+      if (live.value.lives?.isEmpty == true) {
+        if (context.mounted) {
+          context.showNoticeDialog(
+              title: 'Không có live nào phù hợp với yêu cầu');
         }
       }
     } catch (e) {}
@@ -54,9 +59,11 @@ class LiveController {
 
   Future<void> getListLiveForYou(BuildContext context) async {
     try {
-      liveForYou.value = await _useCase.getListLivefollowing(page: 1, pageSize: 20, isFriend: false);
+      liveForYou.value = await _useCase.getListLivefollowing(
+          page: 1, pageSize: 20, isFriend: false);
       if (liveForYou.value.lives?.isNotEmpty == true) {
-        listLiveCountForYour.value = await _useCase.memberCount(liveForYou.value.lives!.map((e) => e.id!).toList());
+        listLiveCountForYour.value = await _useCase
+            .memberCount(liveForYou.value.lives!.map((e) => e.id!).toList());
       }
     } catch (e) {}
   }

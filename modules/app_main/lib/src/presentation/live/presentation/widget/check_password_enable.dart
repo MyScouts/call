@@ -55,6 +55,7 @@ class _LiveSetPasswordState extends State<LiveCheckPassword> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextFormField(
                       textInputAction: TextInputAction.done,
@@ -90,7 +91,6 @@ class _LiveSetPasswordState extends State<LiveCheckPassword> {
                     ),
                     if (_message != null)
                       ...[
-                        const SizedBox(height: 4),
                         Text(
                           _message!,
                           style: const TextStyle(
@@ -139,9 +139,9 @@ class _LiveSetPasswordState extends State<LiveCheckPassword> {
                                   _message = 'Mật khẩu không đúng';
                                 });
                               } else {
-                                widget.onPass(controller.text);
                                 if (mounted) {
                                   Navigator.of(context).pop();
+                                  widget.onPass(controller.text);
                                 }
                               }
                             } catch (e) {

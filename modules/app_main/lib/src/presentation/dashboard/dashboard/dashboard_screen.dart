@@ -125,7 +125,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         dashBoardController: dashBoardController,
         pageController: _pageController,
         child: Scaffold(
-          endDrawer: const DashboardDrawer(),
           body: Stack(
             fit: StackFit.expand,
             children: [

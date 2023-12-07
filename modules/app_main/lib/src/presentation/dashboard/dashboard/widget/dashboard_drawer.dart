@@ -29,7 +29,9 @@ enum _ScreenType {
 }
 
 class DashboardDrawer extends StatefulWidget {
-  const DashboardDrawer({super.key});
+  const DashboardDrawer({super.key, required this.page});
+
+  final int page;
 
   @override
   State<DashboardDrawer> createState() => _DashboardDrawerState();
@@ -40,7 +42,9 @@ class _DashboardDrawerState extends State<DashboardDrawer> {
   String id = '';
   late final userId = context.read<UserCubit>().currentUser?.id ?? '';
 
-  List<DashBoardItem> items = communityItems;
+  late List<DashBoardItem> items = widget.page == 0
+      ? communityItems
+      : (widget.page == 1 ? personalItems : ecoItems);
 
   @override
   void initState() {

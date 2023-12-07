@@ -43,3 +43,9 @@ final class UnauthorizedApp extends AppState {}
 final class AppInitialFailed extends AppState {}
 
 final class ForceLogoutSuccess extends AppState {}
+
+final class OnLogout extends AppState {}
+
+final class LogoutSuccess extends AppState {}
+
+final class LogoutFail extends AppState {}
