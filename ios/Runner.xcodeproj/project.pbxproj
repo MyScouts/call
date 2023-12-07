@@ -630,8 +630,7 @@
 					"-weak_framework",
 					"\"LinkPresentation\"",
 					"-weak_framework",
-					"\"UserNotifications\"",
-					"-ld64",
+					"\"UserNotifications\""
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.vdone.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -988,8 +987,7 @@
 					"-weak_framework",
 					"\"LinkPresentation\"",
 					"-weak_framework",
-					"\"UserNotifications\"",
-					"-ld64",
+					"\"UserNotifications\""
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.vdone.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1241,8 +1239,7 @@
 					"-weak_framework",
 					"\"LinkPresentation\"",
 					"-weak_framework",
-					"\"UserNotifications\"",
-					"-ld64",
+					"\"UserNotifications\""
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.vdone.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
