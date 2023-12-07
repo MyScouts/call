@@ -67,7 +67,7 @@ class PhoneBookPageState extends State<PhoneBookPage> {
                   children: [
                     Stack(
                       children: [
-                        AvatarCallerWidget(
+                        AvatarWidget(
                           avatar: _authInfo.avatar,
                           size: 50,
                         ),
@@ -80,7 +80,7 @@ class PhoneBookPageState extends State<PhoneBookPage> {
                         Row(
                           children: [
                             Text(
-                              _authInfo.fullName ?? '',
+                              _authInfo.displayName ?? '',
                               style: context.textTheme.titleMedium!.copyWith(
                                 fontSize: 16,
                                 color: AppColors.black,
@@ -98,6 +98,20 @@ class PhoneBookPageState extends State<PhoneBookPage> {
                           ),
                         ),
                       ],
+                    ),
+                    kSpacer,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        child: const Icon(
+                          Icons.close,
+                          color: AppColors.black,
+                          size: 28,
+                        ),
+                      ),
                     ),
                   ],
                 ),

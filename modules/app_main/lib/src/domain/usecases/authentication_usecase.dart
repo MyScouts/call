@@ -1,4 +1,5 @@
 import 'package:app_main/app_main.dart';
+import 'package:app_main/src/config/app_config_service.dart';
 import 'package:app_main/src/core/services/notifications/notification_service.dart';
 import 'package:app_main/src/core/socket/chat_socket.dart';
 import 'package:app_main/src/data/models/payloads/auth/authentication_payload.dart';
@@ -107,6 +108,7 @@ class AuthenticationUsecase {
   }
 
   Future logout() async {
+    _chatSocket.destroy();
     _notificationService.unsubscribeNotification();
     await _userSharePreferencesUsecase.clearUserData();
   }
@@ -114,11 +116,13 @@ class AuthenticationUsecase {
   Future syncUser() async {
     _chatSocket.connect();
     final user = await _userRepository.getProfile();
-    String stringeeToken = (await _userRepository.getStringgeToken() as Map)['result'];
+    String stringeeToken =
+        (await _userRepository.getStringgeToken() as Map)['result'];
     _userSharePreferencesUsecase.saveStringeeToken(stringeeToken);
     CallManager.shared.client.connect(stringeeToken);
     _userSharePreferencesUsecase.saveUserInfo(user!);
     isAuthenticate.add(true);
+    await AppConfigService.init();
     await _syncFCMToken();
   }
 

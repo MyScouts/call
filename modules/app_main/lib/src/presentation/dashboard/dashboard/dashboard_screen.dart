@@ -11,6 +11,7 @@ import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_store_s
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_background_builder.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_base_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_community_tab.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_drawer.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_ecommerce_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_personal_tab.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dock_widget.dart';
@@ -140,13 +141,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       padding: const EdgeInsets.only(top: 16),
                       child: ListenableBuilder(
                         listenable: dashBoardController,
-                        builder: (_, __) {
+                        builder: (ctx, __) {
                           return StatusBarWidget(
                             enableEditMode: dashBoardController.enableEditMode,
                             openAppStore: () {
-                              setState(() {
-                                _showAppStore = true;
-                              });
+                              // setState(() {
+                              //   _showAppStore = true;
+                              // });
+                              Scaffold.of(ctx).openEndDrawer();
                             },
                             openNotification: () {
                               if (!authenticate) {
@@ -306,7 +308,7 @@ class DashBoardScreenController extends ChangeNotifier {
   final DashboardSharePreferenceUseCase useCase;
 
   DashBoardScreenController(this.useCase) {
-    mainPage = useCase.getPageInitial();
+    mainPage = useCase.getPageInitial('');
     capture();
   }
 
@@ -327,7 +329,7 @@ class DashBoardScreenController extends ChangeNotifier {
   ScreenshotController screenshotController = ScreenshotController();
 
   void save(int page) {
-    useCase.savePage(page);
+    useCase.savePage('', page);
   }
 
   void capture() async {

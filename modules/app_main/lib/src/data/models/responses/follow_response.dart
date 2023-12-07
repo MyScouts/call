@@ -32,6 +32,7 @@ class GetUserFollowRelationResponse with _$GetUserFollowRelationResponse {
     required bool isFriend,
     required bool isFollower,
     required bool isFollowee,
+    bool? hasPendingApproval,
   }) = _GetUserFollowRelationResponse;
 
   factory GetUserFollowRelationResponse.fromJson(Map<String, dynamic> json) =>
@@ -66,6 +67,7 @@ class ApprovedRequestUser with _$ApprovedRequestUser {
   const factory ApprovedRequestUser({
     required int id,
     required String displayName,
+    String? avatar,
     required String pDoneId,
     required String fullName,
     required String birthday,

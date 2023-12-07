@@ -2,8 +2,8 @@ import 'package:app_main/src/data/models/payloads/call/new_call_payload.dart';
 import 'package:app_main/src/data/models/payloads/call/update_call_payload.dart';
 import 'package:app_main/src/data/models/responses/call/call_history_response_dto.dart';
 import 'package:app_main/src/data/models/responses/call/result_response_dto.dart';
+import 'package:app_main/src/data/models/responses/chat/result_dto.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -37,5 +37,12 @@ abstract class CallApi {
   Future<void> updateCall({
     @Path('historyId') required int historyId,
     @Body() required UpdateCallPayload payload,
+  });
+
+  @DELETE(CallApiConstant.getCallHistory)
+  Future<ResultDto> deleteHistoryCall({
+    @Query('historyIds') List<int>? historyIds,
+    @Query('userId') int? userId,
+    @Query('callGroupId') int? callGroupId,
   });
 }

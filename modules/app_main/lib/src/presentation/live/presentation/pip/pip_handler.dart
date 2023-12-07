@@ -1,3 +1,4 @@
+import 'package:app_main/src/presentation/live/live_magane_state.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:app_main/src/presentation/live/presentation/pip/pip_view.dart';
 import 'package:flutter/material.dart';

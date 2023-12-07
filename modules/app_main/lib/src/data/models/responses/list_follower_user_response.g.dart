@@ -10,7 +10,7 @@ ListFollowerUserResponse _$ListFollowerUserResponseFromJson(
         Map<String, dynamic> json) =>
     ListFollowerUserResponse(
       followers: (json['followers'] as List<dynamic>?)
-          ?.map((e) => User.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => FollowerUser.fromJson(e as Map<String, dynamic>))
           .toList(),
       total: json['total'] as int?,
     );
@@ -20,4 +20,15 @@ Map<String, dynamic> _$ListFollowerUserResponseToJson(
     <String, dynamic>{
       'total': instance.total,
       'followers': instance.followers,
+    };
+
+FollowerUser _$FollowerUserFromJson(Map<String, dynamic> json) => FollowerUser(
+      isFriend: json['isFriend'] as bool,
+      follower: User.fromJson(json['follower'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$FollowerUserToJson(FollowerUser instance) =>
+    <String, dynamic>{
+      'isFriend': instance.isFriend,
+      'follower': instance.follower,
     };

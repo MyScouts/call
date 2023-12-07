@@ -1,5 +1,10 @@
+import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
+import 'package:app_main/src/core/services/notification_center.dart';
+import 'package:app_main/src/di/di.dart';
+import 'package:app_main/src/domain/usecases/dashboard_share_preferences_usecase.dart';
 import 'package:app_main/src/presentation/call/call_1v1/managers/call_manager.dart';
-import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_store_screen.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_drawer.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard_v2/widget/dash_bottom_bar.dart';
 import 'package:app_main/src/presentation/dashboard_v2/widget/dashboard_base_v2.dart';
@@ -17,20 +22,47 @@ class DashBoardScreenV2 extends StatefulWidget {
   State<DashBoardScreenV2> createState() => _DashBoardScreenV2State();
 }
 
-class _DashBoardScreenV2State extends State<DashBoardScreenV2> {
+class _DashBoardScreenV2State extends State<DashBoardScreenV2>
+    with AutomaticKeepAliveClientMixin {
   BottomBarType _type = BottomBarType.c;
   final PageController pageController = PageController();
   final GlobalKey<NotificationScreenState> notificationKey = GlobalKey();
-  bool _showAppStore = false;
+  final GlobalKey<ScaffoldState> drawKey = GlobalKey<ScaffoldState>();
+
+  DashboardSharePreferenceUseCase get useCase =>
+      getIt<DashboardSharePreferenceUseCase>();
+
   @override
   void initState() {
     super.initState();
     CallManager.shared.initCallL(context);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      late final userId = context.read<UserCubit>().currentUser?.id ?? '';
+      final page = useCase.getPageInitial('$userId');
+      if (page != null) {
+        pageController.jumpToPage(page);
+        return;
+      }
+      final id = useCase.getInitPath('$userId') ?? '';
+      if (id.trim().isEmpty) return;
+      final item = [...communityItems, ...personalItems, ...ecoItems]
+          .firstWhereOrNull((e) => e.id == id);
+      final path = item?.path ?? '';
+      context.handleStartAppWidget(id: id, path: path);
+    });
+    NotificationCenter.subscribe(
+      channel: showAppStore,
+      observer: this,
+      onNotification: (data) {
+        drawKey.currentState?.openEndDrawer();
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> children = [
+    super.build(context);
+    final List<Widget> children = [
       DashboardCommunity(context: context),
       const DashboardPersonal(),
       const DashboardEco()
@@ -43,6 +75,10 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2> {
           fit: StackFit.expand,
           children: [
             Scaffold(
+              key: drawKey,
+              endDrawer: DashboardDrawer(
+                page: BottomBarType.values.indexOf(_type),
+              ),
               backgroundColor: const Color(0xffF4F4F4),
               body: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -52,9 +88,7 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2> {
                       notificationKey.currentState?.forward();
                     },
                     openAppStore: () {
-                      setState(() {
-                        _showAppStore = true;
-                      });
+                      drawKey.currentState?.openEndDrawer();
                     },
                     openSetting: () {
                       context.startSystemSetting(0);
@@ -93,17 +127,12 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2> {
                 notificationKey.currentState?.revert();
               },
             ),
-            if (_showAppStore)
-              AppStoreScreen(
-                onClose: () {
-                  setState(() {
-                    _showAppStore = false;
-                  });
-                },
-              ),
           ],
         ),
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

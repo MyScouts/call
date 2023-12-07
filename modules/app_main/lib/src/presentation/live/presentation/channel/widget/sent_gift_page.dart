@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:app_core/app_core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -275,8 +276,8 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
               children: [
                 const SizedBox(height: double.infinity, width: double.infinity),
                 Positioned(
-                  right: 10,
-                  top: 105,
+                  right: 20,
+                  top: 200,
                   child: Stack(
                     clipBehavior: Clip.none,
                     children: [
@@ -354,19 +355,12 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
                             ),
                           ),
                           child: ClipOval(
-                            child: widget.gift.giver?.avatar == null
-                                ? ImageWidget(
-                                    ImageConstants.defaultAppLogo,
-                                    width: 53,
-                                    height: 53,
-                                    fit: BoxFit.fill,
-                                  )
-                                : ImageWidget(
-                                    widget.gift.giver?.avatar ?? '',
-                                    width: 53,
-                                    height: 53,
-                                    fit: BoxFit.cover,
-                                  ),
+                            child: ImageWidget(
+                              widget.gift.giver.getAvatar,
+                              width: 53,
+                              height: 53,
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         ),
                       ),

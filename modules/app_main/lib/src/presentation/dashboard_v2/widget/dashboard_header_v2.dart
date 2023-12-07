@@ -7,7 +7,6 @@ import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
 import 'package:design_system/design_system.dart';
-import 'package:design_system/generated/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:imagewidget/imagewidget.dart';

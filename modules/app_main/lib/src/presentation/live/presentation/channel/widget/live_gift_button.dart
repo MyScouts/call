@@ -21,7 +21,7 @@ class _LiveGiftButtonState extends State<LiveGiftButton> {
 
   GiftCard? giftCard;
 
-  Widget bodyGitf() {
+  Widget bodyGift() {
     final controller = context.findAncestorStateOfType<LiveChannelScreenState>()!.controller;
 
     return Obx(() {
@@ -82,12 +82,25 @@ class _LiveGiftButtonState extends State<LiveGiftButton> {
     return Obx(() {
       final times = controller.timesAnimation.value;
       if (times == 1) {
-        return CircleAnimation(
-          duration: Duration(seconds: int.parse(giftCard!.metadata!.displayTime!.toString())),
-          child: bodyGitf(),
+        int second = int.parse(giftCard!.metadata!.displayTime!.toString());
+        return Stack(
+          children: [
+            Center(child: bodyGift()),
+            Center(
+              child: CircleAnimation(
+                duration: Duration(seconds: second + 2),
+                afterAnimation: () {
+                  setState(() {
+                    isIcon = IconAppConstants.icLiveGift;
+                  });
+                },
+                child: const SizedBox(),
+              ),
+            ),
+          ],
         );
       }
-      return bodyGitf();
+      return bodyGift();
     });
   }
 }
@@ -95,8 +108,9 @@ class _LiveGiftButtonState extends State<LiveGiftButton> {
 class CircleAnimation extends StatefulWidget {
   final Widget child;
   final Duration duration;
+  final VoidCallback afterAnimation;
 
-  const CircleAnimation({super.key, required this.child, required this.duration});
+  const CircleAnimation({super.key, required this.child, required this.duration, required this.afterAnimation});
 
   @override
   State<CircleAnimation> createState() => _CircleAnimationState();
@@ -109,6 +123,11 @@ class _CircleAnimationState extends State<CircleAnimation> with SingleTickerProv
   void initState() {
     _controller = AnimationController(vsync: this, duration: widget.duration);
     _controller.forward();
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        widget.afterAnimation.call();
+      }
+    });
     super.initState();
   }
 
@@ -119,7 +138,7 @@ class _CircleAnimationState extends State<CircleAnimation> with SingleTickerProv
         return CircularPercentIndicator(
           lineWidth: 2,
           percent: _controller.value,
-          radius: 25,
+          radius: 30,
           progressColor: Colors.white,
           backgroundColor: Colors.black.withOpacity(0.4),
           center: widget.child,

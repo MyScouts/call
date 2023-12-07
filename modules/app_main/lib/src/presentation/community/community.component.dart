@@ -115,7 +115,7 @@ class _CommunityWidgetState extends State<CommunityWidget>
                         height: 35,
                         child: IconButton(
                           padding: EdgeInsets.zero,
-                          onPressed: () => context.startDashboardUtil(),
+                          onPressed: () => Navigator.of(context).pop(),
                           icon: const Icon(Icons.close),
                           highlightColor: Colors.transparent,
                         ),

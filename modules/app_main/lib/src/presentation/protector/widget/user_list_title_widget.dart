@@ -1,8 +1,6 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
-import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:imagewidget/imagewidget.dart';
+import 'package:ui/ui.dart';
 
 class UserListTitleWidget extends StatelessWidget {
   const UserListTitleWidget({super.key, required this.user});
@@ -13,10 +11,10 @@ class UserListTitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CircleNetworkImage(
-          url: user.avatar ?? '',
-          size: 40,
-          defaultImage: ImageWidget(ImageConstants.defaultAvatar),
+        AppAvatarWidget(
+          avatar: user.avatar,
+          height: 40,
+          width: 40,
         ),
         const SizedBox(width: 8),
         Column(

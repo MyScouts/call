@@ -1,7 +1,6 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:app_main/src/core/coordinator/app_coordinator.dart';
 import 'package:app_main/src/core/utils/loading_indicator/platform_loading.dart';
-import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_group_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/live_channel_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:app_main/src/presentation/live/presentation/live_message/state/live_message_bloc.dart';
@@ -49,24 +48,6 @@ class PipVideoRender extends StatelessWidget {
                     ),
                   ),
                 );
-                PipHandler.removeOverlay();
-              },
-              behavior: HitTestBehavior.opaque,
-              child: Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: SizedBox.square(
-                  dimension: 30,
-                  child: Center(
-                    child: ImageWidget(Assets.icons_lives_pip_up.path),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: GestureDetector(
-              onTap: () async {
                 PipHandler.removeOverlay();
               },
               behavior: HitTestBehavior.opaque,

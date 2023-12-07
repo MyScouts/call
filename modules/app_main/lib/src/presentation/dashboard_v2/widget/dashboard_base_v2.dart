@@ -173,6 +173,7 @@ class AppIcon extends StatelessWidget {
 
 class DashboardCommunity extends DashboardBaseV2 {
   final BuildContext context;
+
   const DashboardCommunity({super.key, required this.context});
 
   @override
@@ -185,34 +186,7 @@ class DashboardCommunity extends DashboardBaseV2 {
   Widget get center => const DashCmCenter();
 
   @override
-  List<DashBoardItem> get items => [
-        DashBoardIconItem(
-          id: 'ic_group',
-          title: 'Group',
-          backgroundImage: IconAppConstants.icGroupTeam,
-          path: CommunityWidget.routeName,
-        ),
-        DashBoardIconItem(
-          id: 'ic_team',
-          title: 'Team',
-          backgroundImage: IconAppConstants.icTeam,
-        ),
-        DashBoardIconItem(
-          id: 'ic_game',
-          title: 'Trò chơi',
-          backgroundImage: Assets.icons_dashboard_game.path,
-        ),
-        DashBoardIconItem(
-          id: 'ic_donate',
-          title: 'Donate',
-          backgroundImage: Assets.icons_dashboard_donate.path,
-        ),
-        DashBoardIconItem(
-          id: 'ic_tv_live',
-          title: 'TV Live',
-          backgroundImage: Assets.icons_dashboard_tv_live.path,
-        ),
-      ];
+  List<DashBoardItem> get items => communityItems;
 
   @override
   Widget get bottom => Stack(
@@ -222,19 +196,21 @@ class DashboardCommunity extends DashboardBaseV2 {
             fit: BoxFit.fill,
           ),
           Positioned.fill(
-              child: Row(
-            children: [
-              Expanded(child: Container()),
-              const SizedBox(width: 5),
-              Expanded(child: Container()),
-              const SizedBox(width: 5),
-              Expanded(
+            child: Row(
+              children: [
+                Expanded(child: Container()),
+                const SizedBox(width: 5),
+                Expanded(child: Container()),
+                const SizedBox(width: 5),
+                Expanded(
                   child: GestureDetector(
-                onTap: () =>
-                    Navigator.pushNamed(context, LiveHomeScreen.routeName),
-              )),
-            ],
-          ))
+                    onTap: () =>
+                        Navigator.pushNamed(context, LiveHomeScreen.routeName),
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       );
 }
@@ -258,34 +234,7 @@ class DashboardPersonal extends DashboardBaseV2 {
       );
 
   @override
-  List<DashBoardItem> get items => [
-        DashBoardIconItem(
-          id: 'ic_qr',
-          title: 'QR Code',
-          backgroundImage: IconAppConstants.icQr,
-          path: ScanQrCodeScanScreen.routeName,
-        ),
-        DashBoardIconItem(
-          id: 'ic_wallet',
-          title: 'Ví',
-          backgroundImage: IconAppConstants.icWallet,
-        ),
-        DashBoardIconItem(
-          id: 'ic_profile',
-          title: 'Profile',
-          backgroundImage: IconAppConstants.icProfile,
-        ),
-        DashBoardIconItem(
-          id: 'ic_save',
-          title: 'Đã Lưu',
-          backgroundImage: Assets.icons_dashboard_save.path,
-        ),
-        DashBoardIconItem(
-          id: 'ic_buff',
-          title: 'Nạp xu',
-          backgroundImage: Assets.icons_dashboard_buff.path,
-        ),
-      ];
+  List<DashBoardItem> get items => personalItems;
 }
 
 class DashboardEco extends DashboardBaseV2 {
@@ -307,31 +256,91 @@ class DashboardEco extends DashboardBaseV2 {
       );
 
   @override
-  List<DashBoardItem> get items => [
-        DashBoardIconItem(
-          id: 'ic_khtx',
-          title: 'KHTX',
-          backgroundImage: Assets.icons_dashboard_k_h_t_x.path,
-        ),
-        DashBoardIconItem(
-          id: 'ic_marShop',
-          title: 'MarShop',
-          backgroundImage: IconAppConstants.icMaShop,
-        ),
-        DashBoardIconItem(
-          id: 'ic_order',
-          title: 'Đơn hàng',
-          backgroundImage: Assets.icons_dashboard_order.path,
-        ),
-        DashBoardIconItem(
-          id: 'ic_ncc',
-          title: 'NCC',
-          backgroundImage: Assets.icons_dashboard_n_c_c.path,
-        ),
-        DashBoardIconItem(
-          id: 'ic_kho',
-          title: 'Kho',
-          backgroundImage: Assets.icons_dashboard_kho.path,
-        ),
-      ];
+  List<DashBoardItem> get items => ecoItems;
 }
+
+final communityItems = <DashBoardItem>[
+  DashBoardIconItem(
+    id: 'ic_group',
+    title: 'Group',
+    backgroundImage: IconAppConstants.icGroupTeam,
+    path: CommunityWidget.routeName,
+  ),
+  DashBoardIconItem(
+    id: 'ic_team',
+    title: 'Team',
+    backgroundImage: IconAppConstants.icTeam,
+  ),
+  DashBoardIconItem(
+    id: 'ic_game',
+    title: 'Trò chơi',
+    backgroundImage: Assets.icons_dashboard_game.path,
+  ),
+  DashBoardIconItem(
+    id: 'ic_donate',
+    title: 'Donate',
+    backgroundImage: Assets.icons_dashboard_donate.path,
+  ),
+  DashBoardIconItem(
+    id: 'ic_tv_live',
+    title: 'TV Live',
+    backgroundImage: Assets.icons_dashboard_tv_live.path,
+  ),
+];
+
+final personalItems = <DashBoardItem>[
+  DashBoardIconItem(
+    id: 'ic_qr',
+    title: 'QR Code',
+    backgroundImage: IconAppConstants.icQr,
+    path: ScanQrCodeScanScreen.routeName,
+  ),
+  DashBoardIconItem(
+    id: 'ic_wallet',
+    title: 'Ví',
+    backgroundImage: IconAppConstants.icWallet,
+  ),
+  DashBoardIconItem(
+    id: 'ic_profile',
+    title: 'Profile',
+    backgroundImage: IconAppConstants.icProfile,
+  ),
+  DashBoardIconItem(
+    id: 'ic_save',
+    title: 'Đã Lưu',
+    backgroundImage: Assets.icons_dashboard_save.path,
+  ),
+  DashBoardIconItem(
+    id: 'ic_buff',
+    title: 'Nạp xu',
+    backgroundImage: Assets.icons_dashboard_buff.path,
+  ),
+];
+
+final ecoItems = <DashBoardItem>[
+  DashBoardIconItem(
+    id: 'ic_khtx',
+    title: 'KHTX',
+    backgroundImage: Assets.icons_dashboard_k_h_t_x.path,
+  ),
+  DashBoardIconItem(
+    id: 'ic_marShop',
+    title: 'MarShop',
+    backgroundImage: IconAppConstants.icMaShop,
+  ),
+  DashBoardIconItem(
+    id: 'ic_order',
+    title: 'Đơn hàng',
+    backgroundImage: Assets.icons_dashboard_order.path,
+  ),
+  DashBoardIconItem(
+    id: 'ic_ncc',
+    title: 'NCC',
+    backgroundImage: Assets.icons_dashboard_n_c_c.path,
+  ),
+  DashBoardIconItem(
+    id: 'ic_kho',
+    title: 'Kho',
+    backgroundImage: Assets.icons_dashboard_kho.path,
+  ),
+];

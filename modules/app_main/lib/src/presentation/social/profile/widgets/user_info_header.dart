@@ -35,18 +35,21 @@ class UserInfoHeader extends StatelessWidget {
     required this.onBoarding,
   });
 
-  bool _getButtonStatus() {
+  bool _getButtonStatus({required GetUserFollowRelationResponse relation}) {
+    if (relation.hasPendingApproval != null && relation.hasPendingApproval!) {
+      return true;
+    }
     // if (followInfoCtrl.value == null) return true;
     // final followInfo = followInfoCtrl.value!.relation;
 
     // if (followInfo.isFollowee || followInfo.isFriend) return false;
 
-    // if (onBoarding != null) {
-    //   if (onBoarding!.isPdone && authInfo.old > 15) return false;
-    //   if (onBoarding!.isPdone && authInfo.old <= 15) {
-    //     return false;
-    //   }
-    // }
+    if (onBoarding != null) {
+      if (onBoarding!.isPdone && authInfo.old <= 15) {
+        // print(authInfo.old);
+        // return true;
+      }
+    }
 
     return false;
   }
@@ -370,12 +373,12 @@ class UserInfoHeader extends StatelessWidget {
                 height: 40,
                 title: friendStatusStr(
                   isFriend: relation.isFriend,
-                  isFollowed: relation.isFollower,
-                  isFollowing: false,
+                  isFollower: relation.isFollower,
+                  isFollowee: relation.isFollowee,
                   isBlocked: userInfo.isBlock,
                 ),
                 onTap: () => _onFriendAction(context, relation),
-                disabled: _getButtonStatus(),
+                disabled: _getButtonStatus(relation: relation),
                 width: null,
               ),
             );

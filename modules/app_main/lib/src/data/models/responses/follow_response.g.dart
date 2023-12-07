@@ -44,6 +44,7 @@ _$GetUserFollowRelationResponseImpl
           isFriend: json['isFriend'] as bool,
           isFollower: json['isFollower'] as bool,
           isFollowee: json['isFollowee'] as bool,
+          hasPendingApproval: json['hasPendingApproval'] as bool?,
         );
 
 Map<String, dynamic> _$$GetUserFollowRelationResponseImplToJson(
@@ -52,6 +53,7 @@ Map<String, dynamic> _$$GetUserFollowRelationResponseImplToJson(
       'isFriend': instance.isFriend,
       'isFollower': instance.isFollower,
       'isFollowee': instance.isFollowee,
+      'hasPendingApproval': instance.hasPendingApproval,
     };
 
 _$ApprovedRequestResponseImpl _$$ApprovedRequestResponseImplFromJson(
@@ -97,6 +99,7 @@ _$ApprovedRequestUserImpl _$$ApprovedRequestUserImplFromJson(
     _$ApprovedRequestUserImpl(
       id: json['id'] as int,
       displayName: json['displayName'] as String,
+      avatar: json['avatar'] as String?,
       pDoneId: json['pDoneId'] as String,
       fullName: json['fullName'] as String,
       birthday: json['birthday'] as String,
@@ -108,6 +111,7 @@ Map<String, dynamic> _$$ApprovedRequestUserImplToJson(
     <String, dynamic>{
       'id': instance.id,
       'displayName': instance.displayName,
+      'avatar': instance.avatar,
       'pDoneId': instance.pDoneId,
       'fullName': instance.fullName,
       'birthday': instance.birthday,

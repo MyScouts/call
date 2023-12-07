@@ -101,7 +101,7 @@ class AuthRepositoryImpl extends UserRepository {
   @override
   Future<List<User>> listFollower() async {
     final res = await _userAPI.listFollower();
-    return res.followers ?? [];
+    return res.followers?.map((e) => e.follower).toList() ?? [];
   }
 
   @override
@@ -163,5 +163,8 @@ class AuthRepositoryImpl extends UserRepository {
     return _userAPI.getStringeeToken();
   }
 
-
+  @override
+  Future replyFollowRequest(ReplyFollowPayload payload) {
+    return _userAPI.replyRequest(payload);
+  }
 }
