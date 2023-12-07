@@ -275,8 +275,8 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
               children: [
                 const SizedBox(height: double.infinity, width: double.infinity),
                 Positioned(
-                  right: 10,
-                  top: 105,
+                  right: 20,
+                  top: 200,
                   child: Stack(
                     clipBehavior: Clip.none,
                     children: [
@@ -356,7 +356,7 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
                           child: ClipOval(
                             child: widget.gift.giver?.avatar == null
                                 ? ImageWidget(
-                                    ImageConstants.defaultAppLogo,
+                                    ImageConstants.defaultAvatar,
                                     width: 53,
                                     height: 53,
                                     fit: BoxFit.fill,

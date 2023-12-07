@@ -38,7 +38,7 @@ class _RegisterMarshopPackScreenState extends State<RegisterMarshopPackScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const BaseAppBar(
-        title: "Chọn gói Marshop",
+        title: "Chọn gói MarShop",
         isClose: false,
       ),
       body: Container(

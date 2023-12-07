@@ -5,6 +5,7 @@ import '../../ui.dart';
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final Widget? titleWidget;
+  final double? elevation;
   final bool isClose;
   final Function()? onPressed;
   final List<Widget>? actions;
@@ -16,7 +17,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onPressed,
     this.titleWidget,
     this.backgroundColor,
-    this.actions,
+    this.actions, this.elevation,
   });
 
   @override
@@ -25,7 +26,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: titleWidget ?? Text(title ?? ''),
       backgroundColor: backgroundColor ?? Colors.transparent,
       bottomOpacity: 0.0,
-      elevation: 0.0,
+      elevation: elevation ?? 0.0,
       centerTitle: true,
       leading: CustomBackButton(
         alignment: Alignment.center,

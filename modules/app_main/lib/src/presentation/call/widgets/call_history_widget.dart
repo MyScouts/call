@@ -16,7 +16,7 @@ class CallHistoryWidget extends StatelessWidget {
     return SizedBox(
       child: Row(
         children: [
-          AvatarCallerWidget(avatar: data.callGroup.members.first.member.avatar, size: 40),
+          AvatarWidget(avatar: data.callGroup.members.first.member.avatar, size: 40),
           kSpacingWidth16,
           Expanded(
             child: Column(
@@ -48,7 +48,7 @@ class CallHistoryWidget extends StatelessWidget {
             ),
           ),
           Text(
-            data.calledAt?.tohhmm ?? '',
+            DateTime.tryParse(data.calledAt ?? '')?.tohhmm ?? '',
             style: context.textTheme.titleMedium?.copyWith(
               fontSize: 11,
             ),

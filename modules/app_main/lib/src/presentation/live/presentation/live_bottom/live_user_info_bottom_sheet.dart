@@ -374,8 +374,8 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
                 height: 40,
                 title: friendStatusStr(
                   isFriend: relation.isFriend,
-                  isFollowed: relation.isFollower,
-                  isFollowing: false,
+                  isFollower: relation.isFollower,
+                  isFollowee: false,
                   isBlocked: userInfo.isBlock,
                 ),
                 onTap: () => _onFriendAction(userInfo, relation),

@@ -42,7 +42,7 @@ class AppAvatarWidget extends StatelessWidget {
               fit: BoxFit.cover,
               errorWidget: (context, url, error) {
                 return ImageWidget(
-                  defaultAvatar ?? ImageConstants.defaultAvatar,
+                  defaultAvatar ?? ImageConstants.defaultUserAvatar,
                   borderRadius: radius,
                 );
               },

@@ -6,11 +6,11 @@ import 'package:app_main/src/presentation/notification/state/notification_bloc.d
 import 'package:app_main/src/presentation/notification/widget/notification_card.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:ui' as ui;
 
 import 'package:imagewidget/imagewidget.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:ui/ui.dart';
 
 class NotificationScreen extends StatefulWidget {
   static const String routerName = '/notification';
@@ -27,7 +27,7 @@ class NotificationScreenState extends State<NotificationScreen>
     with SingleTickerProviderStateMixin {
   final bloc = getIt<NotificationBloc>();
   late AnimationController controller;
-  late final Animation<Offset> animation;
+  late Animation<Offset> animation;
 
   @override
   void initState() {
@@ -36,13 +36,8 @@ class NotificationScreenState extends State<NotificationScreen>
       duration: const Duration(milliseconds: 300),
     );
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
     animation = Tween<Offset>(
-      begin: Offset(0, -MediaQuery.of(context).size.height),
+      begin: Offset(0, -ScreenUtil().screenHeight),
       end: Offset.zero,
     ).animate(
       CurvedAnimation(parent: controller, curve: Curves.easeInOut),

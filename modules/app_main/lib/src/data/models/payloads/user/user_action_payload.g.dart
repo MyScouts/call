@@ -146,3 +146,15 @@ Map<String, dynamic> _$UpdateNonePDoneProfilePayloadToJson(
       'supplyDate': instance.supplyDate,
       'supplyAddress': instance.supplyAddress,
     };
+
+ReplyFollowPayload _$ReplyFollowPayloadFromJson(Map<String, dynamic> json) =>
+    ReplyFollowPayload(
+      requestId: json['requestId'] as int,
+      isApproved: json['isApproved'] as bool,
+    );
+
+Map<String, dynamic> _$ReplyFollowPayloadToJson(ReplyFollowPayload instance) =>
+    <String, dynamic>{
+      'requestId': instance.requestId,
+      'isApproved': instance.isApproved,
+    };

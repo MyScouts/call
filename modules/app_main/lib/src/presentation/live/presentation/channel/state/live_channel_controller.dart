@@ -184,14 +184,14 @@ class LiveChannelController {
     final result = <LiveMember>[];
     for (final i in users) {
       if (i.id == _me.value.info.userID) continue;
-      _me = LiveMember(
+      result.add(LiveMember(
         info: LiveMemberInfo(
           userID: i.id ?? 0,
           name: i.nickname ?? i.fullName ?? i.displayName ?? '',
           avatar: i.avatar ?? '',
         ),
         isOwner: _info.value.user?.id == i.id,
-      ).obs;
+      ));
     }
     return result;
   }
@@ -254,9 +254,7 @@ class LiveChannelController {
         _agora?.token ?? '',
         _agora?.channel ?? '',
         _me.value.info.userID,
-        role: _me.value.isOwner
-            ? ClientRoleType.clientRoleBroadcaster
-            : ClientRoleType.clientRoleAudience,
+        role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
       );
 
       _hostOffline.value = !hostInLive;
@@ -339,8 +337,7 @@ class LiveChannelController {
       androidNotificationOptions: AndroidNotificationOptions(
         channelId: 'notification_channel_id',
         channelName: 'Foreground Notification',
-        channelDescription:
-            'This notification appears when the foreground service is running.',
+        channelDescription: 'This notification appears when the foreground service is running.',
         channelImportance: NotificationChannelImportance.LOW,
         priority: NotificationPriority.LOW,
         iconData: const NotificationIconData(
@@ -408,7 +405,7 @@ class LiveChannelController {
           giftNumber: gift.total ?? 1,
         );
       } else {
-        if (gift.total! > 1 && gift.giver?.id == _me.value.info.userID) {
+        if (gift.giver?.id.toString() == _me.value.info.userID.toString()) {
           timesAnimation.value = gift.total!;
         }
         for (int j = 1; j <= gift.total!; j++) {
@@ -500,6 +497,8 @@ class LiveChannelController {
       );
       NotificationCenter.post(channel: receiveMessage, options: message);
     });
+
+    socketService.on(socketPkStartEvent, (data) {});
   }
 
   void leaveLive() async {
@@ -529,18 +528,13 @@ class LiveChannelController {
 }
 
 extension RemoteVideoStateReasonX on RemoteVideoStateReason {
-  bool get isNetworkCongestion =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
+  bool get isNetworkCongestion => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
 
-  bool get isNetworkRecovery =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
+  bool get isNetworkRecovery => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
 
-  bool get isRemoteOffline =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
+  bool get isRemoteOffline => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
 
-  bool get isRemoteUnmuted =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
+  bool get isRemoteUnmuted => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
 
-  bool get isRemoteInBackground =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
+  bool get isRemoteInBackground => this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
 }

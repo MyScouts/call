@@ -1,4 +1,3 @@
-
 import 'package:app_main/src/domain/entities/call/call_history_response_model.dart';
 import 'package:app_main/src/domain/usecases/call_usecase.dart';
 import 'package:app_main/src/presentation/call/phone_book_detail/cubit/phone_book_detail_state.dart';
@@ -14,7 +13,7 @@ class PhoneBookDetailCubit extends Cubit<PhoneBookDetailState> {
   void init(int id) async {
     try {
       final CallHistoryResponseModel data =
-      await _callUseCase.getCallHistory(page: 1, pageSize: 10, receiverId: id);
+          await _callUseCase.getCallHistory(page: 1, pageSize: 10, receiverId: id);
       emit(PhoneBookDetailState(data: data.items, canLoadMore: data.items.length == 10, page: 1));
     } catch (e) {
       emit(PhoneBookDetailState.error(e));
@@ -25,15 +24,23 @@ class PhoneBookDetailCubit extends Cubit<PhoneBookDetailState> {
     state.mapOrNull((value) async {
       try {
         final CallHistoryResponseModel data =
-        await _callUseCase.getCallHistory(page: value.page +1, pageSize: 10, receiverId: id);
+            await _callUseCase.getCallHistory(page: value.page + 1, pageSize: 10, receiverId: id);
         emit(value.copyWith(
             data: [...value.data, ...data.items],
-            page: value.page +1,
-            canLoadMore: data.items.length == 10
-        ));
+            page: value.page + 1,
+            canLoadMore: data.items.length == 10));
       } catch (err) {
         emit(PhoneBookDetailState.error(err));
       }
     });
+  }
+
+  Future<void> deleteHistoryCall(int id) async {
+    try {
+      await _callUseCase.deleteHistoryCall(userId: id);
+      init(id);
+    } catch (e) {
+      emit(PhoneBookDetailState.error(e));
+    }
   }
 }
