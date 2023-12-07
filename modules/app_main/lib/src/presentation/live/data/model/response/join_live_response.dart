@@ -13,7 +13,6 @@ class JoinLiveResponse {
   final List<AgoraData> agoraData;
 
 
-
   JoinLiveResponse({
     required this.data,
     required this.isModerator,

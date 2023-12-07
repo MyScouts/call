@@ -23,6 +23,7 @@ class _LiveMessageInputState extends State<LiveMessageInput> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            const SizedBox(height: 16),
             IntrinsicHeight(
               child: Row(
                 children: [

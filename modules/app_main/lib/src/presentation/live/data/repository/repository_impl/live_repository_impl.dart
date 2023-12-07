@@ -135,7 +135,7 @@ class LiveRepositoryImpl extends LiveRepository {
   @override
   Future<bool> checkPass(int liveId, String password) async {
     final res = await _liveApi.checkPass(liveId, password);
-    return (res as Map)['joinable'] ?? false;
+    return (res as Map)['data']?['joinable'] ?? false;
   }
 
   Future<GiftCardLive> getDailyDedications(int userId) async {

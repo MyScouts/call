@@ -173,6 +173,7 @@ class AppIcon extends StatelessWidget {
 
 class DashboardCommunity extends DashboardBaseV2 {
   final BuildContext context;
+
   const DashboardCommunity({super.key, required this.context});
 
   @override
@@ -195,19 +196,21 @@ class DashboardCommunity extends DashboardBaseV2 {
             fit: BoxFit.fill,
           ),
           Positioned.fill(
-              child: Row(
-            children: [
-              Expanded(child: Container()),
-              const SizedBox(width: 5),
-              Expanded(child: Container()),
-              const SizedBox(width: 5),
-              Expanded(
+            child: Row(
+              children: [
+                Expanded(child: Container()),
+                const SizedBox(width: 5),
+                Expanded(child: Container()),
+                const SizedBox(width: 5),
+                Expanded(
                   child: GestureDetector(
-                onTap: () =>
-                    Navigator.pushNamed(context, LiveHomeScreen.routeName),
-              )),
-            ],
-          ))
+                    onTap: () =>
+                        Navigator.pushNamed(context, LiveHomeScreen.routeName),
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       );
 }

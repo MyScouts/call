@@ -1,9 +1,9 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
+import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/usecases/dashboard_share_preferences_usecase.dart';
 import 'package:app_main/src/presentation/call/call_1v1/managers/call_manager.dart';
-import 'package:app_main/src/presentation/dashboard/dashboard/widget/app_store_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/widget/dashboard_drawer.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard_v2/widget/dash_bottom_bar.dart';
@@ -27,7 +27,7 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
   BottomBarType _type = BottomBarType.c;
   final PageController pageController = PageController();
   final GlobalKey<NotificationScreenState> notificationKey = GlobalKey();
-  bool _showAppStore = false;
+  final GlobalKey<ScaffoldState> drawKey = GlobalKey<ScaffoldState>();
 
   DashboardSharePreferenceUseCase get useCase =>
       getIt<DashboardSharePreferenceUseCase>();
@@ -39,7 +39,7 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       late final userId = context.read<UserCubit>().currentUser?.id ?? '';
       final page = useCase.getPageInitial('$userId');
-      if(page != null) {
+      if (page != null) {
         pageController.jumpToPage(page);
         return;
       }
@@ -48,9 +48,15 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
       final item = [...communityItems, ...personalItems, ...ecoItems]
           .firstWhereOrNull((e) => e.id == id);
       final path = item?.path ?? '';
-      if (path.trim().isEmpty) return;
-      Navigator.of(context).pushNamed(path);
+      context.handleStartAppWidget(id: id, path: path);
     });
+    NotificationCenter.subscribe(
+      channel: showAppStore,
+      observer: this,
+      onNotification: (data) {
+        drawKey.currentState?.openEndDrawer();
+      },
+    );
   }
 
   @override
@@ -69,41 +75,40 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
           fit: StackFit.expand,
           children: [
             Scaffold(
-              endDrawer: const DashboardDrawer(),
+              key: drawKey,
+              endDrawer: DashboardDrawer(
+                page: BottomBarType.values.indexOf(_type),
+              ),
               backgroundColor: const Color(0xffF4F4F4),
-              body: Builder(
-                builder: (ctx) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      DashBoardV2Header(
-                        onNotification: () {
-                          notificationKey.currentState?.forward();
-                        },
-                        openAppStore: () {
-                          Scaffold.of(ctx).openEndDrawer();
-                        },
-                        openSetting: () {
-                          context.startSystemSetting(0);
-                        },
-                      ),
-                      Expanded(
-                        child: PageView.builder(
-                          controller: pageController,
-                          itemCount: children.length,
-                          itemBuilder: (context, index) => children[index],
-                          onPageChanged: (page) {
-                            if (mounted) {
-                              setState(() {
-                                _type = BottomBarType.fromIndex(page);
-                              });
-                            }
-                          },
-                        ),
-                      ),
-                    ],
-                  );
-                },
+              body: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  DashBoardV2Header(
+                    onNotification: () {
+                      notificationKey.currentState?.forward();
+                    },
+                    openAppStore: () {
+                      drawKey.currentState?.openEndDrawer();
+                    },
+                    openSetting: () {
+                      context.startSystemSetting(0);
+                    },
+                  ),
+                  Expanded(
+                    child: PageView.builder(
+                      controller: pageController,
+                      itemCount: children.length,
+                      itemBuilder: (context, index) => children[index],
+                      onPageChanged: (page) {
+                        if (mounted) {
+                          setState(() {
+                            _type = BottomBarType.fromIndex(page);
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
               bottomNavigationBar: DashBoardBottomBar(
                 type: _type,
@@ -122,14 +127,6 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
                 notificationKey.currentState?.revert();
               },
             ),
-            if (_showAppStore)
-              AppStoreScreen(
-                onClose: () {
-                  setState(() {
-                    _showAppStore = false;
-                  });
-                },
-              ),
           ],
         ),
       ),
