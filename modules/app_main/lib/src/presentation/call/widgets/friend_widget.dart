@@ -10,12 +10,13 @@ import 'avatar_caller_widget.dart';
 
 class FriendWidget extends StatelessWidget {
   final MemberModel data;
-  const FriendWidget({super.key, required this.data});
+  final VoidCallback? onTap;
+  const FriendWidget({super.key, required this.data, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap: onTap ?? () {
         context.startPhoneBookDetail(data);
       },
       child: Row(

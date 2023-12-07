@@ -1,10 +1,13 @@
 //import 'dart:developer' as developer;
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/di/di.dart';
+import 'package:app_main/src/presentation/chat/chat_coordinator.dart';
 import 'package:app_main/src/presentation/chat/new_message/cubit/new_message_cubit.dart';
 import 'package:app_main/src/presentation/chat/new_message/cubit/new_message_state.dart';
 import 'package:app_main/src/presentation/chat/widgets/friend_widget.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
 
@@ -40,10 +43,39 @@ class NewMessagePageState extends State<NewMessagePage> {
               (friends, page, canLoadMore, keySearch) => Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        InkWell(
+                          onTap: () {
+                            context.startCreateRoom();
+                          },
+                          child: Row(
+                            children: [
+                              ImageWidget(IconAppConstants.icUserGroup3),
+                              kSpacingWidth12,
+                              Text(
+                                'Tạo nhóm chat mới',
+                                style: context.textTheme.bodyMedium?.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.blueEdit,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        kSpacingHeight24,
+                        Text(
+                          'Gợi ý',
+                          style: context.textTheme.bodyMedium?.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.greyLightTextColor,
+                          ),
+                        ),
+                        kSpacingHeight16,
                         Expanded(
                           child: ListView.separated(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              padding: const EdgeInsets.only(bottom: 16),
                               itemBuilder: (_, index) {
                                 if (index == friends.length) {
                                   _cubit.loadMore();

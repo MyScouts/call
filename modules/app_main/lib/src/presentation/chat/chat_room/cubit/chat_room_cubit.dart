@@ -17,8 +17,7 @@ import 'package:injectable/injectable.dart';
 
 @singleton
 class ChatRoomCubit extends Cubit<ChatRoomState> {
-  ChatRoomCubit(this._chatUseCase, this._userUsecase,
-      this.upgradeAccountUsecase, this.mediaPicker)
+  ChatRoomCubit(this._chatUseCase, this._userUsecase, this.upgradeAccountUsecase, this.mediaPicker)
       : super(const ChatRoomState.loading());
 
   final int kPageSize = 20;
@@ -33,21 +32,18 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
       emit(const ChatRoomState.loading());
       if (conversationId == null && memberId != null) {
         final User? user = await _userUsecase.geSynctUserById(memberId);
-        final ResultModel newConversation =
-            await _chatUseCase.createConversations(
+        final ResultModel newConversation = await _chatUseCase.createConversations(
           payload: NewConversationsPayload(
             name: user.getdisplayName,
             type: 1,
             memberIds: [memberId],
           ),
         );
-        final conversationIdDetail = await _chatUseCase.getConversationsDetail(
-            conversationId: newConversation.result);
+        final conversationIdDetail =
+            await _chatUseCase.getConversationsDetail(conversationId: newConversation.result);
         _conversationId = newConversation.result;
         final response = await _chatUseCase.getMessages(
-            conversationId: newConversation.result as int,
-            page: 1,
-            pageSize: kPageSize);
+            conversationId: newConversation.result as int, page: 1, pageSize: kPageSize);
         emit(ChatRoomStateData(
           messages: response.items ?? [],
           conversation: conversationIdDetail,
@@ -56,8 +52,8 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
         ));
       } else {
         _conversationId = conversationId!;
-        final conversationIdDetail = await _chatUseCase.getConversationsDetail(
-            conversationId: _conversationId);
+        final conversationIdDetail =
+            await _chatUseCase.getConversationsDetail(conversationId: _conversationId);
         final response = await _chatUseCase.getMessages(
             conversationId: conversationId, page: 1, pageSize: kPageSize);
         emit(ChatRoomStateData(
@@ -87,8 +83,7 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
   Future<void> sendMessage(String message) async {
     try {
       _chatUseCase.newMessage(
-          conversationId: _conversationId,
-          payload: NewMessagePayload(message: message));
+          conversationId: _conversationId, payload: NewMessagePayload(message: message));
     } catch (e) {
       emit(ChatRoomState.error(e));
     }
@@ -96,7 +91,9 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
 
   void updateMessage(MessageModel message) {
     state.mapOrNull((value) async {
-      if (_conversationId == message.conversationId) {
+      if (_conversationId == message.conversationId &&
+          value.messages.firstWhereOrNull((element) => element.messageId == message.messageId) ==
+              null) {
         emit(value.copyWith(messages: [message, ...value.messages]));
       }
     });
@@ -115,24 +112,41 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
   }
 
   Future<void> reportUser(int userId, String content) async {
-    await _userUsecase.reportUser(
-        userId: userId, payload: ReportUserPayload(content: content));
+    await _userUsecase.reportUser(userId: userId, payload: ReportUserPayload(content: content));
   }
 
   Future<void> sendImage() async {
     final files = await mediaPicker.pickImagesFromGallery();
+    List<String> uploadImages = [];
     if (files == null) return;
-    final file = files.first;
+    for (final file in files) {
+      if (file != null) {
+        final uploadImage = await upgradeAccountUsecase.uploadBirthCer(
+          XFile(file.path),
+          'image',
+        );
+        uploadImages.add(uploadImage);
+      }
+    }
 
-    if (file == null) return;
-
-    final uploadImage = await upgradeAccountUsecase.uploadBirthCer(
-      XFile(file.path),
-      'image',
-    );
     await _chatUseCase.newMessage(
         conversationId: _conversationId,
-        payload:
-            NewMessagePayload(metadata: MetaDataDto(images: [uploadImage])));
+        payload: NewMessagePayload(metadata: MetaDataDto(images: uploadImages)));
+  }
+
+  Future<void> loadMessages() async {
+    state.mapOrNull(
+      (value) async {
+        final response = await _chatUseCase.getMessages(
+            conversationId: _conversationId, page: 1, pageSize: kPageSize);
+        emit(
+          value.copyWith(
+            page: 1,
+            messages: response.items ?? [],
+            canLoadMore: response.items?.length == kPageSize,
+          ),
+        );
+      },
+    );
   }
 }

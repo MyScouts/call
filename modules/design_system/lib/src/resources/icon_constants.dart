@@ -168,6 +168,8 @@ class IconAppConstants {
   static String icDeleteCall = IconApp.icDeleteCall.path;
   static String icVideoAnswer = IconApp.icVideoAnswer.path;
   static String icBackCall = IconApp.icBackCall.path;
+  static String icRadioButtonCheck = IconApp.icRadioButtonCheck.path;
+  static String icRadioButton = IconApp.icRadioButton.path;
 }
 
 enum IconApp {
@@ -330,6 +332,8 @@ enum IconApp {
   icBlockChat('assets/icons/ic_block_chat.svg'),
   icVideoOff('assets/icons/ic_video_off.svg'),
   icMicOff('assets/icons/ic_mic_off.svg'),
+  icRadioButton('assets/icons/ic_radio_button.svg'),
+  icRadioButtonCheck('assets/icons/ic_radio_button_check.svg'),
 
 
   ///call

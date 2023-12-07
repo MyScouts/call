@@ -548,7 +548,6 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
 
   @override
   void onStatusChange(String status) {
-    print('stata $status');
     if (isAndroid) {
       _callState.add(_callCubit.androidCallManager!.callState);
     } else {
