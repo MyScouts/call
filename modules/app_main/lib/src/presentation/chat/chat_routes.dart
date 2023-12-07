@@ -1,5 +1,7 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/chat/create_room/create_room_page.dart';
 import 'package:app_main/src/presentation/chat/new_message/new_message_page.dart';
+import 'package:app_main/src/presentation/chat/view_image_page.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -22,6 +24,14 @@ class ChatRoutes extends RouteModule {
             conversationId: args['conversationId'],
             memberId: args['memberId'],
           );
+        },
+        ViewImagePage.routeName: (context) {
+          return ViewImagePage(
+            urlImage: settings.arguments as String,
+          );
+        },
+        CreateRoomPage.routeName: (context) {
+          return const CreateRoomPage();
         },
       };
 }
