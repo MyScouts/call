@@ -6,6 +6,7 @@ import 'package:app_main/src/domain/entities/chat/conversation_model.dart';
 import 'package:app_main/src/domain/entities/chat/message_model.dart';
 import 'package:app_main/src/domain/entities/chat/result_model.dart';
 import 'package:app_main/src/domain/entities/friend/friend_response_model.dart';
+import 'package:app_main/src/domain/entities/friend/friend_status_model.dart';
 import 'package:app_main/src/domain/repository/chat_repository.dart';
 import 'package:app_main/src/domain/repository/friend_repository.dart';
 import 'package:injectable/injectable.dart';
@@ -69,5 +70,8 @@ class ChatUseCase {
   }) {
     return _chatRepository.getMessages(
         conversationId: conversationId, page: page, pageSize: pageSize);
+  }
+  Future<FriendStatusModel> getFriendStatus({required int userId}) {
+    return _friendRepository.getFriendStatus(userId: userId);
   }
 }

@@ -67,7 +67,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
         bloc: _cubit,
         builder: (_, state) {
           return state.when(
-            (messages, conversation, page, canLoadMore, loadMoreError) {
+            (messages, conversation, friendStatus, page, canLoadMore, loadMoreError) {
               return GestureDetector(
                 onTap: () {
                   setState(() {
@@ -127,164 +127,165 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                       ],
                     ),
                     actions: [
-                      if(conversation.conversation.type == 1)
-                      PopupMenuButton<int>(
-                        icon: const Icon(
-                          Icons.more_vert,
-                          color: AppColors.black,
-                        ),
-                        color: AppColors.white,
-                        onSelected: (i) {
-                          if (i == 0) {
-                            showDialog(
-                              context: context,
-                              builder: (_) => ChatDialog(
-                                title: 'Xóa cuộc trò chuyện',
-                                content:
-                                    'Cuộc trò chuyện của bạn sẽ được xóa vĩnh viễn và không thể khôi phục',
-                                actionTitle: 'Xóa',
-                                onAction: () {
-                                  _cubit.deleteConversation().then(
-                                        (value) => Navigator.pop(context),
-                                      );
-                                },
-                              ),
-                            );
-                          } else if (i == 1) {
-                            showDialog(
-                              context: context,
-                              builder: (_) => ChatDialog(
-                                title: 'Báo cáo',
-                                actionTitle: 'Gửi',
-                                showCancel: false,
-                                actionColor: AppColors.blueEdit,
-                                contentWidget: TextFormField(
-                                  controller: reportController,
-                                  minLines: 3,
-                                  maxLines: 5,
-                                  decoration: InputDecoration(
-                                    fillColor: AppColors.white,
-                                    hintText: 'Nhập nội dung báo cáo...',
-                                    contentPadding: const EdgeInsets.all(8),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: const BorderSide(
-                                        color: Color(0xffEAEDF0),
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0xffEAEDF0),
-                                      ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
+                      if (conversation.conversation.type == 1)
+                        PopupMenuButton<int>(
+                          icon: const Icon(
+                            Icons.more_vert,
+                            color: AppColors.black,
+                          ),
+                          color: AppColors.white,
+                          onSelected: (i) {
+                            if (i == 0) {
+                              showDialog(
+                                context: context,
+                                builder: (_) => ChatDialog(
+                                  title: 'Xóa cuộc trò chuyện',
+                                  content:
+                                      'Cuộc trò chuyện của bạn sẽ được xóa vĩnh viễn và không thể khôi phục',
+                                  actionTitle: 'Xóa',
+                                  onAction: () {
+                                    _cubit.deleteConversation().then(
+                                          (value) => Navigator.pop(context),
+                                        );
+                                  },
                                 ),
-                                onAction: () {
-                                  if (reportController.text.isNotEmpty) {
-                                    _cubit.reportUser(
-                                        widget.memberId ??
-                                            conversation.conversation.membersNotMe.first.member.id,
-                                        reportController.text);
-                                  }
-                                },
-                              ),
-                            );
-                          } else if (i == 2) {
-                            showDialog(
-                              context: context,
-                              builder: (_) => ChatDialog(
-                                title:
-                                    'Chặn ${conversation.conversation.membersNotMe.first.member.fullName}',
-                                content:
-                                    '${conversation.conversation.membersNotMe.first.member.fullName} sẽ không thể :\n\n'
-                                    ' • Xem bài viết trên trang cá nhân của bạn\n'
-                                    ' • Nhắn tin cho bạn\n'
-                                    ' • Thêm bạn làm bạn bè\n'
-                                    ' • Nếu các bạn là bạn bè, chặn tài khoản đồng nghĩa với việc hủy kết bạn',
-                                actionTitle: 'Xác nhận',
-                                actionColor: AppColors.blueEdit,
-                                contentAlign: TextAlign.start,
-                                onAction: () {
-                                  _cubit
-                                      .blockUser(widget.memberId ??
-                                          conversation.conversation.membersNotMe.first.member.id)
-                                      .then(
-                                        (value) => Navigator.pop(context),
-                                      );
-                                },
-                              ),
-                            );
-                          }
-                        },
-                        itemBuilder: (BuildContext context) {
-                          return [
-                            PopupMenuItem<int>(
-                              value: 0,
-                              child: Row(
-                                children: [
-                                  ImageWidget(
-                                    IconAppConstants.icDeleteChat,
-                                    width: 24,
-                                    height: 24,
-                                  ),
-                                  kSpacingWidth20,
-                                  Text(
-                                    'Xóa cuộc trò chuyện',
-                                    style: context.text.bodyMedium?.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: AppColors.textSecondary,
+                              );
+                            } else if (i == 1) {
+                              showDialog(
+                                context: context,
+                                builder: (_) => ChatDialog(
+                                  title: 'Báo cáo',
+                                  actionTitle: 'Gửi',
+                                  showCancel: false,
+                                  actionColor: AppColors.blueEdit,
+                                  contentWidget: TextFormField(
+                                    controller: reportController,
+                                    minLines: 3,
+                                    maxLines: 5,
+                                    decoration: InputDecoration(
+                                      fillColor: AppColors.white,
+                                      hintText: 'Nhập nội dung báo cáo...',
+                                      contentPadding: const EdgeInsets.all(8),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: const BorderSide(
+                                          color: Color(0xffEAEDF0),
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0xffEAEDF0),
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-                            PopupMenuItem<int>(
-                              value: 1,
-                              child: Row(
-                                children: [
-                                  ImageWidget(
-                                    IconAppConstants.icReportChat,
-                                    width: 24,
-                                    height: 24,
-                                  ),
-                                  kSpacingWidth20,
-                                  Text(
-                                    'Báo cáo',
-                                    style: context.text.bodyMedium?.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: AppColors.textSecondary,
+                                  onAction: () {
+                                    if (reportController.text.isNotEmpty) {
+                                      _cubit.reportUser(
+                                          widget.memberId ??
+                                              conversation
+                                                  .conversation.membersNotMe.first.member.id,
+                                          reportController.text);
+                                    }
+                                  },
+                                ),
+                              );
+                            } else if (i == 2) {
+                              showDialog(
+                                context: context,
+                                builder: (_) => ChatDialog(
+                                  title:
+                                      'Chặn ${conversation.conversation.membersNotMe.first.member.fullName}',
+                                  content:
+                                      '${conversation.conversation.membersNotMe.first.member.fullName} sẽ không thể :\n\n'
+                                      ' • Xem bài viết trên trang cá nhân của bạn\n'
+                                      ' • Nhắn tin cho bạn\n'
+                                      ' • Thêm bạn làm bạn bè\n'
+                                      ' • Nếu các bạn là bạn bè, chặn tài khoản đồng nghĩa với việc hủy kết bạn',
+                                  actionTitle: 'Xác nhận',
+                                  actionColor: AppColors.blueEdit,
+                                  contentAlign: TextAlign.start,
+                                  onAction: () {
+                                    _cubit
+                                        .blockUser(widget.memberId ??
+                                            conversation.conversation.membersNotMe.first.member.id)
+                                        .then(
+                                          (value) => Navigator.pop(context),
+                                        );
+                                  },
+                                ),
+                              );
+                            }
+                          },
+                          itemBuilder: (BuildContext context) {
+                            return [
+                              PopupMenuItem<int>(
+                                value: 0,
+                                child: Row(
+                                  children: [
+                                    ImageWidget(
+                                      IconAppConstants.icDeleteChat,
+                                      width: 24,
+                                      height: 24,
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            PopupMenuItem<int>(
-                              value: 2,
-                              child: Row(
-                                children: [
-                                  ImageWidget(
-                                    IconAppConstants.icBlockChat,
-                                    width: 24,
-                                    height: 24,
-                                  ),
-                                  kSpacingWidth20,
-                                  Text(
-                                    'Chặn tài khoản',
-                                    style: context.text.bodyMedium?.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: AppColors.textSecondary,
+                                    kSpacingWidth20,
+                                    Text(
+                                      'Xóa cuộc trò chuyện',
+                                      style: context.text.bodyMedium?.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                        color: AppColors.textSecondary,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ];
-                        },
-                      ),
+                              PopupMenuItem<int>(
+                                value: 1,
+                                child: Row(
+                                  children: [
+                                    ImageWidget(
+                                      IconAppConstants.icReportChat,
+                                      width: 24,
+                                      height: 24,
+                                    ),
+                                    kSpacingWidth20,
+                                    Text(
+                                      'Báo cáo',
+                                      style: context.text.bodyMedium?.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                        color: AppColors.textSecondary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              PopupMenuItem<int>(
+                                value: 2,
+                                child: Row(
+                                  children: [
+                                    ImageWidget(
+                                      IconAppConstants.icBlockChat,
+                                      width: 24,
+                                      height: 24,
+                                    ),
+                                    kSpacingWidth20,
+                                    Text(
+                                      'Chặn tài khoản',
+                                      style: context.text.bodyMedium?.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                        color: AppColors.textSecondary,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ];
+                          },
+                        ),
                     ],
                   ),
                   body: Column(
@@ -293,6 +294,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                         Expanded(
                           child: ListView.separated(
                               controller: scrollController,
+                              addAutomaticKeepAlives: true,
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                               reverse: true,
                               itemBuilder: (_, index) {
@@ -303,6 +305,11 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                   return MessageWidget(
                                     key: ValueKey(messages[index].messageId),
                                     message: messages[index],
+                                    showSeen: index == 0,
+                                    showTime: index == 0 ||
+                                        index - 1 > 0 &&
+                                            messages[index].sender?.id !=
+                                                messages[index - 1].sender?.id,
                                   );
                                 }
                               },
@@ -311,6 +318,40 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                         )
                       else
                         kSpacer,
+                      if (friendStatus != null &&
+                          (friendStatus.relation.isBlocked || friendStatus.relation.isBlocking))
+                        Center(
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            margin: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                color: AppColors.white, borderRadius: BorderRadius.circular(8)),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (friendStatus.relation.isBlocking) ...[
+                                  Text('Bạn đã chặn ', style: context.text.bodyMedium),
+                                  Text(
+                                    conversation.conversation.membersNotMe.first.member.fullName ??
+                                        '',
+                                    style: context.text.bodyMedium?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ] else ...[
+                                  Text(
+                                    conversation.conversation.membersNotMe.first.member.fullName ??
+                                        '',
+                                    style: context.text.bodyMedium?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Text(' đã chặn tin nhắn', style: context.text.bodyMedium),
+                                ]
+                              ],
+                            ),
+                          ),
+                        ),
                       Container(
                         padding: EdgeInsets.only(
                           top: 8,

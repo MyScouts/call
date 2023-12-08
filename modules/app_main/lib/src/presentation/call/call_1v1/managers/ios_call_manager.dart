@@ -124,7 +124,7 @@ class IOSCallManager with WidgetsBindingObserver {
       syncCall = SyncCall();
       syncCall!.attachCall(call);
       syncCall!.uuid = genUUID();
-
+      addListenerForCall();
       // Show callkit
       callKeep.displayIncomingCall(syncCall!.uuid!, call.from!,
           localizedCallerName: call.fromAlias!);
@@ -240,8 +240,7 @@ class IOSCallManager with WidgetsBindingObserver {
 
     if (appLifecycleState != AppLifecycleState.resumed ||
         syncCall == null ||
-        !syncCall!.hasStringeeCall() ||
-        callScreenKey != null) {
+        !syncCall!.hasStringeeCall()) {
       return;
     }
     callScreenKey = GlobalKey<Call1V1PageState>();
@@ -448,6 +447,7 @@ class IOSCallManager with WidgetsBindingObserver {
     if (syncCall != null) {
       syncCall!.destroy();
     }
+    callScreenKey = null;
     endCallkit();
     deleteSyncCallIfNeed();
   }
@@ -461,7 +461,7 @@ class IOSCallManager with WidgetsBindingObserver {
       return;
     }
 
-    Timer(Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () {
       if (syncCall == null) {
         return;
       }
