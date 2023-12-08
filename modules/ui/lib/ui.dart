@@ -58,6 +58,7 @@ export 'src/text/read_more_widget.dart';
 export 'src/text/requirement_check_list_widget.dart';
 //video
 export 'src/video/common_video_player.dart';
+export 'src/video/custom_video_player.dart';
 export 'src/widget/app_avatar_widget.dart';
 export 'src/widget/empty_data/empty_data_widget.dart';
 export 'src/widget/empty_data/emptydata_list_widget.dart';

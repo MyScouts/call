@@ -1,6 +1,4 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/app_dimens.dart';
-import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_bloc.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/post_header_user_info.dart';
@@ -11,6 +9,8 @@ import 'package:imagewidget/imagewidget.dart';
 import 'package:ui/ui.dart';
 
 import '../../widgets/double_tappable_interactive_viewer.dart';
+import '../../widgets/post_video_widget.dart';
+import '../../widgets/video_appbar_widget.dart';
 
 class PostPreviewScreen extends StatefulWidget {
   static const String routeName = "post_preview";
@@ -36,7 +36,7 @@ class _PostPreviewScreenState extends State<PostPreviewScreen> {
   late PageController previewController;
   bool isShowInfo = true;
   late PostType postType;
-  final animationDuration = Duration(milliseconds: 300);
+
   @override
   void initState() {
     super.initState();
@@ -78,43 +78,15 @@ class _PostPreviewScreenState extends State<PostPreviewScreen> {
           ),
           Visibility(
             visible: isShowInfo,
-            child: _buildAppBar(),
+            child: const VideoAppbarWidget(),
           ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Visibility(
               visible: isShowInfo,
-              child: AnimatedContainer(
-                duration: animationDuration,
-                color: AppColors.black.withOpacity(0.85),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: paddingHorizontal),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(height: 12),
-                      PostHeaderUserInfo(
-                        user: widget.post.user,
-                        time: widget.post.getTime,
-                        isShowSetting: false,
-                        isDarkMode: true,
-                      ),
-                      const SizedBox(height: 12),
-                      ReactWidget(
-                        post: widget.post,
-                        isNewPost: false,
-                        myProfileBloc: widget.myProfileBloc,
-                        isDarkMode: true,
-                        onChange: (Post newPost) {
-                          widget.onChange(newPost);
-                        },
-                      ),
-                      SizedBox(height: paddingLineBottom),
-                    ],
-                  ),
-                ),
+              child: Padding(
+                padding: EdgeInsets.only(bottom: paddingLineBottom),
+                child: _buildBottomChild(paddingHorizontal),
               ),
             ),
           ),
@@ -122,7 +94,47 @@ class _PostPreviewScreenState extends State<PostPreviewScreen> {
       );
     }
 
+    if (postType.isVideo) {
+      return PostVideoWidget(
+        source: widget.post.getListMedia.first.link!,
+        videoType: CustomVideoType.network,
+        bottomChild: widget.currentMediaIndex == -1
+            ? const SizedBox.shrink()
+            : _buildBottomChild(paddingHorizontal),
+      );
+    }
+
     return const SizedBox.shrink();
+  }
+
+  Widget _buildBottomChild(double paddingHorizontal) {
+    return Container(
+      color: AppColors.black.withOpacity(0.5),
+      padding: EdgeInsets.symmetric(horizontal: paddingHorizontal),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const SizedBox(height: 12),
+          PostHeaderUserInfo(
+            user: widget.post.user,
+            time: widget.post.getTime,
+            isShowSetting: false,
+            isDarkMode: true,
+          ),
+          const SizedBox(height: 12),
+          ReactWidget(
+            post: widget.post,
+            isNewPost: false,
+            myProfileBloc: widget.myProfileBloc,
+            isDarkMode: true,
+            onChange: (Post newPost) {
+              widget.onChange(newPost);
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildPageViewMedia() {
@@ -150,21 +162,5 @@ class _PostPreviewScreenState extends State<PostPreviewScreen> {
     }
 
     return const SizedBox.shrink();
-  }
-
-  Widget _buildAppBar() {
-    return AnimatedContainer(
-      duration: animationDuration,
-      height: kToolbarHeight,
-      margin: EdgeInsets.only(top: statusBarHeight - 4, left: 3),
-      color: Colors.transparent,
-      child: IconButton(
-        onPressed: () => context.pop(),
-        icon: const Icon(
-          Icons.arrow_back_ios,
-          color: AppColors.white,
-        ),
-      ),
-    );
   }
 }
