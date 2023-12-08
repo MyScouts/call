@@ -1,5 +1,4 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_bloc.dart';
 import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_event.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
@@ -9,32 +8,39 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 class ReactWidget extends StatefulWidget {
-  const ReactWidget({required this.post, this.isNewPost = false, super.key});
+  const ReactWidget({
+    required this.post,
+    required this.myProfileBloc,
+    this.isNewPost = false,
+    this.isDarkMode = false,
+    this.onChange,
+    super.key,
+  });
   final Post post;
   final bool isNewPost;
+  final MyProfileBloc myProfileBloc;
+  final Function(Post)? onChange;
+  final bool isDarkMode;
 
   @override
   State<ReactWidget> createState() => _ReactWidgetState();
 }
 
 class _ReactWidgetState extends State<ReactWidget> {
-  final myProfileBloc = getIt<MyProfileBloc>();
-  late bool isHearted;
-  late int totalReaction;
+  late Post post;
 
   @override
   void initState() {
     super.initState();
-    isHearted = widget.post.getIsHearted;
-    totalReaction = widget.post.getTotalReaction;
+    post = widget.post;
   }
 
   @override
   Widget build(BuildContext context) {
-    final hasShowTotalReact = totalReaction != 0;
+    final hasShowTotalReact = post.getTotalReaction != 0;
     final reactText = MyProfileConstant.reactText(
-      totalReact: totalReaction,
-      isHearted: isHearted,
+      totalReact: post.getTotalReaction,
+      isHearted: post.getIsHearted,
     );
 
     return Column(
@@ -55,9 +61,11 @@ class _ReactWidgetState extends State<ReactWidget> {
                         const SizedBox(width: 5),
                         Text(
                           reactText,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.w400,
-                            color: AppColors.grey76,
+                            color: widget.isDarkMode
+                                ? AppColors.grey77
+                                : AppColors.grey76,
                           ),
                           overflow: TextOverflow.ellipsis,
                         )
@@ -67,10 +75,11 @@ class _ReactWidgetState extends State<ReactWidget> {
             Padding(
               padding: const EdgeInsets.only(left: 28),
               child: Text(
-                '${widget.post.getTotalComment} bình luận',
-                style: const TextStyle(
+                '${post.getTotalComment} bình luận',
+                style: TextStyle(
                   fontWeight: FontWeight.w400,
-                  color: AppColors.grey76,
+                  color:
+                      widget.isDarkMode ? AppColors.grey77 : AppColors.grey76,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -78,9 +87,7 @@ class _ReactWidgetState extends State<ReactWidget> {
           ],
         ),
         const SizedBox(height: 10),
-        _buildInteract(
-          postId: widget.post.id ?? -1,
-        ),
+        _buildInteract(postId: widget.post.id ?? -1),
       ],
     );
   }
@@ -104,18 +111,10 @@ class _ReactWidgetState extends State<ReactWidget> {
               iconName: IconAppConstants.icHeart,
               iconActivedName: IconAppConstants.icHeartActive,
               isShowActiveImageWhenTapped: true,
-              isHearted: isHearted,
-              onChange: (bool isLiked) {
-                setState(() {
-                  isHearted = isLiked;
-                  totalReaction = isHearted ? ++totalReaction : --totalReaction;
-                });
-                myProfileBloc.add(ReactPostTapped(
-                  postId: postId,
-                  isHearted: isLiked,
-                ));
-              },
+              isHearted: post.getIsHearted,
+              onChange: _handleOnChangeReact,
               parentHeight: 40,
+              isDarkMode: widget.isDarkMode,
             ),
           ),
           _buildDivider(),
@@ -124,6 +123,7 @@ class _ReactWidgetState extends State<ReactWidget> {
               text: 'Bình luận',
               iconName: IconAppConstants.icComment,
               parentHeight: 40,
+              isDarkMode: widget.isDarkMode,
             ),
           ),
           _buildDivider(),
@@ -132,10 +132,27 @@ class _ReactWidgetState extends State<ReactWidget> {
               text: 'Chia sẻ',
               iconName: IconAppConstants.icShare,
               parentHeight: 40,
+              isDarkMode: widget.isDarkMode,
             ),
           ),
         ],
       ),
     );
+  }
+
+  void _handleOnChangeReact(bool isLiked) {
+    setState(() {
+      var totalReaction = post.getTotalReaction;
+
+      post = post.copyWith(
+        isHearted: isLiked,
+        totalReaction: isLiked ? ++totalReaction : --totalReaction,
+      );
+
+      widget.myProfileBloc.add(ReactPostTapped(newPost: post));
+      if (widget.onChange != null) {
+        widget.onChange!(post);
+      }
+    });
   }
 }

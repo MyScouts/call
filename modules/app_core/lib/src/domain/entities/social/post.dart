@@ -33,6 +33,7 @@ class Post with _$Post {
     User? user,
     List<Media>? medias,
     Comment? latestComment,
+    String? type,
   }) = _Post;
 
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
@@ -60,5 +61,5 @@ extension PostExtension on Post? {
   int get getTotalComment => this?.totalComment ?? 0;
   int get getTotalParentComment => this?.totalParentComment ?? 0;
   List<Media> get getListMedia => this?.medias ?? [];
-
+  String get getType => this?.type ?? 'text';
 }
