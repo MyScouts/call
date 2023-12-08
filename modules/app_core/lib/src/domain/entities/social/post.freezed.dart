@@ -43,6 +43,7 @@ mixin _$Post {
   User? get user => throw _privateConstructorUsedError;
   List<Media>? get medias => throw _privateConstructorUsedError;
   Comment? get latestComment => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -77,7 +78,8 @@ abstract class $PostCopyWith<$Res> {
       int? totalParentComment,
       User? user,
       List<Media>? medias,
-      Comment? latestComment});
+      Comment? latestComment,
+      String? type});
 
   $UserCopyWith<$Res>? get user;
   $CommentCopyWith<$Res>? get latestComment;
@@ -119,6 +121,7 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
     Object? user = freezed,
     Object? medias = freezed,
     Object? latestComment = freezed,
+    Object? type = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -213,6 +216,10 @@ class _$PostCopyWithImpl<$Res, $Val extends Post>
           ? _value.latestComment
           : latestComment // ignore: cast_nullable_to_non_nullable
               as Comment?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -271,7 +278,8 @@ abstract class _$$PostImplCopyWith<$Res> implements $PostCopyWith<$Res> {
       int? totalParentComment,
       User? user,
       List<Media>? medias,
-      Comment? latestComment});
+      Comment? latestComment,
+      String? type});
 
   @override
   $UserCopyWith<$Res>? get user;
@@ -312,6 +320,7 @@ class __$$PostImplCopyWithImpl<$Res>
     Object? user = freezed,
     Object? medias = freezed,
     Object? latestComment = freezed,
+    Object? type = freezed,
   }) {
     return _then(_$PostImpl(
       id: freezed == id
@@ -406,6 +415,10 @@ class __$$PostImplCopyWithImpl<$Res>
           ? _value.latestComment
           : latestComment // ignore: cast_nullable_to_non_nullable
               as Comment?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -436,7 +449,8 @@ class _$PostImpl implements _Post {
       this.totalParentComment,
       this.user,
       final List<Media>? medias,
-      this.latestComment})
+      this.latestComment,
+      this.type})
       : _medias = medias;
 
   factory _$PostImpl.fromJson(Map<String, dynamic> json) =>
@@ -496,10 +510,12 @@ class _$PostImpl implements _Post {
 
   @override
   final Comment? latestComment;
+  @override
+  final String? type;
 
   @override
   String toString() {
-    return 'Post(id: $id, userId: $userId, subject: $subject, content: $content, typeScope: $typeScope, isNews: $isNews, parentId: $parentId, isAdvertisement: $isAdvertisement, startPublishedDate: $startPublishedDate, endPublishedDate: $endPublishedDate, position: $position, createdAt: $createdAt, totalShared: $totalShared, totalReaction: $totalReaction, totalSaved: $totalSaved, isHearted: $isHearted, isSaved: $isSaved, isShared: $isShared, totalComment: $totalComment, totalParentComment: $totalParentComment, user: $user, medias: $medias, latestComment: $latestComment)';
+    return 'Post(id: $id, userId: $userId, subject: $subject, content: $content, typeScope: $typeScope, isNews: $isNews, parentId: $parentId, isAdvertisement: $isAdvertisement, startPublishedDate: $startPublishedDate, endPublishedDate: $endPublishedDate, position: $position, createdAt: $createdAt, totalShared: $totalShared, totalReaction: $totalReaction, totalSaved: $totalSaved, isHearted: $isHearted, isSaved: $isSaved, isShared: $isShared, totalComment: $totalComment, totalParentComment: $totalParentComment, user: $user, medias: $medias, latestComment: $latestComment, type: $type)';
   }
 
   @override
@@ -544,7 +560,8 @@ class _$PostImpl implements _Post {
             (identical(other.user, user) || other.user == user) &&
             const DeepCollectionEquality().equals(other._medias, _medias) &&
             (identical(other.latestComment, latestComment) ||
-                other.latestComment == latestComment));
+                other.latestComment == latestComment) &&
+            (identical(other.type, type) || other.type == type));
   }
 
   @JsonKey(ignore: true)
@@ -573,7 +590,8 @@ class _$PostImpl implements _Post {
         totalParentComment,
         user,
         const DeepCollectionEquality().hash(_medias),
-        latestComment
+        latestComment,
+        type
       ]);
 
   @JsonKey(ignore: true)
@@ -614,7 +632,8 @@ abstract class _Post implements Post {
       final int? totalParentComment,
       final User? user,
       final List<Media>? medias,
-      final Comment? latestComment}) = _$PostImpl;
+      final Comment? latestComment,
+      final String? type}) = _$PostImpl;
 
   factory _Post.fromJson(Map<String, dynamic> json) = _$PostImpl.fromJson;
 
@@ -664,6 +683,8 @@ abstract class _Post implements Post {
   List<Media>? get medias;
   @override
   Comment? get latestComment;
+  @override
+  String? get type;
   @override
   @JsonKey(ignore: true)
   _$$PostImplCopyWith<_$PostImpl> get copyWith =>

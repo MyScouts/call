@@ -42,6 +42,7 @@ _$PostImpl _$$PostImplFromJson(Map<String, dynamic> json) => _$PostImpl(
       latestComment: json['latestComment'] == null
           ? null
           : Comment.fromJson(json['latestComment'] as Map<String, dynamic>),
+      type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$$PostImplToJson(_$PostImpl instance) =>
@@ -69,4 +70,5 @@ Map<String, dynamic> _$$PostImplToJson(_$PostImpl instance) =>
       'user': instance.user,
       'medias': instance.medias,
       'latestComment': instance.latestComment,
+      'type': instance.type,
     };

@@ -38,6 +38,18 @@ enum PostType {
         return PostType.film;
     }
   }
+
+  static PostType getTypeByText(String text) {
+    if(text == PostType.text.name){
+      return PostType.text;
+    }
+
+    if(text == PostType.video.name){
+      return PostType.video;
+    }
+
+    return PostType.film;
+  }
 }
 
 extension PostTypeEx on PostType {
@@ -77,3 +89,5 @@ enum ReactType { heart, unknown }
 extension ReactTypeEx on ReactType {
   String get getName => name.toUpperCase();
 }
+
+enum ImageScrollType {image1, image2, image3}

@@ -16,27 +16,11 @@ class CommonMultiImageView extends StatelessWidget {
     this.boxShape,
     this.radius,
     this.sizeMoreBuilder,
+    this.onTapImage1,
+    this.onTapImage2,
+    this.onTapImage3,
     Key? key,
   }) : super(key: key);
-
-  const CommonMultiImageView.multiAsset({
-    required List<String> listAssetPath,
-    double? width,
-    double? height,
-    BoxShape? boxShape,
-    double? radius,
-    SizeMoreBuilder? sizeMoreBuilder,
-    Key? key,
-  }) : this._(
-          key: key,
-          images: listAssetPath,
-          imageInputType: ImageInputType.asset,
-          width: width,
-          height: height,
-          boxShape: boxShape,
-          radius: radius,
-          sizeMoreBuilder: sizeMoreBuilder,
-        );
 
   const CommonMultiImageView.multiNetwork({
     required List<String> listNetwork,
@@ -45,6 +29,9 @@ class CommonMultiImageView extends StatelessWidget {
     BoxShape? boxShape,
     double? radius,
     SizeMoreBuilder? sizeMoreBuilder,
+    Function? onTapImage1,
+    Function? onTapImage2,
+    Function? onTapImage3,
     Key? key,
   }) : this._(
           key: key,
@@ -55,6 +42,9 @@ class CommonMultiImageView extends StatelessWidget {
           boxShape: boxShape,
           radius: radius,
           sizeMoreBuilder: sizeMoreBuilder,
+          onTapImage1: onTapImage1,
+          onTapImage2: onTapImage2,
+          onTapImage3: onTapImage3,
         );
 
   const CommonMultiImageView.multiFile({
@@ -64,6 +54,9 @@ class CommonMultiImageView extends StatelessWidget {
     BoxShape? boxShape,
     double? radius,
     SizeMoreBuilder? sizeMoreBuilder,
+     Function? onTapImage1,
+    Function? onTapImage2,
+    Function? onTapImage3,
     Key? key,
   }) : this._(
           key: key,
@@ -74,6 +67,9 @@ class CommonMultiImageView extends StatelessWidget {
           boxShape: boxShape,
           radius: radius,
           sizeMoreBuilder: sizeMoreBuilder,
+          onTapImage1: onTapImage1,
+          onTapImage2: onTapImage2,
+          onTapImage3: onTapImage3,
         );
 
   final List<Object> images;
@@ -83,6 +79,9 @@ class CommonMultiImageView extends StatelessWidget {
   final double? radius;
   final ImageInputType imageInputType;
   final SizeMoreBuilder? sizeMoreBuilder;
+  final Function? onTapImage1;
+  final Function? onTapImage2;
+  final Function? onTapImage3;
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +109,9 @@ class CommonMultiImageView extends StatelessWidget {
               maxHeight: maxHeight,
               fit: _fit,
               sizeMoreBuilder: sizeMoreBuilder,
+              onTapImage1: onTapImage1,
+          onTapImage2: onTapImage2,
+          onTapImage3: onTapImage3,
             );
           },
         ),
@@ -124,6 +126,9 @@ class CommonMultiImageView extends StatelessWidget {
     required double maxHeight,
     required BoxFit fit,
     SizeMoreBuilder? sizeMoreBuilder,
+    Function? onTapImage1,
+    Function? onTapImage2,
+    Function? onTapImage3,
   }) {
     final int bitmapsSize = images.length;
     const spacing = 6.0;
@@ -132,12 +137,19 @@ class CommonMultiImageView extends StatelessWidget {
       case 1:
         return Wrap(
           children: [
-            _buildImage(
-              images.first,
-              imageInputType: imageInputType,
-              width: maxWidth,
-              height: maxHeight,
-              fit: fit,
+            GestureDetector(
+              onTap: () {
+                if (onTapImage1 != null) {
+                  onTapImage1();
+                }
+              },
+              child: _buildImage(
+                images.first,
+                imageInputType: imageInputType,
+                width: maxWidth,
+                height: maxHeight,
+                fit: fit,
+              ),
             ),
           ],
         );
@@ -145,19 +157,33 @@ class CommonMultiImageView extends StatelessWidget {
         return Wrap(
           spacing: spacing,
           children: [
-            _buildImage(
-              images.first,
-              imageInputType: imageInputType,
-              width: (maxWidth - spacing) / 2,
-              height: maxHeight,
-              fit: fit,
+            GestureDetector(
+              onTap: () {
+                if (onTapImage1 != null) {
+                  onTapImage1();
+                }
+              },
+              child: _buildImage(
+                images.first,
+                imageInputType: imageInputType,
+                width: (maxWidth - spacing) / 2,
+                height: maxHeight,
+                fit: fit,
+              ),
             ),
-            _buildImage(
-              images[1],
-              imageInputType: imageInputType,
-              width: (maxWidth - spacing) / 2,
-              height: maxHeight,
-              fit: fit,
+            GestureDetector(
+              onTap: () {
+                if (onTapImage2 != null) {
+                  onTapImage2();
+                }
+              },
+              child: _buildImage(
+                images[1],
+                imageInputType: imageInputType,
+                width: (maxWidth - spacing) / 2,
+                height: maxHeight,
+                fit: fit,
+              ),
             ),
           ],
         );
@@ -165,29 +191,50 @@ class CommonMultiImageView extends StatelessWidget {
         return Wrap(
           spacing: spacing,
           children: [
-            _buildImage(
-              images.first,
-              imageInputType: imageInputType,
-              width: (maxWidth - spacing) * 6 / 8,
-              height: maxHeight,
-              fit: fit,
+            GestureDetector(
+              onTap: () {
+                if (onTapImage1 != null) {
+                  onTapImage1();
+                }
+              },
+              child: _buildImage(
+                images.first,
+                imageInputType: imageInputType,
+                width: (maxWidth - spacing) * 6 / 8,
+                height: maxHeight,
+                fit: fit,
+              ),
             ),
             Column(
               children: [
-                _buildImage(
-                  images[1],
-                  imageInputType: imageInputType,
-                  width: (maxWidth - spacing) * 2 / 8,
-                  height: (maxHeight - spacing) / 2,
-                  fit: fit,
+                GestureDetector(
+                  onTap: () {
+                    if (onTapImage2 != null) {
+                      onTapImage2();
+                    }
+                  },
+                  child: _buildImage(
+                    images[1],
+                    imageInputType: imageInputType,
+                    width: (maxWidth - spacing) * 2 / 8,
+                    height: (maxHeight - spacing) / 2,
+                    fit: fit,
+                  ),
                 ),
                 const SizedBox(height: spacing),
-                _buildImage(
-                  images[2],
-                  imageInputType: imageInputType,
-                  width: (maxWidth - spacing) * 2 / 8,
-                  height: (maxHeight - spacing) / 2,
-                  fit: fit,
+                GestureDetector(
+                  onTap: () {
+                    if (onTapImage3 != null) {
+                      onTapImage3();
+                    }
+                  },
+                  child: _buildImage(
+                    images[2],
+                    imageInputType: imageInputType,
+                    width: (maxWidth - spacing) * 2 / 8,
+                    height: (maxHeight - spacing) / 2,
+                    fit: fit,
+                  ),
                 ),
               ],
             ),
@@ -197,33 +244,54 @@ class CommonMultiImageView extends StatelessWidget {
         return Wrap(
           spacing: spacing,
           children: [
-            _buildImage(
-              images.first,
-              imageInputType: imageInputType,
-              width: (maxWidth - spacing) * 6 / 8,
-              height: maxHeight,
-              fit: fit,
+            GestureDetector(
+              onTap: () {
+                if (onTapImage1 != null) {
+                  onTapImage1();
+                }
+              },
+              child: _buildImage(
+                images.first,
+                imageInputType: imageInputType,
+                width: (maxWidth - spacing) * 6 / 8,
+                height: maxHeight,
+                fit: fit,
+              ),
             ),
             Column(
               children: [
-                _buildImage(
-                  images[1],
-                  imageInputType: imageInputType,
-                  width: (maxWidth - spacing) * 2 / 8,
-                  height: (maxHeight - spacing) / 2,
-                  fit: fit,
-                ),
-                const SizedBox(height: spacing),
-                _buildBlur(
+                GestureDetector(
+                  onTap: () {
+                    if (onTapImage2 != null) {
+                      onTapImage2();
+                    }
+                  },
                   child: _buildImage(
-                    images[2],
+                    images[1],
                     imageInputType: imageInputType,
                     width: (maxWidth - spacing) * 2 / 8,
                     height: (maxHeight - spacing) / 2,
                     fit: fit,
                   ),
-                  sizeMore: images.length - 3,
-                  sizeMoreBuilder: sizeMoreBuilder,
+                ),
+                const SizedBox(height: spacing),
+                GestureDetector(
+                  onTap: () {
+                    if (onTapImage3 != null) {
+                      onTapImage3();
+                    }
+                  },
+                  child: _buildBlur(
+                    child: _buildImage(
+                      images[2],
+                      imageInputType: imageInputType,
+                      width: (maxWidth - spacing) * 2 / 8,
+                      height: (maxHeight - spacing) / 2,
+                      fit: fit,
+                    ),
+                    sizeMore: images.length - 3,
+                    sizeMoreBuilder: sizeMoreBuilder,
+                  ),
                 ),
               ],
             ),
