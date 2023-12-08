@@ -593,7 +593,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                                     : null,
                           )
                         : Container(),
-                    !isShowProtector()
+                    isShowProtector()
                         ? VerifyProtectorWidget(
                             onUpdatePlaceInformation:
                                 (PDoneVerifyProtectorRequest value) {
