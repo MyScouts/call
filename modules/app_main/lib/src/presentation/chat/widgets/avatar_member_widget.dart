@@ -16,7 +16,6 @@ class AvatarMemberWidget extends StatelessWidget {
       child: AvatarWidget(
         avatar: avatar,
         size: size,
-
       ),
     );
   }

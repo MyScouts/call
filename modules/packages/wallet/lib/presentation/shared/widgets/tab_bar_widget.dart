@@ -99,38 +99,36 @@ class _TabBarViewWidgetState extends State<TabBarViewWidget>
 
   Widget _tabButton(WalletType resourceType) {
     final index = WalletType.values.indexWhere((type) => type == resourceType);
-    return Expanded(
-      child: InkWell(
-        onTap: () {
-          _pageCtrl.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.ease,
-          );
-          _page = index;
-          setState(() {});
-        },
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
-          decoration: BoxDecoration(
-            borderRadius: WalletConstant.borderRadius90,
-            color: _page == index ? const Color(0xFF4B84F7) : Colors.white,
-          ),
-          child: Center(
-            child: Text(
-              resourceType.resourceTabText,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 14,
-                height: 1,
-                leadingDistribution: TextLeadingDistribution.even,
-                color:
-                    _page == index ? AppColors.white : const Color(0xFF6E6E6E),
-              ),
+    return InkWell(
+      onTap: () {
+        _pageCtrl.animateToPage(
+          index,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.ease,
+        );
+        _page = index;
+        setState(() {});
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+        decoration: BoxDecoration(
+          borderRadius: WalletConstant.borderRadius90,
+          color: _page == index ? const Color(0xFF4B84F7) : Colors.white,
+        ),
+        child: Center(
+          child: Text(
+            resourceType.resourceTabText,
+            maxLines: 2,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
+              height: 1,
+              leadingDistribution: TextLeadingDistribution.even,
+              color:
+                  _page == index ? AppColors.white : const Color(0xFF6E6E6E),
             ),
           ),
         ),

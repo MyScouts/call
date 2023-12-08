@@ -4,4 +4,7 @@ abstract class MediaPicker {
   Future<List<MediaFile?>?> pickImagesFromGallery();
 
   Future<MediaFile?> pickImageFromCamera();
+
+  Future<MediaFile?> pickVideoFromGallery();
+
 }

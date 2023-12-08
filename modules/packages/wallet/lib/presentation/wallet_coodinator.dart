@@ -162,8 +162,11 @@ extension WalletCoordinator on BuildContext {
     );
   }
 
-  Future<T?> startTransactionHistoryDetails<T>(String id) {
-    return Navigator.of(this)
-        .pushNamed(TransactionHistoryDetailScreen.routeName, arguments: id);
+  Future<T?> startTransactionHistoryDetails<T>(
+      TransactionHistoryDetailParams params) {
+    return Navigator.of(this).pushNamed(
+      TransactionHistoryDetailScreen.routeName,
+      arguments: params,
+    );
   }
 }

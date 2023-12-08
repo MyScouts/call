@@ -83,47 +83,49 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
           getOtpLoading: showLoading,
         );
       },
-      child: Scaffold(
-        appBar: BaseAppBar(
-          title: _titleAppbar,
-          onPressed: () {
-            if (_pageCtrl.page == 0) {
-              Navigator.pop(context);
-            } else {
-              _pageCtrl.jumpToPage(0);
-              _titleAppbar = 'Thêm liên kết ngân hàng';
-              setState(() {});
-            }
-            context.hideKeyboard();
-          },
-          isClose: false,
-        ),
-        body: BlocBuilder<BankAccountBloc, BankAccountState>(
-          buildWhen: (previous, current) =>
-              current.whenOrNull(
-                getAllBanksInfoSuccess: () => true,
-              ) ??
-              false,
-          builder: (context, state) {
-            return state.maybeWhen(
-              orElse: () => const LoadingWidget(),
-              getAllBanksInfoSuccess: () {
-                banks = context.read<BankAccountBloc>().banks;
+      child: AutoHideKeyboard(
+        child: Scaffold(
+          appBar: BaseAppBar(
+            title: _titleAppbar,
+            onPressed: () {
+              if (_pageCtrl.page == 0) {
+                Navigator.pop(context);
+              } else {
+                _pageCtrl.jumpToPage(0);
+                _titleAppbar = 'Thêm liên kết ngân hàng';
+                setState(() {});
+              }
+              context.hideKeyboard();
+            },
+            isClose: false,
+          ),
+          body: BlocBuilder<BankAccountBloc, BankAccountState>(
+            buildWhen: (previous, current) =>
+                current.whenOrNull(
+                  getAllBanksInfoSuccess: () => true,
+                ) ??
+                false,
+            builder: (context, state) {
+              return state.maybeWhen(
+                orElse: () => const LoadingWidget(),
+                getAllBanksInfoSuccess: () {
+                  banks = context.read<BankAccountBloc>().banks;
 
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: context.horizontal),
-                  child: PageView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    controller: _pageCtrl,
-                    children: [
-                      _buildFirstPage(),
-                      _buildSecondPage(),
-                    ],
-                  ),
-                );
-              },
-            );
-          },
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: context.horizontal),
+                    child: PageView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      controller: _pageCtrl,
+                      children: [
+                        _buildFirstPage(),
+                        _buildSecondPage(),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );
@@ -156,6 +158,7 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
                 name: 'searchBank',
                 isRequired: true,
                 hintText: 'Nhập tên ngân hàng cần tìm',
+                focusedBorderColor: const Color(0xFF4B84F7),
                 onChanged: (value) {
                   EasyDebounce.debounce(
                     'SEARCH_BANK',

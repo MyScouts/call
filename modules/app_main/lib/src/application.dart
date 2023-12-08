@@ -126,11 +126,12 @@ class _ApplicationState extends State<Application> with WidgetsBindingObserver, 
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // if (state == AppLifecycleState.resumed) {
+    if (state == AppLifecycleState.resumed) {
     //   ChatSocket().connect();
-    //   getIt.get<ConversationCubit>().loadNewConversation();
-    //   getIt.get<ChatRoomCubit>().loadMessages();
-    // } else if (state == AppLifecycleState.paused) {
+      getIt.get<ConversationCubit>().loadNewConversation();
+      getIt.get<ChatRoomCubit>().loadMessages();
+    }
+    // else if (state == AppLifecycleState.paused) {
     //   ChatSocket().disconnect();
     // }
   }

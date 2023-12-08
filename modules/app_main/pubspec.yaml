@@ -116,7 +116,8 @@ dependencies:
       url: https://github.com/stringeecom/stringee_flutter_plugin.git
   pulsator: ^1.0.0+2
   percent_indicator: ^4.2.3
-
+  detectable_text_field: ^3.0.2
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -7,11 +7,11 @@ import 'package:wallet/presentation/presentation.dart';
 import 'package:wallet/presentation/shared/widgets/datetime_filter_sheet.dart';
 import 'package:wallet/presentation/shared/widgets/transaction_filter_sheet.dart';
 import 'package:wallet/presentation/shared/widgets/wallet_transaction_item_widget.dart';
+import 'package:wallet/presentation/transaction_history_detail_screen.dart';
 import 'package:wallet/presentation/wallet_constant.dart';
 
 import '../core/theme/wallet_theme.dart';
 import 'shared/bloc/wallet_bloc.dart';
-import 'shared/widgets/transactions_empty_widget.dart';
 
 class WalletTransactionHistoryScreen extends StatefulWidget {
   final WalletType walletType;
@@ -59,7 +59,7 @@ class _WalletTransactionHistoryScreenState
         walletType: widget.walletType,
         request: WalletTransactionsRequest(
           fromTimestamp: _fromTimestamp,
-          toTimestamp: _selectedDate.millisecondsSinceEpoch,
+          toTimestamp: _toTimestamp,
         ),
       ),
     );
@@ -103,7 +103,7 @@ class _WalletTransactionHistoryScreenState
                             walletType: widget.walletType,
                             request: WalletTransactionsRequest(
                               fromTimestamp: _fromTimestamp,
-                              toTimestamp: _selectedDate.millisecondsSinceEpoch,
+                              toTimestamp: _toTimestamp,
                             ),
                           ),
                         );
@@ -131,10 +131,120 @@ class _WalletTransactionHistoryScreenState
         ),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _dateFilterWidget(),
+          _buildSelectedStatus(),
           Expanded(child: _buildList()),
         ],
+      ),
+    );
+  }
+
+  _buildSelectedStatus() {
+    return BlocBuilder<WalletBloc, WalletState>(
+      bloc: _bloc,
+      builder: (context, state) => Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 10,
+        ),
+        child: Wrap(
+          spacing: 5,
+          runSpacing: 10,
+          children: [
+            ..._selectedFilter.type.map(
+              (type) => _buildSelectedStatusChip(
+                title: type.filterText(walletType: widget.walletType),
+                onRemove: () {
+                  _selectedFilter.type.remove(type);
+
+                  if (_selectedFilter.type.isNotEmpty &&
+                      _selectedFilter.status.isNotEmpty) {
+                    _bloc.add(
+                      WalletEvent.filterTransaction(filter: _selectedFilter),
+                    );
+                  } else {
+                    _bloc.add(
+                      WalletEvent.getWalletTransactionList(
+                        walletType: widget.walletType,
+                        request: WalletTransactionsRequest(
+                          fromTimestamp: _fromTimestamp,
+                          toTimestamp: _toTimestamp,
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
+            ..._selectedFilter.status.map(
+              (status) => _buildSelectedStatusChip(
+                title: status.text,
+                onRemove: () {
+                  _selectedFilter.status.remove(status);
+                  if (_selectedFilter.type.isNotEmpty &&
+                      _selectedFilter.status.isNotEmpty) {
+                    _bloc.add(
+                      WalletEvent.filterTransaction(filter: _selectedFilter),
+                    );
+                  } else {
+                    _bloc.add(
+                      WalletEvent.getWalletTransactionList(
+                        walletType: widget.walletType,
+                        request: WalletTransactionsRequest(
+                          fromTimestamp: _fromTimestamp,
+                          toTimestamp: _toTimestamp,
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _buildSelectedStatusChip({
+    required String title,
+    required VoidCallback onRemove,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(100),
+        border: Border.all(color: const Color(0xFFD0D6DD)),
+        color: AppColors.white,
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      child: IntrinsicWidth(
+        child: Row(
+          children: [
+            Text(
+              title,
+              style: context.text.bodyMedium?.copyWith(
+                color: const Color(0xFF101B28),
+                fontSize: 14,
+                height: 20 / 14,
+              ),
+            ),
+            const SizedBox(width: 10),
+            GestureDetector(
+              onTap: onRemove.call,
+              child: CircleAvatar(
+                radius: 15,
+                backgroundColor: const Color(0xFF101B28).withOpacity(0.08),
+                child: const Icon(
+                  Icons.close,
+                  color: WalletTheme.textColor,
+                  size: 16,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -234,14 +344,17 @@ class _WalletTransactionHistoryScreenState
               return const TransactionsEmptyWidget();
             }
             return ListView(
-              padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
+              padding: const EdgeInsets.only(left: 15, right: 15),
               children: transactions
                   .map(
                     (item) => WalletTransactionItemWidget(
                       transactionItem: item,
                       walletType: widget.walletType,
                       onTap: () => context.startTransactionHistoryDetails(
-                        '${item.id}',
+                        TransactionHistoryDetailParams(
+                          id: '${item.id}',
+                          walletType: widget.walletType,
+                        ),
                       ),
                     ),
                   )

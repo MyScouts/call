@@ -63,6 +63,7 @@ mixin _$User {
   String? get vShopId => throw _privateConstructorUsedError;
   int? get vShopPDoneId => throw _privateConstructorUsedError;
   UserFanGroupInfo? get fanGroup => throw _privateConstructorUsedError;
+  UserProfileInfo? get profile => throw _privateConstructorUsedError;
   int? get sexCode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -119,10 +120,12 @@ abstract class $UserCopyWith<$Res> {
       String? vShopId,
       int? vShopPDoneId,
       UserFanGroupInfo? fanGroup,
+      UserProfileInfo? profile,
       int? sexCode});
 
   $TeamCopyWith<$Res>? get joinedTeam;
   $UserFanGroupInfoCopyWith<$Res>? get fanGroup;
+  $UserProfileInfoCopyWith<$Res>? get profile;
 }
 
 /// @nodoc
@@ -181,6 +184,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? vShopId = freezed,
     Object? vShopPDoneId = freezed,
     Object? fanGroup = freezed,
+    Object? profile = freezed,
     Object? sexCode = freezed,
   }) {
     return _then(_value.copyWith(
@@ -356,6 +360,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.fanGroup
           : fanGroup // ignore: cast_nullable_to_non_nullable
               as UserFanGroupInfo?,
+      profile: freezed == profile
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as UserProfileInfo?,
       sexCode: freezed == sexCode
           ? _value.sexCode
           : sexCode // ignore: cast_nullable_to_non_nullable
@@ -384,6 +392,18 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
 
     return $UserFanGroupInfoCopyWith<$Res>(_value.fanGroup!, (value) {
       return _then(_value.copyWith(fanGroup: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserProfileInfoCopyWith<$Res>? get profile {
+    if (_value.profile == null) {
+      return null;
+    }
+
+    return $UserProfileInfoCopyWith<$Res>(_value.profile!, (value) {
+      return _then(_value.copyWith(profile: value) as $Val);
     });
   }
 }
@@ -439,12 +459,15 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       String? vShopId,
       int? vShopPDoneId,
       UserFanGroupInfo? fanGroup,
+      UserProfileInfo? profile,
       int? sexCode});
 
   @override
   $TeamCopyWith<$Res>? get joinedTeam;
   @override
   $UserFanGroupInfoCopyWith<$Res>? get fanGroup;
+  @override
+  $UserProfileInfoCopyWith<$Res>? get profile;
 }
 
 /// @nodoc
@@ -500,6 +523,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? vShopId = freezed,
     Object? vShopPDoneId = freezed,
     Object? fanGroup = freezed,
+    Object? profile = freezed,
     Object? sexCode = freezed,
   }) {
     return _then(_$UserImpl(
@@ -675,6 +699,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.fanGroup
           : fanGroup // ignore: cast_nullable_to_non_nullable
               as UserFanGroupInfo?,
+      profile: freezed == profile
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as UserProfileInfo?,
       sexCode: freezed == sexCode
           ? _value.sexCode
           : sexCode // ignore: cast_nullable_to_non_nullable
@@ -730,6 +758,7 @@ class _$UserImpl implements _User {
       this.vShopId,
       this.vShopPDoneId,
       this.fanGroup,
+      this.profile,
       this.sexCode})
       : _backgroundImages = backgroundImages;
 
@@ -841,11 +870,13 @@ class _$UserImpl implements _User {
   @override
   final UserFanGroupInfo? fanGroup;
   @override
+  final UserProfileInfo? profile;
+  @override
   final int? sexCode;
 
   @override
   String toString() {
-    return 'User(id: $id, username: $username, name: $name, nickname: $nickname, email: $email, phone: $phone, avatar: $avatar, sex: $sex, phoneCode: $phoneCode, address: $address, forgotHash: $forgotHash, status: $status, roleId: $roleId, roleMemberCode: $roleMemberCode, createdById: $createdById, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, pDoneId: $pDoneId, displayName: $displayName, fullName: $fullName, isPDone: $isPDone, isFriend: $isFriend, isFollowing: $isFollowing, isFollowed: $isFollowed, totalFollower: $totalFollower, totalFollowing: $totalFollowing, totalFriend: $totalFriend, old: $old, isBlock: $isBlock, backgroundImages: $backgroundImages, defaultBackground: $defaultBackground, isJA: $isJA, isVShop: $isVShop, isLive: $isLive, isSupervisor: $isSupervisor, isModerator: $isModerator, joinedTeam: $joinedTeam, birthday: $birthday, jaAt: $jaAt, vShopId: $vShopId, vShopPDoneId: $vShopPDoneId, fanGroup: $fanGroup, sexCode: $sexCode)';
+    return 'User(id: $id, username: $username, name: $name, nickname: $nickname, email: $email, phone: $phone, avatar: $avatar, sex: $sex, phoneCode: $phoneCode, address: $address, forgotHash: $forgotHash, status: $status, roleId: $roleId, roleMemberCode: $roleMemberCode, createdById: $createdById, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, pDoneId: $pDoneId, displayName: $displayName, fullName: $fullName, isPDone: $isPDone, isFriend: $isFriend, isFollowing: $isFollowing, isFollowed: $isFollowed, totalFollower: $totalFollower, totalFollowing: $totalFollowing, totalFriend: $totalFriend, old: $old, isBlock: $isBlock, backgroundImages: $backgroundImages, defaultBackground: $defaultBackground, isJA: $isJA, isVShop: $isVShop, isLive: $isLive, isSupervisor: $isSupervisor, isModerator: $isModerator, joinedTeam: $joinedTeam, birthday: $birthday, jaAt: $jaAt, vShopId: $vShopId, vShopPDoneId: $vShopPDoneId, fanGroup: $fanGroup, profile: $profile, sexCode: $sexCode)';
   }
 
   @override
@@ -921,6 +952,7 @@ class _$UserImpl implements _User {
                 other.vShopPDoneId == vShopPDoneId) &&
             (identical(other.fanGroup, fanGroup) ||
                 other.fanGroup == fanGroup) &&
+            (identical(other.profile, profile) || other.profile == profile) &&
             (identical(other.sexCode, sexCode) || other.sexCode == sexCode));
   }
 
@@ -971,6 +1003,7 @@ class _$UserImpl implements _User {
         vShopId,
         vShopPDoneId,
         fanGroup,
+        profile,
         sexCode
       ]);
 
@@ -1033,6 +1066,7 @@ abstract class _User implements User {
       final String? vShopId,
       final int? vShopPDoneId,
       final UserFanGroupInfo? fanGroup,
+      final UserProfileInfo? profile,
       final int? sexCode}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
@@ -1123,6 +1157,8 @@ abstract class _User implements User {
   int? get vShopPDoneId;
   @override
   UserFanGroupInfo? get fanGroup;
+  @override
+  UserProfileInfo? get profile;
   @override
   int? get sexCode;
   @override

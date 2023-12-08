@@ -3,6 +3,7 @@ import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/dashboard/system_setting/system_setting.dart';
 import 'package:app_main/src/presentation/call/phone_book/phone_book_page.dart';
 import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
+import 'package:app_main/src/presentation/social/my_profile/screens/my_profile_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:equatable/equatable.dart';
 import 'package:staggered_reorderable/staggered_reorderable.dart';
@@ -299,6 +300,7 @@ final personalDefault = {
     id: 'ic_profile',
     title: 'Profile',
     backgroundImage: IconAppConstants.icProfile,
+    path: MyProfileScreen.routeName,
   ),
   // 'ic_setting': DashBoardIconItem(
   //   id: 'ic_setting',
@@ -347,6 +349,12 @@ final eCommerceDefault = {
   //   width: 2,
   //   height: 3,
   // ),
+  'ic_profile': DashBoardIconItem(
+    id: 'ic_profile',
+    title: 'Profile',
+    backgroundImage: IconAppConstants.icProfile,
+    path: MyProfileScreen.routeName,
+  ),
   "ic_marShop": DashBoardIconItem(
     id: 'ic_marShop',
     title: 'MarShop',

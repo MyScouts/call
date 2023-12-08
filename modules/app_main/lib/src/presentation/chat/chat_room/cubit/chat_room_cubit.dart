@@ -7,6 +7,7 @@ import 'package:app_main/src/data/models/responses/chat/meta_data_dto.dart';
 import 'package:app_main/src/data/repositories/media_picker.dart';
 import 'package:app_main/src/domain/entities/chat/message_model.dart';
 import 'package:app_main/src/domain/entities/chat/result_model.dart';
+import 'package:app_main/src/domain/entities/friend/friend_status_model.dart';
 import 'package:app_main/src/domain/usecases/chat_usecase.dart';
 import 'package:app_main/src/domain/usecases/community_usecase.dart';
 import 'package:app_main/src/domain/usecases/upgrade_account_usecase.dart';
@@ -32,6 +33,8 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
       emit(const ChatRoomState.loading());
       if (conversationId == null && memberId != null) {
         final User? user = await _userUsecase.geSynctUserById(memberId);
+        final FriendStatusModel friendStatus =
+            await _chatUseCase.getFriendStatus(userId: memberId!);
         final ResultModel newConversation = await _chatUseCase.createConversations(
           payload: NewConversationsPayload(
             name: user.getdisplayName,
@@ -44,23 +47,34 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
         _conversationId = newConversation.result;
         final response = await _chatUseCase.getMessages(
             conversationId: newConversation.result as int, page: 1, pageSize: kPageSize);
-        emit(ChatRoomStateData(
-          messages: response.items ?? [],
-          conversation: conversationIdDetail,
-          page: 1,
-          canLoadMore: response.items?.length == kPageSize,
-        ));
-      } else {
-        _conversationId = conversationId!;
-        final conversationIdDetail =
-            await _chatUseCase.getConversationsDetail(conversationId: _conversationId);
-        final response = await _chatUseCase.getMessages(
-            conversationId: conversationId, page: 1, pageSize: kPageSize);
-        emit(ChatRoomStateData(
+        emit(
+          ChatRoomStateData(
             messages: response.items ?? [],
             conversation: conversationIdDetail,
+            friendStatus: friendStatus,
             page: 1,
-            canLoadMore: response.items?.length == kPageSize));
+            canLoadMore: response.items?.length == kPageSize,
+          ),
+        );
+      } else {
+        _conversationId = conversationId!;
+        FriendStatusModel? friendStatus;
+        final conversationIdDetail =
+            await _chatUseCase.getConversationsDetail(conversationId: _conversationId);
+        if (conversationIdDetail.conversation.type == 1) {
+          friendStatus = await _chatUseCase.getFriendStatus(
+              userId: conversationIdDetail.conversation.membersNotMe.first.member.id);
+        }
+        final response = await _chatUseCase.getMessages(
+            conversationId: _conversationId, page: 1, pageSize: kPageSize);
+        emit(
+          ChatRoomStateData(
+              messages: response.items ?? [],
+              conversation: conversationIdDetail,
+              friendStatus: friendStatus,
+              page: 1,
+              canLoadMore: response.items?.length == kPageSize),
+        );
       }
     } catch (e) {
       emit(ChatRoomState.error(e));
