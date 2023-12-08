@@ -124,26 +124,28 @@
                 children: [
                   Expanded(
                     child: CallButtonWidget(
-                      onTap: () {
-                        context.startCall(
+                      onTap: () async {
+                        await context.startCall(
                           toUserId: widget.data.id.toString(),
                           isVideo: false,
                           fromUserId:
                               getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id.toString(),
                         );
+                        _cubit.init(widget.data.id);
                       },
                     ),
                   ),
                   kSpacingWidth12,
                   Expanded(
                     child: VideoCallButtonWidget(
-                      onTap: () {
-                        context.startCall(
+                      onTap: () async {
+                         await context.startCall(
                           toUserId: widget.data.id.toString(),
                           isVideo: true,
                           fromUserId:
                               getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id.toString(),
                         );
+                        _cubit.init(widget.data.id);
                       },
                     ),
                   ),

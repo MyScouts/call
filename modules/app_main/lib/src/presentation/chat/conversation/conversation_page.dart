@@ -146,7 +146,7 @@ class ConversationPageState extends State<ConversationPage> {
                         kSpacingHeight16,
                         Expanded(
                           child: ListView.separated(
-                            shrinkWrap: true,
+                              padding: const EdgeInsets.only(bottom: 16),
                               itemBuilder: (_, index) {
                                 if (index == conversations.length) {
                                   _cubit.loadMoreConversation();
