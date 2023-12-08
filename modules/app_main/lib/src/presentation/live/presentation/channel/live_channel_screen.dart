@@ -60,48 +60,77 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
             FocusScope.of(context).unfocus();
           },
           behavior: HitTestBehavior.opaque,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              const _RtcRender(),
-              const Align(
-                alignment: Alignment.topCenter,
-                child: SafeArea(
-                  child: LiveChannelHeader(),
-                ),
-              ),
-              const Align(
-                alignment: Alignment.bottomCenter,
-                child: LiveBottomAction(),
-              ),
-              Positioned.fill(
-                child: IgnorePointer(
-                  ignoring: true,
-                  child: SentGiftPage(
-                    provider: controller.floatingGiftsProvider,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Obx(() {
-                  if (controller.showMessageInput.value) {
-                    return const LiveMessageInput();
-                  }
-                  return const SizedBox.shrink();
-                }),
-              ),
-              Obx(() {
-                if (controller.state.value == LiveStreamState.stop) {
-                  return const LiveEndScreen();
-                }
-
-                return const SizedBox.shrink();
-              }),
-            ],
-          ),
+          child: Obx(() {
+            if (controller.enablePk.value) {
+              return const _LivePk();
+            } else {
+              return const _LiveSimple();
+            }
+          }),
         ),
       ),
+    );
+  }
+}
+
+class _LivePk extends StatelessWidget {
+  const _LivePk({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [],
+    );
+  }
+}
+
+class _LiveSimple extends StatelessWidget {
+  const _LiveSimple({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = context.read<LiveChannelController>();
+
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        const _RtcRender(),
+        const Align(
+          alignment: Alignment.topCenter,
+          child: SafeArea(
+            child: LiveChannelHeader(),
+          ),
+        ),
+        const Align(
+          alignment: Alignment.bottomCenter,
+          child: LiveBottomAction(),
+        ),
+        Positioned.fill(
+          child: IgnorePointer(
+            ignoring: true,
+            child: SentGiftPage(
+              provider: controller.floatingGiftsProvider,
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Obx(() {
+            if (controller.showMessageInput.value) {
+              return const LiveMessageInput();
+            }
+            return const SizedBox.shrink();
+          }),
+        ),
+        Obx(() {
+          if (controller.state.value == LiveStreamState.stop) {
+            return const LiveEndScreen();
+          }
+
+          return const SizedBox.shrink();
+        }),
+      ],
     );
   }
 }
@@ -189,3 +218,23 @@ class _RtcRenderState extends State<_RtcRender> {
     });
   }
 }
+
+// class _LivePKRtc extends StatelessWidget {
+//   const _LivePKRtc({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: [
+//         Expanded(
+//           flex: 1,
+//           child: child,
+//         ),
+//         Expanded(
+//           flex: 1,
+//           child: child,
+//         ),
+//       ],
+//     );
+//   }
+// }

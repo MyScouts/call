@@ -8,11 +8,13 @@ class TabbarDynamicWidget extends StatefulWidget {
     required this.tabController,
     required this.children,
     this.heightDefault = 200.0,
+    this.physics,
   });
 
   final TabController tabController;
   final List<Widget> children;
   final double heightDefault;
+  final ScrollPhysics? physics;
 
   @override
   State<TabbarDynamicWidget> createState() => _TabbarDynamicWidgetState();
@@ -53,6 +55,7 @@ class _TabbarDynamicWidgetState extends State<TabbarDynamicWidget> {
           height: heightTabbar,
           child: TabBarView(
             controller: widget.tabController,
+            physics: widget.physics,
             children: List.generate(
               widget.children.length,
               (index) {

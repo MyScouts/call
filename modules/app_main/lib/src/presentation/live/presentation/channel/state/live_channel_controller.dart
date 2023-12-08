@@ -15,6 +15,7 @@ import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_member.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/domain/usecases/user_usecase.dart';
+import 'package:app_main/src/presentation/live/domain/entities/pk_data.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:app_main/src/presentation/live/live_magane_state.dart';
 import 'package:flutter/cupertino.dart';
@@ -113,6 +114,8 @@ class LiveChannelController {
 
   RxBool get enablePk => _enablePk;
 
+  PkData? _pk;
+
   bool get hostInLive {
     if (_me.value.isOwner) return true;
     return host != null;
@@ -144,6 +147,10 @@ class LiveChannelController {
   final RxBool _video = false.obs;
 
   RxBool get video => _video;
+
+  void switchCamera() {
+    service.switchCamera();
+  }
 
   void enableVideo() {
     if (_video.value) {
@@ -177,6 +184,7 @@ class LiveChannelController {
     _roomInfoFetching.value = true;
     final res = await repository.joinLive(id: id, password: _password);
     _info.value = res.data;
+    _pk = res.pk;
     _agora = res.agoraData.first;
     _roomInfoFetching.value = false;
 
@@ -282,6 +290,11 @@ class LiveChannelController {
       _state.value = LiveStreamState.watching;
 
       WakelockPlus.enable();
+
+      if (_me.value.isOwner) {
+        _mic.value = true;
+        _video.value = true;
+      }
 
       if (Platform.isAndroid) _initForegroundTask();
     } catch (e) {
@@ -439,7 +452,9 @@ class LiveChannelController {
       final message = UserMessage(
         member: LiveMember(
             info: LiveMemberInfo(
-                userID: gift.giver!.id!, name: gift.giver!.displayName!, avatar: gift.giver?.avatar ?? '')),
+                userID: gift.giver!.id!,
+                name: gift.giver!.displayName!,
+                avatar: gift.giver?.avatar ?? '')),
         message: 'đã tặng ${gift.giftCard?.name} x${gift.total}',
         createdAt: DateTime.now(),
       );
@@ -449,6 +464,28 @@ class LiveChannelController {
     socketService.on(socketUserJoinEvent, (Map data) {
       debugPrint('$socketUserJoinEvent ===> ${data['user']}');
       final user = User.fromJson(data['user']);
+      if (_me.value.info.userID == user.id) {
+        NotificationCenter.post(
+          channel: receiveMessage,
+          options: SystemMessage(
+            message: 'Nghiêm cấm tất cả các nội dung không lành mạnh, thô tục,'
+                ' tình dục (bao gồm tình dục trẻ em), trái với thuần phong mỹ tục;'
+                ' các nội dụng liên quan đến chống phá nhà nước, vi phạm bản'
+                ' quyền hoặc pháp luật trong phòng live. Nếu vi phạm, VDONE'
+                ' sẽ tạm ngưng hoặc xóa tài khoản của bạn.',
+            createdAt: DateTime.now(),
+          ),
+        );
+
+        final message = JoinMessage(
+          member: _me.value,
+          message: '',
+          createdAt: DateTime.now(),
+        );
+
+        NotificationCenter.post(channel: receiveMessage, options: message);
+        return;
+      }
       if (isMemberInLive(user.id!)) return;
       final member = LiveMember(
         info: LiveMemberInfo(

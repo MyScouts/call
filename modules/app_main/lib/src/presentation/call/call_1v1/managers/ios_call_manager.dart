@@ -384,6 +384,7 @@ class IOSCallManager with WidgetsBindingObserver {
   void handleSignalingStateChangeEvent(StringeeSignalingState? state) {
     syncCall!.callState = state ?? StringeeSignalingState.calling;
     syncCall!.status = state.toString().split('.')[1];
+    callScreenKey?.currentState?.onStatusChange(syncCall!.status);
     switch (state) {
       case StringeeSignalingState.calling:
         break;

@@ -25,7 +25,6 @@ class ChatSocket {
   bool _forceDisconnect = false;
 
   void connect() async {
-    destroy();
     _forceDisconnect = false;
     await _initSocket();
     _connect();
@@ -36,6 +35,7 @@ class ChatSocket {
     _forceDisconnect = true;
 
     if (_socket != null) {
+      _socket?.disconnect();
       _socket?.dispose();
       _socket = null;
     }
@@ -87,7 +87,7 @@ class ChatSocket {
 
     _socket?.on('connect_timeout', (_) {
       dlog('❤️❤️❤️❤️❤️ SOCKET CONNECT TIMEOUT');
-      reconnect();
+      // reconnect();
     });
 
     _socket?.on('error', (_) {
@@ -97,10 +97,9 @@ class ChatSocket {
     _socket?.on('reconnecting', (_) {
       dlog('❤️❤️❤️❤️❤️ SOCKET RECONNECTING');
     });
-
-    _socket?.on('disconnect', (_) {
+    _socket?.onDisconnect((data) {
       dlog('⚠️⚠️⚠️⚠️⚠️ SOCKET DISCONNECT');
-      reconnect();
+      // reconnect();
     });
 
     _socket?.on('reconnect_failed', (_) {
@@ -116,7 +115,7 @@ class ChatSocket {
     });
     _socket?.on('onNewMessage', (data) {
       _transformMessageData(data);
-      getIt.get<ConversationCubit>().init();
+      getIt.get<ConversationCubit>().loadNewConversation();
     });
   }
 

@@ -27,14 +27,10 @@ class LiveChannelHeader extends StatefulWidget {
 
 class _LiveChannelHeaderState extends State<LiveChannelHeader> {
   late final controller = context.read<LiveChannelController>();
-  late final LiveMessageBloc commentController;
+  late final LiveMessageBloc commentController =
+      context.read<LiveMessageBloc>();
   bool showPip = true;
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    commentController = context.read<LiveMessageBloc>();
-  }
 
   @override
   void dispose() {
@@ -104,7 +100,8 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                 ),
                 padding: const EdgeInsets.all(4.0),
                 child: Obx(() {
-                  final host = controller.members.value.firstWhereOrNull((e) => e.isOwner);
+                  final host = controller.members.value
+                      .firstWhereOrNull((e) => e.isOwner);
                   return IntrinsicHeight(
                     child: Row(
                       children: [

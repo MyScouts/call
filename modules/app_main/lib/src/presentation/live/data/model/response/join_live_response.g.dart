@@ -13,6 +13,9 @@ JoinLiveResponse _$JoinLiveResponseFromJson(Map<String, dynamic> json) =>
       agoraData: (json['userAgoras'] as List<dynamic>)
           .map((e) => AgoraData.fromJson(e as Map<String, dynamic>))
           .toList(),
+      pk: json['pk'] == null
+          ? null
+          : PkData.fromJson(json['pk'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$JoinLiveResponseToJson(JoinLiveResponse instance) =>
@@ -20,4 +23,5 @@ Map<String, dynamic> _$JoinLiveResponseToJson(JoinLiveResponse instance) =>
       'live': instance.data,
       'isModerator': instance.isModerator,
       'userAgoras': instance.agoraData,
+      'pk': instance.pk,
     };

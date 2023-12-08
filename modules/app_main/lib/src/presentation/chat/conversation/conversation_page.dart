@@ -24,7 +24,7 @@ class ConversationPageState extends State<ConversationPage> {
   final ConversationCubit _cubit = getIt.get();
   @override
   void initState() {
-    _cubit.init();
+    _cubit.init(loading: true);
     super.initState();
   }
 
@@ -72,8 +72,9 @@ class ConversationPageState extends State<ConversationPage> {
                               ),
                               kSpacingWidth12,
                               GestureDetector(
-                                onTap: () {
-                                  context.startNewMessage();
+                                onTap: () async {
+                                  await context.startNewMessage();
+                                  _cubit.loadNewConversation();
                                 },
                                 child: Container(
                                   decoration: const BoxDecoration(
@@ -142,10 +143,10 @@ class ConversationPageState extends State<ConversationPage> {
                               separatorBuilder: (_, __) => kSpacingWidth16,
                               itemCount: canLoadMoreFriend ? friends.length + 1 : friends.length),
                         ),
+                        kSpacingHeight16,
                         Expanded(
                           child: ListView.separated(
                             shrinkWrap: true,
-                              padding: const EdgeInsets.symmetric(vertical: 16),
                               itemBuilder: (_, index) {
                                 if (index == conversations.length) {
                                   _cubit.loadMoreConversation();

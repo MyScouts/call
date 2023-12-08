@@ -9,20 +9,8 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 
-enum DiaryCategory { personal, marshop, saved }
+import '../social_constants.dart';
 
-extension DiaryCategoryExt on DiaryCategory {
-  String getName() {
-    switch (this) {
-      case DiaryCategory.personal:
-        return "Cá nhân";
-      case DiaryCategory.marshop:
-        return "Marshop";
-      case DiaryCategory.saved:
-        return "Mục đã lưu";
-    }
-  }
-}
 
 class DiaryScreen extends StatefulWidget {
   static const String routeName = "diary";

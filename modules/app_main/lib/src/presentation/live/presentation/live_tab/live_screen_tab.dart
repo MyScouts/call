@@ -25,8 +25,8 @@ class _LiveScreenTabState extends State<LiveScreenTab>
 
   @override
   void initState() {
-    liveController.getListLive(context);
-    liveController.getListLiveForYou(context);
+    liveController.getListLive();
+    liveController.getListLiveForYou();
 
     _liveTabController = TabController(length: 2, vsync: this, initialIndex: 0, animationDuration: Duration.zero);
 
@@ -56,7 +56,7 @@ class _LiveScreenTabState extends State<LiveScreenTab>
               Obx(() {
                 return RefreshIndicator(
                   onRefresh: () async {
-                    liveController.getListLive(context);
+                    liveController.getListLive();
                   },
                   child: GridView.count(
                     physics: const AlwaysScrollableScrollPhysics(),
@@ -81,7 +81,7 @@ class _LiveScreenTabState extends State<LiveScreenTab>
               Obx(() {
                 return RefreshIndicator(
                   onRefresh: () async {
-                    liveController.getListLiveForYou(context);
+                    liveController.getListLiveForYou();
                   },
                   child: GridView.count(
                     physics: const AlwaysScrollableScrollPhysics(),

@@ -40,6 +40,7 @@ class IconAppConstants {
   static String icMale = IconApp.icMale.path;
   static String icMaleSVG = IconApp.icMaleSVG.path;
   static String icFeMaleSVG = IconApp.icFeMaleSVG.path;
+  static String icLGBTSVG = IconApp.icLGBT.path;
   static String icUserGroup = IconApp.icUserGroup.path;
   static String icUserAddSolid = IconApp.icUserAddSolid.path;
   static String icUserAddOutline = IconApp.icUserAddOutline.path;
@@ -168,6 +169,33 @@ class IconAppConstants {
   static String icDeleteCall = IconApp.icDeleteCall.path;
   static String icVideoAnswer = IconApp.icVideoAnswer.path;
   static String icBackCall = IconApp.icBackCall.path;
+  static String icVideoRd = IconApp.icVideoRd.path;
+  static String icCamera = IconApp.icCamera.path;
+  static String icShopVdone = IconApp.icShopVdone.path;
+  static String icPost = IconApp.icPost.path;
+  static String icReels = IconApp.icReels.path;
+  static String icVideoRdTrans = IconApp.icVideoRdTrans.path;
+  static String icPostActive = IconApp.icPostActive.path;
+  static String icVideoRdTransActive = IconApp.icVideoRdTransActive.path;
+  static String icReelsActive = IconApp.icReelsActive.path;
+  static String icHeart = IconApp.icHeart.path;
+  static String icHeartRd = IconApp.icHeartRd.path;
+  static String icComment = IconApp.icComment.path;
+  static String icShare = IconApp.icShare.path;
+  static String icHeartActive = IconApp.icHeartActive.path;
+  static String icFriend = IconApp.icFriend.path;
+  static String icGalleryBg = IconApp.icGalleryBg.path;
+  static String icSmileBg = IconApp.icSmileBg.path;
+  static String icPositionBg = IconApp.icPositionBg.path;
+  static String icTagBg = IconApp.icTagBg.path;
+  static String icVideoBg = IconApp.icVideoBg.path;
+  static String icOnly = IconApp.icOnly.path;
+  static String icPublic = IconApp.icPublic.path;
+  static String icFan = IconApp.icFan.path;
+  static String icDoubleImage = IconApp.icDoubleImage.path;
+
+  static String icRadioButtonCheck = IconApp.icRadioButtonCheck.path;
+  static String icRadioButton = IconApp.icRadioButton.path;
 }
 
 enum IconApp {
@@ -193,6 +221,7 @@ enum IconApp {
   icMale('assets/icons/ic_male.png'),
   icMaleSVG('assets/icons/ic_male.svg'),
   icFeMaleSVG('assets/icons/ic_female.svg'),
+  icLGBT('assets/icons/ic_lgbt.svg'),
   icWheelOfFortune('assets/icons/wheel_of_fortune.png'),
   icChanel('assets/icons/ic_chanel.png'),
   icBToB('assets/icons/ic_b_to_b.png'),
@@ -330,7 +359,8 @@ enum IconApp {
   icBlockChat('assets/icons/ic_block_chat.svg'),
   icVideoOff('assets/icons/ic_video_off.svg'),
   icMicOff('assets/icons/ic_mic_off.svg'),
-
+  icRadioButton('assets/icons/ic_radio_button.svg'),
+  icRadioButtonCheck('assets/icons/ic_radio_button_check.svg'),
 
   ///call
   icUserGroup3('assets/icons/ic_user_group3.svg'),
@@ -346,7 +376,31 @@ enum IconApp {
   icCallAway('assets/icons/ic_call_away.svg'),
   icDeleteCall('assets/icons/ic_delete.svg'),
   icVideoAnswer('assets/icons/ic_video_answer.svg'),
-  icBackCall('assets/icons/ic_back_call.svg');
+  icBackCall('assets/icons/ic_back_call.svg'),
+  icVideoRd('assets/icons/ic_video_rd.svg'),
+  icCamera('assets/icons/ic_camera.svg'),
+  icShopVdone('assets/icons/ic_shop_vdone.svg'),
+  icPost('assets/icons/ic_post.svg'),
+  icReels('assets/icons/ic_reels.svg'),
+  icVideoRdTrans('assets/icons/ic_video_rd_trans.svg'),
+  icPostActive('assets/icons/ic_post_active.svg'),
+  icVideoRdTransActive('assets/icons/ic_video_rd_trans_active.svg'),
+  icReelsActive('assets/icons/ic_reels_active.svg'),
+  icHeart('assets/icons/ic_heart.svg'),
+  icHeartRd('assets/icons/ic_heart_rd.svg'),
+  icComment('assets/icons/ic_comment.svg'),
+  icShare('assets/icons/ic_share.svg'),
+  icHeartActive('assets/icons/ic_heart_active.svg'),
+  icFriend('assets/icons/ic_friend.svg'),
+  icGalleryBg('assets/icons/ic_gallery_bg.svg'),
+  icSmileBg('assets/icons/ic_smile_bg.svg'),
+  icPositionBg('assets/icons/ic_position_bg.svg'),
+  icTagBg('assets/icons/ic_tag_bg.svg'),
+  icVideoBg('assets/icons/ic_video_bg.svg'),
+  icOnly('assets/icons/ic_only.svg'),
+  icPublic('assets/icons/ic_public.svg'),
+  icFan('assets/icons/ic_fan.svg'),
+  icDoubleImage('assets/icons/ic_double_image.svg');
 
   const IconApp(this.path);
 
