@@ -83,8 +83,10 @@ class NotificationService {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      _loggerService.d('[fcm] User granted permission: ${settings.authorizationStatus}');
-      final userSharePreferencesUsecase = injector.get<UserSharePreferencesUsecase>();
+      _loggerService
+          .d('[fcm] User granted permission: ${settings.authorizationStatus}');
+      final userSharePreferencesUsecase =
+          injector.get<UserSharePreferencesUsecase>();
       if (userSharePreferencesUsecase.getSubTopicFCM == false) {
         await messaging.subscribeToTopic('vdone');
         await messaging.subscribeToTopic('public');
@@ -93,7 +95,9 @@ class NotificationService {
       }
     }
 
-    unawaited(FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
+    unawaited(FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage? message) {
       if (message == null) {
         return;
       }
@@ -119,12 +123,13 @@ class NotificationService {
     await messaging.unsubscribeFromTopic('vdone');
     await messaging.unsubscribeFromTopic('public');
     await messaging.unsubscribeFromTopic(isIOS ? 'ios' : 'android');
-    final userSharePreferencesUsecase = injector.get<UserSharePreferencesUsecase>();
+    final userSharePreferencesUsecase =
+        injector.get<UserSharePreferencesUsecase>();
     User? user = userSharePreferencesUsecase.getUserInfo();
     if (user != null && user.id != null) {
       final topic = 'user_${user.id}';
       await messaging.unsubscribeFromTopic(topic);
-      ;
     }
+    await messaging.deleteToken();
   }
 }
