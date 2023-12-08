@@ -118,25 +118,28 @@ extension WalletTypeExt on WalletType {
     }
   }
 
-  Widget iconTransaction(BuildContext context) {
+  Widget iconTransaction(BuildContext context,
+      {double size = 20, double textSize = 16}) {
     switch (this) {
       case WalletType.ddone:
-        return ImageWidget(ImageConstants.icWalletDDone, width: 20, height: 20);
+        return ImageWidget(ImageConstants.icWalletDDone,
+            width: size, height: size);
       case WalletType.coin:
-        return ImageWidget(ImageConstants.icWalletCoin, width: 20, height: 20);
+        return ImageWidget(ImageConstants.icWalletCoin,
+            width: size, height: size);
       case WalletType.diamond:
         return ImageWidget(
           ImageConstants.icWalletDiamond,
-          width: 20,
-          height: 20,
+          width: size,
+          height: size,
         );
       case WalletType.vnd:
         return Text(
           'vnđ',
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                fontSize: 16,
+                fontSize: textSize,
                 fontWeight: FontWeight.w600,
-                height: 24 / 16,
+                height: 24 / textSize,
                 color: const Color(0xFF4B84F7),
               ),
         );
@@ -244,29 +247,6 @@ enum TransactionValueType {
   }
 
   const TransactionValueType(this.value);
-}
-
-extension TransactionValueTypeExt on TransactionValueType {
-  WalletType get walletType {
-    switch (this) {
-      case TransactionValueType.COIN:
-        return WalletType.coin;
-      case TransactionValueType.DIAMOND:
-        return WalletType.diamond;
-      case TransactionValueType.VND:
-        return WalletType.vnd;
-      case TransactionValueType.D_ONE:
-        return WalletType.diamond;
-      case TransactionValueType.PENDING_DIAMOND:
-        return WalletType.diamond;
-      case TransactionValueType.PENDING_VND:
-        return WalletType.vnd;
-      case TransactionValueType.WITHDRAWING_VND:
-        return WalletType.vnd;
-      case TransactionValueType.CASH:
-        return WalletType.vnd;
-    }
-  }
 }
 
 enum TransactionResolvedStatus {
@@ -436,70 +416,6 @@ extension TransactionTypeExt on TransactionType {
       case TransactionType.WITHDRAW_FROM_MARSHOP:
       case TransactionType.REQUEST_WITHDRAW_VND:
         return '-';
-      case TransactionType.WITHDRAW_VND_COMPLETED:
-        return '';
-    }
-  }
-
-  String titleSender(BuildContext context) {
-    switch (this) {
-      case TransactionType.LIVE_GIFT:
-        return 'Tên người tặng';
-      case TransactionType.LIVE_VOTE:
-        return '';
-      case TransactionType.DIAMOND_TO_VND:
-        return '';
-      case TransactionType.BUY_COIN_FROM_AGENCY:
-        return '';
-      case TransactionType.GROUP_INCOME:
-        return '';
-      case TransactionType.TEAM_INCOME:
-        return '';
-      case TransactionType.DIAMOND_AVAILABLE:
-        return 'ID người tặng';
-      case TransactionType.VND_AVAILABLE:
-        return '';
-      case TransactionType.MARSHOP_COMMISSION:
-        return '';
-      case TransactionType.WITHDRAW_FROM_LIVE:
-        return '';
-      case TransactionType.WITHDRAW_FROM_MARSHOP:
-        return '';
-
-      case TransactionType.REQUEST_WITHDRAW_VND:
-        return '';
-      case TransactionType.WITHDRAW_VND_COMPLETED:
-        return '';
-    }
-  }
-
-  String titleReceiver(BuildContext context) {
-    switch (this) {
-      case TransactionType.LIVE_GIFT:
-        return '';
-      case TransactionType.LIVE_VOTE:
-        return '';
-      case TransactionType.DIAMOND_TO_VND:
-        return '';
-      case TransactionType.BUY_COIN_FROM_AGENCY:
-        return 'ID người nạp';
-      case TransactionType.GROUP_INCOME:
-        return '';
-      case TransactionType.TEAM_INCOME:
-        return '';
-      case TransactionType.DIAMOND_AVAILABLE:
-        return '';
-      case TransactionType.VND_AVAILABLE:
-        return '';
-      case TransactionType.MARSHOP_COMMISSION:
-        return '';
-      case TransactionType.WITHDRAW_FROM_LIVE:
-        return '';
-      case TransactionType.WITHDRAW_FROM_MARSHOP:
-        return '';
-
-      case TransactionType.REQUEST_WITHDRAW_VND:
-        return '';
       case TransactionType.WITHDRAW_VND_COMPLETED:
         return '';
     }

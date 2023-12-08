@@ -66,6 +66,10 @@ const kSpacingHeight64 = SizedBox(
   height: 64,
 );
 
+const kSpacingWidth2 = SizedBox(
+  width: 2,
+);
+
 const kSpacingWidth4 = SizedBox(
   width: 4,
 );

@@ -94,8 +94,8 @@ class AppWalletRoutes extends RouteModule {
           );
         },
         TransactionHistoryDetailScreen.routeName: (context) {
-          final id = settings.arguments.toString();
-          return TransactionHistoryDetailScreen(id: id);
+          final params = settings.arguments as TransactionHistoryDetailParams;
+          return TransactionHistoryDetailScreen(params: params);
         },
       };
 }

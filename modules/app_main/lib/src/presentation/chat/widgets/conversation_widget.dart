@@ -47,7 +47,20 @@ class ConversationWidget extends StatelessWidget {
                     ),
                   ),
                   kSpacingHeight6,
-                  if (data.latestMessage?.message != null)
+                  if (data.latestMessage?.type != 1)
+                    Text(
+                      '[${data.latestMessage?.sender?.fullName} ${data.latestMessage?.type == 2 ? 'đã tạo cuộc trò chuyện' : 'dã đổi tên cuộc trò chuyện'}]',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.textTheme.bodyMedium?.copyWith(
+                        fontWeight:
+                            data.latestMessage?.seen ?? true ? FontWeight.w400 : FontWeight.w600,
+                        color: data.latestMessage?.seen ?? true
+                            ? AppColors.greyLightTextColor
+                            : AppColors.black,
+                      ),
+                    )
+                  else if (data.latestMessage?.message != null)
                     Text(
                       data.latestMessage?.message ?? '',
                       maxLines: 1,

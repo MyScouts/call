@@ -10,10 +10,13 @@ class MemberResponseDto extends MemberResponseModel {
 
   factory MemberResponseDto.fromJson(Map<String, dynamic> json) => _$MemberResponseDtoFromJson(json);
 
-  MemberResponseDto(this.member);
+  MemberResponseDto(this.member, this.type);
 
   Map<String, dynamic> toJson() => _$MemberResponseDtoToJson(this);
 
   @override
   final MemberDto member;
+
+  @override
+  final int type;
 }
