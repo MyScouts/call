@@ -128,6 +128,7 @@
                         await context.startCall(
                           toUserId: widget.data.id.toString(),
                           isVideo: false,
+                          incomingUI: false,
                           fromUserId:
                               getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id.toString(),
                         );
@@ -142,7 +143,8 @@
                          await context.startCall(
                           toUserId: widget.data.id.toString(),
                           isVideo: true,
-                          fromUserId:
+                           incomingUI: false,
+                           fromUserId:
                               getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id.toString(),
                         );
                         _cubit.init(widget.data.id);

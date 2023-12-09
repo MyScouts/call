@@ -7,6 +7,7 @@ extension PhoneBookDetailCoordinator on BuildContext {
       required String? fromUserId,
       required String? toUserId,
       required bool isVideo,
+      bool? incomingUI,
       bool? useCall2}) {
     return Navigator.of(this).pushNamed(Call1V1Page.routeName, arguments: {
       'key': key,
@@ -14,6 +15,7 @@ extension PhoneBookDetailCoordinator on BuildContext {
       'toUserId': toUserId,
       'isVideo': isVideo,
       'useCall2': useCall2,
+      'incomingUI': incomingUI,
     });
   }
 }
