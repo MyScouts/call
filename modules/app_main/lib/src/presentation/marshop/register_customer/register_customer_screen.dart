@@ -5,6 +5,7 @@ import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/payloads/marshop/marshop_payload.dart';
 import 'package:app_main/src/data/models/responses/marshop_response.dart';
+import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/authentication/widget/custom_text_field.dart';
 import 'package:app_main/src/presentation/marshop/marshop_bloc.dart';
 import 'package:app_main/src/presentation/marshop/register_customer/register_customer_coordinator.dart';
@@ -49,6 +50,7 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
   void initState() {
     super.initState();
     _authInfo = userCubit.currentUser!;
+    userCubit.onboarding();
     if (widget.marshopId != null) {
       _marshopIdCtrl.text = widget.marshopId!;
     }
@@ -76,6 +78,27 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
+        BlocListener<UserCubit, UserState>(
+          listener: (context, state) {
+            if (state is OnGetOnboarding) {
+              showLoading();
+            }
+
+            if (state is OnboardingFail) {
+              hideLoading();
+              showToastMessage("Lỗi hệ thống vui lòng thử lại sau");
+            }
+
+            if (state is OnboardingSuccess) {
+              hideLoading();
+              if (state.onboarding.isMarshopCustomer) {
+                context.showToastMessage("Bạn đã là khách hàng thường xuyên.");
+                context.pop();
+                return;
+              }
+            }
+          },
+        ),
         BlocListener<MarshopDetailBloc, GetDetailState>(
           listener: _marshopDetailListener,
         ),
