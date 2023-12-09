@@ -27,4 +27,8 @@ class ResourceUsecase {
     final response = await _resourceRepository.latestVersion(type: type);
     return response;
   }
+
+  Future<GlobalSettingResponse> getGlobalConfig({required String key}) async {
+    return _resourceRepository.getGlobalConfig(key: key);
+  }
 }

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:app_main/src/presentation/call/phone_book/phone_book_page.dart';
 import 'package:app_main/src/presentation/chat/conversation/conversation_page.dart';
+import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:design_system/generated/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -50,7 +51,7 @@ class DashBoardBottomBarState extends State<DashBoardBottomBar> {
       GlobalKey<FabBoxAnimationState>();
 
   void disableFab() {
-    if(mounted) {
+    if (mounted) {
       setState(() {
         showFab = false;
       });
@@ -146,7 +147,7 @@ class DashBoardBottomBarState extends State<DashBoardBottomBar> {
                         showFab = !showFab;
                       });
                       widget.onFabChange(showFab);
-                      if(showFab) {
+                      if (showFab) {
                         bKey.currentState?.forward();
                       } else {
                         bKey.currentState?.revert();
@@ -160,6 +161,7 @@ class DashBoardBottomBarState extends State<DashBoardBottomBar> {
               Expanded(
                 child: GestureDetector(
                   onTap: () {
+                    context.startLiveWrapper();
                     setState(() {
                       showFab = false;
                     });

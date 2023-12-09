@@ -3,7 +3,6 @@ import 'package:app_main/src/data/models/responses/resource_response.dart';
 import 'package:app_main/src/domain/usecases/authentication_usecase.dart';
 import 'package:app_main/src/domain/usecases/resource_usecase.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:version/version.dart';
@@ -15,6 +14,8 @@ class AppCubit extends Cubit<AppState> {
   final ResourceUsecase _srcUsecase;
   final UserSharePreferencesUsecase _userSharePreferencesUsecase;
   final AuthenticationUsecase _authUsecase;
+  Map<String, String> ekycToken = {};
+
   AppCubit(
     this._srcUsecase,
     this._userSharePreferencesUsecase,

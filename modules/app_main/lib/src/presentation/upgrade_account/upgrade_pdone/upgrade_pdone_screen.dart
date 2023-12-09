@@ -42,7 +42,6 @@ class _UpgradePDoneScreenState extends State<UpgradePDoneScreen>
   @override
   void initState() {
     super.initState();
-
     if (widget.currentStep < KycStep.values.length) {
       currentIndex = widget.currentStep;
       _pageController = PageController(initialPage: widget.currentStep);

@@ -36,3 +36,15 @@ Map<String, dynamic> _$$VersionResponseImplToJson(
       'force': instance.force,
       'note': instance.note,
     };
+
+_$GlobalSettingResponseImpl _$$GlobalSettingResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$GlobalSettingResponseImpl(
+      value: json['value'] as String,
+    );
+
+Map<String, dynamic> _$$GlobalSettingResponseImplToJson(
+        _$GlobalSettingResponseImpl instance) =>
+    <String, dynamic>{
+      'value': instance.value,
+    };

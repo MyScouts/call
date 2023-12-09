@@ -2,13 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/config/app_config_service.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/responses/pdone/pdone_information_response.dart';
 import 'package:app_main/src/domain/entities/update_account/update_pdone_birth_place_payload.dart';
 import 'package:app_main/src/domain/entities/update_account/update_place_information_payload.dart';
 import 'package:app_main/src/domain/entities/update_account/update_profile_payload.dart';
 import 'package:app_main/src/presentation/app_coordinator.dart';
-import 'package:app_main/src/presentation/upgrade_account/place_information_constant.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/bloc/pdone_information/pdone_information_bloc.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
@@ -49,7 +49,8 @@ class _UpgradeEkycScreenState extends State<UpgradeEkycScreen> {
   }
 
   _initData() async {
-    final json = await _channel.invokeMethod('startEkycFull', ekycInfo);
+    final json = await _channel.invokeMethod(
+        'startEkycFull', AppConfigService.ekycToken);
     upgradePDoneBloc.add(ExtractingIdCardEvent(jsonDecode(json), const {}));
   }
 
