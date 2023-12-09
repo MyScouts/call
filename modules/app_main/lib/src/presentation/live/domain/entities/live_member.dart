@@ -18,19 +18,22 @@ class LiveMemberInfo extends Equatable {
 class LiveMember extends Equatable {
   final LiveMemberInfo info;
   final bool isOwner;
+  final int liveID;
 
   const LiveMember({
     required this.info,
     this.isOwner = false,
+    required this.liveID,
   });
 
   LiveMember copyWith({bool? isOwner}) {
     return LiveMember(
       info: info,
       isOwner: isOwner ?? this.isOwner,
+      liveID: liveID,
     );
   }
 
   @override
-  List<Object?> get props => [isOwner, info];
+  List<Object?> get props => [isOwner, info, liveID];
 }

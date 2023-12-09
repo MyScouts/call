@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/live/data/model/response/live_list_member_response.dart';
 import 'package:app_main/src/presentation/live/data/model/response/live_stream_category_response.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
+import 'package:app_main/src/presentation/live/domain/entities/live_pk_data.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -67,6 +68,8 @@ class LiveApiConstant {
   static const String pkCreate = '/api/live-pk/invite';
 
   static const String pkAccept = '/api/live-pk/accept';
+
+  static const String pk = '/api/live-pk/live/{id}';
 }
 
 @RestApi()
@@ -163,6 +166,12 @@ abstract class LiveApi {
 
   @POST(LiveApiConstant.pkAccept)
   Future<Object> acceptPK(@Body() Map<String, dynamic> json);
+
+  @DELETE(LiveApiConstant.pk)
+  Future deletePK(@Path('id') int id);
+
+  @GET(LiveApiConstant.pk)
+  Future<ApiResponse<LivePkData>> getPk(@Path('id') int id);
 
 //
 // @POST(LiveApiConstant.joinLive)

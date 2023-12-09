@@ -56,7 +56,7 @@ class RegisterMarshopBillInfo {
 
 @JsonSerializable()
 class RegisterMarshopProduct {
-  final int productId;
+  final String productId;
   final int quantity;
 
   RegisterMarshopProduct({

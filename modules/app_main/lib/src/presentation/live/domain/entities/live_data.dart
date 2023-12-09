@@ -21,7 +21,7 @@ class LiveData {
   final String? agoraToken;
   final bool isBanned;
   final List<LiveMedia> medias;
-  List<LiveCategoryDetail> categories;
+  final List<LiveCategoryDetail> categories;
   @JsonKey(name: 'pk')
   final PkData? pk;
 

@@ -6,6 +6,7 @@ import 'package:app_main/src/presentation/live/data/model/response/gift_card_liv
 import 'package:app_main/src/presentation/live/domain/entities/live_category_detail.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_member_count.dart';
+import 'package:app_main/src/presentation/live/domain/entities/live_pk_data.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/entities/gift_card_list.dart';
@@ -159,5 +160,16 @@ class LiveRepositoryImpl extends LiveRepository {
   Future<bool> acceptPK(Map<String, dynamic> json) async {
     final result = await _liveApi.acceptPK(json);
     return (result as Map)['result'] ?? false;
+  }
+
+  @override
+  Future deletePK(int id) {
+    return _liveApi.deletePK(id);
+  }
+
+  @override
+  Future<LivePkData> getPk(int id) async {
+    final res = await _liveApi.getPk(id);
+    return res.data;
   }
 }

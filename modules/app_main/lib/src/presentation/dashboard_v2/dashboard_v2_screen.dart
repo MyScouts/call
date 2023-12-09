@@ -31,6 +31,8 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
   final GlobalKey<NotificationScreenState> notificationKey = GlobalKey();
   final GlobalKey<ScaffoldState> drawKey = GlobalKey<ScaffoldState>();
   final GlobalKey<DashBottomFabState> fabKey = GlobalKey<DashBottomFabState>();
+  final GlobalKey<DashBoardBottomBarState> bottomKey =
+      GlobalKey<DashBoardBottomBarState>();
 
   DashboardSharePreferenceUseCase get useCase =>
       getIt<DashboardSharePreferenceUseCase>();
@@ -83,47 +85,55 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
                 page: BottomBarType.values.indexOf(_type),
               ),
               backgroundColor: const Color(0xffF4F4F4),
-              body: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      DashBoardV2Header(
-                        onNotification: () {
-                          notificationKey.currentState?.forward();
-                        },
-                        openAppStore: () {
-                          drawKey.currentState?.openEndDrawer();
-                        },
-                        openSetting: () {
-                          context.startSystemSetting(0);
-                        },
-                      ),
-                      Expanded(
-                        child: PageView.builder(
-                          controller: pageController,
-                          itemCount: children.length,
-                          itemBuilder: (context, index) => children[index],
-                          onPageChanged: (page) {
-                            if (mounted) {
-                              setState(() {
-                                _type = BottomBarType.fromIndex(page);
-                              });
-                            }
+              body: GestureDetector(
+                onTap: () {
+                  fabKey.currentState?.revert();
+                  bottomKey.currentState?.disableFab();
+                },
+                behavior: HitTestBehavior.opaque,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        DashBoardV2Header(
+                          onNotification: () {
+                            notificationKey.currentState?.forward();
+                          },
+                          openAppStore: () {
+                            drawKey.currentState?.openEndDrawer();
+                          },
+                          openSetting: () {
+                            context.startSystemSetting(0);
                           },
                         ),
-                      ),
-                    ],
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    left: (ScreenUtil().screenWidth - 32) / 2 + 8,
-                    child: DashBottomFab(key: fabKey),
-                  ),
-                ],
+                        Expanded(
+                          child: PageView.builder(
+                            controller: pageController,
+                            itemCount: children.length,
+                            itemBuilder: (context, index) => children[index],
+                            onPageChanged: (page) {
+                              if (mounted) {
+                                setState(() {
+                                  _type = BottomBarType.fromIndex(page);
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      left: (ScreenUtil().screenWidth - 32) / 2 + 8,
+                      child: DashBottomFab(key: fabKey),
+                    ),
+                  ],
+                ),
               ),
               bottomNavigationBar: DashBoardBottomBar(
+                key: bottomKey,
                 type: _type,
                 onChanged: (type) {
                   pageController.animateToPage(
@@ -133,7 +143,7 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
                   );
                 },
                 onFabChange: (value) {
-                  if(value) {
+                  if (value) {
                     fabKey.currentState?.forward();
                   } else {
                     fabKey.currentState?.revert();

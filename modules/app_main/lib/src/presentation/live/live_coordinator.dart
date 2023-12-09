@@ -1,6 +1,5 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/join_channel_provider.dart';
-import 'package:app_main/src/presentation/live/presentation/channel/live_channel_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/create/widget/live_category_picker.dart';
 import 'package:app_main/src/presentation/live/presentation/create/widget/live_set_password.dart';
 import 'package:app_main/src/presentation/live/presentation/create/widget/live_title_picker.dart';

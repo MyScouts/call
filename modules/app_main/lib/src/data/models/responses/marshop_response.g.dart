@@ -121,10 +121,14 @@ _$MarshopRegisterPackProductImpl _$$MarshopRegisterPackProductImplFromJson(
         Map<String, dynamic> json) =>
     _$MarshopRegisterPackProductImpl(
       id: json['id'] as String,
+      minQuantity: json['minQuantity'] as int? ?? 0,
+      maxQuantity: json['maxQuantity'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$$MarshopRegisterPackProductImplToJson(
         _$MarshopRegisterPackProductImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'minQuantity': instance.minQuantity,
+      'maxQuantity': instance.maxQuantity,
     };

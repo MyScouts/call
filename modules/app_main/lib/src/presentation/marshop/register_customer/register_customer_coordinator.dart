@@ -9,7 +9,7 @@ import 'widget/verify_phone_otp_dialog_widget.dart';
 
 extension UpgradeAccountCoordinator on BuildContext {
   Future<T?> startDialogVerifyPhoneOTP<T>({
-    required String marshopId,
+    required int marshopId,
     required String phone,
   }) {
     return showGeneralDialog<T>(
@@ -26,7 +26,7 @@ extension UpgradeAccountCoordinator on BuildContext {
                   onVerify: (otpCode) {
                     context.read<MarshopCubit>().registerCustomer(
                           RegisterCustomerPayload(
-                            marshopId: int.parse(marshopId),
+                            marshopId: marshopId,
                             otp: otpCode,
                           ),
                         );

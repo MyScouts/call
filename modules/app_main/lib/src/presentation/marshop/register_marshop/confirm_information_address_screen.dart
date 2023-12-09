@@ -5,6 +5,7 @@ import 'package:app_main/src/data/models/payloads/marshop/marshop_payload.dart';
 import 'package:app_main/src/data/models/responses/marshop_response.dart';
 import 'package:app_main/src/domain/entities/update_account/update_place_information_payload.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
+import 'package:app_main/src/presentation/marshop/register_marshop/confirm_infomation_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/bloc/place_information/place_information_bloc.dart';
 import 'package:design_system/design_system.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
@@ -18,12 +19,16 @@ class ConfirmInfomationAddressScreen extends StatefulWidget {
   final User authInfo;
   final MarshopResponse marshop;
   final MarshopRegisterPackResponse pack;
+  final int totalPrice;
+  final List<RegisterPackProductInfo> productResult;
 
   const ConfirmInfomationAddressScreen({
     super.key,
     required this.pack,
     required this.authInfo,
     required this.marshop,
+    required this.productResult,
+    required this.totalPrice,
   });
 
   @override
@@ -55,6 +60,8 @@ class _ConfirmInfomationAddressScreenState
             authInfo: widget.authInfo,
             marshop: widget.marshop,
             address: address!,
+            productResult: widget.productResult,
+            totalPrice: widget.totalPrice,
           );
         }
       },
@@ -104,7 +111,7 @@ class _ConfirmInfomationAddressScreenState
                       style: context.textTheme.bodyLarge,
                       children: [
                         TextSpan(
-                            text: widget.pack.price.toAppCurrencyString(),
+                            text: widget.totalPrice.toAppCurrencyString(),
                             style: context.textTheme.titleLarge!.copyWith(
                               color: context.theme.primaryColor,
                               fontWeight: FontWeight.w700,
@@ -133,7 +140,10 @@ class _ConfirmInfomationAddressScreenState
                                 shipFee: 0,
                                 tax: 10,
                               ),
-                              productInfo: [],
+                              productInfo: widget.productResult
+                                  .map((e) => RegisterMarshopProduct(
+                                      productId: e.id, quantity: e.quantity))
+                                  .toList(),
                             ),
                           ),
                         );

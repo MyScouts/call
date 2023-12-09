@@ -4,11 +4,27 @@ import 'package:flutter/material.dart';
 enum QuantityAction { decrement, increment }
 
 // ignore: must_be_immutable
-class QuantityButtonWidget extends StatelessWidget {
+class QuantityButtonWidget extends StatefulWidget {
   final Function(int) onChange;
-  QuantityButtonWidget({super.key, required this.onChange});
+  int minVal;
+  QuantityButtonWidget({
+    super.key,
+    required this.onChange,
+    required this.minVal,
+  });
 
-  final ValueNotifier<int> _notifier = ValueNotifier(1);
+  @override
+  State<QuantityButtonWidget> createState() => _QuantityButtonWidgetState();
+}
+
+class _QuantityButtonWidgetState extends State<QuantityButtonWidget> {
+  late ValueNotifier<int> _notifier;
+
+  @override
+  void initState() {
+    super.initState();
+    _notifier = ValueNotifier(widget.minVal);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,13 +89,13 @@ class QuantityButtonWidget extends StatelessWidget {
   _handleChange(QuantityAction action) {
     int quantity = _notifier.value;
     if (action == QuantityAction.decrement) {
-      if (quantity > 0) {
+      if (quantity > widget.minVal) {
         _notifier.value -= 1;
-        onChange(_notifier.value);
+        widget.onChange(_notifier.value);
       }
     } else {
       _notifier.value += 1;
-      onChange(_notifier.value);
+      widget.onChange(_notifier.value);
     }
   }
 }

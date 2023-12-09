@@ -41,13 +41,21 @@ class DashBoardBottomBar extends StatefulWidget {
   final Function(bool value) onFabChange;
 
   @override
-  State<DashBoardBottomBar> createState() => _DashBoardBottomBarState();
+  State<DashBoardBottomBar> createState() => DashBoardBottomBarState();
 }
 
-class _DashBoardBottomBarState extends State<DashBoardBottomBar> {
+class DashBoardBottomBarState extends State<DashBoardBottomBar> {
   bool showFab = false;
   late final GlobalKey<FabBoxAnimationState> bKey =
       GlobalKey<FabBoxAnimationState>();
+
+  void disableFab() {
+    if(mounted) {
+      setState(() {
+        showFab = false;
+      });
+    }
+  }
 
   @override
   void didUpdateWidget(covariant DashBoardBottomBar oldWidget) {
