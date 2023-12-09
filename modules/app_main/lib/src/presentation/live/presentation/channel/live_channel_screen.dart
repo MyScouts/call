@@ -122,6 +122,10 @@ class _LivePk extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
+        const Align(
+          alignment: Alignment.bottomCenter,
+          child: LiveBottomAction(),
+        ),
         const SingleChildScrollView(
           child: Column(
             children: [
@@ -132,10 +136,6 @@ class _LivePk extends StatelessWidget {
               _LivePKRtc(),
             ],
           ),
-        ),
-        const Align(
-          alignment: Alignment.bottomCenter,
-          child: LiveBottomAction(),
         ),
         Align(
           alignment: Alignment.bottomCenter,
@@ -294,25 +294,23 @@ class _LivePKRtc extends StatelessWidget {
 
     if (controller.info.pk == null) return const SizedBox.shrink();
 
-    final meInLive = controller.info.pk!.users
-            .firstWhereOrNull((e) => e.id == controller.me.value.info.userID) !=
+    final meInLive = controller.pkData!.lives.firstWhereOrNull(
+            (e) => e.user!.id == controller.me.value.info.userID) !=
         null;
 
     Widget left;
     Widget right;
 
     if (meInLive) {
-      final host = controller.info.pk!.users
-          .firstWhereOrNull((e) => e.id != controller.me.value.info.userID);
-
+      final host = controller.pkData!.lives.firstWhereOrNull(
+              (e) => e.user!.id != controller.me.value.info.userID);
       left = AnimatedSize(
         duration: const Duration(milliseconds: 150),
         child: AgoraVideoView(
-          key: UniqueKey(),
           controller: VideoViewController.remote(
             rtcEngine: controller.service.engine,
             canvas: VideoCanvas(
-              uid: host?.id ?? 0,
+              uid: host?.user?.id ?? 0,
               renderMode: RenderModeType.renderModeHidden,
               mirrorMode: VideoMirrorModeType.videoMirrorModeEnabled,
               sourceType: VideoSourceType.videoSourceCamera,
@@ -327,7 +325,6 @@ class _LivePKRtc extends StatelessWidget {
       right = AnimatedSize(
         duration: const Duration(milliseconds: 150),
         child: AgoraVideoView(
-          key: UniqueKey(),
           controller: VideoViewController(
             rtcEngine: controller.service.engine,
             canvas: const VideoCanvas(
@@ -338,17 +335,16 @@ class _LivePKRtc extends StatelessWidget {
         ),
       );
     } else {
-      final host = controller.info.pk!.users
-          .firstWhereOrNull((e) => e.id != controller.hostID);
+      final host = controller.pkData!.lives.firstWhereOrNull(
+              (e) => e.user!.id != controller.me.value.info.userID);
 
       left = AnimatedSize(
         duration: const Duration(milliseconds: 150),
         child: AgoraVideoView(
-          key: UniqueKey(),
           controller: VideoViewController.remote(
             rtcEngine: controller.service.engine,
             canvas: VideoCanvas(
-              uid: host?.id ?? 0,
+              uid: host?.user?.id ?? 0,
               renderMode: RenderModeType.renderModeHidden,
               mirrorMode: VideoMirrorModeType.videoMirrorModeEnabled,
               sourceType: VideoSourceType.videoSourceCamera,

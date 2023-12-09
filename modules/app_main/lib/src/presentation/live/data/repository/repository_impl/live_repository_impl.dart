@@ -6,6 +6,7 @@ import 'package:app_main/src/presentation/live/data/model/response/gift_card_liv
 import 'package:app_main/src/presentation/live/domain/entities/live_category_detail.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_member_count.dart';
+import 'package:app_main/src/presentation/live/domain/entities/live_pk_data.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/entities/gift_card_list.dart';
@@ -167,10 +168,8 @@ class LiveRepositoryImpl extends LiveRepository {
   }
 
   @override
-  Future<List<int>> getPKLiveIDs(int id) async {
-    final res = await _liveApi.getPKLiveIDs(id);
-    return List<Map>.from((res as Map)['data']?['lives'] ?? {})
-        .map<int>((e) => e['id'] ?? 0)
-        .toList();
+  Future<LivePkData> getPk(int id) async {
+    final res = await _liveApi.getPk(id);
+    return res.data;
   }
 }
