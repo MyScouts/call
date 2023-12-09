@@ -41,18 +41,8 @@ class ResourceRepositoryImpl extends ResourceRepository {
     return response.appVersion;
   }
 
-  // @override
-  // Future<List<MediaModel>> getMedias(
-  //   String role,
-  //   String type,
-  //   String category,
-  // ) async {
-  //   final result = await _resourceApi.getMedias(
-  //     role: role,
-  //     type: type,
-  //     category: category,
-  //   );
-  //
-  //   return result.data;
-  // }
+  @override
+  Future<GlobalSettingResponse> getGlobalConfig({required String key}) {
+    return _resourceApi.getGlobalSetting(key);
+  }
 }

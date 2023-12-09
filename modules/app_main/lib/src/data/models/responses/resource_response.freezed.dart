@@ -346,3 +346,145 @@ abstract class _VersionResponse implements VersionResponse {
   _$$VersionResponseImplCopyWith<_$VersionResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+GlobalSettingResponse _$GlobalSettingResponseFromJson(
+    Map<String, dynamic> json) {
+  return _GlobalSettingResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$GlobalSettingResponse {
+  String get value => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GlobalSettingResponseCopyWith<GlobalSettingResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GlobalSettingResponseCopyWith<$Res> {
+  factory $GlobalSettingResponseCopyWith(GlobalSettingResponse value,
+          $Res Function(GlobalSettingResponse) then) =
+      _$GlobalSettingResponseCopyWithImpl<$Res, GlobalSettingResponse>;
+  @useResult
+  $Res call({String value});
+}
+
+/// @nodoc
+class _$GlobalSettingResponseCopyWithImpl<$Res,
+        $Val extends GlobalSettingResponse>
+    implements $GlobalSettingResponseCopyWith<$Res> {
+  _$GlobalSettingResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? value = null,
+  }) {
+    return _then(_value.copyWith(
+      value: null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$GlobalSettingResponseImplCopyWith<$Res>
+    implements $GlobalSettingResponseCopyWith<$Res> {
+  factory _$$GlobalSettingResponseImplCopyWith(
+          _$GlobalSettingResponseImpl value,
+          $Res Function(_$GlobalSettingResponseImpl) then) =
+      __$$GlobalSettingResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String value});
+}
+
+/// @nodoc
+class __$$GlobalSettingResponseImplCopyWithImpl<$Res>
+    extends _$GlobalSettingResponseCopyWithImpl<$Res,
+        _$GlobalSettingResponseImpl>
+    implements _$$GlobalSettingResponseImplCopyWith<$Res> {
+  __$$GlobalSettingResponseImplCopyWithImpl(_$GlobalSettingResponseImpl _value,
+      $Res Function(_$GlobalSettingResponseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? value = null,
+  }) {
+    return _then(_$GlobalSettingResponseImpl(
+      value: null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$GlobalSettingResponseImpl implements _GlobalSettingResponse {
+  const _$GlobalSettingResponseImpl({required this.value});
+
+  factory _$GlobalSettingResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GlobalSettingResponseImplFromJson(json);
+
+  @override
+  final String value;
+
+  @override
+  String toString() {
+    return 'GlobalSettingResponse(value: $value)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GlobalSettingResponseImpl &&
+            (identical(other.value, value) || other.value == value));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, value);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GlobalSettingResponseImplCopyWith<_$GlobalSettingResponseImpl>
+      get copyWith => __$$GlobalSettingResponseImplCopyWithImpl<
+          _$GlobalSettingResponseImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$GlobalSettingResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _GlobalSettingResponse implements GlobalSettingResponse {
+  const factory _GlobalSettingResponse({required final String value}) =
+      _$GlobalSettingResponseImpl;
+
+  factory _GlobalSettingResponse.fromJson(Map<String, dynamic> json) =
+      _$GlobalSettingResponseImpl.fromJson;
+
+  @override
+  String get value;
+  @override
+  @JsonKey(ignore: true)
+  _$$GlobalSettingResponseImplCopyWith<_$GlobalSettingResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}

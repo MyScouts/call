@@ -24,3 +24,13 @@ class VersionResponse with _$VersionResponse {
   factory VersionResponse.fromJson(Map<String, dynamic> json) =>
       _$VersionResponseFromJson(json);
 }
+
+@freezed
+class GlobalSettingResponse with _$GlobalSettingResponse {
+  const factory GlobalSettingResponse({
+    required String value,
+  }) = _GlobalSettingResponse;
+
+  factory GlobalSettingResponse.fromJson(Map<String, dynamic> json) =>
+      _$GlobalSettingResponseFromJson(json);
+}

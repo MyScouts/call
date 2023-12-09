@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:developer';
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/config/app_config_service.dart';
 import 'package:app_main/src/core/extensions/string_extension.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:design_system/design_system.dart';
@@ -12,7 +13,6 @@ import 'package:imagewidget/imagewidget.dart';
 import 'package:ui/ui.dart';
 import '../../../marshop/widgets/gradiant_button.dart';
 import '../../../shared/user/bloc/user_bloc.dart';
-import '../../place_information_constant.dart';
 import '../bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 import '../views/widgets/select_information_widget.dart';
 
@@ -142,7 +142,8 @@ class _UpdatePdoneSelectTypeUserState extends State<UpdatePdoneSelectTypeUser> {
   }
 
   Future<void> _startEKycByNameMethod({required String methodName}) async {
-    final json = await _channel.invokeMethod(methodName, ekycInfo);
+    final json =
+        await _channel.invokeMethod(methodName, AppConfigService.ekycToken);
     log(json);
     log(json.toString().toMap()['LIVENESS_FACE_RESULT']);
     if (json.toString().toMap()['LIVENESS_FACE_RESULT'] == null) {

@@ -20,6 +20,7 @@ class ResourceApiConstant {
   static const String getUserMedia =
       'api/medias/{role}?category={category}&type={type}';
   static const String latestVersion = 'api/v1/app-version/type/{type}/latest';
+  static const String globalSetting = 'api/v1/setting/{key}';
 }
 
 @RestApi()
@@ -53,4 +54,7 @@ abstract class ResourceApi {
   Future<LatestVersionResponse> latestVersion({
     @Path('type') required String type,
   });
+
+  @GET(ResourceApiConstant.globalSetting)
+  Future<GlobalSettingResponse> getGlobalSetting(@Path('key') String key);
 }
