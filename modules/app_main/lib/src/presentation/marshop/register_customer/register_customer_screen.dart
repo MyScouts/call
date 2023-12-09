@@ -102,7 +102,7 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
                 padding:
                     const EdgeInsets.symmetric(horizontal: paddingHorizontal),
                 child: CustomTextField(
-                  label: "Mã marshop",
+                  label: "ID MarShop",
                   controller: _marshopIdCtrl,
                   onChange: (value) => onValidation(),
                   hintText: "",
