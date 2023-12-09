@@ -62,6 +62,11 @@ class _SettingScreenState extends State<SettingScreen> {
               }
               if (state is OnboardingSuccess) {
                 _onboarding = state.onboarding;
+                Future.delayed(const Duration(milliseconds: 200)).then((value) {
+                  setState(() {
+
+                  });
+                });
               }
             },
           ),
