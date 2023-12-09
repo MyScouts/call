@@ -160,4 +160,17 @@ class LiveRepositoryImpl extends LiveRepository {
     final result = await _liveApi.acceptPK(json);
     return (result as Map)['result'] ?? false;
   }
+
+  @override
+  Future deletePK(int id) {
+    return _liveApi.deletePK(id);
+  }
+
+  @override
+  Future<List<int>> getPKLiveIDs(int id) async {
+    final res = await _liveApi.getPKLiveIDs(id);
+    return List<Map>.from((res as Map)['data']?['lives'] ?? {})
+        .map<int>((e) => e['id'] ?? 0)
+        .toList();
+  }
 }

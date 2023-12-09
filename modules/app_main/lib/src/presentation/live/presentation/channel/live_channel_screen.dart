@@ -86,8 +86,9 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
     return Obx(() {
       return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor:
-            controller.enablePk.value ? const Color(0xff032E49) : Colors.white,
+        backgroundColor: controller.enablePk.value
+            ? const Color(0xff032E49)
+            : Colors.black.withOpacity(0.8),
         body: Focus(
           onFocusChange: (value) {
             if (!value) controller.disableMessage();
@@ -116,16 +117,36 @@ class _LivePk extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-      child: Column(
-        children: [
-          SafeArea(
-            child: LiveChannelHeader(),
+    final controller = context.read<LiveChannelController>();
+
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        const SingleChildScrollView(
+          child: Column(
+            children: [
+              SafeArea(
+                child: LiveChannelHeader(),
+              ),
+              SizedBox(height: 16),
+              _LivePKRtc(),
+            ],
           ),
-          SizedBox(height: 16),
-          _LivePKRtc(),
-        ],
-      ),
+        ),
+        const Align(
+          alignment: Alignment.bottomCenter,
+          child: LiveBottomAction(),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Obx(() {
+            if (controller.showMessageInput.value) {
+              return const LiveMessageInput();
+            }
+            return const SizedBox.shrink();
+          }),
+        ),
+      ],
     );
   }
 }
@@ -273,54 +294,83 @@ class _LivePKRtc extends StatelessWidget {
 
     if (controller.info.pk == null) return const SizedBox.shrink();
 
-    final host1 = controller.info.pk!.host.id;
+    final meInLive = controller.info.pk!.users
+            .firstWhereOrNull((e) => e.id == controller.me.value.info.userID) !=
+        null;
 
-    final host2 =
-        controller.info.pk!.users.where((e) => e.id != host1).first.id;
+    Widget left;
+    Widget right;
 
-    Widget left = AnimatedSize(
-      duration: const Duration(milliseconds: 150),
-      child: AgoraVideoView(
-        controller: VideoViewController.remote(
-          rtcEngine: controller.service.engine,
-          canvas: VideoCanvas(
-            uid: host2,
-            renderMode: RenderModeType.renderModeHidden,
-            mirrorMode: VideoMirrorModeType.videoMirrorModeEnabled,
-            sourceType: VideoSourceType.videoSourceCamera,
-          ),
-          connection: RtcConnection(
-            channelId: controller.agora?.channel,
+    if (meInLive) {
+      final host = controller.info.pk!.users
+          .firstWhereOrNull((e) => e.id != controller.me.value.info.userID);
+
+      left = AnimatedSize(
+        duration: const Duration(milliseconds: 150),
+        child: AgoraVideoView(
+          key: UniqueKey(),
+          controller: VideoViewController.remote(
+            rtcEngine: controller.service.engine,
+            canvas: VideoCanvas(
+              uid: host?.id ?? 0,
+              renderMode: RenderModeType.renderModeHidden,
+              mirrorMode: VideoMirrorModeType.videoMirrorModeEnabled,
+              sourceType: VideoSourceType.videoSourceCamera,
+            ),
+            connection: RtcConnection(
+              channelId: controller.agora?.channel,
+            ),
           ),
         ),
-      ),
-    );
-    Widget right = AnimatedSize(
-      duration: const Duration(milliseconds: 150),
-      child: AgoraVideoView(
-        controller: VideoViewController.remote(
-          rtcEngine: controller.service.engine,
-          canvas: VideoCanvas(
-            uid: host1,
-            renderMode: RenderModeType.renderModeHidden,
-            mirrorMode: VideoMirrorModeType.videoMirrorModeEnabled,
-            sourceType: VideoSourceType.videoSourceCamera,
-          ),
-          connection: RtcConnection(
-            channelId: controller.agora?.channel,
+      );
+
+      right = AnimatedSize(
+        duration: const Duration(milliseconds: 150),
+        child: AgoraVideoView(
+          key: UniqueKey(),
+          controller: VideoViewController(
+            rtcEngine: controller.service.engine,
+            canvas: const VideoCanvas(
+              uid: 0,
+              renderMode: RenderModeType.renderModeHidden,
+            ),
           ),
         ),
-      ),
-    );
+      );
+    } else {
+      final host = controller.info.pk!.users
+          .firstWhereOrNull((e) => e.id != controller.hostID);
 
-    if (controller.hostLivePk) {
-      return SizedBox(
-        height: 343.h,
-        child: Row(
-          children: [
-            Expanded(flex: 1, child: left),
-            Expanded(flex: 1, child: right),
-          ],
+      left = AnimatedSize(
+        duration: const Duration(milliseconds: 150),
+        child: AgoraVideoView(
+          key: UniqueKey(),
+          controller: VideoViewController.remote(
+            rtcEngine: controller.service.engine,
+            canvas: VideoCanvas(
+              uid: host?.id ?? 0,
+              renderMode: RenderModeType.renderModeHidden,
+              mirrorMode: VideoMirrorModeType.videoMirrorModeEnabled,
+              sourceType: VideoSourceType.videoSourceCamera,
+            ),
+            connection: RtcConnection(
+              channelId: controller.agora?.channel,
+            ),
+          ),
+        ),
+      );
+
+      right = AnimatedSize(
+        duration: const Duration(milliseconds: 150),
+        child: AgoraVideoView(
+          key: UniqueKey(),
+          controller: VideoViewController(
+            rtcEngine: controller.service.engine,
+            canvas: VideoCanvas(
+              uid: controller.hostID,
+              renderMode: RenderModeType.renderModeHidden,
+            ),
+          ),
         ),
       );
     }
@@ -329,8 +379,8 @@ class _LivePKRtc extends StatelessWidget {
       height: 343.h,
       child: Row(
         children: [
-          Expanded(flex: 1, child: right),
           Expanded(flex: 1, child: left),
+          Expanded(flex: 1, child: right),
         ],
       ),
     );

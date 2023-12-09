@@ -62,4 +62,8 @@ abstract class LiveRepository {
   Future<bool> invitePK(Map<String, dynamic> json);
 
   Future<bool> acceptPK(Map<String, dynamic> json);
+
+  Future deletePK(int id);
+
+  Future<List<int>> getPKLiveIDs(int id);
 }

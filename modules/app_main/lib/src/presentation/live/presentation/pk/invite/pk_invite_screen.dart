@@ -9,6 +9,7 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:imagewidget/imagewidget.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PkInviteScreen extends StatefulWidget {
@@ -202,6 +203,9 @@ class _Card extends StatelessWidget {
         CircleNetworkImage(
           url: user.avatar ?? '',
           size: 36,
+          defaultImage: ImageWidget(
+            ImageConstants.defaultUserAvatar,
+          ),
         ),
         const SizedBox(width: 8),
         Text(

@@ -17,6 +17,9 @@ import 'package:app_main/src/presentation/live/domain/entities/live_member.dart'
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/domain/usecases/user_usecase.dart';
 import 'package:app_main/src/presentation/live/live_magane_state.dart';
+import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
+import 'package:app_main/src/presentation/live/presentation/channel/join_channel_provider.dart';
+import 'package:app_main/src/presentation/live/presentation/live_home/live_home_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/pk/widget/invite_pk_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -89,7 +92,7 @@ class LiveChannelController {
 
   AgoraData? get agora => _agora;
 
-  late final RxList<LiveMember> _members = <LiveMember>[].obs;
+  final RxList<LiveMember> _members = <LiveMember>[].obs;
 
   RxList<LiveMember> get members => _members;
 
@@ -185,16 +188,54 @@ class LiveChannelController {
     _showMessageInput.value = false;
   }
 
+  void rejoinNonPk(int id) async {
+    _roomInfoFetching.value = true;
+    final res = await repository.joinLive(id: id, password: _password);
+    _info.value = res.data;
+    for (final i in res.agoraData) {
+      if (i.uid == null) continue;
+      if (_me.value.isOwner && i.type == 1) _agora = i;
+      if (!_me.value.isOwner && i.type == 0) _agora = i;
+    }
+    _roomInfoFetching.value = false;
+
+    final members = await getMembers(_info.value.id);
+
+    _members.value = [...members, _me.value];
+
+    getLeaderBoard(_info.value.id);
+
+    await service.rejoinChannel(
+      _agora?.token ?? '',
+      _agora?.channel ?? '',
+      _me.value.info.userID,
+      role: _me.value.isOwner
+          ? ClientRoleType.clientRoleBroadcaster
+          : ClientRoleType.clientRoleAudience,
+    );
+
+    _enablePk.value = false;
+  }
+
   void joinPk(int id) async {
     _roomInfoFetching.value = true;
     final res = await repository.joinLive(id: id, password: _password);
     _info.value = res.data;
-    _agora = res.agoraData.first;
+    for (final i in res.agoraData) {
+      if (i.uid == null) continue;
+      if (me.value.isOwner) {
+        if (i.type == 3) _agora = i;
+      } else {
+        if (i.type == 2) _agora = i;
+      }
+    }
     _roomInfoFetching.value = false;
 
     getLeaderBoard(_info.value.id);
-    final members = await getMembers();
-    _members.value = [...members, _me.value];
+
+    await getMembersPk();
+
+    _members.value = [..._members, _me.value];
 
     await service.rejoinChannel(
       _agora?.token ?? '',
@@ -208,8 +249,8 @@ class LiveChannelController {
     _enablePk.value = true;
   }
 
-  Future<List<LiveMember>> getMembers() async {
-    final users = await repository.listMembers(_info.value.id);
+  Future<List<LiveMember>> getMembers(int id) async {
+    final users = await repository.listMembers(id);
     final result = <LiveMember>[];
     for (final i in users) {
       if (i.id == _me.value.info.userID) continue;
@@ -219,7 +260,8 @@ class LiveChannelController {
           name: i.nickname ?? i.fullName ?? i.displayName ?? '',
           avatar: i.avatar ?? '',
         ),
-        isOwner: _info.value.user?.id == i.id,
+        isOwner: id == i.id,
+        liveID: id,
       ));
     }
     return result;
@@ -232,9 +274,8 @@ class LiveChannelController {
         repository.joinLive(id: id, password: _password),
         userUseCase.getProfile(),
       ]);
-      _info = (res.first as JoinLiveResponse).data.obs;
-      _agora = (res.first as JoinLiveResponse).agoraData.first;
-      _roomInfoFetching.value = false;
+      final joinRes = res.first as JoinLiveResponse;
+      _info = joinRes.data.obs;
       final user = res.last as User?;
       if (user == null) return;
 
@@ -245,7 +286,20 @@ class LiveChannelController {
           avatar: user.avatar ?? '',
         ),
         isOwner: _info.value.user?.id == user.id,
+        liveID: _info.value.id,
       ).obs;
+
+      for (final i in joinRes.agoraData) {
+        if (i.uid == null) continue;
+        if (joinRes.data.pk != null) {
+          if (_me.value.isOwner && i.type == 3) _agora = i;
+          if (!_me.value.isOwner && i.type == 2) _agora = i;
+        } else {
+          if (_me.value.isOwner && i.type == 1) _agora = i;
+          if (!_me.value.isOwner && i.type == 0) _agora = i;
+        }
+      }
+      _roomInfoFetching.value = false;
 
       getLeaderBoard(_info.value.id);
     } catch (e) {
@@ -267,9 +321,13 @@ class LiveChannelController {
         await service.initEngine(enableMic: false, enableWebCam: false);
       }
 
-      final members = await getMembers();
+      if (_info.value.pk != null) {
+        await getMembersPk();
+      } else {
+        final members = await getMembers(_info.value.id);
 
-      _members.value = [...members, _me.value];
+        _members.value = [...members, _me.value];
+      }
 
       _onSocketEvent(context);
 
@@ -300,7 +358,7 @@ class LiveChannelController {
         _video.value = true;
       }
 
-      if(_info.value.pk != null) {
+      if (_info.value.pk != null) {
         _enablePk.value = true;
       } else {
         _enablePk.value = false;
@@ -310,6 +368,14 @@ class LiveChannelController {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future getMembersPk() async {
+    final liveIds = await repository.getPKLiveIDs(_info.value.id);
+    final resMembers =
+        await Future.wait(liveIds.map((e) => getMembers(e)).toList());
+
+    _members.value = [...resMembers.first, ...resMembers.last];
   }
 
   void reaction() {
@@ -439,6 +505,27 @@ class LiveChannelController {
       }
     });
 
+    socketService.on(socketPkMessageEvent, (Map data) {
+      debugPrint('$socketPkMessageEvent ===> $data');
+      if (_info.value.pk == null) return;
+      if (!_me.value.isOwner) return;
+      final user = User.fromJson(data['user']);
+      final message = UserMessage(
+        member: LiveMember(
+          info: LiveMemberInfo(
+            userID: user.id ?? 0,
+            avatar: user.avatar ?? '',
+            name: user.nickname ?? user.fullName ?? user.displayName ?? '',
+          ),
+          isOwner: false,
+          liveID: data['liveId'],
+        ),
+        message: data['rawContent'] ?? '',
+        createdAt: DateTime.tryParse(data['createdAt'] ?? '') ?? DateTime.now(),
+      );
+      NotificationCenter.post(channel: receiveMessage, options: message);
+    });
+
     socketService.on(socketGiftGiven, (data) {
       debugPrint('$socketGiftGiven ===> $data');
       getLeaderBoard(_info.value.id);
@@ -461,10 +548,13 @@ class LiveChannelController {
       }
       final message = UserMessage(
         member: LiveMember(
-            info: LiveMemberInfo(
-                userID: gift.giver!.id!,
-                name: gift.giver!.displayName!,
-                avatar: gift.giver?.avatar ?? '')),
+          info: LiveMemberInfo(
+            userID: gift.giver!.id!,
+            name: gift.giver!.displayName!,
+            avatar: gift.giver?.avatar ?? '',
+          ),
+          liveID: _info.value.id,
+        ),
         message: 'đã tặng ${gift.giftCard?.name} x${gift.total}',
         createdAt: DateTime.now(),
       );
@@ -475,6 +565,7 @@ class LiveChannelController {
       debugPrint('$socketUserJoinEvent ===> ${data['user']}');
       final user = User.fromJson(data['user']);
       if (_me.value.info.userID == user.id) {
+        if (_me.value.isOwner && _enablePk.value) return;
         NotificationCenter.post(
           channel: receiveMessage,
           options: SystemMessage(
@@ -504,6 +595,7 @@ class LiveChannelController {
           avatar: user.avatar ?? '',
         ),
         isOwner: user.id == _info.value.user?.id,
+        liveID: data['liveId'],
       );
       _members.value = [..._members, member];
 
@@ -555,6 +647,7 @@ class LiveChannelController {
 
     socketService.on(socketMessageEvent, (Map data) {
       debugPrint('$socketMessageEvent ===> $data');
+      if (_info.value.pk != null && _me.value.isOwner) return;
       final user = User.fromJson(data['user']);
       final member = _members.firstWhereOrNull((e) => e.info.userID == user.id);
       if (member == null) return;
@@ -568,10 +661,19 @@ class LiveChannelController {
 
     socketService.on(socketPkStartEvent, (data) {
       joinPk(_info.value.id);
+      Navigator.popUntil(context, (route) {
+        if (route.settings.name == LiveWrapperScreen.routerName) {
+          return true;
+        }
+        if (route.settings.name == LiveHomeScreen.routeName) {
+          return true;
+        }
+        return false;
+      });
     });
 
-    socketService.on(socketPkEndEvent, (data) {
-      join(_info.value.id, context);
+    socketService.on(socketPkEndEvent, (data) async {
+      rejoinNonPk(_info.value.id);
     });
 
     socketService.on(socketInvitePkEvent, (Map data) {
@@ -608,6 +710,11 @@ class LiveChannelController {
   }
 
   void leaveLive() async {
+    if (_info.value.pk != null) {
+      await repository.deletePK(_info.value.id);
+      return;
+    }
+
     LiveManageState.disable();
     socketService.disconnect();
     service.leaveChannel();

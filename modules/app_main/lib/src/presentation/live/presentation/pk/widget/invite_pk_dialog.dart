@@ -1,6 +1,8 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:imagewidget/imagewidget.dart';
 
 class InvitePkDialog extends StatelessWidget {
   const InvitePkDialog({
@@ -30,10 +32,11 @@ class InvitePkDialog extends StatelessWidget {
                 child: Text(
                   'Lời mời PK',
                   style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black,
-                      height: 2.0),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black,
+                    height: 2.0,
+                  ),
                 ),
               ),
               Align(
@@ -50,12 +53,16 @@ class InvitePkDialog extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 14,
                   color: Color(0xff6E6E6E),
+                  height: 1.4,
                 ),
                 children: [
                   WidgetSpan(
                     child: CircleNetworkImage(
                       url: user.avatar ?? '',
                       size: 20,
+                      defaultImage: ImageWidget(
+                        ImageConstants.defaultUserAvatar,
+                      ),
                     ),
                   ),
                   TextSpan(
@@ -65,6 +72,7 @@ class InvitePkDialog extends StatelessWidget {
                       fontSize: 14,
                       color: Colors.black,
                       fontWeight: FontWeight.w500,
+                      height: 1.4,
                     ),
                   )
                 ],

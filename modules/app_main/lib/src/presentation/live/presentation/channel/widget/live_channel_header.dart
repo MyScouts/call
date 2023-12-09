@@ -1,13 +1,9 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/app_size.dart';
 import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
-import 'package:app_main/src/presentation/live/presentation/channel/widget/pip_video_render.dart';
 import 'package:app_main/src/presentation/live/presentation/live_message/state/live_message_bloc.dart';
-import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
-import 'package:app_main/src/presentation/live/presentation/pip/pip_view.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -69,8 +65,8 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                 ),
                 padding: const EdgeInsets.all(4.0),
                 child: Obx(() {
-                  final host = controller.members.value
-                      .firstWhereOrNull((e) => e.isOwner);
+                  final host = controller.members.value.firstWhereOrNull(
+                      (e) => e.isOwner && e.liveID == controller.info.id);
                   return IntrinsicHeight(
                     child: Row(
                       children: [
@@ -229,7 +225,9 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                       builder: (_) => LeaveLiveConfirm(
                         onRemoved: () {
                           controller.leaveLive();
-                          Navigator.of(context).pop();
+                          if (!controller.enablePk.value) {
+                            Navigator.of(context).pop();
+                          }
                         },
                       ),
                     );

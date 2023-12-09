@@ -67,6 +67,8 @@ class LiveApiConstant {
   static const String pkCreate = '/api/live-pk/invite';
 
   static const String pkAccept = '/api/live-pk/accept';
+
+  static const String pk = '/api/live-pk/live/{id}';
 }
 
 @RestApi()
@@ -163,6 +165,12 @@ abstract class LiveApi {
 
   @POST(LiveApiConstant.pkAccept)
   Future<Object> acceptPK(@Body() Map<String, dynamic> json);
+
+  @DELETE(LiveApiConstant.pk)
+  Future deletePK(@Path('id') int id);
+
+  @GET(LiveApiConstant.pk)
+  Future<Object> getPKLiveIDs(@Path('id') int id);
 
 //
 // @POST(LiveApiConstant.joinLive)

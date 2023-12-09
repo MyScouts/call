@@ -84,6 +84,7 @@ class LiveToolsSheet extends StatelessWidget {
                     icon: Assets.icons_lives_switch_came.svg(),
                     action: controller.switchCamera,
                   ),
+                  if(controller.info.pk == null)
                   _Item(
                     title: 'Mời PK',
                     icon: Assets.icons_lives_pk.svg(),
