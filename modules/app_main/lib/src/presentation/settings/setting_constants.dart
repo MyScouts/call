@@ -69,11 +69,16 @@ class Setting {
                 Navigator.pushNamed(context, CommunityWidget.routeName),
           ),
           Setting(
-            text: "P-Done",
-            icon: IconAppConstants.icUpgrade,
-            onPressed: () =>
-                context.startPDoneInformation().then((value) => onUpdate()),
-          ),
+              text: "P-Done",
+              icon: IconAppConstants.icUpgrade,
+              onPressed: () {
+                print('onboarding?.isPdone : ${onboarding?.isPdone}');
+                if (onboarding?.isPdone ?? false) {
+                  context.startPDoneInformation().then((value) => onUpdate());
+                } else {
+                  context.startUpgradePDone().then((value) => onUpdate());
+                }
+              }),
           Setting(
             text: "JA",
             icon: IconAppConstants.icJA,
