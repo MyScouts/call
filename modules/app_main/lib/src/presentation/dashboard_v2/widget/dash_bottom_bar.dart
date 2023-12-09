@@ -73,7 +73,12 @@ class _DashBoardBottomBarState extends State<DashBoardBottomBar> {
             children: [
               Expanded(
                 child: GestureDetector(
-                  onTap: () => widget.onChanged(widget.type.begin),
+                  onTap: () {
+                    widget.onChanged(widget.type.begin);
+                    setState(() {
+                      showFab = false;
+                    });
+                  },
                   behavior: HitTestBehavior.opaque,
                   child: Stack(
                     alignment: Alignment.center,
@@ -96,8 +101,12 @@ class _DashBoardBottomBarState extends State<DashBoardBottomBar> {
               ),
               Expanded(
                 child: GestureDetector(
-                  onTap: () =>
-                      Navigator.pushNamed(context, PhoneBookPage.routeName),
+                  onTap: () {
+                    Navigator.pushNamed(context, PhoneBookPage.routeName);
+                    setState(() {
+                      showFab = false;
+                    });
+                  },
                   behavior: HitTestBehavior.opaque,
                   child: Center(
                     child: ImageWidget(Assets.icons_dashboard_call.path),
@@ -106,10 +115,15 @@ class _DashBoardBottomBarState extends State<DashBoardBottomBar> {
               ),
               Expanded(
                 child: GestureDetector(
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    ConversationPage.routeName,
-                  ),
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      ConversationPage.routeName,
+                    );
+                    setState(() {
+                      showFab = false;
+                    });
+                  },
                   behavior: HitTestBehavior.opaque,
                   child: Center(
                     child: ImageWidget(Assets.icons_dashboard_message.path),
@@ -137,7 +151,11 @@ class _DashBoardBottomBarState extends State<DashBoardBottomBar> {
               ),
               Expanded(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    setState(() {
+                      showFab = false;
+                    });
+                  },
                   behavior: HitTestBehavior.opaque,
                   child: Center(
                     child: ImageWidget(
@@ -148,7 +166,12 @@ class _DashBoardBottomBarState extends State<DashBoardBottomBar> {
               ),
               Expanded(
                 child: GestureDetector(
-                  onTap: () => widget.onChanged(widget.type.end),
+                  onTap: () {
+                    widget.onChanged(widget.type.end);
+                    setState(() {
+                      showFab = false;
+                    });
+                  },
                   behavior: HitTestBehavior.opaque,
                   child: Stack(
                     alignment: Alignment.center,

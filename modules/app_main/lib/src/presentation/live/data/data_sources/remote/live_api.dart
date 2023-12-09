@@ -63,6 +63,10 @@ class LiveApiConstant {
   static const String inviteFriend = '/api/live/{id}/invite';
 
   static const String joinable = '/api/live/{id}/joinable';
+
+  static const String pkCreate = '/api/live-pk/invite';
+
+  static const String pkAccept = '/api/live-pk/accept';
 }
 
 @RestApi()
@@ -153,6 +157,12 @@ abstract class LiveApi {
     @Path('id') int liveId,
     @Field('password') String password,
   );
+
+  @POST(LiveApiConstant.pkCreate)
+  Future<Object> invitePK(@Body() Map<String, dynamic> json);
+
+  @POST(LiveApiConstant.pkAccept)
+  Future<Object> acceptPK(@Body() Map<String, dynamic> json);
 
 //
 // @POST(LiveApiConstant.joinLive)

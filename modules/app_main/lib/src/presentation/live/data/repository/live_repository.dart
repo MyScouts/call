@@ -58,4 +58,8 @@ abstract class LiveRepository {
   });
 
   Future<bool> checkPass(int liveId, String password);
+
+  Future<bool> invitePK(Map<String, dynamic> json);
+
+  Future<bool> acceptPK(Map<String, dynamic> json);
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/coordinator/app_coordinator.dart';
 import 'package:app_main/src/core/services/live_service/impl/live_socket_service_impl.dart';
 import 'package:app_main/src/core/services/live_service/live_service.dart';
 import 'package:app_main/src/core/services/live_service/live_socket_service.dart';
@@ -15,10 +16,10 @@ import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_member.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/domain/usecases/user_usecase.dart';
-import 'package:app_main/src/presentation/live/domain/entities/pk_data.dart';
-import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:app_main/src/presentation/live/live_magane_state.dart';
+import 'package:app_main/src/presentation/live/presentation/pk/widget/invite_pk_dialog.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
@@ -114,7 +115,11 @@ class LiveChannelController {
 
   RxBool get enablePk => _enablePk;
 
-  PkData? _pk;
+  bool get hostLivePk {
+    if (_info.value.pk == null) return false;
+    if (hostID == _info.value.pk!.host.id) return true;
+    return false;
+  }
 
   bool get hostInLive {
     if (_me.value.isOwner) return true;
@@ -184,7 +189,6 @@ class LiveChannelController {
     _roomInfoFetching.value = true;
     final res = await repository.joinLive(id: id, password: _password);
     _info.value = res.data;
-    _pk = res.pk;
     _agora = res.agoraData.first;
     _roomInfoFetching.value = false;
 
@@ -294,6 +298,12 @@ class LiveChannelController {
       if (_me.value.isOwner) {
         _mic.value = true;
         _video.value = true;
+      }
+
+      if(_info.value.pk != null) {
+        _enablePk.value = true;
+      } else {
+        _enablePk.value = false;
       }
 
       if (Platform.isAndroid) _initForegroundTask();
@@ -562,6 +572,38 @@ class LiveChannelController {
 
     socketService.on(socketPkEndEvent, (data) {
       join(_info.value.id, context);
+    });
+
+    socketService.on(socketInvitePkEvent, (Map data) {
+      final liveID = data['liveId'] ?? '';
+      final user = User.fromJson(data['inviter']);
+
+      showDialog(
+        context: AppCoordinator.rootNavigator.currentContext!,
+        builder: (_) => InvitePkDialog(
+          user: user,
+          onPress: () async {
+            try {
+              context.showLoading();
+              final ok = await repository.acceptPK({
+                'inviterId': user.id,
+                'inviterLiveId': liveID,
+                'liveId': _info.value.id,
+              });
+              if (!context.mounted) return;
+              context.hideLoading();
+              if (!ok) {
+                // context.showToastMessage(
+                //   'Lời mời đã hết hạn',
+                //   ToastMessageType.error,
+                // );
+              }
+            } catch (e) {
+              context.hideLoading();
+            }
+          },
+        ),
+      );
     });
   }
 

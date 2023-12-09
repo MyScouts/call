@@ -15,6 +15,7 @@ const socketMessageEvent = 'message';
 const socketReactionEvent = 'reaction';
 const socketPkStartEvent = 'pkStart';
 const socketPkEndEvent = 'pkEnd';
+const socketInvitePkEvent = 'invitePk';
 
 @Injectable(as: LiveSocketService)
 class LiveSocketServiceImpl extends LiveSocketService {
@@ -52,6 +53,7 @@ class LiveSocketServiceImpl extends LiveSocketService {
       ..on(socketReactionEvent, (data) => emit(socketReactionEvent, data))
       ..on(socketPkStartEvent, (data) => emit(socketPkStartEvent, data))
       ..on(socketPkEndEvent, (data) => emit(socketPkEndEvent, data))
+      ..on(socketInvitePkEvent, (data) => emit(socketInvitePkEvent, data))
       ..onConnect(_handleConnect)
       ..onConnectError(_handleConnectionFailure)
       ..onConnectTimeout(_handleConnectionTimeout)

@@ -3,7 +3,6 @@ import 'package:app_main/src/app_size.dart';
 import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
-import 'package:app_main/src/presentation/live/live_magane_state.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/pip_video_render.dart';
 import 'package:app_main/src/presentation/live/presentation/live_message/state/live_message_bloc.dart';
@@ -27,42 +26,12 @@ class LiveChannelHeader extends StatefulWidget {
 
 class _LiveChannelHeaderState extends State<LiveChannelHeader> {
   late final controller = context.read<LiveChannelController>();
-  late final LiveMessageBloc commentController =
-      context.read<LiveMessageBloc>();
-  bool showPip = true;
-
+  late final LiveMessageBloc commentController;
 
   @override
-  void dispose() {
-    if (showPip && controller.state.value == LiveStreamState.watching) {
-      Future.delayed(const Duration(milliseconds: 300), () {
-        PipHandler.addOverlay(
-          PipView(
-            width: SizeConfig.screenWidth * 0.3,
-            height: SizeConfig.screenWidth * 0.6,
-            borderRadius: BorderRadius.circular(8),
-            backgroundColor: Colors.black.withOpacity(0.8),
-            child: MultiProvider(
-              providers: [
-                Provider<LiveChannelController>.value(
-                  value: controller,
-                ),
-                BlocProvider<LiveMessageBloc>.value(
-                  value: commentController,
-                ),
-              ],
-              child: const PipVideoRender(),
-            ),
-            // child: Provider<LiveChannelController>.value(
-            //   value: controller,
-            //   child: const PipVideoRender(),
-            // ),
-          ),
-          controller,
-        );
-      });
-    }
-    super.dispose();
+  void initState() {
+    commentController = context.read<LiveMessageBloc>();
+    super.initState();
   }
 
   @override
@@ -206,8 +175,9 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                                     alignment: Alignment.center,
                                     child: SizedBox(
                                       child: AvatarWidget(
-                                          avatar: element.giver?.avatar,
-                                          size: 25),
+                                        avatar: element.giver?.avatar,
+                                        size: 25,
+                                      ),
                                     ),
                                   )
                                 ],
@@ -258,7 +228,6 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                       context: context,
                       builder: (_) => LeaveLiveConfirm(
                         onRemoved: () {
-                          showPip = false;
                           controller.leaveLive();
                           Navigator.of(context).pop();
                         },

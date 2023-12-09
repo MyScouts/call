@@ -148,4 +148,16 @@ class LiveRepositoryImpl extends LiveRepository {
     final result = await _liveApi.getDedications(userId: userId);
     return result.data;
   }
+
+  @override
+  Future<bool> invitePK(Map<String, dynamic> json) async {
+    final result = await _liveApi.invitePK(json);
+    return (result as Map)['result'] ?? false;
+  }
+
+  @override
+  Future<bool> acceptPK(Map<String, dynamic> json) async {
+    final result = await _liveApi.acceptPK(json);
+    return (result as Map)['result'] ?? false;
+  }
 }
