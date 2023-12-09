@@ -4,6 +4,7 @@ import 'package:app_main/src/domain/entities/update_account/update_place_informa
 import 'package:app_main/src/presentation/chat/chat_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
+import 'package:app_main/src/presentation/marshop/register_marshop/confirm_infomation_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/ui.dart';
@@ -14,12 +15,17 @@ class TransactionDetailScreen extends StatelessWidget {
   final User authInfo;
   final MarshopResponse marshop;
   final UpdatePlaceInformationPayload address;
+  final int totalPrice;
+  final List<RegisterPackProductInfo> productResult;
+
   const TransactionDetailScreen({
     super.key,
     required this.pack,
     required this.address,
     required this.marshop,
     required this.authInfo,
+    required this.productResult,
+    required this.totalPrice,
   });
 
   @override
@@ -130,7 +136,7 @@ class TransactionDetailScreen extends StatelessWidget {
   }
 
   String genImageQr() {
-    return 'https://img.vietqr.io/image/techcombank-192753047-qr-only.jpg?amount=${totalPrice}&addInfo=DK ${authInfo.pDoneId}';
+    return 'https://img.vietqr.io/image/techcombank-192753047-qr-only.jpg?amount=$_totalPrice&addInfo=DK ${authInfo.pDoneId}';
   }
 
   Widget _buildQrPayment(BuildContext context) {
@@ -176,7 +182,7 @@ class TransactionDetailScreen extends StatelessWidget {
     );
   }
 
-  int get totalPrice => (pack.price + pack.price * 0.1).toInt();
+  int get _totalPrice => (totalPrice + (totalPrice * 0.1)).toInt();
 
   _buildPriceInfo(BuildContext context) {
     return _buildSessionInfo(
@@ -186,15 +192,15 @@ class TransactionDetailScreen extends StatelessWidget {
         _buildRow(
           context,
           name: "Giá gốc",
-          value: pack.price.toAppCurrencyString(),
+          value: totalPrice.toAppCurrencyString(),
         ),
         _buildRow(context,
-            name: "VAT(10%)", value: (pack.price * 0.1).toAppCurrencyString()),
-        _buildRow(context, name: "Phí vận chuyển", value: "100.000 đ"),
+            name: "VAT(10%)", value: (totalPrice * 0.1).toAppCurrencyString()),
+        _buildRow(context, name: "Phí vận chuyển", value: "0 đ"),
         _buildRow(
           context,
           name: "Tổng tiền",
-          value: totalPrice.toAppCurrencyString(),
+          value: _totalPrice.toAppCurrencyString(),
         ),
       ],
     );
@@ -229,7 +235,7 @@ class TransactionDetailScreen extends StatelessWidget {
         _buildRow(
           context,
           name: "Số tiền",
-          value: totalPrice.toAppCurrencyString(),
+          value: _totalPrice.toAppCurrencyString(),
         ),
         _buildRow(context, name: "Nội dung", value: "DK ${authInfo.pDoneId}"),
       ],

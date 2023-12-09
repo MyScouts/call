@@ -74,6 +74,8 @@ class MarkShopRoutes extends RouteModule {
               pack: args['pack'],
               authInfo: args['authInfo'],
               marshop: args['marshop'],
+              productResult: args['productResult'],
+              totalPrice: args['totalPrice'],
             ),
           );
         },
@@ -84,6 +86,8 @@ class MarkShopRoutes extends RouteModule {
             authInfo: args['authInfo'],
             marshop: args['marshop'],
             address: args['address'],
+            productResult: args['productResult'],
+            totalPrice: args['totalPrice'],
           );
         },
       };

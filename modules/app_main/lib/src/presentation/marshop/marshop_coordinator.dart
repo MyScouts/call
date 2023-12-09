@@ -88,12 +88,16 @@ extension UpgradeMarshopCoordinator on BuildContext {
     required MarshopRegisterPackResponse pack,
     required User authInfo,
     required MarshopResponse marshop,
+    required int totalPrice,
+    required List<RegisterPackProductInfo> productResult,
   }) {
     return Navigator.of(this)
         .pushNamed(ConfirmInfomationAddressScreen.routeName, arguments: {
       'pack': pack,
       'authInfo': authInfo,
       'marshop': marshop,
+      'totalPrice': totalPrice,
+      'productResult': productResult,
     });
   }
 
@@ -102,6 +106,8 @@ extension UpgradeMarshopCoordinator on BuildContext {
     required User authInfo,
     required MarshopResponse marshop,
     required UpdatePlaceInformationPayload address,
+    required int totalPrice,
+    required List<RegisterPackProductInfo> productResult,
   }) {
     return Navigator.of(this)
         .pushNamed(TransactionDetailScreen.routeName, arguments: {
@@ -109,6 +115,8 @@ extension UpgradeMarshopCoordinator on BuildContext {
       'authInfo': authInfo,
       'marshop': marshop,
       'address': address,
+      'totalPrice': totalPrice,
+      'productResult': productResult,
     });
   }
 
