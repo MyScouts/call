@@ -91,6 +91,14 @@ class _TransactionHistoryDetailScreenState
   }
 
   _buildStatusWidget(TransactionItem data) {
+    final value =
+    (data.transactionType == TransactionType.LIVE_GIFT.value ||
+        data.transactionType ==
+            TransactionType.LIVE_VOTE.value) &&
+        walletType == WalletType.diamond
+        ? data.toValue
+        : data.fromValue;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 20),
@@ -108,7 +116,7 @@ class _TransactionHistoryDetailScreenState
                 text: TextSpan(
                   text: '${TransactionType.values.firstWhere(
                         (type) => type.value == data.transactionType,
-                      ).operator(context, receiverPDoneId: data.receiver?.pDoneId, walletType: widget.params.walletType)} ${data.fromValue.toAppCurrencyString(
+                      ).operator(context, receiverPDoneId: data.receiver?.pDoneId, walletType: widget.params.walletType)} ${value.toAppCurrencyString(
                     isWithSymbol: false,
                   )}',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -182,7 +190,11 @@ class _TransactionHistoryDetailScreenState
               walletType == WalletType.diamond)
             _buildItemInfo(
               title: 'Tên người tặng',
-              content: data.sender?.fullName ?? '',
+              content: data.sender != null &&
+                      data.sender!.fullName != null &&
+                      data.sender!.fullName!.isNotEmpty
+                  ? data.sender!.fullName!
+                  : '${data.sender?.getdisplayName}',
             ),
           if (data.transactionType == TransactionType.LIVE_GIFT.name &&
               walletType == WalletType.diamond)

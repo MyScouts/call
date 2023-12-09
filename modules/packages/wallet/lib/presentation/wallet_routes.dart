@@ -6,6 +6,7 @@ import 'package:wallet/presentation/transaction_history_detail_screen.dart';
 import 'package:wallet/presentation/wallet_constant.dart';
 import 'package:wallet/presentation/wallet_transaction_history_screen.dart';
 import 'package:wallet/presentation/wallet_diamond/screens/charge_diamond_to_vnd_screen.dart';
+import 'package:wallet/presentation/wallet_vnd/bank_account/screens/confirm_information_screen.dart';
 
 import 'shared/bloc/wallet_bloc.dart';
 
@@ -96,6 +97,15 @@ class AppWalletRoutes extends RouteModule {
         TransactionHistoryDetailScreen.routeName: (context) {
           final params = settings.arguments as TransactionHistoryDetailParams;
           return TransactionHistoryDetailScreen(params: params);
+        },
+        ConfirmInformationScreen.routeName: (context) {
+          final params = settings.arguments as Map<String, dynamic>;
+          return BlocProvider.value(
+            value: params['bloc'] as BankAccountBloc,
+            child: ConfirmInformationScreen(
+              confirmBankAccountParams: params['params'],
+            ),
+          );
         },
       };
 }

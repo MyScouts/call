@@ -15,6 +15,7 @@ import 'wallet_vnd/bank_account/screens/add_bank_account_screen.dart';
 import 'wallet_vnd/bank_account/screens/bank_account_details_screen.dart';
 import 'wallet_vnd/bank_account/screens/bank_account_veryfy_otp_screen.dart';
 import 'wallet_vnd/bank_account/screens/bank_accounts_screen.dart';
+import 'wallet_vnd/bank_account/screens/confirm_information_screen.dart';
 import 'wallet_vnd/dialog/choose_bank_account_dialog.dart';
 import 'wallet_vnd/dialog/delete_bank_account_dialog.dart';
 import 'wallet_vnd/dialog/succes_dialog.dart';
@@ -167,6 +168,16 @@ extension WalletCoordinator on BuildContext {
     return Navigator.of(this).pushNamed(
       TransactionHistoryDetailScreen.routeName,
       arguments: params,
+    );
+  }
+
+  Future<T?> startConfirmBankAccountInformation<T>({
+    required AddBankAccountParams params,
+    required BankAccountBloc bloc,
+  }) {
+    return Navigator.of(this).pushNamed(
+      ConfirmInformationScreen.routeName,
+      arguments: {'params': params, 'bloc': bloc},
     );
   }
 }
