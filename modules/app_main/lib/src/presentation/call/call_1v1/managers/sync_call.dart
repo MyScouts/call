@@ -34,18 +34,12 @@ class SyncCall {
   bool isMute = false;
   bool isSpeaker = false;
   bool videoEnabled = false;
-  bool hasLocalStream = false;
-  bool hasRemoteStream = false;
-  var _status = '';
+  // bool hasLocalStream = false;
+  // bool hasRemoteStream = false;
   bool mediaFirstTimeConnected =
       false; // Thêm biến này để check nếu là lần đầu media connected thì nếu là cuộc gọi video sẽ cho audio ra loa ngoài
 
-  set status(value) {
-    _status = value;
-    updateUI();
-  }
 
-  String get status => _status;
 
   bool showedCallkit() {
     return uuid!.isNotEmpty;
@@ -89,7 +83,7 @@ class SyncCall {
       return;
     }
 
-    IOSCallManager.shared!.callKeep.answerIncomingCall(uuid!);
+    IOSCallManager.shared.callKeep.answerIncomingCall(uuid!);
   }
 
   void answerIfConditionPassed() {
@@ -115,10 +109,10 @@ class SyncCall {
     }
 
     // Cập nhật giao diện từ incomingCall ==> calling
-    if (IOSCallManager.shared!.callScreenKey != null &&
-        IOSCallManager.shared!.callScreenKey!.currentState != null) {
-      IOSCallManager.shared!.callScreenKey!.currentState!.changeToCallingUI();
-    }
+    // if (IOSCallManager.shared.callScreenKey != null &&
+    //     IOSCallManager.shared.callScreenKey!.currentState != null) {
+    //   IOSCallManager.shared.callScreenKey!.currentState!.changeToCallingUI();
+    // }
 
     if (stringeeCall != null) {
       stringeeCall!.answer().then((result) {
@@ -203,13 +197,13 @@ class SyncCall {
     return status;
   }
 
-  void mute({bool? isMute}) {
+  Future<bool> mute({bool? isMute}) async {
     if (stringeeCall == null && stringeeCall2 == null) {
       print("SyncCall mute failed, call: " +
           stringeeCall.toString() +
           ", call2: " +
           stringeeCall2.toString());
-      return;
+      return false;
     }
 
     if (isMute != null) {
@@ -223,7 +217,7 @@ class SyncCall {
     } else {
       stringeeCall2!.mute(this.isMute);
     }
-    updateUI();
+    return this.isMute;
   }
 
   Future<bool> setSpeakerphoneOn() async {
@@ -241,8 +235,7 @@ class SyncCall {
     } else {
       await stringeeCall2!.setSpeakerphoneOn(isSpeaker);
     }
-    updateUI();
-    return true;
+    return isSpeaker;
   }
 
   void switchCamera() {
@@ -276,33 +269,27 @@ class SyncCall {
     } else {
       await stringeeCall2!.enableVideo(videoEnabled);
     }
-    updateUI();
-    return true;
+    return videoEnabled;
   }
 
-  void routeAudioToSpeakerIfNeed() {
+  Future<bool> routeAudioToSpeakerIfNeed() async {
     if (mediaFirstTimeConnected) {
-      return;
+      return false;
     }
 
     if ((stringeeCall != null && stringeeCall!.isVideoCall) ||
         (stringeeCall2 != null && stringeeCall2!.isVideoCall)) {
       mediaFirstTimeConnected = true;
       isSpeaker = false;
-      setSpeakerphoneOn();
+      return setSpeakerphoneOn();
     }
+    return false;
   }
 
   void endCallIfNeed() {
-    IOSCallManager.shared!.clearDataEndDismiss();
+    IOSCallManager.shared.clearDataEndDismiss();
   }
 
-  void updateUI() {
-    if (IOSCallManager.shared!.callScreenKey != null &&
-        IOSCallManager.shared!.callScreenKey!.currentState != null) {
-      IOSCallManager.shared!.callScreenKey!.currentState!.setState(() {});
-    }
-  }
 
   /// Thêm các hàm xử lý chung cho StringeeCall và StringeeCall2 của Stringee
   ///
@@ -339,6 +326,22 @@ class SyncCall {
   }
 
   void destroy() {
+    serial = 1;
+    callId = '';
+    uuid = ''; // uuid da su dung de show callkit
+
+    userRejected = false;
+    userAnswered = false; // Người dùng đã click và nút answer ở màn hình incoming call của callkit hoặc của app
+    callAnswered =  false; // StringeeCall đã được answer (đã gọi hàm answer của StringeeCall object)
+    audioSessionActived = false; // AudioSession của iOS đã được active thì khi answer call của Stringee mới kết nối thoại được
+
+    endedCallkit = false;
+    endedStringeeCall = false;
+
+    isMute = false;
+    isSpeaker = false;
+    videoEnabled = false;
+    mediaFirstTimeConnected = false;
     if (stringeeCall != null) {
       return stringeeCall!.destroy();
     } else if (stringeeCall2 != null) {

@@ -1,6 +1,8 @@
 
+import 'package:stringee_flutter_plugin/stringee_flutter_plugin.dart';
+
 abstract class CallInfo {
-  void onStatusChange(String status) {}
+  void onStatusChange(StringeeSignalingState? state) {}
   void onReceiveLocalStream(){}
   void onReceiveRemoteStream(){}
   void onMuteState(bool isMute){}
