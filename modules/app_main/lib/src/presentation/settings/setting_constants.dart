@@ -41,6 +41,8 @@ class Setting {
             onPressed: () =>
                 Navigator.of(context).pushNamed(SystemSetting.routerName),
           ),
+        ],
+        [
           Setting(
             text: "Cài đặt tài khoản",
             icon: IconAppConstants.icSettingAccount,
