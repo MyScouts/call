@@ -222,9 +222,7 @@ class _SettingScreenState extends State<SettingScreen> {
       children: Setting.session1Menus(
         context,
         user: userCubit.currentUser,
-        onUpdate: () {
-          userCubit.onboarding();
-        },
+        onUpdate: () => userCubit.onboarding(),
         onboarding: _onboarding,
         osType: currentPlatformName,
         isProduction: Configurations.isProduction,

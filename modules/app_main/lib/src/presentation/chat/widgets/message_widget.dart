@@ -1,4 +1,6 @@
 //import 'dart:developer' as developer;
+import 'dart:async';
+
 import 'package:app_main/src/core/extensions/datetime_ext.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/entities/chat/message_model.dart';
@@ -12,7 +14,7 @@ import 'package:ui/ui.dart';
 
 import 'avatar_member_widget.dart';
 
-class MessageWidget extends StatelessWidget {
+class MessageWidget extends StatefulWidget {
   final MessageModel message;
   final bool showTime;
   final bool showSeen;
@@ -20,17 +22,44 @@ class MessageWidget extends StatelessWidget {
       {super.key, required this.message, required this.showTime, required this.showSeen});
 
   @override
+  State<MessageWidget> createState() => _MessageWidgetState();
+}
+
+class _MessageWidgetState extends State<MessageWidget> {
+
+  Timer? _timer;
+  void _startTimer() {
+    if(widget.showTime) {
+      _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
+        setState(() {
+        });
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final bool isSender =
-        message.sender?.id == getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id;
-    return message.type == 3
+        widget.message.sender?.id == getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id;
+    return widget.message.type == 3
         ? Text(
-            '${message.sender?.fullName} đã đổi tên cuộc trò chuyện',
+            '${widget.message.sender?.displayName} đã đổi tên cuộc trò chuyện',
             textAlign: TextAlign.center,
           )
-        : message.type == 2
+        : widget.message.type == 2
             ? Text(
-                '${message.sender?.fullName} đã tạo cuộc trò chuyện',
+                '${widget.message.sender?.displayName} đã tạo cuộc trò chuyện',
                 textAlign: TextAlign.center,
               )
             : Column(
@@ -47,7 +76,7 @@ class MessageWidget extends StatelessWidget {
                           width: 24,
                           height: 24,
                           child: AvatarMemberWidget(
-                            avatar: message.sender?.avatar ?? '',
+                            avatar: widget.message.sender?.avatar ?? '',
                             size: 24,
                           ),
                         ),
@@ -55,9 +84,9 @@ class MessageWidget extends StatelessWidget {
                       ],
                       Container(
                         alignment: isSender ? Alignment.topRight : Alignment.topLeft,
-                        padding: message.metadata?.images?.isNotEmpty ?? false
+                        padding: widget.message.metadata?.images?.isNotEmpty ?? false
                             ? null
-                            : EdgeInsets.fromLTRB(12, 12, 12, showTime ? 4 : 12),
+                            : EdgeInsets.fromLTRB(12, 12, 12, widget.showTime ? 4 : 12),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(
                             topRight:
@@ -67,7 +96,7 @@ class MessageWidget extends StatelessWidget {
                                 isSender ? const Radius.circular(16) : const Radius.circular(0),
                             bottomRight: const Radius.circular(16),
                           ),
-                          color: message.metadata?.images?.isNotEmpty ?? false
+                          color: widget.message.metadata?.images?.isNotEmpty ?? false
                               ? AppColors.white
                               : isSender
                                   ? AppColors.bgSenderMessage
@@ -76,18 +105,18 @@ class MessageWidget extends StatelessWidget {
                         child: ConstrainedBox(
                           constraints:
                               BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.6),
-                          child: message.metadata?.images?.isNotEmpty ?? false
+                          child: widget.message.metadata?.images?.isNotEmpty ?? false
                               ? Wrap(
                                   children: List.generate(
-                                    message.metadata?.images?.length ?? 0,
+                                    widget.message.metadata?.images?.length ?? 0,
                                     (index) => GestureDetector(
                                       onTap: () {
                                         context
-                                            .startViewImage(message.metadata?.images?[index] ?? '');
+                                            .startViewImage(widget.message.metadata?.images?[index] ?? '');
                                       },
                                       child: CachedNetworkImage(
-                                        key: ValueKey(message.metadata?.images?[index] ?? ''),
-                                        imageUrl: message.metadata?.images?[index] ?? '',
+                                        key: ValueKey(widget.message.metadata?.images?[index] ?? ''),
+                                        imageUrl: widget.message.metadata?.images?[index] ?? '',
                                         progressIndicatorBuilder: (_, __, ___) =>
                                             const LoadingWidget(),
                                         errorWidget: (_, __, ___) => const Center(
@@ -99,7 +128,7 @@ class MessageWidget extends StatelessWidget {
                                 )
                               : Stack(
                                   children: [
-                                    if (showTime)
+                                    if (widget.showTime)
                                       const SizedBox(
                                       width: 90,
                                     ),
@@ -110,23 +139,23 @@ class MessageWidget extends StatelessWidget {
                                           : CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          message.message ?? '',
+                                          widget.message.message ?? '',
                                           maxLines: 99,
                                           style: context.text.bodyMedium?.copyWith(
                                             fontSize: 14,
                                             color: isSender ? AppColors.white : AppColors.black,
                                           ),
                                         ),
-                                        if (showTime)
+                                        if (widget.showTime)
                                           const Text(''),
                                       ],
                                     ),
-                                    if (showTime)
+                                    if (widget.showTime)
                                       Positioned(
                                       bottom: 0,
                                       right: 0,
                                       child: Text(
-                                        message.createdAt.timeMessage,
+                                        widget.message.createdAt.timeMessage,
                                         maxLines: 1,
                                         textAlign: TextAlign.end,
                                         style: context.text.bodyMedium?.copyWith(
@@ -145,15 +174,15 @@ class MessageWidget extends StatelessWidget {
                           width: 24,
                           height: 24,
                           child: AvatarMemberWidget(
-                            key: ValueKey(message.sender?.avatar ?? ''),
-                            avatar: message.sender?.avatar ?? '',
+                            key: ValueKey(widget.message.sender?.avatar ?? ''),
+                            avatar: widget.message.sender?.avatar ?? '',
                             size: 24,
                           ),
                         ),
                       ]
                     ],
                   ),
-                  if (showSeen && isSender && message.seen)
+                  if (widget.showSeen && isSender && widget.message.seen)
                     const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Row(

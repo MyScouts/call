@@ -21,6 +21,7 @@ class CallRoutes extends RouteModule {
             fromUserId: args['fromUserId'],
             toUserId: args['toUserId'],
             isVideo: args['isVideo'],
+            incomingUI: args['incomingUI'] ?? true,
           );
         },
         PhoneBookDetailPage.routeName: (context) {

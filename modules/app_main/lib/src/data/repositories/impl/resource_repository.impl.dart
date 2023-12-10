@@ -45,4 +45,9 @@ class ResourceRepositoryImpl extends ResourceRepository {
   Future<GlobalSettingResponse> getGlobalConfig({required String key}) {
     return _resourceApi.getGlobalSetting(key);
   }
+
+  @override
+  Future<GlobalPersonResponse> getGlobalPersonSetting({required int userId}) {
+    return _resourceApi.getGlobalPeronSetting(userId);
+  }
 }

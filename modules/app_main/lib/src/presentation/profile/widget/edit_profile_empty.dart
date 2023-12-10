@@ -183,6 +183,8 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
               talent: talentController.text,
               bloodGroup: bloodType,
               maritalStatus: martialStatus,
+              academicLevel: edu,
+              job: jobController.text,
             ),
           ));
     }
@@ -238,6 +240,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
     martialStatus = userBloc.state.pDoneProfile?.maritalStatus ?? '';
     bloodType = userBloc.state.pDoneProfile?.bloodGroup ?? '';
     emailController.text = userBloc.state.user?.email ?? '';
+    edu = userBloc.state.pDoneProfile?.academicLevel ?? '';
     super.initState();
   }
 

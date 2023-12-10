@@ -2,7 +2,6 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/presentation/profile/state/user_profile_bloc.dart';
 import 'package:app_main/src/presentation/profile/widget/use_header.dart';
-import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/bloc/upgrade_pdone/upgrade_pdone_bloc.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 

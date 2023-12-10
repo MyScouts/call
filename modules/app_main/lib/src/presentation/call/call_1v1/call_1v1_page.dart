@@ -25,6 +25,7 @@ class Call1V1Page extends StatefulWidget {
   final String? toUserId;
   bool isVideo;
   bool useCall2;
+  final bool incomingUI;
 
   static const routeName = 'Call1V1Page';
 
@@ -34,6 +35,7 @@ class Call1V1Page extends StatefulWidget {
     required this.toUserId,
     this.isVideo = false,
     this.useCall2 = false,
+    this.incomingUI = true,
   });
 
   @override
@@ -89,30 +91,30 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
   }
 
   void _bind() async {
-    _callCubit.init(
-        payload: NewCallPayload(
-          receiverId: int.tryParse(widget.toUserId ?? '') ?? 0,
-          type: widget.isVideo ? 2 : 1,
-        ),
-        isVideo: widget.isVideo);
     if (widget.fromUserId ==
         getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id.toString()) {
+      _callCubit.init(
+          payload: NewCallPayload(
+            receiverId: int.tryParse(widget.toUserId ?? '') ?? 0,
+            type: widget.isVideo ? 2 : 1,
+          ),
+          isVideo: widget.isVideo);
       _callCubit.getParticipant(int.tryParse(widget.toUserId ?? '') ?? 0);
     } else {
       _callCubit.getParticipant(int.tryParse(widget.fromUserId ?? '') ?? 0);
     }
-
+    _isSpeakerOn = widget.isVideo;
+    _isVideoEnable = widget.isVideo;
     if (isAndroid) {
-      _callCubit.androidCallManager!.getCallInfo(this);
-      _isSpeakerOn = widget.isVideo;
-      _isVideoEnable = widget.isVideo;
-      if (_callCubit.androidCallManager!.showIncomingCall) {
-        showIncomingUI = _callCubit.androidCallManager!.showIncomingCall;
+      _callCubit.androidCallManager.getCallInfo(this);
+      if (widget.incomingUI) {
+        showIncomingUI = _callCubit.androidCallManager.showIncomingCall;
       } else {
         makeOutgoingCall();
       }
     } else {
-      if (_callCubit.iOSCallManager!.syncCall == null) {
+      _callCubit.iOSCallManager.getCallInfo(this);
+      if (!widget.incomingUI) {
         // Goi di
         makeOutgoingCall();
       } else {
@@ -122,18 +124,12 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
     }
 
     _callState.listen((value) async {
-      print('statee ${value.toString()}');
       switch (value) {
         case StringeeSignalingState.busy:
           if (widget.toUserId ==
               getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id.toString()) {
             _statusState.add('Người nhận từ chối cuộc gọi');
             Future.delayed(const Duration(seconds: 2)).then((value) {
-              if (isAndroid) {
-                _callCubit.androidCallManager!.clearDataEndDismiss();
-              } else {
-                _callCubit.iOSCallManager!.clearDataEndDismiss();
-              }
               dismiss();
             });
           }
@@ -163,39 +159,37 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
 
   @override
   Widget build(BuildContext context) {
-    Widget localView =
-        (isAndroid ? _hasLocalStream : _callCubit.iOSCallManager?.syncCall?.hasLocalStream ?? false)
-            ? StringeeVideoView(
-                isAndroid
-                    ? _callCubit.androidCallManager!.callId
-                    : _callCubit.iOSCallManager!.syncCall!.callId,
-                true,
-                alignment: Alignment.topRight,
-                borderRadius: BorderRadius.circular(12),
-                margin: const EdgeInsets.only(top: 128, right: 16),
-                height: 195,
-                width: 136,
-                scalingType: ScalingType.fill,
-              )
-            : const SizedBox.shrink();
-
-    Widget remoteView = (isAndroid
-            ? _hasRemoteStream
-            : _callCubit.iOSCallManager?.syncCall?.hasRemoteStream ?? false)
+    Widget localView = (_hasLocalStream)
         ? StringeeVideoView(
             isAndroid
-                ? _callCubit.androidCallManager!.callId
-                : _callCubit.iOSCallManager!.syncCall!.callId,
+                ? _callCubit.androidCallManager.callId
+                : _callCubit.iOSCallManager.syncCall!.callId,
+            true,
+            alignment: Alignment.topRight,
+            borderRadius: BorderRadius.circular(12),
+            margin: const EdgeInsets.only(top: 128, right: 16),
+            height: 195,
+            width: 136,
+            scalingType: ScalingType.fill,
+          )
+        : const SizedBox.shrink();
+
+    Widget remoteView = (_hasRemoteStream)
+        ? StringeeVideoView(
+            isAndroid
+                ? _callCubit.androidCallManager.callId
+                : _callCubit.iOSCallManager.syncCall!.callId,
             false,
             isMirror: false,
             scalingType: ScalingType.fill,
           )
         : const SizedBox.shrink();
 
-    return WillPopScope(
-      onWillPop: () {
+    return PopScope(
+      canPop: true,
+      onPopInvoked: (didPop) {
         endCallTapped();
-        return Future.value(false);
+        return;
       },
       child: Scaffold(
         backgroundColor: AppColors.blueEdit,
@@ -405,36 +399,36 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
     };
     if (isAndroid) {
       if (widget.useCall2) {
-        _callCubit.androidCallManager!
+        _callCubit.androidCallManager
             .setStringeeCall2(StringeeCall2(CallManager.shared.client), widget.isVideo);
       } else {
-        _callCubit.androidCallManager!
+        _callCubit.androidCallManager
             .setStringeeCall(StringeeCall(CallManager.shared.client), widget.isVideo);
       }
-      _callCubit.androidCallManager!.addListenerForCall();
-      _callCubit.androidCallManager!.makeCall(parameters);
+      _callCubit.androidCallManager.addListenerForCall();
+      _callCubit.androidCallManager.makeCall(parameters);
     } else {
-      _callCubit.iOSCallManager!.syncCall = SyncCall();
+      _callCubit.iOSCallManager.syncCall = SyncCall();
       var outgoingCall;
       if (widget.useCall2) {
         outgoingCall = StringeeCall2(CallManager.shared.client);
-        _callCubit.iOSCallManager!.syncCall!.stringeeCall2 = outgoingCall;
+        _callCubit.iOSCallManager.syncCall!.stringeeCall2 = outgoingCall;
       } else {
         outgoingCall = StringeeCall(CallManager.shared.client);
-        _callCubit.iOSCallManager!.syncCall!.stringeeCall = outgoingCall;
+        _callCubit.iOSCallManager.syncCall!.stringeeCall = outgoingCall;
       }
-      _callCubit.iOSCallManager!.addListenerForCall();
+      _callCubit.iOSCallManager.addListenerForCall();
 
       outgoingCall.makeCall(parameters).then((result) {
         bool status = result['status'];
         if (widget.useCall2) {
-          _callCubit.iOSCallManager!.syncCall!.attachCall2(outgoingCall);
+          _callCubit.iOSCallManager.syncCall!.attachCall2(outgoingCall);
         } else {
-          _callCubit.iOSCallManager!.syncCall!.attachCall(outgoingCall);
+          _callCubit.iOSCallManager.syncCall!.attachCall(outgoingCall);
         }
 
         if (!status) {
-          _callCubit.iOSCallManager!.clearDataEndDismiss();
+          _callCubit.iOSCallManager.clearDataEndDismiss();
         }
       });
     }
@@ -442,12 +436,12 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
 
   void endCallTapped() async {
     if (isAndroid) {
-      _callCubit.androidCallManager!.hangup();
+      _callCubit.androidCallManager.hangup();
     } else {
-      if (_callCubit.iOSCallManager!.syncCall == null) {
+      if (_callCubit.iOSCallManager.syncCall == null) {
         return;
       }
-      _callCubit.iOSCallManager!.syncCall!.hangup();
+      _callCubit.iOSCallManager.syncCall!.hangup();
     }
     if (widget.fromUserId ==
         getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id.toString()) {
@@ -458,38 +452,43 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
 
   void acceptCallTapped() {
     if (isAndroid) {
-      _callCubit.androidCallManager!.answer().then((result) {
-        _callState.add(StringeeSignalingState.answered);
+      _callCubit.androidCallManager.answer().then((result) {
         if (result['status']) {
+          _callState.add(StringeeSignalingState.answered);
           setState(() {
             showIncomingUI = !showIncomingUI;
           });
         } else {
-          _callCubit.androidCallManager!.clearDataEndDismiss();
+          rejectCallTapped();
         }
       });
     } else {
-      if (_callCubit.iOSCallManager!.syncCall == null) {
+      if (_callCubit.iOSCallManager.syncCall == null) {
         return;
       }
-
-      _callCubit.iOSCallManager!.syncCall!.answerCallkitCall();
-      _callState.add(StringeeSignalingState.answered);
+      _callCubit.iOSCallManager.answer().then((result) {
+        if (result['status']) {
+          _callState.add(StringeeSignalingState.answered);
+          setState(() {
+            showIncomingUI = !showIncomingUI;
+          });
+        } else {
+          rejectCallTapped();
+        }
+      });
     }
   }
 
   void rejectCallTapped() {
     if (isAndroid) {
-      _callCubit.androidCallManager!.reject();
+      _callCubit.androidCallManager.reject();
     } else {
-      if (_callCubit.iOSCallManager!.syncCall == null) {
+      if (_callCubit.iOSCallManager.syncCall == null) {
         return;
       }
-      _callCubit.iOSCallManager!.syncCall!.userRejected = true;
-      _callCubit.iOSCallManager!.syncCall!.reject().then((status) {
-        if (Platform.isAndroid) {
-          _callCubit.iOSCallManager!.clearDataEndDismiss();
-        }
+      _callCubit.iOSCallManager.syncCall!.userRejected = true;
+      _callCubit.iOSCallManager.syncCall!.reject().then((status) {
+        _callCubit.iOSCallManager.clearDataEndDismiss();
       });
     }
   }
@@ -508,16 +507,11 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
       if (dismissFuncCalled) {
         return;
       }
-      dismissFuncCalled = !dismissFuncCalled;
+      dismissFuncCalled = dismissFuncCalled;
       Navigator.pop(context);
     }
   }
 
-  void changeToCallingUI() {
-    setState(() {
-      showIncomingUI = false;
-    });
-  }
 
   @override
   void onMuteState(bool isMute) {
@@ -550,11 +544,11 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
   }
 
   @override
-  void onStatusChange(String status) {
+  void onStatusChange(StringeeSignalingState? state) {
     if (isAndroid) {
-      _callState.add(_callCubit.androidCallManager!.callState);
+      _callState.add(_callCubit.androidCallManager.callState);
     } else {
-      _callState.add(_callCubit.iOSCallManager!.syncCall!.callState);
+      _callState.add(_callCubit.iOSCallManager.syncCall!.callState);
     }
   }
 
@@ -577,12 +571,12 @@ class ButtonSwitchCamera extends StatefulWidget {
 class _ButtonSwitchCameraState extends State<ButtonSwitchCamera> {
   void _toggleSwitchCamera() {
     if (isAndroid) {
-      widget.cubit.androidCallManager!.switchCamera();
+      widget.cubit.androidCallManager.switchCamera();
     } else {
-      if (widget.cubit.iOSCallManager!.syncCall == null) {
+      if (widget.cubit.iOSCallManager.syncCall == null) {
         return;
       }
-      widget.cubit.iOSCallManager!.syncCall!.switchCamera();
+      widget.cubit.iOSCallManager.syncCall!.switchCamera();
     }
   }
 
@@ -622,13 +616,12 @@ class ButtonSpeaker extends StatefulWidget {
 class _ButtonSpeakerState extends State<ButtonSpeaker> {
   void _toggleSpeaker() {
     if (isAndroid) {
-      widget.cubit.androidCallManager!.setSpeakerphoneOn();
+      widget.cubit.androidCallManager.setSpeakerphoneOn();
     } else {
-      if (widget.cubit.iOSCallManager!.syncCall == null) {
+      if (widget.cubit.iOSCallManager.syncCall == null) {
         return;
       }
-
-      widget.cubit.iOSCallManager!.syncCall!.setSpeakerphoneOn();
+      widget.cubit.iOSCallManager.setSpeakerphoneOn();
     }
   }
 
@@ -645,7 +638,7 @@ class _ButtonSpeakerState extends State<ButtonSpeaker> {
         IconAppConstants.icVolume,
         color: (isAndroid
                 ? widget.isSpeakerOn
-                : widget.cubit.iOSCallManager!.syncCall?.isSpeaker ?? false)
+                : widget.cubit.iOSCallManager.syncCall?.isSpeaker ?? false)
             ? null
             : AppColors.greyLightTextColor,
         height: 72,
@@ -671,13 +664,12 @@ class ButtonMicro extends StatefulWidget {
 class _ButtonMicroState extends State<ButtonMicro> {
   void _toggleMicro() {
     if (isAndroid) {
-      widget.cubit.androidCallManager!.mute();
+      widget.cubit.androidCallManager.mute();
     } else {
-      if (widget.cubit.iOSCallManager!.syncCall == null) {
+      if (widget.cubit.iOSCallManager.syncCall == null) {
         return;
       }
-
-      widget.cubit.iOSCallManager!.syncCall!.mute();
+      widget.cubit.iOSCallManager.mute();
     }
   }
 
@@ -691,7 +683,7 @@ class _ButtonMicroState extends State<ButtonMicro> {
     return GestureDetector(
       onTap: _toggleMicro,
       child: ImageWidget(
-        (isAndroid ? widget.isMute : widget.cubit.iOSCallManager?.syncCall?.isMute ?? false)
+        (isAndroid ? widget.isMute : widget.cubit.iOSCallManager.syncCall?.isMute ?? false)
             ? IconAppConstants.icMicOff
             : IconAppConstants.icMicro,
         height: 72,
@@ -716,12 +708,12 @@ class ButtonVideo extends StatefulWidget {
 class _ButtonVideoState extends State<ButtonVideo> {
   void _toggleVideo() {
     if (isAndroid) {
-      widget.cubit.androidCallManager!.enableVideo();
+      widget.cubit.androidCallManager.enableVideo();
     } else {
-      if (widget.cubit.iOSCallManager!.syncCall == null) {
+      if (widget.cubit.iOSCallManager.syncCall == null) {
         return;
       }
-      widget.cubit.iOSCallManager!.syncCall!.enableVideo();
+      widget.cubit.iOSCallManager.enableVideo();
     }
   }
 
@@ -738,7 +730,7 @@ class _ButtonVideoState extends State<ButtonVideo> {
             child: ImageWidget(
               (isAndroid
                       ? widget.isVideoEnable
-                      : widget.cubit.iOSCallManager?.syncCall?.videoEnabled ?? false)
+                      : widget.cubit.iOSCallManager.syncCall?.videoEnabled ?? false)
                   ? IconAppConstants.icVideoCall
                   : IconAppConstants.icVideoOff,
               height: 72,

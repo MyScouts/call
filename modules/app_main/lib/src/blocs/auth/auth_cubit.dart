@@ -34,4 +34,8 @@ class AuthCubit extends Cubit<AuthState> {
       emit(ResendOTPFail(message: err));
     }
   }
+
+  Future autoLogin() async {
+    _authenticationUsecase.syncUser();
+  }
 }

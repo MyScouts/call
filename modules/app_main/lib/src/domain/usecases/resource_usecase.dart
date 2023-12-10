@@ -31,4 +31,10 @@ class ResourceUsecase {
   Future<GlobalSettingResponse> getGlobalConfig({required String key}) async {
     return _resourceRepository.getGlobalConfig(key: key);
   }
+
+  Future<Map<String, dynamic>> getGlobalPerson(int userId) async {
+    final response =
+        await _resourceRepository.getGlobalPersonSetting(userId: userId);
+    return response.setting;
+  }
 }

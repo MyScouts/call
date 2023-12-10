@@ -34,3 +34,13 @@ class GlobalSettingResponse with _$GlobalSettingResponse {
   factory GlobalSettingResponse.fromJson(Map<String, dynamic> json) =>
       _$GlobalSettingResponseFromJson(json);
 }
+
+@freezed
+class GlobalPersonResponse with _$GlobalPersonResponse {
+  const factory GlobalPersonResponse({
+    required dynamic setting,
+  }) = _GlobalPersonResponse;
+
+  factory GlobalPersonResponse.fromJson(Map<String, dynamic> json) =>
+      _$GlobalPersonResponseFromJson(json);
+}

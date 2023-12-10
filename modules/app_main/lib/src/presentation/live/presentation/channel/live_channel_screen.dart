@@ -1,6 +1,7 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/app_size.dart';
+import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/core/utils/loading_indicator/platform_loading.dart';
 import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
@@ -9,6 +10,7 @@ import 'package:app_main/src/presentation/live/presentation/channel/widget/live_
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_end_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/pip_video_render.dart';
 import 'package:app_main/src/presentation/live/presentation/live_message/live_message_input.dart';
+import 'package:app_main/src/presentation/live/presentation/live_message/live_opacity_builder.dart';
 import 'package:app_main/src/presentation/live/presentation/live_message/state/live_message_bloc.dart';
 import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
 import 'package:app_main/src/presentation/live/presentation/pip/pip_view.dart';
@@ -68,7 +70,7 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
               Provider<LiveChannelController>.value(
                 value: controller,
               ),
-              BlocProvider<LiveMessageBloc>.value(
+              BlocProvider.value(
                 value: commentController,
               ),
             ],
@@ -96,6 +98,7 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
           child: GestureDetector(
             onTap: () {
               FocusScope.of(context).unfocus();
+              NotificationCenter.post(channel: showOption);
             },
             behavior: HitTestBehavior.opaque,
             child: Obx(() {
@@ -122,19 +125,25 @@ class _LivePk extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        const Align(
-          alignment: Alignment.bottomCenter,
-          child: LiveBottomAction(),
-        ),
         const SingleChildScrollView(
           child: Column(
             children: [
               SafeArea(
-                child: LiveChannelHeader(),
+                child: OpacityBuilder(
+                  key: Key('pk live'),
+                  child: LiveChannelHeader(),
+                ),
               ),
               SizedBox(height: 16),
               _LivePKRtc(),
             ],
+          ),
+        ),
+        const Align(
+          alignment: Alignment.bottomCenter,
+          child: OpacityBuilder(
+            key: Key('pk live'),
+            child: LiveBottomAction(),
           ),
         ),
         Align(
@@ -164,13 +173,16 @@ class _LiveSimple extends StatelessWidget {
         const _RtcRender(),
         const Align(
           alignment: Alignment.topCenter,
-          child: SafeArea(
-            child: LiveChannelHeader(),
+          child: OpacityBuilder(
+            key: Key('live simple'),
+            child: SafeArea(child: LiveChannelHeader()),
           ),
         ),
         const Align(
           alignment: Alignment.bottomCenter,
-          child: LiveBottomAction(),
+          child: OpacityBuilder(
+            child: LiveBottomAction(),
+          ),
         ),
         Positioned.fill(
           child: IgnorePointer(
@@ -303,7 +315,7 @@ class _LivePKRtc extends StatelessWidget {
 
     if (meInLive) {
       final host = controller.pkData!.lives.firstWhereOrNull(
-              (e) => e.user!.id != controller.me.value.info.userID);
+          (e) => e.user!.id != controller.me.value.info.userID);
       left = AnimatedSize(
         duration: const Duration(milliseconds: 150),
         child: AgoraVideoView(
@@ -336,7 +348,7 @@ class _LivePKRtc extends StatelessWidget {
       );
     } else {
       final host = controller.pkData!.lives.firstWhereOrNull(
-              (e) => e.user!.id != controller.me.value.info.userID);
+          (e) => e.user!.id != controller.me.value.info.userID);
 
       left = AnimatedSize(
         duration: const Duration(milliseconds: 150),

@@ -1,7 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/app/app_cubit.dart';
 import 'package:app_main/src/presentation/community/community.component.dart';
-import 'package:app_main/src/presentation/dashboard/system_setting/system_setting.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
 import 'package:app_main/src/presentation/profile/user_profile_screen.dart';
 import 'package:app_main/src/presentation/protector/manage_protector_screen.dart';
@@ -36,18 +35,12 @@ class Setting {
       [
         [
           Setting(
-            text: "Cài đặt chung",
-            icon: IconAppConstants.icSettingHome,
-            onPressed: () =>
-                Navigator.of(context).pushNamed(SystemSetting.routerName),
-          ),
-          Setting(
             text: "Cài đặt tài khoản",
             icon: IconAppConstants.icSettingAccount,
             onPressed: () =>
                 Navigator.of(context).pushNamed(UserProfileScreen.routerName),
           ),
-          if ((user?.old ?? 0) >= 18)
+          if ((user?.getAge ?? 0) >= 18)
             Setting(
               text: "Quản lý người bảo hộ",
               icon: IconAppConstants.icCare,
@@ -71,7 +64,6 @@ class Setting {
               text: "P-Done",
               icon: IconAppConstants.icUpgrade,
               onPressed: () {
-                print('onboarding?.isPdone : ${onboarding?.isPdone}');
                 if (onboarding?.isPdone ?? false) {
                   context.startPDoneInformation().then((value) => onUpdate());
                 } else {

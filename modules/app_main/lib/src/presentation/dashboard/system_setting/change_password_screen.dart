@@ -4,6 +4,7 @@ import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/entities/change_password_payload.dart';
 import 'package:app_main/src/domain/usecases/authentication_usecase.dart';
+import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/authentication/widget/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -100,7 +101,7 @@ class _ChangePasswordState extends State<ChangePassword> with ValidationMixin {
               PrimaryButton(
                 title: 'Đổi mật khẩu',
                 onTap: () async {
-                  if(newPass.text.trim().isEmpty) {
+                  if (newPass.text.trim().isEmpty) {
                     showToastMessage(
                       "Không được để trống",
                       ToastMessageType.error,
@@ -121,7 +122,8 @@ class _ChangePasswordState extends State<ChangePassword> with ValidationMixin {
                   );
                   hideLoading();
                   if (ok) {
-                    showToastMessage("Yêu cầu đã được gửi thành công");
+                    showToastMessage("Thay đổi mật khẩu thành công.");
+                    Future.delayed(Duration.zero, () => context.pop());
                   } else {
                     showToastMessage(
                       "Mật khẩu không đúng",
@@ -150,9 +152,8 @@ class ChangePasswordController extends ChangeNotifier {
   Future<bool> changePassword(String current, String pass) async {
     try {
       await useCase.changePassword(ChangePasswordPayload(
-        currentPassword: current,
+        oldPassword: current,
         newPassword: pass,
-        confirmPassword: pass,
       ));
       return true;
     } catch (e) {

@@ -4,7 +4,6 @@ import 'package:app_main/src/core/bloc/core_state.dart';
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
-import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/data/repositories/media_picker.dart';
 import 'package:app_main/src/domain/entities/protector_request.dart';
 import 'package:app_main/src/domain/entities/update_account/information_none_pdone_profile.dart';

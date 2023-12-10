@@ -77,7 +77,7 @@ extension UserExtNull on User? {
   String get getAvatar => this?.avatar ?? Assets.images_avatar.path;
 
   String get getNickname => this?.nickname ?? _userDefaultNickname;
-  
+
   String get getBirthday {
     final DateTime? birthday = this?.birthday;
 
@@ -88,19 +88,23 @@ extension UserExtNull on User? {
     if (this?.fullName != null && this?.fullName?.isNotEmpty == true) {
       return this!.fullName!;
     }
-    return this?.displayName?.replaceRange(this!.displayName!.length - 3, this!.displayName!.length, '***') ?? '';
-
+    return this?.displayName?.replaceRange(
+            this!.displayName!.length - 3, this!.displayName!.length, '***') ??
+        '';
   }
 
   int get getAge {
-    final DateTime? birthday = this?.profile?.birthday;
-
+    DateTime? birthday;
+    if (this?.birthday != null) {
+      final age = calculateAge(this!.birthday!);
+      return age;
+    }
+    birthday = this?.profile?.birthday;
     if (birthday == null) {
       return 0;
     }
 
     final age = calculateAge(birthday);
-
     return age;
   }
 

@@ -91,6 +91,7 @@ class ItemSettingWidget extends StatelessWidget {
                                 softWrap: true,
                                 style: context.text.titleMedium!.copyWith(
                                   fontWeight: FontWeight.bold,
+                                  fontSize: 18,
                                 ),
                               ),
                             if (summary != null)

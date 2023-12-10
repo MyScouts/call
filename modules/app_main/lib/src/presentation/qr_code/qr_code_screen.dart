@@ -27,7 +27,18 @@ class QrCodeScreen extends StatefulWidget {
 }
 
 class _QrCodeScreenState extends State<QrCodeScreen> {
+  late File? _file;
   final ScreenshotController _screenshotCtrl = ScreenshotController();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 1), () => _initFile());
+  }
+
+  Future _initFile() async {
+    _file = await _convertFile(init: true);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -172,8 +183,8 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
         Expanded(
           child: GestureDetector(
             onTap: () async {
-              final file = await _convertFile();
-              await Share.shareXFiles([XFile(file.path)]);
+              _file ??= await _convertFile();
+              await Share.shareXFiles([XFile(_file!.path)]);
             },
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
@@ -197,7 +208,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
     );
   }
 
-  _convertFile() async {
+  _convertFile({bool init = false}) async {
     try {
       final image = await _screenshotCtrl.capture(
           delay: const Duration(milliseconds: 10));
@@ -206,7 +217,9 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
       await imagePath.writeAsBytes(image!);
       return imagePath;
     } catch (e) {
-      showToastMessage("Thao tác không thành công.", ToastMessageType.error);
+      if (!init) {
+        showToastMessage("Thao tác không thành công.", ToastMessageType.error);
+      }
     }
   }
 }

@@ -280,19 +280,22 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
             //     ),
             //   ),
             // ),
-            child: Container(
-              height: 48,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                'Quay lại',
-                style: context.textTheme.bodyLarge!.copyWith(
-                  color: context.theme.primaryColor,
+            child: GestureDetector(
+              child: Container(
+                height: 48,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  'Quay lại',
+                  style: context.textTheme.bodyLarge!.copyWith(
+                    color: context.theme.primaryColor,
+                  ),
                 ),
               ),
+              onTap: () => context.pop(),
             ),
           ),
           const SizedBox(width: 10),

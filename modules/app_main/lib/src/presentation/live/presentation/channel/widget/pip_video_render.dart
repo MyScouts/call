@@ -1,6 +1,7 @@
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:app_main/src/core/coordinator/app_coordinator.dart';
 import 'package:app_main/src/core/utils/loading_indicator/platform_loading.dart';
+import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/live_channel_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:app_main/src/presentation/live/presentation/live_message/state/live_message_bloc.dart';
@@ -37,8 +38,11 @@ class PipVideoRender extends StatelessWidget {
                         Provider<LiveChannelController>.value(
                           value: controller,
                         ),
-                        BlocProvider<LiveMessageBloc>.value(
-                          value: commentController,
+                        BlocProvider(
+                          create: (_) => getIt<LiveMessageBloc>()
+                            ..add(UpdateMessageHistory(
+                              commentController.state.comments,
+                            )),
                         ),
                       ],
                       child: LiveChannelScreen(

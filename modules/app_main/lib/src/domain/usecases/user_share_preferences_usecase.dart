@@ -21,7 +21,6 @@ class UserSharePreferencesUsecase extends UserInfoSharePreferencesUsecase {
 
   String? getToken() => _shared.getString(_assessToken);
 
-
   bool get isAuthenticated => getToken()?.isNotEmpty ?? false;
 
   Future<bool> saveFCMToken(String token) =>
@@ -37,5 +36,4 @@ class UserSharePreferencesUsecase extends UserInfoSharePreferencesUsecase {
   Future<bool> saveSubTopicFCM() => _shared.setBool(_keySubTopic, true);
 
   bool isMe(int? id) => getUserInfo()?.id == id;
-
 }

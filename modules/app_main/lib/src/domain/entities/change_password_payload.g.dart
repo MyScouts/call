@@ -9,15 +9,13 @@ part of 'change_password_payload.dart';
 ChangePasswordPayload _$ChangePasswordPayloadFromJson(
         Map<String, dynamic> json) =>
     ChangePasswordPayload(
-      currentPassword: json['currentPassword'] as String,
+      oldPassword: json['oldPassword'] as String,
       newPassword: json['newPassword'] as String,
-      confirmPassword: json['confirmPassword'] as String,
     );
 
 Map<String, dynamic> _$ChangePasswordPayloadToJson(
         ChangePasswordPayload instance) =>
     <String, dynamic>{
-      'currentPassword': instance.currentPassword,
+      'oldPassword': instance.oldPassword,
       'newPassword': instance.newPassword,
-      'confirmPassword': instance.confirmPassword,
     };

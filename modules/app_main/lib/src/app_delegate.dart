@@ -63,26 +63,20 @@ class AppDelegate extends IAppDelegate {
     final savedThemeMode = await AdaptiveTheme.getThemeMode();
 
     if (isMobile) {
-      /// CONFIG NOTIFICATION
-      /// Set the background messaging handler early on,
-      /// as a named top-level function
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
       await setupFlutterNotifications();
-      // if (Configurations.isProduction) {
-      //   FirebaseMessaging.onBackgroundMessage(
-      //       firebaseMessagingBackgroundHandler);
-      //   await setupFlutterNotifications();
-      // }
 
-      unawaited(SystemChrome.setPreferredOrientations(
-          [DeviceOrientation.portraitUp]));
+      unawaited(SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+      ]));
       unawaited(deviceService.setStatusBar());
       unawaited(deviceService.updateNavigationBarColors(false));
     }
 
     String initialRoute = SplashScreen.routeName;
     if (userSharePreferencesUsecase.isAuthenticated) {
-      await AppConfigService.init();
+      injector.get<AuthCubit>().autoLogin();
+      unawaited(AppConfigService.init());
       isAuthenticate.add(true);
     }
 

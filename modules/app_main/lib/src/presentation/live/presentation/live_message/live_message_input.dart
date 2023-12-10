@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/presentation/live/presentation/live_message/state/live_message_bloc.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +68,7 @@ class _LiveMessageInputState extends State<LiveMessageInput> {
                                       .read<LiveMessageBloc>()
                                       .add(SendEvent(controller.text));
                                   FocusScope.of(context).unfocus();
+                                  NotificationCenter.post(channel: showOption);
                                 },
                           behavior: HitTestBehavior.opaque,
                           child: Padding(
