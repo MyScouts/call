@@ -36,14 +36,6 @@ class Setting {
       [
         [
           Setting(
-            text: "Cài đặt chung",
-            icon: IconAppConstants.icSettingHome,
-            onPressed: () =>
-                Navigator.of(context).pushNamed(SystemSetting.routerName),
-          ),
-        ],
-        [
-          Setting(
             text: "Cài đặt tài khoản",
             icon: IconAppConstants.icSettingAccount,
             onPressed: () =>
