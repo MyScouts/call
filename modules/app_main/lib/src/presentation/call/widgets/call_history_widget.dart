@@ -23,7 +23,7 @@ class CallHistoryWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                   data.callGroup.membersNotMe.first.member.getName,
+                   data.callGroup.membersNotMe.first.member.fullName ?? '',
                   style: context.textTheme.headlineSmall?.copyWith(
                     color: AppColors.black,
                   ),

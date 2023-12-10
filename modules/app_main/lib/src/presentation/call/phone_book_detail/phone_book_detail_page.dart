@@ -103,7 +103,7 @@
               ),
               kSpacingHeight12,
               Text(
-                widget.data.getName,
+                widget.data.fullName ?? '',
                 style: context.textTheme.titleMedium!.copyWith(
                   fontSize: 16,
                   color: AppColors.black,
@@ -128,7 +128,6 @@
                         await context.startCall(
                           toUserId: widget.data.id.toString(),
                           isVideo: false,
-                          incomingUI: false,
                           fromUserId:
                               getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id.toString(),
                         );
@@ -143,8 +142,7 @@
                          await context.startCall(
                           toUserId: widget.data.id.toString(),
                           isVideo: true,
-                           incomingUI: false,
-                           fromUserId:
+                          fromUserId:
                               getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id.toString(),
                         );
                         _cubit.init(widget.data.id);

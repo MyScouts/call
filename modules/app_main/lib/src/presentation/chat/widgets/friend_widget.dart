@@ -38,7 +38,7 @@ class FriendWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  data.getName,
+                  data.fullName ?? '',
                   style: context.textTheme.headlineSmall?.copyWith(
                     color: AppColors.black,
                   ),

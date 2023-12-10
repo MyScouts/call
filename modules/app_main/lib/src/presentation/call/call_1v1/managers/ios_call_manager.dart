@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:app_main/src/domain/entities/call/call_info.dart';
+import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/call/call_1v1/call_1v1_coordinator.dart';
 import 'package:app_main/src/presentation/call/call_1v1/call_1v1_page.dart';
 import 'package:app_main/src/presentation/call/call_1v1/managers/call_manager.dart';
@@ -15,19 +15,16 @@ import 'sync_call.dart';
 class IOSCallManager with WidgetsBindingObserver {
   static IOSCallManager? _instance;
 
-  static IOSCallManager get shared {
+  static IOSCallManager? get shared {
     _instance ??= IOSCallManager._internal();
 
-    return _instance!;
+    return _instance;
   }
 
 
 
   // Cac bien xu ly pushkit + callkit
   SyncCall? syncCall;
-  bool _showIncomingCall = false;
-  bool get showIncomingCall => _showIncomingCall;
-  CallInfo? _callInfo;
   final List<String?> _fakeCallUuids =
       []; // mảng các uuid của các call được show từ callkit mà cần end ngay sau khi show thành công (xử lý cho rule mới trên iOS 13)
   final List<SyncCall?> _oldSyncCalls =
@@ -56,10 +53,6 @@ class IOSCallManager with WidgetsBindingObserver {
 
   void destroy() {
     WidgetsBinding.instance.removeObserver(this);
-  }
-
-  void getCallInfo(CallInfo callInfo) {
-    _callInfo = callInfo;
   }
 
   @override
@@ -149,18 +142,18 @@ class IOSCallManager with WidgetsBindingObserver {
     }
 
     // Cuộc gọi mới không phải là cuộc gọi đang xử lý thì reject
-    // if (!syncCall!.isThisCall(call.id, call.serial)) {
-    //   print("Cuộc gọi mới không phải là cuộc gọi đang xử lý thì reject");
-    //   call.reject();
-    //   return;
-    // }
-    //
-    // // Người dùng đã click reject cuộc gọi thì reject
-    // if (syncCall!.userRejected) {
-    //   print("Người dùng đã click reject cuộc gọi thì reject");
-    //   call.reject();
-    //   return;
-    // }
+    if (!syncCall!.isThisCall(call.id, call.serial)) {
+      print("Cuộc gọi mới không phải là cuộc gọi đang xử lý thì reject");
+      call.reject();
+      return;
+    }
+
+    // Người dùng đã click reject cuộc gọi thì reject
+    if (syncCall!.userRejected) {
+      print("Người dùng đã click reject cuộc gọi thì reject");
+      call.reject();
+      return;
+    }
 
     // Chưa show callkit thì show không thì update thông tin người gọi lên giao diện
     syncCall!.attachCall(call);
@@ -175,10 +168,7 @@ class IOSCallManager with WidgetsBindingObserver {
 
     showCallScreen(context);
 
-    call.initAnswer().then((result) {
-      String message = result['message'];
-      print("initAnswer: " + message);
-    });
+    call.initAnswer();
     syncCall!.answerIfConditionPassed();
   }
 
@@ -197,30 +187,29 @@ class IOSCallManager with WidgetsBindingObserver {
 
       // Show callScreen
       showCallScreen(context);
-      call.initAnswer().then((event) {
-        bool status = event['status'];
-        if (!status) {
-          clearDataEndDismiss();
-        }
+
+      call.initAnswer().then((result) {
+        String message = result['message'];
+        print("initAnswer: " + message);
       });
       syncCall!.answerIfConditionPassed();
 
       return;
     }
 
-    // // Cuộc gọi mới không phải là cuộc gọi đang xử lý thì reject
-    // if (!syncCall!.isThisCall(call.id, call.serial)) {
-    //   print("Cuộc gọi mới không phải là cuộc gọi đang xử lý thì reject");
-    //   call.reject();
-    //   return;
-    // }
-    //
-    // // Người dùng đã click reject cuộc gọi thì reject
-    // if (syncCall!.userRejected) {
-    //   print("Người dùng đã click reject cuộc gọi thì reject");
-    //   call.reject();
-    //   return;
-    // }
+    // Cuộc gọi mới không phải là cuộc gọi đang xử lý thì reject
+    if (!syncCall!.isThisCall(call.id, call.serial)) {
+      print("Cuộc gọi mới không phải là cuộc gọi đang xử lý thì reject");
+      call.reject();
+      return;
+    }
+
+    // Người dùng đã click reject cuộc gọi thì reject
+    if (syncCall!.userRejected) {
+      print("Người dùng đã click reject cuộc gọi thì reject");
+      call.reject();
+      return;
+    }
 
     // Chưa show callkit thì show không thì update thông tin người gọi lên giao diện
     syncCall!.attachCall2(call);
@@ -235,22 +224,8 @@ class IOSCallManager with WidgetsBindingObserver {
 
     showCallScreen(context);
 
-    call.initAnswer().then((event) {
-      bool status = event['status'];
-      if (!status) {
-        clearDataEndDismiss();
-      }
-    });
+    call.initAnswer();
     syncCall!.answerIfConditionPassed();
-  }
-
-  Future<Map<dynamic, dynamic>> answer() async {
-    syncCall?.callAnswered = true;
-    if (syncCall?.stringeeCall2 != null) {
-      return await syncCall!.stringeeCall2!.answer();
-    } else {
-      return await syncCall!.stringeeCall!.answer();
-    }
   }
 
   void showCallScreen(BuildContext? context) {
@@ -407,7 +382,8 @@ class IOSCallManager with WidgetsBindingObserver {
 
   void handleSignalingStateChangeEvent(StringeeSignalingState? state) {
     syncCall!.callState = state ?? StringeeSignalingState.calling;
-    _callInfo?.onStatusChange(state);
+    syncCall!.status = state.toString().split('.')[1];
+    callScreenKey?.currentState?.onStatusChange(syncCall!.status);
     switch (state) {
       case StringeeSignalingState.calling:
         break;
@@ -428,31 +404,12 @@ class IOSCallManager with WidgetsBindingObserver {
     }
   }
 
-  Future<void> setSpeakerphoneOn() async {
-    bool? onSpeaker = await syncCall?.setSpeakerphoneOn();
-    _callInfo?.onSpeakerState(onSpeaker ?? false);
-  }
-
-  Future<void> routeAudioToSpeakerIfNeed() async {
-    bool? onSpeaker = await syncCall?.routeAudioToSpeakerIfNeed();
-    _callInfo?.onSpeakerState(onSpeaker ?? false);
-  }
-
-  Future<void> mute() async {
-    bool? isMute = await syncCall?.mute();
-    _callInfo?.onMuteState(isMute ?? false);
-  }
-
-  Future<void> enableVideo() async {
-    bool? enableVideo = await syncCall?.enableVideo();
-    _callInfo?.onVideoState(enableVideo ?? false);
-  }
-
   void handleMediaStateChangeEvent(StringeeMediaState? state) {
     print('handleMediaStateChangeEvent - $state');
+    syncCall!.status = state.toString().split('.')[1];
     switch (state) {
       case StringeeMediaState.connected:
-        routeAudioToSpeakerIfNeed();
+        syncCall!.routeAudioToSpeakerIfNeed();
         break;
       case StringeeMediaState.disconnected:
         break;
@@ -477,12 +434,12 @@ class IOSCallManager with WidgetsBindingObserver {
 
   void handleReceiveLocalStreamEvent(String? callId) {
     print('handleReceiveLocalStreamEvent - $callId');
-    _callInfo?.onReceiveLocalStream();
+    syncCall!.hasLocalStream = true;
   }
 
   void handleReceiveRemoteStreamEvent(String? callId) {
     print('handleReceiveRemoteStreamEvent - $callId');
-    _callInfo?.onReceiveRemoteStream();
+    syncCall!.hasRemoteStream = true;
   }
 
   void clearDataEndDismiss() {
@@ -567,7 +524,7 @@ class IOSCallManager with WidgetsBindingObserver {
       syncCall!.callId = callId;
       syncCall!.serial = serial;
       syncCall!.uuid = uuid;
-      IOSCallManager.shared.startTimeoutForIncomingCall();
+      IOSCallManager.shared!.startTimeoutForIncomingCall();
       return;
     }
 
@@ -612,27 +569,27 @@ class IOSCallManager with WidgetsBindingObserver {
        Được gọi khi người dùng reject (ngắt ở màn hình cuộc gọi đến) hoặc hangup (ngắt ở màn hình cuộc gọi đang diễn ra) cuộc gọi từ màn hỉnh callkit
        => Cần kiểm tra điều kiện để biết nên gọi hàm reject hay hangup của StringeeCall object. 2 hàm này có ý nghĩa khác nhau.
        **/
-    // if (syncCall == null ||
-    //     syncCall!.uuid!.isEmpty ||
-    //     syncCall!.uuid != event.callUUID) {
-    //   return;
-    // }
-    //
-    // syncCall!.endedCallkit = true;
-    // syncCall!.userRejected = true;
-    //
-    // if (syncCall!.hasStringeeCall() &&
-    //     syncCall!.callState != StringeeSignalingState.busy &&
-    //     syncCall!.callState != StringeeSignalingState.ended) {
-    //   // Nếu StringeeCall đã được answer thì gọi hàm hangup() nếu chưa thì reject()
-    //   if (syncCall!.callAnswered) {
-    //     syncCall!.hangup();
-    //   } else {
-    //     syncCall!.reject();
-    //   }
-    // }
-    //
-    // deleteSyncCallIfNeed();
+    if (syncCall == null ||
+        syncCall!.uuid!.isEmpty ||
+        syncCall!.uuid != event.callUUID) {
+      return;
+    }
+
+    syncCall!.endedCallkit = true;
+    syncCall!.userRejected = true;
+
+    if (syncCall!.hasStringeeCall() &&
+        syncCall!.callState != StringeeSignalingState.busy &&
+        syncCall!.callState != StringeeSignalingState.ended) {
+      // Nếu StringeeCall đã được answer thì gọi hàm hangup() nếu chưa thì reject()
+      if (syncCall!.callAnswered) {
+        syncCall!.hangup();
+      } else {
+        syncCall!.reject();
+      }
+    }
+
+    deleteSyncCallIfNeed();
   }
 
   Future<void> didPerformSetMutedCallAction(

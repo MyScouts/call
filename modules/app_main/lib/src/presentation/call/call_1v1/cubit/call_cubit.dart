@@ -15,8 +15,8 @@ class CallCubit extends Cubit<CallState> {
   final CallUseCase _callUseCase;
   final UserUsecase _userUseCase;
 
-  AndroidCallManager androidCallManager = AndroidCallManager.shared;
-  IOSCallManager iOSCallManager = IOSCallManager.shared;
+  AndroidCallManager? androidCallManager = AndroidCallManager.shared;
+  IOSCallManager? iOSCallManager = IOSCallManager.shared;
   CallCubit(this._callUseCase, this._userUseCase)
       : super(const CallStateData(callId: 0, isVideo: false));
 

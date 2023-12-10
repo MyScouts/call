@@ -32,7 +32,7 @@ class FriendWidget extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    data.getName,
+                    data.fullName ?? '',
                     style: context.textTheme.titleMedium!.copyWith(
                       fontSize: 16,
                       color: AppColors.black,

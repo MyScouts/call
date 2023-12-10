@@ -7,7 +7,6 @@ import 'package:app_main/src/core/socket/chat_socket.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_cubit.dart';
 import 'package:app_main/src/presentation/chat/conversation/cubit/conversation_cubit.dart';
-import 'package:app_main/src/presentation/chat/conversation/conversation_page.dart';
 import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
 import 'package:app_main/src/presentation/routes.dart';
 import 'package:design_system/design_system.dart';
@@ -21,7 +20,6 @@ import 'app_dimens.dart';
 import 'app_size.dart';
 import 'core/coordinator/app_coordinator.dart';
 import 'core/utils/toast_message/toast_message.dart';
-import 'presentation/chat/chat_room/chat_room_page.dart';
 import 'presentation/notification/notification_coordinator.dart';
 
 class Application extends StatefulWidget {
@@ -129,12 +127,8 @@ class _ApplicationState extends State<Application> with WidgetsBindingObserver, 
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
     //   ChatSocket().connect();
-      if (MyNavigatorObserver.listRoute.contains(ChatRoomPage.routeName)) {
-        getIt.get<ChatRoomCubit>().loadMessages();
-      } else if(MyNavigatorObserver.listRoute.contains(ConversationPage.routeName)) {
-        getIt.get<ConversationCubit>().loadNewConversation();
-      }
-
+      getIt.get<ConversationCubit>().loadNewConversation();
+      getIt.get<ChatRoomCubit>().loadMessages();
     }
     // else if (state == AppLifecycleState.paused) {
     //   ChatSocket().disconnect();

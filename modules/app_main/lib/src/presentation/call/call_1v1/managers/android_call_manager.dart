@@ -30,9 +30,9 @@ class AndroidCallManager with WidgetsBindingObserver {
   StringeeSignalingState? _signalingState;
   StringeeSignalingState get callState => _signalingState ?? StringeeSignalingState.calling;
 
-  static AndroidCallManager get shared {
+  static AndroidCallManager? get shared {
     _instance ??= AndroidCallManager._internal();
-    return _instance!;
+    return _instance;
   }
 
   void setStringeeCall(StringeeCall stringeeCall, bool isVideoCall) {
@@ -242,12 +242,17 @@ class AndroidCallManager with WidgetsBindingObserver {
   void handleSignalingStateChangeEvent(StringeeSignalingState? state) {
     // print('handleSignalingStateChangeEvent - $state');
     _signalingState = state;
-    _callInfo?.onStatusChange(state);
+    _callInfo?.onStatusChange(state.toString().split('.')[1]);
 
     switch (state) {
       case StringeeSignalingState.calling:
+        // print('-state: calling');
+        // _callInfo?.onStatusChange('Đang nối máy đến ');
         break;
       case StringeeSignalingState.ringing:
+        // print('-state: ringing');
+        // _callInfo?
+        //     .onStatusChange(_isVideoCall ? 'Cuộc gọi video đến từ ' : 'Cuộc gọi thường đến từ ');
         break;
       case StringeeSignalingState.answered:
         if (_mediaState == StringeeMediaState.connected) {
@@ -333,7 +338,6 @@ class AndroidCallManager with WidgetsBindingObserver {
   void handleReceiveLocalStreamEvent(String? callId) {
     print('handleReceiveLocalStreamEvent - $callId');
     _hasLocalStream = true;
-    _callInfo?.onReceiveLocalStream();
   }
 
   void handleReceiveRemoteStreamEvent(String? callId) {
