@@ -2,14 +2,12 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/chat/new_conversations_payload.dart';
 import 'package:app_main/src/data/models/payloads/chat/new_message_payload.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
-import 'package:app_main/src/data/models/responses/chat/message_dto.dart';
 import 'package:app_main/src/data/models/responses/chat/meta_data_dto.dart';
 import 'package:app_main/src/data/repositories/media_picker.dart';
 import 'package:app_main/src/domain/entities/chat/message_model.dart';
 import 'package:app_main/src/domain/entities/chat/result_model.dart';
 import 'package:app_main/src/domain/entities/friend/friend_status_model.dart';
 import 'package:app_main/src/domain/usecases/chat_usecase.dart';
-import 'package:app_main/src/domain/usecases/community_usecase.dart';
 import 'package:app_main/src/domain/usecases/upgrade_account_usecase.dart';
 import 'package:app_main/src/domain/usecases/user_usecase.dart';
 import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_state.dart';
@@ -34,7 +32,7 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
       if (conversationId == null && memberId != null) {
         final User? user = await _userUsecase.geSynctUserById(memberId);
         final FriendStatusModel friendStatus =
-            await _chatUseCase.getFriendStatus(userId: memberId!);
+            await _chatUseCase.getFriendStatus(userId: memberId);
         final ResultModel newConversation = await _chatUseCase.createConversations(
           payload: NewConversationsPayload(
             name: user.getdisplayName,

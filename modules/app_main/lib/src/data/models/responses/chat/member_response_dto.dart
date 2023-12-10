@@ -18,5 +18,5 @@ class MemberResponseDto extends MemberResponseModel {
   final MemberDto member;
 
   @override
-  final int type;
+  final int? type;
 }

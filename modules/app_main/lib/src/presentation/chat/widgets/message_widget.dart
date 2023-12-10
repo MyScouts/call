@@ -25,12 +25,12 @@ class MessageWidget extends StatelessWidget {
         message.sender?.id == getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id;
     return message.type == 3
         ? Text(
-            '${message.sender?.fullName} đã đổi tên cuộc trò chuyện',
+            '${message.sender?.getName} đã đổi tên cuộc trò chuyện',
             textAlign: TextAlign.center,
           )
         : message.type == 2
             ? Text(
-                '${message.sender?.fullName} đã tạo cuộc trò chuyện',
+                '${message.sender?.getName} đã tạo cuộc trò chuyện',
                 textAlign: TextAlign.center,
               )
             : Column(

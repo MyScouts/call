@@ -32,7 +32,7 @@ class UserActiveWidget extends StatelessWidget {
             ),
             kSpacingHeight10,
             Text(
-              data.fullName ?? '',
+              data.getName,
               style: context.textTheme.bodyMedium?.copyWith(
                 color: AppColors.black,
               ),
