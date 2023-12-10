@@ -270,7 +270,7 @@ class _PointAgencyScreenState extends State<PointAgencyScreen> {
   Widget _agencyBankAccElement(BuildContext context, BankAccount bankAccount) {
     return Container(
       margin: const EdgeInsets.only(top: 16),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8).copyWith(right: 24),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: AppColors.black10.withOpacity(0.4))),
@@ -285,6 +285,7 @@ class _PointAgencyScreenState extends State<PointAgencyScreen> {
             child: Text(
               bankAccount.bank?.name ?? '',
               style: context.textTheme.titleMedium,
+              textAlign: TextAlign.right,
             ),
           ),
         ],
