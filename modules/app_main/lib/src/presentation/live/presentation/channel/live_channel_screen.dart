@@ -70,7 +70,7 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
               Provider<LiveChannelController>.value(
                 value: controller,
               ),
-              BlocProvider<LiveMessageBloc>.value(
+              BlocProvider.value(
                 value: commentController,
               ),
             ],

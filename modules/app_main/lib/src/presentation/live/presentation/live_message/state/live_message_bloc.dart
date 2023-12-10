@@ -14,7 +14,15 @@ class LiveMessageBloc extends CoreBloc<LiveMessageEvent, LiveMessageState> {
       transformer: (event, mapper) => event.asyncExpand(mapper),
     );
     on<_ListenMessage>(onListenMessage);
+    on<UpdateMessageHistory>(onUpdateMessageHistory);
     add(_ListenMessage());
+  }
+
+  void onUpdateMessageHistory(
+    UpdateMessageHistory event,
+    Emitter<LiveMessageState> emit,
+  ) {
+    emit(LiveMessageState(comments: event.message));
   }
 
   void onListenMessage(_, __) {
@@ -83,3 +91,9 @@ class UpdateMessage extends LiveMessageEvent {
 }
 
 class _ListenMessage extends LiveMessageEvent {}
+
+class UpdateMessageHistory extends LiveMessageEvent {
+  final List<LiveMessageData> message;
+
+  UpdateMessageHistory(this.message);
+}
