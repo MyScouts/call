@@ -72,10 +72,14 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
     if (money + coin == 0) {
       showToastMessage('Số quy đổi không hợp lệ', ToastMessageType.warning);
     } else {
-      _agencyBloc.add(
-        AgencyEvent.exchange(widget.agencyId, money.toInt(), coin.toInt(),
-            _userIDController.text, bankAccount?.id ?? 0),
-      );
+      if (_userIDController.text.isEmpty) {
+        showToastMessage('ID người nhận không được để trống', ToastMessageType.warning);
+      } else {
+        _agencyBloc.add(
+          AgencyEvent.exchange(widget.agencyId, money.toInt(), coin.toInt(),
+              _userIDController.text, bankAccount?.id ?? 0),
+        );
+      }
     }
   }
 
@@ -374,6 +378,9 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
       controller: _userIDController,
       required: false,
       shouldEnabled: true,
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9]"))
+      ],
       onChanged: (value) {
         onValidation();
       },
@@ -622,10 +629,12 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                 .map((e) => SuggestionsField(
                     name: e.bank?.name ?? '', data: e, img: e.bank?.logo ?? ''))
                 .toList(),
-            initialValue: SuggestionsField(
-                name: bankAccount!.bank?.name ?? '',
-                data: bankAccount!,
-                img: bankAccount!.bank?.logo ?? ''),
+            initialValue: bankAccount != null
+                ? SuggestionsField(
+                    name: bankAccount!.bank?.name ?? '',
+                    data: bankAccount!,
+                    img: bankAccount!.bank?.logo ?? '')
+                : null,
             onSelected: (value) {
               if (value != null) {
                 bankAccount = value;
