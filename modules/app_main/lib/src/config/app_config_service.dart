@@ -9,9 +9,9 @@ class AppConfigService {
   static Map<String, dynamic> ekycToken = {};
 
   static Future init() async {
-    final resouceUsecase = getIt<ResourceUsecase>();
-    await initAgora(resouceUsecase);
-    await initEkycToken(resouceUsecase);
+    final resourceUsecase = getIt<ResourceUsecase>();
+    await initAgora(resourceUsecase);
+    await initEkycToken(resourceUsecase);
   }
 
   static Future initAgora(ResourceUsecase usecase) async {

@@ -49,7 +49,7 @@ class Setting {
             onPressed: () =>
                 Navigator.of(context).pushNamed(UserProfileScreen.routerName),
           ),
-          if ((user?.old ?? 0) >= 18)
+          if ((user?.getAge ?? 0) >= 18)
             Setting(
               text: "Quản lý người bảo hộ",
               icon: IconAppConstants.icCare,
