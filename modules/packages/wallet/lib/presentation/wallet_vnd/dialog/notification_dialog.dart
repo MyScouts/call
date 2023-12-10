@@ -5,11 +5,13 @@ import 'package:wallet/core/core.dart';
 import '../../wallet_constant.dart';
 
 class NotificationDialog extends StatelessWidget {
+  final String content;
   final String? actionTitle;
   final VoidCallback? onAction;
 
   const NotificationDialog({
     super.key,
+    required this.content,
     this.actionTitle,
     this.onAction,
   });
@@ -60,7 +62,7 @@ class NotificationDialog extends StatelessWidget {
               ),
               const SizedBox(height: 25),
               Text(
-                'Bạn cần phải là PDone để thực hiện thao tác này',
+                content,
                 style: context.text.titleLarge?.copyWith(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -117,6 +119,7 @@ class NotificationDialog extends StatelessWidget {
                           ),
                           onPressed: () {
                             context.popNavigator();
+                            onAction?.call();
                           },
                           child: Text(
                             'Huỷ liên kết',
