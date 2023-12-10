@@ -3,6 +3,7 @@ import 'package:wallet/data/datasources/models/request/wallet_transactions_reque
 import 'package:wallet/data/datasources/models/response/transaction_details_response.dart';
 import 'package:wallet/data/datasources/models/response/transactions_response.dart';
 import 'package:wallet/data/datasources/models/response/wallet_info_response.dart';
+import 'package:wallet/presentation/shared/model/infomation_pdone_profile.dart';
 import 'package:wallet/presentation/wallet_constant.dart';
 
 import '../../domain/repository/wallet_repository.dart';
@@ -58,5 +59,11 @@ class WalletRepositoryImpl implements WalletRepository {
   Future<TransactionItem> getTransactionDetails(String id) async {
     final response = await _walletApi.getTransactionDetail(id: id);
     return response.transaction ?? TransactionItem();
+  }
+
+  @override
+  Future<PDoneProfile> getPDoneProfile() async {
+    final response = await _walletApi.getPDoneProfile();
+    return response.profile ?? const PDoneProfile();
   }
 }

@@ -93,6 +93,8 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
                 Navigator.pop(context);
               } else {
                 _pageCtrl.jumpToPage(0);
+                _bankAccountHolderCtrl.clear();
+                _bankNumberCtrl.clear();
                 _titleAppbar = 'Thêm liên kết ngân hàng';
                 setState(() {});
               }
@@ -253,7 +255,7 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
                   hintText: BankAccountField.bankAccountHolder.hintText,
                   controller: _bankAccountHolderCtrl,
                   inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]"))
+                    FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]"))
                   ],
                   keyBoardType: TextInputType.text,
                   onChanged: (value) {
@@ -267,6 +269,9 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
                   hintText: BankAccountField.bankAccountNumber.hintText,
                   controller: _bankNumberCtrl,
                   keyBoardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                  ],
                   onChanged: (value) {
                     setState(() {});
                   },
@@ -305,8 +310,8 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
                       isDefault: false,
                     );
                     _bloc.setAddBankAccountParams(params);
-                    // context.startConfirmBankAccountInformation(params: params, bloc: _bloc);
-                    _bloc.add(const BankAccountEvent.getOtp());
+                    context.startConfirmBankAccountInformation(params: params, bloc: _bloc);
+                    // _bloc.add(const BankAccountEvent.getOtp());
                   },
                   disabled: !validation,
                   width: double.infinity,

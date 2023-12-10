@@ -75,7 +75,10 @@ class WalletPackageModule extends _i1.MicroPackageModule {
         () => _i21.WalletVndRepositoryImpl(gh<_i22.VndWalletApi>()));
     gh.factory<_i23.WalletVndUseCase>(
         () => _i23.WalletVndUseCase(gh<_i24.WalletVndRepository>()));
-    gh.singleton<_i25.WalletBloc>(_i25.WalletBloc(gh<_i19.WalletRepository>()));
+    gh.singleton<_i25.WalletBloc>(_i25.WalletBloc(
+      gh<_i19.WalletRepository>(),
+      gh<_i7.SharedPreferences>(),
+    ));
     gh.factory<_i26.WalletDiamondBloc>(
         () => _i26.WalletDiamondBloc(gh<_i12.WalletDiamondUseCase>()));
     gh.factory<_i27.WalletUseCase>(() => _i27.WalletUseCase(

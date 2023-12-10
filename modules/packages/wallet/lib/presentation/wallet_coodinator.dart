@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
 import 'package:wallet/presentation/transaction_history_detail_screen.dart';
+import 'package:wallet/presentation/wallet_vnd/dialog/notification_dialog.dart';
 
 import '../core/configuratons/configurations.dart';
 import '../core/utils/extension.dart';
@@ -178,6 +179,14 @@ extension WalletCoordinator on BuildContext {
     return Navigator.of(this).pushNamed(
       ConfirmInformationScreen.routeName,
       arguments: {'params': params, 'bloc': bloc},
+    );
+  }
+
+  Future<void> showNotificationDialog() async {
+    await showDialog(
+      context: this,
+      barrierDismissible: false,
+      builder: (_) => const NotificationDialog(),
     );
   }
 }
