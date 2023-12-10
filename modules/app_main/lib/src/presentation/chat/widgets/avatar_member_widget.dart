@@ -6,17 +6,16 @@ import 'package:ui/ui.dart';
 class AvatarMemberWidget extends StatelessWidget {
   final String avatar;
   final double size;
-  const AvatarMemberWidget({super.key, required this.avatar, required this.size});
+  final bool? isPDone;
+  const AvatarMemberWidget({super.key, required this.avatar, required this.size, this.isPDone});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return AppAvatarWidget(
+      avatar: avatar,
       width: size,
       height: size,
-      child: AvatarWidget(
-        avatar: avatar,
-        size: size,
-      ),
+      isPDone: isPDone ?? false,
     );
   }
 }

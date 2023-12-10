@@ -4,6 +4,7 @@ import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/entities/chat/member_model.dart';
 import 'package:app_main/src/presentation/chat/chat_coordinator.dart';
 import 'package:app_main/src/presentation/chat/conversation/cubit/conversation_cubit.dart';
+import 'package:app_main/src/presentation/chat/widgets/avatar_member_widget.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/ui.dart';
@@ -26,13 +27,13 @@ class UserActiveWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AvatarWidget(
+            AvatarMemberWidget(
               size: 70,
-              avatar: data.avatar,
+              avatar: data.avatar ?? '',
             ),
             kSpacingHeight10,
             Text(
-              data.fullName ?? '',
+              data.displayName ?? '',
               style: context.textTheme.bodyMedium?.copyWith(
                 color: AppColors.black,
               ),
