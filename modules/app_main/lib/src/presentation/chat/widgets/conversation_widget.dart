@@ -40,7 +40,7 @@ class ConversationWidget extends StatelessWidget {
                 children: [
                   Text(
                     data.type == 1
-                        ? data.membersNotMe.first.member.fullName ?? ''
+                        ? data.membersNotMe.first.member.getName
                         : data.name ?? '',
                     style: context.textTheme.labelLarge?.copyWith(
                       fontSize: 16,
@@ -49,7 +49,7 @@ class ConversationWidget extends StatelessWidget {
                   kSpacingHeight6,
                   if (data.latestMessage?.type != 1)
                     Text(
-                      '[${data.latestMessage?.sender?.fullName} ${data.latestMessage?.type == 2 ? 'đã tạo cuộc trò chuyện' : 'dã đổi tên cuộc trò chuyện'}]',
+                      '[${data.latestMessage?.sender?.getName} ${data.latestMessage?.type == 2 ? 'đã tạo cuộc trò chuyện' : 'dã đổi tên cuộc trò chuyện'}]',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.bodyMedium?.copyWith(

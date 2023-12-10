@@ -124,7 +124,6 @@ class Call1V1PageState extends State<Call1V1Page> implements CallInfo {
     }
 
     _callState.listen((value) async {
-      print('statee ${value.toString()}');
       switch (value) {
         case StringeeSignalingState.busy:
           if (widget.toUserId ==
