@@ -4,6 +4,7 @@ import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart
 import 'package:app_main/src/presentation/chat/chat_coordinator.dart';
 import 'package:app_main/src/presentation/chat/conversation/cubit/conversation_cubit.dart';
 import 'package:app_main/src/presentation/chat/conversation/cubit/conversation_state.dart';
+import 'package:app_main/src/presentation/chat/widgets/avatar_member_widget.dart';
 import 'package:app_main/src/presentation/chat/widgets/conversation_widget.dart';
 import 'package:app_main/src/presentation/chat/widgets/user_active_widget.dart';
 import 'package:design_system/design_system.dart';
@@ -45,10 +46,17 @@ class ConversationPageState extends State<ConversationPage> {
                           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                           child: Row(
                             children: [
-                              AvatarWidget(
-                                avatar:
-                                    getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.avatar,
+                              AvatarMemberWidget(
+                                avatar: getIt
+                                        .get<UserSharePreferencesUsecase>()
+                                        .getUserInfo()
+                                        ?.avatar ??
+                                    '',
                                 size: 40,
+                                isPDone: getIt
+                                    .get<UserSharePreferencesUsecase>()
+                                    .getUserInfo()
+                                    ?.getIsPDone,
                               ),
                               kSpacingWidth12,
                               Expanded(
@@ -91,8 +99,7 @@ class ConversationPageState extends State<ConversationPage> {
                               ),
                               kSpacingWidth12,
                               GestureDetector(
-                                onTap: () {
-                                },
+                                onTap: () {},
                                 child: Container(
                                   decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
@@ -124,25 +131,25 @@ class ConversationPageState extends State<ConversationPage> {
                           ),
                         ),
                         kSpacingHeight12,
-                        if(friends.isNotEmpty)
-                        SizedBox(
-                          height: 100,
-                          child: ListView.separated(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (_, index) {
-                                if (index == friends.length) {
-                                  _cubit.loadMoreFriend();
-                                  return const LoadingWidget();
-                                } else {
-                                  return UserActiveWidget(
-                                    data: friends[index],
-                                  );
-                                }
-                              },
-                              separatorBuilder: (_, __) => kSpacingWidth16,
-                              itemCount: canLoadMoreFriend ? friends.length + 1 : friends.length),
-                        ),
+                        if (friends.isNotEmpty)
+                          SizedBox(
+                            height: 100,
+                            child: ListView.separated(
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (_, index) {
+                                  if (index == friends.length) {
+                                    _cubit.loadMoreFriend();
+                                    return const LoadingWidget();
+                                  } else {
+                                    return UserActiveWidget(
+                                      data: friends[index],
+                                    );
+                                  }
+                                },
+                                separatorBuilder: (_, __) => kSpacingWidth16,
+                                itemCount: canLoadMoreFriend ? friends.length + 1 : friends.length),
+                          ),
                         kSpacingHeight16,
                         Expanded(
                           child: ListView.separated(
