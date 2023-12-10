@@ -73,7 +73,6 @@ class Setting {
               text: "P-Done",
               icon: IconAppConstants.icUpgrade,
               onPressed: () {
-                print('onboarding?.isPdone : ${onboarding?.isPdone}');
                 if (onboarding?.isPdone ?? false) {
                   context.startPDoneInformation().then((value) => onUpdate());
                 } else {
