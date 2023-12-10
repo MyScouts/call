@@ -190,3 +190,16 @@ final class OnboardingFail extends UserState {
   final OnboardingResponse onboarding;
   OnboardingFail({required this.onboarding});
 }
+
+// Get user public info
+final class GetUserPublicInfoLoading extends UserState {}
+
+final class GetUserPublicInfoSuccess extends UserState {
+  final User user;
+  GetUserPublicInfoSuccess({required this.user});
+}
+
+final class GetUserPublicInfoFail extends UserState {
+  final String err;
+  GetUserPublicInfoFail({required this.err});
+}

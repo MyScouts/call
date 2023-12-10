@@ -4,7 +4,9 @@ import 'package:wallet/presentation/shared/widgets/toast_message/toast_message.d
 import 'package:wallet/presentation/wallet_coodinator.dart';
 
 import '../../../core/core.dart';
+import '../../../di/wallet_micro.dart';
 import '../../wallet_constant.dart';
+import '../../wallet_vnd/bank_account/bloc/bank_account_bloc.dart';
 
 class WalletVNDActions extends StatefulWidget {
   const WalletVNDActions({super.key});
@@ -68,17 +70,24 @@ class _WalletVNDActionsState extends State<WalletVNDActions> {
             WalletInjectedData.user.pDoneId!.isNotEmpty) {
           context.bankAccounts();
         } else {
-          context.showNotificationDialog();
+          context.showNotificationDialog(
+            content: 'Bạn cần phải là PDone để thực hiện thao tác này',
+          );
         }
         break;
       case WalletVNDActionType.withdrawalOrder:
-        // context.showChooseBankAccountDialog(
-        //   bankAccountBloc: BankAccountBloc(injector()),
-        // );
+        // if (WalletInjectedData.user.jaAt is DateTime) {
+        //   context.startWithdraw();
+        // } else {
+        //   context.showNotificationDialog(
+        //     content: 'Bạn cần phải là JA để thực hiện thao tác này',
+        //   );
+        // }
         showToastMessage(
-          'Tính năng này đang được phát triển.',
+          'Tính năng này đang được phát triển',
           ToastMessageType.warning,
         );
+
         break;
       case WalletVNDActionType.transactionHistory:
         context.startTransactionHistory(walletType: WalletType.vnd);

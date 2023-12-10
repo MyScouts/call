@@ -119,6 +119,8 @@ class UserCubit extends Cubit<UserState> {
 
   void setCurrentUser(User? user) => _currentUser = user;
 
+  OnBoarding? _onboarding;
+
   Future<void> fetchUser() async {
     _currentUser = _userSharePreferencesUsecase.getUserInfo();
     final id = _currentUser?.id;
@@ -128,9 +130,13 @@ class UserCubit extends Cubit<UserState> {
     if (id != null) {
       try {
         final user = await _userUsecase.geSynctUserById(id);
-
         if (user != null) {
-          await _userSharePreferencesUsecase.saveUserInfo(user);
+          final response = await _userUsecase.getUserPublicInfo(id) ?? const User();
+          await _userSharePreferencesUsecase.saveUserInfo(user.copyWith(
+            isJA: _onboarding?.isJA,
+            isPDone: _onboarding?.isPdone ?? false,
+            birthday: response.birthday,
+          ));
           setCurrentUser(user);
           emit(GetProfileSuccess(user));
         }
@@ -395,6 +401,7 @@ class UserCubit extends Cubit<UserState> {
     try {
       emit(OnGetOnboarding());
       final response = await _userUsecase.onboarding();
+      _onboarding = response;
       emit(OnboardingSuccess(onboarding: response));
     } catch (error) {
       debugPrint("onboarding: $error");
@@ -406,6 +413,18 @@ class UserCubit extends Cubit<UserState> {
         isMarshopOwner: false,
         isPdone: false,
       )));
+    }
+  }
+
+  Future<void> getUserPublicInfo(int id) async {
+    if (state is GetUserPublicInfoLoading) return;
+    try {
+      emit(GetUserPublicInfoLoading());
+      final response = await _userUsecase.getUserPublicInfo(id) ?? const User();
+      emit(GetUserPublicInfoSuccess(user: response));
+    } catch (error) {
+      debugPrint("get user public info: $error");
+      emit(GetUserInfoFail(message: '$error'));
     }
   }
 

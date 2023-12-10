@@ -13,6 +13,7 @@ import 'package:retrofit/retrofit.dart';
 import '../../models/responses/api_response.dart';
 import '../../models/responses/list_followees_response.dart';
 import '../../models/responses/list_follower_user_response.dart';
+import '../../models/responses/user_public_info_response.dart';
 
 part 'user_api.g.dart';
 
@@ -40,6 +41,7 @@ class UserApiConstants {
   static const updateAvatar = "api/v1/user";
   static const setConfig = "api/v1/setting/personal/{key}";
   static const stringeeToken = "api/v1/call/stringee-token";
+  static const userPublicInfo = "api/v1/user/user/{userId}/public-info";
 }
 
 @RestApi()
@@ -147,4 +149,9 @@ abstract class UserApi {
 
   @GET(UserApiConstants.stringeeToken)
   Future getStringeeToken();
+
+  @GET(UserApiConstants.userPublicInfo)
+  Future<UserPublicInfoResponse> getUserPublicInfo({
+    @Path('id') required int id,
+  });
 }

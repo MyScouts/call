@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
 import 'package:wallet/presentation/transaction_history_detail_screen.dart';
 import 'package:wallet/presentation/wallet_vnd/dialog/notification_dialog.dart';
+import 'package:wallet/presentation/wallet_vnd/withdraw/screens/withdraw_screen.dart';
 
 import '../core/configuratons/configurations.dart';
 import '../core/utils/extension.dart';
@@ -17,12 +18,10 @@ import 'wallet_vnd/bank_account/screens/bank_account_details_screen.dart';
 import 'wallet_vnd/bank_account/screens/bank_account_veryfy_otp_screen.dart';
 import 'wallet_vnd/bank_account/screens/bank_accounts_screen.dart';
 import 'wallet_vnd/bank_account/screens/confirm_information_screen.dart';
-import 'wallet_vnd/dialog/choose_bank_account_dialog.dart';
 import 'wallet_vnd/dialog/delete_bank_account_dialog.dart';
 import 'wallet_vnd/dialog/succes_dialog.dart';
 import 'wallet_vnd/dialog/warning_dialog.dart';
 import 'wallet_vnd/withdraw/screens/confirm_withdraw_transaction_screen.dart';
-import 'wallet_vnd/withdraw/screens/create_withdraw_order_screen.dart';
 
 extension WalletCoordinator on BuildContext {
   Future<T?> startMyWallet<T>(User? user) {
@@ -87,14 +86,6 @@ extension WalletCoordinator on BuildContext {
     );
   }
 
-  Future<T?> createWithdrawOrder<T>(
-      {required BankAccountParams bankAccountParams}) {
-    return Navigator.of(this).pushNamed<T>(
-      CreateWithdrawOrderScreen.routeName,
-      arguments: bankAccountParams,
-    );
-  }
-
   Future<T?> confirmWithdrawTransaction<T>(
       {required WithdrawParams withdrawParams}) {
     return Navigator.of(this).pushNamed(
@@ -108,18 +99,6 @@ extension WalletCoordinator on BuildContext {
       context: this,
       barrierDismissible: false,
       builder: (_) => const WarningDialog(),
-    );
-  }
-
-  Future<void> showChooseBankAccountDialog(
-      {required BankAccountBloc bankAccountBloc}) async {
-    await showDialog(
-      context: this,
-      barrierDismissible: false,
-      builder: (_) => BlocProvider.value(
-        value: bankAccountBloc,
-        child: const ChooseBankAccountDialog(),
-      ),
     );
   }
 
@@ -182,11 +161,23 @@ extension WalletCoordinator on BuildContext {
     );
   }
 
-  Future<void> showNotificationDialog() async {
+  Future<T?> startWithdraw<T>() {
+    return Navigator.of(this).pushNamed(WithdrawScreen.routeName);
+  }
+
+  Future<void> showNotificationDialog({
+    String? actionTitle,
+    VoidCallback? onAction,
+    required String content,
+  }) async {
     await showDialog(
       context: this,
       barrierDismissible: false,
-      builder: (_) => const NotificationDialog(),
+      builder: (_) => NotificationDialog(
+        content: content,
+        actionTitle: actionTitle,
+        onAction: onAction,
+      ),
     );
   }
 }

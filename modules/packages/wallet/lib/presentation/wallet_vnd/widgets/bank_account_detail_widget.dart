@@ -26,7 +26,7 @@ class BankAccountDetailWidget extends StatelessWidget {
         : '***';
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
       decoration: decoration ??
           BoxDecoration(
             color: AppColors.white,
@@ -51,12 +51,12 @@ class BankAccountDetailWidget extends StatelessWidget {
           ),
         ),
         title: Text(
-          '${bankAccount.bank?.name}',
+          '${bankAccount.bank?.shortName}',
           overflow: TextOverflow.ellipsis,
           style: context.text.titleSmall?.copyWith(
             fontSize: 14,
             color: const Color(0xFF212121),
-            height: 20 / 14,
+            height: 1.8,
           ),
         ),
         subtitle: Text(
@@ -64,7 +64,7 @@ class BankAccountDetailWidget extends StatelessWidget {
           style: context.text.titleSmall?.copyWith(
               fontWeight: FontWeight.w400,
               fontSize: 14,
-              height: 20 / 14,
+              height: 1.8,
               color: const Color(0xFF6E6E6E)),
         ),
         trailing: trailingIcon ??
