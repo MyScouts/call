@@ -12,6 +12,7 @@ class ReactIntereactWidget extends StatefulWidget {
     this.iconActivedName,
     this.parentHeight,
     this.isHearted = false,
+    this.isDarkMode = false,
     super.key,
   });
 
@@ -24,6 +25,7 @@ class ReactIntereactWidget extends StatefulWidget {
   final String iconName;
   final String? iconActivedName;
   final double? parentHeight;
+  final bool isDarkMode;
 
   @override
   State<ReactIntereactWidget> createState() => _ReactIntereactWidgetState();
@@ -33,7 +35,7 @@ class _ReactIntereactWidgetState extends State<ReactIntereactWidget> {
   late bool isHearted;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     isHearted = widget.isHearted;
   }
@@ -65,6 +67,9 @@ class _ReactIntereactWidgetState extends State<ReactIntereactWidget> {
               icon,
               width: 16,
               height: 16,
+              color: widget.isDarkMode
+                  ? (isHearted ? AppColors.red70 : AppColors.grey77)
+                  : null,
             ),
             if (widget.text.isNotEmpty) const SizedBox(width: 10),
             if (widget.text.isNotEmpty)
@@ -73,7 +78,11 @@ class _ReactIntereactWidgetState extends State<ReactIntereactWidget> {
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  color: isHearted ? AppColors.red70 : AppColors.grey76,
+                  color: isHearted
+                      ? AppColors.red70
+                      : (widget.isDarkMode
+                          ? AppColors.grey77
+                          : AppColors.grey76),
                 ),
               )
           ],

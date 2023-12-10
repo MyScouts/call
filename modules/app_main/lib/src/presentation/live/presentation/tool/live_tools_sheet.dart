@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:app_main/src/presentation/live/presentation/live_home/live_home_screen.dart';
+import 'package:app_main/src/presentation/live/presentation/pk/invite/pk_invite_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
@@ -83,19 +84,22 @@ class LiveToolsSheet extends StatelessWidget {
                     icon: Assets.icons_lives_switch_came.svg(),
                     action: controller.switchCamera,
                   ),
+                  if(controller.info.pk == null)
                   _Item(
                     title: 'Mời PK',
                     icon: Assets.icons_lives_pk.svg(),
                     action: () {
-
+                      Navigator.of(context).pop();
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (_) => const PkInviteScreen(),
+                      );
                     },
                   ),
                   _Item(
                     title: 'MarShop',
                     icon: Assets.icons_lives_marshop.svg(),
-                    action: () {
-
-                    },
+                    action: () {},
                   ),
                 ],
               ),

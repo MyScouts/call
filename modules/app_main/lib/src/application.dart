@@ -11,7 +11,6 @@ import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart
 import 'package:app_main/src/presentation/routes.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:localization/localization.dart';
@@ -126,11 +125,12 @@ class _ApplicationState extends State<Application> with WidgetsBindingObserver, 
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // if (state == AppLifecycleState.resumed) {
+    if (state == AppLifecycleState.resumed) {
     //   ChatSocket().connect();
-    //   getIt.get<ConversationCubit>().loadNewConversation();
-    //   getIt.get<ChatRoomCubit>().loadMessages();
-    // } else if (state == AppLifecycleState.paused) {
+      getIt.get<ConversationCubit>().loadNewConversation();
+      getIt.get<ChatRoomCubit>().loadMessages();
+    }
+    // else if (state == AppLifecycleState.paused) {
     //   ChatSocket().disconnect();
     // }
   }

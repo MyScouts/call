@@ -81,6 +81,8 @@ class MarshopRegisterPackRule with _$MarshopRegisterPackRule {
 class MarshopRegisterPackProduct with _$MarshopRegisterPackProduct {
   const factory MarshopRegisterPackProduct({
     required String id,
+    @Default(0) int minQuantity,
+    @Default(0) int maxQuantity,
   }) = _MarshopRegisterPackProduct;
 
   factory MarshopRegisterPackProduct.fromJson(Map<String, dynamic> json) =>

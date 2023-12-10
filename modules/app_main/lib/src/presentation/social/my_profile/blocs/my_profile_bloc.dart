@@ -150,11 +150,33 @@ class MyProfileBloc extends CoreBloc<MyProfileEvent, MyProfileState> {
 
   void onReactPostTapped(
       ReactPostTapped event, Emitter<MyProfileState> emit) async {
+    if (state.currentPostType.isText) {
+      final posts = state.textPosts;
+      List<Post> newPosts = _getNewReactPost(posts, event);
+      emit(state.copyWith(textPosts: newPosts));
+    }
+
+    if (state.currentPostType.isVideo) {
+      final posts = state.videoPosts;
+      List<Post> newPosts = _getNewReactPost(posts, event);
+      emit(state.copyWith(videoPosts: newPosts));
+    }
+
     await _postUsecase.react(
-      postId: event.postId,
+      postId: event.newPost.id!,
       reactPayload: ReactPayload(
-          isHearted: event.isHearted, type: ReactType.heart.getName),
+          isHearted: event.newPost.getIsHearted, type: ReactType.heart.getName),
     );
+  }
+
+  List<Post> _getNewReactPost(List<Post> posts, ReactPostTapped event) {
+    final index = posts.indexWhere((element) => element.id == event.newPost.id);
+
+    var newPosts = List.of(posts);
+    newPosts.removeAt(index);
+    newPosts.insert(index, event.newPost);
+
+    return newPosts;
   }
 
   Future<void> onCreateNewPost(

@@ -200,39 +200,47 @@ class UserInfoHeader extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (userInfo.sex != null)
-            Container(
-              height: 25,
+            IntrinsicHeight(
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: const Color(0XFFFFEDF8),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    ImageWidget(
+                      userInfo.sex!.getIcon(),
+                      height: 15,
+                    ),
+                    const SizedBox(width: 3),
+                    Text(
+                      userInfo.old.toString(),
+                      style: context.text.titleSmall!.copyWith(height: 0),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          const SizedBox(width: 5),
+          IntrinsicHeight(
+            child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
-                color: const Color(0XFFFFEDF8),
+                color: const Color(0XFF4B84F7),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
                 children: [
-                  ImageWidget(userInfo.sex!.getIcon()),
                   Text(
-                    userInfo.old.toString(),
-                    style: context.text.titleMedium,
+                    "LV.1",
+                    style: context.text.titleSmall!.copyWith(
+                      color: AppColors.white,
+                    ),
                   ),
                 ],
               ),
-            ),
-          const SizedBox(width: 5),
-          Container(
-            height: 25,
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            decoration: BoxDecoration(
-              color: const Color(0XFF4B84F7),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              children: [
-                Text(
-                  "LV.1",
-                  style: context.text.titleMedium!
-                      .copyWith(color: AppColors.white),
-                ),
-              ],
             ),
           ),
           if (userInfo.joinedTeam != null) const SizedBox(width: 5),

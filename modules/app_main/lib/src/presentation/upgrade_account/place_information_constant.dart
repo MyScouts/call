@@ -126,11 +126,3 @@ List<Ward> wards = [
   const Ward(name: 'Phường Tân Thới Hoà', id: 8765),
   const Ward(name: 'Phường Tây Thạnh', id: 8756),
 ];
-
-Map<String, dynamic> ekycInfo = {
-  "access_token":
-      "bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwYWZlMzQzZi0zMjBjLTVkMGMtZTA2My02MjE5OWYwYTdiMTYiLCJhdWQiOlsicmVzdHNlcnZpY2UiXSwidXNlcl9uYW1lIjoibmdvY3BoYW05OUB2aW5haG91c2UuYXVkaW8iLCJzY29wZSI6WyJyZWFkIl0sImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0IiwibmFtZSI6Im5nb2NwaGFtOTlAdmluYWhvdXNlLmF1ZGlvIiwidXVpZF9hY2NvdW50IjoiMGFmZTM0M2YtMzIwYy01ZDBjLWUwNjMtNjIxOTlmMGE3YjE2IiwiYXV0aG9yaXRpZXMiOlsiVVNFUiJdLCJqdGkiOiJhMzA2ZWFlZC00MWM0LTQ0MmQtOGZlOS05NzBlYzhiYjhjMjIiLCJjbGllbnRfaWQiOiJhZG1pbmFwcCJ9.Imjj11l4mRxdaM3nfYUtwxrOIT-Wa8_fCsxcjPxcmxrccK4O-PYEkoWtP4-1xSdkgSwujIaHSXCoEoBaYgsgXgSOjQmWKaH66KggPjs--fMVGFQR64noJMirN6UQoFmh_JmqmTBEWOKctxE3iYyzPSbZM0CIT4GjM4-g2wD5cxZCdan89MYfh_LI143MP-j76eMywG4O4nQAZv4qxfTxji186o8UALQx-M-TD0Zr8_FLC4q675jOPMhpZRN0_aWDmivQrTx1IgCt7hpoollH5pSnMhn7RxttpsqyBHn79f90evxqW2rJUTwVGhrDFrAZt8mH2JRvr-He5kGI9sS8tQ",
-  "token_id": "0afe3791-6c5a-65ea-e063-63199f0a8677",
-  "token_key":
-      "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMZTiwmZlnBvhhxn7GNDu8F7qkR73i0q36BIRdkRXNYQzkj+UMDYOughU9c0EqBx/r+WAaTEDPGwzS31RKFV1McCAwEAAQ==",
-};

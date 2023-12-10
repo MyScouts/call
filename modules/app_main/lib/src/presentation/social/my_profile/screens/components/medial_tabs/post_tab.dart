@@ -1,7 +1,10 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/domain/entities/media/media_file.dart';
+import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_bloc.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
+import 'package:app_main/src/presentation/social/my_profile/my_profile_coordinator.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/common/subordinate_scroll.dart';
+import 'package:app_main/src/presentation/social/my_profile/screens/widgets/post_header_user_info.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/react_comment_widget.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/profile_avatar.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/react_widget.dart';
@@ -139,31 +142,18 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(right: 16),
-                    child: ProfileAvatar(
-                      avatarUrl: post.user.getUserAvatar,
-                      size: 42,
-                      isPDone: post.user.getIsPDone,
-                      fontSize: 12,
-                      profileTypePadding: 2,
-                      avatarPadding: 3,
-                      backgroundColor: AppColors.blueEdit,
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildInfoDetail(post),
-                        const SizedBox(height: 2),
-                        _buildPostTime(post.getTime),
-                      ],
-                    ),
-                  ),
-                ],
+              InkWell(
+                onTap: () {
+                  context.startPostDetail(
+                    post: post,
+                    myProfileBloc: context.read<MyProfileBloc>(),
+                  );
+                },
+                child: PostHeaderUserInfo(
+                  user: post.user,
+                  time: post.getTime,
+                  isShowSetting: true,
+                ),
               ),
               if (hasMedia) const SizedBox(height: 12),
               if (hasMedia)
@@ -172,7 +162,7 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
                   child: _buildShowMedia(
                     isNewPost: isNewPost,
                     postType: widget.postType,
-                    medias: post.getListMedia,
+                    post: post,
                   ),
                 ),
               const SizedBox(height: 12),
@@ -183,12 +173,14 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
                   fontWeight: FontWeight.w600,
                 ),
               ),
+              const SizedBox(height: 8),
               ReadMoreHashtag(
                 data: post.getContent,
                 trimMode: TrimModeRM.LINE,
                 trimLines: 3,
                 expandedText: '',
                 collapsedText: '...Xem thêm',
+                seeMore: true,
                 dataStyle: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
@@ -196,7 +188,12 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
                 colorHighlightDetectedText: AppColors.blue34,
               ),
               const SizedBox(height: 12),
-              ReactWidget(post: post, isNewPost: isNewPost),
+              ReactWidget(
+                key: UniqueKey(),
+                post: post,
+                isNewPost: isNewPost,
+                myProfileBloc: context.read<MyProfileBloc>(),
+              ),
               _buildLatestComment(post.latestComment),
             ],
           ),
@@ -318,8 +315,9 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
   Widget _buildShowMedia({
     required bool isNewPost,
     required PostType postType,
-    required List<Media> medias,
+    required Post post,
   }) {
+    final medias = post.getListMedia;
     if (isNewPost) {
       switch (postType) {
         case PostType.text:
@@ -349,6 +347,27 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
             listNetwork: medias.map((media) => media.link ?? '').toList(),
             width: double.infinity,
             radius: 12,
+            onTapImage1: () {
+              context.startPostDetail(
+                post: post,
+                imageScrollType: ImageScrollType.image1,
+                myProfileBloc: context.read<MyProfileBloc>(),
+              );
+            },
+            onTapImage2: () {
+              context.startPostDetail(
+                post: post,
+                imageScrollType: ImageScrollType.image2,
+                myProfileBloc: context.read<MyProfileBloc>(),
+              );
+            },
+            onTapImage3: () {
+              context.startPostDetail(
+                post: post,
+                imageScrollType: ImageScrollType.image3,
+                myProfileBloc: context.read<MyProfileBloc>(),
+              );
+            },
           );
         case PostType.video:
           return SizedBox(
@@ -374,49 +393,6 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
         fontWeight: FontWeight.w400,
         color: AppColors.grey77,
       ),
-    );
-  }
-
-  Widget _buildInfoDetail(Post post) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Text(
-              post.user.getdisplayName,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: AppColors.black10,
-              ),
-            ),
-            if (post.user.getIsPDone) const SizedBox(width: 4),
-            if (post.user.getIsPDone)
-              ImageWidget(
-                IconAppConstants.icShopVdone,
-                width: 24,
-                height: 24,
-              ),
-            const SizedBox(width: 8),
-            Text(
-              post.user.getPDoneId,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: AppColors.grey77,
-              ),
-            ),
-          ],
-        ),
-        GestureDetector(
-          onTap: () => print('setting'),
-          child: const Icon(
-            Icons.more_vert,
-            size: 24,
-          ),
-        ),
-      ],
     );
   }
 

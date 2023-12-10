@@ -10,7 +10,6 @@ import 'package:ui/ui.dart';
 
 import '../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
 import '../../../../domain/entities/update_account/update_pdone_birth_place_payload.dart';
-import '../../../../domain/entities/update_account/update_place_information_payload.dart';
 import '../../../../domain/entities/update_account/update_profile_payload.dart';
 import '../../../shared/extensions/validation_extension.dart';
 import '../../upgrade_account_constants.dart';
@@ -356,7 +355,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                         formatText: (date) => S
                             .of(context)
                             .formatDateDDmmYYYYhhMM(date, date)
-                            .split('|')
+                            .split(' ')
                             .first,
                         max: maxBirthDay,
                         onChange: (dateTime) {
@@ -554,7 +553,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                                     formatText: (date) => S
                                         .of(context)
                                         .formatDateDDmmYYYYhhMM(date, date)
-                                        .split('|')
+                                        .split(' ')
                                         .first,
                                     max: DateTime.now(),
                                     onChange: (dateTime) {
@@ -593,7 +592,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                                     : null,
                           )
                         : Container(),
-                    !isShowProtector()
+                    isShowProtector()
                         ? VerifyProtectorWidget(
                             onUpdatePlaceInformation:
                                 (PDoneVerifyProtectorRequest value) {

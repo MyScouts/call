@@ -25,7 +25,7 @@ class CallHistoryDetailWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                DateTime.tryParse(data.calledAt ?? '')?.tohhmm ?? '',
+                DateTime.tryParse(data.calledAt ?? '')?.toLocal().tohhmm ?? '',
                 style: context.textTheme.headlineSmall?.copyWith(
                   color: AppColors.black,
                 ),

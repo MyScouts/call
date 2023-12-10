@@ -7,4 +7,5 @@ abstract class ResourceRepository {
   Future<String> uploadVideo(File file);
   Future<String> uploadFile(File file);
   Future<VersionResponse?> latestVersion({required String type});
+  Future<GlobalSettingResponse> getGlobalConfig({required String key});
 }

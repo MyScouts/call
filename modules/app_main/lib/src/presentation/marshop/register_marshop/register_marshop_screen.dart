@@ -246,6 +246,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
   }
 
   void _startQrCodeScan() {
+    if (_hasMarshop) return;
     context
         .startScanQrCode(
       showMyQr: false,

@@ -1630,6 +1630,10 @@ class Assets {
   static const SvgGenImage icons_lives_public =
       SvgGenImage('assets/icons/lives/public.svg');
 
+  /// File path: assets/icons/lives/search.svg
+  static const SvgGenImage icons_lives_search =
+      SvgGenImage('assets/icons/lives/search.svg');
+
   /// File path: assets/icons/lives/share.svg
   static const SvgGenImage icons_lives_share =
       SvgGenImage('assets/icons/lives/share.svg');
@@ -2499,6 +2503,7 @@ class Assets {
         icons_lives_pip_up,
         icons_lives_pk,
         icons_lives_public,
+        icons_lives_search,
         icons_lives_share,
         icons_lives_switch_came,
         icons_lives_turn_off_mic,

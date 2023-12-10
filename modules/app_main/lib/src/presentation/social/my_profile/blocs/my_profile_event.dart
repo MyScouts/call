@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/social/create_post_payload.dart';
 
 abstract class MyProfileEvent {}
@@ -15,9 +16,10 @@ class Search extends MyProfileEvent {
 }
 
 class ReactPostTapped extends MyProfileEvent {
-  ReactPostTapped({required this.postId, required this.isHearted});
-  final int postId;
-  final bool isHearted;
+  ReactPostTapped({
+    required this.newPost
+  });
+  final Post newPost;
 }
 
 class ReactLatestCommentTapped extends MyProfileEvent {

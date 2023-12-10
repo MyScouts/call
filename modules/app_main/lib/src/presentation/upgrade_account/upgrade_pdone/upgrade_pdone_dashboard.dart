@@ -266,20 +266,35 @@ class _UpgradePDoneDashboardState extends State<UpgradePDoneDashboard> {
       child: Row(
         children: [
           Expanded(
-              child: IntrinsicHeight(
-            child: TextButton(
-              onPressed: () => context.pop(),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(AppColors.white),
+            // child: IntrinsicHeight(
+            //   child: TextButton(
+            //     onPressed: () => context.pop(),
+            //     style: ButtonStyle(
+            //       backgroundColor: MaterialStateProperty.all(AppColors.white),
+            //     ),
+            //     child: Text(
+            //       "Quay lại",
+            //       style: context.textTheme.bodyLarge!.copyWith(
+            //         color: context.theme.primaryColor,
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            child: Container(
+              height: 48,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
-                "Quay lại",
+                'Quay lại',
                 style: context.textTheme.bodyLarge!.copyWith(
                   color: context.theme.primaryColor,
                 ),
               ),
             ),
-          )),
+          ),
           const SizedBox(width: 10),
           Expanded(
             child: PrimarySolidButton(

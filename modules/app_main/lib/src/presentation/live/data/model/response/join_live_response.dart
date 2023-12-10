@@ -12,14 +12,11 @@ class JoinLiveResponse {
   final bool isModerator;
   @JsonKey(name: 'userAgoras')
   final List<AgoraData> agoraData;
-  @JsonKey(name: 'pk')
-  final PkData? pk;
 
   JoinLiveResponse({
     required this.data,
     required this.isModerator,
     required this.agoraData,
-    this.pk,
   });
 
   factory JoinLiveResponse.fromJson(Map<String, dynamic> json) =>

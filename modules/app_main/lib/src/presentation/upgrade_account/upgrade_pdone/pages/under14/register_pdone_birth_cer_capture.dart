@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/config/app_config_service.dart';
 import 'package:app_main/src/core/extensions/string_extension.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
-import 'package:app_main/src/presentation/upgrade_account/place_information_constant.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +74,6 @@ class _RegisterPdoneBirthCerCaptureState
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BlocListener<UpgradePDoneBloc, UpgradePDoneState>(
       listener: _onListenerBloc,
       child: Column(
@@ -231,7 +229,8 @@ class _RegisterPdoneBirthCerCaptureState
   }
 
   Future<void> _startEKycByNameMethod({required String methodName}) async {
-    final json = await _channel.invokeMethod(methodName, ekycInfo);
+    final json =
+        await _channel.invokeMethod(methodName, AppConfigService.ekycToken);
     final urlBirthCer = (upgradePDoneBloc.state as UploadedSuccessImageBirthCer)
         .imageBirthCerUrl;
 

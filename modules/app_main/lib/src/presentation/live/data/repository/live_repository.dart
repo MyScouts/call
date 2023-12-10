@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_category_detail.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
+import 'package:app_main/src/presentation/live/domain/entities/live_pk_data.dart';
 
 import '../../domain/entities/gift_card_list.dart';
 import '../../domain/entities/live_member_count.dart';
@@ -58,4 +59,12 @@ abstract class LiveRepository {
   });
 
   Future<bool> checkPass(int liveId, String password);
+
+  Future<bool> invitePK(Map<String, dynamic> json);
+
+  Future<bool> acceptPK(Map<String, dynamic> json);
+
+  Future deletePK(int id);
+
+  Future<LivePkData> getPk(int id);
 }

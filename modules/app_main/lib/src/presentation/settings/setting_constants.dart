@@ -1,6 +1,5 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/app/app_cubit.dart';
-import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/dashboard/system_setting/system_setting.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
@@ -69,11 +68,16 @@ class Setting {
                 Navigator.pushNamed(context, CommunityWidget.routeName),
           ),
           Setting(
-            text: "P-Done",
-            icon: IconAppConstants.icUpgrade,
-            onPressed: () =>
-                context.startPDoneInformation().then((value) => onUpdate()),
-          ),
+              text: "P-Done",
+              icon: IconAppConstants.icUpgrade,
+              onPressed: () {
+                print('onboarding?.isPdone : ${onboarding?.isPdone}');
+                if (onboarding?.isPdone ?? false) {
+                  context.startPDoneInformation().then((value) => onUpdate());
+                } else {
+                  context.startUpgradePDone().then((value) => onUpdate());
+                }
+              }),
           Setting(
             text: "JA",
             icon: IconAppConstants.icJA,
@@ -85,13 +89,7 @@ class Setting {
           Setting(
             text: "Khách hàng thường xuyên - Market Home",
             icon: IconAppConstants.icMarshopHome,
-            onPressed: () {
-              if (onboarding != null && onboarding.isMarshopCustomer) {
-                context.showToastMessage("Bạn đã là khách hàng thường xuyên.");
-                return;
-              }
-              context.startRegisterCustomer();
-            },
+            onPressed: context.startRegisterCustomer,
           ),
           Setting(
             text: "Tài khoản MarShop",

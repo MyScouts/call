@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:app_main/src/presentation/call/phone_book/phone_book_page.dart';
 import 'package:app_main/src/presentation/chat/conversation/conversation_page.dart';
+import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:design_system/generated/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -41,13 +42,21 @@ class DashBoardBottomBar extends StatefulWidget {
   final Function(bool value) onFabChange;
 
   @override
-  State<DashBoardBottomBar> createState() => _DashBoardBottomBarState();
+  State<DashBoardBottomBar> createState() => DashBoardBottomBarState();
 }
 
-class _DashBoardBottomBarState extends State<DashBoardBottomBar> {
+class DashBoardBottomBarState extends State<DashBoardBottomBar> {
   bool showFab = false;
   late final GlobalKey<FabBoxAnimationState> bKey =
       GlobalKey<FabBoxAnimationState>();
+
+  void disableFab() {
+    if (mounted) {
+      setState(() {
+        showFab = false;
+      });
+    }
+  }
 
   @override
   void didUpdateWidget(covariant DashBoardBottomBar oldWidget) {
@@ -73,7 +82,12 @@ class _DashBoardBottomBarState extends State<DashBoardBottomBar> {
             children: [
               Expanded(
                 child: GestureDetector(
-                  onTap: () => widget.onChanged(widget.type.begin),
+                  onTap: () {
+                    widget.onChanged(widget.type.begin);
+                    setState(() {
+                      showFab = false;
+                    });
+                  },
                   behavior: HitTestBehavior.opaque,
                   child: Stack(
                     alignment: Alignment.center,
@@ -96,8 +110,12 @@ class _DashBoardBottomBarState extends State<DashBoardBottomBar> {
               ),
               Expanded(
                 child: GestureDetector(
-                  onTap: () =>
-                      Navigator.pushNamed(context, PhoneBookPage.routeName),
+                  onTap: () {
+                    Navigator.pushNamed(context, PhoneBookPage.routeName);
+                    setState(() {
+                      showFab = false;
+                    });
+                  },
                   behavior: HitTestBehavior.opaque,
                   child: Center(
                     child: ImageWidget(Assets.icons_dashboard_call.path),
@@ -106,10 +124,15 @@ class _DashBoardBottomBarState extends State<DashBoardBottomBar> {
               ),
               Expanded(
                 child: GestureDetector(
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    ConversationPage.routeName,
-                  ),
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      ConversationPage.routeName,
+                    );
+                    setState(() {
+                      showFab = false;
+                    });
+                  },
                   behavior: HitTestBehavior.opaque,
                   child: Center(
                     child: ImageWidget(Assets.icons_dashboard_message.path),
@@ -124,7 +147,7 @@ class _DashBoardBottomBarState extends State<DashBoardBottomBar> {
                         showFab = !showFab;
                       });
                       widget.onFabChange(showFab);
-                      if(showFab) {
+                      if (showFab) {
                         bKey.currentState?.forward();
                       } else {
                         bKey.currentState?.revert();
@@ -137,7 +160,12 @@ class _DashBoardBottomBarState extends State<DashBoardBottomBar> {
               ),
               Expanded(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    context.startLiveWrapper();
+                    setState(() {
+                      showFab = false;
+                    });
+                  },
                   behavior: HitTestBehavior.opaque,
                   child: Center(
                     child: ImageWidget(
@@ -148,7 +176,12 @@ class _DashBoardBottomBarState extends State<DashBoardBottomBar> {
               ),
               Expanded(
                 child: GestureDetector(
-                  onTap: () => widget.onChanged(widget.type.end),
+                  onTap: () {
+                    widget.onChanged(widget.type.end);
+                    setState(() {
+                      showFab = false;
+                    });
+                  },
                   behavior: HitTestBehavior.opaque,
                   child: Stack(
                     alignment: Alignment.center,

@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/live/domain/entities/pk_data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'live_category_detail.dart';
@@ -20,7 +21,9 @@ class LiveData {
   final String? agoraToken;
   final bool isBanned;
   final List<LiveMedia> medias;
-  List<LiveCategoryDetail> categories;
+  final List<LiveCategoryDetail> categories;
+  @JsonKey(name: 'pk')
+  final PkData? pk;
 
   LiveData({
     required this.id,
@@ -34,6 +37,7 @@ class LiveData {
     this.medias = const [],
     this.isBanned = false,
     this.categories = const [],
+    this.pk,
   });
 
   factory LiveData.fromJson(Map<String, dynamic> json) =>

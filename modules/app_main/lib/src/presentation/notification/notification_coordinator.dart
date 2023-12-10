@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/chat/chat_room/chat_room_page.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ extension NotificationCoordinator on BuildContext {
   Future<T?> startOpenNotification<T>(Map<String, dynamic> notification) async {
     LoggerService.print('[fcm] startOpenNotification: '
         '${notification.toString()}');
+    print('noti ${notification.toString()}');
 
     final payload = notification['data'];
     final type = MessageTypeFB.values.firstWhereOrNull((element) => element.type == payload['type']);
@@ -30,6 +32,9 @@ extension NotificationCoordinator on BuildContext {
         }, liveData['liveId']);
       }
       return AppCoordinator.rootNavigator.currentContext!.joinLive(liveData['liveId']);
+    }
+    if (MyNavigatorObserver.listRoute.contains(ChatRoomPage.routeName)) {
+      return null;
     }
     // final dataModelDetail = notification['data'];
     //

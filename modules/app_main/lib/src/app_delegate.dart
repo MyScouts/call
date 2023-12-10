@@ -84,7 +84,6 @@ class AppDelegate extends IAppDelegate {
     if (userSharePreferencesUsecase.isAuthenticated) {
       await AppConfigService.init();
       isAuthenticate.add(true);
-      // initialRoute = DashBoardScreen.routeName;
     }
 
     if (Configurations.isStudio) {

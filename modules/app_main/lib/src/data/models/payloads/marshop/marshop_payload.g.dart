@@ -61,7 +61,7 @@ Map<String, dynamic> _$RegisterMarshopBillInfoToJson(
 RegisterMarshopProduct _$RegisterMarshopProductFromJson(
         Map<String, dynamic> json) =>
     RegisterMarshopProduct(
-      productId: json['productId'] as int,
+      productId: json['productId'] as String,
       quantity: json['quantity'] as int,
     );
 

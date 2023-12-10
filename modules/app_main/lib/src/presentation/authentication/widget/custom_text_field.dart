@@ -17,10 +17,12 @@ class CustomTextField extends StatefulWidget {
     this.node,
     this.onError,
     this.readOnly = false,
+    this.suffix,
   });
   final TextEditingController controller;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final Widget? suffix;
   final String hintText;
   final TextStyle? hintStyle;
   final ValueChanged<String>? onChange;
@@ -77,6 +79,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: widget.validator,
           decoration: InputDecoration(
+            suffix: widget.suffix,
             prefixIcon: widget.prefixIcon,
             suffixIcon: widget.isPassword
                 ? InkWell(
