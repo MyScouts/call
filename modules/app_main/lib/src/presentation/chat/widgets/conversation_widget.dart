@@ -1,4 +1,6 @@
 //import 'dart:developer' as developer;
+import 'dart:async';
+
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/entities/chat/conversation_model.dart';
@@ -10,16 +12,40 @@ import 'package:ui/ui.dart';
 
 import 'avatar_conversation_widget.dart';
 
-class ConversationWidget extends StatelessWidget {
+class ConversationWidget extends StatefulWidget {
   final ConversationModel data;
   const ConversationWidget({super.key, required this.data});
+
+  @override
+  State<ConversationWidget> createState() => _ConversationWidgetState();
+}
+
+class _ConversationWidgetState extends State<ConversationWidget> {
+  Timer? _timer;
+  void _startTimer() {
+    _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
+      setState(() {});
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
         await context.startChatRoom(
-          conversationId: data.id,
+          conversationId: widget.data.id,
         );
         getIt.get<ConversationCubit>().loadNewConversation();
       },
@@ -30,7 +56,7 @@ class ConversationWidget extends StatelessWidget {
         child: Row(
           children: [
             AvatarConversationWidget(
-              members: data.membersNotMe,
+              members: widget.data.membersNotMe,
             ),
             kSpacingWidth16,
             Expanded(
@@ -39,49 +65,52 @@ class ConversationWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    data.type == 1
-                        ? data.membersNotMe.first.member.getName
-                        : data.name ?? '',
+                    widget.data.type == 1
+                        ? widget.data.membersNotMe.first.member.displayName ?? ''
+                        : widget.data.name ?? '',
                     style: context.textTheme.labelLarge?.copyWith(
                       fontSize: 16,
                     ),
                   ),
                   kSpacingHeight6,
-                  if (data.latestMessage?.type != 1)
+                  if (widget.data.latestMessage?.type != 1)
                     Text(
-                      '[${data.latestMessage?.sender?.getName} ${data.latestMessage?.type == 2 ? 'đã tạo cuộc trò chuyện' : 'dã đổi tên cuộc trò chuyện'}]',
+                      '[${widget.data.latestMessage?.sender?.displayName} ${widget.data.latestMessage?.type == 2 ? 'đã tạo cuộc trò chuyện' : 'dã đổi tên cuộc trò chuyện'}]',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.bodyMedium?.copyWith(
-                        fontWeight:
-                            data.latestMessage?.seen ?? true ? FontWeight.w400 : FontWeight.w600,
-                        color: data.latestMessage?.seen ?? true
+                        fontWeight: widget.data.latestMessage?.seen ?? true
+                            ? FontWeight.w400
+                            : FontWeight.w600,
+                        color: widget.data.latestMessage?.seen ?? true
                             ? AppColors.greyLightTextColor
                             : AppColors.black,
                       ),
                     )
-                  else if (data.latestMessage?.message != null)
+                  else if (widget.data.latestMessage?.message != null)
                     Text(
-                      data.latestMessage?.message ?? '',
+                      widget.data.latestMessage?.message ?? '',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.bodyMedium?.copyWith(
-                        fontWeight:
-                            data.latestMessage?.seen ?? true ? FontWeight.w400 : FontWeight.w600,
-                        color: data.latestMessage?.seen ?? true
+                        fontWeight: widget.data.latestMessage?.seen ?? true
+                            ? FontWeight.w400
+                            : FontWeight.w600,
+                        color: widget.data.latestMessage?.seen ?? true
                             ? AppColors.greyLightTextColor
                             : AppColors.black,
                       ),
                     )
-                  else if (data.latestMessage?.metadata != null)
+                  else if (widget.data.latestMessage?.metadata != null)
                     Text(
                       '[Hình ảnh]',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.bodyMedium?.copyWith(
-                        fontWeight:
-                            data.latestMessage?.seen ?? true ? FontWeight.w400 : FontWeight.w600,
-                        color: data.latestMessage?.seen ?? true
+                        fontWeight: widget.data.latestMessage?.seen ?? true
+                            ? FontWeight.w400
+                            : FontWeight.w600,
+                        color: widget.data.latestMessage?.seen ?? true
                             ? AppColors.greyLightTextColor
                             : AppColors.black,
                       ),
@@ -93,15 +122,15 @@ class ConversationWidget extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  data.latestMessage?.createdAt.timeMessage ?? '',
+                  widget.data.latestMessage?.createdAt.timeMessage ?? '',
                   style: context.textTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight.w500,
-                    color: data.latestMessage?.seen ?? true
+                    color: widget.data.latestMessage?.seen ?? true
                         ? AppColors.greyLightTextColor
                         : AppColors.black,
                   ),
                 ),
-                if (data.countUnSeen != 0) ...[
+                if (widget.data.countUnSeen != 0) ...[
                   kSpacingHeight10,
                   Container(
                     decoration: BoxDecoration(
@@ -110,7 +139,7 @@ class ConversationWidget extends StatelessWidget {
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
                     child: Text(
-                      data.countUnSeen.toString(),
+                      widget.data.countUnSeen.toString(),
                       style: context.textTheme.bodySmall?.copyWith(
                         color: AppColors.white,
                         fontWeight: FontWeight.w500,

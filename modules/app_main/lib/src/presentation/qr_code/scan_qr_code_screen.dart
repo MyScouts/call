@@ -35,7 +35,6 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   late final userCubit = context.read<UserCubit>();
   late User _authInfo;
-  final ValueNotifier<String?> _result = ValueNotifier(null);
   final ValueNotifier<bool> _flashCtrl = ValueNotifier(false);
   Scanner.QRViewController? controller;
 
@@ -185,7 +184,7 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
                       QRCodeDartScanDecoder(formats: [BarcodeFormat.QR_CODE]);
                   Result? result = await decoder.decodeFile(image);
                   if (result != null) {
-                    _result.value = result.text;
+                    _handleListener(result.text);
                   }
                 }
               },

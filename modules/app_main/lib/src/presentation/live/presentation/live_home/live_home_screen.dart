@@ -158,7 +158,7 @@ class _LiveHomeScreenState extends State<LiveHomeScreen>
                             height: 35,
                             child: IconButton(
                               padding: EdgeInsets.zero,
-                              onPressed: () => context.startDashboardUtil(),
+                              onPressed: () => Navigator.pop(context),
                               icon: const Icon(Icons.close),
                               highlightColor: Colors.transparent,
                             ),

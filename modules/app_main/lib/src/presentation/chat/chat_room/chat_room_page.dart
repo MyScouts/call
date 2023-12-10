@@ -113,7 +113,8 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                           children: [
                             Text(
                               conversation.conversation.type == 1
-                                  ? conversation.conversation.membersNotMe.first.member.getName
+                                  ? conversation.conversation.membersNotMe.first.member.displayName ??
+                                      ''
                                   : conversation.conversation.name ?? '',
                               style: context.textTheme.labelLarge?.copyWith(
                                 fontSize: 16,
@@ -195,9 +196,9 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                 context: context,
                                 builder: (_) => ChatDialog(
                                   title:
-                                      'Chặn ${conversation.conversation.membersNotMe.first.member.getName}',
+                                      'Chặn ${conversation.conversation.membersNotMe.first.member.displayName}',
                                   content:
-                                      '${conversation.conversation.membersNotMe.first.member.getName} sẽ không thể :\n\n'
+                                      '${conversation.conversation.membersNotMe.first.member.displayName} sẽ không thể :\n\n'
                                       ' • Xem bài viết trên trang cá nhân của bạn\n'
                                       ' • Nhắn tin cho bạn\n'
                                       ' • Thêm bạn làm bạn bè\n'
@@ -331,14 +332,16 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                 if (friendStatus.relation.isBlocking) ...[
                                   Text('Bạn đã chặn ', style: context.text.bodyMedium),
                                   Text(
-                                    conversation.conversation.membersNotMe.first.member.getName,
+                                    conversation.conversation.membersNotMe.first.member.displayName ??
+                                        '',
                                     style: context.text.bodyMedium?.copyWith(
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ] else ...[
                                   Text(
-                                    conversation.conversation.membersNotMe.first.member.getName,
+                                    conversation.conversation.membersNotMe.first.member.displayName ??
+                                        '',
                                     style: context.text.bodyMedium?.copyWith(
                                       fontWeight: FontWeight.w600,
                                     ),

@@ -13,15 +13,19 @@ class LiveCommentWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LiveMessageBloc, LiveMessageState>(
       builder: (_, state) {
-        return ListView.separated(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          reverse: true,
-          itemBuilder: (_, index) {
-            final list = state.comments.reversed.toList();
-            return LiveCommentCard(comment: list[index]);
-          },
-          separatorBuilder: (_, index) => const SizedBox(height: 6),
-          itemCount: state.comments.length,
+        return AnimatedOpacity(
+          opacity: 1.0,
+          duration: const Duration(microseconds: 300),
+          child: ListView.separated(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            reverse: true,
+            itemBuilder: (_, index) {
+              final list = state.comments.reversed.toList();
+              return LiveCommentCard(comment: list[index]);
+            },
+            separatorBuilder: (_, index) => const SizedBox(height: 6),
+            itemCount: state.comments.length,
+          ),
         );
       },
     );

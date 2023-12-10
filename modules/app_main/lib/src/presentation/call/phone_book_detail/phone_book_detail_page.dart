@@ -103,7 +103,7 @@
               ),
               kSpacingHeight12,
               Text(
-                widget.data.getName,
+                widget.data.displayName ?? '',
                 style: context.textTheme.titleMedium!.copyWith(
                   fontSize: 16,
                   color: AppColors.black,
