@@ -4,14 +4,12 @@ part 'change_password_payload.g.dart';
 
 @JsonSerializable()
 class ChangePasswordPayload {
-  final String currentPassword;
+  final String oldPassword;
   final String newPassword;
-  final String confirmPassword;
 
   ChangePasswordPayload({
-    required this.currentPassword,
+    required this.oldPassword,
     required this.newPassword,
-    required this.confirmPassword,
   });
 
   factory ChangePasswordPayload.fromJson(Map<String, dynamic> json) =>
