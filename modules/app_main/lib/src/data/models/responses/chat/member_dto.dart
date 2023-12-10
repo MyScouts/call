@@ -30,4 +30,7 @@ class MemberDto extends MemberModel {
 
   @override
   final int? sexCode;
+
+  @override
+  String get getName => (fullName != null && fullName!.isNotEmpty) ? fullName! : displayName ?? '';
 }
