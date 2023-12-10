@@ -8,4 +8,5 @@ abstract class ResourceRepository {
   Future<String> uploadFile(File file);
   Future<VersionResponse?> latestVersion({required String type});
   Future<GlobalSettingResponse> getGlobalConfig({required String key});
+  Future<GlobalPersonResponse> getGlobalPersonSetting({required int userId});
 }

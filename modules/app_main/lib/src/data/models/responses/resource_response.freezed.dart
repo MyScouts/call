@@ -488,3 +488,144 @@ abstract class _GlobalSettingResponse implements GlobalSettingResponse {
   _$$GlobalSettingResponseImplCopyWith<_$GlobalSettingResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+GlobalPersonResponse _$GlobalPersonResponseFromJson(Map<String, dynamic> json) {
+  return _GlobalPersonResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$GlobalPersonResponse {
+  dynamic get setting => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GlobalPersonResponseCopyWith<GlobalPersonResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GlobalPersonResponseCopyWith<$Res> {
+  factory $GlobalPersonResponseCopyWith(GlobalPersonResponse value,
+          $Res Function(GlobalPersonResponse) then) =
+      _$GlobalPersonResponseCopyWithImpl<$Res, GlobalPersonResponse>;
+  @useResult
+  $Res call({dynamic setting});
+}
+
+/// @nodoc
+class _$GlobalPersonResponseCopyWithImpl<$Res,
+        $Val extends GlobalPersonResponse>
+    implements $GlobalPersonResponseCopyWith<$Res> {
+  _$GlobalPersonResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? setting = freezed,
+  }) {
+    return _then(_value.copyWith(
+      setting: freezed == setting
+          ? _value.setting
+          : setting // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$GlobalPersonResponseImplCopyWith<$Res>
+    implements $GlobalPersonResponseCopyWith<$Res> {
+  factory _$$GlobalPersonResponseImplCopyWith(_$GlobalPersonResponseImpl value,
+          $Res Function(_$GlobalPersonResponseImpl) then) =
+      __$$GlobalPersonResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({dynamic setting});
+}
+
+/// @nodoc
+class __$$GlobalPersonResponseImplCopyWithImpl<$Res>
+    extends _$GlobalPersonResponseCopyWithImpl<$Res, _$GlobalPersonResponseImpl>
+    implements _$$GlobalPersonResponseImplCopyWith<$Res> {
+  __$$GlobalPersonResponseImplCopyWithImpl(_$GlobalPersonResponseImpl _value,
+      $Res Function(_$GlobalPersonResponseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? setting = freezed,
+  }) {
+    return _then(_$GlobalPersonResponseImpl(
+      setting: freezed == setting
+          ? _value.setting
+          : setting // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$GlobalPersonResponseImpl implements _GlobalPersonResponse {
+  const _$GlobalPersonResponseImpl({required this.setting});
+
+  factory _$GlobalPersonResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GlobalPersonResponseImplFromJson(json);
+
+  @override
+  final dynamic setting;
+
+  @override
+  String toString() {
+    return 'GlobalPersonResponse(setting: $setting)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GlobalPersonResponseImpl &&
+            const DeepCollectionEquality().equals(other.setting, setting));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(setting));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GlobalPersonResponseImplCopyWith<_$GlobalPersonResponseImpl>
+      get copyWith =>
+          __$$GlobalPersonResponseImplCopyWithImpl<_$GlobalPersonResponseImpl>(
+              this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$GlobalPersonResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _GlobalPersonResponse implements GlobalPersonResponse {
+  const factory _GlobalPersonResponse({required final dynamic setting}) =
+      _$GlobalPersonResponseImpl;
+
+  factory _GlobalPersonResponse.fromJson(Map<String, dynamic> json) =
+      _$GlobalPersonResponseImpl.fromJson;
+
+  @override
+  dynamic get setting;
+  @override
+  @JsonKey(ignore: true)
+  _$$GlobalPersonResponseImplCopyWith<_$GlobalPersonResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}

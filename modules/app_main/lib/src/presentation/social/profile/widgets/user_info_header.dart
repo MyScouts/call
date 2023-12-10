@@ -5,11 +5,13 @@ import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart'
 import 'package:app_main/src/data/models/responses/follow_response.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
 import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
+import 'package:app_main/src/presentation/social/profile/profile_bloc.dart';
 import 'package:app_main/src/presentation/social/social_constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
 
 // class UserInfoHeader extends StatefulWidget {
@@ -39,16 +41,8 @@ class UserInfoHeader extends StatelessWidget {
     if (relation.hasPendingApproval != null && relation.hasPendingApproval!) {
       return true;
     }
-    // if (followInfoCtrl.value == null) return true;
-    // final followInfo = followInfoCtrl.value!.relation;
-
-    // if (followInfo.isFollowee || followInfo.isFriend) return false;
-
     if (onBoarding != null) {
-      if (onBoarding!.isPdone && authInfo.old <= 15) {
-        // print(authInfo.old);
-        // return true;
-      }
+      if (onBoarding!.isPdone && authInfo.old <= 15) {}
     }
 
     return false;
@@ -56,24 +50,28 @@ class UserInfoHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<UserCubit, UserState>(
-      listener: (context, state) {},
-      child: Container(
-        padding: const EdgeInsets.only(bottom: 20),
-        decoration: const BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(30),
-            bottomRight: Radius.circular(30),
+    return BlocProvider(
+      create: (context) => injector.get<GlobalPersonSettingBloc>()
+        ..add(GetDetailDataParam1Event(userInfo.id)),
+      child: BlocListener<UserCubit, UserState>(
+        listener: (context, state) {},
+        child: Container(
+          padding: const EdgeInsets.only(bottom: 20),
+          decoration: const BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(30),
+            ),
           ),
+          child: Column(children: [
+            _buildBgAvatar(context),
+            const SizedBox(height: 60),
+            _buildUserName(context),
+            const SizedBox(height: 10),
+            _buildUserInfo(context),
+          ]),
         ),
-        child: Column(children: [
-          _buildBgAvatar(context),
-          const SizedBox(height: 60),
-          _buildUserName(context),
-          const SizedBox(height: 10),
-          _buildUserInfo(context),
-        ]),
       ),
     );
   }
@@ -82,20 +80,7 @@ class UserInfoHeader extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        CachedNetworkImage(
-          height: 180,
-          width: MediaQuery.of(context).size.width,
-          fit: BoxFit.cover,
-          imageUrl: userInfo.defaultBackground ?? "",
-          errorWidget: (context, url, error) {
-            return ImageWidget(
-              ImageConstants.defaultUserBackground,
-              height: 180,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            );
-          },
-        ),
+        _buildBackground(context),
         Positioned(
           top: 130,
           left: 0,
@@ -463,5 +448,27 @@ class UserInfoHeader extends StatelessWidget {
         }
       });
     }
+  }
+
+  _buildBackground(BuildContext context) {
+    return BlocBuilder<GlobalPersonSettingBloc, GetDetailState>(
+      builder: (context, state) {
+        final setting = (state is GetDetailDataSuccess) ? state.data : null;
+        return CachedNetworkImage(
+          height: 180,
+          width: MediaQuery.of(context).size.width,
+          fit: BoxFit.cover,
+          imageUrl: setting?['user_bg'] ?? '',
+          errorWidget: (context, url, error) {
+            return ImageWidget(
+              ImageConstants.defaultUserBackground,
+              height: 180,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            );
+          },
+        );
+      },
+    );
   }
 }

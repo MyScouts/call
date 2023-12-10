@@ -48,3 +48,15 @@ Map<String, dynamic> _$$GlobalSettingResponseImplToJson(
     <String, dynamic>{
       'value': instance.value,
     };
+
+_$GlobalPersonResponseImpl _$$GlobalPersonResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$GlobalPersonResponseImpl(
+      setting: json['setting'],
+    );
+
+Map<String, dynamic> _$$GlobalPersonResponseImplToJson(
+        _$GlobalPersonResponseImpl instance) =>
+    <String, dynamic>{
+      'setting': instance.setting,
+    };
