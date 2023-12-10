@@ -64,7 +64,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       children: [
                         ImageWidget(ImageConstants.imgWalletHeader),
                         Positioned(
-                          top: MediaQuery.of(context).padding.top + 50,
+                          top: MediaQuery.of(context).padding.top + 5,
                           left: 0,
                           right: 0,
                           child: Center(
@@ -82,7 +82,7 @@ class _WalletScreenState extends State<WalletScreen> {
                           ),
                         ),
                         Positioned(
-                          top: MediaQuery.of(context).padding.top + 50,
+                          top: MediaQuery.of(context).padding.top + 5,
                           right: 20,
                           child: GestureDetector(
                             onTap:
@@ -95,7 +95,7 @@ class _WalletScreenState extends State<WalletScreen> {
                           child: Padding(
                             padding: EdgeInsets.fromLTRB(
                               20,
-                              MediaQuery.of(context).padding.top + 50 + 65,
+                              MediaQuery.of(context).padding.top + 60,
                               20,
                               20,
                             ),

@@ -13,6 +13,8 @@ abstract class UserRepository {
 
   Future<User?> getUserById({required int id});
 
+  Future<User?> getUserPublicInfo({required int id});
+
   Future reportUser({
     required int id,
     required ReportUserPayload payload,
@@ -70,5 +72,6 @@ abstract class UserRepository {
   Future<GetUserFollowDetailResponse> getFollowUser(int userId);
 
   Future<ApprovedRequestResponse> approvedRequests();
+
   Future replyFollowRequest(ReplyFollowPayload payload);
 }

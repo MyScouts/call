@@ -88,11 +88,7 @@ class _WalletTransactionHistoryScreenState
               onPressed: () {
                 showModalBottomSheet(
                   context: context,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(12),
-                    ),
-                  ),
+                  backgroundColor: AppColors.white,
                   builder: (BuildContext context) {
                     return TransactionFilterSheet(
                       walletType: widget.walletType,

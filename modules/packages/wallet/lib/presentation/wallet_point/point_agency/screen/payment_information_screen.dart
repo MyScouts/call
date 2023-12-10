@@ -218,6 +218,7 @@ class _PaymentInformationState extends State<PaymentInformationScreen> {
             style: context.textTheme.titleMedium!
                 .copyWith(fontWeight: FontWeight.normal, fontSize: 16),
           ),
+          const SizedBox(width: 16,),
           Expanded(
             child: Text(
               content,

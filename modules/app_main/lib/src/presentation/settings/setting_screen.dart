@@ -33,13 +33,14 @@ class _SettingScreenState extends State<SettingScreen> {
   late User _authInfo;
   OnBoarding? _onboarding;
   PackageInfo? currentPackageInfo;
+  User? _userPublicInfo;
 
   @override
   void initState() {
     super.initState();
     _authInfo = userCubit.currentUser!;
     userCubit.onboarding();
-    userCubit.fetchUser();
+    userCubit.getUserPublicInfo(userCubit.currentUser!.id!);
   }
 
   @override
@@ -62,6 +63,13 @@ class _SettingScreenState extends State<SettingScreen> {
               }
               if (state is OnboardingSuccess) {
                 _onboarding = state.onboarding;
+                Future.delayed(const Duration(milliseconds: 200)).then((value) {
+                  setState(() {});
+                });
+                userCubit.fetchUser();
+              }
+              if (state is GetUserPublicInfoSuccess) {
+                _userPublicInfo = state.user;
                 Future.delayed(const Duration(milliseconds: 200)).then((value) {
                   setState(() {});
                 });
@@ -136,6 +144,7 @@ class _SettingScreenState extends State<SettingScreen> {
         user: userCubit.currentUser?.copyWith(
           isJA: _onboarding?.isJA,
           isPDone: _onboarding?.isPdone ?? false,
+          birthday: _userPublicInfo?.birthday,
         ),
       );
     } else if (state is GetDetailError) {

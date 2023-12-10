@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobilehub_core/mobilehub_core.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
+import 'package:wallet/domain/domain.dart';
 import 'package:wallet/presentation/presentation.dart';
 import 'package:wallet/presentation/shared/widgets/toast_message/toast_message.dart';
 
@@ -92,6 +93,8 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
                 Navigator.pop(context);
               } else {
                 _pageCtrl.jumpToPage(0);
+                _bankAccountHolderCtrl.clear();
+                _bankNumberCtrl.clear();
                 _titleAppbar = 'Thêm liên kết ngân hàng';
                 setState(() {});
               }
@@ -112,7 +115,8 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
                   banks = context.read<BankAccountBloc>().banks;
 
                   return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: context.horizontal),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: context.horizontal),
                     child: PageView(
                       physics: const NeverScrollableScrollPhysics(),
                       controller: _pageCtrl,
@@ -251,7 +255,7 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
                   hintText: BankAccountField.bankAccountHolder.hintText,
                   controller: _bankAccountHolderCtrl,
                   inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]"))
+                    FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]"))
                   ],
                   keyBoardType: TextInputType.text,
                   onChanged: (value) {
@@ -265,6 +269,9 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
                   hintText: BankAccountField.bankAccountNumber.hintText,
                   controller: _bankNumberCtrl,
                   keyBoardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                  ],
                   onChanged: (value) {
                     setState(() {});
                   },
@@ -303,7 +310,8 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
                       isDefault: false,
                     );
                     _bloc.setAddBankAccountParams(params);
-                    _bloc.add(const BankAccountEvent.getOtp());
+                    context.startConfirmBankAccountInformation(params: params, bloc: _bloc);
+                    // _bloc.add(const BankAccountEvent.getOtp());
                   },
                   disabled: !validation,
                   width: double.infinity,

@@ -6,6 +6,8 @@ import 'package:wallet/presentation/transaction_history_detail_screen.dart';
 import 'package:wallet/presentation/wallet_constant.dart';
 import 'package:wallet/presentation/wallet_transaction_history_screen.dart';
 import 'package:wallet/presentation/wallet_diamond/screens/charge_diamond_to_vnd_screen.dart';
+import 'package:wallet/presentation/wallet_vnd/bank_account/screens/confirm_information_screen.dart';
+import 'package:wallet/presentation/wallet_vnd/withdraw/screens/withdraw_screen.dart';
 
 import 'shared/bloc/wallet_bloc.dart';
 
@@ -20,7 +22,6 @@ import 'wallet_vnd/bank_account/screens/bank_account_details_screen.dart';
 import 'wallet_vnd/bank_account/screens/bank_account_veryfy_otp_screen.dart';
 import 'wallet_vnd/bank_account/screens/bank_accounts_screen.dart';
 import 'wallet_vnd/withdraw/screens/confirm_withdraw_transaction_screen.dart';
-import 'wallet_vnd/withdraw/screens/create_withdraw_order_screen.dart';
 
 @injectable
 class WalletRoutes extends RouteModuleBuilder {
@@ -72,13 +73,6 @@ class AppWalletRoutes extends RouteModule {
             child: BankAccountDetailsScreen(bankAccount: args.bankAccount),
           );
         },
-        CreateWithdrawOrderScreen.routeName: (context) {
-          final args = settings.arguments as BankAccountParams;
-          return BlocProvider.value(
-            value: args.bankAccountBloc,
-            child: CreateWithdrawOrderScreen(bankAccount: args.bankAccount),
-          );
-        },
         ConfirmWithdrawTransactionScreen.routeName: (context) {
           final args = settings.arguments as WithdrawParams;
           return ConfirmWithdrawTransactionScreen(withdrawParams: args);
@@ -96,6 +90,21 @@ class AppWalletRoutes extends RouteModule {
         TransactionHistoryDetailScreen.routeName: (context) {
           final params = settings.arguments as TransactionHistoryDetailParams;
           return TransactionHistoryDetailScreen(params: params);
+        },
+        ConfirmInformationScreen.routeName: (context) {
+          final params = settings.arguments as Map<String, dynamic>;
+          return BlocProvider.value(
+            value: params['bloc'] as BankAccountBloc,
+            child: ConfirmInformationScreen(
+              confirmBankAccountParams: params['params'],
+            ),
+          );
+        },
+        WithdrawScreen.routeName: (context) {
+          return BlocProvider(
+            create: (context) => BankAccountBloc(injector()),
+            child: const WithdrawScreen(),
+          );
         },
       };
 }
