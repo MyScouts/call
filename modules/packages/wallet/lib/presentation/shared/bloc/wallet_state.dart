@@ -30,4 +30,12 @@ class WalletState with _$WalletState {
 
   const factory WalletState.getWalletTransactionDetailFailed(String err) =
       _GetWalletTransactionDetailFailed;
+
+  const factory WalletState.getPDoneProfileLoading() = _GetPDoneProfileLoading;
+
+  const factory WalletState.getPDoneProfileSuccess(PDoneProfile pDoneProfile) =
+      _GetPDoneProfileSuccess;
+
+  const factory WalletState.getPDoneProfileFailed(String err) =
+      _GetPDoneProfileFailed;
 }

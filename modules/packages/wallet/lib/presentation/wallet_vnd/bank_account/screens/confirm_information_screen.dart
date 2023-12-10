@@ -2,9 +2,12 @@ import 'package:app_core/app_core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
 import 'package:wallet/core/core.dart';
+import 'package:wallet/presentation/shared/model/infomation_pdone_profile.dart';
 
+import '../../../shared/bloc/wallet_bloc.dart';
 import '../../../shared/widgets/app_bar.dart';
 import '../bloc/bank_account_bloc.dart';
 import 'add_bank_account_screen.dart';
@@ -26,6 +29,13 @@ class ConfirmInformationScreen extends StatefulWidget {
 class _ConfirmInformationScreenState extends State<ConfirmInformationScreen> {
   late final params = widget.confirmBankAccountParams;
   late final _bloc = context.read<BankAccountBloc>();
+  final _walletBloc = injector.get<WalletBloc>();
+
+  @override
+  void initState() {
+    _walletBloc.add(const WalletEvent.getPDoneProfile());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,33 +50,49 @@ class _ConfirmInformationScreenState extends State<ConfirmInformationScreen> {
             onPressed: context.popNavigator,
           ),
         ),
-        body: Column(
-          children: [
-            const SizedBox(height: 15),
-            _buildUserInfo(),
-            const SizedBox(height: 15),
-            const Divider(color: WalletTheme.dividerColor, thickness: 8),
-            const SizedBox(height: 15),
-            _buildBankAccountInfo(),
-            if (params.qrImage != null && params.qrImage!.isNotEmpty)
-              _buildQrWidget(),
-            const Spacer(),
-            Padding(
-              padding: EdgeInsets.only(
-                right: context.horizontal,
-                left: context.horizontal,
-                bottom: MediaQuery.of(context).padding.bottom,
-              ),
-              child: PrimaryButton(
-                title: 'Hoàn thành',
-                onTap: () {
-                  _bloc.add(const BankAccountEvent.getOtp());
-                },
-                disabled: false,
-                width: double.infinity,
-              ),
-            ),
-          ],
+        body: BlocBuilder<WalletBloc, WalletState>(
+          bloc: _walletBloc,
+          buildWhen: (previous, current) =>
+              current.whenOrNull(
+                getPDoneProfileSuccess: (walletInfo) => true,
+                getPDoneProfileFailed: (mess) => true,
+              ) ??
+              false,
+          builder: (context, state) {
+            return state.maybeWhen(
+                orElse: () => const LoadingWidget(),
+                getPDoneProfileSuccess: (pdone) {
+                  return Column(
+                    children: [
+                      const SizedBox(height: 15),
+                      _buildUserInfo(pdone),
+                      const SizedBox(height: 15),
+                      const Divider(
+                          color: WalletTheme.dividerColor, thickness: 8),
+                      const SizedBox(height: 15),
+                      _buildBankAccountInfo(),
+                      if (params.qrImage != null && params.qrImage!.isNotEmpty)
+                        _buildQrWidget(),
+                      const Spacer(),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          right: context.horizontal,
+                          left: context.horizontal,
+                          bottom: MediaQuery.of(context).padding.bottom,
+                        ),
+                        child: PrimaryButton(
+                          title: 'Hoàn thành',
+                          onTap: () {
+                            _bloc.add(const BankAccountEvent.getOtp());
+                          },
+                          disabled: false,
+                          width: double.infinity,
+                        ),
+                      ),
+                    ],
+                  );
+                });
+          },
         ),
       ),
     );
@@ -103,7 +129,7 @@ class _ConfirmInformationScreenState extends State<ConfirmInformationScreen> {
     );
   }
 
-  _buildUserInfo() {
+  _buildUserInfo(PDoneProfile profile) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: context.horizontal),
       child: Column(
@@ -120,11 +146,12 @@ class _ConfirmInformationScreenState extends State<ConfirmInformationScreen> {
           const SizedBox(height: 15),
           _buildInfoWidget(
             title: 'Họ và tên',
-            content: 'Nguyễn Thị Lan',
+            content:
+                '${profile.firstName}${' ${profile.middleName ?? ''}'}${profile.lastName}',
           ),
           _buildInfoWidget(
             title: 'Số CMNN/CCCD',
-            content: '013234234100',
+            content: '${profile.identityNumber}',
           ),
         ],
       ),

@@ -64,11 +64,12 @@ class _WalletVNDActionsState extends State<WalletVNDActions> {
   void onTap(WalletVNDActionType type) {
     switch (type) {
       case WalletVNDActionType.bankAccountInfo:
-        // showToastMessage(
-        //   'Tính năng này đang được phát triển.',
-        //   ToastMessageType.warning,
-        // );
-        context.bankAccounts();
+        if (WalletInjectedData.user.pDoneId != null &&
+            WalletInjectedData.user.pDoneId!.isNotEmpty) {
+          context.bankAccounts();
+        } else {
+          context.showNotificationDialog();
+        }
         break;
       case WalletVNDActionType.withdrawalOrder:
         // context.showChooseBankAccountDialog(
