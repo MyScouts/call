@@ -251,7 +251,7 @@ class _PointAgencyScreenState extends State<PointAgencyScreen> {
                 .copyWith(fontWeight: FontWeight.w500, fontSize: 18),
           ),
           SizedBox(
-            height: 300,
+            height: 230,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
