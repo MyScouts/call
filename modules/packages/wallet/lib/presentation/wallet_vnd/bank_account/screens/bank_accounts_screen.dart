@@ -119,7 +119,18 @@ class _BankAccountsScreenState extends State<BankAccountsScreen> {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 15),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(
+              'NGÂN HÀNG ĐÃ LIÊN KẾT',
+              style: context.text.bodyMedium?.copyWith(
+                color: const Color(0xFF6E6E6E),
+                fontSize: 14,
+                height: 20/14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 20),
             GridView.count(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobilehub_core/mobilehub_core.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
+import 'package:wallet/domain/domain.dart';
 import 'package:wallet/presentation/presentation.dart';
 import 'package:wallet/presentation/shared/widgets/toast_message/toast_message.dart';
 
@@ -112,7 +113,8 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
                   banks = context.read<BankAccountBloc>().banks;
 
                   return Padding(
-                    padding: EdgeInsets.symmetric(horizontal: context.horizontal),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: context.horizontal),
                     child: PageView(
                       physics: const NeverScrollableScrollPhysics(),
                       controller: _pageCtrl,
@@ -303,6 +305,7 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
                       isDefault: false,
                     );
                     _bloc.setAddBankAccountParams(params);
+                    // context.startConfirmBankAccountInformation(params: params, bloc: _bloc);
                     _bloc.add(const BankAccountEvent.getOtp());
                   },
                   disabled: !validation,
