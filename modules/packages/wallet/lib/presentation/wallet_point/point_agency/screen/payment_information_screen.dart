@@ -79,8 +79,7 @@ class _PaymentInformationState extends State<PaymentInformationScreen> {
                 alignment: Alignment.bottomCenter,
                 child: GradiantButton(
                   onPressed: () {
-                    context
-                        .startChat(widget.paymentInfo.bankAccount.userId ?? 0);
+                    context.startChat(widget.agency.user?.id ?? 0);
                   },
                   child: const Text('Liên hệ'),
                 ),
@@ -111,7 +110,7 @@ class _PaymentInformationState extends State<PaymentInformationScreen> {
             height: 12,
           ),
           _paymentInformationRow(
-              context, 'Tên đại lý', widget.agency.name ?? ''),
+              context, 'Tên đại lý', (widget.agency.name ?? '').toUpperCase()),
           _paymentInformationRow(context, 'Số xu nhận',
               widget.paymentInfo.coin.toAppCurrencyString(isWithSymbol: false)),
           _paymentInformationRow(context, 'ID người nhận', widget.rPDoneUserId),
@@ -146,7 +145,7 @@ class _PaymentInformationState extends State<PaymentInformationScreen> {
           _paymentInformationRow(
               context,
               'Số tiền',
-              widget.paymentInfo.vnd.toAppCurrencyString(isWithSymbol: false) ??
+              widget.paymentInfo.vnd.toAppCurrencyString(isWithSymbol: true) ??
                   ''),
           _paymentInformationRow(
               context, 'Nội dung', widget.paymentInfo.content),
@@ -160,7 +159,6 @@ class _PaymentInformationState extends State<PaymentInformationScreen> {
   }
 
   Widget buildQrPayment(BuildContext context) {
-    print(widget.paymentInfo.bankAccount);
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.all(16),
@@ -218,7 +216,9 @@ class _PaymentInformationState extends State<PaymentInformationScreen> {
             style: context.textTheme.titleMedium!
                 .copyWith(fontWeight: FontWeight.normal, fontSize: 16),
           ),
-          const SizedBox(width: 16,),
+          const SizedBox(
+            width: 16,
+          ),
           Expanded(
             child: Text(
               content,
