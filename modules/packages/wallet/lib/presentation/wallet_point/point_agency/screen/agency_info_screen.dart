@@ -50,7 +50,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
   final _userIDController = TextEditingController();
   BankAccount? bankAccount;
   Timer? _debounce;
-  AgencyDetailResponse? agencyInfo;
+  AgencyDetailResponse? agencyData;
 
   @override
   void initState() {
@@ -80,7 +80,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
       return;
     }
 
-    if (coin > (agencyInfo?.coinAgency.availableCoin ?? 0)) {
+    if (coin > (agencyData?.coinAgency.availableCoin ?? 0)) {
       showToastMessage(
           'Số xu quy đổi không đượt vượt quá số lượng tối đa của đại lý',
           ToastMessageType.error);
@@ -177,7 +177,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
               return state.maybeWhen(
                 orElse: () => const LoadingWidget(),
                 getAgencyInfoSuccess: (agencyInfo) {
-                  agencyInfo = agencyInfo;
+                  agencyData = agencyInfo;
                   return Stack(
                     children: [
                       Container(

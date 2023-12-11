@@ -79,7 +79,7 @@ class _PaymentInformationState extends State<PaymentInformationScreen> {
                 alignment: Alignment.bottomCenter,
                 child: GradiantButton(
                   onPressed: () {
-                    context.startChat(widget.agency.id ?? 0);
+                    context.startChat(widget.agency.user?.id ?? 0);
                   },
                   child: const Text('Liên hệ'),
                 ),
