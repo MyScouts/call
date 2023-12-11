@@ -154,45 +154,25 @@ class _EditCommunityDetailScreenState extends State<EditCommunityDetailScreen>
               listener: _onListenerBloc,
               builder: (context, state) {
                 String? avatar = state.community.avatar;
-                bool hasError = false;
-
                 String? banner = state.community.banner;
-
-                if (state is UserChangeBanner) {
-                  banner = state.localImg;
-                }
-
-                if (state is UserChangeBannerSuccess) {
-                  banner = state.newUrl.optimizeSize600;
-                }
-
-                if (state is UserChangeAvatar) {
-                  avatar = state.localImg;
-                }
-
-                if (state is UserChangeAvatarSuccess) {
-                  avatar = state.newUrl.optimizeSize400;
-                }
-
-                if (state is UserChangeAvatarFailure) {
-                  hasError = true;
-                }
-
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Stack(
                       clipBehavior: Clip.none,
                       children: [
-                        CachedNetworkImage(
-                          imageUrl: banner ?? "",
-                          height: 150,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                          errorWidget: (context, url, error) {
-                            return ImageWidget(
-                                ImageConstants.imgDefaultTeamBanner);
-                          },
+                        GestureDetector(
+                          onTap: _onTapChangeBgImage,
+                          child: CachedNetworkImage(
+                            imageUrl: banner ?? "",
+                            height: 150,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                            errorWidget: (context, url, error) {
+                              return ImageWidget(
+                                  ImageConstants.imgDefaultTeamBanner);
+                            },
+                          ),
                         ),
                         Positioned(
                           top: 100,
@@ -211,7 +191,6 @@ class _EditCommunityDetailScreenState extends State<EditCommunityDetailScreen>
                         )
                       ],
                     ),
-
                     Container(
                       margin: const EdgeInsets.only(top: 80),
                       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -236,42 +215,6 @@ class _EditCommunityDetailScreenState extends State<EditCommunityDetailScreen>
                         ],
                       ),
                     ),
-                    // InformationImageWidget(
-                    //   label: 'Ảnh đại diện',
-                    //   onTapEdit: _onTapEditAvatar,
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.only(top: 8, bottom: 36),
-                    //     child: UploadAvatarWidget(
-                    //       urlImg: avatar,
-                    //       hasError: hasError,
-                    //     ),
-                    //   ),
-                    // ),
-                    // InformationImageWidget(
-                    //   label: 'Ảnh nền',
-                    //   onTapEdit: _onTapChangeBgImage,
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.fromLTRB(16, 8, 16, 18),
-                    //     child: AspectRatio(
-                    //       aspectRatio: 16 / 9,
-                    //       child: ImageWidget(banner ?? ''),
-                    //     ),
-                    //   ),
-                    // ),
-                    // validationListenableBuilder(builder: (isValid) {
-                    //   return Padding(
-                    //     padding: const EdgeInsets.only(top: 33, bottom: 73),
-                    //     child: PrimaryButton(
-                    //       disabled: !(isValid &&
-                    //           state is! UserChangeBanner &&
-                    //           state is! UserChangeAvatar),
-                    //       onTap: () => _onTapSave(state.community),
-                    //       height: 45,
-                    //       title: 'Lưu',
-                    //       width: MediaQuery.of(context).size.width,
-                    //     ),
-                    //   );
-                    // })
                   ],
                 );
               },

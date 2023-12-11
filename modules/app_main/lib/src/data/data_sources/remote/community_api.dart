@@ -102,10 +102,10 @@ abstract class CommunityApi {
   });
 
   @PATCH(CommunityApiConstants.updateGroup)
-  Future<GroupByIdResponse> updateGroup({
-    @Path('id') required String id,
-    @Body() required UpdateCommunityPayload payload,
-  });
+  Future<GroupByIdResponse> updateGroup(
+    @Path('id') String id,
+    @Body() dynamic payload,
+  );
 
   @GET(CommunityApiConstants.getTeamList)
   Future<TeamResponse> getTeamList({

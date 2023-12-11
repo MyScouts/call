@@ -221,10 +221,10 @@ class _CommunityApi implements CommunityApi {
   }
 
   @override
-  Future<GroupByIdResponse> updateGroup({
-    required String id,
-    required UpdateCommunityPayload payload,
-  }) async {
+  Future<GroupByIdResponse> updateGroup(
+    String id,
+    dynamic payload,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};

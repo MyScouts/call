@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
 import 'package:app_main/src/data/models/responses/boss_team_relinquish_status_response.dart';
 import 'package:app_main/src/data/models/responses/member_join_request.dart';
-import 'package:app_main/src/domain/usecases/resource_usecase.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/models/payloads/community/reply_give_up_boss_team_role_payload.dart';
@@ -19,9 +16,8 @@ import '../repository/community_repository.dart';
 @injectable
 class CommunityUsecase {
   final CommunityRepository _communityRepository;
-  final ResourceUsecase _resourceUsecase;
 
-  CommunityUsecase(this._communityRepository, this._resourceUsecase);
+  CommunityUsecase(this._communityRepository);
 
   Future<List<Group>> getGroups() {
     return _communityRepository.getGroups();
@@ -57,11 +53,6 @@ class CommunityUsecase {
 
   Future<Team> updateTeam(String id, UpdateCommunityPayload payload) async {
     return _communityRepository.updateTeam(id, payload);
-  }
-
-  Future<String> uploadNewImage(String image) async {
-    // BE return new url avatar
-    return _resourceUsecase.uploadImage(File(image));
   }
 
   Future<FanGroup> getFanGroup() => _communityRepository.getFanGroup();

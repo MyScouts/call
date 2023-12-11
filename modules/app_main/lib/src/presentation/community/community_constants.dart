@@ -136,7 +136,7 @@ extension UpdateGroupOptionExt on UpdateGroupOption {
     }
   }
 
-  Future<void> onTap(BuildContext context,
+  Future<dynamic> onTap(BuildContext context,
       {required Community community}) async {
     switch (this) {
       case UpdateGroupOption.edit:
