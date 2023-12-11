@@ -250,7 +250,7 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
         return _validationRoute(
             [QrCodeScanType.registerCustomer, QrCodeScanType.registerMarshop],
             () {
-          Navigator.pop(context, data['marshopId'].toString());
+          Navigator.pop(context, data['pDoneId'].toString());
         });
       }
 
