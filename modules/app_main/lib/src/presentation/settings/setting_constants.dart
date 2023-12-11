@@ -1,6 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/app/app_cubit.dart';
-import 'package:app_main/src/presentation/community/community.component.dart';
+import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
 import 'package:app_main/src/presentation/profile/user_profile_screen.dart';
 import 'package:app_main/src/presentation/protector/manage_protector_screen.dart';
@@ -57,8 +57,7 @@ class Setting {
           Setting(
             text: "Team",
             icon: Assets.icons_ic_team_png.path,
-            onPressed: () =>
-                Navigator.pushNamed(context, CommunityWidget.routeName),
+            onPressed: () => context.startTeam(),
           ),
           Setting(
               text: "P-Done",
