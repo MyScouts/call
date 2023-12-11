@@ -26,3 +26,14 @@ class TeamByIdResponse {
 
   Map<String, dynamic> toJson() => _$TeamByIdResponseToJson(this);
 }
+
+@JsonSerializable()
+class UpdateTeamResponse {
+  final Team team;
+
+  UpdateTeamResponse({required this.team});
+  factory UpdateTeamResponse.fromJson(Map<String, dynamic> json) =>
+      _$UpdateTeamResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UpdateTeamResponseToJson(this);
+}

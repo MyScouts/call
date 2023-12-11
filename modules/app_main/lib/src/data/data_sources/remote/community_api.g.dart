@@ -289,23 +289,23 @@ class _CommunityApi implements CommunityApi {
   }
 
   @override
-  Future<ApiResponse<Team>> updateTeam({
+  Future<UpdateTeamResponse> updateTeam({
     required String id,
-    required UpdateCommunityPayload payload,
+    required dynamic payload,
   }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = payload;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<Team>>(Options(
-      method: 'PUT',
+        .fetch<Map<String, dynamic>>(_setStreamType<UpdateTeamResponse>(Options(
+      method: 'PATCH',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'api/team/${id}',
+              '/api/v1/team/${id}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -314,10 +314,7 @@ class _CommunityApi implements CommunityApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<Team>.fromJson(
-      _result.data!,
-      (json) => Team.fromJson(json as Map<String, dynamic>),
-    );
+    final value = UpdateTeamResponse.fromJson(_result.data!);
     return value;
   }
 

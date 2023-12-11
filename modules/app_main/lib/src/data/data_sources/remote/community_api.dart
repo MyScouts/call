@@ -31,7 +31,7 @@ class CommunityApiConstants {
   /// get Team & Group By BossId
   static const String getGroupDetail = 'api/group/boss-team/{id}';
   static const String updateGroup = '/api/v1/group/{id}';
-  static const String updateTeam = 'api/team/{id}';
+  static const String updateTeam = '/api/v1/team/{id}';
   static const String checkBossTeamId = 'api/team/check-team?bossTeamId={id}';
   static const String getFanGroup = 'api/fan-groups';
   static const String getFanGroupById = 'api/fan-groups/{id}';
@@ -115,10 +115,10 @@ abstract class CommunityApi {
     @Query('bossId') String? bossId,
   });
 
-  @PUT(CommunityApiConstants.updateTeam)
-  Future<ApiResponse<Team>> updateTeam({
+  @PATCH(CommunityApiConstants.updateTeam)
+  Future<UpdateTeamResponse> updateTeam({
     @Path('id') required String id,
-    @Body() required UpdateCommunityPayload payload,
+    @Body() required dynamic payload,
   });
 
   @GET(CommunityApiConstants.getFanGroup)
