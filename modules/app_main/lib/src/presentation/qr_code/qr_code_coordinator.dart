@@ -15,7 +15,7 @@ import 'package:ui/ui.dart';
 extension DeeplinkCoordinator on BuildContext {
   Future<T?> startScanQrCode<T>({
     bool? showMyQr,
-    required QrCodeScanType type,
+    QrCodeScanType? type,
   }) {
     return Navigator.of(this)
         .pushNamed(ScanQrCodeScanScreen.routeName, arguments: {
@@ -33,6 +33,7 @@ extension DeeplinkCoordinator on BuildContext {
   Future<T?> confirmLoginQrCode<T>({
     required String code,
     required AuthClaimType type,
+    required String pDoneId,
     String? marshopId,
   }) {
     debugPrint("confirmLoginQrCode: $marshopId");
@@ -60,7 +61,7 @@ extension DeeplinkCoordinator on BuildContext {
                   showToastMessage(
                       "Bạn chưa là khách hàng thường xuyên vui lòng đăng ký khách hàng thường xuyên.");
                   context.startReplaceRegisterCustomer(
-                    marshopId: marshopId,
+                    marshopId: pDoneId,
                   );
                   break;
                 default:
