@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 import 'background_picker.dart';
+import 'language_setting.dart';
 
 class SystemSettingData extends InheritedWidget {
   final int page;
@@ -96,7 +97,8 @@ class SystemSetting extends StatelessWidget {
                     children: [
                       _ItemView(
                         onClick: () {
-
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (_) => const LanguageSetting()));
                         },
                         path: IconAppConstants.icTranslate,
                         title: 'Cài đặt ngôn ngữ',

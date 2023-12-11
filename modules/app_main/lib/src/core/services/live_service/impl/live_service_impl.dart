@@ -125,7 +125,6 @@ class LiveServiceImpl extends LiveService {
               : AudienceLatencyLevelType.audienceLatencyLevelUltraLowLatency,
           publishCameraTrack: isBroadcaster,
           publishMicrophoneTrack: isBroadcaster,
-          defaultVideoStreamType: VideoStreamType.videoStreamHigh,
         ),
       );
     } catch (e) {

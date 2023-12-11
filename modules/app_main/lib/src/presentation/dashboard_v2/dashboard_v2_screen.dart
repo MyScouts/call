@@ -11,6 +11,7 @@ import 'package:app_main/src/presentation/dashboard_v2/widget/dash_bottom_fab.da
 import 'package:app_main/src/presentation/dashboard_v2/widget/dashboard_base_v2.dart';
 import 'package:app_main/src/presentation/dashboard_v2/widget/dashboard_header_v2.dart';
 import 'package:app_main/src/presentation/notification/notification_screen.dart';
+import 'package:app_main/src/presentation/notification/state/notification_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,6 +37,8 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
 
   DashboardSharePreferenceUseCase get useCase =>
       getIt<DashboardSharePreferenceUseCase>();
+
+  late final notificationBloc = getIt<NotificationBloc>();
 
   @override
   void initState() {
@@ -75,89 +78,96 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
-      child: Material(
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            Scaffold(
-              key: drawKey,
-              endDrawer: DashboardDrawer(
-                page: BottomBarType.values.indexOf(_type),
-              ),
-              backgroundColor: const Color(0xffF4F4F4),
-              body: GestureDetector(
-                onTap: () {
-                  fabKey.currentState?.revert();
-                  bottomKey.currentState?.disableFab();
-                },
-                behavior: HitTestBehavior.opaque,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        DashBoardV2Header(
-                          onNotification: () {
-                            notificationKey.currentState?.forward();
-                          },
-                          openAppStore: () {
-                            drawKey.currentState?.openEndDrawer();
-                          },
-                          openSetting: () {
-                            context.startSystemSetting(0);
-                          },
-                        ),
-                        Expanded(
-                          child: PageView.builder(
-                            controller: pageController,
-                            itemCount: children.length,
-                            itemBuilder: (context, index) => children[index],
-                            onPageChanged: (page) {
-                              if (mounted) {
-                                setState(() {
-                                  _type = BottomBarType.fromIndex(page);
-                                });
-                              }
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<NotificationBloc>(
+            create: (_) => notificationBloc,
+          ),
+        ],
+        child: Material(
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Scaffold(
+                key: drawKey,
+                endDrawer: DashboardDrawer(
+                  page: BottomBarType.values.indexOf(_type),
+                ),
+                backgroundColor: const Color(0xffF4F4F4),
+                body: GestureDetector(
+                  onTap: () {
+                    fabKey.currentState?.revert();
+                    bottomKey.currentState?.disableFab();
+                  },
+                  behavior: HitTestBehavior.opaque,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          DashBoardV2Header(
+                            onNotification: () {
+                              notificationKey.currentState?.forward();
+                            },
+                            openAppStore: () {
+                              drawKey.currentState?.openEndDrawer();
+                            },
+                            openSetting: () {
+                              context.startSystemSetting(0);
                             },
                           ),
-                        ),
-                      ],
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      left: (ScreenUtil().screenWidth - 32) / 2 + 8,
-                      child: DashBottomFab(key: fabKey),
-                    ),
-                  ],
+                          Expanded(
+                            child: PageView.builder(
+                              controller: pageController,
+                              itemCount: children.length,
+                              itemBuilder: (context, index) => children[index],
+                              onPageChanged: (page) {
+                                if (mounted) {
+                                  setState(() {
+                                    _type = BottomBarType.fromIndex(page);
+                                  });
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        left: (ScreenUtil().screenWidth - 32) / 2 + 8,
+                        child: DashBottomFab(key: fabKey),
+                      ),
+                    ],
+                  ),
+                ),
+                bottomNavigationBar: DashBoardBottomBar(
+                  key: bottomKey,
+                  type: _type,
+                  onChanged: (type) {
+                    pageController.animateToPage(
+                      BottomBarType.values.indexOf(type),
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeIn,
+                    );
+                  },
+                  onFabChange: (value) {
+                    if (value) {
+                      fabKey.currentState?.forward();
+                    } else {
+                      fabKey.currentState?.revert();
+                    }
+                  },
                 ),
               ),
-              bottomNavigationBar: DashBoardBottomBar(
-                key: bottomKey,
-                type: _type,
-                onChanged: (type) {
-                  pageController.animateToPage(
-                    BottomBarType.values.indexOf(type),
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeIn,
-                  );
-                },
-                onFabChange: (value) {
-                  if (value) {
-                    fabKey.currentState?.forward();
-                  } else {
-                    fabKey.currentState?.revert();
-                  }
+              NotificationScreen(
+                key: notificationKey,
+                onClose: () {
+                  notificationKey.currentState?.revert();
                 },
               ),
-            ),
-            NotificationScreen(
-              key: notificationKey,
-              onClose: () {
-                notificationKey.currentState?.revert();
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
