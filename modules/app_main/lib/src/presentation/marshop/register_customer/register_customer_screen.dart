@@ -36,7 +36,7 @@ class RegisterCustomerScreen extends StatefulWidget {
 class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
     with ValidationMixin {
   final TextEditingController _marshopIdCtrl = TextEditingController();
-  MarshopDetailBloc get _marshopDetailBloc => context.read();
+  final _marshopDetailBloc = injector.get<MarshopDetailBloc>();
   final _acceptTerm = ValueNotifier(false);
   late final userCubit = context.read<UserCubit>();
   final _marshopIdValidCtrl = ValueNotifier<MarshopResponse?>(null);
@@ -53,11 +53,9 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
     userCubit.onboarding();
     if (widget.marshopId != null) {
       _marshopIdCtrl.text = widget.marshopId!;
+      _handleCheckMarshop();
     }
-    _acceptTerm.addListener(() {
-      onValidation();
-    });
-
+    _acceptTerm.addListener(() => onValidation());
     _marshopIdCtrl.addListener(() => _handleCheckMarshop());
   }
 
@@ -76,99 +74,103 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<UserCubit, UserState>(
-          listener: (context, state) {
-            if (state is OnGetOnboarding) {
-              showLoading();
-            }
-
-            if (state is OnboardingFail) {
-              hideLoading();
-              showToastMessage("Lỗi hệ thống vui lòng thử lại sau");
-            }
-
-            if (state is OnboardingSuccess) {
-              hideLoading();
-              if (state.onboarding.isMarshopCustomer) {
-                context.showToastMessage("Bạn đã là khách hàng thường xuyên.");
-                context.pop();
-                return;
+    return BlocProvider(
+      create: (context) => _marshopDetailBloc,
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<UserCubit, UserState>(
+            listener: (context, state) {
+              if (state is OnGetOnboarding) {
+                showLoading();
               }
-            }
-          },
-        ),
-        BlocListener<MarshopDetailBloc, GetDetailState>(
-          listener: _marshopDetailListener,
-        ),
-        BlocListener<MarshopCubit, MarshopState>(
-          listener: (context, state) {
-            if (state is RegisterCustomerSuccess) {
-              hideLoading();
-              context.congratulationRegisterCustomer();
-            }
 
-            if (state is RegisterCustomerFailed) {
-              hideLoading();
-              showToastMessage(state.message, ToastMessageType.error);
-            }
-          },
-        ),
-        BlocListener<AuthCubit, AuthState>(
-          listener: (context, state) {
-            if (state is SendOTPSuccess) {
-              hideLoading();
-              context.startDialogVerifyPhoneOTP(
-                marshopId: _marshopIdValidCtrl.value!.id,
-                phone: _authInfo.phone ?? '',
-              );
-            }
+              if (state is OnboardingFail) {
+                hideLoading();
+                showToastMessage("Lỗi hệ thống vui lòng thử lại sau");
+              }
 
-            if (state is SendOTPFail) {
-              hideLoading();
-              showToastMessage(
-                  "Gởi OTP không thành công", ToastMessageType.error);
-            }
-          },
-        ),
-      ],
-      child: ScaffoldHideKeyboard(
-        appBar: const BaseAppBar(title: "Nâng cấp khách hàng thường xuyên"),
-        body: Form(
-          key: formKey,
-          child: SingleChildScrollView(
-            child: Column(children: [
-              const ReadMorePolicy(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: AcceptTermWithCheckboxWidget(
-                  acceptTerm: _acceptTerm,
+              if (state is OnboardingSuccess) {
+                hideLoading();
+                if (state.onboarding.isMarshopCustomer) {
+                  context
+                      .showToastMessage("Bạn đã là khách hàng thường xuyên.");
+                  context.pop();
+                  return;
+                }
+              }
+            },
+          ),
+          BlocListener<MarshopDetailBloc, GetDetailState>(
+            listener: _marshopDetailListener,
+          ),
+          BlocListener<MarshopCubit, MarshopState>(
+            listener: (context, state) {
+              if (state is RegisterCustomerSuccess) {
+                hideLoading();
+                context.congratulationRegisterCustomer();
+              }
+
+              if (state is RegisterCustomerFailed) {
+                hideLoading();
+                showToastMessage(state.message, ToastMessageType.error);
+              }
+            },
+          ),
+          BlocListener<AuthCubit, AuthState>(
+            listener: (context, state) {
+              if (state is SendOTPSuccess) {
+                hideLoading();
+                context.startDialogVerifyPhoneOTP(
+                  marshopId: _marshopIdValidCtrl.value!.id,
+                  phone: _authInfo.phone ?? '',
+                );
+              }
+
+              if (state is SendOTPFail) {
+                hideLoading();
+                showToastMessage(
+                    "Gởi OTP không thành công", ToastMessageType.error);
+              }
+            },
+          ),
+        ],
+        child: ScaffoldHideKeyboard(
+          appBar: const BaseAppBar(title: "Nâng cấp khách hàng thường xuyên"),
+          body: Form(
+            key: formKey,
+            child: SingleChildScrollView(
+              child: Column(children: [
+                const ReadMorePolicy(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: AcceptTermWithCheckboxWidget(
+                    acceptTerm: _acceptTerm,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              _buildMarshopInput(),
-              const SizedBox(height: 10),
-              validationListenableBuilder(
-                builder: (isValid) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 15,
-                      horizontal: paddingHorizontal,
-                    ),
-                    child: PrimaryButton(
-                      width: MediaQuery.of(context).size.width,
-                      title: S.current.register,
-                      onTap: () {
-                        showLoading();
-                        context.read<AuthCubit>().sendOTP();
-                      },
-                      disabled: !isValid,
-                    ),
-                  );
-                },
-              )
-            ]),
+                const SizedBox(height: 10),
+                _buildMarshopInput(),
+                const SizedBox(height: 10),
+                validationListenableBuilder(
+                  builder: (isValid) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 15,
+                        horizontal: paddingHorizontal,
+                      ),
+                      child: PrimaryButton(
+                        width: MediaQuery.of(context).size.width,
+                        title: S.current.register,
+                        onTap: () {
+                          showLoading();
+                          context.read<AuthCubit>().sendOTP();
+                        },
+                        disabled: !isValid,
+                      ),
+                    );
+                  },
+                )
+              ]),
+            ),
           ),
         ),
       ),
