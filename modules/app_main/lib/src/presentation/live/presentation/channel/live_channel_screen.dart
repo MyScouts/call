@@ -52,6 +52,7 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
       if (!widget.fromPip && PipHandler.showPip.value) {
         PipHandler.removeOverlay();
       }
+      
     });
   }
 

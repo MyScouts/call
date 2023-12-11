@@ -1,8 +1,6 @@
-import 'package:app_main/src/core/coordinator/app_coordinator.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_detail.dart';
 import 'package:app_main/src/presentation/live/domain/usecases/live_usecases.dart';
 import 'package:app_main/src/presentation/live/live_magane_state.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';

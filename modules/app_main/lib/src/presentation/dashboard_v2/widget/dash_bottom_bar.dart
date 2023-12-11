@@ -55,6 +55,11 @@ class DashBoardBottomBarState extends State<DashBoardBottomBar> {
       setState(() {
         showFab = false;
       });
+      if (showFab) {
+        bKey.currentState?.forward();
+      } else {
+        bKey.currentState?.revert();
+      }
     }
   }
 

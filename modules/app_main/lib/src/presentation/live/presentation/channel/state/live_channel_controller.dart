@@ -220,6 +220,8 @@ class LiveChannelController {
     );
 
     _enablePk.value = false;
+
+    LiveManageState.hostID.value = hostID;
   }
 
   void joinPk(int id) async {
@@ -253,6 +255,8 @@ class LiveChannelController {
     );
 
     _enablePk.value = true;
+
+    LiveManageState.hostID.value = hostID;
   }
 
   Future<List<LiveMember>> getMembers(int id) async {
@@ -378,6 +382,8 @@ class LiveChannelController {
       } else {
         _enablePk.value = false;
       }
+
+      LiveManageState.hostID.value = hostID;
 
       if (Platform.isAndroid) _initForegroundTask();
     } catch (e) {
@@ -613,6 +619,8 @@ class LiveChannelController {
         liveID: data['liveId'],
       );
       _members.value = [..._members, member];
+
+      LiveManageState.hostID.value = hostID;
 
       print('length ===> ${_members.length}');
       if (user.id == _me.value.info.userID) {
