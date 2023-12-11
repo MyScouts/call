@@ -5,11 +5,13 @@ import 'package:app_main/src/presentation/social/my_profile/my_profile_constants
 import 'package:app_main/src/presentation/social/my_profile/my_profile_coordinator.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/common/subordinate_scroll.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/post_header_user_info.dart';
+import 'package:app_main/src/presentation/social/my_profile/screens/widgets/post_video_thumbnail_widget.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/react_comment_widget.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/profile_avatar.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/react_widget.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:ui/ui.dart';
 
@@ -158,7 +160,7 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
               if (hasMedia) const SizedBox(height: 12),
               if (hasMedia)
                 SizedBox(
-                  height: 172,
+                  height: 172.h,
                   child: _buildShowMedia(
                     isNewPost: isNewPost,
                     postType: widget.postType,
@@ -370,13 +372,22 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
             },
           );
         case PostType.video:
-          return SizedBox(
-            width: double.infinity,
+          return PostVideoThumbnailWidget(
+            onTap: () {
+              context.startPostPreview(
+                post: post,
+                myProfileBloc: context.read<MyProfileBloc>(),
+                currentMediaIndex: -1,
+                onChange: (_) => {},
+              );
+            },
             child: CommonVideoPlayer(
               videoType: VideoType.network,
               source: medias.first.link!,
+              isShowOnlyPlayIcon: true,
             ),
           );
+
         default:
           break;
       }

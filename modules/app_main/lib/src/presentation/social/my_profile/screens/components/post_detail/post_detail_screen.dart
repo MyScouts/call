@@ -5,10 +5,12 @@ import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_blo
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_coordinator.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/post_header_user_info.dart';
+import 'package:app_main/src/presentation/social/my_profile/screens/widgets/post_video_thumbnail_widget.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/react_widget.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:ui/ui.dart';
 
@@ -33,7 +35,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
   ScrollController scrollController = ScrollController();
   late List<GlobalKey> imagesGlobalKey;
   late Post post;
-  final imageHeight = 248.0;
+  final imageHeight = 248.h;
 
   @override
   void initState() {
@@ -167,12 +169,12 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
     }
 
     if (postType.isVideo) {
-      return SizedBox(
-        width: double.infinity,
+      return PostVideoThumbnailWidget(
+        onTap: () => _handleOnTapMedia(index),
         child: CommonVideoPlayer(
           videoType: VideoType.network,
           source: media.link!,
-          // isShowOnlyPlayIcon: true,
+          isShowOnlyPlayIcon: true,
         ),
       );
     }

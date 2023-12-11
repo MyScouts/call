@@ -143,7 +143,7 @@ import '../presentation/chat/conversation/cubit/conversation_cubit.dart'
 import '../presentation/chat/create_room/cubit/create_room_cubit.dart' as _i121;
 import '../presentation/chat/new_message/cubit/new_message_cubit.dart' as _i157;
 import '../presentation/community/community_constants.dart' as _i142;
-import '../presentation/community/community_module.dart' as _i184;
+import '../presentation/community/community_module.dart' as _i185;
 import '../presentation/community/community_routes.dart' as _i9;
 import '../presentation/community/edit_community_detail/bloc/edit_community_detail_bloc.dart'
     as _i125;
@@ -524,9 +524,15 @@ Future<_i1.GetIt> init(
       _i48.GetDetailBlocParam2<_i141.ConfirmResponse, String,
           _i143.ReplyGiveUpBossTeamRolePayload>>(() => communityModule
       .createReplyGiveUpBossTeamBloc(gh<_i119.CommunityUsecase>()));
+  gh.factory<_i48.GetListBloc<_i135.MarshopRegisterPackResponse>>(
+      () => marshopBlocFactory.getMarshopPack(gh<_i60.MarshopUsecase>()));
+  gh.factory<_i48.GetListBloc<_i3.Team>>(
+      () => dashBoardModule.getMyTeams(gh<_i119.CommunityUsecase>()));
   gh.factory<_i48.GetListBloc<_i3.Group>>(() =>
       communityModule.createGetListGroupsBloc(gh<_i119.CommunityUsecase>()));
-  gh.factory<_i48.GetListBloc<_i144.Bank>>(() => upgradeAgreePolicyBlocFactory
+  gh.factory<_i48.GetListBloc<_i144.GroupRequest>>(() =>
+      communityModule.createGetGroupRequestsBloc(gh<_i119.CommunityUsecase>()));
+  gh.factory<_i48.GetListBloc<_i145.Bank>>(() => upgradeAgreePolicyBlocFactory
       .createGetListBanksBloc(gh<_i89.UpgradeAccountUsecase>()));
   gh.factory<_i48.GetListBloc<_i133.MarshopRegisterPackResponse>>(
       () => marshopBlocFactory.getMarshopPack(gh<_i60.MarshopUsecase>()));
