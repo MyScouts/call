@@ -31,10 +31,6 @@ import 'team_detail/team_detail_screen.dart';
 extension CommunityCoordinator on BuildContext {
   Future<T?> startGroupDetail<T>(
       {required String? id, String? groupName, String? cover}) {
-    // if (!isAuthenticated) {
-    //   return startLogin<T>(hasDashboard: true);
-    // }
-
     return Navigator.of(this)
         .pushNamed(GroupDetailScreen.routeName, arguments: {
       'id': id,
@@ -45,10 +41,6 @@ extension CommunityCoordinator on BuildContext {
 
   Future<T?> startTeamDetail<T>(
       {required String? id, String? name, int? bossGroupId}) {
-    // if (!isAuthenticated) {
-    //   return startLogin<T>(hasDashboard: true);
-    // }
-
     return Navigator.of(this).pushNamed(TeamDetailScreen.routeName, arguments: {
       'id': id,
       'name': name,

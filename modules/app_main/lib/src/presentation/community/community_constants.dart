@@ -140,14 +140,10 @@ extension UpdateGroupOptionExt on UpdateGroupOption {
       {required Community community}) async {
     switch (this) {
       case UpdateGroupOption.edit:
-        return context.showToastMessage(
-          'Tính năng này đang được phát triển',
-          ToastMessageType.warning,
+        return await context.startEditInformation(
+          community: community,
+          type: CommunityType.group,
         );
-      // return await context.startEditInformation(
-      //   community: community,
-      //   type: CommunityType.group,
-      // );
       case UpdateGroupOption.pendingRequest:
         return await context.startGroupRequestList();
       case UpdateGroupOption.relinquish:
