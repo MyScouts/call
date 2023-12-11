@@ -372,7 +372,6 @@ class _LivePKRtc extends StatelessWidget {
       right = AnimatedSize(
         duration: const Duration(milliseconds: 150),
         child: AgoraVideoView(
-          key: UniqueKey(),
           controller: VideoViewController(
             rtcEngine: controller.service.engine,
             canvas: VideoCanvas(
