@@ -5,7 +5,8 @@ import 'group_request_list_screen.dart';
 
 final items = [
   _Item('Chỉnh sửa thông tin Group', '', Colors.black),
-  _Item('Yêu cầu cần phê duyệt', GroupRequestListScreen.routeName, Colors.black),
+  _Item(
+      'Yêu cầu cần phê duyệt', GroupRequestListScreen.routeName, Colors.black),
   _Item('Từ chức Boss Group', '', Colors.red),
 ];
 
@@ -58,7 +59,7 @@ class _ItemView extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(item.router);
-        },
+      },
       behavior: HitTestBehavior.opaque,
       child: Container(
         height: 50,
