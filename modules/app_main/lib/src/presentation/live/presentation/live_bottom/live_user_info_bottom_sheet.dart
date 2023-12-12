@@ -90,30 +90,16 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
         },
         child: Builder(builder: (context) {
           final useByIdrBloc = context.watch<GetUserByIdBloc>().state;
+          final userBloc = context.watch<UserCubit>().state;
           if (useByIdrBloc is GetDetailDataSuccess) {
             final userInfo = useByIdrBloc.data;
-            return Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(topRight: Radius.circular(16), topLeft: Radius.circular(16)),
-                  color: Colors.white,
-                ),
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  const SizedBox(height: 10),
-                  Center(
-                      child: AppAvatarWidget(
-                    avatar: userInfo.avatar,
-                    defaultAvatar: ImageConstants.defaultUserAvatar,
-                    width: 100,
-                    height: 100,
-                    isPDone: userInfo.isPDone,
-                    border: Border.all(color: AppColors.white, width: 4),
-                  )),
-                  const SizedBox(height: 10),
-                  _buildUserName(userInfo),
-                  const SizedBox(height: 10),
-                  _buildUserInfo(userInfo),
-                  const SizedBox(height: 20),
-                ]));
+            return UserInfoHeader(
+              userInfo: userInfo,
+              friendStatusCtrl: _friendStatus,
+              followInfoCtrl: _followInfo,
+              authInfo: _authInfo,
+              onBoarding: userBloc is OnboardingSuccess ? userBloc.onboarding : null,
+            );
           }
           return const SizedBox(
             height: 300,
@@ -123,8 +109,74 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
       ),
     ));
   }
+}
 
-  _buildUserName(User userInfo) {
+class UserInfoHeader extends StatelessWidget {
+  final User userInfo;
+  final User authInfo;
+  final ValueNotifier<bool> friendStatusCtrl;
+  final bool isMe;
+  final ValueNotifier<GetUserFollowDetailResponse?> followInfoCtrl;
+  final OnBoarding? onBoarding;
+
+  const UserInfoHeader({
+    super.key,
+    required this.userInfo,
+    required this.friendStatusCtrl,
+    this.isMe = false,
+    required this.followInfoCtrl,
+    required this.authInfo,
+    required this.onBoarding,
+  });
+
+  bool _getButtonStatus({required GetUserFollowRelationResponse relation}) {
+    if (relation.hasPendingApproval != null && relation.hasPendingApproval!) {
+      return true;
+    }
+    if (onBoarding != null) {
+      if (onBoarding!.isPdone && authInfo.old <= 15) {}
+    }
+
+    return false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => injector.get<GlobalPersonSettingBloc>()..add(GetDetailDataParam1Event(userInfo.id)),
+      child: BlocListener<UserCubit, UserState>(
+        listener: (context, state) {},
+        child: Container(
+          padding: const EdgeInsets.only(bottom: 20),
+          decoration: const BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+          ),
+          child: Column(children: [
+            const SizedBox(height: 24),
+            Center(
+                child: AppAvatarWidget(
+              avatar: userInfo.avatar,
+              defaultAvatar: ImageConstants.defaultUserAvatar,
+              width: 136,
+              height: 136,
+              isPDone: userInfo.isPDone,
+              border: Border.all(color: AppColors.white, width: 4),
+            )),
+            const SizedBox(height: 6),
+            _buildUserName(context),
+            const SizedBox(height: 10),
+            _buildUserInfo(context),
+          ]),
+        ),
+      ),
+    );
+  }
+
+  _buildUserName(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -175,66 +227,68 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
     );
   }
 
-  _buildUserInfo(User userInfo) {
+  _buildUserInfo(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
-          _buildInfomation(userInfo),
+          _buildInfomation(context),
           const SizedBox(height: 10),
-          _buildFriendInfo(userInfo),
+          _buildFriendInfo(context),
           if (!isMe) const SizedBox(height: 20),
-          if (!isMe) _buildProfileAction(userInfo),
+          if (!isMe) _buildProfileAction(context),
         ],
       ),
     );
   }
 
-  _buildInfomation(User userInfo) {
+  _buildInfomation(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           if (userInfo.sex != null)
-            Container(
-              height: 25,
+            IntrinsicHeight(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: const Color(0XFFFFEDF8),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    ImageWidget(
+                      userInfo.sex!.getIcon(),
+                      height: 15,
+                    ),
+                    const SizedBox(width: 3),
+                    Text(
+                      userInfo.old.toString(),
+                      style: context.text.titleSmall!.copyWith(height: 0),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          const SizedBox(width: 5),
+          IntrinsicHeight(
+            child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
-                color: userInfo.sex!.sexBackGroundColor,
+                color: const Color(0XFF4B84F7),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
                 children: [
-                  ImageWidget(
-                    userInfo.sex!.getIcon1(),
-                    height: 20,
-                    width: 20,
-                  ),
                   Text(
-                    userInfo.old.toString(),
-                    style: context.text.titleMedium
-                        ?.copyWith(fontSize: 14, height: 1, color: userInfo.sex!.sexColor, fontWeight: FontWeight.w600),
+                    "LV.1",
+                    style: context.text.titleSmall!.copyWith(
+                      color: AppColors.white,
+                    ),
                   ),
                 ],
               ),
-            ),
-          const SizedBox(width: 5),
-          Container(
-            height: 25,
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            decoration: BoxDecoration(
-              color: const Color(0XFF4B84F7),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              children: [
-                Text(
-                  "LV.1",
-                  style: context.text.titleMedium
-                      ?.copyWith(fontSize: 14, height: 1, color: Colors.white, fontWeight: FontWeight.w600),
-                ),
-              ],
             ),
           ),
           if (userInfo.joinedTeam != null) const SizedBox(width: 5),
@@ -276,9 +330,9 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
     );
   }
 
-  _buildFriendInfo(User userInfo) {
+  _buildFriendInfo(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: _followInfo,
+      valueListenable: followInfoCtrl,
       builder: (context, value, child) {
         if (value == null) {
           return const SizedBox.shrink();
@@ -292,7 +346,7 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
               child: Column(
                 children: [
                   ValueListenableBuilder(
-                    valueListenable: _friendStatus,
+                    valueListenable: friendStatusCtrl,
                     builder: (context, value, child) {
                       return Text(
                         stats.followerCount.toString(),
@@ -360,50 +414,69 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
     );
   }
 
-  _buildProfileAction(User userInfo) {
-    final userBloc = context.watch<UserCubit>().state;
+  _buildProfileAction(BuildContext context) {
     return Row(
       children: [
         ValueListenableBuilder(
-          valueListenable: _followInfo,
+          valueListenable: followInfoCtrl,
           builder: (context, value, child) {
             if (value == null) return const SizedBox.shrink();
             final relation = value.relation;
             return Expanded(
+              flex: 2,
               child: PrimarySolidButton(
                 height: 40,
                 title: friendStatusStr(
                   isFriend: relation.isFriend,
                   isFollower: relation.isFollower,
-                  isFollowee: false,
+                  isFollowee: relation.isFollowee,
                   isBlocked: userInfo.isBlock,
                 ),
-                onTap: () => _onFriendAction(userInfo, relation),
-                disabled: _getButtonStatus(userBloc is OnboardingSuccess ? userBloc.onboarding : null),
+                onTap: () => _onFriendAction(context, relation),
+                disabled: _getButtonStatus(relation: relation),
                 width: null,
               ),
             );
           },
         ),
         const SizedBox(width: 10),
-        Expanded(
-          child: PrimarySolidButton(
+        CommonOutlineButton(
+          height: 40,
+          onPressed: () {},
+          label: "Nhắn tin",
+        ),
+        const SizedBox(width: 10),
+        GestureDetector(
+          onTap: () async {
+            context.showDiaryActions(userInfo: userInfo).then((result) {
+              if (result != null) {
+                context.read<UserActionCubit>().getFollowUser(userId: userInfo.id!);
+              }
+            });
+          },
+          child: Container(
             height: 40,
-            title: 'Trang cá nhân',
-            onTap: () {
-              context.startDiary(userId: widget.userId.toString());
-            },
-            width: null,
-            disabled: false,
+            width: 40,
+            padding: const EdgeInsets.all(13),
+            decoration: BoxDecoration(
+              color: const Color(0XFFE8F0FE),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: ImageWidget(
+              IconAppConstants.icFlag,
+              color: context.theme.primaryColor,
+            ),
           ),
         )
       ],
     );
   }
 
-  _onFriendAction(User userInfo, GetUserFollowRelationResponse relation) async {
+  _onFriendAction(BuildContext context, GetUserFollowRelationResponse relation) async {
     if (!relation.isFollower) {
-      _actionBloc.followUser(payload: FollowUserPayload(followeeId: userInfo.id!));
+      context.read<UserActionCubit>().followUser(
+            payload: FollowUserPayload(followeeId: userInfo.id!),
+          );
     } else {
       context
           .showFriendActions(
@@ -414,25 +487,9 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
       )
           .then((value) {
         if (value != null && value is User) {
-          _actionBloc.getFollowUser(userId: userInfo.id!);
+          context.read<UserActionCubit>().getFollowUser(userId: userInfo.id!);
         }
       });
     }
-  }
-
-  bool _getButtonStatus(OnBoarding? onBoarding) {
-    if (_followInfo.value == null) return true;
-    final followInfo = _followInfo.value!.relation;
-
-    if (followInfo.isFollowee || followInfo.isFriend) return false;
-
-    if (onBoarding != null) {
-      if (onBoarding.isPdone && _authInfo.old > 15) return false;
-      if (onBoarding.isPdone && _authInfo.old <= 15) {
-        return false;
-      }
-    }
-
-    return true;
   }
 }

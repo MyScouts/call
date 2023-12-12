@@ -59,11 +59,7 @@ class LiveRepositoryImpl extends LiveRepository {
   }
 
   @override
-  Future sendGift(
-      {required int userId,
-      required int liveId,
-      required int giftId,
-      required int total}) async {
+  Future sendGift({required int userId, required int liveId, required int giftId, required int total}) async {
     return _liveApi.sendGift(userId, liveId, giftId, total);
   }
 
@@ -104,8 +100,7 @@ class LiveRepositoryImpl extends LiveRepository {
     int? pageSize,
     required bool isFriend,
   }) async {
-    final result = await _liveApi.getListInviteFriend(
-        page: page, pageSize: pageSize, isFriend: isFriend);
+    final result = await _liveApi.getListInviteFriend(page: page, pageSize: pageSize, isFriend: isFriend);
 
     return result.data;
   }
@@ -123,12 +118,8 @@ class LiveRepositoryImpl extends LiveRepository {
   }
 
   @override
-  Future<Live> getListLivefollowing(
-      {required int page,
-      required int pageSize,
-      required bool isFriend}) async {
-    final result = await _liveApi.getListLivefollowing(
-        page: page, pageSize: pageSize, isFriend: isFriend);
+  Future<Live> getListLivefollowing({required int page, required int pageSize, required bool isFriend}) async {
+    final result = await _liveApi.getListLivefollowing(page: page, pageSize: pageSize, isFriend: isFriend);
 
     return result.data;
   }
@@ -170,6 +161,12 @@ class LiveRepositoryImpl extends LiveRepository {
   @override
   Future<LivePkData> getPk(int id) async {
     final res = await _liveApi.getPk(id);
+    return res.data;
+  }
+
+  @override
+  Future<GiftCardLive> getLiveState(int liveID) async {
+    final res = await _liveApi.getLiveStats(liveId: liveID);
     return res.data;
   }
 }
