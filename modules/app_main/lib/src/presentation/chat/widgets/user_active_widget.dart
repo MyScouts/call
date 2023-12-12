@@ -30,6 +30,7 @@ class UserActiveWidget extends StatelessWidget {
             AvatarMemberWidget(
               size: 70,
               avatar: data.avatar ?? '',
+              isPDone: data.type > 0,
             ),
             kSpacingHeight10,
             Text(
