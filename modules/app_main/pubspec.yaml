@@ -119,6 +119,8 @@ dependencies:
   pulsator: ^1.0.0+2
   percent_indicator: ^4.2.3
   detectable_text_field: ^3.0.2
+  auto_animated_list:
+    path: ../auto_animated_list
   
 dev_dependencies:
   flutter_test:

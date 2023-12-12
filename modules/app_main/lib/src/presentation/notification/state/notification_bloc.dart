@@ -35,7 +35,7 @@ class NotificationBloc extends CoreBloc<NotificationEvent, NotificationState> {
   RefreshController get controller => _controller;
 
   void onDelete(Delete event, Emitter<NotificationState> emit) {
-    if(state.isSearching) return;
+    if (state.isSearching) return;
     final items = state.items.where((e) => e.id != event.id).toList();
     useCase.delete(event.id);
     emit(state.copyWith(items: items));
@@ -114,6 +114,11 @@ class NotificationState extends CoreState with EquatableMixin {
     this.hasLoadMore = true,
     super.status,
   });
+
+  int get notReadCount => items.fold(0, (pre, e) {
+        if (!e.isRead) return pre += 1;
+        return pre;
+      });
 
   NotificationState copyWith({
     StateStatus? status,

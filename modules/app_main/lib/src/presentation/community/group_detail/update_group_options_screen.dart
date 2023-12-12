@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
@@ -11,19 +12,39 @@ import '../../../data/models/responses/confirm_response.dart';
 import '../community_constants.dart';
 import '../groups/group_listing_bloc.dart';
 
-class UpdateGroupOptionScreen extends StatelessWidget {
+class UpdateGroupOptionScreen extends StatefulWidget {
   final Community community;
   static const String routeName = '/update-group-options';
 
   const UpdateGroupOptionScreen({super.key, required this.community});
 
   @override
+  State<UpdateGroupOptionScreen> createState() =>
+      _UpdateGroupOptionScreenState();
+}
+
+class _UpdateGroupOptionScreenState extends State<UpdateGroupOptionScreen> {
+  late Community _community;
+  bool hasUpdate = false;
+  @override
+  void initState() {
+    super.initState();
+    _community = widget.community;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        leading: IconButton(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () => context.pop(data: true),
+        ),
         title: Text(
-          '${community.name}',
+          '${_community.name}',
           style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
@@ -55,7 +76,20 @@ class UpdateGroupOptionScreen extends StatelessWidget {
                                 ),
                       ),
                       trailing: const Icon(Icons.keyboard_arrow_right_sharp),
-                      onTap: () => option.onTap(context, community: community),
+                      onTap: () async {
+                        final result =
+                            await option.onTap(context, community: _community);
+                        if (result != null && result is Group) {
+                          _community = _community.copyWith(
+                            avatar: result.avatar,
+                            banner: result.banner,
+                            name: result.name,
+                            introduction: result.introduction,
+                          );
+                          hasUpdate = true;
+                          setState(() {});
+                        }
+                      },
                     ),
                   ),
                 )
@@ -73,7 +107,7 @@ class UpdateGroupOptionScreen extends StatelessWidget {
       context.hideLoading();
       if (state.data.giveUpBossRoleRequest == null) {
         context.startDialogRelinquishBoss(
-          '${community.id}',
+          '${widget.community.id}',
           CommunityType.group,
           context.read<RelinquishBossRoleBloc>(),
         );

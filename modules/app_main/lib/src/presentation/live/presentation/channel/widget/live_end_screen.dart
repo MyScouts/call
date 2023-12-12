@@ -27,7 +27,7 @@ class _LiveEndScreenState extends State<LiveEndScreen> {
 
   @override
   void initState() {
-    listController.getListLive();
+    listController.getListLive(isShowMessage: false);
     super.initState();
   }
 

@@ -3,7 +3,6 @@ import 'package:app_main/src/app_dimens.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/community/community_coordinator.dart';
-import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
@@ -498,9 +497,15 @@ class _TopBarRightButtons extends StatelessWidget {
     if (canEdit) {
       content = GestureDetector(
         onTap: () {
-          context.startUpdateGroupOptions(
+          context
+              .startUpdateGroupOptions(
             community: Community.copyWithGroup(group),
-          );
+          )
+              .then((value) {
+            if (value) {
+              bloc.add(FetchGroupDetailEvent(group.id!));
+            }
+          });
         },
         behavior: HitTestBehavior.opaque,
         child: Padding(
@@ -608,8 +613,6 @@ class _GroupBanner extends StatelessWidget {
     final group =
         (context.watch<GroupDetailBloc>().state as FetchGroupDetailSuccess)
             .group;
-    final imageWidth = (screenWidth * pixelRatio).round();
-
     if (group.banner == null || group.banner!.isEmpty) {
       return ImageWidget(
         ImageConstants.imgDefaultTeamBanner,

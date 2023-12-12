@@ -19,6 +19,7 @@ class UpdateTeamOptionsScreen extends StatelessWidget {
   UpdateTeamOptionsScreen({super.key, required this.team});
 
   final ValueNotifier _updateCtrl = ValueNotifier(false);
+  final ValueNotifier<Team?> _teamCtrl = ValueNotifier(null);
 
   @override
   Widget build(BuildContext context) {
@@ -70,10 +71,14 @@ class UpdateTeamOptionsScreen extends StatelessWidget {
                           ),
                           trailing:
                               const Icon(Icons.keyboard_arrow_right_sharp),
-                          onTap: () =>
-                              option.onTap(context, team: team).then((value) {
+                          onTap: () => option
+                              .onTap(context, team: _teamCtrl.value ?? team)
+                              .then((value) {
                             if (value != null) {
                               _updateCtrl.value = true;
+                              if (value is Team) {
+                                _teamCtrl.value = value;
+                              }
                             }
                           }),
                         ),

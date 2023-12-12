@@ -13,6 +13,7 @@ import 'package:app_main/src/presentation/dashboard_v2/widget/dash_bottom_fab.da
 import 'package:app_main/src/presentation/dashboard_v2/widget/dashboard_base_v2.dart';
 import 'package:app_main/src/presentation/dashboard_v2/widget/dashboard_header_v2.dart';
 import 'package:app_main/src/presentation/notification/notification_screen.dart';
+import 'package:app_main/src/presentation/notification/state/notification_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,6 +36,8 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2> with AutomaticKee
   final GlobalKey<DashBoardBottomBarState> bottomKey = GlobalKey<DashBoardBottomBarState>();
 
   DashboardSharePreferenceUseCase get useCase => getIt<DashboardSharePreferenceUseCase>();
+
+  late final notificationBloc = getIt<NotificationBloc>();
 
   @override
   void initState() {
@@ -96,6 +99,12 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2> with AutomaticKee
       listener: _listenStringeeBloc,
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
+        child: MultiBlocProvider(
+        providers: [
+          BlocProvider<NotificationBloc>(
+            create: (_) => notificationBloc,
+          ),
+        ],
         child: Material(
           child: Stack(
             fit: StackFit.expand,

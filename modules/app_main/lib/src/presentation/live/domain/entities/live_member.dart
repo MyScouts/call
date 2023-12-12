@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:get/get.dart';
 
 class LiveMemberInfo extends Equatable {
   final int userID;

@@ -47,7 +47,8 @@ class Application extends StatefulWidget {
   State<Application> createState() => _ApplicationState();
 }
 
-class _ApplicationState extends State<Application> with WidgetsBindingObserver, NotificationMixin {
+class _ApplicationState extends State<Application>
+    with WidgetsBindingObserver, NotificationMixin {
   Widget _buildMaterialApp({
     required Locale? locale,
     ThemeData? light,
@@ -128,13 +129,13 @@ class _ApplicationState extends State<Application> with WidgetsBindingObserver, 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-    //   ChatSocket().connect();
+      //   ChatSocket().connect();
       if (MyNavigatorObserver.listRoute.contains(ChatRoomPage.routeName)) {
         getIt.get<ChatRoomCubit>().loadMessages();
-      } else if(MyNavigatorObserver.listRoute.contains(ConversationPage.routeName)) {
+      } else if (MyNavigatorObserver.listRoute
+          .contains(ConversationPage.routeName)) {
         getIt.get<ConversationCubit>().loadNewConversation();
       }
-
     }
     // else if (state == AppLifecycleState.paused) {
     //   ChatSocket().disconnect();
@@ -169,7 +170,8 @@ class _ApplicationState extends State<Application> with WidgetsBindingObserver, 
 
   @override
   void onListenerOpenNotification(Map<String, dynamic> notification) {
-    AppCoordinator.rootNavigator.currentContext?.startOpenNotification(notification);
+    AppCoordinator.rootNavigator.currentContext
+        ?.startOpenNotification(notification);
   }
 
   @override
@@ -181,7 +183,8 @@ final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 class MyNavigatorObserver extends NavigatorObserver {
   static List<Route<dynamic>> routeStack = [];
 
-  static List<String> get listRoute => routeStack.map((e) => e.settings.name ?? 'null').toList();
+  static List<String> get listRoute =>
+      routeStack.map((e) => e.settings.name ?? 'null').toList();
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {

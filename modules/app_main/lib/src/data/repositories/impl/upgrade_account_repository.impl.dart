@@ -231,22 +231,21 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
   }
 
   @override
-  Future<PDoneRegisteringProfileData?> getRegisteringProfile() async{
-    // TODO: implement getRegisteringProfile
+  Future<PDoneRegisteringProfileData?> getRegisteringProfile() async {
     final response = await _upgradeAccountApi.pDoneRegisteringProfile();
     return response.data.registeringProfile;
   }
 
   @override
-  Future<CheckExistIdentityNumber?> checkExistIdentityNumber(String identityNumber) async{
-    // TODO: implement checkExistIdentityNumber
-    final response = await _upgradeAccountApi.checkExistIdentityNumber(identityNumber);
+  Future<CheckExistIdentityNumber?> checkExistIdentityNumber(
+      String identityNumber) async {
+    final response =
+        await _upgradeAccountApi.checkExistIdentityNumber(identityNumber);
     return response;
   }
 
   @override
-  Future<String> getEKycKey() async{
-    // TODO: implement getEKycKey
+  Future<String> getEKycKey() async {
     final response = await _upgradeAccountApi.getEKycKey();
     return response.value;
   }
