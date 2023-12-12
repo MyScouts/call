@@ -12,6 +12,12 @@ import '../ui_model/rule_content.dart';
 import 'ja_contract_contact_point_information_widget.dart';
 import 'ja_contract_rule_information_widget.dart';
 
+part 'ja_contract_pdf_page_header.dart';
+part 'ja_contract_pdf_page_title.dart';
+part 'ja_contract_pdf_page_contact_information_description.dart';
+part 'ja_contract_pdf_page_rule_description.dart';
+part 'ja_contract_pdf_page_signature.dart';
+
 class JAContractPdfPage {
   JAContractPdfPage(this.model) : super();
 
@@ -24,6 +30,7 @@ class JAContractPdfPage {
 
     document.addPage(
       MultiPage(
+        footer: (context) => Center(child: Text(context.pageNumber.toString())),
         pageTheme: PageTheme(
           margin: const EdgeInsets.all(16),
           pageFormat: pageFormat,
@@ -36,19 +43,19 @@ class JAContractPdfPage {
           ),
         ),
         build: (context) => [
-          _header(),
+          _Header(model: model),
           SizedBox(height: 18),
-          _title(),
+          _Title(),
           SizedBox(height: 12),
-          _contactInformationDescription(),
+          _ContactInformationDescription(),
           SizedBox(height: 12),
           ..._contactInformation(),
           SizedBox(height: 12),
-          _ruleDescription(),
+          _RuleDescription(),
           SizedBox(height: 12),
           ..._ruleInformation(),
           SizedBox(height: 12),
-          _signature(),
+          _Signature(model: model),
         ]
             .map(
               (e) => Container(
@@ -63,87 +70,12 @@ class JAContractPdfPage {
     return document.save();
   }
 
-  Widget _header() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Column(
-            children: [
-              Text(
-                'CÔNG TY CỔ PHẦN TẬP\nĐOÀN CÔNG NGHỆ VIPTAM',
-                textAlign: TextAlign.center,
-                style: defaultTextStyle.copyWith(fontWeight: FontWeight.bold),
-              ),
-              Text('....'),
-              Text(
-                '${model.jaContractNumber}/2022/HĐCTV-\nVIPTAM',
-                textAlign: TextAlign.center,
-                style: defaultTextStyle,
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Column(
-            children: [
-              Text(
-                'CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM',
-                style: defaultTextStyle.copyWith(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                'Độc lập - Tự do - Hạnh phúc',
-                style: defaultTextStyle.copyWith(fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _title() {
-    return Center(
-      child: Text(
-        'HỢP ĐỒNG CỘNG TÁC VIÊN',
-        style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-
-  Widget _contactInformationDescription() {
-    return Text(
-      '                   Hôm nay, ngày ${DateTime.now().day} tháng ${DateTime.now().month} năm ${DateTime.now().year}, tại trụ sở chính của Công ty cổ phần tập đoàn công nghệ Viptam chúng tôi gồm:',
-      style: defaultTextStyle,
-    );
-  }
-
   List<Widget> _contactInformation() {
     return getContactPointInformation(model)
         .mapIndexed(
           (index, model) => ContactPointInformationWidget(index: index, model: model),
         )
         .toList();
-  }
-
-  Widget _ruleDescription() {
-    return RichText(
-      text: TextSpan(
-        style: defaultTextStyle,
-        children: [
-          const TextSpan(
-            text: 'Sau khi thảo luận các bên đồng ý ký kết Hợp đồng cộng tác viên (gọi tắt là ',
-          ),
-          TextSpan(
-            text: '“Hợp Đồng"',
-            style: defaultTextStyle.copyWith(fontWeight: FontWeight.bold),
-          ),
-          const TextSpan(
-            text: ') với các điều khoản và điều kiện như sau:',
-          )
-        ],
-      ),
-    );
   }
 
   List<Widget> _ruleInformation() {
@@ -155,50 +87,5 @@ class JAContractPdfPage {
           ),
         )
         .toList();
-  }
-
-  Widget _signature() {
-    return Row(
-      children: [
-        Expanded(
-          child: Column(
-            children: [
-              Text(
-                'BÊN B',
-                style: defaultTextStyle.copyWith(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                '(ký, ghi rõ họ tên)',
-                style: defaultTextStyle.copyWith(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 100),
-              Text(
-                model.pDoneInformationData?.fullName ?? '',
-                style: defaultTextStyle.copyWith(fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Column(
-            children: [
-              Text(
-                'ĐẠI DIỆN BÊN A',
-                style: defaultTextStyle.copyWith(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                '(ký, ghi rõ họ tên, chức vụ, đóng dấu)',
-                style: defaultTextStyle.copyWith(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 100),
-              Text(
-                'Nguyễn Thanh Tuấn',
-                style: defaultTextStyle.copyWith(fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
   }
 }
