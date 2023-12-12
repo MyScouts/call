@@ -8,6 +8,7 @@ const socketConnectionTimeOutEvent = 'connection timeout';
 const socketReConnectEvent = 'reconnect';
 const socketUserJoinEvent = 'userJoinLive';
 const socketGiftGiven = 'giftGiven';
+const socketGiftInfoUpdated = 'giftInfoUpdated';
 const socketUserLeaveEvent = 'userLeaveLive';
 const socketKickFromLiveEvent = 'userKickedFromLive';
 const socketBannedEvent = 'userBannedFromReaction';
@@ -49,6 +50,7 @@ class LiveSocketServiceImpl extends LiveSocketService {
     _socket!
       ..on(socketUserJoinEvent, (data) => emit(socketUserJoinEvent, data))
       ..on(socketGiftGiven, (data) => emit(socketGiftGiven, data))
+      ..on(socketGiftInfoUpdated, (data) => emit(socketGiftInfoUpdated, data))
       ..on(socketUserLeaveEvent, (data) => emit(socketUserLeaveEvent, data))
       ..on(socketMessageEvent, (data) => emit(socketMessageEvent, data))
       ..on(socketKickFromLiveEvent,

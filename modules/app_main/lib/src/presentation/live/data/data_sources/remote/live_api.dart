@@ -32,13 +32,14 @@ class LiveApiConstant {
   static const String getListLiveMember = 'api/live/{id}/members';
   static const String kickMember = '/api/live/{id}/kick';
   static const String banMember = '/api/live/{id}/ban';
-  static const String getListLivefollowing =
-      'api/live/following?page={page}&pageSize={pageSize}';
+  static const String getListLivefollowing = 'api/live/following?page={page}&pageSize={pageSize}';
   static const String getListTopLive = 'api/top-live/list';
 
   static const String rbContest = '/api/rb-contest/active';
 
   static const String giftCard = '/api/gift-card/live/{liveId}';
+
+  static const String liveStats = '/api/gift-card/live-stats';
 
   static const String dailyDedications = '/api/gift-card/daily-dedication';
 
@@ -48,8 +49,7 @@ class LiveApiConstant {
 
   static const String festivalsID = '/api/festivals/register-festival/{userId}';
 
-  static const String voteForUser =
-      '/api/gift-card/user/{userId}/report?contestId={contestId}';
+  static const String voteForUser = '/api/gift-card/user/{userId}/report?contestId={contestId}';
 
   static const String defaultConfig = '/api/live/default-config';
 
@@ -112,8 +112,10 @@ abstract class LiveApi {
   );
 
   @GET(LiveApiConstant.giftCard)
-  Future<ApiResponse<GiftCardLive>> getInfoGiftCard(
-      {@Path('liveId') required int liveId});
+  Future<ApiResponse<GiftCardLive>> getInfoGiftCard({@Path('liveId') required int liveId});
+
+  @GET(LiveApiConstant.liveStats)
+  Future<ApiResponse<GiftCardLive>> getLiveStats({@Query('liveId') required int liveId});
 
   @GET(LiveApiConstant.dailyDedications)
   Future<ApiResponse<GiftCardLive>> getDailyDedications({@Query('userId') required int userId});
@@ -138,12 +140,10 @@ abstract class LiveApi {
 
   @POST(LiveApiConstant.inviteFriend)
   Future<ApiResponse<dynamic>> inviteFriend(
-      {@Path('id') required String liveId,
-      @Body() required InviteFriendReq user});
+      {@Path('id') required String liveId, @Body() required InviteFriendReq user});
 
   @GET(LiveApiConstant.memberCount)
-  Future<ApiResponse<MemberCountData>> memberCount(
-      {@Query('liveIds') required List<int> liveIds});
+  Future<ApiResponse<MemberCountData>> memberCount({@Query('liveIds') required List<int> liveIds});
 
   @GET(LiveApiConstant.getAllCateGory)
   Future<ApiResponse<LiveStreamCategoryResponse>> getAllCateGory();
