@@ -3,7 +3,6 @@ import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:app_main/src/presentation/community/groups/group_listing_bloc.dart';
 import 'package:app_main/src/presentation/community/groups/groups_listing_widget.dart';
 import 'package:app_main/src/presentation/community/groups/widget/tab-bar-groups.dart';
-import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +64,8 @@ class _CommunityWidgetState extends State<CommunityWidget>
                   child: Row(
                     children: [
                       GestureDetector(
-                        onTap: () => context.startDiary(userId: myId.toString()),
+                        onTap: () =>
+                            context.startDiary(userId: myId.toString()),
                         child: const AppAvatarWidget(),
                       ),
                       const SizedBox(width: 15),

@@ -26,3 +26,13 @@ Map<String, dynamic> _$TeamByIdResponseToJson(TeamByIdResponse instance) =>
     <String, dynamic>{
       'team': instance.team,
     };
+
+UpdateTeamResponse _$UpdateTeamResponseFromJson(Map<String, dynamic> json) =>
+    UpdateTeamResponse(
+      team: Team.fromJson(json['team'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$UpdateTeamResponseToJson(UpdateTeamResponse instance) =>
+    <String, dynamic>{
+      'team': instance.team,
+    };

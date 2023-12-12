@@ -1,5 +1,4 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:app_main/src/presentation/community/team_detail/bloc/team_detail_bloc.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/add_team_member_sheet.dart';
@@ -136,18 +135,14 @@ extension UpdateGroupOptionExt on UpdateGroupOption {
     }
   }
 
-  Future<void> onTap(BuildContext context,
+  Future<dynamic> onTap(BuildContext context,
       {required Community community}) async {
     switch (this) {
       case UpdateGroupOption.edit:
-        return context.showToastMessage(
-          'Tính năng này đang được phát triển',
-          ToastMessageType.warning,
+        return await context.startEditInformation(
+          community: community,
+          type: CommunityType.group,
         );
-      // return await context.startEditInformation(
-      //   community: community,
-      //   type: CommunityType.group,
-      // );
       case UpdateGroupOption.pendingRequest:
         return await context.startGroupRequestList();
       case UpdateGroupOption.relinquish:
@@ -305,9 +300,16 @@ extension UpdateTeamOptionExt on UpdateTeamOption {
                 )));
         break;
       case UpdateTeamOption.edit:
-        return context.showToastMessage(
-          'Tính năng này đang được phát triển',
-          ToastMessageType.warning,
+        return await context.startEditInformation(
+          community: Community(
+            avatar: team.avatar,
+            banner: team.banner,
+            id: team.id,
+            groupId: team.groupId,
+            introduction: team.introduction,
+            name: team.name,
+          ),
+          type: CommunityType.team,
         );
       case UpdateTeamOption.requests:
         return await context.startTeamRequestsScreen(team: team);

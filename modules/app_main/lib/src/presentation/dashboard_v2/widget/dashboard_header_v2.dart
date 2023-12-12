@@ -5,6 +5,7 @@ import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
+import 'package:app_main/src/presentation/notification/state/notification_bloc.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -112,7 +113,54 @@ class DashBoardV2Header extends StatelessWidget {
                   onNotification.call();
                 },
                 behavior: HitTestBehavior.opaque,
-                child: _Item(icon: Assets.icons_dashboard_notification.path),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    _Item(icon: Assets.icons_dashboard_notification.path),
+                    Positioned(
+                      top: 1,
+                      right: -2,
+                      child: BlocBuilder<NotificationBloc, NotificationState>(
+                        builder: (BuildContext context, state) {
+                          Widget child;
+                          if (state.notReadCount == 0) {
+                            return const SizedBox.shrink();
+                          } else if (state.notReadCount > 9) {
+                            child = const Text(
+                              '9+',
+                              style: TextStyle(
+                                fontSize: 9,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            );
+                          } else {
+                            child = Text(
+                              '${state.notReadCount}',
+                              style: const TextStyle(
+                                fontSize: 9,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            );
+                          }
+
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xffD92D20),
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 3,
+                              vertical: 1,
+                            ),
+                            child: child,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
               GestureDetector(
                 onTap: () {

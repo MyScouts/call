@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
-import 'package:app_main/src/presentation/community/edit_community_detail/widgets/upload_avatar_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:ui/ui.dart';
@@ -8,7 +9,6 @@ import 'package:ui/ui.dart';
 import '../../../data/models/payloads/community/update_community_payload.dart';
 import '../community_constants.dart';
 import 'bloc/edit_community_detail_bloc.dart';
-import 'widgets/information_image_widget.dart';
 import 'widgets/information_layout_text_input_widget.dart';
 
 class EditCommunityDetailScreen extends StatefulWidget {
@@ -31,16 +31,15 @@ class EditCommunityDetailScreen extends StatefulWidget {
 class _EditCommunityDetailScreenState extends State<EditCommunityDetailScreen>
     with ValidationMixin {
   EditCommunityDetailBloc get editDetailBloc => context.read();
-
   Community get community => widget.community;
-
   CommunityType get type => widget.type;
+  late String title;
 
   final _nameCtrl = TextEditingController();
   final _descriptionCtrl = TextEditingController();
 
   void _onTapEditAvatar() {
-    context.showUpdateAvatar().then((path) {
+    context.showUpdateAvatar(title: "Sửa ảnh đại diện").then((path) {
       if (path != null) {
         editDetailBloc.add(UserChangeAvatarEvent(localImg: path));
       }
@@ -92,9 +91,11 @@ class _EditCommunityDetailScreenState extends State<EditCommunityDetailScreen>
   @override
   void initState() {
     super.initState();
-
     _nameCtrl.text = community.name ?? '';
     _descriptionCtrl.text = community.introduction ?? '';
+    title = widget.type == CommunityType.group
+        ? "Chỉnh sửa thông tin Group"
+        : "Chỉnh sửa thông tin team";
   }
 
   @override
@@ -108,7 +109,7 @@ class _EditCommunityDetailScreenState extends State<EditCommunityDetailScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chỉnh sửa thông tin'),
+        title: Text(title),
         centerTitle: true,
         titleSpacing: 0,
         elevation: 0,
@@ -117,99 +118,103 @@ class _EditCommunityDetailScreenState extends State<EditCommunityDetailScreen>
           icon: const Icon(Icons.arrow_back),
           onPressed: Navigator.of(context).pop,
         ),
+        actions: [
+          BlocBuilder<EditCommunityDetailBloc, EditCommunityDetailState>(
+            builder: (context, state) {
+              return validationListenableBuilder(builder: (isValid) {
+                return TextButton(
+                  style: ButtonStyle(
+                    shadowColor: MaterialStateProperty.all(Colors.transparent),
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.transparent),
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                    foregroundColor: MaterialStateProperty.all(
+                        isValid ? context.theme.primaryColor : Colors.grey),
+                  ),
+                  onPressed: () {
+                    if (!(isValid &&
+                        state is! UserChangeBanner &&
+                        state is! UserChangeAvatar)) {
+                      return;
+                    }
+                    _onTapSave(state.community);
+                  },
+                  child: const Text("Lưu"),
+                );
+              });
+            },
+          )
+        ],
       ),
       body: validationFormBuilder(
         child: AutoHideKeyboard(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
             child:
                 BlocConsumer<EditCommunityDetailBloc, EditCommunityDetailState>(
               listener: _onListenerBloc,
               builder: (context, state) {
                 String? avatar = state.community.avatar;
-                bool hasError = false;
-
                 String? banner = state.community.banner;
-
-                if (state is UserChangeBanner) {
-                  banner = state.localImg;
-                }
-
-                if (state is UserChangeBannerSuccess) {
-                  banner = state.newUrl.optimizeSize600;
-                }
-
-                if (state is UserChangeAvatar) {
-                  avatar = state.localImg;
-                }
-
-                if (state is UserChangeAvatarSuccess) {
-                  avatar = state.newUrl.optimizeSize400;
-                }
-
-                if (state is UserChangeAvatarFailure) {
-                  hasError = true;
-                }
-
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    InformationLayoutTextInputWidget(
-                      label: type.label(context),
-                      hintText: type.hintText(context),
-                      errMsg: type.errMsg(context),
-                      controller: _nameCtrl,
-                      onChanged: (String? value) {
-                        checkValidation();
-                      },
-                    ),
-                    InformationLayoutTextInputWidget(
-                      label: 'Giới thiệu',
-                      minLines: 7,
-                      maxLines: 12,
-                      hintText: type.hintIntroduction(context),
-                      errMsg: 'Giới thiệu không được để trống',
-                      controller: _descriptionCtrl,
-                      onChanged: (String? value) {
-                        checkValidation();
-                      },
-                    ),
-                    InformationImageWidget(
-                      label: 'Ảnh đại diện',
-                      onTapEdit: _onTapEditAvatar,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 8, bottom: 36),
-                        child: UploadAvatarWidget(
-                          urlImg: avatar,
-                          hasError: hasError,
+                    Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        GestureDetector(
+                          onTap: _onTapChangeBgImage,
+                          child: CachedNetworkImage(
+                            imageUrl: banner ?? "",
+                            height: 150,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                            errorWidget: (context, url, error) {
+                              return ImageWidget(
+                                  ImageConstants.imgDefaultTeamBanner);
+                            },
+                          ),
                         ),
+                        Positioned(
+                          top: 100,
+                          left: 0,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: _onTapEditAvatar,
+                            child: Center(
+                              child: AppAvatarWidget(
+                                avatar: avatar,
+                                width: 100,
+                                height: 100,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 80),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        children: [
+                          InformationLayoutTextInputWidget(
+                            label: type.label(context),
+                            hintText: type.hintText(context),
+                            errMsg: type.errMsg(context),
+                            controller: _nameCtrl,
+                            onChanged: (String? value) => checkValidation(),
+                          ),
+                          InformationLayoutTextInputWidget(
+                            label: 'Giới thiệu',
+                            minLines: 10,
+                            maxLines: 12,
+                            hintText: type.hintIntroduction(context),
+                            errMsg: 'Giới thiệu không được để trống',
+                            controller: _descriptionCtrl,
+                            onChanged: (String? value) => checkValidation(),
+                          ),
+                        ],
                       ),
                     ),
-                    InformationImageWidget(
-                      label: 'Ảnh nền',
-                      onTapEdit: _onTapChangeBgImage,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 18),
-                        child: AspectRatio(
-                          aspectRatio: 16 / 9,
-                          child: ImageWidget(banner ?? ''),
-                        ),
-                      ),
-                    ),
-                    validationListenableBuilder(builder: (isValid) {
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 33, bottom: 73),
-                        child: PrimaryButton(
-                          disabled: !(isValid &&
-                              state is! UserChangeBanner &&
-                              state is! UserChangeAvatar),
-                          onTap: () => _onTapSave(state.community),
-                          height: 45,
-                          title: 'Lưu',
-                          width: MediaQuery.of(context).size.width,
-                        ),
-                      );
-                    })
                   ],
                 );
               },

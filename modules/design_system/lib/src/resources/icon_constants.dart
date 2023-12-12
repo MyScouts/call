@@ -193,9 +193,15 @@ class IconAppConstants {
   static String icPublic = IconApp.icPublic.path;
   static String icFan = IconApp.icFan.path;
   static String icDoubleImage = IconApp.icDoubleImage.path;
+  static String icVideoFullscreen = IconApp.icVideoFullscreen.path;
+  static String icVideoBackTime = IconApp.icVideoBackTime.path;
+  static String icVideoNextTime = IconApp.icVideoNextTime.path;
+  static String icVideoVolume = IconApp.icVideoVolume.path;
 
   static String icRadioButtonCheck = IconApp.icRadioButtonCheck.path;
   static String icRadioButton = IconApp.icRadioButton.path;
+
+  
 }
 
 enum IconApp {
@@ -400,7 +406,11 @@ enum IconApp {
   icOnly('assets/icons/ic_only.svg'),
   icPublic('assets/icons/ic_public.svg'),
   icFan('assets/icons/ic_fan.svg'),
-  icDoubleImage('assets/icons/ic_double_image.svg');
+  icDoubleImage('assets/icons/ic_double_image.svg'),
+  icVideoFullscreen('assets/icons/ic_video_fullscreen.svg'),
+  icVideoBackTime('assets/icons/ic_video_back_time.svg'),
+  icVideoNextTime('assets/icons/ic_video_next_time.svg'),
+  icVideoVolume('assets/icons/ic_video_volume.svg');
 
   const IconApp(this.path);
 

@@ -12,8 +12,11 @@ import 'package:design_system/design_system.dart';
 import 'package:detectable_text_field/widgets/detectable_text_editing_controller.dart';
 import 'package:detectable_text_field/widgets/detectable_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:ui/ui.dart';
+
+import '../../widgets/post_video_widget.dart';
 
 class CreatePostScreen extends StatefulWidget {
   static const String routeName = "create_post";
@@ -249,11 +252,28 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 ),
               ),
             widget.postType.isVideo
-                ? SizedBox(
+                ? Container(
                     width: double.infinity,
-                    child: CommonVideoPlayer(
-                      videoType: VideoType.file,
-                      source: state.files.first!.path,
+                    height: 172.h,
+                    color: AppColors.black,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push<void>(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) => PostVideoWidget(
+                              videoType: CustomVideoType.file,
+                              source: state.files.first!.path,
+                              isSliderAtEndOfVideo: true,
+                            ),
+                          ),
+                        );
+                      },
+                      child: CommonVideoPlayer(
+                        videoType: VideoType.file,
+                        source: state.files.first!.path,
+                        isShowOnlyPlayIcon: true,
+                      ),
                     ),
                   )
                 : CommonMultiImageView.multiFile(
@@ -465,13 +485,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       minLines: minLines,
       style: textStyle,
       onChanged: onChanged,
-      // detectedStyle: isShowDetectedStyle
-      //     ? const TextStyle(
-      //         fontSize: 14,
-      //         fontWeight: FontWeight.w600,
-      //         color: AppColors.blue34,
-      //       )
-      //     : textStyle,
       decoration: InputDecoration(
         isDense: true,
         contentPadding: EdgeInsets.zero,

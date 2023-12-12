@@ -96,7 +96,9 @@ class _ReactWidgetState extends State<ReactWidget> {
     return Container(
       height: 40,
       padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: const VerticalDivider(),
+      child:  VerticalDivider(
+        color: widget.isDarkMode ? Colors.transparent : null,
+      ),
     );
   }
 

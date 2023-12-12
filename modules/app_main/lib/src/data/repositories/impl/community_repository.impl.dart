@@ -71,14 +71,17 @@ class CommunityRepositoryImpl extends CommunityRepository {
 
   @override
   Future<Group> updateGroup(String id, UpdateCommunityPayload payload) async {
-    final res = await _communityApi.updateGroup(id: id, payload: payload);
+    final res = await _communityApi.updateGroup(id, payload.toJson());
     return res.group;
   }
 
   @override
   Future<Team> updateTeam(String id, UpdateCommunityPayload payload) async {
-    final res = await _communityApi.updateTeam(id: id, payload: payload);
-    return res.data;
+    final res = await _communityApi.updateTeam(
+      id: id,
+      payload: payload.toJson(),
+    );
+    return res.team;
   }
 
   @override

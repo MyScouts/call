@@ -250,7 +250,7 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
         return _validationRoute(
             [QrCodeScanType.registerCustomer, QrCodeScanType.registerMarshop],
             () {
-          Navigator.pop(context, data['marshopId'].toString());
+          Navigator.pop(context, data['pDoneId'].toString());
         });
       }
 
@@ -259,6 +259,7 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
           context.confirmLoginQrCode(
             type: AuthClaimType.v1,
             code: data['code'],
+            pDoneId: data['pDoneId'] ?? "",
           );
         });
       }
@@ -269,34 +270,18 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
             type: AuthClaimType.v2,
             code: data['code'],
             marshopId: data['marshopId'].toString(),
+            pDoneId: data['pDoneId'] ?? "",
           );
         });
       }
-    } else {
-      if ((code.toString().contains("_auth1") ||
-          code.toString().contains("_auth2"))) {
-        return _validationRoute([], () {
-          AuthClaimType type = code.toString().contains("_auth2")
-              ? AuthClaimType.v2
-              : AuthClaimType.v1;
-          context.confirmLoginQrCode(
-            type: type,
-            code: code
-                .toString()
-                .replaceAll("_auth1", "")
-                .replaceAll("_auth2", ""),
-          );
-        });
-      }
-      showToastMessage("Mã QR không hợp lệ", ToastMessageType.error);
-      Future.delayed(
-        const Duration(milliseconds: 300),
-        () {
-          controller?.resumeCamera();
-        },
-      );
-      // Navigator.pop(context, code);
     }
+    showToastMessage("Mã QR không hợp lệ", ToastMessageType.error);
+    Future.delayed(
+      const Duration(milliseconds: 300),
+      () {
+        controller?.resumeCamera();
+      },
+    );
   }
 
   _validationRoute(List<QrCodeScanType> types, Function callback) {
@@ -311,7 +296,6 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
         controller?.resumeCamera();
       },
     );
-
     return true;
   }
 }

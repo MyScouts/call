@@ -1,126 +1,117 @@
-import 'package:app_core/app_core.dart';
 import 'package:app_main/src/domain/entities/notification/notification_data.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
-import 'package:app_main/src/presentation/notification/state/notification_bloc.dart';
+import 'package:app_main/src/presentation/notification/notification_builder.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:intl/intl.dart';
+import 'dart:ui' as ui;
 
 class NotificationCard extends StatelessWidget {
   const NotificationCard({
     super.key,
     required this.data,
     this.isSearching = false,
+    required this.onRemoved,
   });
 
   final NotificationData data;
   final bool isSearching;
+  final Function() onRemoved;
 
   @override
   Widget build(BuildContext context) {
-    final Widget child = Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: const Color.fromRGBO(247, 247, 247, 0.70),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      padding: const EdgeInsets.all(11),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if ((data.metadata?['user']?['avatar'] ?? '').trim().isEmpty)
-                  SizedBox.square(
-                    dimension: 19 * 2,
-                    child: ClipRRect(
-                      child: ImageWidget(
-                        ImageConstants.defaultUserAvatar,
-                        borderRadius: 100,
+    final Widget child = ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: BackdropFilter(
+        filter: ui.ImageFilter.blur(
+          sigmaX: 10,
+          sigmaY: 10,
+        ),
+        child: Container(
+          width: ScreenUtil().screenWidth - 32,
+          height: 106,
+          decoration: BoxDecoration(
+            color: const Color.fromRGBO(247, 247, 247, 0.7),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          padding: const EdgeInsets.all(11),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if ((data.metadata?['user']?['avatar'] ?? '').trim().isEmpty)
+                      SizedBox.square(
+                        dimension: 19 * 2,
+                        child: ClipRRect(
+                          child: ImageWidget(
+                            ImageConstants.defaultUserAvatar,
+                            borderRadius: 100,
+                          ),
+                        ),
+                      ),
+                    if ((data.metadata?['user']?['avatar'] ?? '').trim().isNotEmpty)
+                      CircleNetworkImage(
+                        url: data.metadata?['user']?['avatar'] ?? '',
+                        size: 19 * 2,
+                      ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          data.metadata?['user']?['displayName'] ?? '',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                if ((data.metadata?['user']?['avatar'] ?? '').trim().isNotEmpty)
-                  CircleNetworkImage(
-                    url: data.metadata?['user']?['avatar'] ?? '',
-                    size: 19 * 2,
-                  ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      data.metadata?['user']?['displayName'] ?? '',
+                    Text(
+                      _formatTime((data.createdAt ?? DateTime.now()).toLocal()),
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black,
+                        color: Color(0xff00395D),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-                Text(
-                  _formatTime((data.createdAt ?? DateTime.now()).toLocal()),
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xff3F3F3F),
-                  ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                data.title,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          const SizedBox(height: 12),
-          Text(
-            data.title,
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w400,
-              color: Colors.black,
-            ),
-          ),
-        ],
+        ),
       ),
     );
     if (isSearching) {
       return child;
     }
-    return Slidable(
+
+    return Container(
       key: ValueKey(data.id),
-      endActionPane: ActionPane(
-        dismissible: DismissiblePane(
-          onDismissed: () {
-            context.read<NotificationBloc>().add(Delete(data.id));
-          },
-        ),
-        motion: const DrawerMotion(),
-        children: [
-          SlidableAction(
-            flex: 1,
-            onPressed: (_) {},
-            backgroundColor: Colors.transparent,
-            foregroundColor: Colors.transparent,
-            label: 'Xoá',
-          ),
-          SlidableAction(
-            flex: 10,
-            onPressed: (_) {
-              context.read<NotificationBloc>().add(Delete(data.id));
-            },
-            backgroundColor: const Color.fromRGBO(247, 247, 247, 0.70),
-            foregroundColor: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            label: 'Xoá',
-            padding: const EdgeInsets.all(16),
-            spacing: 10,
-          ),
-        ],
+      padding: const EdgeInsets.only(bottom: 16),
+      width: ScreenUtil().screenWidth,
+      height: 106 + 16,
+      child: NotificationBuilder(
+        key: ValueKey(data.id),
+        onRemoved: onRemoved,
+        child: child,
       ),
-      child: child,
     );
   }
 }

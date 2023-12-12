@@ -63,7 +63,7 @@ extension DashBoardCoordinator on BuildContext {
     });
   }
 
-  Future<T?> _startTeam<T>() async {
+  Future<T?> startTeam<T>() async {
     return showGeneralDialog<T>(
       context: this,
       barrierDismissible: true,
@@ -88,7 +88,7 @@ extension DashBoardCoordinator on BuildContext {
   Future<T?> handleStartAppWidget<T>({required String id, String? path}) async {
     switch (id) {
       case "ic_team":
-        return _startTeam();
+        return startTeam();
       case 'ic_wallet':
         return _startWallet();
       case 'ic_live':

@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/coordinator/app_coordinator.dart';
 import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
@@ -12,6 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:ui/ui.dart';
 
 import 'leave_live_confirm.dart';
+import 'live_end_sheet.dart';
 
 class LiveChannelHeader extends StatefulWidget {
   const LiveChannelHeader({super.key});
@@ -227,6 +229,18 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                           controller.leaveLive();
                           if (!controller.enablePk.value) {
                             Navigator.of(context).pop();
+                            if(controller.me.value.isOwner) {
+                              Future.delayed(
+                                const Duration(seconds: 1),
+                                    () => showModalBottomSheet(
+                                  context: AppCoordinator
+                                      .rootNavigator.currentContext!,
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  builder: (_) => const LiveEndSheet(),
+                                ),
+                              );
+                            }
                           }
                         },
                       ),
