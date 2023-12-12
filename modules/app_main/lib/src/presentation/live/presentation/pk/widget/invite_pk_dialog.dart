@@ -30,7 +30,7 @@ class InvitePkDialog extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'Lời mời PK',
+                  'Lời mời DK',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
@@ -49,7 +49,7 @@ class InvitePkDialog extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Text.rich(
               TextSpan(
-                text: 'Bạn nhận được 1 lời mới PK từ bạn bè của bạn là ',
+                text: 'Bạn nhận được 1 lời mới DK từ bạn bè của bạn là ',
                 style: const TextStyle(
                   fontSize: 14,
                   color: Color(0xff6E6E6E),

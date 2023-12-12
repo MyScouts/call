@@ -79,6 +79,9 @@ class NotificationScreenState extends State<NotificationScreen>
                       ),
                     ),
                     elevation: 0,
+                    shape: const RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.transparent),
+                    ),
                   ),
                   body: GestureDetector(
                     onTap: () {
