@@ -155,7 +155,9 @@ class LiveRepositoryImpl extends LiveRepository {
 
   @override
   Future deletePK(int id) {
-    return _liveApi.deletePK(id);
+    return _liveApi.deletePK(id).onError((error, stackTrace) {
+      throw Exception('');
+    });
   }
 
   @override

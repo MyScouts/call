@@ -250,9 +250,9 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                       builder: (_) => LeaveLiveConfirm(
                         onRemoved: () {
                           controller.leaveLive();
-                          if (!controller.enablePk.value) {
-                            Navigator.of(context).pop();
-                            if (controller.me.value.isOwner) {
+                          if(controller.me.value.isOwner) {
+                            if(!controller.enablePk.value) {
+                              Navigator.of(context).pop();
                               Future.delayed(
                                 const Duration(seconds: 1),
                                 () => showModalBottomSheet(
@@ -263,6 +263,8 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                                 ),
                               );
                             }
+                          } else {
+                            Navigator.of(context).pop();
                           }
                         },
                       ),

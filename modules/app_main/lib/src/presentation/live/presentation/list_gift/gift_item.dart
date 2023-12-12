@@ -1,9 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 import '../../domain/entities/gift_card_list.dart';
-
 
 class GiftItem extends StatelessWidget {
   const GiftItem({
@@ -23,21 +24,21 @@ class GiftItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xffFBF4FF) : null,
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(
-            color: isSelected ? const Color(0xff9627DF) : Colors.transparent,
-          )
-        ),
+            color: isSelected ? const Color(0xffFBF4FF) : null,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(
+              color: isSelected ? const Color(0xff9627DF) : Colors.transparent,
+            )),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            ImageWidget(
-              gift.imageGift ?? '',
-              aspectRatio: 1,
+            CachedNetworkImage(
+              imageUrl: gift.imageGift ?? '',
+              cacheKey: '${gift.imageGift ?? ''} 50',
               width: 50,
               height: 50,
               fit: BoxFit.fill,
+              maxWidthDiskCache: ScreenUtil().screenWidth.toInt(),
             ),
             Text(
               gift.name ?? '',

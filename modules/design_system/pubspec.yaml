@@ -8,7 +8,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_fonts: ^6.1.0
+  google_fonts: any
   lottie: ^2.3.0
 
 dependency_overrides:
@@ -42,6 +42,7 @@ flutter:
     - assets/fonts/
     - assets/icons/lives/
     - assets/icons/dashboard/
+    - assets/audio/
 
   fonts:
     - family: Inter
