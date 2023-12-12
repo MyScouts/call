@@ -762,4 +762,8 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 01e937f4a6c40eb0d60dea6991b53801b54cea02
 
+<<<<<<< HEAD
 COCOAPODS: 1.14.2
+=======
+COCOAPODS: 1.12.1
+>>>>>>> parent of 8e5546f2 (Merge branch 'phuc/wallet_1112' into 'feat/2.1.0_wallet')

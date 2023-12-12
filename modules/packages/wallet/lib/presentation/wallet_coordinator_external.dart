@@ -7,7 +7,7 @@ extension WalletCoordinatorExternalExt on BuildContext {
 
   Future<T?> startChat<T>(int userId) async {
     return Navigator.of(this).pushNamed(ChatRoomPage.routeName, arguments: {
-      'memberId': userId,
+      'conversationId': userId,
     });
   }
 
