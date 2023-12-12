@@ -355,6 +355,8 @@ class LiveChannelController {
 
       if (_pkData != null) {
         await getMembersPk();
+
+        _members.value = [..._members, _me.value];
       } else {
         final members = await getMembers(_info.value.id);
 
@@ -783,7 +785,9 @@ class LiveChannelController {
   void leaveLive() async {
     if (_info.value.pk != null) {
       if (_me.value.isOwner) {
-        await repository.deletePK(_info.value.id);
+        await repository.deletePK(_info.value.id).onError((error, stackTrace) {
+          rejoinNonPk(_info.value.id);
+        });
         return;
       }
     }
