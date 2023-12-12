@@ -76,7 +76,7 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2> with AutomaticKee
         IOSCallManager.shared.handleIncomingEvent(state.call, context);
       }
       // context.showIncomingCall(call: state.call);
-    } else if( state is IncomingCall2) {
+    } else if (state is IncomingCall2) {
       if (isAndroid) {
         AndroidCallManager.shared.handleIncomingEvent2(state.call, context);
       } else {
@@ -100,94 +100,95 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2> with AutomaticKee
       child: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.dark,
         child: MultiBlocProvider(
-        providers: [
-          BlocProvider<NotificationBloc>(
-            create: (_) => notificationBloc,
-          ),
-        ],
-        child: Material(
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              Scaffold(
-                key: drawKey,
-                endDrawer: DashboardDrawer(
-                  page: BottomBarType.values.indexOf(_type),
-                ),
-                backgroundColor: const Color(0xffF4F4F4),
-                body: GestureDetector(
-                  onTap: () {
-                    fabKey.currentState?.revert();
-                    bottomKey.currentState?.disableFab();
-                  },
-                  behavior: HitTestBehavior.opaque,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          DashBoardV2Header(
-                            onNotification: () {
-                              notificationKey.currentState?.forward();
-                            },
-                            openAppStore: () {
-                              drawKey.currentState?.openEndDrawer();
-                            },
-                            openSetting: () {
-                              context.startSystemSetting(0);
-                            },
-                          ),
-                          Expanded(
-                            child: PageView.builder(
-                              controller: pageController,
-                              itemCount: children.length,
-                              itemBuilder: (context, index) => children[index],
-                              onPageChanged: (page) {
-                                if (mounted) {
-                                  setState(() {
-                                    _type = BottomBarType.fromIndex(page);
-                                  });
-                                }
+          providers: [
+            BlocProvider<NotificationBloc>(
+              create: (_) => notificationBloc,
+            ),
+          ],
+          child: Material(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Scaffold(
+                  key: drawKey,
+                  endDrawer: DashboardDrawer(
+                    page: BottomBarType.values.indexOf(_type),
+                  ),
+                  backgroundColor: const Color(0xffF4F4F4),
+                  body: GestureDetector(
+                    onTap: () {
+                      fabKey.currentState?.revert();
+                      bottomKey.currentState?.disableFab();
+                    },
+                    behavior: HitTestBehavior.opaque,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            DashBoardV2Header(
+                              onNotification: () {
+                                notificationKey.currentState?.forward();
+                              },
+                              openAppStore: () {
+                                drawKey.currentState?.openEndDrawer();
+                              },
+                              openSetting: () {
+                                context.startSystemSetting(0);
                               },
                             ),
-                          ),
-                        ],
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        left: (ScreenUtil().screenWidth - 32) / 2 + 8,
-                        child: DashBottomFab(key: fabKey),
-                      ),
-                    ],
+                            Expanded(
+                              child: PageView.builder(
+                                controller: pageController,
+                                itemCount: children.length,
+                                itemBuilder: (context, index) => children[index],
+                                onPageChanged: (page) {
+                                  if (mounted) {
+                                    setState(() {
+                                      _type = BottomBarType.fromIndex(page);
+                                    });
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          left: (ScreenUtil().screenWidth - 32) / 2 + 8,
+                          child: DashBottomFab(key: fabKey),
+                        ),
+                      ],
+                    ),
+                  ),
+                  bottomNavigationBar: DashBoardBottomBar(
+                    key: bottomKey,
+                    type: _type,
+                    onChanged: (type) {
+                      pageController.animateToPage(
+                        BottomBarType.values.indexOf(type),
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeIn,
+                      );
+                    },
+                    onFabChange: (value) {
+                      if (value) {
+                        fabKey.currentState?.forward();
+                      } else {
+                        fabKey.currentState?.revert();
+                      }
+                    },
                   ),
                 ),
-                bottomNavigationBar: DashBoardBottomBar(
-                  key: bottomKey,
-                  type: _type,
-                  onChanged: (type) {
-                    pageController.animateToPage(
-                      BottomBarType.values.indexOf(type),
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeIn,
-                    );
-                  },
-                  onFabChange: (value) {
-                    if (value) {
-                      fabKey.currentState?.forward();
-                    } else {
-                      fabKey.currentState?.revert();
-                    }
+                NotificationScreen(
+                  key: notificationKey,
+                  onClose: () {
+                    notificationKey.currentState?.revert();
                   },
                 ),
-              ),
-              NotificationScreen(
-                key: notificationKey,
-                onClose: () {
-                  notificationKey.currentState?.revert();
-                },
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
