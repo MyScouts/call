@@ -52,7 +52,6 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
       if (!widget.fromPip && PipHandler.showPip.value) {
         PipHandler.removeOverlay();
       }
-      
     });
   }
 
@@ -145,6 +144,12 @@ class _LivePk extends StatelessWidget {
           child: OpacityBuilder(
             key: Key('pk live'),
             child: LiveBottomAction(),
+          ),
+        ),
+        IgnorePointer(
+          ignoring: true,
+          child: SentGiftPage(
+            provider: controller.floatingGiftsProvider,
           ),
         ),
         Align(
@@ -348,8 +353,8 @@ class _LivePKRtc extends StatelessWidget {
         ),
       );
     } else {
-      final host = controller.pkData!.lives.firstWhereOrNull(
-          (e) => e.user!.id != controller.me.value.info.userID);
+      final host = controller.pkData!.lives
+          .firstWhereOrNull((e) => e.user!.id != controller.hostID);
 
       left = AnimatedSize(
         duration: const Duration(milliseconds: 150),
@@ -372,11 +377,14 @@ class _LivePKRtc extends StatelessWidget {
       right = AnimatedSize(
         duration: const Duration(milliseconds: 150),
         child: AgoraVideoView(
-          controller: VideoViewController(
+          controller: VideoViewController.remote(
             rtcEngine: controller.service.engine,
             canvas: VideoCanvas(
               uid: controller.hostID,
               renderMode: RenderModeType.renderModeHidden,
+            ),
+            connection: RtcConnection(
+              channelId: controller.agora?.channel,
             ),
           ),
         ),

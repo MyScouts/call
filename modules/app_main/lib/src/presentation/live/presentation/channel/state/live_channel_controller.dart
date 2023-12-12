@@ -17,6 +17,7 @@ import 'package:app_main/src/presentation/live/domain/entities/live_member.dart'
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/domain/usecases/user_usecase.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_pk_data.dart';
+import 'package:app_main/src/presentation/live/domain/entities/user_diamond_for_pk.dart';
 import 'package:app_main/src/presentation/live/live_magane_state.dart';
 import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/join_channel_provider.dart';
@@ -122,6 +123,18 @@ class LiveChannelController {
   LivePkData? _pkData;
 
   LivePkData? get pkData => _pkData;
+
+  final RxBool _inGame = false.obs;
+
+  RxBool get inGame => _inGame;
+
+  Round? _currentGameRound;
+
+  Round? get currentGameRound => _currentGameRound;
+
+  final RxList<UserDiamondForPK> _diamondsPK = <UserDiamondForPK>[].obs;
+
+  RxList<UserDiamondForPK> get diamondsPK => _diamondsPK;
 
   bool get hostLivePk {
     if (_pkData == null) return false;
@@ -342,6 +355,8 @@ class LiveChannelController {
 
       if (_pkData != null) {
         await getMembersPk();
+
+        _members.value = [..._members, _me.value];
       } else {
         final members = await getMembers(_info.value.id);
 
@@ -524,6 +539,41 @@ class LiveChannelController {
       if (data['type'] == 'heart') {
         NotificationCenter.post(channel: reactionEvent);
       }
+    });
+
+    socketService.on(socketReadyPkEvent, (Map data) {
+      debugPrint('$socketReadyPkEvent ===> $data');
+      if (data['round'] != null) {
+        final round = Round.fromJson(data['round']);
+        _inGame.value = true;
+        _currentGameRound = round;
+      }
+    });
+
+    socketService.on(socketPkGiftUpdatedEvent, (Map data) {
+      debugPrint('$socketPkGiftUpdatedEvent ===> $data');
+      final diamond = UserDiamondForPK.fromJson(
+        Map<String, dynamic>.from(data),
+      );
+      if (_diamondsPK.isEmpty) {
+        _diamondsPK.value = [diamond];
+      } else {
+        final x =
+            _diamondsPK.firstWhereOrNull((e) => e.userId == diamond.userId);
+        if (x == null) {
+          _diamondsPK.value = [..._diamondsPK, diamond];
+        } else {
+          _diamondsPK.value = _diamondsPK.map((e) {
+            if (e.userId == diamond.userId) return diamond;
+            return e;
+          }).toList();
+        }
+      }
+    });
+
+    socketService.on(socketPkGameFinishEvent, (Map data) {
+      debugPrint('$socketPkGameFinishEvent ===> $data');
+
     });
 
     socketService.on(socketPkMessageEvent, (Map data) {
@@ -734,8 +784,12 @@ class LiveChannelController {
 
   void leaveLive() async {
     if (_info.value.pk != null) {
-      await repository.deletePK(_info.value.id);
-      return;
+      if (_me.value.isOwner) {
+        await repository.deletePK(_info.value.id).onError((error, stackTrace) {
+          rejoinNonPk(_info.value.id);
+        });
+        return;
+      }
     }
 
     LiveManageState.disable();

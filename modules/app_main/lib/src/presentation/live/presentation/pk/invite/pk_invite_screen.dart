@@ -46,7 +46,7 @@ class _PkInviteScreenState extends State<PkInviteScreen> {
                 leading: const CloseButton(),
                 centerTitle: true,
                 title: const Text(
-                  'Mời PK',
+                  'Mời DK',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
