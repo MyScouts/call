@@ -86,7 +86,7 @@ class LiveToolsSheet extends StatelessWidget {
                   ),
                   if(controller.info.pk == null)
                   _Item(
-                    title: 'Mời PK',
+                    title: 'Mời DK',
                     icon: Assets.icons_lives_pk.svg(),
                     action: () {
                       Navigator.of(context).pop();
