@@ -239,20 +239,22 @@ class _VndWalletApi implements VndWalletApi {
   }
 
   @override
-  Future<ApiResponse<num>> estimateTax({required num val}) async {
+  Future<EstimateTaxResponse> estimateTax(
+      {required EstimateTaxRequest body}) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'value': val};
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<num>>(Options(
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<EstimateTaxResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/api/vnd-wallet/withdraw/est-tax',
+              'api/v1/wallet/withdraw-vnd/estimate',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -261,10 +263,34 @@ class _VndWalletApi implements VndWalletApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<num>.fromJson(
-      _result.data!,
-      (json) => json as num,
-    );
+    final value = EstimateTaxResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<dynamic> requestOtp({required VerifyOtpRequest body}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'api/v1/auth/otp',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = _result.data;
     return value;
   }
 
@@ -282,7 +308,7 @@ class _VndWalletApi implements VndWalletApi {
     )
         .compose(
           _dio.options,
-          '/api/vnd-wallet/withdraw',
+          'api/v1/wallet/withdraw-vnd',
           queryParameters: queryParameters,
           data: _data,
         )

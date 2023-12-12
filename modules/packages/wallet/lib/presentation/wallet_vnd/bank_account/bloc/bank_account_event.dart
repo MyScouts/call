@@ -28,6 +28,11 @@ class BankAccountEvent with _$BankAccountEvent {
   const factory BankAccountEvent.estimateTax({required num value}) =
       _EstimateTax;
 
+  const factory BankAccountEvent.requestWithdrawOtp() =
+      _RequestWithdrawOtpEvent;
+
+  const factory BankAccountEvent.resendWithdrawOtp() = _ResendWithdrawOtpEvent;
+
   const factory BankAccountEvent.withdraw({required WithdrawRequest request}) =
       _Withdraw;
 
