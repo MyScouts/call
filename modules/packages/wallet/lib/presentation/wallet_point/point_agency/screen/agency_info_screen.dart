@@ -50,6 +50,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
   final _userIDController = TextEditingController();
   BankAccount? bankAccount;
   Timer? _debounce;
+  AgencyDetailResponse? agencyData;
 
   @override
   void initState() {
@@ -71,16 +72,25 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
 
     if (money + coin == 0) {
       showToastMessage('Số quy đổi không hợp lệ', ToastMessageType.warning);
-    } else {
-      if (_userIDController.text.isEmpty) {
-        showToastMessage('ID người nhận không được để trống', ToastMessageType.warning);
-      } else {
-        _agencyBloc.add(
-          AgencyEvent.exchange(widget.agencyId, money.toInt(), coin.toInt(),
-              _userIDController.text, bankAccount?.id ?? 0),
-        );
-      }
+      return;
     }
+    if (_userIDController.text.isEmpty) {
+      showToastMessage(
+          'ID người nhận không được để trống', ToastMessageType.warning);
+      return;
+    }
+
+    if (coin > (agencyData?.coinAgency.availableCoin ?? 0)) {
+      showToastMessage(
+          'Số xu quy đổi không đượt vượt quá số lượng tối đa của đại lý',
+          ToastMessageType.error);
+      return;
+    }
+
+    _agencyBloc.add(
+      AgencyEvent.exchange(widget.agencyId, money.toInt(), coin.toInt(),
+          _userIDController.text, bankAccount?.id ?? 0),
+    );
   }
 
   late AgencyDetailResponse agency;
@@ -167,6 +177,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
               return state.maybeWhen(
                 orElse: () => const LoadingWidget(),
                 getAgencyInfoSuccess: (agencyInfo) {
+                  agencyData = agencyInfo;
                   return Stack(
                     children: [
                       Container(
