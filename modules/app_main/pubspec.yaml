@@ -28,6 +28,8 @@ dependencies:
     path: ../reorderable
   staggered_reorderable:
     path: ../staggered_reorderable
+  easy_audio:
+    path: ../plugins/easy_audio
 
   wallet:
     path: ../packages/wallet

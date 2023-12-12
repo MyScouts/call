@@ -30,6 +30,8 @@ PODS:
   - AgoraRtcEngine_iOS/SuperResolution (4.1.0)
   - AgoraRtcEngine_iOS/VirtualBackground (4.1.0)
   - AgoraRtcEngine_iOS/VQA (4.1.0)
+  - audioplayers_darwin (0.0.1):
+    - Flutter
   - callkeep (0.0.1):
     - Flutter
   - camera_avfoundation (0.0.1):
@@ -415,6 +417,8 @@ PODS:
   - qr_code_scanner (0.2.0):
     - Flutter
     - MTBBarcodeScanner
+  - record (0.0.1):
+    - Flutter
   - SDWebImage (5.18.5):
     - SDWebImage/Core (= 5.18.5)
   - SDWebImage/Core (5.18.5)
@@ -449,6 +453,7 @@ PODS:
 
 DEPENDENCIES:
   - agora_rtc_engine (from `.symlinks/plugins/agora_rtc_engine/ios`)
+  - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - callkeep (from `.symlinks/plugins/callkeep/ios`)
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
@@ -488,6 +493,7 @@ DEPENDENCIES:
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - printing (from `.symlinks/plugins/printing/ios`)
   - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
+  - record (from `.symlinks/plugins/record/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
@@ -559,6 +565,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   agora_rtc_engine:
     :path: ".symlinks/plugins/agora_rtc_engine/ios"
+  audioplayers_darwin:
+    :path: ".symlinks/plugins/audioplayers_darwin/ios"
   callkeep:
     :path: ".symlinks/plugins/callkeep/ios"
   camera_avfoundation:
@@ -637,6 +645,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/printing/ios"
   qr_code_scanner:
     :path: ".symlinks/plugins/qr_code_scanner/ios"
+  record:
+    :path: ".symlinks/plugins/record/ios"
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
   shared_preferences_foundation:
@@ -659,6 +669,7 @@ SPEC CHECKSUMS:
   AgoraIrisEventFlutter_iOS: d7ee4acb57d9042dbe9d64229bfe9bf8e32b6f2f
   AgoraIrisRTC_iOS: 820fbab2d78d870a1bad4b1a02f950a390c73b48
   AgoraRtcEngine_iOS: 33f0136ad4196b2a31c8470e6b536fe77fb25f8b
+  audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   callkeep: 6b21abbd46786a36e482190816db99b391ada1e3
   camera_avfoundation: 3125e8cd1a4387f6f31c6c63abb8a55892a9eeeb
   device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
@@ -745,6 +756,7 @@ SPEC CHECKSUMS:
   printing: 233e1b73bd1f4a05615548e9b5a324c98588640b
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
+  record: cae05d8dd3cdb1dea3511b20e5a5811a1ae00d0d
   SDWebImage: 7ac2b7ddc5e8484c79aa90fc4e30b149d6a2c88f
   SDWebImageWebPCoder: 633b813fca24f1de5e076bcd7f720c038b23892b
   share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
@@ -762,4 +774,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 01e937f4a6c40eb0d60dea6991b53801b54cea02
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.11.3

@@ -4,13 +4,11 @@ export 'src/appbar/base_appbar.dart';
 export 'src/button/common_outline_button.dart';
 export 'src/button/custom_back_button.dart';
 export 'src/button/custom_close_button.dart';
-
 /// button
 export 'src/button/icon_vertical_button.dart';
 export 'src/button/primary_button.dart';
 export 'src/button/primary_solid_button.dart';
 export 'src/const/constains.dart';
-
 /// decoration
 export 'src/decoration/tab_indicator_decoration.dart';
 export 'src/dialog/action_dialog.dart';
@@ -30,7 +28,6 @@ export 'src/dropdown/dropdown_widget.dart';
 export 'src/dropdown/gender_input.dart';
 export 'src/dropdown/items/dropdown_item_widget.dart';
 export 'src/expandable_fab/expandable_fab.dart';
-
 /// extensions
 export 'src/extensions/device_media/device_image_extension.dart';
 export 'src/extensions/device_media/picked_file.dart';
@@ -56,6 +53,9 @@ export 'src/social/avatar_widget.dart';
 export 'src/text/read_more_hashtag_widget.dart';
 export 'src/text/read_more_widget.dart';
 export 'src/text/requirement_check_list_widget.dart';
+//ticker
+export 'src/ticket/ticker_builder_widget.dart';
+export 'src/ticket/ticket_widget.dart';
 //video
 export 'src/video/common_video_player.dart';
 export 'src/video/custom_video_player.dart';
