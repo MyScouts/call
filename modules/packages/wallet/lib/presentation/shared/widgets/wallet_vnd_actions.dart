@@ -66,8 +66,7 @@ class _WalletVNDActionsState extends State<WalletVNDActions> {
   void onTap(WalletVNDActionType type) {
     switch (type) {
       case WalletVNDActionType.bankAccountInfo:
-        if (WalletInjectedData.user.pDoneId != null &&
-            WalletInjectedData.user.pDoneId!.isNotEmpty) {
+        if (WalletInjectedData.user.isPDone == true) {
           context.bankAccounts();
         } else {
           context.showNotificationDialog(
@@ -76,17 +75,17 @@ class _WalletVNDActionsState extends State<WalletVNDActions> {
         }
         break;
       case WalletVNDActionType.withdrawalOrder:
-        // if (WalletInjectedData.user.jaAt is DateTime) {
-        //   context.startWithdraw();
-        // } else {
-        //   context.showNotificationDialog(
-        //     content: 'Bạn cần phải là JA để thực hiện thao tác này',
-        //   );
-        // }
-        showToastMessage(
-          'Tính năng này đang được phát triển',
-          ToastMessageType.warning,
-        );
+        if (WalletInjectedData.user.isJA == true) {
+          context.startWithdraw();
+        } else {
+          context.showNotificationDialog(
+            content: 'Bạn cần phải là JA để thực hiện thao tác này',
+          );
+        }
+        // showToastMessage(
+        //   'Tính năng này đang được phát triển',
+        //   ToastMessageType.warning,
+        // );
 
         break;
       case WalletVNDActionType.transactionHistory:

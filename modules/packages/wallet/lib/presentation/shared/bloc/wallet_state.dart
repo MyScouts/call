@@ -38,4 +38,11 @@ class WalletState with _$WalletState {
 
   const factory WalletState.getPDoneProfileFailed(String err) =
       _GetPDoneProfileFailed;
+
+  const factory WalletState.getOnboardingLoading() = _GetOnboardingLoading;
+
+  const factory WalletState.getOnboardingSuccess(
+      OnboardingResponse onboarding) = _GetOnboardingSuccess;
+
+  const factory WalletState.getOnboardingFail(String err) = _GetOnboardingFail;
 }

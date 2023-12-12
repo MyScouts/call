@@ -28,11 +28,9 @@ class _VerifyBankAccountOTPScreenState extends State<VerifyBankAccountOTPScreen>
   late final _paddingBottom = MediaQuery.of(context).padding.bottom;
   final _otpCodeController = TextEditingController();
   late final _bloc = context.read<BankAccountBloc>();
-  late User _user;
 
   @override
   void initState() {
-    _user = WalletInjectedData.user;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       startTimer();
     });
@@ -128,15 +126,7 @@ class _VerifyBankAccountOTPScreenState extends State<VerifyBankAccountOTPScreen>
                         style: context.text.titleMedium?.copyWith(
                             fontWeight: FontWeight.w600, fontSize: 14),
                       ),
-                      const TextSpan(text: 'đến số điện thoại\n\n\n'),
-                      TextSpan(
-                        text:
-                            '${_user.phoneCode != null ? '(+${_user.phoneCode})' : ''} ${_formatPhoneNumber(_user.phone)}\n\n',
-                        style: context.text.titleLarge?.copyWith(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      const TextSpan(text: 'đến số điện thoại của bạn'),
                       TextSpan(
                         text: 'Nhập mã OTP\n',
                         style: context.text.titleLarge?.copyWith(
