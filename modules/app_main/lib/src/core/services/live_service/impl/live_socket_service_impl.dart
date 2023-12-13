@@ -20,10 +20,10 @@ const socketInvitePkEvent = 'invitePk';
 const socketPkMessageEvent = 'pkMessage';
 const socketReadyPkEvent = 'readyForPk';
 const socketPkGiftUpdatedEvent = 'pkGiftUpdated';
-const socketPkGameFinishEvent = 'pkgameFinished';
+const socketPkGameFinishEvent = 'pkGameFinished ';
 const socketPkGameStartEvent = 'pkGameStart';
 const socketPkRoundStartEvent = 'pkRoundStart';
-const socketPkRoundFinishEvent = 'pkRoundFinish';
+const socketPkRoundFinishEvent = 'pkRoundFinished';
 
 @Injectable(as: LiveSocketService)
 class LiveSocketServiceImpl extends LiveSocketService {
