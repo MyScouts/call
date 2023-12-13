@@ -1,12 +1,12 @@
 import 'package:injectable/injectable.dart';
 import 'package:wallet/data/datasources/models/request/wallet_transactions_request.dart';
-import 'package:wallet/data/datasources/models/response/transaction_details_response.dart';
 import 'package:wallet/data/datasources/models/response/transactions_response.dart';
 import 'package:wallet/data/datasources/models/response/wallet_info_response.dart';
 import 'package:wallet/presentation/shared/model/infomation_pdone_profile.dart';
 import 'package:wallet/presentation/wallet_constant.dart';
 
 import '../../domain/repository/wallet_repository.dart';
+import '../datasources/models/response/onboarding_response.dart';
 import '../datasources/remote/wallet_api.dart';
 
 @Injectable(as: WalletRepository)
@@ -65,5 +65,11 @@ class WalletRepositoryImpl implements WalletRepository {
   Future<PDoneProfile> getPDoneProfile() async {
     final response = await _walletApi.getPDoneProfile();
     return response.profile ?? const PDoneProfile();
+  }
+
+  @override
+  Future<OnboardingResponse> getOnboarding() async {
+    final response = await _walletApi.getOnboarding();
+    return response;
   }
 }

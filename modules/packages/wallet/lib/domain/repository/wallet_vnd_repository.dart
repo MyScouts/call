@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import '../../data/data.dart';
+import '../../data/datasources/models/response/estimate_tax_response.dart';
 import '../entities/entities.dart';
 
 abstract class WalletVndRepository {
@@ -20,7 +20,9 @@ abstract class WalletVndRepository {
 
   Future<bool> deleteBankAccount({required int bankId});
 
-  Future<num> estimateTax(num value);
+  Future<EstimateTaxResponse> estimateTax(num value);
+
+  Future requestWithdrawOtp();
 
   Future<void> withdraw(WithdrawRequest request);
 

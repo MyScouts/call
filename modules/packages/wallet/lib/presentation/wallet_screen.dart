@@ -30,7 +30,7 @@ class _WalletScreenState extends State<WalletScreen> {
 
   @override
   void initState() {
-    bloc.add(const WalletEvent.getWalletInfo());
+    bloc.add(const WalletEvent.getOnboarding());
     super.initState();
   }
 
@@ -45,8 +45,19 @@ class _WalletScreenState extends State<WalletScreen> {
       backgroundColor: WalletTheme.bgColor,
       extendBodyBehindAppBar: true,
       body: AutoHideKeyboard(
-        child: BlocBuilder<WalletBloc, WalletState>(
+        child: BlocConsumer<WalletBloc, WalletState>(
           bloc: bloc,
+          listener: (context, state) {
+            state.whenOrNull(
+              getOnboardingSuccess: (data) {
+                bloc.add(const WalletEvent.getWalletInfo());
+                WalletInjectedData.setUser = WalletInjectedData.user.copyWith(
+                  isJA: data.isJA,
+                  isPDone: data.isPdone ?? false,
+                );
+              },
+            );
+          },
           buildWhen: (previous, current) =>
               current.whenOrNull(
                 getWalletInfoSuccess: (walletInfo) => true,

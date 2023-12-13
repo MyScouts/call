@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../data/data.dart';
+import '../../../../data/datasources/models/response/estimate_tax_response.dart';
 import '../../../../domain/domain.dart';
 import '../screens/add_bank_account_screen.dart';
 
@@ -21,8 +22,6 @@ class BankAccountBloc extends Bloc<BankAccountEvent, BankAccountState> {
   List<Bank> banks = [];
   late String qrImage;
   late Otp otp;
-
-  late num taxValue;
 
   AddBankAccountParams _addBankAccountParams = AddBankAccountParams();
 
@@ -133,8 +132,9 @@ class BankAccountBloc extends Bloc<BankAccountEvent, BankAccountState> {
     on<_EstimateTax>((event, emit) async {
       try {
         emit(const _EstimateTaxLoading());
-        taxValue = await _walletVndUseCase.estimateTax(value: event.value);
-        emit(_EstimateTaxSuccess(taxValue));
+        final response =
+            await _walletVndUseCase.estimateTax(value: event.value);
+        emit(_EstimateTaxSuccess(response));
       } catch (e) {
         const errMessage = 'Đã xảy ra lỗi';
         emit(const _Error(errMessage));
@@ -146,6 +146,17 @@ class BankAccountBloc extends Bloc<BankAccountEvent, BankAccountState> {
         emit(const _WithdrawLoading());
         await _walletVndUseCase.withdraw(request: event.request);
         emit(const _WithdrawLoaded());
+      } on DioException catch (error) {
+        String message;
+        final data = error.response!.data;
+        switch (data['code']) {
+          case "OTP_NOT_MATCH":
+            message = 'Mã xác minh không đúng';
+            break;
+          default:
+            message = 'Lỗi hệ thống';
+        }
+        emit(_Error(message));
       } catch (e) {
         const errMessage = 'Đã xảy ra lỗi';
         emit(const _Error(errMessage));
@@ -179,6 +190,28 @@ class BankAccountBloc extends Bloc<BankAccountEvent, BankAccountState> {
           banks = cloneBanks;
         }
         emit(const _GetAllBanksInfoSuccess());
+      } catch (e) {
+        const errMessage = 'Đã xảy ra lỗi';
+        emit(const _Error(errMessage));
+      }
+    });
+
+    on<_RequestWithdrawOtpEvent>((event, emit) async {
+      try {
+        emit(const _RequestWithdrawOtpLoading());
+        final response = await _walletVndUseCase.requestWithdrawOtp();
+        emit(const _RequestWithdrawOtpSuccess());
+      } catch (e) {
+        const errMessage = 'Đã xảy ra lỗi';
+        emit(const _Error(errMessage));
+      }
+    });
+
+    on<_ResendWithdrawOtpEvent>((event, emit) async {
+      try {
+        emit(const _ResendOtpLoading());
+        final response = await _walletVndUseCase.requestWithdrawOtp();
+        emit(const _ResendOtpSuccess());
       } catch (e) {
         const errMessage = 'Đã xảy ra lỗi';
         emit(const _Error(errMessage));

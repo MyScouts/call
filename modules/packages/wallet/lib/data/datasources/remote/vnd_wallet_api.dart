@@ -3,11 +3,15 @@ import 'dart:io';
 import 'package:app_core/app_core.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:wallet/data/datasources/models/request/estimate_tax_request.dart';
+import 'package:wallet/data/datasources/models/response/onboarding_response.dart';
 
 import '../../../core/core.dart';
 import '../../../core/networking/api_response.dart';
 import '../../../domain/domain.dart';
 import '../models/models.dart';
+import '../models/request/verify_otp_request.dart';
+import '../models/response/estimate_tax_response.dart';
 
 part 'vnd_wallet_api.g.dart';
 
@@ -19,8 +23,9 @@ class VndWalletApiConstants {
   static const getOtp = '/api/sms/send-otp';
   static const addBankAccount = '/api/bank-account';
   static const deleteBankAccount = '/api/bank-account/{id}';
-  static const estimateTax = '/api/vnd-wallet/withdraw/est-tax';
-  static const withdraw = '/api/vnd-wallet/withdraw';
+  static const estimateTax = 'api/v1/wallet/withdraw-vnd/estimate';
+  static const requestOtp = 'api/v1/auth/otp';
+  static const withdraw = 'api/v1/wallet/withdraw-vnd';
   static const setDefaultBankAccount = '/api/bank-account/{id}/default';
 }
 
@@ -55,7 +60,13 @@ abstract class VndWalletApi {
   Future<ApiResponse<bool>> deleteBankAccount({@Path('id') required int id});
 
   @POST(VndWalletApiConstants.estimateTax)
-  Future<ApiResponse<num>> estimateTax({@Query('value') required num val});
+  Future<EstimateTaxResponse> estimateTax(
+      {@Body() required EstimateTaxRequest body});
+
+  @POST(VndWalletApiConstants.requestOtp)
+  Future requestOtp({
+    @Body() required VerifyOtpRequest body,
+  });
 
   @POST(VndWalletApiConstants.withdraw)
   Future<void> withdraw({@Body() required WithdrawRequest request});

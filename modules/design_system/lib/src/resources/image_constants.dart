@@ -80,6 +80,7 @@ class ImageConstants {
   static String loading = ImageApp.loading.path;
   static String imgTransactionEmpty = ImageApp.imgTransactionEmpty.path;
   static String imgNoResults = ImageApp.imgNoResults.path;
+  static String imgWaiting = ImageApp.imgWaiting.path;
 }
 
 enum ImageApp {
@@ -162,6 +163,7 @@ enum ImageApp {
   loading('assets/images/loading.json'),
   imgChargeDiamond('assets/images/imgChargeDiamond.png'),
   imgTransactionEmpty('assets/images/imgTransactionEmpty.png'),
+  imgWaiting('assets/images/img_waiting.png'),
   imgNoResults('assets/images/img_no_results.svg');
 
   const ImageApp(this.path);
