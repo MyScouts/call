@@ -13,7 +13,6 @@ class OpacityBuilder extends StatefulWidget {
   final int configTimer;
   final Widget child;
 
-
   @override
   State<OpacityBuilder> createState() => _OpacityBuilderState();
 }
@@ -68,7 +67,10 @@ class _OpacityBuilderState extends State<OpacityBuilder> {
     return AnimatedOpacity(
       opacity: _opacity,
       duration: const Duration(milliseconds: 500),
-      child: widget.child,
+      child: IgnorePointer(
+        ignoring: _opacity == 0.0 ? true : false,
+        child: widget.child,
+      ),
     );
   }
 }

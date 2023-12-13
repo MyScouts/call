@@ -70,6 +70,12 @@ class LiveApiConstant {
   static const String pkAccept = '/api/live-pk/accept';
 
   static const String pk = '/api/live-pk/live/{id}';
+
+  static const String updatePk = '/api/live-pk/{id}/config';
+
+  static const String startGame = '/api/live-pk/game';
+
+  static const String readyGame = '/api/live-pk/game/round/ready';
 }
 
 @RestApi()
@@ -118,10 +124,12 @@ abstract class LiveApi {
   Future<ApiResponse<GiftCardLive>> getLiveStats({@Query('liveId') required int liveId});
 
   @GET(LiveApiConstant.dailyDedications)
-  Future<ApiResponse<GiftCardLive>> getDailyDedications({@Query('userId') required int userId});
+  Future<ApiResponse<GiftCardLive>> getDailyDedications(
+      {@Query('userId') required int userId});
 
   @GET(LiveApiConstant.getDedications)
-  Future<ApiResponse<GiftCardLive>> getDedications({@Query('userId') required int userId});
+  Future<ApiResponse<GiftCardLive>> getDedications(
+      {@Query('userId') required int userId});
 
   @POST(LiveApiConstant.createNewLive)
   Future<ApiResponse<LiveData>> createNewLive(
@@ -172,6 +180,18 @@ abstract class LiveApi {
 
   @GET(LiveApiConstant.pk)
   Future<ApiResponse<LivePkData>> getPk(@Path('id') int id);
+
+  @PATCH(LiveApiConstant.updatePk)
+  Future updatePk(
+    @Path('id') int pkId,
+    @Field('enableShareMessage') bool enableShareMessage,
+  );
+
+  @POST(LiveApiConstant.startGame)
+  Future startGame(@Body() Map<String, dynamic> json);
+
+  @POST(LiveApiConstant.readyGame)
+  Future readyGame(@Field('liveId') int id);
 
 //
 // @POST(LiveApiConstant.joinLive)

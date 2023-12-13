@@ -59,7 +59,11 @@ class LiveRepositoryImpl extends LiveRepository {
   }
 
   @override
-  Future sendGift({required int userId, required int liveId, required int giftId, required int total}) async {
+  Future sendGift(
+      {required int userId,
+      required int liveId,
+      required int giftId,
+      required int total}) async {
     return _liveApi.sendGift(userId, liveId, giftId, total);
   }
 
@@ -118,8 +122,12 @@ class LiveRepositoryImpl extends LiveRepository {
   }
 
   @override
-  Future<Live> getListLivefollowing({required int page, required int pageSize, required bool isFriend}) async {
-    final result = await _liveApi.getListLivefollowing(page: page, pageSize: pageSize, isFriend: isFriend);
+  Future<Live> getListLivefollowing(
+      {required int page,
+      required int pageSize,
+      required bool isFriend}) async {
+    final result = await _liveApi.getListLivefollowing(
+        page: page, pageSize: pageSize, isFriend: isFriend);
 
     return result.data;
   }
@@ -170,5 +178,20 @@ class LiveRepositoryImpl extends LiveRepository {
   Future<GiftCardLive> getLiveState(int liveID) async {
     final res = await _liveApi.getLiveStats(liveId: liveID);
     return res.data;
+  }
+
+  @override
+  Future updatePk(int pkId, bool enableShareMessage) {
+    return _liveApi.updatePk(pkId, enableShareMessage);
+  }
+
+  @override
+  Future startGame(Map<String, dynamic> json) {
+    return _liveApi.startGame(json);
+  }
+
+  @override
+  Future readyGame(int id) {
+    return _liveApi.readyGame(id);
   }
 }

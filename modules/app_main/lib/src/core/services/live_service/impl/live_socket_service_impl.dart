@@ -21,6 +21,9 @@ const socketPkMessageEvent = 'pkMessage';
 const socketReadyPkEvent = 'readyForPk';
 const socketPkGiftUpdatedEvent = 'pkGiftUpdated';
 const socketPkGameFinishEvent = 'pkgameFinished';
+const socketPkGameStartEvent = 'pkGameStart';
+const socketPkRoundStartEvent = 'pkRoundStart';
+const socketPkRoundFinishEvent = 'pkRoundFinish';
 
 @Injectable(as: LiveSocketService)
 class LiveSocketServiceImpl extends LiveSocketService {
@@ -65,7 +68,12 @@ class LiveSocketServiceImpl extends LiveSocketService {
       ..on(socketPkGiftUpdatedEvent,
           (data) => emit(socketPkGiftUpdatedEvent, data))
       ..on(socketPkGameFinishEvent,
-              (data) => emit(socketPkGameFinishEvent, data))
+          (data) => emit(socketPkGameFinishEvent, data))
+      ..on(socketPkGameStartEvent, (data) => emit(socketPkGameStartEvent, data))
+      ..on(socketPkRoundStartEvent,
+          (data) => emit(socketPkRoundStartEvent, data))
+      ..on(socketPkRoundFinishEvent,
+          (data) => emit(socketPkRoundFinishEvent, data))
       ..onConnect(_handleConnect)
       ..onConnectError(_handleConnectionFailure)
       ..onConnectTimeout(_handleConnectionTimeout)
