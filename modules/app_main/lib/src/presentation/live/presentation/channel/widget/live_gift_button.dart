@@ -33,6 +33,9 @@ class _LiveGiftButtonState extends State<LiveGiftButton> {
           onTap: () {
             context.showBottomGift(controller).then((value) {
               if (value is GiftCard) {
+                if(value.metadata?.isStaticGif == true){
+                  return;
+                }
                 giftCard = value;
                 setState(() {
                   isIcon = value.imageGift!;

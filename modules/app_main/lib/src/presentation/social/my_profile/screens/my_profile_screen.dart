@@ -5,6 +5,7 @@ import 'package:app_main/src/app_dimens.dart';
 import 'package:app_main/src/data/models/payloads/social/create_post_payload.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
+import 'package:app_main/src/presentation/social/following/following_coordinator.dart';
 import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_event.dart';
 import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_state.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
@@ -527,13 +528,13 @@ class _MyProfileScreenState extends State<MyProfileScreen>
                               previous.userFollowDetail !=
                               current.userFollowDetail,
                           builder: (context, state) {
-                            final totalFollower =
+                            final followerCount =
                                 state.userFollowDetail?.stats.followerCount ??
                                     0;
-                            final totalFollowing =
+                            final followeeCount =
                                 state.userFollowDetail?.stats.followeeCount ??
                                     0;
-                            final totalFriend =
+                            final friendCount =
                                 state.userFollowDetail?.stats.friendCount ?? 0;
 
                             return Padding(
@@ -542,8 +543,9 @@ class _MyProfileScreenState extends State<MyProfileScreen>
                               child: Row(
                                 children: [
                                   _buildPeopleInfo(
-                                    data: totalFollower,
+                                    data: followerCount,
                                     title: 'Người hâm mộ',
+                                    followingType: FollowingType.follower,
                                   ),
                                   Container(
                                     height: 20,
@@ -551,8 +553,9 @@ class _MyProfileScreenState extends State<MyProfileScreen>
                                     color: Colors.grey,
                                   ),
                                   _buildPeopleInfo(
-                                    data: totalFollowing,
+                                    data: followeeCount,
                                     title: 'Đang theo dõi',
+                                    followingType: FollowingType.followee,
                                   ),
                                   Container(
                                     height: 20,
@@ -560,8 +563,9 @@ class _MyProfileScreenState extends State<MyProfileScreen>
                                     color: Colors.grey,
                                   ),
                                   _buildPeopleInfo(
-                                    data: totalFriend,
+                                    data: friendCount,
                                     title: 'Bạn bè',
+                                    followingType: FollowingType.friend,
                                   ),
                                 ],
                               ),
@@ -734,27 +738,50 @@ class _MyProfileScreenState extends State<MyProfileScreen>
         });
   }
 
-  Widget _buildPeopleInfo({required int data, required String title}) {
+  Widget _buildPeopleInfo({required int data, required String title, required FollowingType followingType}) {
     return Expanded(
       flex: 1,
-      child: Column(
-        children: [
-          Text(
-            data.toString(),
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
+      child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          final user = bloc.state.userInfo;
+
+          if (user != null) {
+            final int friendCount =
+                bloc.state.userFollowDetail?.stats.friendCount ?? 0;
+            final int followerCount =
+                bloc.state.userFollowDetail?.stats.followerCount ?? 0;
+            final int followeeCount =
+                bloc.state.userFollowDetail?.stats.followeeCount ?? 0;
+
+            context.startFollowing(
+              user: user,
+              followeeCount: followeeCount,
+              friendCount: friendCount,
+              followerCount: followerCount,
+              followingType: followingType,
+            );
+          }
+        },
+        child: Column(
+          children: [
+            Text(
+              data.toString(),
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
+            const SizedBox(height: 2),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

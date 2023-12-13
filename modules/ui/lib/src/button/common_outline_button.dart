@@ -38,6 +38,7 @@ class CommonOutlineButton extends StatelessWidget {
               '$label',
               style: context.text.bodyLarge?.copyWith(
                 color: AppColors.blue10,
+                height: 1
               ),
             ),
       ),

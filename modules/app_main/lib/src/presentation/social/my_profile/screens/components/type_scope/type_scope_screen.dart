@@ -1,5 +1,6 @@
 import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
+import 'package:app_main/src/presentation/social/widgets/social_appbar_widget.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -30,7 +31,9 @@ class _TypeScopeScreenState extends State<TypeScopeScreen> {
     final paddingBottom = MediaQuery.viewPaddingOf(context).bottom;
 
     return Scaffold(
-      appBar: _buildAppBar(),
+      appBar: const SocialAppBarWidget(
+        titleText: 'Đối tượng của bài viết',
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -141,23 +144,6 @@ class _TypeScopeScreenState extends State<TypeScopeScreen> {
         ),
       ),
       controlAffinity: ListTileControlAffinity.trailing,
-    );
-  }
-
-  AppBar _buildAppBar() {
-    return AppBar(
-      title: Text(
-        'Đối tượng của bài viết',
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      centerTitle: true,
-      elevation: 0,
-      shape: const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.transparent),
-      ),
     );
   }
 }

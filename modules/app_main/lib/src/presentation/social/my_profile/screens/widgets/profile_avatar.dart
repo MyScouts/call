@@ -78,7 +78,7 @@ class ProfileAvatar extends StatelessWidget {
     String textType = '';
     switch (profileType) {
       case ProfileType.pDone:
-        textType = 'C';
+        textType = 'P';
       case ProfileType.ads:
         textType = 'A';
       default:

@@ -40,11 +40,11 @@ enum PostType {
   }
 
   static PostType getTypeByText(String text) {
-    if(text == PostType.text.name){
+    if (text == PostType.text.name) {
       return PostType.text;
     }
 
-    if(text == PostType.video.name){
+    if (text == PostType.video.name) {
       return PostType.video;
     }
 
@@ -90,4 +90,12 @@ extension ReactTypeEx on ReactType {
   String get getName => name.toUpperCase();
 }
 
-enum ImageScrollType {image1, image2, image3}
+enum ImageScrollType { image1, image2, image3 }
+
+enum FollowingType { follower, followee, friend }
+
+extension FollowingTypeEx on FollowingType {
+  bool get isFollowee => this == FollowingType.followee;
+  bool get isFollower => this == FollowingType.follower;
+  bool get isFriend => this == FollowingType.friend;
+}

@@ -83,106 +83,100 @@ class NotificationScreenState extends State<NotificationScreen>
                       side: BorderSide(color: Colors.transparent),
                     ),
                   ),
-                  body: GestureDetector(
-                    onTap: () {
-                      FocusScope.of(context).unfocus();
-                    },
-                    behavior: HitTestBehavior.opaque,
-                    child: BlocBuilder<NotificationBloc, NotificationState>(
-                      builder: (ctx, state) {
-                        final bloc = ctx.read<NotificationBloc>();
+                  body: BlocBuilder<NotificationBloc, NotificationState>(
+                    builder: (ctx, state) {
+                      final bloc = ctx.read<NotificationBloc>();
 
-                        List<NotificationData> items = state.items;
-                        if (state.isSearching) {
-                          items = state.search;
-                        }
+                      List<NotificationData> items = state.items;
+                      if (state.isSearching) {
+                        items = state.search;
+                      }
 
-                        return Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: TextFormField(
-                                cursorHeight: 20,
-                                cursorColor: Colors.white,
-                                style: const TextStyle(
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: TextFormField(
+                              cursorHeight: 20,
+                              cursorColor: Colors.white,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                              onChanged: (value) => bloc.add(Search(value)),
+                              decoration: InputDecoration(
+                                hintText: 'Tìm kiếm',
+                                hintStyle: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
                                 ),
-                                onChanged: (value) => bloc.add(Search(value)),
-                                decoration: InputDecoration(
-                                  hintText: 'Tìm kiếm',
-                                  hintStyle: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                  ),
-                                  contentPadding: EdgeInsets.zero,
-                                  fillColor:
-                                      const Color.fromRGBO(242, 242, 242, 0.24),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        color: Colors.transparent),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(
-                                        color: Colors.transparent),
-                                  ),
-                                  prefixIcon: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const SizedBox(width: 16),
-                                      ImageWidget(
-                                        IconAppConstants.icSearch,
-                                        color: Colors.white,
-                                      ),
-                                    ],
-                                  ),
+                                contentPadding: EdgeInsets.zero,
+                                fillColor:
+                                    const Color.fromRGBO(242, 242, 242, 0.24),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                      color: Colors.transparent),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(
+                                      color: Colors.transparent),
+                                ),
+                                prefixIcon: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const SizedBox(width: 16),
+                                    ImageWidget(
+                                      IconAppConstants.icSearch,
+                                      color: Colors.white,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            Expanded(
-                              child: SmartRefresher.builder(
-                                controller: bloc.controller,
-                                enablePullDown: true,
-                                enablePullUp: state.hasLoadMore,
-                                onRefresh: () => bloc.add(Fetch()),
-                                onLoading: () => bloc.add(LoadMore()),
-                                builder: (_, __) {
-                                  if (!state.status.isSuccess) {
-                                    return const Center(
-                                      child: PlatformLoadingIndicator(),
-                                    );
-                                  }
-
-                                  return AutoAnimatedList<NotificationData>(
-                                    duration: const Duration(milliseconds: 150),
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 16,
-                                    ),
-                                    items: items,
-                                    itemBuilder: (_, item, i, animation) {
-                                      return _SizeFadeTransition(
-                                        animation: animation,
-                                        child: NotificationCard(
-                                          data: item,
-                                          isSearching: state.isSearching,
-                                          onRemoved: () {
-                                            context
-                                                .read<NotificationBloc>()
-                                                .add(Delete(items[i].id));
-                                          },
-                                        ),
-                                      );
-                                    },
+                          ),
+                          Expanded(
+                            child: SmartRefresher.builder(
+                              controller: bloc.controller,
+                              enablePullDown: true,
+                              enablePullUp: state.hasLoadMore,
+                              onRefresh: () => bloc.add(Fetch()),
+                              onLoading: () => bloc.add(LoadMore()),
+                              builder: (_, __) {
+                                if (!state.status.isSuccess) {
+                                  return const Center(
+                                    child: PlatformLoadingIndicator(),
                                   );
-                                },
-                              ),
+                                }
+
+                                return AutoAnimatedList<NotificationData>(
+                                  duration: const Duration(milliseconds: 150),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                  ),
+                                  items: items,
+                                  itemBuilder: (_, item, i, animation) {
+                                    return _SizeFadeTransition(
+                                      animation: animation,
+                                      child: NotificationCard(
+                                        data: item,
+                                        isSearching: state.isSearching,
+                                        onRemoved: () {
+                                          context
+                                              .read<NotificationBloc>()
+                                              .add(Delete(items[i].id));
+                                        },
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
                             ),
-                          ],
-                        );
-                      },
-                    ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
               ),

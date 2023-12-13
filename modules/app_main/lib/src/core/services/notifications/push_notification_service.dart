@@ -41,7 +41,45 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   debugPrint('[Push] Background message $message');
 
   final pnType = message.data['type'];
-  if (pnType is String && pnType == 'CALL_EVENT') {}
+  if (pnType is String && pnType == 'CALL_EVENT') {
+    Map<dynamic, dynamic> _notiData = message.data;
+    Map<dynamic, dynamic> _data = json.decode(_notiData['data']);
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    if (_data['callStatus'] == 'started') {
+      const AndroidInitializationSettings androidSettings =
+          AndroidInitializationSettings('@drawable/icon_notify');
+      const InitializationSettings initializationSettings =
+          InitializationSettings(android: androidSettings);
+      flutterLocalNotificationsPlugin.initialize(initializationSettings).then((value) async {
+        if (value!) {
+          /// Create channel for notification
+          const AndroidNotificationDetails androidPlatformChannelSpecifics =
+              AndroidNotificationDetails(
+           'channelId', 'channelName',
+            channelDescription: 'channelDescription',
+            importance: Importance.high,
+            priority: Priority.high,
+            category: AndroidNotificationCategory.call,
+            /// Set true for show App in lockScreen
+            fullScreenIntent: true,
+          );
+          const NotificationDetails platformChannelSpecifics =
+              NotificationDetails(android: androidPlatformChannelSpecifics);
+
+          /// Show notification
+          await flutterLocalNotificationsPlugin.show(
+            1234,
+            'Cuộc gọi đến',
+            '',
+            platformChannelSpecifics,
+          );
+        }
+      });
+    } else if (_data['callStatus'] == 'ended') {
+      flutterLocalNotificationsPlugin.cancel(1234);
+    }
+  }
 }
 
 /// Create a [AndroidNotificationChannel] for heads up notifications
@@ -138,7 +176,8 @@ enum MessageTypeFB {
 @pragma('vm:entry-point')
 void _onDidReceiveLocalNotification(int id, String? title, String? body, String? payload) {}
 
-const AndroidNotificationDetails _androidNotificationDetails = AndroidNotificationDetails('channelId', 'channelName',
+const AndroidNotificationDetails _androidNotificationDetails = AndroidNotificationDetails(
+    'channelId', 'channelName',
     channelDescription: 'channelDescription',
     playSound: true,
     priority: Priority.high,

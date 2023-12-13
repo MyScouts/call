@@ -34,10 +34,15 @@ class CallHistoryDetailWidget extends StatelessWidget {
               Row(
                 children: [
                   ImageWidget(
-                    data.isCaller ? IconAppConstants.icCallAway : IconAppConstants.icIncomingCall,
+                    data.isMissingCall
+                        ? IconAppConstants.icMissingCall
+                        : data.isCaller
+                            ? IconAppConstants.icCallAway
+                            : IconAppConstants.icIncomingCall,
                     width: 16,
                     height: 16,
                   ),
+                  kSpacingWidth2,
                   Text(
                     data.des,
                     style: context.textTheme.titleMedium?.copyWith(

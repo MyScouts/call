@@ -2,8 +2,12 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/app_size.dart';
 import 'package:app_main/src/core/services/stringee/player_manager/single_player_manager.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/presentation/call/1vs1/views/pip_call_render.dart';
+import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
+import 'package:app_main/src/presentation/live/presentation/pip/pip_view.dart';
 import 'package:design_system/design_system.dart';
 import 'package:easy_audio/easy_audio.dart';
 import 'package:flutter/material.dart';
@@ -95,14 +99,22 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with Single
   Widget build(BuildContext context) {
     mediaData = MediaQuery.of(context);
 
-    return Scaffold(
-      backgroundColor: AppColors.blueEdit,
-      body: BlocConsumer<Call1vs1Bloc, Call1vs1State>(
-        listener: _blocListener,
-        bloc: bloc,
-        builder: (context, state) {
-          return _buildBody(state);
-        },
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (bool didPop) {
+        if (didPop) {
+          return;
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.blueEdit,
+        body: BlocConsumer<Call1vs1Bloc, Call1vs1State>(
+          listener: _blocListener,
+          bloc: bloc,
+          builder: (context, state) {
+            return _buildBody(state);
+          },
+        ),
       ),
     );
   }
@@ -187,13 +199,7 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with Single
   Widget _buildAppbarByState(Call1vs1State state) {
     return Row(
       children: [
-        IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: onBack,
-        ),
+        const SizedBox(),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -206,27 +212,27 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with Single
                   color: AppColors.white,
                 ),
               ),
-              if(state.isInCall && state.callType == CallType.video)
-              TickerBuilder(
-                duration: const Duration(
-                  milliseconds: 300,
+              if (state.isInCall && state.callType == CallType.video)
+                TickerBuilder(
+                  duration: const Duration(
+                    milliseconds: 300,
+                  ),
+                  builder: (context) {
+                    return Text(
+                      state.data.startTime.let((it) {
+                        if (it == null) {
+                          return '00:00';
+                        }
+                        return DateTime.now().difference(it).mmss;
+                      }),
+                      style: context.textTheme.bodySmall?.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(0xff00ff92),
+                      ),
+                    );
+                  },
                 ),
-                builder: (context) {
-                  return Text(
-                    state.data.startTime.let((it) {
-                      if (it == null) {
-                        return '00:00';
-                      }
-                      return DateTime.now().difference(it).mmss;
-                    }),
-                    style: context.textTheme.bodySmall?.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: const Color(0xff00ff92),
-                    ),
-                  );
-                },
-              ),
             ],
           ),
         ),
@@ -390,8 +396,7 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with Single
     return _buildIconButton(
       size: size ?? 72,
       iconSize: 72,
-      icColor: state.callState.isSpeaker ? null : AppColors.greyLightTextColor,
-      icon: IconAppConstants.icVolume,
+      icon: state.callState.isSpeaker ? IconAppConstants.icVolumeOn : IconAppConstants.icVolume,
       enable: !state.isLeaving,
       onPressed: onPressSpeaker,
     );
@@ -406,7 +411,7 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with Single
       iconSize: 72,
       icon: IconAppConstants.icEnd,
       enable: !state.isLeaving,
-      onPressed: onBack,
+      onPressed: onEndCall,
     );
   }
 
@@ -432,7 +437,7 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with Single
       iconSize: 72,
       icon: IconAppConstants.icEnd,
       enable: !state.isLeaving,
-      onPressed: onBack,
+      onPressed: onEndCall,
     );
   }
 
