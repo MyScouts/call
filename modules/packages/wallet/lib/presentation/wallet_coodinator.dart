@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
 import 'package:wallet/data/data.dart';
+import 'package:wallet/presentation/wallet_point/point_agency/screen/point_agency_screen.dart';
 import 'package:wallet/presentation/wallet_vnd/dialog/waiting_dialog.dart';
 import 'package:wallet/presentation/wallet_vnd/withdraw/screens/verify_otp_withdraw_screen.dart';
 import 'package:wallet/presentation/transaction_history_detail_screen.dart';
@@ -34,6 +35,9 @@ extension WalletCoordinator on BuildContext {
 
     return Navigator.of(this).pushNamed(WalletScreen.routeName);
   }
+
+  Future<T?> pointAllAgencyExternal<T>() =>
+      Navigator.of(this).pushNamed(PointAgencyScreen.routeName);
 
   Future<T?> bankAccounts<T>() {
     return Navigator.of(this).pushNamed(BankAccountsScreen.routeName);

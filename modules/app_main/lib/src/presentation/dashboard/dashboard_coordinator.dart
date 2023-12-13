@@ -85,6 +85,10 @@ extension DashBoardCoordinator on BuildContext {
     return startMyWallet(read<UserCubit>().currentUser);
   }
 
+  Future<T?> _startPointAllAgency<T>() async {
+    return pointAllAgencyExternal();
+  }
+
   Future<T?> handleStartAppWidget<T>({required String id, String? path}) async {
     switch (id) {
       case "ic_team":
@@ -93,6 +97,8 @@ extension DashBoardCoordinator on BuildContext {
         return _startWallet();
       case 'ic_live':
         return Navigator.of(this).pushNamed(LiveHomeScreen.routeName);
+      case "ic_buff":
+        return _startPointAllAgency();
       default:
         if (path != null) {
           Navigator.of(this).pushNamed(path);
