@@ -23,7 +23,7 @@ class CallHistoryWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                   data.callGroup.membersNotMe.first.member.displayName ?? '',
+                  data.callGroup.membersNotMe.first.member.displayName ?? '',
                   style: context.textTheme.headlineSmall?.copyWith(
                     color: AppColors.black,
                   ),
@@ -32,7 +32,11 @@ class CallHistoryWidget extends StatelessWidget {
                 Row(
                   children: [
                     ImageWidget(
-                      data.isCaller ? IconAppConstants.icCallAway : IconAppConstants.icIncomingCall,
+                      data.type == 3
+                          ? IconAppConstants.icMissingCall
+                          : data.isCaller
+                              ? IconAppConstants.icCallAway
+                              : IconAppConstants.icIncomingCall,
                       width: 16,
                       height: 16,
                     ),
@@ -48,7 +52,7 @@ class CallHistoryWidget extends StatelessWidget {
             ),
           ),
           Text(
-            DateTime.tryParse(data.calledAt ?? '')?.tohhmm ?? '',
+            DateTime.tryParse(data.calledAt ?? '')?.toLocal().tohhmm ?? '',
             style: context.textTheme.titleMedium?.copyWith(
               fontSize: 11,
             ),

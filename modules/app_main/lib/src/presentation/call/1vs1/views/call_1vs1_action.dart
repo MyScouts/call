@@ -86,9 +86,46 @@ extension Call1vs1ScreenAction on Call1vs1ScreenState {
     bloc.add(AnswerCallEvent());
   }
 
-  void onBack() {
+  void onEndCall() {
     bloc.add(CloseCallEvent());
   }
+
+  // void onBack() {
+  //   if(widget.callType == CallType.video && bloc.state.isInCall) {
+  //     Navigator.pop(context);
+  //     Future.delayed(
+  //       const Duration(milliseconds: 300),
+  //           () {
+  //         if (!bloc.state.isInCall || callType == CallType.audio) {
+  //           _audioController.dispose();
+  //           return;
+  //         } else {
+  //           try {
+  //             PipHandler.addCallOverlay(
+  //               PipView(
+  //                 width: SizeConfig.screenWidth * 0.4,
+  //                 height: SizeConfig.screenHeight * 0.45,
+  //                 borderRadius: BorderRadius.circular(8),
+  //                 backgroundColor: Colors.black.withOpacity(0.8),
+  //                 child: BlocProvider<Call1vs1Bloc>.value(
+  //                   value: bloc,
+  //                   child: const PipCallRender(),
+  //                 ),
+  //               ),
+  //               bloc,
+  //             );
+  //
+  //           } catch (e,s) {
+  //             print(e);
+  //             print(s);
+  //           }
+  //         }
+  //       },
+  //     );
+  //   } else {
+  //     bloc.add(CloseCallEvent());
+  //   }
+  // }
 
   void onSwitchCamera() {
     bloc.add(SwitchCameraEvent());

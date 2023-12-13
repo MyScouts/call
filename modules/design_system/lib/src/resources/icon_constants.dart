@@ -161,6 +161,7 @@ class IconAppConstants {
   static String icMicro = IconApp.icMicro.path;
   static String icVideoCall = IconApp.icVideoCall.path;
   static String icVolume = IconApp.icVolume.path;
+  static String icVolumeOn = IconApp.icVolumeOn.path;
   static String icIncomingCall = IconApp.icIncomingCall.path;
   static String icSwitchCamera = IconApp.icSwitchCamera.path;
   static String icCallAway = IconApp.icCallAway.path;
@@ -169,6 +170,8 @@ class IconAppConstants {
   static String icDeleteCall = IconApp.icDeleteCall.path;
   static String icVideoAnswer = IconApp.icVideoAnswer.path;
   static String icBackCall = IconApp.icBackCall.path;
+  static String icMissingCall = IconApp.icMissingCall.path;
+  static String icExpandCall = IconApp.icExpandCall.path;
   static String icVideoRd = IconApp.icVideoRd.path;
   static String icCamera = IconApp.icCamera.path;
   static String icShopVdone = IconApp.icShopVdone.path;
@@ -377,12 +380,17 @@ enum IconApp {
   icMicro('assets/icons/ic_micro.svg'),
   icVideoCall('assets/icons/ic_video_call.svg'),
   icVolume('assets/icons/ic_volume.svg'),
+  icVolumeOn('assets/icons/ic_volume_on.svg'),
   icIncomingCall('assets/icons/ic_incoming_call.svg'),
   icSwitchCamera('assets/icons/ic_switch_camera.svg'),
   icCallAway('assets/icons/ic_call_away.svg'),
   icDeleteCall('assets/icons/ic_delete.svg'),
   icVideoAnswer('assets/icons/ic_video_answer.svg'),
   icBackCall('assets/icons/ic_back_call.svg'),
+  icExpandCall('assets/icons/ic_expand_call.svg'),
+  icMissingCall('assets/icons/ic_missing_call.svg'),
+
+
   icVideoRd('assets/icons/ic_video_rd.svg'),
   icCamera('assets/icons/ic_camera.svg'),
   icShopVdone('assets/icons/ic_shop_vdone.svg'),
