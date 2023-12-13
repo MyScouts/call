@@ -27,6 +27,8 @@ mixin _$BankAccountEvent {
     required TResult Function(int bankId) deleteBankAccount,
     required TResult Function() getVndWalletInfo,
     required TResult Function(num value) estimateTax,
+    required TResult Function() requestWithdrawOtp,
+    required TResult Function() resendWithdrawOtp,
     required TResult Function(WithdrawRequest request) withdraw,
     required TResult Function(int bankAccountId, bool isDefault)
         setDefaultBankAccount,
@@ -43,6 +45,8 @@ mixin _$BankAccountEvent {
     TResult? Function(int bankId)? deleteBankAccount,
     TResult? Function()? getVndWalletInfo,
     TResult? Function(num value)? estimateTax,
+    TResult? Function()? requestWithdrawOtp,
+    TResult? Function()? resendWithdrawOtp,
     TResult? Function(WithdrawRequest request)? withdraw,
     TResult? Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
   }) =>
@@ -58,6 +62,8 @@ mixin _$BankAccountEvent {
     TResult Function(int bankId)? deleteBankAccount,
     TResult Function()? getVndWalletInfo,
     TResult Function(num value)? estimateTax,
+    TResult Function()? requestWithdrawOtp,
+    TResult Function()? resendWithdrawOtp,
     TResult Function(WithdrawRequest request)? withdraw,
     TResult Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
     required TResult orElse(),
@@ -74,6 +80,9 @@ mixin _$BankAccountEvent {
     required TResult Function(_DeleteBankAccount value) deleteBankAccount,
     required TResult Function(_GetVndWalletInfo value) getVndWalletInfo,
     required TResult Function(_EstimateTax value) estimateTax,
+    required TResult Function(_RequestWithdrawOtpEvent value)
+        requestWithdrawOtp,
+    required TResult Function(_ResendWithdrawOtpEvent value) resendWithdrawOtp,
     required TResult Function(_Withdraw value) withdraw,
     required TResult Function(_SetDefaultBankAccount value)
         setDefaultBankAccount,
@@ -90,6 +99,8 @@ mixin _$BankAccountEvent {
     TResult? Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult? Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult? Function(_EstimateTax value)? estimateTax,
+    TResult? Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult? Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult? Function(_Withdraw value)? withdraw,
     TResult? Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
   }) =>
@@ -105,6 +116,8 @@ mixin _$BankAccountEvent {
     TResult Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult Function(_EstimateTax value)? estimateTax,
+    TResult Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult Function(_Withdraw value)? withdraw,
     TResult Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
     required TResult orElse(),
@@ -177,6 +190,8 @@ class _$GetBankAccountsImpl implements _GetBankAccounts {
     required TResult Function(int bankId) deleteBankAccount,
     required TResult Function() getVndWalletInfo,
     required TResult Function(num value) estimateTax,
+    required TResult Function() requestWithdrawOtp,
+    required TResult Function() resendWithdrawOtp,
     required TResult Function(WithdrawRequest request) withdraw,
     required TResult Function(int bankAccountId, bool isDefault)
         setDefaultBankAccount,
@@ -196,6 +211,8 @@ class _$GetBankAccountsImpl implements _GetBankAccounts {
     TResult? Function(int bankId)? deleteBankAccount,
     TResult? Function()? getVndWalletInfo,
     TResult? Function(num value)? estimateTax,
+    TResult? Function()? requestWithdrawOtp,
+    TResult? Function()? resendWithdrawOtp,
     TResult? Function(WithdrawRequest request)? withdraw,
     TResult? Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
   }) {
@@ -214,6 +231,8 @@ class _$GetBankAccountsImpl implements _GetBankAccounts {
     TResult Function(int bankId)? deleteBankAccount,
     TResult Function()? getVndWalletInfo,
     TResult Function(num value)? estimateTax,
+    TResult Function()? requestWithdrawOtp,
+    TResult Function()? resendWithdrawOtp,
     TResult Function(WithdrawRequest request)? withdraw,
     TResult Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
     required TResult orElse(),
@@ -236,6 +255,9 @@ class _$GetBankAccountsImpl implements _GetBankAccounts {
     required TResult Function(_DeleteBankAccount value) deleteBankAccount,
     required TResult Function(_GetVndWalletInfo value) getVndWalletInfo,
     required TResult Function(_EstimateTax value) estimateTax,
+    required TResult Function(_RequestWithdrawOtpEvent value)
+        requestWithdrawOtp,
+    required TResult Function(_ResendWithdrawOtpEvent value) resendWithdrawOtp,
     required TResult Function(_Withdraw value) withdraw,
     required TResult Function(_SetDefaultBankAccount value)
         setDefaultBankAccount,
@@ -255,6 +277,8 @@ class _$GetBankAccountsImpl implements _GetBankAccounts {
     TResult? Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult? Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult? Function(_EstimateTax value)? estimateTax,
+    TResult? Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult? Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult? Function(_Withdraw value)? withdraw,
     TResult? Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
   }) {
@@ -273,6 +297,8 @@ class _$GetBankAccountsImpl implements _GetBankAccounts {
     TResult Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult Function(_EstimateTax value)? estimateTax,
+    TResult Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult Function(_Withdraw value)? withdraw,
     TResult Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
     required TResult orElse(),
@@ -335,6 +361,8 @@ class _$GetAllBanksInfoImpl implements _GetAllBanksInfo {
     required TResult Function(int bankId) deleteBankAccount,
     required TResult Function() getVndWalletInfo,
     required TResult Function(num value) estimateTax,
+    required TResult Function() requestWithdrawOtp,
+    required TResult Function() resendWithdrawOtp,
     required TResult Function(WithdrawRequest request) withdraw,
     required TResult Function(int bankAccountId, bool isDefault)
         setDefaultBankAccount,
@@ -354,6 +382,8 @@ class _$GetAllBanksInfoImpl implements _GetAllBanksInfo {
     TResult? Function(int bankId)? deleteBankAccount,
     TResult? Function()? getVndWalletInfo,
     TResult? Function(num value)? estimateTax,
+    TResult? Function()? requestWithdrawOtp,
+    TResult? Function()? resendWithdrawOtp,
     TResult? Function(WithdrawRequest request)? withdraw,
     TResult? Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
   }) {
@@ -372,6 +402,8 @@ class _$GetAllBanksInfoImpl implements _GetAllBanksInfo {
     TResult Function(int bankId)? deleteBankAccount,
     TResult Function()? getVndWalletInfo,
     TResult Function(num value)? estimateTax,
+    TResult Function()? requestWithdrawOtp,
+    TResult Function()? resendWithdrawOtp,
     TResult Function(WithdrawRequest request)? withdraw,
     TResult Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
     required TResult orElse(),
@@ -394,6 +426,9 @@ class _$GetAllBanksInfoImpl implements _GetAllBanksInfo {
     required TResult Function(_DeleteBankAccount value) deleteBankAccount,
     required TResult Function(_GetVndWalletInfo value) getVndWalletInfo,
     required TResult Function(_EstimateTax value) estimateTax,
+    required TResult Function(_RequestWithdrawOtpEvent value)
+        requestWithdrawOtp,
+    required TResult Function(_ResendWithdrawOtpEvent value) resendWithdrawOtp,
     required TResult Function(_Withdraw value) withdraw,
     required TResult Function(_SetDefaultBankAccount value)
         setDefaultBankAccount,
@@ -413,6 +448,8 @@ class _$GetAllBanksInfoImpl implements _GetAllBanksInfo {
     TResult? Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult? Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult? Function(_EstimateTax value)? estimateTax,
+    TResult? Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult? Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult? Function(_Withdraw value)? withdraw,
     TResult? Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
   }) {
@@ -431,6 +468,8 @@ class _$GetAllBanksInfoImpl implements _GetAllBanksInfo {
     TResult Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult Function(_EstimateTax value)? estimateTax,
+    TResult Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult Function(_Withdraw value)? withdraw,
     TResult Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
     required TResult orElse(),
@@ -519,6 +558,8 @@ class _$SearchBankImpl implements _SearchBank {
     required TResult Function(int bankId) deleteBankAccount,
     required TResult Function() getVndWalletInfo,
     required TResult Function(num value) estimateTax,
+    required TResult Function() requestWithdrawOtp,
+    required TResult Function() resendWithdrawOtp,
     required TResult Function(WithdrawRequest request) withdraw,
     required TResult Function(int bankAccountId, bool isDefault)
         setDefaultBankAccount,
@@ -538,6 +579,8 @@ class _$SearchBankImpl implements _SearchBank {
     TResult? Function(int bankId)? deleteBankAccount,
     TResult? Function()? getVndWalletInfo,
     TResult? Function(num value)? estimateTax,
+    TResult? Function()? requestWithdrawOtp,
+    TResult? Function()? resendWithdrawOtp,
     TResult? Function(WithdrawRequest request)? withdraw,
     TResult? Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
   }) {
@@ -556,6 +599,8 @@ class _$SearchBankImpl implements _SearchBank {
     TResult Function(int bankId)? deleteBankAccount,
     TResult Function()? getVndWalletInfo,
     TResult Function(num value)? estimateTax,
+    TResult Function()? requestWithdrawOtp,
+    TResult Function()? resendWithdrawOtp,
     TResult Function(WithdrawRequest request)? withdraw,
     TResult Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
     required TResult orElse(),
@@ -578,6 +623,9 @@ class _$SearchBankImpl implements _SearchBank {
     required TResult Function(_DeleteBankAccount value) deleteBankAccount,
     required TResult Function(_GetVndWalletInfo value) getVndWalletInfo,
     required TResult Function(_EstimateTax value) estimateTax,
+    required TResult Function(_RequestWithdrawOtpEvent value)
+        requestWithdrawOtp,
+    required TResult Function(_ResendWithdrawOtpEvent value) resendWithdrawOtp,
     required TResult Function(_Withdraw value) withdraw,
     required TResult Function(_SetDefaultBankAccount value)
         setDefaultBankAccount,
@@ -597,6 +645,8 @@ class _$SearchBankImpl implements _SearchBank {
     TResult? Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult? Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult? Function(_EstimateTax value)? estimateTax,
+    TResult? Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult? Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult? Function(_Withdraw value)? withdraw,
     TResult? Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
   }) {
@@ -615,6 +665,8 @@ class _$SearchBankImpl implements _SearchBank {
     TResult Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult Function(_EstimateTax value)? estimateTax,
+    TResult Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult Function(_Withdraw value)? withdraw,
     TResult Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
     required TResult orElse(),
@@ -710,6 +762,8 @@ class _$GetOtpImpl implements _GetOtp {
     required TResult Function(int bankId) deleteBankAccount,
     required TResult Function() getVndWalletInfo,
     required TResult Function(num value) estimateTax,
+    required TResult Function() requestWithdrawOtp,
+    required TResult Function() resendWithdrawOtp,
     required TResult Function(WithdrawRequest request) withdraw,
     required TResult Function(int bankAccountId, bool isDefault)
         setDefaultBankAccount,
@@ -729,6 +783,8 @@ class _$GetOtpImpl implements _GetOtp {
     TResult? Function(int bankId)? deleteBankAccount,
     TResult? Function()? getVndWalletInfo,
     TResult? Function(num value)? estimateTax,
+    TResult? Function()? requestWithdrawOtp,
+    TResult? Function()? resendWithdrawOtp,
     TResult? Function(WithdrawRequest request)? withdraw,
     TResult? Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
   }) {
@@ -747,6 +803,8 @@ class _$GetOtpImpl implements _GetOtp {
     TResult Function(int bankId)? deleteBankAccount,
     TResult Function()? getVndWalletInfo,
     TResult Function(num value)? estimateTax,
+    TResult Function()? requestWithdrawOtp,
+    TResult Function()? resendWithdrawOtp,
     TResult Function(WithdrawRequest request)? withdraw,
     TResult Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
     required TResult orElse(),
@@ -769,6 +827,9 @@ class _$GetOtpImpl implements _GetOtp {
     required TResult Function(_DeleteBankAccount value) deleteBankAccount,
     required TResult Function(_GetVndWalletInfo value) getVndWalletInfo,
     required TResult Function(_EstimateTax value) estimateTax,
+    required TResult Function(_RequestWithdrawOtpEvent value)
+        requestWithdrawOtp,
+    required TResult Function(_ResendWithdrawOtpEvent value) resendWithdrawOtp,
     required TResult Function(_Withdraw value) withdraw,
     required TResult Function(_SetDefaultBankAccount value)
         setDefaultBankAccount,
@@ -788,6 +849,8 @@ class _$GetOtpImpl implements _GetOtp {
     TResult? Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult? Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult? Function(_EstimateTax value)? estimateTax,
+    TResult? Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult? Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult? Function(_Withdraw value)? withdraw,
     TResult? Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
   }) {
@@ -806,6 +869,8 @@ class _$GetOtpImpl implements _GetOtp {
     TResult Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult Function(_EstimateTax value)? estimateTax,
+    TResult Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult Function(_Withdraw value)? withdraw,
     TResult Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
     required TResult orElse(),
@@ -900,6 +965,8 @@ class _$AddBankAccountImpl implements _AddBankAccount {
     required TResult Function(int bankId) deleteBankAccount,
     required TResult Function() getVndWalletInfo,
     required TResult Function(num value) estimateTax,
+    required TResult Function() requestWithdrawOtp,
+    required TResult Function() resendWithdrawOtp,
     required TResult Function(WithdrawRequest request) withdraw,
     required TResult Function(int bankAccountId, bool isDefault)
         setDefaultBankAccount,
@@ -919,6 +986,8 @@ class _$AddBankAccountImpl implements _AddBankAccount {
     TResult? Function(int bankId)? deleteBankAccount,
     TResult? Function()? getVndWalletInfo,
     TResult? Function(num value)? estimateTax,
+    TResult? Function()? requestWithdrawOtp,
+    TResult? Function()? resendWithdrawOtp,
     TResult? Function(WithdrawRequest request)? withdraw,
     TResult? Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
   }) {
@@ -937,6 +1006,8 @@ class _$AddBankAccountImpl implements _AddBankAccount {
     TResult Function(int bankId)? deleteBankAccount,
     TResult Function()? getVndWalletInfo,
     TResult Function(num value)? estimateTax,
+    TResult Function()? requestWithdrawOtp,
+    TResult Function()? resendWithdrawOtp,
     TResult Function(WithdrawRequest request)? withdraw,
     TResult Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
     required TResult orElse(),
@@ -959,6 +1030,9 @@ class _$AddBankAccountImpl implements _AddBankAccount {
     required TResult Function(_DeleteBankAccount value) deleteBankAccount,
     required TResult Function(_GetVndWalletInfo value) getVndWalletInfo,
     required TResult Function(_EstimateTax value) estimateTax,
+    required TResult Function(_RequestWithdrawOtpEvent value)
+        requestWithdrawOtp,
+    required TResult Function(_ResendWithdrawOtpEvent value) resendWithdrawOtp,
     required TResult Function(_Withdraw value) withdraw,
     required TResult Function(_SetDefaultBankAccount value)
         setDefaultBankAccount,
@@ -978,6 +1052,8 @@ class _$AddBankAccountImpl implements _AddBankAccount {
     TResult? Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult? Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult? Function(_EstimateTax value)? estimateTax,
+    TResult? Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult? Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult? Function(_Withdraw value)? withdraw,
     TResult? Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
   }) {
@@ -996,6 +1072,8 @@ class _$AddBankAccountImpl implements _AddBankAccount {
     TResult Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult Function(_EstimateTax value)? estimateTax,
+    TResult Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult Function(_Withdraw value)? withdraw,
     TResult Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
     required TResult orElse(),
@@ -1090,6 +1168,8 @@ class _$UploadImageImpl implements _UploadImage {
     required TResult Function(int bankId) deleteBankAccount,
     required TResult Function() getVndWalletInfo,
     required TResult Function(num value) estimateTax,
+    required TResult Function() requestWithdrawOtp,
+    required TResult Function() resendWithdrawOtp,
     required TResult Function(WithdrawRequest request) withdraw,
     required TResult Function(int bankAccountId, bool isDefault)
         setDefaultBankAccount,
@@ -1109,6 +1189,8 @@ class _$UploadImageImpl implements _UploadImage {
     TResult? Function(int bankId)? deleteBankAccount,
     TResult? Function()? getVndWalletInfo,
     TResult? Function(num value)? estimateTax,
+    TResult? Function()? requestWithdrawOtp,
+    TResult? Function()? resendWithdrawOtp,
     TResult? Function(WithdrawRequest request)? withdraw,
     TResult? Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
   }) {
@@ -1127,6 +1209,8 @@ class _$UploadImageImpl implements _UploadImage {
     TResult Function(int bankId)? deleteBankAccount,
     TResult Function()? getVndWalletInfo,
     TResult Function(num value)? estimateTax,
+    TResult Function()? requestWithdrawOtp,
+    TResult Function()? resendWithdrawOtp,
     TResult Function(WithdrawRequest request)? withdraw,
     TResult Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
     required TResult orElse(),
@@ -1149,6 +1233,9 @@ class _$UploadImageImpl implements _UploadImage {
     required TResult Function(_DeleteBankAccount value) deleteBankAccount,
     required TResult Function(_GetVndWalletInfo value) getVndWalletInfo,
     required TResult Function(_EstimateTax value) estimateTax,
+    required TResult Function(_RequestWithdrawOtpEvent value)
+        requestWithdrawOtp,
+    required TResult Function(_ResendWithdrawOtpEvent value) resendWithdrawOtp,
     required TResult Function(_Withdraw value) withdraw,
     required TResult Function(_SetDefaultBankAccount value)
         setDefaultBankAccount,
@@ -1168,6 +1255,8 @@ class _$UploadImageImpl implements _UploadImage {
     TResult? Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult? Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult? Function(_EstimateTax value)? estimateTax,
+    TResult? Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult? Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult? Function(_Withdraw value)? withdraw,
     TResult? Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
   }) {
@@ -1186,6 +1275,8 @@ class _$UploadImageImpl implements _UploadImage {
     TResult Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult Function(_EstimateTax value)? estimateTax,
+    TResult Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult Function(_Withdraw value)? withdraw,
     TResult Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
     required TResult orElse(),
@@ -1280,6 +1371,8 @@ class _$DeleteBankAccountImpl implements _DeleteBankAccount {
     required TResult Function(int bankId) deleteBankAccount,
     required TResult Function() getVndWalletInfo,
     required TResult Function(num value) estimateTax,
+    required TResult Function() requestWithdrawOtp,
+    required TResult Function() resendWithdrawOtp,
     required TResult Function(WithdrawRequest request) withdraw,
     required TResult Function(int bankAccountId, bool isDefault)
         setDefaultBankAccount,
@@ -1299,6 +1392,8 @@ class _$DeleteBankAccountImpl implements _DeleteBankAccount {
     TResult? Function(int bankId)? deleteBankAccount,
     TResult? Function()? getVndWalletInfo,
     TResult? Function(num value)? estimateTax,
+    TResult? Function()? requestWithdrawOtp,
+    TResult? Function()? resendWithdrawOtp,
     TResult? Function(WithdrawRequest request)? withdraw,
     TResult? Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
   }) {
@@ -1317,6 +1412,8 @@ class _$DeleteBankAccountImpl implements _DeleteBankAccount {
     TResult Function(int bankId)? deleteBankAccount,
     TResult Function()? getVndWalletInfo,
     TResult Function(num value)? estimateTax,
+    TResult Function()? requestWithdrawOtp,
+    TResult Function()? resendWithdrawOtp,
     TResult Function(WithdrawRequest request)? withdraw,
     TResult Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
     required TResult orElse(),
@@ -1339,6 +1436,9 @@ class _$DeleteBankAccountImpl implements _DeleteBankAccount {
     required TResult Function(_DeleteBankAccount value) deleteBankAccount,
     required TResult Function(_GetVndWalletInfo value) getVndWalletInfo,
     required TResult Function(_EstimateTax value) estimateTax,
+    required TResult Function(_RequestWithdrawOtpEvent value)
+        requestWithdrawOtp,
+    required TResult Function(_ResendWithdrawOtpEvent value) resendWithdrawOtp,
     required TResult Function(_Withdraw value) withdraw,
     required TResult Function(_SetDefaultBankAccount value)
         setDefaultBankAccount,
@@ -1358,6 +1458,8 @@ class _$DeleteBankAccountImpl implements _DeleteBankAccount {
     TResult? Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult? Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult? Function(_EstimateTax value)? estimateTax,
+    TResult? Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult? Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult? Function(_Withdraw value)? withdraw,
     TResult? Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
   }) {
@@ -1376,6 +1478,8 @@ class _$DeleteBankAccountImpl implements _DeleteBankAccount {
     TResult Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult Function(_EstimateTax value)? estimateTax,
+    TResult Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult Function(_Withdraw value)? withdraw,
     TResult Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
     required TResult orElse(),
@@ -1444,6 +1548,8 @@ class _$GetVndWalletInfoImpl implements _GetVndWalletInfo {
     required TResult Function(int bankId) deleteBankAccount,
     required TResult Function() getVndWalletInfo,
     required TResult Function(num value) estimateTax,
+    required TResult Function() requestWithdrawOtp,
+    required TResult Function() resendWithdrawOtp,
     required TResult Function(WithdrawRequest request) withdraw,
     required TResult Function(int bankAccountId, bool isDefault)
         setDefaultBankAccount,
@@ -1463,6 +1569,8 @@ class _$GetVndWalletInfoImpl implements _GetVndWalletInfo {
     TResult? Function(int bankId)? deleteBankAccount,
     TResult? Function()? getVndWalletInfo,
     TResult? Function(num value)? estimateTax,
+    TResult? Function()? requestWithdrawOtp,
+    TResult? Function()? resendWithdrawOtp,
     TResult? Function(WithdrawRequest request)? withdraw,
     TResult? Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
   }) {
@@ -1481,6 +1589,8 @@ class _$GetVndWalletInfoImpl implements _GetVndWalletInfo {
     TResult Function(int bankId)? deleteBankAccount,
     TResult Function()? getVndWalletInfo,
     TResult Function(num value)? estimateTax,
+    TResult Function()? requestWithdrawOtp,
+    TResult Function()? resendWithdrawOtp,
     TResult Function(WithdrawRequest request)? withdraw,
     TResult Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
     required TResult orElse(),
@@ -1503,6 +1613,9 @@ class _$GetVndWalletInfoImpl implements _GetVndWalletInfo {
     required TResult Function(_DeleteBankAccount value) deleteBankAccount,
     required TResult Function(_GetVndWalletInfo value) getVndWalletInfo,
     required TResult Function(_EstimateTax value) estimateTax,
+    required TResult Function(_RequestWithdrawOtpEvent value)
+        requestWithdrawOtp,
+    required TResult Function(_ResendWithdrawOtpEvent value) resendWithdrawOtp,
     required TResult Function(_Withdraw value) withdraw,
     required TResult Function(_SetDefaultBankAccount value)
         setDefaultBankAccount,
@@ -1522,6 +1635,8 @@ class _$GetVndWalletInfoImpl implements _GetVndWalletInfo {
     TResult? Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult? Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult? Function(_EstimateTax value)? estimateTax,
+    TResult? Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult? Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult? Function(_Withdraw value)? withdraw,
     TResult? Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
   }) {
@@ -1540,6 +1655,8 @@ class _$GetVndWalletInfoImpl implements _GetVndWalletInfo {
     TResult Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult Function(_EstimateTax value)? estimateTax,
+    TResult Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult Function(_Withdraw value)? withdraw,
     TResult Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
     required TResult orElse(),
@@ -1628,6 +1745,8 @@ class _$EstimateTaxImpl implements _EstimateTax {
     required TResult Function(int bankId) deleteBankAccount,
     required TResult Function() getVndWalletInfo,
     required TResult Function(num value) estimateTax,
+    required TResult Function() requestWithdrawOtp,
+    required TResult Function() resendWithdrawOtp,
     required TResult Function(WithdrawRequest request) withdraw,
     required TResult Function(int bankAccountId, bool isDefault)
         setDefaultBankAccount,
@@ -1647,6 +1766,8 @@ class _$EstimateTaxImpl implements _EstimateTax {
     TResult? Function(int bankId)? deleteBankAccount,
     TResult? Function()? getVndWalletInfo,
     TResult? Function(num value)? estimateTax,
+    TResult? Function()? requestWithdrawOtp,
+    TResult? Function()? resendWithdrawOtp,
     TResult? Function(WithdrawRequest request)? withdraw,
     TResult? Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
   }) {
@@ -1665,6 +1786,8 @@ class _$EstimateTaxImpl implements _EstimateTax {
     TResult Function(int bankId)? deleteBankAccount,
     TResult Function()? getVndWalletInfo,
     TResult Function(num value)? estimateTax,
+    TResult Function()? requestWithdrawOtp,
+    TResult Function()? resendWithdrawOtp,
     TResult Function(WithdrawRequest request)? withdraw,
     TResult Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
     required TResult orElse(),
@@ -1687,6 +1810,9 @@ class _$EstimateTaxImpl implements _EstimateTax {
     required TResult Function(_DeleteBankAccount value) deleteBankAccount,
     required TResult Function(_GetVndWalletInfo value) getVndWalletInfo,
     required TResult Function(_EstimateTax value) estimateTax,
+    required TResult Function(_RequestWithdrawOtpEvent value)
+        requestWithdrawOtp,
+    required TResult Function(_ResendWithdrawOtpEvent value) resendWithdrawOtp,
     required TResult Function(_Withdraw value) withdraw,
     required TResult Function(_SetDefaultBankAccount value)
         setDefaultBankAccount,
@@ -1706,6 +1832,8 @@ class _$EstimateTaxImpl implements _EstimateTax {
     TResult? Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult? Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult? Function(_EstimateTax value)? estimateTax,
+    TResult? Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult? Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult? Function(_Withdraw value)? withdraw,
     TResult? Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
   }) {
@@ -1724,6 +1852,8 @@ class _$EstimateTaxImpl implements _EstimateTax {
     TResult Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult Function(_EstimateTax value)? estimateTax,
+    TResult Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult Function(_Withdraw value)? withdraw,
     TResult Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
     required TResult orElse(),
@@ -1742,6 +1872,354 @@ abstract class _EstimateTax implements BankAccountEvent {
   @JsonKey(ignore: true)
   _$$EstimateTaxImplCopyWith<_$EstimateTaxImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$RequestWithdrawOtpEventImplCopyWith<$Res> {
+  factory _$$RequestWithdrawOtpEventImplCopyWith(
+          _$RequestWithdrawOtpEventImpl value,
+          $Res Function(_$RequestWithdrawOtpEventImpl) then) =
+      __$$RequestWithdrawOtpEventImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$RequestWithdrawOtpEventImplCopyWithImpl<$Res>
+    extends _$BankAccountEventCopyWithImpl<$Res, _$RequestWithdrawOtpEventImpl>
+    implements _$$RequestWithdrawOtpEventImplCopyWith<$Res> {
+  __$$RequestWithdrawOtpEventImplCopyWithImpl(
+      _$RequestWithdrawOtpEventImpl _value,
+      $Res Function(_$RequestWithdrawOtpEventImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$RequestWithdrawOtpEventImpl implements _RequestWithdrawOtpEvent {
+  const _$RequestWithdrawOtpEventImpl();
+
+  @override
+  String toString() {
+    return 'BankAccountEvent.requestWithdrawOtp()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RequestWithdrawOtpEventImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getBankAccounts,
+    required TResult Function() getAllBanksInfo,
+    required TResult Function(String search) searchBank,
+    required TResult Function(bool isResend) getOtp,
+    required TResult Function(AddBankAccountRequest request) addBankAccount,
+    required TResult Function(File file) uploadImage,
+    required TResult Function(int bankId) deleteBankAccount,
+    required TResult Function() getVndWalletInfo,
+    required TResult Function(num value) estimateTax,
+    required TResult Function() requestWithdrawOtp,
+    required TResult Function() resendWithdrawOtp,
+    required TResult Function(WithdrawRequest request) withdraw,
+    required TResult Function(int bankAccountId, bool isDefault)
+        setDefaultBankAccount,
+  }) {
+    return requestWithdrawOtp();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getBankAccounts,
+    TResult? Function()? getAllBanksInfo,
+    TResult? Function(String search)? searchBank,
+    TResult? Function(bool isResend)? getOtp,
+    TResult? Function(AddBankAccountRequest request)? addBankAccount,
+    TResult? Function(File file)? uploadImage,
+    TResult? Function(int bankId)? deleteBankAccount,
+    TResult? Function()? getVndWalletInfo,
+    TResult? Function(num value)? estimateTax,
+    TResult? Function()? requestWithdrawOtp,
+    TResult? Function()? resendWithdrawOtp,
+    TResult? Function(WithdrawRequest request)? withdraw,
+    TResult? Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
+  }) {
+    return requestWithdrawOtp?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getBankAccounts,
+    TResult Function()? getAllBanksInfo,
+    TResult Function(String search)? searchBank,
+    TResult Function(bool isResend)? getOtp,
+    TResult Function(AddBankAccountRequest request)? addBankAccount,
+    TResult Function(File file)? uploadImage,
+    TResult Function(int bankId)? deleteBankAccount,
+    TResult Function()? getVndWalletInfo,
+    TResult Function(num value)? estimateTax,
+    TResult Function()? requestWithdrawOtp,
+    TResult Function()? resendWithdrawOtp,
+    TResult Function(WithdrawRequest request)? withdraw,
+    TResult Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
+    required TResult orElse(),
+  }) {
+    if (requestWithdrawOtp != null) {
+      return requestWithdrawOtp();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetBankAccounts value) getBankAccounts,
+    required TResult Function(_GetAllBanksInfo value) getAllBanksInfo,
+    required TResult Function(_SearchBank value) searchBank,
+    required TResult Function(_GetOtp value) getOtp,
+    required TResult Function(_AddBankAccount value) addBankAccount,
+    required TResult Function(_UploadImage value) uploadImage,
+    required TResult Function(_DeleteBankAccount value) deleteBankAccount,
+    required TResult Function(_GetVndWalletInfo value) getVndWalletInfo,
+    required TResult Function(_EstimateTax value) estimateTax,
+    required TResult Function(_RequestWithdrawOtpEvent value)
+        requestWithdrawOtp,
+    required TResult Function(_ResendWithdrawOtpEvent value) resendWithdrawOtp,
+    required TResult Function(_Withdraw value) withdraw,
+    required TResult Function(_SetDefaultBankAccount value)
+        setDefaultBankAccount,
+  }) {
+    return requestWithdrawOtp(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetBankAccounts value)? getBankAccounts,
+    TResult? Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult? Function(_SearchBank value)? searchBank,
+    TResult? Function(_GetOtp value)? getOtp,
+    TResult? Function(_AddBankAccount value)? addBankAccount,
+    TResult? Function(_UploadImage value)? uploadImage,
+    TResult? Function(_DeleteBankAccount value)? deleteBankAccount,
+    TResult? Function(_GetVndWalletInfo value)? getVndWalletInfo,
+    TResult? Function(_EstimateTax value)? estimateTax,
+    TResult? Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult? Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
+    TResult? Function(_Withdraw value)? withdraw,
+    TResult? Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
+  }) {
+    return requestWithdrawOtp?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetBankAccounts value)? getBankAccounts,
+    TResult Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult Function(_SearchBank value)? searchBank,
+    TResult Function(_GetOtp value)? getOtp,
+    TResult Function(_AddBankAccount value)? addBankAccount,
+    TResult Function(_UploadImage value)? uploadImage,
+    TResult Function(_DeleteBankAccount value)? deleteBankAccount,
+    TResult Function(_GetVndWalletInfo value)? getVndWalletInfo,
+    TResult Function(_EstimateTax value)? estimateTax,
+    TResult Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
+    TResult Function(_Withdraw value)? withdraw,
+    TResult Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
+    required TResult orElse(),
+  }) {
+    if (requestWithdrawOtp != null) {
+      return requestWithdrawOtp(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RequestWithdrawOtpEvent implements BankAccountEvent {
+  const factory _RequestWithdrawOtpEvent() = _$RequestWithdrawOtpEventImpl;
+}
+
+/// @nodoc
+abstract class _$$ResendWithdrawOtpEventImplCopyWith<$Res> {
+  factory _$$ResendWithdrawOtpEventImplCopyWith(
+          _$ResendWithdrawOtpEventImpl value,
+          $Res Function(_$ResendWithdrawOtpEventImpl) then) =
+      __$$ResendWithdrawOtpEventImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ResendWithdrawOtpEventImplCopyWithImpl<$Res>
+    extends _$BankAccountEventCopyWithImpl<$Res, _$ResendWithdrawOtpEventImpl>
+    implements _$$ResendWithdrawOtpEventImplCopyWith<$Res> {
+  __$$ResendWithdrawOtpEventImplCopyWithImpl(
+      _$ResendWithdrawOtpEventImpl _value,
+      $Res Function(_$ResendWithdrawOtpEventImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$ResendWithdrawOtpEventImpl implements _ResendWithdrawOtpEvent {
+  const _$ResendWithdrawOtpEventImpl();
+
+  @override
+  String toString() {
+    return 'BankAccountEvent.resendWithdrawOtp()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ResendWithdrawOtpEventImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getBankAccounts,
+    required TResult Function() getAllBanksInfo,
+    required TResult Function(String search) searchBank,
+    required TResult Function(bool isResend) getOtp,
+    required TResult Function(AddBankAccountRequest request) addBankAccount,
+    required TResult Function(File file) uploadImage,
+    required TResult Function(int bankId) deleteBankAccount,
+    required TResult Function() getVndWalletInfo,
+    required TResult Function(num value) estimateTax,
+    required TResult Function() requestWithdrawOtp,
+    required TResult Function() resendWithdrawOtp,
+    required TResult Function(WithdrawRequest request) withdraw,
+    required TResult Function(int bankAccountId, bool isDefault)
+        setDefaultBankAccount,
+  }) {
+    return resendWithdrawOtp();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getBankAccounts,
+    TResult? Function()? getAllBanksInfo,
+    TResult? Function(String search)? searchBank,
+    TResult? Function(bool isResend)? getOtp,
+    TResult? Function(AddBankAccountRequest request)? addBankAccount,
+    TResult? Function(File file)? uploadImage,
+    TResult? Function(int bankId)? deleteBankAccount,
+    TResult? Function()? getVndWalletInfo,
+    TResult? Function(num value)? estimateTax,
+    TResult? Function()? requestWithdrawOtp,
+    TResult? Function()? resendWithdrawOtp,
+    TResult? Function(WithdrawRequest request)? withdraw,
+    TResult? Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
+  }) {
+    return resendWithdrawOtp?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getBankAccounts,
+    TResult Function()? getAllBanksInfo,
+    TResult Function(String search)? searchBank,
+    TResult Function(bool isResend)? getOtp,
+    TResult Function(AddBankAccountRequest request)? addBankAccount,
+    TResult Function(File file)? uploadImage,
+    TResult Function(int bankId)? deleteBankAccount,
+    TResult Function()? getVndWalletInfo,
+    TResult Function(num value)? estimateTax,
+    TResult Function()? requestWithdrawOtp,
+    TResult Function()? resendWithdrawOtp,
+    TResult Function(WithdrawRequest request)? withdraw,
+    TResult Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
+    required TResult orElse(),
+  }) {
+    if (resendWithdrawOtp != null) {
+      return resendWithdrawOtp();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetBankAccounts value) getBankAccounts,
+    required TResult Function(_GetAllBanksInfo value) getAllBanksInfo,
+    required TResult Function(_SearchBank value) searchBank,
+    required TResult Function(_GetOtp value) getOtp,
+    required TResult Function(_AddBankAccount value) addBankAccount,
+    required TResult Function(_UploadImage value) uploadImage,
+    required TResult Function(_DeleteBankAccount value) deleteBankAccount,
+    required TResult Function(_GetVndWalletInfo value) getVndWalletInfo,
+    required TResult Function(_EstimateTax value) estimateTax,
+    required TResult Function(_RequestWithdrawOtpEvent value)
+        requestWithdrawOtp,
+    required TResult Function(_ResendWithdrawOtpEvent value) resendWithdrawOtp,
+    required TResult Function(_Withdraw value) withdraw,
+    required TResult Function(_SetDefaultBankAccount value)
+        setDefaultBankAccount,
+  }) {
+    return resendWithdrawOtp(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetBankAccounts value)? getBankAccounts,
+    TResult? Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult? Function(_SearchBank value)? searchBank,
+    TResult? Function(_GetOtp value)? getOtp,
+    TResult? Function(_AddBankAccount value)? addBankAccount,
+    TResult? Function(_UploadImage value)? uploadImage,
+    TResult? Function(_DeleteBankAccount value)? deleteBankAccount,
+    TResult? Function(_GetVndWalletInfo value)? getVndWalletInfo,
+    TResult? Function(_EstimateTax value)? estimateTax,
+    TResult? Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult? Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
+    TResult? Function(_Withdraw value)? withdraw,
+    TResult? Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
+  }) {
+    return resendWithdrawOtp?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetBankAccounts value)? getBankAccounts,
+    TResult Function(_GetAllBanksInfo value)? getAllBanksInfo,
+    TResult Function(_SearchBank value)? searchBank,
+    TResult Function(_GetOtp value)? getOtp,
+    TResult Function(_AddBankAccount value)? addBankAccount,
+    TResult Function(_UploadImage value)? uploadImage,
+    TResult Function(_DeleteBankAccount value)? deleteBankAccount,
+    TResult Function(_GetVndWalletInfo value)? getVndWalletInfo,
+    TResult Function(_EstimateTax value)? estimateTax,
+    TResult Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
+    TResult Function(_Withdraw value)? withdraw,
+    TResult Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
+    required TResult orElse(),
+  }) {
+    if (resendWithdrawOtp != null) {
+      return resendWithdrawOtp(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ResendWithdrawOtpEvent implements BankAccountEvent {
+  const factory _ResendWithdrawOtpEvent() = _$ResendWithdrawOtpEventImpl;
 }
 
 /// @nodoc
@@ -1817,6 +2295,8 @@ class _$WithdrawImpl implements _Withdraw {
     required TResult Function(int bankId) deleteBankAccount,
     required TResult Function() getVndWalletInfo,
     required TResult Function(num value) estimateTax,
+    required TResult Function() requestWithdrawOtp,
+    required TResult Function() resendWithdrawOtp,
     required TResult Function(WithdrawRequest request) withdraw,
     required TResult Function(int bankAccountId, bool isDefault)
         setDefaultBankAccount,
@@ -1836,6 +2316,8 @@ class _$WithdrawImpl implements _Withdraw {
     TResult? Function(int bankId)? deleteBankAccount,
     TResult? Function()? getVndWalletInfo,
     TResult? Function(num value)? estimateTax,
+    TResult? Function()? requestWithdrawOtp,
+    TResult? Function()? resendWithdrawOtp,
     TResult? Function(WithdrawRequest request)? withdraw,
     TResult? Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
   }) {
@@ -1854,6 +2336,8 @@ class _$WithdrawImpl implements _Withdraw {
     TResult Function(int bankId)? deleteBankAccount,
     TResult Function()? getVndWalletInfo,
     TResult Function(num value)? estimateTax,
+    TResult Function()? requestWithdrawOtp,
+    TResult Function()? resendWithdrawOtp,
     TResult Function(WithdrawRequest request)? withdraw,
     TResult Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
     required TResult orElse(),
@@ -1876,6 +2360,9 @@ class _$WithdrawImpl implements _Withdraw {
     required TResult Function(_DeleteBankAccount value) deleteBankAccount,
     required TResult Function(_GetVndWalletInfo value) getVndWalletInfo,
     required TResult Function(_EstimateTax value) estimateTax,
+    required TResult Function(_RequestWithdrawOtpEvent value)
+        requestWithdrawOtp,
+    required TResult Function(_ResendWithdrawOtpEvent value) resendWithdrawOtp,
     required TResult Function(_Withdraw value) withdraw,
     required TResult Function(_SetDefaultBankAccount value)
         setDefaultBankAccount,
@@ -1895,6 +2382,8 @@ class _$WithdrawImpl implements _Withdraw {
     TResult? Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult? Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult? Function(_EstimateTax value)? estimateTax,
+    TResult? Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult? Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult? Function(_Withdraw value)? withdraw,
     TResult? Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
   }) {
@@ -1913,6 +2402,8 @@ class _$WithdrawImpl implements _Withdraw {
     TResult Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult Function(_EstimateTax value)? estimateTax,
+    TResult Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult Function(_Withdraw value)? withdraw,
     TResult Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
     required TResult orElse(),
@@ -2020,6 +2511,8 @@ class _$SetDefaultBankAccountImpl implements _SetDefaultBankAccount {
     required TResult Function(int bankId) deleteBankAccount,
     required TResult Function() getVndWalletInfo,
     required TResult Function(num value) estimateTax,
+    required TResult Function() requestWithdrawOtp,
+    required TResult Function() resendWithdrawOtp,
     required TResult Function(WithdrawRequest request) withdraw,
     required TResult Function(int bankAccountId, bool isDefault)
         setDefaultBankAccount,
@@ -2039,6 +2532,8 @@ class _$SetDefaultBankAccountImpl implements _SetDefaultBankAccount {
     TResult? Function(int bankId)? deleteBankAccount,
     TResult? Function()? getVndWalletInfo,
     TResult? Function(num value)? estimateTax,
+    TResult? Function()? requestWithdrawOtp,
+    TResult? Function()? resendWithdrawOtp,
     TResult? Function(WithdrawRequest request)? withdraw,
     TResult? Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
   }) {
@@ -2057,6 +2552,8 @@ class _$SetDefaultBankAccountImpl implements _SetDefaultBankAccount {
     TResult Function(int bankId)? deleteBankAccount,
     TResult Function()? getVndWalletInfo,
     TResult Function(num value)? estimateTax,
+    TResult Function()? requestWithdrawOtp,
+    TResult Function()? resendWithdrawOtp,
     TResult Function(WithdrawRequest request)? withdraw,
     TResult Function(int bankAccountId, bool isDefault)? setDefaultBankAccount,
     required TResult orElse(),
@@ -2079,6 +2576,9 @@ class _$SetDefaultBankAccountImpl implements _SetDefaultBankAccount {
     required TResult Function(_DeleteBankAccount value) deleteBankAccount,
     required TResult Function(_GetVndWalletInfo value) getVndWalletInfo,
     required TResult Function(_EstimateTax value) estimateTax,
+    required TResult Function(_RequestWithdrawOtpEvent value)
+        requestWithdrawOtp,
+    required TResult Function(_ResendWithdrawOtpEvent value) resendWithdrawOtp,
     required TResult Function(_Withdraw value) withdraw,
     required TResult Function(_SetDefaultBankAccount value)
         setDefaultBankAccount,
@@ -2098,6 +2598,8 @@ class _$SetDefaultBankAccountImpl implements _SetDefaultBankAccount {
     TResult? Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult? Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult? Function(_EstimateTax value)? estimateTax,
+    TResult? Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult? Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult? Function(_Withdraw value)? withdraw,
     TResult? Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
   }) {
@@ -2116,6 +2618,8 @@ class _$SetDefaultBankAccountImpl implements _SetDefaultBankAccount {
     TResult Function(_DeleteBankAccount value)? deleteBankAccount,
     TResult Function(_GetVndWalletInfo value)? getVndWalletInfo,
     TResult Function(_EstimateTax value)? estimateTax,
+    TResult Function(_RequestWithdrawOtpEvent value)? requestWithdrawOtp,
+    TResult Function(_ResendWithdrawOtpEvent value)? resendWithdrawOtp,
     TResult Function(_Withdraw value)? withdraw,
     TResult Function(_SetDefaultBankAccount value)? setDefaultBankAccount,
     required TResult orElse(),
@@ -2165,12 +2669,17 @@ mixin _$BankAccountState {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -2195,12 +2704,16 @@ mixin _$BankAccountState {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -2225,12 +2738,16 @@ mixin _$BankAccountState {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -2268,6 +2785,10 @@ mixin _$BankAccountState {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -2275,6 +2796,10 @@ mixin _$BankAccountState {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -2303,6 +2828,10 @@ mixin _$BankAccountState {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -2310,6 +2839,10 @@ mixin _$BankAccountState {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -2336,6 +2869,10 @@ mixin _$BankAccountState {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -2343,6 +2880,8 @@ mixin _$BankAccountState {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -2426,12 +2965,17 @@ class _$InitialImpl implements _Initial {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return initial();
   }
@@ -2459,12 +3003,16 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return initial?.call();
   }
@@ -2492,12 +3040,16 @@ class _$InitialImpl implements _Initial {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -2541,6 +3093,10 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -2548,6 +3104,10 @@ class _$InitialImpl implements _Initial {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return initial(this);
   }
@@ -2579,6 +3139,10 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -2586,6 +3150,10 @@ class _$InitialImpl implements _Initial {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return initial?.call(this);
   }
@@ -2615,6 +3183,10 @@ class _$InitialImpl implements _Initial {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -2622,6 +3194,8 @@ class _$InitialImpl implements _Initial {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -2721,12 +3295,17 @@ class _$ErrorImpl implements _Error {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return error(err);
   }
@@ -2754,12 +3333,16 @@ class _$ErrorImpl implements _Error {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return error?.call(err);
   }
@@ -2787,12 +3370,16 @@ class _$ErrorImpl implements _Error {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -2836,6 +3423,10 @@ class _$ErrorImpl implements _Error {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -2843,6 +3434,10 @@ class _$ErrorImpl implements _Error {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return error(this);
   }
@@ -2874,6 +3469,10 @@ class _$ErrorImpl implements _Error {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -2881,6 +3480,10 @@ class _$ErrorImpl implements _Error {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return error?.call(this);
   }
@@ -2910,6 +3513,10 @@ class _$ErrorImpl implements _Error {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -2917,6 +3524,8 @@ class _$ErrorImpl implements _Error {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -3033,12 +3642,17 @@ class _$GetBankAccountsSuccessImpl implements _GetBankAccountsSuccess {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return getBankAccountsSuccess(bankAccounts);
   }
@@ -3066,12 +3680,16 @@ class _$GetBankAccountsSuccessImpl implements _GetBankAccountsSuccess {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return getBankAccountsSuccess?.call(bankAccounts);
   }
@@ -3099,12 +3717,16 @@ class _$GetBankAccountsSuccessImpl implements _GetBankAccountsSuccess {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (getBankAccountsSuccess != null) {
@@ -3148,6 +3770,10 @@ class _$GetBankAccountsSuccessImpl implements _GetBankAccountsSuccess {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -3155,6 +3781,10 @@ class _$GetBankAccountsSuccessImpl implements _GetBankAccountsSuccess {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return getBankAccountsSuccess(this);
   }
@@ -3186,6 +3816,10 @@ class _$GetBankAccountsSuccessImpl implements _GetBankAccountsSuccess {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -3193,6 +3827,10 @@ class _$GetBankAccountsSuccessImpl implements _GetBankAccountsSuccess {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return getBankAccountsSuccess?.call(this);
   }
@@ -3222,6 +3860,10 @@ class _$GetBankAccountsSuccessImpl implements _GetBankAccountsSuccess {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -3229,6 +3871,8 @@ class _$GetBankAccountsSuccessImpl implements _GetBankAccountsSuccess {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (getBankAccountsSuccess != null) {
@@ -3312,12 +3956,17 @@ class _$GetBankAccountsLoadingImpl implements _GetBankAccountsLoading {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return getBankAccountsLoading();
   }
@@ -3345,12 +3994,16 @@ class _$GetBankAccountsLoadingImpl implements _GetBankAccountsLoading {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return getBankAccountsLoading?.call();
   }
@@ -3378,12 +4031,16 @@ class _$GetBankAccountsLoadingImpl implements _GetBankAccountsLoading {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (getBankAccountsLoading != null) {
@@ -3427,6 +4084,10 @@ class _$GetBankAccountsLoadingImpl implements _GetBankAccountsLoading {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -3434,6 +4095,10 @@ class _$GetBankAccountsLoadingImpl implements _GetBankAccountsLoading {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return getBankAccountsLoading(this);
   }
@@ -3465,6 +4130,10 @@ class _$GetBankAccountsLoadingImpl implements _GetBankAccountsLoading {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -3472,6 +4141,10 @@ class _$GetBankAccountsLoadingImpl implements _GetBankAccountsLoading {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return getBankAccountsLoading?.call(this);
   }
@@ -3501,6 +4174,10 @@ class _$GetBankAccountsLoadingImpl implements _GetBankAccountsLoading {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -3508,6 +4185,8 @@ class _$GetBankAccountsLoadingImpl implements _GetBankAccountsLoading {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (getBankAccountsLoading != null) {
@@ -3609,12 +4288,17 @@ class _$GetBankAccountsErrorImpl implements _GetBankAccountsError {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return getBankAccountsError(err);
   }
@@ -3642,12 +4326,16 @@ class _$GetBankAccountsErrorImpl implements _GetBankAccountsError {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return getBankAccountsError?.call(err);
   }
@@ -3675,12 +4363,16 @@ class _$GetBankAccountsErrorImpl implements _GetBankAccountsError {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (getBankAccountsError != null) {
@@ -3724,6 +4416,10 @@ class _$GetBankAccountsErrorImpl implements _GetBankAccountsError {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -3731,6 +4427,10 @@ class _$GetBankAccountsErrorImpl implements _GetBankAccountsError {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return getBankAccountsError(this);
   }
@@ -3762,6 +4462,10 @@ class _$GetBankAccountsErrorImpl implements _GetBankAccountsError {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -3769,6 +4473,10 @@ class _$GetBankAccountsErrorImpl implements _GetBankAccountsError {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return getBankAccountsError?.call(this);
   }
@@ -3798,6 +4506,10 @@ class _$GetBankAccountsErrorImpl implements _GetBankAccountsError {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -3805,6 +4517,8 @@ class _$GetBankAccountsErrorImpl implements _GetBankAccountsError {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (getBankAccountsError != null) {
@@ -3887,12 +4601,17 @@ class _$GetAllBanksInfoSuccessImpl implements _GetAllBanksInfoSuccess {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return getAllBanksInfoSuccess();
   }
@@ -3920,12 +4639,16 @@ class _$GetAllBanksInfoSuccessImpl implements _GetAllBanksInfoSuccess {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return getAllBanksInfoSuccess?.call();
   }
@@ -3953,12 +4676,16 @@ class _$GetAllBanksInfoSuccessImpl implements _GetAllBanksInfoSuccess {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (getAllBanksInfoSuccess != null) {
@@ -4002,6 +4729,10 @@ class _$GetAllBanksInfoSuccessImpl implements _GetAllBanksInfoSuccess {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -4009,6 +4740,10 @@ class _$GetAllBanksInfoSuccessImpl implements _GetAllBanksInfoSuccess {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return getAllBanksInfoSuccess(this);
   }
@@ -4040,6 +4775,10 @@ class _$GetAllBanksInfoSuccessImpl implements _GetAllBanksInfoSuccess {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -4047,6 +4786,10 @@ class _$GetAllBanksInfoSuccessImpl implements _GetAllBanksInfoSuccess {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return getAllBanksInfoSuccess?.call(this);
   }
@@ -4076,6 +4819,10 @@ class _$GetAllBanksInfoSuccessImpl implements _GetAllBanksInfoSuccess {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -4083,6 +4830,8 @@ class _$GetAllBanksInfoSuccessImpl implements _GetAllBanksInfoSuccess {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (getAllBanksInfoSuccess != null) {
@@ -4159,12 +4908,17 @@ class _$GetAllBanksInfoLoadingImpl implements _GetAllBanksInfoLoading {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return getAllBanksInfoLoading();
   }
@@ -4192,12 +4946,16 @@ class _$GetAllBanksInfoLoadingImpl implements _GetAllBanksInfoLoading {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return getAllBanksInfoLoading?.call();
   }
@@ -4225,12 +4983,16 @@ class _$GetAllBanksInfoLoadingImpl implements _GetAllBanksInfoLoading {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (getAllBanksInfoLoading != null) {
@@ -4274,6 +5036,10 @@ class _$GetAllBanksInfoLoadingImpl implements _GetAllBanksInfoLoading {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -4281,6 +5047,10 @@ class _$GetAllBanksInfoLoadingImpl implements _GetAllBanksInfoLoading {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return getAllBanksInfoLoading(this);
   }
@@ -4312,6 +5082,10 @@ class _$GetAllBanksInfoLoadingImpl implements _GetAllBanksInfoLoading {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -4319,6 +5093,10 @@ class _$GetAllBanksInfoLoadingImpl implements _GetAllBanksInfoLoading {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return getAllBanksInfoLoading?.call(this);
   }
@@ -4348,6 +5126,10 @@ class _$GetAllBanksInfoLoadingImpl implements _GetAllBanksInfoLoading {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -4355,6 +5137,8 @@ class _$GetAllBanksInfoLoadingImpl implements _GetAllBanksInfoLoading {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (getAllBanksInfoLoading != null) {
@@ -4428,12 +5212,17 @@ class _$GetOtpSuccessImpl implements _GetOtpSuccess {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return getOtpSuccess();
   }
@@ -4461,12 +5250,16 @@ class _$GetOtpSuccessImpl implements _GetOtpSuccess {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return getOtpSuccess?.call();
   }
@@ -4494,12 +5287,16 @@ class _$GetOtpSuccessImpl implements _GetOtpSuccess {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (getOtpSuccess != null) {
@@ -4543,6 +5340,10 @@ class _$GetOtpSuccessImpl implements _GetOtpSuccess {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -4550,6 +5351,10 @@ class _$GetOtpSuccessImpl implements _GetOtpSuccess {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return getOtpSuccess(this);
   }
@@ -4581,6 +5386,10 @@ class _$GetOtpSuccessImpl implements _GetOtpSuccess {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -4588,6 +5397,10 @@ class _$GetOtpSuccessImpl implements _GetOtpSuccess {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return getOtpSuccess?.call(this);
   }
@@ -4617,6 +5430,10 @@ class _$GetOtpSuccessImpl implements _GetOtpSuccess {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -4624,6 +5441,8 @@ class _$GetOtpSuccessImpl implements _GetOtpSuccess {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (getOtpSuccess != null) {
@@ -4697,12 +5516,17 @@ class _$GetOtpLoadingImpl implements _GetOtpLoading {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return getOtpLoading();
   }
@@ -4730,12 +5554,16 @@ class _$GetOtpLoadingImpl implements _GetOtpLoading {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return getOtpLoading?.call();
   }
@@ -4763,12 +5591,16 @@ class _$GetOtpLoadingImpl implements _GetOtpLoading {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (getOtpLoading != null) {
@@ -4812,6 +5644,10 @@ class _$GetOtpLoadingImpl implements _GetOtpLoading {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -4819,6 +5655,10 @@ class _$GetOtpLoadingImpl implements _GetOtpLoading {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return getOtpLoading(this);
   }
@@ -4850,6 +5690,10 @@ class _$GetOtpLoadingImpl implements _GetOtpLoading {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -4857,6 +5701,10 @@ class _$GetOtpLoadingImpl implements _GetOtpLoading {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return getOtpLoading?.call(this);
   }
@@ -4886,6 +5734,10 @@ class _$GetOtpLoadingImpl implements _GetOtpLoading {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -4893,6 +5745,8 @@ class _$GetOtpLoadingImpl implements _GetOtpLoading {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (getOtpLoading != null) {
@@ -4966,12 +5820,17 @@ class _$ResendOtpLoadingImpl implements _ResendOtpLoading {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return resendOtpLoading();
   }
@@ -4999,12 +5858,16 @@ class _$ResendOtpLoadingImpl implements _ResendOtpLoading {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return resendOtpLoading?.call();
   }
@@ -5032,12 +5895,16 @@ class _$ResendOtpLoadingImpl implements _ResendOtpLoading {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (resendOtpLoading != null) {
@@ -5081,6 +5948,10 @@ class _$ResendOtpLoadingImpl implements _ResendOtpLoading {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -5088,6 +5959,10 @@ class _$ResendOtpLoadingImpl implements _ResendOtpLoading {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return resendOtpLoading(this);
   }
@@ -5119,6 +5994,10 @@ class _$ResendOtpLoadingImpl implements _ResendOtpLoading {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -5126,6 +6005,10 @@ class _$ResendOtpLoadingImpl implements _ResendOtpLoading {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return resendOtpLoading?.call(this);
   }
@@ -5155,6 +6038,10 @@ class _$ResendOtpLoadingImpl implements _ResendOtpLoading {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -5162,6 +6049,8 @@ class _$ResendOtpLoadingImpl implements _ResendOtpLoading {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (resendOtpLoading != null) {
@@ -5235,12 +6124,17 @@ class _$ResendOtpSuccessImpl implements _ResendOtpSuccess {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return resendOtpSuccess();
   }
@@ -5268,12 +6162,16 @@ class _$ResendOtpSuccessImpl implements _ResendOtpSuccess {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return resendOtpSuccess?.call();
   }
@@ -5301,12 +6199,16 @@ class _$ResendOtpSuccessImpl implements _ResendOtpSuccess {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (resendOtpSuccess != null) {
@@ -5350,6 +6252,10 @@ class _$ResendOtpSuccessImpl implements _ResendOtpSuccess {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -5357,6 +6263,10 @@ class _$ResendOtpSuccessImpl implements _ResendOtpSuccess {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return resendOtpSuccess(this);
   }
@@ -5388,6 +6298,10 @@ class _$ResendOtpSuccessImpl implements _ResendOtpSuccess {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -5395,6 +6309,10 @@ class _$ResendOtpSuccessImpl implements _ResendOtpSuccess {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return resendOtpSuccess?.call(this);
   }
@@ -5424,6 +6342,10 @@ class _$ResendOtpSuccessImpl implements _ResendOtpSuccess {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -5431,6 +6353,8 @@ class _$ResendOtpSuccessImpl implements _ResendOtpSuccess {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (resendOtpSuccess != null) {
@@ -5543,12 +6467,17 @@ class _$AddBankAccountSuccessImpl implements _AddBankAccountSuccess {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return addBankAccountSuccess(bankAccount);
   }
@@ -5576,12 +6505,16 @@ class _$AddBankAccountSuccessImpl implements _AddBankAccountSuccess {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return addBankAccountSuccess?.call(bankAccount);
   }
@@ -5609,12 +6542,16 @@ class _$AddBankAccountSuccessImpl implements _AddBankAccountSuccess {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (addBankAccountSuccess != null) {
@@ -5658,6 +6595,10 @@ class _$AddBankAccountSuccessImpl implements _AddBankAccountSuccess {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -5665,6 +6606,10 @@ class _$AddBankAccountSuccessImpl implements _AddBankAccountSuccess {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return addBankAccountSuccess(this);
   }
@@ -5696,6 +6641,10 @@ class _$AddBankAccountSuccessImpl implements _AddBankAccountSuccess {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -5703,6 +6652,10 @@ class _$AddBankAccountSuccessImpl implements _AddBankAccountSuccess {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return addBankAccountSuccess?.call(this);
   }
@@ -5732,6 +6685,10 @@ class _$AddBankAccountSuccessImpl implements _AddBankAccountSuccess {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -5739,6 +6696,8 @@ class _$AddBankAccountSuccessImpl implements _AddBankAccountSuccess {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (addBankAccountSuccess != null) {
@@ -5820,12 +6779,17 @@ class _$AddBankAccountLoadingImpl implements _AddBankAccountLoading {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return addBankAccountLoading();
   }
@@ -5853,12 +6817,16 @@ class _$AddBankAccountLoadingImpl implements _AddBankAccountLoading {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return addBankAccountLoading?.call();
   }
@@ -5886,12 +6854,16 @@ class _$AddBankAccountLoadingImpl implements _AddBankAccountLoading {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (addBankAccountLoading != null) {
@@ -5935,6 +6907,10 @@ class _$AddBankAccountLoadingImpl implements _AddBankAccountLoading {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -5942,6 +6918,10 @@ class _$AddBankAccountLoadingImpl implements _AddBankAccountLoading {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return addBankAccountLoading(this);
   }
@@ -5973,6 +6953,10 @@ class _$AddBankAccountLoadingImpl implements _AddBankAccountLoading {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -5980,6 +6964,10 @@ class _$AddBankAccountLoadingImpl implements _AddBankAccountLoading {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return addBankAccountLoading?.call(this);
   }
@@ -6009,6 +6997,10 @@ class _$AddBankAccountLoadingImpl implements _AddBankAccountLoading {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -6016,6 +7008,8 @@ class _$AddBankAccountLoadingImpl implements _AddBankAccountLoading {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (addBankAccountLoading != null) {
@@ -6093,12 +7087,17 @@ class _$AddBankAccountOtpNotMatchImpl implements _AddBankAccountOtpNotMatch {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return addBankAccountOtpNotMatch();
   }
@@ -6126,12 +7125,16 @@ class _$AddBankAccountOtpNotMatchImpl implements _AddBankAccountOtpNotMatch {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return addBankAccountOtpNotMatch?.call();
   }
@@ -6159,12 +7162,16 @@ class _$AddBankAccountOtpNotMatchImpl implements _AddBankAccountOtpNotMatch {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (addBankAccountOtpNotMatch != null) {
@@ -6208,6 +7215,10 @@ class _$AddBankAccountOtpNotMatchImpl implements _AddBankAccountOtpNotMatch {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -6215,6 +7226,10 @@ class _$AddBankAccountOtpNotMatchImpl implements _AddBankAccountOtpNotMatch {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return addBankAccountOtpNotMatch(this);
   }
@@ -6246,6 +7261,10 @@ class _$AddBankAccountOtpNotMatchImpl implements _AddBankAccountOtpNotMatch {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -6253,6 +7272,10 @@ class _$AddBankAccountOtpNotMatchImpl implements _AddBankAccountOtpNotMatch {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return addBankAccountOtpNotMatch?.call(this);
   }
@@ -6282,6 +7305,10 @@ class _$AddBankAccountOtpNotMatchImpl implements _AddBankAccountOtpNotMatch {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -6289,6 +7316,8 @@ class _$AddBankAccountOtpNotMatchImpl implements _AddBankAccountOtpNotMatch {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (addBankAccountOtpNotMatch != null) {
@@ -6389,12 +7418,17 @@ class _$UploadImageSuccessImpl implements _UploadImageSuccess {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return uploadImageSuccess(imgUrl);
   }
@@ -6422,12 +7456,16 @@ class _$UploadImageSuccessImpl implements _UploadImageSuccess {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return uploadImageSuccess?.call(imgUrl);
   }
@@ -6455,12 +7493,16 @@ class _$UploadImageSuccessImpl implements _UploadImageSuccess {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (uploadImageSuccess != null) {
@@ -6504,6 +7546,10 @@ class _$UploadImageSuccessImpl implements _UploadImageSuccess {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -6511,6 +7557,10 @@ class _$UploadImageSuccessImpl implements _UploadImageSuccess {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return uploadImageSuccess(this);
   }
@@ -6542,6 +7592,10 @@ class _$UploadImageSuccessImpl implements _UploadImageSuccess {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -6549,6 +7603,10 @@ class _$UploadImageSuccessImpl implements _UploadImageSuccess {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return uploadImageSuccess?.call(this);
   }
@@ -6578,6 +7636,10 @@ class _$UploadImageSuccessImpl implements _UploadImageSuccess {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -6585,6 +7647,8 @@ class _$UploadImageSuccessImpl implements _UploadImageSuccess {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (uploadImageSuccess != null) {
@@ -6664,12 +7728,17 @@ class _$UploadImageLoadingImpl implements _UploadImageLoading {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return uploadImageLoading();
   }
@@ -6697,12 +7766,16 @@ class _$UploadImageLoadingImpl implements _UploadImageLoading {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return uploadImageLoading?.call();
   }
@@ -6730,12 +7803,16 @@ class _$UploadImageLoadingImpl implements _UploadImageLoading {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (uploadImageLoading != null) {
@@ -6779,6 +7856,10 @@ class _$UploadImageLoadingImpl implements _UploadImageLoading {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -6786,6 +7867,10 @@ class _$UploadImageLoadingImpl implements _UploadImageLoading {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return uploadImageLoading(this);
   }
@@ -6817,6 +7902,10 @@ class _$UploadImageLoadingImpl implements _UploadImageLoading {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -6824,6 +7913,10 @@ class _$UploadImageLoadingImpl implements _UploadImageLoading {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return uploadImageLoading?.call(this);
   }
@@ -6853,6 +7946,10 @@ class _$UploadImageLoadingImpl implements _UploadImageLoading {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -6860,6 +7957,8 @@ class _$UploadImageLoadingImpl implements _UploadImageLoading {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (uploadImageLoading != null) {
@@ -6936,12 +8035,17 @@ class _$DeleteBankAccountSuccessImpl implements _DeleteBankAccountSuccess {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return deleteBankAccountSuccess();
   }
@@ -6969,12 +8073,16 @@ class _$DeleteBankAccountSuccessImpl implements _DeleteBankAccountSuccess {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return deleteBankAccountSuccess?.call();
   }
@@ -7002,12 +8110,16 @@ class _$DeleteBankAccountSuccessImpl implements _DeleteBankAccountSuccess {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (deleteBankAccountSuccess != null) {
@@ -7051,6 +8163,10 @@ class _$DeleteBankAccountSuccessImpl implements _DeleteBankAccountSuccess {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -7058,6 +8174,10 @@ class _$DeleteBankAccountSuccessImpl implements _DeleteBankAccountSuccess {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return deleteBankAccountSuccess(this);
   }
@@ -7089,6 +8209,10 @@ class _$DeleteBankAccountSuccessImpl implements _DeleteBankAccountSuccess {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -7096,6 +8220,10 @@ class _$DeleteBankAccountSuccessImpl implements _DeleteBankAccountSuccess {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return deleteBankAccountSuccess?.call(this);
   }
@@ -7125,6 +8253,10 @@ class _$DeleteBankAccountSuccessImpl implements _DeleteBankAccountSuccess {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -7132,6 +8264,8 @@ class _$DeleteBankAccountSuccessImpl implements _DeleteBankAccountSuccess {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (deleteBankAccountSuccess != null) {
@@ -7208,12 +8342,17 @@ class _$DeleteBankAccountLoadingImpl implements _DeleteBankAccountLoading {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return deleteBankAccountLoading();
   }
@@ -7241,12 +8380,16 @@ class _$DeleteBankAccountLoadingImpl implements _DeleteBankAccountLoading {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return deleteBankAccountLoading?.call();
   }
@@ -7274,12 +8417,16 @@ class _$DeleteBankAccountLoadingImpl implements _DeleteBankAccountLoading {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (deleteBankAccountLoading != null) {
@@ -7323,6 +8470,10 @@ class _$DeleteBankAccountLoadingImpl implements _DeleteBankAccountLoading {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -7330,6 +8481,10 @@ class _$DeleteBankAccountLoadingImpl implements _DeleteBankAccountLoading {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return deleteBankAccountLoading(this);
   }
@@ -7361,6 +8516,10 @@ class _$DeleteBankAccountLoadingImpl implements _DeleteBankAccountLoading {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -7368,6 +8527,10 @@ class _$DeleteBankAccountLoadingImpl implements _DeleteBankAccountLoading {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return deleteBankAccountLoading?.call(this);
   }
@@ -7397,6 +8560,10 @@ class _$DeleteBankAccountLoadingImpl implements _DeleteBankAccountLoading {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -7404,6 +8571,8 @@ class _$DeleteBankAccountLoadingImpl implements _DeleteBankAccountLoading {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (deleteBankAccountLoading != null) {
@@ -7480,12 +8649,17 @@ class _$GetVndWalletInfoLoadingImpl implements _GetVndWalletInfoLoading {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return getVndWalletInfoLoading();
   }
@@ -7513,12 +8687,16 @@ class _$GetVndWalletInfoLoadingImpl implements _GetVndWalletInfoLoading {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return getVndWalletInfoLoading?.call();
   }
@@ -7546,12 +8724,16 @@ class _$GetVndWalletInfoLoadingImpl implements _GetVndWalletInfoLoading {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (getVndWalletInfoLoading != null) {
@@ -7595,6 +8777,10 @@ class _$GetVndWalletInfoLoadingImpl implements _GetVndWalletInfoLoading {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -7602,6 +8788,10 @@ class _$GetVndWalletInfoLoadingImpl implements _GetVndWalletInfoLoading {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return getVndWalletInfoLoading(this);
   }
@@ -7633,6 +8823,10 @@ class _$GetVndWalletInfoLoadingImpl implements _GetVndWalletInfoLoading {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -7640,6 +8834,10 @@ class _$GetVndWalletInfoLoadingImpl implements _GetVndWalletInfoLoading {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return getVndWalletInfoLoading?.call(this);
   }
@@ -7669,6 +8867,10 @@ class _$GetVndWalletInfoLoadingImpl implements _GetVndWalletInfoLoading {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -7676,6 +8878,8 @@ class _$GetVndWalletInfoLoadingImpl implements _GetVndWalletInfoLoading {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (getVndWalletInfoLoading != null) {
@@ -7789,12 +8993,17 @@ class _$GetVndWalletInfoSuccessImpl implements _GetVndWalletInfoSuccess {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return getVndWalletInfoSuccess(vndWalletInfo);
   }
@@ -7822,12 +9031,16 @@ class _$GetVndWalletInfoSuccessImpl implements _GetVndWalletInfoSuccess {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return getVndWalletInfoSuccess?.call(vndWalletInfo);
   }
@@ -7855,12 +9068,16 @@ class _$GetVndWalletInfoSuccessImpl implements _GetVndWalletInfoSuccess {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (getVndWalletInfoSuccess != null) {
@@ -7904,6 +9121,10 @@ class _$GetVndWalletInfoSuccessImpl implements _GetVndWalletInfoSuccess {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -7911,6 +9132,10 @@ class _$GetVndWalletInfoSuccessImpl implements _GetVndWalletInfoSuccess {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return getVndWalletInfoSuccess(this);
   }
@@ -7942,6 +9167,10 @@ class _$GetVndWalletInfoSuccessImpl implements _GetVndWalletInfoSuccess {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -7949,6 +9178,10 @@ class _$GetVndWalletInfoSuccessImpl implements _GetVndWalletInfoSuccess {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return getVndWalletInfoSuccess?.call(this);
   }
@@ -7978,6 +9211,10 @@ class _$GetVndWalletInfoSuccessImpl implements _GetVndWalletInfoSuccess {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -7985,6 +9222,8 @@ class _$GetVndWalletInfoSuccessImpl implements _GetVndWalletInfoSuccess {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (getVndWalletInfoSuccess != null) {
@@ -8010,7 +9249,7 @@ abstract class _$$EstimateTaxSuccessImplCopyWith<$Res> {
           $Res Function(_$EstimateTaxSuccessImpl) then) =
       __$$EstimateTaxSuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({num taxValue});
+  $Res call({EstimateTaxResponse estimateTax});
 }
 
 /// @nodoc
@@ -8024,13 +9263,13 @@ class __$$EstimateTaxSuccessImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? taxValue = null,
+    Object? estimateTax = null,
   }) {
     return _then(_$EstimateTaxSuccessImpl(
-      null == taxValue
-          ? _value.taxValue
-          : taxValue // ignore: cast_nullable_to_non_nullable
-              as num,
+      null == estimateTax
+          ? _value.estimateTax
+          : estimateTax // ignore: cast_nullable_to_non_nullable
+              as EstimateTaxResponse,
     ));
   }
 }
@@ -8038,14 +9277,14 @@ class __$$EstimateTaxSuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$EstimateTaxSuccessImpl implements _EstimateTaxSuccess {
-  const _$EstimateTaxSuccessImpl(this.taxValue);
+  const _$EstimateTaxSuccessImpl(this.estimateTax);
 
   @override
-  final num taxValue;
+  final EstimateTaxResponse estimateTax;
 
   @override
   String toString() {
-    return 'BankAccountState.estimateTaxSuccess(taxValue: $taxValue)';
+    return 'BankAccountState.estimateTaxSuccess(estimateTax: $estimateTax)';
   }
 
   @override
@@ -8053,12 +9292,12 @@ class _$EstimateTaxSuccessImpl implements _EstimateTaxSuccess {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EstimateTaxSuccessImpl &&
-            (identical(other.taxValue, taxValue) ||
-                other.taxValue == taxValue));
+            (identical(other.estimateTax, estimateTax) ||
+                other.estimateTax == estimateTax));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, taxValue);
+  int get hashCode => Object.hash(runtimeType, estimateTax);
 
   @JsonKey(ignore: true)
   @override
@@ -8092,14 +9331,19 @@ class _$EstimateTaxSuccessImpl implements _EstimateTaxSuccess {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
-    return estimateTaxSuccess(taxValue);
+    return estimateTaxSuccess(estimateTax);
   }
 
   @override
@@ -8125,14 +9369,18 @@ class _$EstimateTaxSuccessImpl implements _EstimateTaxSuccess {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
-    return estimateTaxSuccess?.call(taxValue);
+    return estimateTaxSuccess?.call(estimateTax);
   }
 
   @override
@@ -8158,16 +9406,20 @@ class _$EstimateTaxSuccessImpl implements _EstimateTaxSuccess {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (estimateTaxSuccess != null) {
-      return estimateTaxSuccess(taxValue);
+      return estimateTaxSuccess(estimateTax);
     }
     return orElse();
   }
@@ -8207,6 +9459,10 @@ class _$EstimateTaxSuccessImpl implements _EstimateTaxSuccess {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -8214,6 +9470,10 @@ class _$EstimateTaxSuccessImpl implements _EstimateTaxSuccess {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return estimateTaxSuccess(this);
   }
@@ -8245,6 +9505,10 @@ class _$EstimateTaxSuccessImpl implements _EstimateTaxSuccess {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -8252,6 +9516,10 @@ class _$EstimateTaxSuccessImpl implements _EstimateTaxSuccess {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return estimateTaxSuccess?.call(this);
   }
@@ -8281,6 +9549,10 @@ class _$EstimateTaxSuccessImpl implements _EstimateTaxSuccess {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -8288,6 +9560,8 @@ class _$EstimateTaxSuccessImpl implements _EstimateTaxSuccess {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (estimateTaxSuccess != null) {
@@ -8298,13 +9572,629 @@ class _$EstimateTaxSuccessImpl implements _EstimateTaxSuccess {
 }
 
 abstract class _EstimateTaxSuccess implements BankAccountState {
-  const factory _EstimateTaxSuccess(final num taxValue) =
+  const factory _EstimateTaxSuccess(final EstimateTaxResponse estimateTax) =
       _$EstimateTaxSuccessImpl;
 
-  num get taxValue;
+  EstimateTaxResponse get estimateTax;
   @JsonKey(ignore: true)
   _$$EstimateTaxSuccessImplCopyWith<_$EstimateTaxSuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$RequestWithdrawOtpLoadingImplCopyWith<$Res> {
+  factory _$$RequestWithdrawOtpLoadingImplCopyWith(
+          _$RequestWithdrawOtpLoadingImpl value,
+          $Res Function(_$RequestWithdrawOtpLoadingImpl) then) =
+      __$$RequestWithdrawOtpLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$RequestWithdrawOtpLoadingImplCopyWithImpl<$Res>
+    extends _$BankAccountStateCopyWithImpl<$Res,
+        _$RequestWithdrawOtpLoadingImpl>
+    implements _$$RequestWithdrawOtpLoadingImplCopyWith<$Res> {
+  __$$RequestWithdrawOtpLoadingImplCopyWithImpl(
+      _$RequestWithdrawOtpLoadingImpl _value,
+      $Res Function(_$RequestWithdrawOtpLoadingImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$RequestWithdrawOtpLoadingImpl implements _RequestWithdrawOtpLoading {
+  const _$RequestWithdrawOtpLoadingImpl();
+
+  @override
+  String toString() {
+    return 'BankAccountState.requestWithdrawOtpLoading()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RequestWithdrawOtpLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String err) error,
+    required TResult Function(List<BankAccount> bankAccounts)
+        getBankAccountsSuccess,
+    required TResult Function() getBankAccountsLoading,
+    required TResult Function(String err) getBankAccountsError,
+    required TResult Function() getAllBanksInfoSuccess,
+    required TResult Function() getAllBanksInfoLoading,
+    required TResult Function() getOtpSuccess,
+    required TResult Function() getOtpLoading,
+    required TResult Function() resendOtpLoading,
+    required TResult Function() resendOtpSuccess,
+    required TResult Function(BankAccount bankAccount) addBankAccountSuccess,
+    required TResult Function() addBankAccountLoading,
+    required TResult Function() addBankAccountOtpNotMatch,
+    required TResult Function(String imgUrl) uploadImageSuccess,
+    required TResult Function() uploadImageLoading,
+    required TResult Function() deleteBankAccountSuccess,
+    required TResult Function() deleteBankAccountLoading,
+    required TResult Function() getVndWalletInfoLoading,
+    required TResult Function(VndWalletInfo vndWalletInfo)
+        getVndWalletInfoSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
+    required TResult Function() estimateTaxLoading,
+    required TResult Function() withdrawLoading,
+    required TResult Function() withdrawLoaded,
+    required TResult Function() setDefaultBankAccountSuccess,
+    required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
+  }) {
+    return requestWithdrawOtpLoading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String err)? error,
+    TResult? Function(List<BankAccount> bankAccounts)? getBankAccountsSuccess,
+    TResult? Function()? getBankAccountsLoading,
+    TResult? Function(String err)? getBankAccountsError,
+    TResult? Function()? getAllBanksInfoSuccess,
+    TResult? Function()? getAllBanksInfoLoading,
+    TResult? Function()? getOtpSuccess,
+    TResult? Function()? getOtpLoading,
+    TResult? Function()? resendOtpLoading,
+    TResult? Function()? resendOtpSuccess,
+    TResult? Function(BankAccount bankAccount)? addBankAccountSuccess,
+    TResult? Function()? addBankAccountLoading,
+    TResult? Function()? addBankAccountOtpNotMatch,
+    TResult? Function(String imgUrl)? uploadImageSuccess,
+    TResult? Function()? uploadImageLoading,
+    TResult? Function()? deleteBankAccountSuccess,
+    TResult? Function()? deleteBankAccountLoading,
+    TResult? Function()? getVndWalletInfoLoading,
+    TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
+    TResult? Function()? estimateTaxLoading,
+    TResult? Function()? withdrawLoading,
+    TResult? Function()? withdrawLoaded,
+    TResult? Function()? setDefaultBankAccountSuccess,
+    TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
+  }) {
+    return requestWithdrawOtpLoading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String err)? error,
+    TResult Function(List<BankAccount> bankAccounts)? getBankAccountsSuccess,
+    TResult Function()? getBankAccountsLoading,
+    TResult Function(String err)? getBankAccountsError,
+    TResult Function()? getAllBanksInfoSuccess,
+    TResult Function()? getAllBanksInfoLoading,
+    TResult Function()? getOtpSuccess,
+    TResult Function()? getOtpLoading,
+    TResult Function()? resendOtpLoading,
+    TResult Function()? resendOtpSuccess,
+    TResult Function(BankAccount bankAccount)? addBankAccountSuccess,
+    TResult Function()? addBankAccountLoading,
+    TResult Function()? addBankAccountOtpNotMatch,
+    TResult Function(String imgUrl)? uploadImageSuccess,
+    TResult Function()? uploadImageLoading,
+    TResult Function()? deleteBankAccountSuccess,
+    TResult Function()? deleteBankAccountLoading,
+    TResult Function()? getVndWalletInfoLoading,
+    TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
+    TResult Function()? estimateTaxLoading,
+    TResult Function()? withdrawLoading,
+    TResult Function()? withdrawLoaded,
+    TResult Function()? setDefaultBankAccountSuccess,
+    TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
+    required TResult orElse(),
+  }) {
+    if (requestWithdrawOtpLoading != null) {
+      return requestWithdrawOtpLoading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_GetBankAccountsSuccess value)
+        getBankAccountsSuccess,
+    required TResult Function(_GetBankAccountsLoading value)
+        getBankAccountsLoading,
+    required TResult Function(_GetBankAccountsError value) getBankAccountsError,
+    required TResult Function(_GetAllBanksInfoSuccess value)
+        getAllBanksInfoSuccess,
+    required TResult Function(_GetAllBanksInfoLoading value)
+        getAllBanksInfoLoading,
+    required TResult Function(_GetOtpSuccess value) getOtpSuccess,
+    required TResult Function(_GetOtpLoading value) getOtpLoading,
+    required TResult Function(_ResendOtpLoading value) resendOtpLoading,
+    required TResult Function(_ResendOtpSuccess value) resendOtpSuccess,
+    required TResult Function(_AddBankAccountSuccess value)
+        addBankAccountSuccess,
+    required TResult Function(_AddBankAccountLoading value)
+        addBankAccountLoading,
+    required TResult Function(_AddBankAccountOtpNotMatch value)
+        addBankAccountOtpNotMatch,
+    required TResult Function(_UploadImageSuccess value) uploadImageSuccess,
+    required TResult Function(_UploadImageLoading value) uploadImageLoading,
+    required TResult Function(_DeleteBankAccountSuccess value)
+        deleteBankAccountSuccess,
+    required TResult Function(_DeleteBankAccountLoading value)
+        deleteBankAccountLoading,
+    required TResult Function(_GetVndWalletInfoLoading value)
+        getVndWalletInfoLoading,
+    required TResult Function(_GetVndWalletInfoSuccess value)
+        getVndWalletInfoSuccess,
+    required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
+    required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
+    required TResult Function(_WithdrawLoading value) withdrawLoading,
+    required TResult Function(_WithdrawLoaded value) withdrawLoaded,
+    required TResult Function(_SetDefaultBankAccountSuccess value)
+        setDefaultBankAccountSuccess,
+    required TResult Function(_SetDefaultBankAccountLoading value)
+        setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
+  }) {
+    return requestWithdrawOtpLoading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_GetBankAccountsSuccess value)? getBankAccountsSuccess,
+    TResult? Function(_GetBankAccountsLoading value)? getBankAccountsLoading,
+    TResult? Function(_GetBankAccountsError value)? getBankAccountsError,
+    TResult? Function(_GetAllBanksInfoSuccess value)? getAllBanksInfoSuccess,
+    TResult? Function(_GetAllBanksInfoLoading value)? getAllBanksInfoLoading,
+    TResult? Function(_GetOtpSuccess value)? getOtpSuccess,
+    TResult? Function(_GetOtpLoading value)? getOtpLoading,
+    TResult? Function(_ResendOtpLoading value)? resendOtpLoading,
+    TResult? Function(_ResendOtpSuccess value)? resendOtpSuccess,
+    TResult? Function(_AddBankAccountSuccess value)? addBankAccountSuccess,
+    TResult? Function(_AddBankAccountLoading value)? addBankAccountLoading,
+    TResult? Function(_AddBankAccountOtpNotMatch value)?
+        addBankAccountOtpNotMatch,
+    TResult? Function(_UploadImageSuccess value)? uploadImageSuccess,
+    TResult? Function(_UploadImageLoading value)? uploadImageLoading,
+    TResult? Function(_DeleteBankAccountSuccess value)?
+        deleteBankAccountSuccess,
+    TResult? Function(_DeleteBankAccountLoading value)?
+        deleteBankAccountLoading,
+    TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
+    TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
+    TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
+    TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
+    TResult? Function(_WithdrawLoading value)? withdrawLoading,
+    TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
+    TResult? Function(_SetDefaultBankAccountSuccess value)?
+        setDefaultBankAccountSuccess,
+    TResult? Function(_SetDefaultBankAccountLoading value)?
+        setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
+  }) {
+    return requestWithdrawOtpLoading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_GetBankAccountsSuccess value)? getBankAccountsSuccess,
+    TResult Function(_GetBankAccountsLoading value)? getBankAccountsLoading,
+    TResult Function(_GetBankAccountsError value)? getBankAccountsError,
+    TResult Function(_GetAllBanksInfoSuccess value)? getAllBanksInfoSuccess,
+    TResult Function(_GetAllBanksInfoLoading value)? getAllBanksInfoLoading,
+    TResult Function(_GetOtpSuccess value)? getOtpSuccess,
+    TResult Function(_GetOtpLoading value)? getOtpLoading,
+    TResult Function(_ResendOtpLoading value)? resendOtpLoading,
+    TResult Function(_ResendOtpSuccess value)? resendOtpSuccess,
+    TResult Function(_AddBankAccountSuccess value)? addBankAccountSuccess,
+    TResult Function(_AddBankAccountLoading value)? addBankAccountLoading,
+    TResult Function(_AddBankAccountOtpNotMatch value)?
+        addBankAccountOtpNotMatch,
+    TResult Function(_UploadImageSuccess value)? uploadImageSuccess,
+    TResult Function(_UploadImageLoading value)? uploadImageLoading,
+    TResult Function(_DeleteBankAccountSuccess value)? deleteBankAccountSuccess,
+    TResult Function(_DeleteBankAccountLoading value)? deleteBankAccountLoading,
+    TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
+    TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
+    TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
+    TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
+    TResult Function(_WithdrawLoading value)? withdrawLoading,
+    TResult Function(_WithdrawLoaded value)? withdrawLoaded,
+    TResult Function(_SetDefaultBankAccountSuccess value)?
+        setDefaultBankAccountSuccess,
+    TResult Function(_SetDefaultBankAccountLoading value)?
+        setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
+    required TResult orElse(),
+  }) {
+    if (requestWithdrawOtpLoading != null) {
+      return requestWithdrawOtpLoading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RequestWithdrawOtpLoading implements BankAccountState {
+  const factory _RequestWithdrawOtpLoading() = _$RequestWithdrawOtpLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$RequestWithdrawOtpSuccessImplCopyWith<$Res> {
+  factory _$$RequestWithdrawOtpSuccessImplCopyWith(
+          _$RequestWithdrawOtpSuccessImpl value,
+          $Res Function(_$RequestWithdrawOtpSuccessImpl) then) =
+      __$$RequestWithdrawOtpSuccessImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$RequestWithdrawOtpSuccessImplCopyWithImpl<$Res>
+    extends _$BankAccountStateCopyWithImpl<$Res,
+        _$RequestWithdrawOtpSuccessImpl>
+    implements _$$RequestWithdrawOtpSuccessImplCopyWith<$Res> {
+  __$$RequestWithdrawOtpSuccessImplCopyWithImpl(
+      _$RequestWithdrawOtpSuccessImpl _value,
+      $Res Function(_$RequestWithdrawOtpSuccessImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$RequestWithdrawOtpSuccessImpl implements _RequestWithdrawOtpSuccess {
+  const _$RequestWithdrawOtpSuccessImpl();
+
+  @override
+  String toString() {
+    return 'BankAccountState.requestWithdrawOtpSuccess()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RequestWithdrawOtpSuccessImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String err) error,
+    required TResult Function(List<BankAccount> bankAccounts)
+        getBankAccountsSuccess,
+    required TResult Function() getBankAccountsLoading,
+    required TResult Function(String err) getBankAccountsError,
+    required TResult Function() getAllBanksInfoSuccess,
+    required TResult Function() getAllBanksInfoLoading,
+    required TResult Function() getOtpSuccess,
+    required TResult Function() getOtpLoading,
+    required TResult Function() resendOtpLoading,
+    required TResult Function() resendOtpSuccess,
+    required TResult Function(BankAccount bankAccount) addBankAccountSuccess,
+    required TResult Function() addBankAccountLoading,
+    required TResult Function() addBankAccountOtpNotMatch,
+    required TResult Function(String imgUrl) uploadImageSuccess,
+    required TResult Function() uploadImageLoading,
+    required TResult Function() deleteBankAccountSuccess,
+    required TResult Function() deleteBankAccountLoading,
+    required TResult Function() getVndWalletInfoLoading,
+    required TResult Function(VndWalletInfo vndWalletInfo)
+        getVndWalletInfoSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
+    required TResult Function() estimateTaxLoading,
+    required TResult Function() withdrawLoading,
+    required TResult Function() withdrawLoaded,
+    required TResult Function() setDefaultBankAccountSuccess,
+    required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
+  }) {
+    return requestWithdrawOtpSuccess();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String err)? error,
+    TResult? Function(List<BankAccount> bankAccounts)? getBankAccountsSuccess,
+    TResult? Function()? getBankAccountsLoading,
+    TResult? Function(String err)? getBankAccountsError,
+    TResult? Function()? getAllBanksInfoSuccess,
+    TResult? Function()? getAllBanksInfoLoading,
+    TResult? Function()? getOtpSuccess,
+    TResult? Function()? getOtpLoading,
+    TResult? Function()? resendOtpLoading,
+    TResult? Function()? resendOtpSuccess,
+    TResult? Function(BankAccount bankAccount)? addBankAccountSuccess,
+    TResult? Function()? addBankAccountLoading,
+    TResult? Function()? addBankAccountOtpNotMatch,
+    TResult? Function(String imgUrl)? uploadImageSuccess,
+    TResult? Function()? uploadImageLoading,
+    TResult? Function()? deleteBankAccountSuccess,
+    TResult? Function()? deleteBankAccountLoading,
+    TResult? Function()? getVndWalletInfoLoading,
+    TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
+    TResult? Function()? estimateTaxLoading,
+    TResult? Function()? withdrawLoading,
+    TResult? Function()? withdrawLoaded,
+    TResult? Function()? setDefaultBankAccountSuccess,
+    TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
+  }) {
+    return requestWithdrawOtpSuccess?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String err)? error,
+    TResult Function(List<BankAccount> bankAccounts)? getBankAccountsSuccess,
+    TResult Function()? getBankAccountsLoading,
+    TResult Function(String err)? getBankAccountsError,
+    TResult Function()? getAllBanksInfoSuccess,
+    TResult Function()? getAllBanksInfoLoading,
+    TResult Function()? getOtpSuccess,
+    TResult Function()? getOtpLoading,
+    TResult Function()? resendOtpLoading,
+    TResult Function()? resendOtpSuccess,
+    TResult Function(BankAccount bankAccount)? addBankAccountSuccess,
+    TResult Function()? addBankAccountLoading,
+    TResult Function()? addBankAccountOtpNotMatch,
+    TResult Function(String imgUrl)? uploadImageSuccess,
+    TResult Function()? uploadImageLoading,
+    TResult Function()? deleteBankAccountSuccess,
+    TResult Function()? deleteBankAccountLoading,
+    TResult Function()? getVndWalletInfoLoading,
+    TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
+    TResult Function()? estimateTaxLoading,
+    TResult Function()? withdrawLoading,
+    TResult Function()? withdrawLoaded,
+    TResult Function()? setDefaultBankAccountSuccess,
+    TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
+    required TResult orElse(),
+  }) {
+    if (requestWithdrawOtpSuccess != null) {
+      return requestWithdrawOtpSuccess();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_GetBankAccountsSuccess value)
+        getBankAccountsSuccess,
+    required TResult Function(_GetBankAccountsLoading value)
+        getBankAccountsLoading,
+    required TResult Function(_GetBankAccountsError value) getBankAccountsError,
+    required TResult Function(_GetAllBanksInfoSuccess value)
+        getAllBanksInfoSuccess,
+    required TResult Function(_GetAllBanksInfoLoading value)
+        getAllBanksInfoLoading,
+    required TResult Function(_GetOtpSuccess value) getOtpSuccess,
+    required TResult Function(_GetOtpLoading value) getOtpLoading,
+    required TResult Function(_ResendOtpLoading value) resendOtpLoading,
+    required TResult Function(_ResendOtpSuccess value) resendOtpSuccess,
+    required TResult Function(_AddBankAccountSuccess value)
+        addBankAccountSuccess,
+    required TResult Function(_AddBankAccountLoading value)
+        addBankAccountLoading,
+    required TResult Function(_AddBankAccountOtpNotMatch value)
+        addBankAccountOtpNotMatch,
+    required TResult Function(_UploadImageSuccess value) uploadImageSuccess,
+    required TResult Function(_UploadImageLoading value) uploadImageLoading,
+    required TResult Function(_DeleteBankAccountSuccess value)
+        deleteBankAccountSuccess,
+    required TResult Function(_DeleteBankAccountLoading value)
+        deleteBankAccountLoading,
+    required TResult Function(_GetVndWalletInfoLoading value)
+        getVndWalletInfoLoading,
+    required TResult Function(_GetVndWalletInfoSuccess value)
+        getVndWalletInfoSuccess,
+    required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
+    required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
+    required TResult Function(_WithdrawLoading value) withdrawLoading,
+    required TResult Function(_WithdrawLoaded value) withdrawLoaded,
+    required TResult Function(_SetDefaultBankAccountSuccess value)
+        setDefaultBankAccountSuccess,
+    required TResult Function(_SetDefaultBankAccountLoading value)
+        setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
+  }) {
+    return requestWithdrawOtpSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_GetBankAccountsSuccess value)? getBankAccountsSuccess,
+    TResult? Function(_GetBankAccountsLoading value)? getBankAccountsLoading,
+    TResult? Function(_GetBankAccountsError value)? getBankAccountsError,
+    TResult? Function(_GetAllBanksInfoSuccess value)? getAllBanksInfoSuccess,
+    TResult? Function(_GetAllBanksInfoLoading value)? getAllBanksInfoLoading,
+    TResult? Function(_GetOtpSuccess value)? getOtpSuccess,
+    TResult? Function(_GetOtpLoading value)? getOtpLoading,
+    TResult? Function(_ResendOtpLoading value)? resendOtpLoading,
+    TResult? Function(_ResendOtpSuccess value)? resendOtpSuccess,
+    TResult? Function(_AddBankAccountSuccess value)? addBankAccountSuccess,
+    TResult? Function(_AddBankAccountLoading value)? addBankAccountLoading,
+    TResult? Function(_AddBankAccountOtpNotMatch value)?
+        addBankAccountOtpNotMatch,
+    TResult? Function(_UploadImageSuccess value)? uploadImageSuccess,
+    TResult? Function(_UploadImageLoading value)? uploadImageLoading,
+    TResult? Function(_DeleteBankAccountSuccess value)?
+        deleteBankAccountSuccess,
+    TResult? Function(_DeleteBankAccountLoading value)?
+        deleteBankAccountLoading,
+    TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
+    TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
+    TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
+    TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
+    TResult? Function(_WithdrawLoading value)? withdrawLoading,
+    TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
+    TResult? Function(_SetDefaultBankAccountSuccess value)?
+        setDefaultBankAccountSuccess,
+    TResult? Function(_SetDefaultBankAccountLoading value)?
+        setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
+  }) {
+    return requestWithdrawOtpSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_GetBankAccountsSuccess value)? getBankAccountsSuccess,
+    TResult Function(_GetBankAccountsLoading value)? getBankAccountsLoading,
+    TResult Function(_GetBankAccountsError value)? getBankAccountsError,
+    TResult Function(_GetAllBanksInfoSuccess value)? getAllBanksInfoSuccess,
+    TResult Function(_GetAllBanksInfoLoading value)? getAllBanksInfoLoading,
+    TResult Function(_GetOtpSuccess value)? getOtpSuccess,
+    TResult Function(_GetOtpLoading value)? getOtpLoading,
+    TResult Function(_ResendOtpLoading value)? resendOtpLoading,
+    TResult Function(_ResendOtpSuccess value)? resendOtpSuccess,
+    TResult Function(_AddBankAccountSuccess value)? addBankAccountSuccess,
+    TResult Function(_AddBankAccountLoading value)? addBankAccountLoading,
+    TResult Function(_AddBankAccountOtpNotMatch value)?
+        addBankAccountOtpNotMatch,
+    TResult Function(_UploadImageSuccess value)? uploadImageSuccess,
+    TResult Function(_UploadImageLoading value)? uploadImageLoading,
+    TResult Function(_DeleteBankAccountSuccess value)? deleteBankAccountSuccess,
+    TResult Function(_DeleteBankAccountLoading value)? deleteBankAccountLoading,
+    TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
+    TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
+    TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
+    TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
+    TResult Function(_WithdrawLoading value)? withdrawLoading,
+    TResult Function(_WithdrawLoaded value)? withdrawLoaded,
+    TResult Function(_SetDefaultBankAccountSuccess value)?
+        setDefaultBankAccountSuccess,
+    TResult Function(_SetDefaultBankAccountLoading value)?
+        setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
+    required TResult orElse(),
+  }) {
+    if (requestWithdrawOtpSuccess != null) {
+      return requestWithdrawOtpSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RequestWithdrawOtpSuccess implements BankAccountState {
+  const factory _RequestWithdrawOtpSuccess() = _$RequestWithdrawOtpSuccessImpl;
 }
 
 /// @nodoc
@@ -8367,12 +10257,17 @@ class _$EstimateTaxLoadingImpl implements _EstimateTaxLoading {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return estimateTaxLoading();
   }
@@ -8400,12 +10295,16 @@ class _$EstimateTaxLoadingImpl implements _EstimateTaxLoading {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return estimateTaxLoading?.call();
   }
@@ -8433,12 +10332,16 @@ class _$EstimateTaxLoadingImpl implements _EstimateTaxLoading {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (estimateTaxLoading != null) {
@@ -8482,6 +10385,10 @@ class _$EstimateTaxLoadingImpl implements _EstimateTaxLoading {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -8489,6 +10396,10 @@ class _$EstimateTaxLoadingImpl implements _EstimateTaxLoading {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return estimateTaxLoading(this);
   }
@@ -8520,6 +10431,10 @@ class _$EstimateTaxLoadingImpl implements _EstimateTaxLoading {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -8527,6 +10442,10 @@ class _$EstimateTaxLoadingImpl implements _EstimateTaxLoading {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return estimateTaxLoading?.call(this);
   }
@@ -8556,6 +10475,10 @@ class _$EstimateTaxLoadingImpl implements _EstimateTaxLoading {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -8563,6 +10486,8 @@ class _$EstimateTaxLoadingImpl implements _EstimateTaxLoading {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (estimateTaxLoading != null) {
@@ -8636,12 +10561,17 @@ class _$WithdrawLoadingImpl implements _WithdrawLoading {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return withdrawLoading();
   }
@@ -8669,12 +10599,16 @@ class _$WithdrawLoadingImpl implements _WithdrawLoading {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return withdrawLoading?.call();
   }
@@ -8702,12 +10636,16 @@ class _$WithdrawLoadingImpl implements _WithdrawLoading {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (withdrawLoading != null) {
@@ -8751,6 +10689,10 @@ class _$WithdrawLoadingImpl implements _WithdrawLoading {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -8758,6 +10700,10 @@ class _$WithdrawLoadingImpl implements _WithdrawLoading {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return withdrawLoading(this);
   }
@@ -8789,6 +10735,10 @@ class _$WithdrawLoadingImpl implements _WithdrawLoading {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -8796,6 +10746,10 @@ class _$WithdrawLoadingImpl implements _WithdrawLoading {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return withdrawLoading?.call(this);
   }
@@ -8825,6 +10779,10 @@ class _$WithdrawLoadingImpl implements _WithdrawLoading {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -8832,6 +10790,8 @@ class _$WithdrawLoadingImpl implements _WithdrawLoading {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (withdrawLoading != null) {
@@ -8905,12 +10865,17 @@ class _$WithdrawLoadedImpl implements _WithdrawLoaded {
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return withdrawLoaded();
   }
@@ -8938,12 +10903,16 @@ class _$WithdrawLoadedImpl implements _WithdrawLoaded {
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return withdrawLoaded?.call();
   }
@@ -8971,12 +10940,16 @@ class _$WithdrawLoadedImpl implements _WithdrawLoaded {
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (withdrawLoaded != null) {
@@ -9020,6 +10993,10 @@ class _$WithdrawLoadedImpl implements _WithdrawLoaded {
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -9027,6 +11004,10 @@ class _$WithdrawLoadedImpl implements _WithdrawLoaded {
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return withdrawLoaded(this);
   }
@@ -9058,6 +11039,10 @@ class _$WithdrawLoadedImpl implements _WithdrawLoaded {
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -9065,6 +11050,10 @@ class _$WithdrawLoadedImpl implements _WithdrawLoaded {
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return withdrawLoaded?.call(this);
   }
@@ -9094,6 +11083,10 @@ class _$WithdrawLoadedImpl implements _WithdrawLoaded {
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -9101,6 +11094,8 @@ class _$WithdrawLoadedImpl implements _WithdrawLoaded {
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (withdrawLoaded != null) {
@@ -9179,12 +11174,17 @@ class _$SetDefaultBankAccountSuccessImpl
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return setDefaultBankAccountSuccess();
   }
@@ -9212,12 +11212,16 @@ class _$SetDefaultBankAccountSuccessImpl
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return setDefaultBankAccountSuccess?.call();
   }
@@ -9245,12 +11249,16 @@ class _$SetDefaultBankAccountSuccessImpl
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (setDefaultBankAccountSuccess != null) {
@@ -9294,6 +11302,10 @@ class _$SetDefaultBankAccountSuccessImpl
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -9301,6 +11313,10 @@ class _$SetDefaultBankAccountSuccessImpl
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return setDefaultBankAccountSuccess(this);
   }
@@ -9332,6 +11348,10 @@ class _$SetDefaultBankAccountSuccessImpl
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -9339,6 +11359,10 @@ class _$SetDefaultBankAccountSuccessImpl
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return setDefaultBankAccountSuccess?.call(this);
   }
@@ -9368,6 +11392,10 @@ class _$SetDefaultBankAccountSuccessImpl
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -9375,6 +11403,8 @@ class _$SetDefaultBankAccountSuccessImpl
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (setDefaultBankAccountSuccess != null) {
@@ -9454,12 +11484,17 @@ class _$SetDefaultBankAccountLoadingImpl
     required TResult Function() getVndWalletInfoLoading,
     required TResult Function(VndWalletInfo vndWalletInfo)
         getVndWalletInfoSuccess,
-    required TResult Function(num taxValue) estimateTaxSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
     required TResult Function() estimateTaxLoading,
     required TResult Function() withdrawLoading,
     required TResult Function() withdrawLoaded,
     required TResult Function() setDefaultBankAccountSuccess,
     required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
   }) {
     return setDefaultBankAccountLoading();
   }
@@ -9487,12 +11522,16 @@ class _$SetDefaultBankAccountLoadingImpl
     TResult? Function()? deleteBankAccountLoading,
     TResult? Function()? getVndWalletInfoLoading,
     TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult? Function(num taxValue)? estimateTaxSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
     TResult? Function()? estimateTaxLoading,
     TResult? Function()? withdrawLoading,
     TResult? Function()? withdrawLoaded,
     TResult? Function()? setDefaultBankAccountSuccess,
     TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
   }) {
     return setDefaultBankAccountLoading?.call();
   }
@@ -9520,12 +11559,16 @@ class _$SetDefaultBankAccountLoadingImpl
     TResult Function()? deleteBankAccountLoading,
     TResult Function()? getVndWalletInfoLoading,
     TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
-    TResult Function(num taxValue)? estimateTaxSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
     TResult Function()? estimateTaxLoading,
     TResult Function()? withdrawLoading,
     TResult Function()? withdrawLoaded,
     TResult Function()? setDefaultBankAccountSuccess,
     TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (setDefaultBankAccountLoading != null) {
@@ -9569,6 +11612,10 @@ class _$SetDefaultBankAccountLoadingImpl
     required TResult Function(_GetVndWalletInfoSuccess value)
         getVndWalletInfoSuccess,
     required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
     required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
     required TResult Function(_WithdrawLoading value) withdrawLoading,
     required TResult Function(_WithdrawLoaded value) withdrawLoaded,
@@ -9576,6 +11623,10 @@ class _$SetDefaultBankAccountLoadingImpl
         setDefaultBankAccountSuccess,
     required TResult Function(_SetDefaultBankAccountLoading value)
         setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
   }) {
     return setDefaultBankAccountLoading(this);
   }
@@ -9607,6 +11658,10 @@ class _$SetDefaultBankAccountLoadingImpl
     TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult? Function(_WithdrawLoading value)? withdrawLoading,
     TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -9614,6 +11669,10 @@ class _$SetDefaultBankAccountLoadingImpl
         setDefaultBankAccountSuccess,
     TResult? Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
   }) {
     return setDefaultBankAccountLoading?.call(this);
   }
@@ -9643,6 +11702,10 @@ class _$SetDefaultBankAccountLoadingImpl
     TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
     TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
     TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
     TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
     TResult Function(_WithdrawLoading value)? withdrawLoading,
     TResult Function(_WithdrawLoaded value)? withdrawLoaded,
@@ -9650,6 +11713,8 @@ class _$SetDefaultBankAccountLoadingImpl
         setDefaultBankAccountSuccess,
     TResult Function(_SetDefaultBankAccountLoading value)?
         setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
     required TResult orElse(),
   }) {
     if (setDefaultBankAccountLoading != null) {
@@ -9662,4 +11727,618 @@ class _$SetDefaultBankAccountLoadingImpl
 abstract class _SetDefaultBankAccountLoading implements BankAccountState {
   const factory _SetDefaultBankAccountLoading() =
       _$SetDefaultBankAccountLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$ResendWithdrawOtpLoadingImplCopyWith<$Res> {
+  factory _$$ResendWithdrawOtpLoadingImplCopyWith(
+          _$ResendWithdrawOtpLoadingImpl value,
+          $Res Function(_$ResendWithdrawOtpLoadingImpl) then) =
+      __$$ResendWithdrawOtpLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ResendWithdrawOtpLoadingImplCopyWithImpl<$Res>
+    extends _$BankAccountStateCopyWithImpl<$Res, _$ResendWithdrawOtpLoadingImpl>
+    implements _$$ResendWithdrawOtpLoadingImplCopyWith<$Res> {
+  __$$ResendWithdrawOtpLoadingImplCopyWithImpl(
+      _$ResendWithdrawOtpLoadingImpl _value,
+      $Res Function(_$ResendWithdrawOtpLoadingImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$ResendWithdrawOtpLoadingImpl implements _ResendWithdrawOtpLoading {
+  const _$ResendWithdrawOtpLoadingImpl();
+
+  @override
+  String toString() {
+    return 'BankAccountState.resendWithdrawOtpLoading()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ResendWithdrawOtpLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String err) error,
+    required TResult Function(List<BankAccount> bankAccounts)
+        getBankAccountsSuccess,
+    required TResult Function() getBankAccountsLoading,
+    required TResult Function(String err) getBankAccountsError,
+    required TResult Function() getAllBanksInfoSuccess,
+    required TResult Function() getAllBanksInfoLoading,
+    required TResult Function() getOtpSuccess,
+    required TResult Function() getOtpLoading,
+    required TResult Function() resendOtpLoading,
+    required TResult Function() resendOtpSuccess,
+    required TResult Function(BankAccount bankAccount) addBankAccountSuccess,
+    required TResult Function() addBankAccountLoading,
+    required TResult Function() addBankAccountOtpNotMatch,
+    required TResult Function(String imgUrl) uploadImageSuccess,
+    required TResult Function() uploadImageLoading,
+    required TResult Function() deleteBankAccountSuccess,
+    required TResult Function() deleteBankAccountLoading,
+    required TResult Function() getVndWalletInfoLoading,
+    required TResult Function(VndWalletInfo vndWalletInfo)
+        getVndWalletInfoSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
+    required TResult Function() estimateTaxLoading,
+    required TResult Function() withdrawLoading,
+    required TResult Function() withdrawLoaded,
+    required TResult Function() setDefaultBankAccountSuccess,
+    required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
+  }) {
+    return resendWithdrawOtpLoading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String err)? error,
+    TResult? Function(List<BankAccount> bankAccounts)? getBankAccountsSuccess,
+    TResult? Function()? getBankAccountsLoading,
+    TResult? Function(String err)? getBankAccountsError,
+    TResult? Function()? getAllBanksInfoSuccess,
+    TResult? Function()? getAllBanksInfoLoading,
+    TResult? Function()? getOtpSuccess,
+    TResult? Function()? getOtpLoading,
+    TResult? Function()? resendOtpLoading,
+    TResult? Function()? resendOtpSuccess,
+    TResult? Function(BankAccount bankAccount)? addBankAccountSuccess,
+    TResult? Function()? addBankAccountLoading,
+    TResult? Function()? addBankAccountOtpNotMatch,
+    TResult? Function(String imgUrl)? uploadImageSuccess,
+    TResult? Function()? uploadImageLoading,
+    TResult? Function()? deleteBankAccountSuccess,
+    TResult? Function()? deleteBankAccountLoading,
+    TResult? Function()? getVndWalletInfoLoading,
+    TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
+    TResult? Function()? estimateTaxLoading,
+    TResult? Function()? withdrawLoading,
+    TResult? Function()? withdrawLoaded,
+    TResult? Function()? setDefaultBankAccountSuccess,
+    TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
+  }) {
+    return resendWithdrawOtpLoading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String err)? error,
+    TResult Function(List<BankAccount> bankAccounts)? getBankAccountsSuccess,
+    TResult Function()? getBankAccountsLoading,
+    TResult Function(String err)? getBankAccountsError,
+    TResult Function()? getAllBanksInfoSuccess,
+    TResult Function()? getAllBanksInfoLoading,
+    TResult Function()? getOtpSuccess,
+    TResult Function()? getOtpLoading,
+    TResult Function()? resendOtpLoading,
+    TResult Function()? resendOtpSuccess,
+    TResult Function(BankAccount bankAccount)? addBankAccountSuccess,
+    TResult Function()? addBankAccountLoading,
+    TResult Function()? addBankAccountOtpNotMatch,
+    TResult Function(String imgUrl)? uploadImageSuccess,
+    TResult Function()? uploadImageLoading,
+    TResult Function()? deleteBankAccountSuccess,
+    TResult Function()? deleteBankAccountLoading,
+    TResult Function()? getVndWalletInfoLoading,
+    TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
+    TResult Function()? estimateTaxLoading,
+    TResult Function()? withdrawLoading,
+    TResult Function()? withdrawLoaded,
+    TResult Function()? setDefaultBankAccountSuccess,
+    TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
+    required TResult orElse(),
+  }) {
+    if (resendWithdrawOtpLoading != null) {
+      return resendWithdrawOtpLoading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_GetBankAccountsSuccess value)
+        getBankAccountsSuccess,
+    required TResult Function(_GetBankAccountsLoading value)
+        getBankAccountsLoading,
+    required TResult Function(_GetBankAccountsError value) getBankAccountsError,
+    required TResult Function(_GetAllBanksInfoSuccess value)
+        getAllBanksInfoSuccess,
+    required TResult Function(_GetAllBanksInfoLoading value)
+        getAllBanksInfoLoading,
+    required TResult Function(_GetOtpSuccess value) getOtpSuccess,
+    required TResult Function(_GetOtpLoading value) getOtpLoading,
+    required TResult Function(_ResendOtpLoading value) resendOtpLoading,
+    required TResult Function(_ResendOtpSuccess value) resendOtpSuccess,
+    required TResult Function(_AddBankAccountSuccess value)
+        addBankAccountSuccess,
+    required TResult Function(_AddBankAccountLoading value)
+        addBankAccountLoading,
+    required TResult Function(_AddBankAccountOtpNotMatch value)
+        addBankAccountOtpNotMatch,
+    required TResult Function(_UploadImageSuccess value) uploadImageSuccess,
+    required TResult Function(_UploadImageLoading value) uploadImageLoading,
+    required TResult Function(_DeleteBankAccountSuccess value)
+        deleteBankAccountSuccess,
+    required TResult Function(_DeleteBankAccountLoading value)
+        deleteBankAccountLoading,
+    required TResult Function(_GetVndWalletInfoLoading value)
+        getVndWalletInfoLoading,
+    required TResult Function(_GetVndWalletInfoSuccess value)
+        getVndWalletInfoSuccess,
+    required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
+    required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
+    required TResult Function(_WithdrawLoading value) withdrawLoading,
+    required TResult Function(_WithdrawLoaded value) withdrawLoaded,
+    required TResult Function(_SetDefaultBankAccountSuccess value)
+        setDefaultBankAccountSuccess,
+    required TResult Function(_SetDefaultBankAccountLoading value)
+        setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
+  }) {
+    return resendWithdrawOtpLoading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_GetBankAccountsSuccess value)? getBankAccountsSuccess,
+    TResult? Function(_GetBankAccountsLoading value)? getBankAccountsLoading,
+    TResult? Function(_GetBankAccountsError value)? getBankAccountsError,
+    TResult? Function(_GetAllBanksInfoSuccess value)? getAllBanksInfoSuccess,
+    TResult? Function(_GetAllBanksInfoLoading value)? getAllBanksInfoLoading,
+    TResult? Function(_GetOtpSuccess value)? getOtpSuccess,
+    TResult? Function(_GetOtpLoading value)? getOtpLoading,
+    TResult? Function(_ResendOtpLoading value)? resendOtpLoading,
+    TResult? Function(_ResendOtpSuccess value)? resendOtpSuccess,
+    TResult? Function(_AddBankAccountSuccess value)? addBankAccountSuccess,
+    TResult? Function(_AddBankAccountLoading value)? addBankAccountLoading,
+    TResult? Function(_AddBankAccountOtpNotMatch value)?
+        addBankAccountOtpNotMatch,
+    TResult? Function(_UploadImageSuccess value)? uploadImageSuccess,
+    TResult? Function(_UploadImageLoading value)? uploadImageLoading,
+    TResult? Function(_DeleteBankAccountSuccess value)?
+        deleteBankAccountSuccess,
+    TResult? Function(_DeleteBankAccountLoading value)?
+        deleteBankAccountLoading,
+    TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
+    TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
+    TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
+    TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
+    TResult? Function(_WithdrawLoading value)? withdrawLoading,
+    TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
+    TResult? Function(_SetDefaultBankAccountSuccess value)?
+        setDefaultBankAccountSuccess,
+    TResult? Function(_SetDefaultBankAccountLoading value)?
+        setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
+  }) {
+    return resendWithdrawOtpLoading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_GetBankAccountsSuccess value)? getBankAccountsSuccess,
+    TResult Function(_GetBankAccountsLoading value)? getBankAccountsLoading,
+    TResult Function(_GetBankAccountsError value)? getBankAccountsError,
+    TResult Function(_GetAllBanksInfoSuccess value)? getAllBanksInfoSuccess,
+    TResult Function(_GetAllBanksInfoLoading value)? getAllBanksInfoLoading,
+    TResult Function(_GetOtpSuccess value)? getOtpSuccess,
+    TResult Function(_GetOtpLoading value)? getOtpLoading,
+    TResult Function(_ResendOtpLoading value)? resendOtpLoading,
+    TResult Function(_ResendOtpSuccess value)? resendOtpSuccess,
+    TResult Function(_AddBankAccountSuccess value)? addBankAccountSuccess,
+    TResult Function(_AddBankAccountLoading value)? addBankAccountLoading,
+    TResult Function(_AddBankAccountOtpNotMatch value)?
+        addBankAccountOtpNotMatch,
+    TResult Function(_UploadImageSuccess value)? uploadImageSuccess,
+    TResult Function(_UploadImageLoading value)? uploadImageLoading,
+    TResult Function(_DeleteBankAccountSuccess value)? deleteBankAccountSuccess,
+    TResult Function(_DeleteBankAccountLoading value)? deleteBankAccountLoading,
+    TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
+    TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
+    TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
+    TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
+    TResult Function(_WithdrawLoading value)? withdrawLoading,
+    TResult Function(_WithdrawLoaded value)? withdrawLoaded,
+    TResult Function(_SetDefaultBankAccountSuccess value)?
+        setDefaultBankAccountSuccess,
+    TResult Function(_SetDefaultBankAccountLoading value)?
+        setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
+    required TResult orElse(),
+  }) {
+    if (resendWithdrawOtpLoading != null) {
+      return resendWithdrawOtpLoading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ResendWithdrawOtpLoading implements BankAccountState {
+  const factory _ResendWithdrawOtpLoading() = _$ResendWithdrawOtpLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$ResendWithdrawOtpSuccessImplCopyWith<$Res> {
+  factory _$$ResendWithdrawOtpSuccessImplCopyWith(
+          _$ResendWithdrawOtpSuccessImpl value,
+          $Res Function(_$ResendWithdrawOtpSuccessImpl) then) =
+      __$$ResendWithdrawOtpSuccessImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$ResendWithdrawOtpSuccessImplCopyWithImpl<$Res>
+    extends _$BankAccountStateCopyWithImpl<$Res, _$ResendWithdrawOtpSuccessImpl>
+    implements _$$ResendWithdrawOtpSuccessImplCopyWith<$Res> {
+  __$$ResendWithdrawOtpSuccessImplCopyWithImpl(
+      _$ResendWithdrawOtpSuccessImpl _value,
+      $Res Function(_$ResendWithdrawOtpSuccessImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$ResendWithdrawOtpSuccessImpl implements _ResendWithdrawOtpSuccess {
+  const _$ResendWithdrawOtpSuccessImpl();
+
+  @override
+  String toString() {
+    return 'BankAccountState.resendWithdrawOtpSuccess()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ResendWithdrawOtpSuccessImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String err) error,
+    required TResult Function(List<BankAccount> bankAccounts)
+        getBankAccountsSuccess,
+    required TResult Function() getBankAccountsLoading,
+    required TResult Function(String err) getBankAccountsError,
+    required TResult Function() getAllBanksInfoSuccess,
+    required TResult Function() getAllBanksInfoLoading,
+    required TResult Function() getOtpSuccess,
+    required TResult Function() getOtpLoading,
+    required TResult Function() resendOtpLoading,
+    required TResult Function() resendOtpSuccess,
+    required TResult Function(BankAccount bankAccount) addBankAccountSuccess,
+    required TResult Function() addBankAccountLoading,
+    required TResult Function() addBankAccountOtpNotMatch,
+    required TResult Function(String imgUrl) uploadImageSuccess,
+    required TResult Function() uploadImageLoading,
+    required TResult Function() deleteBankAccountSuccess,
+    required TResult Function() deleteBankAccountLoading,
+    required TResult Function() getVndWalletInfoLoading,
+    required TResult Function(VndWalletInfo vndWalletInfo)
+        getVndWalletInfoSuccess,
+    required TResult Function(EstimateTaxResponse estimateTax)
+        estimateTaxSuccess,
+    required TResult Function() requestWithdrawOtpLoading,
+    required TResult Function() requestWithdrawOtpSuccess,
+    required TResult Function() estimateTaxLoading,
+    required TResult Function() withdrawLoading,
+    required TResult Function() withdrawLoaded,
+    required TResult Function() setDefaultBankAccountSuccess,
+    required TResult Function() setDefaultBankAccountLoading,
+    required TResult Function() resendWithdrawOtpLoading,
+    required TResult Function() resendWithdrawOtpSuccess,
+  }) {
+    return resendWithdrawOtpSuccess();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String err)? error,
+    TResult? Function(List<BankAccount> bankAccounts)? getBankAccountsSuccess,
+    TResult? Function()? getBankAccountsLoading,
+    TResult? Function(String err)? getBankAccountsError,
+    TResult? Function()? getAllBanksInfoSuccess,
+    TResult? Function()? getAllBanksInfoLoading,
+    TResult? Function()? getOtpSuccess,
+    TResult? Function()? getOtpLoading,
+    TResult? Function()? resendOtpLoading,
+    TResult? Function()? resendOtpSuccess,
+    TResult? Function(BankAccount bankAccount)? addBankAccountSuccess,
+    TResult? Function()? addBankAccountLoading,
+    TResult? Function()? addBankAccountOtpNotMatch,
+    TResult? Function(String imgUrl)? uploadImageSuccess,
+    TResult? Function()? uploadImageLoading,
+    TResult? Function()? deleteBankAccountSuccess,
+    TResult? Function()? deleteBankAccountLoading,
+    TResult? Function()? getVndWalletInfoLoading,
+    TResult? Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
+    TResult? Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult? Function()? requestWithdrawOtpLoading,
+    TResult? Function()? requestWithdrawOtpSuccess,
+    TResult? Function()? estimateTaxLoading,
+    TResult? Function()? withdrawLoading,
+    TResult? Function()? withdrawLoaded,
+    TResult? Function()? setDefaultBankAccountSuccess,
+    TResult? Function()? setDefaultBankAccountLoading,
+    TResult? Function()? resendWithdrawOtpLoading,
+    TResult? Function()? resendWithdrawOtpSuccess,
+  }) {
+    return resendWithdrawOtpSuccess?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String err)? error,
+    TResult Function(List<BankAccount> bankAccounts)? getBankAccountsSuccess,
+    TResult Function()? getBankAccountsLoading,
+    TResult Function(String err)? getBankAccountsError,
+    TResult Function()? getAllBanksInfoSuccess,
+    TResult Function()? getAllBanksInfoLoading,
+    TResult Function()? getOtpSuccess,
+    TResult Function()? getOtpLoading,
+    TResult Function()? resendOtpLoading,
+    TResult Function()? resendOtpSuccess,
+    TResult Function(BankAccount bankAccount)? addBankAccountSuccess,
+    TResult Function()? addBankAccountLoading,
+    TResult Function()? addBankAccountOtpNotMatch,
+    TResult Function(String imgUrl)? uploadImageSuccess,
+    TResult Function()? uploadImageLoading,
+    TResult Function()? deleteBankAccountSuccess,
+    TResult Function()? deleteBankAccountLoading,
+    TResult Function()? getVndWalletInfoLoading,
+    TResult Function(VndWalletInfo vndWalletInfo)? getVndWalletInfoSuccess,
+    TResult Function(EstimateTaxResponse estimateTax)? estimateTaxSuccess,
+    TResult Function()? requestWithdrawOtpLoading,
+    TResult Function()? requestWithdrawOtpSuccess,
+    TResult Function()? estimateTaxLoading,
+    TResult Function()? withdrawLoading,
+    TResult Function()? withdrawLoaded,
+    TResult Function()? setDefaultBankAccountSuccess,
+    TResult Function()? setDefaultBankAccountLoading,
+    TResult Function()? resendWithdrawOtpLoading,
+    TResult Function()? resendWithdrawOtpSuccess,
+    required TResult orElse(),
+  }) {
+    if (resendWithdrawOtpSuccess != null) {
+      return resendWithdrawOtpSuccess();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_GetBankAccountsSuccess value)
+        getBankAccountsSuccess,
+    required TResult Function(_GetBankAccountsLoading value)
+        getBankAccountsLoading,
+    required TResult Function(_GetBankAccountsError value) getBankAccountsError,
+    required TResult Function(_GetAllBanksInfoSuccess value)
+        getAllBanksInfoSuccess,
+    required TResult Function(_GetAllBanksInfoLoading value)
+        getAllBanksInfoLoading,
+    required TResult Function(_GetOtpSuccess value) getOtpSuccess,
+    required TResult Function(_GetOtpLoading value) getOtpLoading,
+    required TResult Function(_ResendOtpLoading value) resendOtpLoading,
+    required TResult Function(_ResendOtpSuccess value) resendOtpSuccess,
+    required TResult Function(_AddBankAccountSuccess value)
+        addBankAccountSuccess,
+    required TResult Function(_AddBankAccountLoading value)
+        addBankAccountLoading,
+    required TResult Function(_AddBankAccountOtpNotMatch value)
+        addBankAccountOtpNotMatch,
+    required TResult Function(_UploadImageSuccess value) uploadImageSuccess,
+    required TResult Function(_UploadImageLoading value) uploadImageLoading,
+    required TResult Function(_DeleteBankAccountSuccess value)
+        deleteBankAccountSuccess,
+    required TResult Function(_DeleteBankAccountLoading value)
+        deleteBankAccountLoading,
+    required TResult Function(_GetVndWalletInfoLoading value)
+        getVndWalletInfoLoading,
+    required TResult Function(_GetVndWalletInfoSuccess value)
+        getVndWalletInfoSuccess,
+    required TResult Function(_EstimateTaxSuccess value) estimateTaxSuccess,
+    required TResult Function(_RequestWithdrawOtpLoading value)
+        requestWithdrawOtpLoading,
+    required TResult Function(_RequestWithdrawOtpSuccess value)
+        requestWithdrawOtpSuccess,
+    required TResult Function(_EstimateTaxLoading value) estimateTaxLoading,
+    required TResult Function(_WithdrawLoading value) withdrawLoading,
+    required TResult Function(_WithdrawLoaded value) withdrawLoaded,
+    required TResult Function(_SetDefaultBankAccountSuccess value)
+        setDefaultBankAccountSuccess,
+    required TResult Function(_SetDefaultBankAccountLoading value)
+        setDefaultBankAccountLoading,
+    required TResult Function(_ResendWithdrawOtpLoading value)
+        resendWithdrawOtpLoading,
+    required TResult Function(_ResendWithdrawOtpSuccess value)
+        resendWithdrawOtpSuccess,
+  }) {
+    return resendWithdrawOtpSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_GetBankAccountsSuccess value)? getBankAccountsSuccess,
+    TResult? Function(_GetBankAccountsLoading value)? getBankAccountsLoading,
+    TResult? Function(_GetBankAccountsError value)? getBankAccountsError,
+    TResult? Function(_GetAllBanksInfoSuccess value)? getAllBanksInfoSuccess,
+    TResult? Function(_GetAllBanksInfoLoading value)? getAllBanksInfoLoading,
+    TResult? Function(_GetOtpSuccess value)? getOtpSuccess,
+    TResult? Function(_GetOtpLoading value)? getOtpLoading,
+    TResult? Function(_ResendOtpLoading value)? resendOtpLoading,
+    TResult? Function(_ResendOtpSuccess value)? resendOtpSuccess,
+    TResult? Function(_AddBankAccountSuccess value)? addBankAccountSuccess,
+    TResult? Function(_AddBankAccountLoading value)? addBankAccountLoading,
+    TResult? Function(_AddBankAccountOtpNotMatch value)?
+        addBankAccountOtpNotMatch,
+    TResult? Function(_UploadImageSuccess value)? uploadImageSuccess,
+    TResult? Function(_UploadImageLoading value)? uploadImageLoading,
+    TResult? Function(_DeleteBankAccountSuccess value)?
+        deleteBankAccountSuccess,
+    TResult? Function(_DeleteBankAccountLoading value)?
+        deleteBankAccountLoading,
+    TResult? Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
+    TResult? Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
+    TResult? Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult? Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult? Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
+    TResult? Function(_EstimateTaxLoading value)? estimateTaxLoading,
+    TResult? Function(_WithdrawLoading value)? withdrawLoading,
+    TResult? Function(_WithdrawLoaded value)? withdrawLoaded,
+    TResult? Function(_SetDefaultBankAccountSuccess value)?
+        setDefaultBankAccountSuccess,
+    TResult? Function(_SetDefaultBankAccountLoading value)?
+        setDefaultBankAccountLoading,
+    TResult? Function(_ResendWithdrawOtpLoading value)?
+        resendWithdrawOtpLoading,
+    TResult? Function(_ResendWithdrawOtpSuccess value)?
+        resendWithdrawOtpSuccess,
+  }) {
+    return resendWithdrawOtpSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_GetBankAccountsSuccess value)? getBankAccountsSuccess,
+    TResult Function(_GetBankAccountsLoading value)? getBankAccountsLoading,
+    TResult Function(_GetBankAccountsError value)? getBankAccountsError,
+    TResult Function(_GetAllBanksInfoSuccess value)? getAllBanksInfoSuccess,
+    TResult Function(_GetAllBanksInfoLoading value)? getAllBanksInfoLoading,
+    TResult Function(_GetOtpSuccess value)? getOtpSuccess,
+    TResult Function(_GetOtpLoading value)? getOtpLoading,
+    TResult Function(_ResendOtpLoading value)? resendOtpLoading,
+    TResult Function(_ResendOtpSuccess value)? resendOtpSuccess,
+    TResult Function(_AddBankAccountSuccess value)? addBankAccountSuccess,
+    TResult Function(_AddBankAccountLoading value)? addBankAccountLoading,
+    TResult Function(_AddBankAccountOtpNotMatch value)?
+        addBankAccountOtpNotMatch,
+    TResult Function(_UploadImageSuccess value)? uploadImageSuccess,
+    TResult Function(_UploadImageLoading value)? uploadImageLoading,
+    TResult Function(_DeleteBankAccountSuccess value)? deleteBankAccountSuccess,
+    TResult Function(_DeleteBankAccountLoading value)? deleteBankAccountLoading,
+    TResult Function(_GetVndWalletInfoLoading value)? getVndWalletInfoLoading,
+    TResult Function(_GetVndWalletInfoSuccess value)? getVndWalletInfoSuccess,
+    TResult Function(_EstimateTaxSuccess value)? estimateTaxSuccess,
+    TResult Function(_RequestWithdrawOtpLoading value)?
+        requestWithdrawOtpLoading,
+    TResult Function(_RequestWithdrawOtpSuccess value)?
+        requestWithdrawOtpSuccess,
+    TResult Function(_EstimateTaxLoading value)? estimateTaxLoading,
+    TResult Function(_WithdrawLoading value)? withdrawLoading,
+    TResult Function(_WithdrawLoaded value)? withdrawLoaded,
+    TResult Function(_SetDefaultBankAccountSuccess value)?
+        setDefaultBankAccountSuccess,
+    TResult Function(_SetDefaultBankAccountLoading value)?
+        setDefaultBankAccountLoading,
+    TResult Function(_ResendWithdrawOtpLoading value)? resendWithdrawOtpLoading,
+    TResult Function(_ResendWithdrawOtpSuccess value)? resendWithdrawOtpSuccess,
+    required TResult orElse(),
+  }) {
+    if (resendWithdrawOtpSuccess != null) {
+      return resendWithdrawOtpSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ResendWithdrawOtpSuccess implements BankAccountState {
+  const factory _ResendWithdrawOtpSuccess() = _$ResendWithdrawOtpSuccessImpl;
 }

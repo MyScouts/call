@@ -130,9 +130,9 @@ class _BankAccountsScreenState extends State<BankAccountsScreen> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const SizedBox(height: 20),
             GridView.count(
               shrinkWrap: true,
+              padding: const EdgeInsets.only(top: 15, bottom: 20),
               physics: const NeverScrollableScrollPhysics(),
               crossAxisCount: 3,
               mainAxisSpacing: 15,

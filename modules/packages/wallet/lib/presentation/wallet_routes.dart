@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobilehub_core/mobilehub_core.dart';
+import 'package:wallet/data/data.dart';
 import 'package:wallet/presentation/transaction_history_detail_screen.dart';
 import 'package:wallet/presentation/wallet_constant.dart';
 import 'package:wallet/presentation/wallet_transaction_history_screen.dart';
@@ -12,6 +13,7 @@ import 'package:wallet/presentation/wallet_vnd/withdraw/screens/withdraw_screen.
 import 'shared/bloc/wallet_bloc.dart';
 
 import 'shared/model/bank_account_and_bloc_params.dart';
+import 'wallet_vnd/withdraw/screens/verify_otp_withdraw_screen.dart';
 import 'wallet_diamond/bloc/wallet_diamond_bloc.dart';
 import 'wallet_diamond/wallet_diamond_routes.dart';
 import 'wallet_point/wallet_point_routes.dart';
@@ -75,7 +77,10 @@ class AppWalletRoutes extends RouteModule {
         },
         ConfirmWithdrawTransactionScreen.routeName: (context) {
           final args = settings.arguments as WithdrawParams;
-          return ConfirmWithdrawTransactionScreen(withdrawParams: args);
+          return BlocProvider(
+            create: (context) => BankAccountBloc(injector()),
+            child: ConfirmWithdrawTransactionScreen(withdrawParams: args),
+          );
         },
         WalletTransactionHistoryScreen.routeName: (context) {
           final walletType = settings.arguments as WalletType;
@@ -104,6 +109,14 @@ class AppWalletRoutes extends RouteModule {
           return BlocProvider(
             create: (context) => BankAccountBloc(injector()),
             child: const WithdrawScreen(),
+          );
+        },
+        VerifyOTPWithdrawScreen.routeName: (context) {
+          final params = settings.arguments as WithdrawRequest;
+
+          return BlocProvider(
+            create: (context) => BankAccountBloc(injector()),
+            child: VerifyOTPWithdrawScreen(request: params),
           );
         },
       };

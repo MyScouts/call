@@ -1,5 +1,8 @@
 import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
+import 'package:wallet/data/data.dart';
+import 'package:wallet/presentation/wallet_vnd/dialog/waiting_dialog.dart';
+import 'package:wallet/presentation/wallet_vnd/withdraw/screens/verify_otp_withdraw_screen.dart';
 import 'package:wallet/presentation/transaction_history_detail_screen.dart';
 import 'package:wallet/presentation/wallet_vnd/dialog/notification_dialog.dart';
 import 'package:wallet/presentation/wallet_vnd/withdraw/screens/withdraw_screen.dart';
@@ -102,21 +105,6 @@ extension WalletCoordinator on BuildContext {
     );
   }
 
-  // Future<void> showRegisterJaDialog(
-  //     {required WalletType walletType,
-  //     bool isPipLive = false,
-  //     String? content}) async {
-  //   await showDialog(
-  //     context: this,
-  //     barrierDismissible: false,
-  //     builder: (_) => RegisterJADialog(
-  //       walletType: walletType,
-  //       isPipLive: isPipLive,
-  //       content: content,
-  //     ),
-  //   );
-  // }
-
   Future<void> showSuccessDialog() async {
     await showDialog(
         context: this,
@@ -165,6 +153,13 @@ extension WalletCoordinator on BuildContext {
     return Navigator.of(this).pushNamed(WithdrawScreen.routeName);
   }
 
+  Future<T?> startVerifyOTPScreen<T>(WithdrawRequest request) {
+    return Navigator.of(this).pushNamed(
+      VerifyOTPWithdrawScreen.routeName,
+      arguments: request,
+    );
+  }
+
   Future<void> showNotificationDialog({
     String? actionTitle,
     VoidCallback? onAction,
@@ -179,5 +174,19 @@ extension WalletCoordinator on BuildContext {
         onAction: onAction,
       ),
     );
+  }
+
+  Future<void> showWaitingDialog({
+    required VoidCallback onAction,
+  }) async {
+    await showDialog(
+      context: this,
+      barrierDismissible: false,
+      builder: (_) => WaitingDialog(onAction: onAction),
+    );
+  }
+
+  void backToWithdraw<T>() {
+    return popUntilNavigator(ModalRoute.withName(WithdrawScreen.routeName));
   }
 }
