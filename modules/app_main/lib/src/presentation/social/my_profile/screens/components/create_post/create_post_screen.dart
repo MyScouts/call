@@ -8,6 +8,7 @@ import 'package:app_main/src/presentation/social/my_profile/screens/components/c
 import 'package:app_main/src/presentation/social/my_profile/screens/components/create_post/blocs/create_post_state.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/multiple_image.dart';
 import 'package:app_main/src/data/models/payloads/social/create_post_payload.dart';
+import 'package:app_main/src/presentation/social/widgets/social_appbar_widget.dart';
 import 'package:design_system/design_system.dart';
 import 'package:detectable_text_field/widgets/detectable_text_editing_controller.dart';
 import 'package:detectable_text_field/widgets/detectable_text_field.dart';
@@ -499,8 +500,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     );
   }
 
-  AppBar _buildAppBar() {
-    return AppBar(
+  PreferredSizeWidget _buildAppBar() {
+    return SocialAppBarWidget(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -552,11 +553,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             );
           })
         ],
-      ),
-      centerTitle: true,
-      elevation: 0,
-      shape: const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.transparent),
       ),
     );
   }

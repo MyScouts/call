@@ -5,7 +5,6 @@ import 'package:app_main/src/data/models/payloads/social/react_payload.dart';
 import 'package:app_main/src/data/repositories/post_repository.dart';
 import 'package:app_main/src/domain/usecases/comment_usecase.dart';
 import 'package:app_main/src/data/models/payloads/social/create_post_payload.dart';
-import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 

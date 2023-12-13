@@ -7,6 +7,7 @@ import 'package:app_main/src/presentation/social/my_profile/my_profile_coordinat
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/post_header_user_info.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/post_video_thumbnail_widget.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/react_widget.dart';
+import 'package:app_main/src/presentation/social/widgets/social_appbar_widget.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -86,7 +87,9 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
     final paddingLineBottom = MediaQuery.viewPaddingOf(context).bottom;
 
     return Scaffold(
-      appBar: _buildAppBar(),
+      appBar: const SocialAppBarWidget(
+        titleText: 'Bài viết',
+      ),
       body: SingleChildScrollView(
         controller: scrollController,
         child: Column(
@@ -191,22 +194,5 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
           post = newPost;
         });
     setState(() {});
-  }
-
-  AppBar _buildAppBar() {
-    return AppBar(
-      title: const Text(
-        'Bài viết',
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      centerTitle: true,
-      elevation: 0,
-      shape: const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.transparent),
-      ),
-    );
   }
 }
