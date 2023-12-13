@@ -404,7 +404,9 @@ class LiveChannelController {
 
       /// nếu là live ảo thì bỏ connect agora
       if (virtualInfo.value != null) {
-        _members.value = [..._members, _me.value];
+        final members = await getMembers(_info.value.id);
+
+        _members.value = [...members, _me.value];
 
         // _hostOffline.value = !hostInLive;
 
