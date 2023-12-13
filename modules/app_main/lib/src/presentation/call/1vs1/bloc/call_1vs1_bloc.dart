@@ -38,6 +38,8 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
   final UserSharePreferencesUsecase _userSharePreferencesUsecase;
   final UserUsecase _userUsecase;
   final CallUseCase _callUseCase;
+  bool needUpdateCall = false;
+  int status = 1;
 
   late StreamSubscription<CallEvent> _onListenerCallEvent;
 
@@ -279,7 +281,11 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
 
   Future<void> _onCloseCallEvent(CloseCallEvent event, Emitter<Call1vs1State> emit) async {
     await _onListenerCallEvent.cancel();
-
+    if (state.isMakingACall) {
+      status = 3;
+    } else if (state.isCallClosed) {
+      status = 2;
+    }
     if (state.isIncomingCall) {
       _call1vs1Service.reject();
     } else if (state.isInCall || state.isMakingACall || state.isLeaving) {
@@ -397,19 +403,17 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
         receiverId: participant?.id ?? 0,
         type: callType == CallType.audio ? 1 : 2,
       ));
+      needUpdateCall = true;
     }
   }
 
   Future<void> updateCall() async {
-    if (!_call1vs1Service.isIncomingCall) {
+    if (needUpdateCall) {
       await _callUseCase.updateCall(
-          payload: UpdateCallPayload(
-              type: state.isMakingACall
-                  ? 3
-                  : state.callType == CallType.audio
-                      ? 1
-                      : 2),
+          payload:
+              UpdateCallPayload(type: state.callType == CallType.audio ? 1 : 2, status: status),
           callId: response?.result ?? 0);
+      needUpdateCall = false;
     }
   }
 }

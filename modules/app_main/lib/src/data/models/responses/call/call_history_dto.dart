@@ -46,6 +46,9 @@ class CallHistoryDto extends CallHistoryModel {
   bool get isCaller => callerId == getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id;
 
   @override
-  String get des =>
-      'Cuộc gọi ${type == 3 ? 'nhỡ' : type == 1 ? 'thường' : 'video'} ${type == 3 ? '' : isCaller ? 'đi' : 'đến'}';
+  String get des => isMissingCall
+      ? 'Cuộc gọi ${type == 1 ? 'thoại' : 'video'} nhỡ'
+      : 'Cuộc gọi ${type == 1 ? 'thoại' : 'video'} ${isCaller ? 'đi' : 'đến'}';
+  @override
+  bool get isMissingCall => (status == 1 || status == 3) && !isCaller;
 }

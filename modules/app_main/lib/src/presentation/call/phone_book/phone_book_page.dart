@@ -172,25 +172,25 @@ class PhoneBookPageState extends State<PhoneBookPage> {
                     //   contentPadding: EdgeInsets.all(8),
                     // ),
                     // kSpacingHeight18,
-                    if (_pageState == 0)
-                      GestureDetector(
-                        onTap: () {
-                          //todo
-                        },
-                        child: Row(
-                          children: [
-                            ImageWidget(IconAppConstants.icUserGroup3),
-                            kSpacingWidth12,
-                            Text(
-                              'Tạo cuộc gọi nhóm mới',
-                              style: context.textTheme.bodyMedium?.copyWith(
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.blueEdit,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    // if (_pageState == 0)
+                    //   GestureDetector(
+                    //     onTap: () {
+                    //       //todo
+                    //     },
+                    //     child: Row(
+                    //       children: [
+                    //         ImageWidget(IconAppConstants.icUserGroup3),
+                    //         kSpacingWidth12,
+                    //         Text(
+                    //           'Tạo cuộc gọi nhóm mới',
+                    //           style: context.textTheme.bodyMedium?.copyWith(
+                    //             fontWeight: FontWeight.w500,
+                    //             color: AppColors.blueEdit,
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
                     kSpacingHeight18,
                     Expanded(
                       child: _pageState == 0 ? const AllFriendsTab() : const CallHistoryTab(),

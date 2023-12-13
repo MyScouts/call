@@ -87,6 +87,7 @@ extension Call1vs1ScreenAction on Call1vs1ScreenState {
   }
 
   void onEndCall() {
+
     bloc.add(CloseCallEvent());
   }
 
