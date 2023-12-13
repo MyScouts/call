@@ -8,7 +8,7 @@ part of 'member_dto.dart';
 
 MemberDto _$MemberDtoFromJson(Map<String, dynamic> json) => MemberDto(
       avatar: json['avatar'] as String?,
-      type: json['type'] as int,
+      type: json['type'] as int?,
       birthday: json['birthday'] as String?,
       displayName: json['displayName'] as String?,
       fullName: json['fullName'] as String?,

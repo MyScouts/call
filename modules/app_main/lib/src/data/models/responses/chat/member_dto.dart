@@ -40,5 +40,5 @@ class MemberDto extends MemberModel {
   final int? sexCode;
 
   @override
-  final int type;
+  final int? type;
 }

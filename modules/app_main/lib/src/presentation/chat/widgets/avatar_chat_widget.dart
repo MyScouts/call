@@ -16,12 +16,12 @@ class AvatarChatWidget extends StatelessWidget {
       height: 36,
       child: Stack(
         children: [
-          if (type == 1)
+          if (type == 1 || members.length < 2)
             AvatarMemberWidget(
               size: 36,
               avatar: members.first.member.avatar ?? '',
-            ),
-          if (type == 2) ...[
+            )
+          else if (type == 2) ...[
             Positioned(
               top: 0,
               right: 0,

@@ -200,6 +200,9 @@ class IconAppConstants {
 
   static String icRadioButtonCheck = IconApp.icRadioButtonCheck.path;
   static String icRadioButton = IconApp.icRadioButton.path;
+  static String icBlockAccount = IconApp.icBlockAccount.path;
+  static String icEdit = IconApp.icEdit.path;
+  static String icLeaveMute = IconApp.icLeaveMute.path;
 
   
 }
@@ -356,7 +359,7 @@ enum IconApp {
   icC('assets/icons/ic_c.png'),
   icE('assets/icons/ic_e.png'),
   icLeaveTeam('assets/icons/ic_leave_team.svg'),
-  icDeleteChat('assets/icons/ic_delete_chat.svg'),
+  icDeleteChat('assets/icons/ic_delete.svg'),
   icReportChat('assets/icons/ic_report_chat.svg'),
 
   ///chat
@@ -367,6 +370,9 @@ enum IconApp {
   icMicOff('assets/icons/ic_mic_off.svg'),
   icRadioButton('assets/icons/ic_radio_button.svg'),
   icRadioButtonCheck('assets/icons/ic_radio_button_check.svg'),
+  icBlockAccount('assets/icons/ic_block_account.svg'),
+  icEdit('assets/icons/ic_edit.svg'),
+  icLeaveMute('assets/icons/ic_leave_mute.svg'),
 
   ///call
   icUserGroup3('assets/icons/ic_user_group3.svg'),
