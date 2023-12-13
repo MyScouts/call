@@ -146,10 +146,7 @@ class _LivePk extends StatelessWidget {
           child: Column(
             children: [
               const SafeArea(
-                child: OpacityBuilder(
-                  key: Key('pk live'),
-                  child: LiveChannelHeader(),
-                ),
+                child: LiveChannelHeader(),
               ),
               const SizedBox(height: 16),
               const _LivePKRtc(),
@@ -192,10 +189,7 @@ class _LivePk extends StatelessWidget {
         ),
         const Align(
           alignment: Alignment.bottomCenter,
-          child: OpacityBuilder(
-            key: Key('pk live'),
-            child: LiveBottomAction(),
-          ),
+          child: LiveBottomAction(),
         ),
         IgnorePointer(
           ignoring: true,
@@ -288,16 +282,11 @@ class _LiveSimple extends StatelessWidget {
         const _RtcRender(),
         const Align(
           alignment: Alignment.topCenter,
-          child: OpacityBuilder(
-            key: Key('live simple'),
-            child: SafeArea(child: LiveChannelHeader()),
-          ),
+          child: SafeArea(child: LiveChannelHeader()),
         ),
         const Align(
           alignment: Alignment.bottomCenter,
-          child: OpacityBuilder(
-            child: LiveBottomAction(),
-          ),
+          child: LiveBottomAction(),
         ),
         Positioned.fill(
           child: IgnorePointer(
