@@ -12,6 +12,7 @@ abstract class CallHistoryModel {
   CallGroupModel get callGroup;
   bool get isCaller;
   String get des;
+  bool get isMissingCall;
 
 
 }

@@ -421,13 +421,13 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
                                   ImageConstants.defaultAppLogo,
                                   width: 48,
                                   height: 48,
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.cover,
                                 )
                               : ImageWidget(
                                   widget.gift.giver?.avatar ?? '',
                                   width: 48,
                                   height: 48,
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.cover,
                                 ),
                         ),
                         const SizedBox(width: 10),

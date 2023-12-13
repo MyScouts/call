@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/coordinator/app_context.dart';
 import 'package:app_main/src/core/coordinator/app_coordinator.dart';
 import 'package:app_main/src/core/services/live_service/impl/live_socket_service_impl.dart';
 import 'package:app_main/src/core/services/live_service/live_service.dart';
@@ -21,14 +22,18 @@ import 'package:app_main/src/presentation/live/domain/entities/user_diamond_for_
 import 'package:app_main/src/presentation/live/live_magane_state.dart';
 import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/join_channel_provider.dart';
+import 'package:app_main/src/presentation/live/presentation/channel/live_channel_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/live_home/live_home_screen.dart';
+import 'package:app_main/src/presentation/live/presentation/pk/widget/enable_share_message_dialog.dart';
 import 'package:app_main/src/presentation/live/presentation/pk/widget/invite_pk_dialog.dart';
+import 'package:app_main/src/presentation/live/presentation/pk/widget/pk_config_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../../data/model/response/gift_card_live.dart';
@@ -49,6 +54,18 @@ enum LiveStreamState {
   bool get isWatching => this == LiveStreamState.watching;
 
   bool get isStop => this == LiveStreamState.stop;
+}
+
+enum PkStep {
+  pending,
+  starting,
+  started,
+  end;
+}
+
+enum PkAction {
+  none,
+  preEnd;
 }
 
 @injectable
@@ -124,10 +141,6 @@ class LiveChannelController {
 
   LivePkData? get pkData => _pkData;
 
-  final RxBool _inGame = false.obs;
-
-  RxBool get inGame => _inGame;
-
   Round? _currentGameRound;
 
   Round? get currentGameRound => _currentGameRound;
@@ -135,6 +148,18 @@ class LiveChannelController {
   final RxList<UserDiamondForPK> _diamondsPK = <UserDiamondForPK>[].obs;
 
   RxList<UserDiamondForPK> get diamondsPK => _diamondsPK;
+
+  final Rx<PkStep> _pkStep = PkStep.pending.obs;
+
+  Rx<PkStep> get pkStep => _pkStep;
+
+  final Rx<PkAction> _pkAction = PkAction.none.obs;
+
+  Rx<PkAction> get pkAction => _pkAction;
+
+  final RxList<LiveMember> _giftMembers = <LiveMember>[].obs;
+
+  RxList<LiveMember> get giftMembers => _giftMembers;
 
   bool get hostLivePk {
     if (_pkData == null) return false;
@@ -147,6 +172,8 @@ class LiveChannelController {
     return host != null;
   }
 
+  final liveState = const GiftCardLive().obs;
+
   LiveMember? get host {
     final host = _members.firstWhereOrNull((e) => e.isOwner);
     return host;
@@ -154,7 +181,14 @@ class LiveChannelController {
 
   Future<void> getLeaderBoard(int roomId) async {
     try {
+      await getLiveState(_info.value.id);
       giftCardLive.value = await repository.getInfoGiftCard(roomId);
+    } catch (e) {}
+  }
+
+  Future<void> getLiveState(int liveId) async {
+    try {
+      liveState.value = await repository.getLiveState(liveId);
     } catch (e) {}
   }
 
@@ -206,6 +240,27 @@ class LiveChannelController {
     _showMessageInput.value = false;
   }
 
+  void showConfigPk() {
+    showModalBottomSheet(
+      context: AppCoordinator.rootNavigator.currentContext!,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => Provider.value(
+        value: this,
+        child: PkConfigSheet(
+          onGameStarted: (game) async {
+            repository.startGame({
+              'liveId': _info.value.id,
+              'roundCount': game.roundCount,
+              'roundDurationSecond': 30,
+              'roundTimeBreak': game.roundTimeBreak,
+            });
+          },
+        ),
+      ),
+    );
+  }
+
   void rejoinNonPk(int id) async {
     _roomInfoFetching.value = true;
     final res = await repository.joinLive(id: id, password: _password);
@@ -227,9 +282,7 @@ class LiveChannelController {
       _agora?.token ?? '',
       _agora?.channel ?? '',
       _me.value.info.userID,
-      role: _me.value.isOwner
-          ? ClientRoleType.clientRoleBroadcaster
-          : ClientRoleType.clientRoleAudience,
+      role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
     );
 
     _enablePk.value = false;
@@ -237,11 +290,27 @@ class LiveChannelController {
     LiveManageState.hostID.value = hostID;
   }
 
+  BuildContext get context => AppContext.scaffoldContext;
+
+  void shareMessageDialog() async {
+    final ok = await showDialog(
+          context: AppCoordinator.rootNavigator.currentContext!,
+          builder: (_) => const EnableShareMessageDialog(),
+        ) ??
+        false;
+
+    if (ok) {
+      if (_pkData == null) return;
+      repository.updatePk(_pkData!.pk.id, true);
+    }
+  }
+
   void joinPk(int id) async {
     _roomInfoFetching.value = true;
     final res = await repository.joinLive(id: id, password: _password);
     _info.value = res.data;
     _pkData = await repository.getPk(id);
+    if (_me.value.info.userID == _pkData?.pk.hostID) shareMessageDialog();
     for (final i in res.agoraData) {
       if (i.uid == null) continue;
       if (me.value.isOwner) {
@@ -262,9 +331,7 @@ class LiveChannelController {
       _agora?.token ?? '',
       _agora?.channel ?? '',
       _me.value.info.userID,
-      role: _me.value.isOwner
-          ? ClientRoleType.clientRoleBroadcaster
-          : ClientRoleType.clientRoleAudience,
+      role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
     );
 
     _enablePk.value = true;
@@ -294,7 +361,7 @@ class LiveChannelController {
     return result;
   }
 
-  void join(int id, BuildContext context) async {
+  void join(int id) async {
     LiveManageState.join(id, this);
     try {
       final res = await Future.wait([
@@ -355,13 +422,15 @@ class LiveChannelController {
 
       if (_pkData != null) {
         await getMembersPk();
+
+        _members.value = [..._members, _me.value];
       } else {
         final members = await getMembers(_info.value.id);
 
         _members.value = [...members, _me.value];
       }
 
-      _onSocketEvent(context);
+      _onSocketEvent();
 
       socketService.connect(
         '${Configurations.baseUrl}live?id=${_info.value.id}',
@@ -374,9 +443,7 @@ class LiveChannelController {
         _agora?.token ?? '',
         _agora?.channel ?? '',
         _me.value.info.userID,
-        role: _me.value.isOwner
-            ? ClientRoleType.clientRoleBroadcaster
-            : ClientRoleType.clientRoleAudience,
+        role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
       );
 
       _hostOffline.value = !hostInLive;
@@ -390,8 +457,12 @@ class LiveChannelController {
         _video.value = true;
       }
 
-      if (_info.value.pk != null) {
+      if (_pkData != null) {
         _enablePk.value = true;
+        if (_pkData!.latestRound != null) {
+          _currentGameRound = _pkData!.latestRound;
+          _pkStep.value = PkStep.started;
+        }
       } else {
         _enablePk.value = false;
       }
@@ -406,8 +477,7 @@ class LiveChannelController {
 
   Future getMembersPk() async {
     final liveIds = _pkData?.lives.map((e) => e.id).toList() ?? [];
-    final resMembers =
-        await Future.wait(liveIds.map((e) => getMembers(e)).toList());
+    final resMembers = await Future.wait(liveIds.map((e) => getMembers(e)).toList());
 
     _members.value = [...resMembers.first, ...resMembers.last];
   }
@@ -416,6 +486,10 @@ class LiveChannelController {
     EasyDebounce.debounce('reaction', const Duration(milliseconds: 300), () {
       socketService.socket.emit('reaction', {'type': 'heart', 'metadata': {}});
     });
+  }
+
+  void readyPk() {
+    repository.readyGame(_info.value.id);
   }
 
   Future previewQuit() async {
@@ -480,8 +554,7 @@ class LiveChannelController {
       androidNotificationOptions: AndroidNotificationOptions(
         channelId: 'notification_channel_id',
         channelName: 'Foreground Notification',
-        channelDescription:
-            'This notification appears when the foreground service is running.',
+        channelDescription: 'This notification appears when the foreground service is running.',
         channelImportance: NotificationChannelImportance.LOW,
         priority: NotificationPriority.LOW,
         iconData: const NotificationIconData(
@@ -515,7 +588,7 @@ class LiveChannelController {
 
   final Rx<int> timesAnimation = 0.obs;
 
-  void _onSocketEvent(BuildContext context) {
+  void _onSocketEvent() {
     socketService.on(socketConnectedEvent, (data) {
       debugPrint('kết nối thành công ${socketService.socket.id}');
     });
@@ -541,11 +614,25 @@ class LiveChannelController {
 
     socketService.on(socketReadyPkEvent, (Map data) {
       debugPrint('$socketReadyPkEvent ===> $data');
+      if (data['user'] != null) {
+        final user = User.fromJson(data['user']);
+        if (user.id != _me.value.info.userID && _me.value.isOwner) {
+          readyPk();
+        }
+      }
+    });
+
+    socketService.on(socketPkRoundStartEvent, (Map data) {
+      debugPrint('$socketPkRoundStartEvent ===> ${data['round']}');
       if (data['round'] != null) {
         final round = Round.fromJson(data['round']);
-        _inGame.value = true;
         _currentGameRound = round;
+        _pkStep.value = PkStep.started;
       }
+    });
+
+    socketService.on(socketPkRoundFinishEvent, (Map data) {
+      debugPrint('$socketPkRoundFinishEvent ===> ${data['round']}');
     });
 
     socketService.on(socketPkGiftUpdatedEvent, (Map data) {
@@ -571,7 +658,7 @@ class LiveChannelController {
 
     socketService.on(socketPkGameFinishEvent, (Map data) {
       debugPrint('$socketPkGameFinishEvent ===> $data');
-
+      _pkStep.value = PkStep.end;
     });
 
     socketService.on(socketPkMessageEvent, (Map data) {
@@ -599,6 +686,14 @@ class LiveChannelController {
       debugPrint('$socketGiftGiven ===> $data');
       getLeaderBoard(_info.value.id);
       final gift = SentGiftResponse.fromJson(data as Map<String, Object?>);
+      if (_enablePk.value) {
+        final member =
+            _members.firstWhereOrNull((e) => e.info.userID == gift.giver?.id);
+        final ids = _giftMembers.map((e) => e.info.userID);
+        if (member != null && !ids.contains(member.info.userID)) {
+          _giftMembers.value = [..._giftMembers, member];
+        }
+      }
       if (gift.giftCard?.metadata?.isStaticGif == true) {
         floatingGiftsProvider.addGift(
           gift: gift,
@@ -628,6 +723,11 @@ class LiveChannelController {
         createdAt: DateTime.now(),
       );
       NotificationCenter.post(channel: receiveMessage, options: message);
+    });
+
+    socketService.on(socketGiftInfoUpdated, (Map<String, Object?> data) {
+      debugPrint('$socketGiftInfoUpdated ===> $data');
+      liveState.value = GiftCardLive.fromJson(data);
     });
 
     socketService.on(socketUserJoinEvent, (Map data) {
@@ -726,24 +826,34 @@ class LiveChannelController {
         member: member,
         message: data['rawContent'] ?? '',
         createdAt: DateTime.tryParse(data['createdAt'] ?? '') ?? DateTime.now(),
+        liveId: data['liveId'],
       );
       NotificationCenter.post(channel: receiveMessage, options: message);
     });
 
     socketService.on(socketPkStartEvent, (data) {
+      if (_me.value.isOwner) {
+        Navigator.popUntil(AppCoordinator.rootNavigator.currentContext!,
+            (route) {
+          if (route.settings.name == LiveWrapperScreen.routerName) {
+            return true;
+          }
+          if (route.settings.name == LiveHomeScreen.routeName) {
+            return true;
+          }
+          if (route.settings.name == LiveChannelScreen.routerName) {
+            return true;
+          }
+          return false;
+        });
+      }
       joinPk(_info.value.id);
-      Navigator.popUntil(context, (route) {
-        if (route.settings.name == LiveWrapperScreen.routerName) {
-          return true;
-        }
-        if (route.settings.name == LiveHomeScreen.routeName) {
-          return true;
-        }
-        return false;
-      });
     });
 
     socketService.on(socketPkEndEvent, (data) async {
+      _pkStep.value = PkStep.pending;
+      _diamondsPK.value = [];
+      _giftMembers.value = [];
       rejoinNonPk(_info.value.id);
     });
 
@@ -751,39 +861,49 @@ class LiveChannelController {
       final liveID = data['liveId'] ?? '';
       final user = User.fromJson(data['inviter']);
 
-      showDialog(
-        context: AppCoordinator.rootNavigator.currentContext!,
-        builder: (_) => InvitePkDialog(
-          user: user,
-          onPress: () async {
-            try {
-              context.showLoading();
-              final ok = await repository.acceptPK({
-                'inviterId': user.id,
-                'inviterLiveId': liveID,
-                'liveId': _info.value.id,
-              });
-              if (!context.mounted) return;
-              context.hideLoading();
-              if (!ok) {
-                // context.showToastMessage(
-                //   'Lời mời đã hết hạn',
-                //   ToastMessageType.error,
-                // );
-              }
-            } catch (e) {
-              context.hideLoading();
-            }
-          },
-        ),
-      );
+      showInvitePk(liveID, user);
     });
+
+    socketService.on(socketPkGameStartEvent, (Map data) {
+      _pkStep.value = PkStep.starting;
+    });
+  }
+
+  void showInvitePk(int liveID, User user) {
+    showDialog(
+      context: AppCoordinator.rootNavigator.currentContext!,
+      builder: (_) => InvitePkDialog(
+        user: user,
+        onPress: () async {
+          try {
+            context.showLoading();
+            final ok = await repository.acceptPK({
+              'inviterId': user.id,
+              'inviterLiveId': liveID,
+              'liveId': _info.value.id,
+            });
+            if (!context.mounted) return;
+            context.hideLoading();
+            if (!ok) {
+              // context.showToastMessage(
+              //   'Lời mời đã hết hạn',
+              //   ToastMessageType.error,
+              // );
+            }
+          } catch (e) {
+            context.hideLoading();
+          }
+        },
+      ),
+    );
   }
 
   void leaveLive() async {
     if (_info.value.pk != null) {
       if (_me.value.isOwner) {
-        await repository.deletePK(_info.value.id);
+        await repository.deletePK(_info.value.id).onError((error, stackTrace) {
+          rejoinNonPk(_info.value.id);
+        });
         return;
       }
     }
@@ -815,18 +935,13 @@ class LiveChannelController {
 }
 
 extension RemoteVideoStateReasonX on RemoteVideoStateReason {
-  bool get isNetworkCongestion =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
+  bool get isNetworkCongestion => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
 
-  bool get isNetworkRecovery =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
+  bool get isNetworkRecovery => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
 
-  bool get isRemoteOffline =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
+  bool get isRemoteOffline => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
 
-  bool get isRemoteUnmuted =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
+  bool get isRemoteUnmuted => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
 
-  bool get isRemoteInBackground =>
-      this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
+  bool get isRemoteInBackground => this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
 }

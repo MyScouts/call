@@ -11,6 +11,7 @@ import 'package:wallet/data/datasources/models/response/wallet_info_response.dar
 import 'package:wallet/presentation/shared/widgets/transaction_filter_sheet.dart';
 
 import '../../../data/datasources/models/request/wallet_transactions_request.dart';
+import '../../../data/datasources/models/response/onboarding_response.dart';
 import '../../../domain/entities/wallet/vnd_wallet_info/vnd_wallet_info.dart';
 import '../../../domain/repository/wallet_repository.dart';
 import '../../wallet_constant.dart';
@@ -125,6 +126,21 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
         debugPrint(e.toString());
         const errorMessage = 'Đã xảy ra lỗi';
         emit(const _GetPDoneProfileFailed(errorMessage));
+      }
+    });
+
+    on<_GetOnboardingEvent>((event, emit) async {
+      try {
+        emit(const _GetOnboardingLoading());
+        final onboardingData = await _walletRepository.getOnboarding();
+        emit(_GetOnboardingSuccess(onboardingData));
+      } on DioException catch (e) {
+        const errorMessage = 'Đã xảy ra lỗi';
+        emit(const _GetOnboardingFail(errorMessage));
+      } catch (e) {
+        debugPrint(e.toString());
+        const errorMessage = 'Đã xảy ra lỗi';
+        emit(const _GetOnboardingFail(errorMessage));
       }
     });
   }

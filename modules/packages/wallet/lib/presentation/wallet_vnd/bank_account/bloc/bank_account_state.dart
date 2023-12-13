@@ -55,8 +55,14 @@ class BankAccountState with _$BankAccountState {
   const factory BankAccountState.getVndWalletInfoSuccess(
       VndWalletInfo vndWalletInfo) = _GetVndWalletInfoSuccess;
 
-  const factory BankAccountState.estimateTaxSuccess(num taxValue) =
-      _EstimateTaxSuccess;
+  const factory BankAccountState.estimateTaxSuccess(
+      EstimateTaxResponse estimateTax) = _EstimateTaxSuccess;
+
+  const factory BankAccountState.requestWithdrawOtpLoading() =
+      _RequestWithdrawOtpLoading;
+
+  const factory BankAccountState.requestWithdrawOtpSuccess() =
+      _RequestWithdrawOtpSuccess;
 
   const factory BankAccountState.estimateTaxLoading() = _EstimateTaxLoading;
 
@@ -69,4 +75,10 @@ class BankAccountState with _$BankAccountState {
 
   const factory BankAccountState.setDefaultBankAccountLoading() =
       _SetDefaultBankAccountLoading;
+
+  const factory BankAccountState.resendWithdrawOtpLoading() =
+      _ResendWithdrawOtpLoading;
+
+  const factory BankAccountState.resendWithdrawOtpSuccess() =
+      _ResendWithdrawOtpSuccess;
 }

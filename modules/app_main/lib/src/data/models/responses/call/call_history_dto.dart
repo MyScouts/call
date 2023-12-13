@@ -7,18 +7,17 @@ part 'call_history_dto.g.dart';
 
 @JsonSerializable()
 class CallHistoryDto extends CallHistoryModel {
-  factory CallHistoryDto.fromJson(Map<String, dynamic> json) =>
-      _$CallHistoryDtoFromJson(json);
+  factory CallHistoryDto.fromJson(Map<String, dynamic> json) => _$CallHistoryDtoFromJson(json);
 
-  CallHistoryDto(
-      {required this.callGroup,
-      required this.calledAt,
-      required this.endedAt,
-      required this.id,
-      required this.status,
-      required this.type,
-        required this.callerId,
-      });
+  CallHistoryDto({
+    required this.callGroup,
+    required this.calledAt,
+    required this.endedAt,
+    required this.id,
+    required this.status,
+    required this.type,
+    required this.callerId,
+  });
 
   Map<String, dynamic> toJson() => _$CallHistoryDtoToJson(this);
 
@@ -47,5 +46,9 @@ class CallHistoryDto extends CallHistoryModel {
   bool get isCaller => callerId == getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id;
 
   @override
-  String get des => 'Cuộc gọi ${type == 1 ? 'thường' : 'video'} ${isCaller ? 'đi' : 'đến'}';
+  String get des => isMissingCall
+      ? 'Cuộc gọi ${type == 1 ? 'thoại' : 'video'} nhỡ'
+      : 'Cuộc gọi ${type == 1 ? 'thoại' : 'video'} ${isCaller ? 'đi' : 'đến'}';
+  @override
+  bool get isMissingCall => (status == 1 || status == 3) && !isCaller;
 }

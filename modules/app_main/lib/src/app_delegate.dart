@@ -23,6 +23,7 @@ import 'config/app_config_service.dart';
 import 'core/services/notifications/notification_service.dart';
 import 'core/services/notifications/push_notification_service.dart';
 import 'di/di.dart';
+import 'presentation/call/stringee_bloc/stringee_bloc.dart';
 
 abstract class IAppDelegate {
   Future<Widget> build(Map<String, dynamic> env);
@@ -96,6 +97,7 @@ class AppDelegate extends IAppDelegate {
         BlocProvider<AppCubit>(create: (_) => injector.get()),
         Provider<LiveChannelController>(create: (_) => getIt()),
         BlocProvider<LiveMessageBloc>(create: (_) => getIt()),
+        BlocProvider<StringeeBloc>(create: (context) => injector.get()),
       ],
       savedThemeMode: savedThemeMode,
       initialRoute: initialRoute,

@@ -17,6 +17,7 @@ const String dashboardPageChange = 'dashboardPageChange';
 const String refreshLive = 'refreshLive';
 const String showOption = 'showOption';
 const String startPk = 'startPk';
+const String liveTap = 'liveTap';
 
 typedef ObserverCallback = void Function(dynamic options);
 

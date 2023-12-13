@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 export 'src/resources/image_constants.dart';
 export 'src/resources/icon_constants.dart';
+export 'src/resources/audio_constants.dart';
 
 export 'src/styles/theme.dart';
 

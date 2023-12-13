@@ -57,20 +57,12 @@ class LiveCommentCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (cm.member.info.avatar.trim().isEmpty)
-                  SizedBox.square(
-                    dimension: 17,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(17 / 2),
-                      child: ImageWidget(
-                        ImageConstants.defaultUserAvatar,
-                      ),
-                    ),
-                  )
-                else
                   CircleNetworkImage(
                     url: cm.member.info.avatar,
                     size: 17,
+                    defaultImage: ImageWidget(
+                      ImageConstants.defaultUserAvatar,
+                    ),
                   ),
                 const SizedBox(width: 4),
                 Flexible(
@@ -158,20 +150,12 @@ class LiveCommentCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (cm.member.info.avatar.trim().isEmpty)
-                SizedBox.square(
-                  dimension: 17,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(17 / 2),
-                    child: ImageWidget(
-                      ImageConstants.defaultUserAvatar,
-                    ),
-                  ),
-                )
-              else
                 CircleNetworkImage(
                   url: cm.member.info.avatar,
                   size: 17,
+                  defaultImage: ImageWidget(
+                    ImageConstants.defaultUserAvatar,
+                  ),
                 ),
               const SizedBox(width: 4),
               Flexible(

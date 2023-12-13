@@ -22,7 +22,8 @@ class _LiveGiftButtonState extends State<LiveGiftButton> {
   GiftCard? giftCard;
 
   Widget bodyGift() {
-    final controller = context.findAncestorStateOfType<LiveChannelScreenState>()!.controller;
+    final controller =
+        context.findAncestorStateOfType<LiveChannelScreenState>()!.controller;
 
     return Obx(() {
       final times = controller.timesAnimation.value;
@@ -32,6 +33,9 @@ class _LiveGiftButtonState extends State<LiveGiftButton> {
           onTap: () {
             context.showBottomGift(controller).then((value) {
               if (value is GiftCard) {
+                if(value.metadata?.isStaticGif == true){
+                  return;
+                }
                 giftCard = value;
                 setState(() {
                   isIcon = value.imageGift!;
@@ -47,8 +51,11 @@ class _LiveGiftButtonState extends State<LiveGiftButton> {
                 Opacity(
                   opacity: times > 0 ? 0.8 : 1,
                   child: Ink(
-                    decoration:
-                        times > 0 ? BoxDecoration(color: Colors.black.withOpacity(0.5), shape: BoxShape.circle) : null,
+                    decoration: times > 0
+                        ? BoxDecoration(
+                            color: Colors.black.withOpacity(0.5),
+                            shape: BoxShape.circle)
+                        : null,
                     height: 60,
                     width: 60,
                     child: ImageWidget(isIcon),
@@ -59,13 +66,17 @@ class _LiveGiftButtonState extends State<LiveGiftButton> {
                     child: Center(
                         child: Text(
                       times.toString(),
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white, shadows: [
-                        Shadow(
-                          offset: Offset(0, 0),
-                          blurRadius: 3.0,
-                          color: Color.fromARGB(255, 0, 0, 0),
-                        ),
-                      ]),
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              offset: Offset(0, 0),
+                              blurRadius: 3.0,
+                              color: Color.fromARGB(255, 0, 0, 0),
+                            ),
+                          ]),
                     )))
               ],
             ),
@@ -77,7 +88,8 @@ class _LiveGiftButtonState extends State<LiveGiftButton> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = context.findAncestorStateOfType<LiveChannelScreenState>()!.controller;
+    final controller =
+        context.findAncestorStateOfType<LiveChannelScreenState>()!.controller;
 
     return Obx(() {
       final times = controller.timesAnimation.value;
@@ -110,13 +122,18 @@ class CircleAnimation extends StatefulWidget {
   final Duration duration;
   final VoidCallback afterAnimation;
 
-  const CircleAnimation({super.key, required this.child, required this.duration, required this.afterAnimation});
+  const CircleAnimation(
+      {super.key,
+      required this.child,
+      required this.duration,
+      required this.afterAnimation});
 
   @override
   State<CircleAnimation> createState() => _CircleAnimationState();
 }
 
-class _CircleAnimationState extends State<CircleAnimation> with SingleTickerProviderStateMixin {
+class _CircleAnimationState extends State<CircleAnimation>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override

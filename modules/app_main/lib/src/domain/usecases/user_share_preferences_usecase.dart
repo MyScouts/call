@@ -29,11 +29,15 @@ class UserSharePreferencesUsecase extends UserInfoSharePreferencesUsecase {
   Future<bool> saveStringeeToken(String token) =>
       _shared.setString(_kStringeeToken, token);
 
-  String? getFcmToken() => _shared.getString(_kFCMToken);
+  String? get getFcmToken => _shared.getString(_kFCMToken);
 
   bool get getSubTopicFCM => _shared.getBool(_keySubTopic) ?? false;
 
   Future<bool> saveSubTopicFCM() => _shared.setBool(_keySubTopic, true);
 
   bool isMe(int? id) => getUserInfo()?.id == id;
+
+  /// stringee token
+  String? get getStringeeToken => _shared.getString(_kStringeeToken);
+
 }

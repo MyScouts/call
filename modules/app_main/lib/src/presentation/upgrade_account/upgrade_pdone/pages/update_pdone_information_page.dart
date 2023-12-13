@@ -204,6 +204,12 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       identifyNumberCtrl.text = eKycData['id'] ?? '';
       final nameArr = eKycData['name'].toString().split(" ");
 
+      if (nameArr.length > 3) {
+        firstNameCtrl.text = nameArr[0];
+        middleNameCtrl.text = nameArr.sublist(1, nameArr.length-1).join(" ");
+        lastNameCtrl.text = nameArr[nameArr.length-1];
+      }
+
       if (nameArr.length == 3) {
         firstNameCtrl.text = nameArr[0];
         middleNameCtrl.text = nameArr[1];
