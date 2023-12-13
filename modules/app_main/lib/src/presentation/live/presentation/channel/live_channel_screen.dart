@@ -635,12 +635,6 @@ class _LivePKRtc extends StatelessWidget {
               ],
             ),
             Obx(() {
-              if (!meInLive) {
-                return const Align(
-                  alignment: Alignment.center,
-                  child: SizedBox.shrink(),
-                );
-              }
 
               if (controller.pkStep.value != PkStep.pending) {
                 return const Align(
@@ -650,6 +644,13 @@ class _LivePKRtc extends StatelessWidget {
               }
 
               if (controller.pkData!.pk.hostID != controller.me.value.info.userID) {
+                return const Align(
+                  alignment: Alignment.center,
+                  child: SizedBox.shrink(),
+                );
+              }
+
+              if (!meInLive) {
                 return const Align(
                   alignment: Alignment.center,
                   child: SizedBox.shrink(),

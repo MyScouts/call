@@ -255,7 +255,7 @@ class LiveChannelController {
             repository.startGame({
               'liveId': _info.value.id,
               'roundCount': game.roundCount,
-              'roundDurationSecond': 30,
+              'roundDurationSecond': game.roundDurationSecond,
               'roundTimeBreak': game.roundTimeBreak,
             });
           },
