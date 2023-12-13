@@ -41,4 +41,4 @@ class RuleInformationRowUIModel {
   final List<RuleInformationRowUIModel> nestedContents;
 }
 
-enum RuleInformationRowLeadingStyle { number, bullet }
+enum RuleInformationRowLeadingStyle { none, bullet, number, letter }

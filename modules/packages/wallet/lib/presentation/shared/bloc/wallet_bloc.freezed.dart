@@ -25,6 +25,7 @@ mixin _$WalletEvent {
     required TResult Function(String id) getWalletTransactionDetail,
     required TResult Function(FilterOption filter) filterTransaction,
     required TResult Function() getPDoneProfile,
+    required TResult Function() getOnboarding,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -36,6 +37,7 @@ mixin _$WalletEvent {
     TResult? Function(String id)? getWalletTransactionDetail,
     TResult? Function(FilterOption filter)? filterTransaction,
     TResult? Function()? getPDoneProfile,
+    TResult? Function()? getOnboarding,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -46,6 +48,7 @@ mixin _$WalletEvent {
     TResult Function(String id)? getWalletTransactionDetail,
     TResult Function(FilterOption filter)? filterTransaction,
     TResult Function()? getPDoneProfile,
+    TResult Function()? getOnboarding,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -58,6 +61,7 @@ mixin _$WalletEvent {
         getWalletTransactionDetail,
     required TResult Function(_FilterTransactionEvent value) filterTransaction,
     required TResult Function(_GetPDoneProfileEvent value) getPDoneProfile,
+    required TResult Function(_GetOnboardingEvent value) getOnboarding,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -69,6 +73,7 @@ mixin _$WalletEvent {
         getWalletTransactionDetail,
     TResult? Function(_FilterTransactionEvent value)? filterTransaction,
     TResult? Function(_GetPDoneProfileEvent value)? getPDoneProfile,
+    TResult? Function(_GetOnboardingEvent value)? getOnboarding,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -80,6 +85,7 @@ mixin _$WalletEvent {
         getWalletTransactionDetail,
     TResult Function(_FilterTransactionEvent value)? filterTransaction,
     TResult Function(_GetPDoneProfileEvent value)? getPDoneProfile,
+    TResult Function(_GetOnboardingEvent value)? getOnboarding,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -156,6 +162,7 @@ class _$GetWalletInfoEventImpl
     required TResult Function(String id) getWalletTransactionDetail,
     required TResult Function(FilterOption filter) filterTransaction,
     required TResult Function() getPDoneProfile,
+    required TResult Function() getOnboarding,
   }) {
     return getWalletInfo();
   }
@@ -170,6 +177,7 @@ class _$GetWalletInfoEventImpl
     TResult? Function(String id)? getWalletTransactionDetail,
     TResult? Function(FilterOption filter)? filterTransaction,
     TResult? Function()? getPDoneProfile,
+    TResult? Function()? getOnboarding,
   }) {
     return getWalletInfo?.call();
   }
@@ -183,6 +191,7 @@ class _$GetWalletInfoEventImpl
     TResult Function(String id)? getWalletTransactionDetail,
     TResult Function(FilterOption filter)? filterTransaction,
     TResult Function()? getPDoneProfile,
+    TResult Function()? getOnboarding,
     required TResult orElse(),
   }) {
     if (getWalletInfo != null) {
@@ -201,6 +210,7 @@ class _$GetWalletInfoEventImpl
         getWalletTransactionDetail,
     required TResult Function(_FilterTransactionEvent value) filterTransaction,
     required TResult Function(_GetPDoneProfileEvent value) getPDoneProfile,
+    required TResult Function(_GetOnboardingEvent value) getOnboarding,
   }) {
     return getWalletInfo(this);
   }
@@ -215,6 +225,7 @@ class _$GetWalletInfoEventImpl
         getWalletTransactionDetail,
     TResult? Function(_FilterTransactionEvent value)? filterTransaction,
     TResult? Function(_GetPDoneProfileEvent value)? getPDoneProfile,
+    TResult? Function(_GetOnboardingEvent value)? getOnboarding,
   }) {
     return getWalletInfo?.call(this);
   }
@@ -229,6 +240,7 @@ class _$GetWalletInfoEventImpl
         getWalletTransactionDetail,
     TResult Function(_FilterTransactionEvent value)? filterTransaction,
     TResult Function(_GetPDoneProfileEvent value)? getPDoneProfile,
+    TResult Function(_GetOnboardingEvent value)? getOnboarding,
     required TResult orElse(),
   }) {
     if (getWalletInfo != null) {
@@ -338,6 +350,7 @@ class _$GetWalletTransactionListEventImpl
     required TResult Function(String id) getWalletTransactionDetail,
     required TResult Function(FilterOption filter) filterTransaction,
     required TResult Function() getPDoneProfile,
+    required TResult Function() getOnboarding,
   }) {
     return getWalletTransactionList(walletType, request);
   }
@@ -352,6 +365,7 @@ class _$GetWalletTransactionListEventImpl
     TResult? Function(String id)? getWalletTransactionDetail,
     TResult? Function(FilterOption filter)? filterTransaction,
     TResult? Function()? getPDoneProfile,
+    TResult? Function()? getOnboarding,
   }) {
     return getWalletTransactionList?.call(walletType, request);
   }
@@ -365,6 +379,7 @@ class _$GetWalletTransactionListEventImpl
     TResult Function(String id)? getWalletTransactionDetail,
     TResult Function(FilterOption filter)? filterTransaction,
     TResult Function()? getPDoneProfile,
+    TResult Function()? getOnboarding,
     required TResult orElse(),
   }) {
     if (getWalletTransactionList != null) {
@@ -383,6 +398,7 @@ class _$GetWalletTransactionListEventImpl
         getWalletTransactionDetail,
     required TResult Function(_FilterTransactionEvent value) filterTransaction,
     required TResult Function(_GetPDoneProfileEvent value) getPDoneProfile,
+    required TResult Function(_GetOnboardingEvent value) getOnboarding,
   }) {
     return getWalletTransactionList(this);
   }
@@ -397,6 +413,7 @@ class _$GetWalletTransactionListEventImpl
         getWalletTransactionDetail,
     TResult? Function(_FilterTransactionEvent value)? filterTransaction,
     TResult? Function(_GetPDoneProfileEvent value)? getPDoneProfile,
+    TResult? Function(_GetOnboardingEvent value)? getOnboarding,
   }) {
     return getWalletTransactionList?.call(this);
   }
@@ -411,6 +428,7 @@ class _$GetWalletTransactionListEventImpl
         getWalletTransactionDetail,
     TResult Function(_FilterTransactionEvent value)? filterTransaction,
     TResult Function(_GetPDoneProfileEvent value)? getPDoneProfile,
+    TResult Function(_GetOnboardingEvent value)? getOnboarding,
     required TResult orElse(),
   }) {
     if (getWalletTransactionList != null) {
@@ -521,6 +539,7 @@ class _$GetWalletTransactionDetailEventImpl
     required TResult Function(String id) getWalletTransactionDetail,
     required TResult Function(FilterOption filter) filterTransaction,
     required TResult Function() getPDoneProfile,
+    required TResult Function() getOnboarding,
   }) {
     return getWalletTransactionDetail(id);
   }
@@ -535,6 +554,7 @@ class _$GetWalletTransactionDetailEventImpl
     TResult? Function(String id)? getWalletTransactionDetail,
     TResult? Function(FilterOption filter)? filterTransaction,
     TResult? Function()? getPDoneProfile,
+    TResult? Function()? getOnboarding,
   }) {
     return getWalletTransactionDetail?.call(id);
   }
@@ -548,6 +568,7 @@ class _$GetWalletTransactionDetailEventImpl
     TResult Function(String id)? getWalletTransactionDetail,
     TResult Function(FilterOption filter)? filterTransaction,
     TResult Function()? getPDoneProfile,
+    TResult Function()? getOnboarding,
     required TResult orElse(),
   }) {
     if (getWalletTransactionDetail != null) {
@@ -566,6 +587,7 @@ class _$GetWalletTransactionDetailEventImpl
         getWalletTransactionDetail,
     required TResult Function(_FilterTransactionEvent value) filterTransaction,
     required TResult Function(_GetPDoneProfileEvent value) getPDoneProfile,
+    required TResult Function(_GetOnboardingEvent value) getOnboarding,
   }) {
     return getWalletTransactionDetail(this);
   }
@@ -580,6 +602,7 @@ class _$GetWalletTransactionDetailEventImpl
         getWalletTransactionDetail,
     TResult? Function(_FilterTransactionEvent value)? filterTransaction,
     TResult? Function(_GetPDoneProfileEvent value)? getPDoneProfile,
+    TResult? Function(_GetOnboardingEvent value)? getOnboarding,
   }) {
     return getWalletTransactionDetail?.call(this);
   }
@@ -594,6 +617,7 @@ class _$GetWalletTransactionDetailEventImpl
         getWalletTransactionDetail,
     TResult Function(_FilterTransactionEvent value)? filterTransaction,
     TResult Function(_GetPDoneProfileEvent value)? getPDoneProfile,
+    TResult Function(_GetOnboardingEvent value)? getOnboarding,
     required TResult orElse(),
   }) {
     if (getWalletTransactionDetail != null) {
@@ -698,6 +722,7 @@ class _$FilterTransactionEventImpl
     required TResult Function(String id) getWalletTransactionDetail,
     required TResult Function(FilterOption filter) filterTransaction,
     required TResult Function() getPDoneProfile,
+    required TResult Function() getOnboarding,
   }) {
     return filterTransaction(filter);
   }
@@ -712,6 +737,7 @@ class _$FilterTransactionEventImpl
     TResult? Function(String id)? getWalletTransactionDetail,
     TResult? Function(FilterOption filter)? filterTransaction,
     TResult? Function()? getPDoneProfile,
+    TResult? Function()? getOnboarding,
   }) {
     return filterTransaction?.call(filter);
   }
@@ -725,6 +751,7 @@ class _$FilterTransactionEventImpl
     TResult Function(String id)? getWalletTransactionDetail,
     TResult Function(FilterOption filter)? filterTransaction,
     TResult Function()? getPDoneProfile,
+    TResult Function()? getOnboarding,
     required TResult orElse(),
   }) {
     if (filterTransaction != null) {
@@ -743,6 +770,7 @@ class _$FilterTransactionEventImpl
         getWalletTransactionDetail,
     required TResult Function(_FilterTransactionEvent value) filterTransaction,
     required TResult Function(_GetPDoneProfileEvent value) getPDoneProfile,
+    required TResult Function(_GetOnboardingEvent value) getOnboarding,
   }) {
     return filterTransaction(this);
   }
@@ -757,6 +785,7 @@ class _$FilterTransactionEventImpl
         getWalletTransactionDetail,
     TResult? Function(_FilterTransactionEvent value)? filterTransaction,
     TResult? Function(_GetPDoneProfileEvent value)? getPDoneProfile,
+    TResult? Function(_GetOnboardingEvent value)? getOnboarding,
   }) {
     return filterTransaction?.call(this);
   }
@@ -771,6 +800,7 @@ class _$FilterTransactionEventImpl
         getWalletTransactionDetail,
     TResult Function(_FilterTransactionEvent value)? filterTransaction,
     TResult Function(_GetPDoneProfileEvent value)? getPDoneProfile,
+    TResult Function(_GetOnboardingEvent value)? getOnboarding,
     required TResult orElse(),
   }) {
     if (filterTransaction != null) {
@@ -844,6 +874,7 @@ class _$GetPDoneProfileEventImpl
     required TResult Function(String id) getWalletTransactionDetail,
     required TResult Function(FilterOption filter) filterTransaction,
     required TResult Function() getPDoneProfile,
+    required TResult Function() getOnboarding,
   }) {
     return getPDoneProfile();
   }
@@ -858,6 +889,7 @@ class _$GetPDoneProfileEventImpl
     TResult? Function(String id)? getWalletTransactionDetail,
     TResult? Function(FilterOption filter)? filterTransaction,
     TResult? Function()? getPDoneProfile,
+    TResult? Function()? getOnboarding,
   }) {
     return getPDoneProfile?.call();
   }
@@ -871,6 +903,7 @@ class _$GetPDoneProfileEventImpl
     TResult Function(String id)? getWalletTransactionDetail,
     TResult Function(FilterOption filter)? filterTransaction,
     TResult Function()? getPDoneProfile,
+    TResult Function()? getOnboarding,
     required TResult orElse(),
   }) {
     if (getPDoneProfile != null) {
@@ -889,6 +922,7 @@ class _$GetPDoneProfileEventImpl
         getWalletTransactionDetail,
     required TResult Function(_FilterTransactionEvent value) filterTransaction,
     required TResult Function(_GetPDoneProfileEvent value) getPDoneProfile,
+    required TResult Function(_GetOnboardingEvent value) getOnboarding,
   }) {
     return getPDoneProfile(this);
   }
@@ -903,6 +937,7 @@ class _$GetPDoneProfileEventImpl
         getWalletTransactionDetail,
     TResult? Function(_FilterTransactionEvent value)? filterTransaction,
     TResult? Function(_GetPDoneProfileEvent value)? getPDoneProfile,
+    TResult? Function(_GetOnboardingEvent value)? getOnboarding,
   }) {
     return getPDoneProfile?.call(this);
   }
@@ -917,6 +952,7 @@ class _$GetPDoneProfileEventImpl
         getWalletTransactionDetail,
     TResult Function(_FilterTransactionEvent value)? filterTransaction,
     TResult Function(_GetPDoneProfileEvent value)? getPDoneProfile,
+    TResult Function(_GetOnboardingEvent value)? getOnboarding,
     required TResult orElse(),
   }) {
     if (getPDoneProfile != null) {
@@ -928,6 +964,151 @@ class _$GetPDoneProfileEventImpl
 
 abstract class _GetPDoneProfileEvent implements WalletEvent {
   const factory _GetPDoneProfileEvent() = _$GetPDoneProfileEventImpl;
+}
+
+/// @nodoc
+abstract class _$$GetOnboardingEventImplCopyWith<$Res> {
+  factory _$$GetOnboardingEventImplCopyWith(_$GetOnboardingEventImpl value,
+          $Res Function(_$GetOnboardingEventImpl) then) =
+      __$$GetOnboardingEventImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$GetOnboardingEventImplCopyWithImpl<$Res>
+    extends _$WalletEventCopyWithImpl<$Res, _$GetOnboardingEventImpl>
+    implements _$$GetOnboardingEventImplCopyWith<$Res> {
+  __$$GetOnboardingEventImplCopyWithImpl(_$GetOnboardingEventImpl _value,
+      $Res Function(_$GetOnboardingEventImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$GetOnboardingEventImpl
+    with DiagnosticableTreeMixin
+    implements _GetOnboardingEvent {
+  const _$GetOnboardingEventImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WalletEvent.getOnboarding()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'WalletEvent.getOnboarding'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$GetOnboardingEventImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getWalletInfo,
+    required TResult Function(
+            WalletType walletType, WalletTransactionsRequest? request)
+        getWalletTransactionList,
+    required TResult Function(String id) getWalletTransactionDetail,
+    required TResult Function(FilterOption filter) filterTransaction,
+    required TResult Function() getPDoneProfile,
+    required TResult Function() getOnboarding,
+  }) {
+    return getOnboarding();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? getWalletInfo,
+    TResult? Function(
+            WalletType walletType, WalletTransactionsRequest? request)?
+        getWalletTransactionList,
+    TResult? Function(String id)? getWalletTransactionDetail,
+    TResult? Function(FilterOption filter)? filterTransaction,
+    TResult? Function()? getPDoneProfile,
+    TResult? Function()? getOnboarding,
+  }) {
+    return getOnboarding?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getWalletInfo,
+    TResult Function(WalletType walletType, WalletTransactionsRequest? request)?
+        getWalletTransactionList,
+    TResult Function(String id)? getWalletTransactionDetail,
+    TResult Function(FilterOption filter)? filterTransaction,
+    TResult Function()? getPDoneProfile,
+    TResult Function()? getOnboarding,
+    required TResult orElse(),
+  }) {
+    if (getOnboarding != null) {
+      return getOnboarding();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_GetWalletInfoEvent value) getWalletInfo,
+    required TResult Function(_GetWalletTransactionListEvent value)
+        getWalletTransactionList,
+    required TResult Function(_GetWalletTransactionDetailEvent value)
+        getWalletTransactionDetail,
+    required TResult Function(_FilterTransactionEvent value) filterTransaction,
+    required TResult Function(_GetPDoneProfileEvent value) getPDoneProfile,
+    required TResult Function(_GetOnboardingEvent value) getOnboarding,
+  }) {
+    return getOnboarding(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_GetWalletInfoEvent value)? getWalletInfo,
+    TResult? Function(_GetWalletTransactionListEvent value)?
+        getWalletTransactionList,
+    TResult? Function(_GetWalletTransactionDetailEvent value)?
+        getWalletTransactionDetail,
+    TResult? Function(_FilterTransactionEvent value)? filterTransaction,
+    TResult? Function(_GetPDoneProfileEvent value)? getPDoneProfile,
+    TResult? Function(_GetOnboardingEvent value)? getOnboarding,
+  }) {
+    return getOnboarding?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_GetWalletInfoEvent value)? getWalletInfo,
+    TResult Function(_GetWalletTransactionListEvent value)?
+        getWalletTransactionList,
+    TResult Function(_GetWalletTransactionDetailEvent value)?
+        getWalletTransactionDetail,
+    TResult Function(_FilterTransactionEvent value)? filterTransaction,
+    TResult Function(_GetPDoneProfileEvent value)? getPDoneProfile,
+    TResult Function(_GetOnboardingEvent value)? getOnboarding,
+    required TResult orElse(),
+  }) {
+    if (getOnboarding != null) {
+      return getOnboarding(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetOnboardingEvent implements WalletEvent {
+  const factory _GetOnboardingEvent() = _$GetOnboardingEventImpl;
 }
 
 /// @nodoc
@@ -949,6 +1130,10 @@ mixin _$WalletState {
     required TResult Function() getPDoneProfileLoading,
     required TResult Function(PDoneProfile pDoneProfile) getPDoneProfileSuccess,
     required TResult Function(String err) getPDoneProfileFailed,
+    required TResult Function() getOnboardingLoading,
+    required TResult Function(OnboardingResponse onboarding)
+        getOnboardingSuccess,
+    required TResult Function(String err) getOnboardingFail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -968,6 +1153,9 @@ mixin _$WalletState {
     TResult? Function()? getPDoneProfileLoading,
     TResult? Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult? Function(String err)? getPDoneProfileFailed,
+    TResult? Function()? getOnboardingLoading,
+    TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult? Function(String err)? getOnboardingFail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -987,6 +1175,9 @@ mixin _$WalletState {
     TResult Function()? getPDoneProfileLoading,
     TResult Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult Function(String err)? getPDoneProfileFailed,
+    TResult Function()? getOnboardingLoading,
+    TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult Function(String err)? getOnboardingFail,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1014,6 +1205,9 @@ mixin _$WalletState {
         getPDoneProfileSuccess,
     required TResult Function(_GetPDoneProfileFailed value)
         getPDoneProfileFailed,
+    required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
+    required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
+    required TResult Function(_GetOnboardingFail value) getOnboardingFail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1037,6 +1231,9 @@ mixin _$WalletState {
     TResult? Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult? Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult? Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1060,6 +1257,9 @@ mixin _$WalletState {
     TResult Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult Function(_GetOnboardingFail value)? getOnboardingFail,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1142,6 +1342,10 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     required TResult Function() getPDoneProfileLoading,
     required TResult Function(PDoneProfile pDoneProfile) getPDoneProfileSuccess,
     required TResult Function(String err) getPDoneProfileFailed,
+    required TResult Function() getOnboardingLoading,
+    required TResult Function(OnboardingResponse onboarding)
+        getOnboardingSuccess,
+    required TResult Function(String err) getOnboardingFail,
   }) {
     return initial();
   }
@@ -1164,6 +1368,9 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult? Function()? getPDoneProfileLoading,
     TResult? Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult? Function(String err)? getPDoneProfileFailed,
+    TResult? Function()? getOnboardingLoading,
+    TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult? Function(String err)? getOnboardingFail,
   }) {
     return initial?.call();
   }
@@ -1186,6 +1393,9 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult Function()? getPDoneProfileLoading,
     TResult Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult Function(String err)? getPDoneProfileFailed,
+    TResult Function()? getOnboardingLoading,
+    TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult Function(String err)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -1219,6 +1429,9 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
         getPDoneProfileSuccess,
     required TResult Function(_GetPDoneProfileFailed value)
         getPDoneProfileFailed,
+    required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
+    required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
+    required TResult Function(_GetOnboardingFail value) getOnboardingFail,
   }) {
     return initial(this);
   }
@@ -1245,6 +1458,9 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult? Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult? Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult? Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
   }) {
     return initial?.call(this);
   }
@@ -1271,6 +1487,9 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult Function(_GetOnboardingFail value)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -1371,6 +1590,10 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     required TResult Function() getPDoneProfileLoading,
     required TResult Function(PDoneProfile pDoneProfile) getPDoneProfileSuccess,
     required TResult Function(String err) getPDoneProfileFailed,
+    required TResult Function() getOnboardingLoading,
+    required TResult Function(OnboardingResponse onboarding)
+        getOnboardingSuccess,
+    required TResult Function(String err) getOnboardingFail,
   }) {
     return error(err);
   }
@@ -1393,6 +1616,9 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     TResult? Function()? getPDoneProfileLoading,
     TResult? Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult? Function(String err)? getPDoneProfileFailed,
+    TResult? Function()? getOnboardingLoading,
+    TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult? Function(String err)? getOnboardingFail,
   }) {
     return error?.call(err);
   }
@@ -1415,6 +1641,9 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     TResult Function()? getPDoneProfileLoading,
     TResult Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult Function(String err)? getPDoneProfileFailed,
+    TResult Function()? getOnboardingLoading,
+    TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult Function(String err)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1448,6 +1677,9 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
         getPDoneProfileSuccess,
     required TResult Function(_GetPDoneProfileFailed value)
         getPDoneProfileFailed,
+    required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
+    required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
+    required TResult Function(_GetOnboardingFail value) getOnboardingFail,
   }) {
     return error(this);
   }
@@ -1474,6 +1706,9 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     TResult? Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult? Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult? Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
   }) {
     return error?.call(this);
   }
@@ -1500,6 +1735,9 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     TResult Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult Function(_GetOnboardingFail value)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1609,6 +1847,10 @@ class _$GetWalletInfoSuccessImpl
     required TResult Function() getPDoneProfileLoading,
     required TResult Function(PDoneProfile pDoneProfile) getPDoneProfileSuccess,
     required TResult Function(String err) getPDoneProfileFailed,
+    required TResult Function() getOnboardingLoading,
+    required TResult Function(OnboardingResponse onboarding)
+        getOnboardingSuccess,
+    required TResult Function(String err) getOnboardingFail,
   }) {
     return getWalletInfoSuccess(wallet);
   }
@@ -1631,6 +1873,9 @@ class _$GetWalletInfoSuccessImpl
     TResult? Function()? getPDoneProfileLoading,
     TResult? Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult? Function(String err)? getPDoneProfileFailed,
+    TResult? Function()? getOnboardingLoading,
+    TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult? Function(String err)? getOnboardingFail,
   }) {
     return getWalletInfoSuccess?.call(wallet);
   }
@@ -1653,6 +1898,9 @@ class _$GetWalletInfoSuccessImpl
     TResult Function()? getPDoneProfileLoading,
     TResult Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult Function(String err)? getPDoneProfileFailed,
+    TResult Function()? getOnboardingLoading,
+    TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult Function(String err)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getWalletInfoSuccess != null) {
@@ -1686,6 +1934,9 @@ class _$GetWalletInfoSuccessImpl
         getPDoneProfileSuccess,
     required TResult Function(_GetPDoneProfileFailed value)
         getPDoneProfileFailed,
+    required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
+    required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
+    required TResult Function(_GetOnboardingFail value) getOnboardingFail,
   }) {
     return getWalletInfoSuccess(this);
   }
@@ -1712,6 +1963,9 @@ class _$GetWalletInfoSuccessImpl
     TResult? Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult? Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult? Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
   }) {
     return getWalletInfoSuccess?.call(this);
   }
@@ -1738,6 +1992,9 @@ class _$GetWalletInfoSuccessImpl
     TResult Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult Function(_GetOnboardingFail value)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getWalletInfoSuccess != null) {
@@ -1820,6 +2077,10 @@ class _$GetWalletInfoLoadingImpl
     required TResult Function() getPDoneProfileLoading,
     required TResult Function(PDoneProfile pDoneProfile) getPDoneProfileSuccess,
     required TResult Function(String err) getPDoneProfileFailed,
+    required TResult Function() getOnboardingLoading,
+    required TResult Function(OnboardingResponse onboarding)
+        getOnboardingSuccess,
+    required TResult Function(String err) getOnboardingFail,
   }) {
     return getWalletInfoLoading();
   }
@@ -1842,6 +2103,9 @@ class _$GetWalletInfoLoadingImpl
     TResult? Function()? getPDoneProfileLoading,
     TResult? Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult? Function(String err)? getPDoneProfileFailed,
+    TResult? Function()? getOnboardingLoading,
+    TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult? Function(String err)? getOnboardingFail,
   }) {
     return getWalletInfoLoading?.call();
   }
@@ -1864,6 +2128,9 @@ class _$GetWalletInfoLoadingImpl
     TResult Function()? getPDoneProfileLoading,
     TResult Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult Function(String err)? getPDoneProfileFailed,
+    TResult Function()? getOnboardingLoading,
+    TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult Function(String err)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getWalletInfoLoading != null) {
@@ -1897,6 +2164,9 @@ class _$GetWalletInfoLoadingImpl
         getPDoneProfileSuccess,
     required TResult Function(_GetPDoneProfileFailed value)
         getPDoneProfileFailed,
+    required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
+    required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
+    required TResult Function(_GetOnboardingFail value) getOnboardingFail,
   }) {
     return getWalletInfoLoading(this);
   }
@@ -1923,6 +2193,9 @@ class _$GetWalletInfoLoadingImpl
     TResult? Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult? Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult? Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
   }) {
     return getWalletInfoLoading?.call(this);
   }
@@ -1949,6 +2222,9 @@ class _$GetWalletInfoLoadingImpl
     TResult Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult Function(_GetOnboardingFail value)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getWalletInfoLoading != null) {
@@ -2057,6 +2333,10 @@ class _$GetWalletTransactionListFailedImpl
     required TResult Function() getPDoneProfileLoading,
     required TResult Function(PDoneProfile pDoneProfile) getPDoneProfileSuccess,
     required TResult Function(String err) getPDoneProfileFailed,
+    required TResult Function() getOnboardingLoading,
+    required TResult Function(OnboardingResponse onboarding)
+        getOnboardingSuccess,
+    required TResult Function(String err) getOnboardingFail,
   }) {
     return getWalletTransactionListFailed(err);
   }
@@ -2079,6 +2359,9 @@ class _$GetWalletTransactionListFailedImpl
     TResult? Function()? getPDoneProfileLoading,
     TResult? Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult? Function(String err)? getPDoneProfileFailed,
+    TResult? Function()? getOnboardingLoading,
+    TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult? Function(String err)? getOnboardingFail,
   }) {
     return getWalletTransactionListFailed?.call(err);
   }
@@ -2101,6 +2384,9 @@ class _$GetWalletTransactionListFailedImpl
     TResult Function()? getPDoneProfileLoading,
     TResult Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult Function(String err)? getPDoneProfileFailed,
+    TResult Function()? getOnboardingLoading,
+    TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult Function(String err)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getWalletTransactionListFailed != null) {
@@ -2134,6 +2420,9 @@ class _$GetWalletTransactionListFailedImpl
         getPDoneProfileSuccess,
     required TResult Function(_GetPDoneProfileFailed value)
         getPDoneProfileFailed,
+    required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
+    required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
+    required TResult Function(_GetOnboardingFail value) getOnboardingFail,
   }) {
     return getWalletTransactionListFailed(this);
   }
@@ -2160,6 +2449,9 @@ class _$GetWalletTransactionListFailedImpl
     TResult? Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult? Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult? Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
   }) {
     return getWalletTransactionListFailed?.call(this);
   }
@@ -2186,6 +2478,9 @@ class _$GetWalletTransactionListFailedImpl
     TResult Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult Function(_GetOnboardingFail value)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getWalletTransactionListFailed != null) {
@@ -2310,6 +2605,10 @@ class _$GetWalletTransactionListSuccessImpl
     required TResult Function() getPDoneProfileLoading,
     required TResult Function(PDoneProfile pDoneProfile) getPDoneProfileSuccess,
     required TResult Function(String err) getPDoneProfileFailed,
+    required TResult Function() getOnboardingLoading,
+    required TResult Function(OnboardingResponse onboarding)
+        getOnboardingSuccess,
+    required TResult Function(String err) getOnboardingFail,
   }) {
     return getWalletTransactionListSuccess(transactions);
   }
@@ -2332,6 +2631,9 @@ class _$GetWalletTransactionListSuccessImpl
     TResult? Function()? getPDoneProfileLoading,
     TResult? Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult? Function(String err)? getPDoneProfileFailed,
+    TResult? Function()? getOnboardingLoading,
+    TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult? Function(String err)? getOnboardingFail,
   }) {
     return getWalletTransactionListSuccess?.call(transactions);
   }
@@ -2354,6 +2656,9 @@ class _$GetWalletTransactionListSuccessImpl
     TResult Function()? getPDoneProfileLoading,
     TResult Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult Function(String err)? getPDoneProfileFailed,
+    TResult Function()? getOnboardingLoading,
+    TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult Function(String err)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getWalletTransactionListSuccess != null) {
@@ -2387,6 +2692,9 @@ class _$GetWalletTransactionListSuccessImpl
         getPDoneProfileSuccess,
     required TResult Function(_GetPDoneProfileFailed value)
         getPDoneProfileFailed,
+    required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
+    required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
+    required TResult Function(_GetOnboardingFail value) getOnboardingFail,
   }) {
     return getWalletTransactionListSuccess(this);
   }
@@ -2413,6 +2721,9 @@ class _$GetWalletTransactionListSuccessImpl
     TResult? Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult? Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult? Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
   }) {
     return getWalletTransactionListSuccess?.call(this);
   }
@@ -2439,6 +2750,9 @@ class _$GetWalletTransactionListSuccessImpl
     TResult Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult Function(_GetOnboardingFail value)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getWalletTransactionListSuccess != null) {
@@ -2526,6 +2840,10 @@ class _$GetWalletTransactionListLoadingImpl
     required TResult Function() getPDoneProfileLoading,
     required TResult Function(PDoneProfile pDoneProfile) getPDoneProfileSuccess,
     required TResult Function(String err) getPDoneProfileFailed,
+    required TResult Function() getOnboardingLoading,
+    required TResult Function(OnboardingResponse onboarding)
+        getOnboardingSuccess,
+    required TResult Function(String err) getOnboardingFail,
   }) {
     return getWalletTransactionListLoading();
   }
@@ -2548,6 +2866,9 @@ class _$GetWalletTransactionListLoadingImpl
     TResult? Function()? getPDoneProfileLoading,
     TResult? Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult? Function(String err)? getPDoneProfileFailed,
+    TResult? Function()? getOnboardingLoading,
+    TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult? Function(String err)? getOnboardingFail,
   }) {
     return getWalletTransactionListLoading?.call();
   }
@@ -2570,6 +2891,9 @@ class _$GetWalletTransactionListLoadingImpl
     TResult Function()? getPDoneProfileLoading,
     TResult Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult Function(String err)? getPDoneProfileFailed,
+    TResult Function()? getOnboardingLoading,
+    TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult Function(String err)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getWalletTransactionListLoading != null) {
@@ -2603,6 +2927,9 @@ class _$GetWalletTransactionListLoadingImpl
         getPDoneProfileSuccess,
     required TResult Function(_GetPDoneProfileFailed value)
         getPDoneProfileFailed,
+    required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
+    required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
+    required TResult Function(_GetOnboardingFail value) getOnboardingFail,
   }) {
     return getWalletTransactionListLoading(this);
   }
@@ -2629,6 +2956,9 @@ class _$GetWalletTransactionListLoadingImpl
     TResult? Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult? Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult? Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
   }) {
     return getWalletTransactionListLoading?.call(this);
   }
@@ -2655,6 +2985,9 @@ class _$GetWalletTransactionListLoadingImpl
     TResult Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult Function(_GetOnboardingFail value)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getWalletTransactionListLoading != null) {
@@ -2765,6 +3098,10 @@ class _$GetWalletTransactionDetailSuccessImpl
     required TResult Function() getPDoneProfileLoading,
     required TResult Function(PDoneProfile pDoneProfile) getPDoneProfileSuccess,
     required TResult Function(String err) getPDoneProfileFailed,
+    required TResult Function() getOnboardingLoading,
+    required TResult Function(OnboardingResponse onboarding)
+        getOnboardingSuccess,
+    required TResult Function(String err) getOnboardingFail,
   }) {
     return getWalletTransactionDetailSuccess(transaction);
   }
@@ -2787,6 +3124,9 @@ class _$GetWalletTransactionDetailSuccessImpl
     TResult? Function()? getPDoneProfileLoading,
     TResult? Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult? Function(String err)? getPDoneProfileFailed,
+    TResult? Function()? getOnboardingLoading,
+    TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult? Function(String err)? getOnboardingFail,
   }) {
     return getWalletTransactionDetailSuccess?.call(transaction);
   }
@@ -2809,6 +3149,9 @@ class _$GetWalletTransactionDetailSuccessImpl
     TResult Function()? getPDoneProfileLoading,
     TResult Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult Function(String err)? getPDoneProfileFailed,
+    TResult Function()? getOnboardingLoading,
+    TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult Function(String err)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getWalletTransactionDetailSuccess != null) {
@@ -2842,6 +3185,9 @@ class _$GetWalletTransactionDetailSuccessImpl
         getPDoneProfileSuccess,
     required TResult Function(_GetPDoneProfileFailed value)
         getPDoneProfileFailed,
+    required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
+    required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
+    required TResult Function(_GetOnboardingFail value) getOnboardingFail,
   }) {
     return getWalletTransactionDetailSuccess(this);
   }
@@ -2868,6 +3214,9 @@ class _$GetWalletTransactionDetailSuccessImpl
     TResult? Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult? Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult? Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
   }) {
     return getWalletTransactionDetailSuccess?.call(this);
   }
@@ -2894,6 +3243,9 @@ class _$GetWalletTransactionDetailSuccessImpl
     TResult Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult Function(_GetOnboardingFail value)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getWalletTransactionDetailSuccess != null) {
@@ -2981,6 +3333,10 @@ class _$GetWalletTransactionDetailLoadingImpl
     required TResult Function() getPDoneProfileLoading,
     required TResult Function(PDoneProfile pDoneProfile) getPDoneProfileSuccess,
     required TResult Function(String err) getPDoneProfileFailed,
+    required TResult Function() getOnboardingLoading,
+    required TResult Function(OnboardingResponse onboarding)
+        getOnboardingSuccess,
+    required TResult Function(String err) getOnboardingFail,
   }) {
     return getWalletTransactionDetailLoading();
   }
@@ -3003,6 +3359,9 @@ class _$GetWalletTransactionDetailLoadingImpl
     TResult? Function()? getPDoneProfileLoading,
     TResult? Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult? Function(String err)? getPDoneProfileFailed,
+    TResult? Function()? getOnboardingLoading,
+    TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult? Function(String err)? getOnboardingFail,
   }) {
     return getWalletTransactionDetailLoading?.call();
   }
@@ -3025,6 +3384,9 @@ class _$GetWalletTransactionDetailLoadingImpl
     TResult Function()? getPDoneProfileLoading,
     TResult Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult Function(String err)? getPDoneProfileFailed,
+    TResult Function()? getOnboardingLoading,
+    TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult Function(String err)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getWalletTransactionDetailLoading != null) {
@@ -3058,6 +3420,9 @@ class _$GetWalletTransactionDetailLoadingImpl
         getPDoneProfileSuccess,
     required TResult Function(_GetPDoneProfileFailed value)
         getPDoneProfileFailed,
+    required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
+    required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
+    required TResult Function(_GetOnboardingFail value) getOnboardingFail,
   }) {
     return getWalletTransactionDetailLoading(this);
   }
@@ -3084,6 +3449,9 @@ class _$GetWalletTransactionDetailLoadingImpl
     TResult? Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult? Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult? Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
   }) {
     return getWalletTransactionDetailLoading?.call(this);
   }
@@ -3110,6 +3478,9 @@ class _$GetWalletTransactionDetailLoadingImpl
     TResult Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult Function(_GetOnboardingFail value)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getWalletTransactionDetailLoading != null) {
@@ -3219,6 +3590,10 @@ class _$GetWalletTransactionDetailFailedImpl
     required TResult Function() getPDoneProfileLoading,
     required TResult Function(PDoneProfile pDoneProfile) getPDoneProfileSuccess,
     required TResult Function(String err) getPDoneProfileFailed,
+    required TResult Function() getOnboardingLoading,
+    required TResult Function(OnboardingResponse onboarding)
+        getOnboardingSuccess,
+    required TResult Function(String err) getOnboardingFail,
   }) {
     return getWalletTransactionDetailFailed(err);
   }
@@ -3241,6 +3616,9 @@ class _$GetWalletTransactionDetailFailedImpl
     TResult? Function()? getPDoneProfileLoading,
     TResult? Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult? Function(String err)? getPDoneProfileFailed,
+    TResult? Function()? getOnboardingLoading,
+    TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult? Function(String err)? getOnboardingFail,
   }) {
     return getWalletTransactionDetailFailed?.call(err);
   }
@@ -3263,6 +3641,9 @@ class _$GetWalletTransactionDetailFailedImpl
     TResult Function()? getPDoneProfileLoading,
     TResult Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult Function(String err)? getPDoneProfileFailed,
+    TResult Function()? getOnboardingLoading,
+    TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult Function(String err)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getWalletTransactionDetailFailed != null) {
@@ -3296,6 +3677,9 @@ class _$GetWalletTransactionDetailFailedImpl
         getPDoneProfileSuccess,
     required TResult Function(_GetPDoneProfileFailed value)
         getPDoneProfileFailed,
+    required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
+    required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
+    required TResult Function(_GetOnboardingFail value) getOnboardingFail,
   }) {
     return getWalletTransactionDetailFailed(this);
   }
@@ -3322,6 +3706,9 @@ class _$GetWalletTransactionDetailFailedImpl
     TResult? Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult? Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult? Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
   }) {
     return getWalletTransactionDetailFailed?.call(this);
   }
@@ -3348,6 +3735,9 @@ class _$GetWalletTransactionDetailFailedImpl
     TResult Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult Function(_GetOnboardingFail value)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getWalletTransactionDetailFailed != null) {
@@ -3433,6 +3823,10 @@ class _$GetPDoneProfileLoadingImpl
     required TResult Function() getPDoneProfileLoading,
     required TResult Function(PDoneProfile pDoneProfile) getPDoneProfileSuccess,
     required TResult Function(String err) getPDoneProfileFailed,
+    required TResult Function() getOnboardingLoading,
+    required TResult Function(OnboardingResponse onboarding)
+        getOnboardingSuccess,
+    required TResult Function(String err) getOnboardingFail,
   }) {
     return getPDoneProfileLoading();
   }
@@ -3455,6 +3849,9 @@ class _$GetPDoneProfileLoadingImpl
     TResult? Function()? getPDoneProfileLoading,
     TResult? Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult? Function(String err)? getPDoneProfileFailed,
+    TResult? Function()? getOnboardingLoading,
+    TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult? Function(String err)? getOnboardingFail,
   }) {
     return getPDoneProfileLoading?.call();
   }
@@ -3477,6 +3874,9 @@ class _$GetPDoneProfileLoadingImpl
     TResult Function()? getPDoneProfileLoading,
     TResult Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult Function(String err)? getPDoneProfileFailed,
+    TResult Function()? getOnboardingLoading,
+    TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult Function(String err)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getPDoneProfileLoading != null) {
@@ -3510,6 +3910,9 @@ class _$GetPDoneProfileLoadingImpl
         getPDoneProfileSuccess,
     required TResult Function(_GetPDoneProfileFailed value)
         getPDoneProfileFailed,
+    required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
+    required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
+    required TResult Function(_GetOnboardingFail value) getOnboardingFail,
   }) {
     return getPDoneProfileLoading(this);
   }
@@ -3536,6 +3939,9 @@ class _$GetPDoneProfileLoadingImpl
     TResult? Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult? Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult? Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
   }) {
     return getPDoneProfileLoading?.call(this);
   }
@@ -3562,6 +3968,9 @@ class _$GetPDoneProfileLoadingImpl
     TResult Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult Function(_GetOnboardingFail value)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getPDoneProfileLoading != null) {
@@ -3678,6 +4087,10 @@ class _$GetPDoneProfileSuccessImpl
     required TResult Function() getPDoneProfileLoading,
     required TResult Function(PDoneProfile pDoneProfile) getPDoneProfileSuccess,
     required TResult Function(String err) getPDoneProfileFailed,
+    required TResult Function() getOnboardingLoading,
+    required TResult Function(OnboardingResponse onboarding)
+        getOnboardingSuccess,
+    required TResult Function(String err) getOnboardingFail,
   }) {
     return getPDoneProfileSuccess(pDoneProfile);
   }
@@ -3700,6 +4113,9 @@ class _$GetPDoneProfileSuccessImpl
     TResult? Function()? getPDoneProfileLoading,
     TResult? Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult? Function(String err)? getPDoneProfileFailed,
+    TResult? Function()? getOnboardingLoading,
+    TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult? Function(String err)? getOnboardingFail,
   }) {
     return getPDoneProfileSuccess?.call(pDoneProfile);
   }
@@ -3722,6 +4138,9 @@ class _$GetPDoneProfileSuccessImpl
     TResult Function()? getPDoneProfileLoading,
     TResult Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult Function(String err)? getPDoneProfileFailed,
+    TResult Function()? getOnboardingLoading,
+    TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult Function(String err)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getPDoneProfileSuccess != null) {
@@ -3755,6 +4174,9 @@ class _$GetPDoneProfileSuccessImpl
         getPDoneProfileSuccess,
     required TResult Function(_GetPDoneProfileFailed value)
         getPDoneProfileFailed,
+    required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
+    required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
+    required TResult Function(_GetOnboardingFail value) getOnboardingFail,
   }) {
     return getPDoneProfileSuccess(this);
   }
@@ -3781,6 +4203,9 @@ class _$GetPDoneProfileSuccessImpl
     TResult? Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult? Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult? Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
   }) {
     return getPDoneProfileSuccess?.call(this);
   }
@@ -3807,6 +4232,9 @@ class _$GetPDoneProfileSuccessImpl
     TResult Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult Function(_GetOnboardingFail value)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getPDoneProfileSuccess != null) {
@@ -3917,6 +4345,10 @@ class _$GetPDoneProfileFailedImpl
     required TResult Function() getPDoneProfileLoading,
     required TResult Function(PDoneProfile pDoneProfile) getPDoneProfileSuccess,
     required TResult Function(String err) getPDoneProfileFailed,
+    required TResult Function() getOnboardingLoading,
+    required TResult Function(OnboardingResponse onboarding)
+        getOnboardingSuccess,
+    required TResult Function(String err) getOnboardingFail,
   }) {
     return getPDoneProfileFailed(err);
   }
@@ -3939,6 +4371,9 @@ class _$GetPDoneProfileFailedImpl
     TResult? Function()? getPDoneProfileLoading,
     TResult? Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult? Function(String err)? getPDoneProfileFailed,
+    TResult? Function()? getOnboardingLoading,
+    TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult? Function(String err)? getOnboardingFail,
   }) {
     return getPDoneProfileFailed?.call(err);
   }
@@ -3961,6 +4396,9 @@ class _$GetPDoneProfileFailedImpl
     TResult Function()? getPDoneProfileLoading,
     TResult Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
     TResult Function(String err)? getPDoneProfileFailed,
+    TResult Function()? getOnboardingLoading,
+    TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult Function(String err)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getPDoneProfileFailed != null) {
@@ -3994,6 +4432,9 @@ class _$GetPDoneProfileFailedImpl
         getPDoneProfileSuccess,
     required TResult Function(_GetPDoneProfileFailed value)
         getPDoneProfileFailed,
+    required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
+    required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
+    required TResult Function(_GetOnboardingFail value) getOnboardingFail,
   }) {
     return getPDoneProfileFailed(this);
   }
@@ -4020,6 +4461,9 @@ class _$GetPDoneProfileFailedImpl
     TResult? Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult? Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult? Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
   }) {
     return getPDoneProfileFailed?.call(this);
   }
@@ -4046,6 +4490,9 @@ class _$GetPDoneProfileFailedImpl
     TResult Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
     TResult Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
     TResult Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult Function(_GetOnboardingFail value)? getOnboardingFail,
     required TResult orElse(),
   }) {
     if (getPDoneProfileFailed != null) {
@@ -4063,4 +4510,743 @@ abstract class _GetPDoneProfileFailed implements WalletState {
   @JsonKey(ignore: true)
   _$$GetPDoneProfileFailedImplCopyWith<_$GetPDoneProfileFailedImpl>
       get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$GetOnboardingLoadingImplCopyWith<$Res> {
+  factory _$$GetOnboardingLoadingImplCopyWith(_$GetOnboardingLoadingImpl value,
+          $Res Function(_$GetOnboardingLoadingImpl) then) =
+      __$$GetOnboardingLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$GetOnboardingLoadingImplCopyWithImpl<$Res>
+    extends _$WalletStateCopyWithImpl<$Res, _$GetOnboardingLoadingImpl>
+    implements _$$GetOnboardingLoadingImplCopyWith<$Res> {
+  __$$GetOnboardingLoadingImplCopyWithImpl(_$GetOnboardingLoadingImpl _value,
+      $Res Function(_$GetOnboardingLoadingImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$GetOnboardingLoadingImpl
+    with DiagnosticableTreeMixin
+    implements _GetOnboardingLoading {
+  const _$GetOnboardingLoadingImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WalletState.getOnboardingLoading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('type', 'WalletState.getOnboardingLoading'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetOnboardingLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String err) error,
+    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
+    required TResult Function(String err) getWalletTransactionListFailed,
+    required TResult Function(List<TransactionItem> transactions)
+        getWalletTransactionListSuccess,
+    required TResult Function() getWalletTransactionListLoading,
+    required TResult Function(TransactionItem transaction)
+        getWalletTransactionDetailSuccess,
+    required TResult Function() getWalletTransactionDetailLoading,
+    required TResult Function(String err) getWalletTransactionDetailFailed,
+    required TResult Function() getPDoneProfileLoading,
+    required TResult Function(PDoneProfile pDoneProfile) getPDoneProfileSuccess,
+    required TResult Function(String err) getPDoneProfileFailed,
+    required TResult Function() getOnboardingLoading,
+    required TResult Function(OnboardingResponse onboarding)
+        getOnboardingSuccess,
+    required TResult Function(String err) getOnboardingFail,
+  }) {
+    return getOnboardingLoading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String err)? error,
+    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
+    TResult? Function(String err)? getWalletTransactionListFailed,
+    TResult? Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult? Function()? getWalletTransactionListLoading,
+    TResult? Function(TransactionItem transaction)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function()? getWalletTransactionDetailLoading,
+    TResult? Function(String err)? getWalletTransactionDetailFailed,
+    TResult? Function()? getPDoneProfileLoading,
+    TResult? Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
+    TResult? Function(String err)? getPDoneProfileFailed,
+    TResult? Function()? getOnboardingLoading,
+    TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult? Function(String err)? getOnboardingFail,
+  }) {
+    return getOnboardingLoading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String err)? error,
+    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
+    TResult Function(String err)? getWalletTransactionListFailed,
+    TResult Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult Function()? getWalletTransactionListLoading,
+    TResult Function(TransactionItem transaction)?
+        getWalletTransactionDetailSuccess,
+    TResult Function()? getWalletTransactionDetailLoading,
+    TResult Function(String err)? getWalletTransactionDetailFailed,
+    TResult Function()? getPDoneProfileLoading,
+    TResult Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
+    TResult Function(String err)? getPDoneProfileFailed,
+    TResult Function()? getOnboardingLoading,
+    TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult Function(String err)? getOnboardingFail,
+    required TResult orElse(),
+  }) {
+    if (getOnboardingLoading != null) {
+      return getOnboardingLoading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
+    required TResult Function(_GetWalletTransactionListFailed value)
+        getWalletTransactionListFailed,
+    required TResult Function(_GetWalletTransactionListSuccess value)
+        getWalletTransactionListSuccess,
+    required TResult Function(_GetWalletTransactionListLoading value)
+        getWalletTransactionListLoading,
+    required TResult Function(_GetWalletTransactionDetailSuccess value)
+        getWalletTransactionDetailSuccess,
+    required TResult Function(_GetWalletTransactionDetailLoading value)
+        getWalletTransactionDetailLoading,
+    required TResult Function(_GetWalletTransactionDetailFailed value)
+        getWalletTransactionDetailFailed,
+    required TResult Function(_GetPDoneProfileLoading value)
+        getPDoneProfileLoading,
+    required TResult Function(_GetPDoneProfileSuccess value)
+        getPDoneProfileSuccess,
+    required TResult Function(_GetPDoneProfileFailed value)
+        getPDoneProfileFailed,
+    required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
+    required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
+    required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+  }) {
+    return getOnboardingLoading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult? Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult? Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult? Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult? Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult? Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+    TResult? Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
+    TResult? Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
+    TResult? Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+  }) {
+    return getOnboardingLoading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+    TResult Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
+    TResult Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
+    TResult Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    required TResult orElse(),
+  }) {
+    if (getOnboardingLoading != null) {
+      return getOnboardingLoading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetOnboardingLoading implements WalletState {
+  const factory _GetOnboardingLoading() = _$GetOnboardingLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$GetOnboardingSuccessImplCopyWith<$Res> {
+  factory _$$GetOnboardingSuccessImplCopyWith(_$GetOnboardingSuccessImpl value,
+          $Res Function(_$GetOnboardingSuccessImpl) then) =
+      __$$GetOnboardingSuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({OnboardingResponse onboarding});
+}
+
+/// @nodoc
+class __$$GetOnboardingSuccessImplCopyWithImpl<$Res>
+    extends _$WalletStateCopyWithImpl<$Res, _$GetOnboardingSuccessImpl>
+    implements _$$GetOnboardingSuccessImplCopyWith<$Res> {
+  __$$GetOnboardingSuccessImplCopyWithImpl(_$GetOnboardingSuccessImpl _value,
+      $Res Function(_$GetOnboardingSuccessImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? onboarding = null,
+  }) {
+    return _then(_$GetOnboardingSuccessImpl(
+      null == onboarding
+          ? _value.onboarding
+          : onboarding // ignore: cast_nullable_to_non_nullable
+              as OnboardingResponse,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$GetOnboardingSuccessImpl
+    with DiagnosticableTreeMixin
+    implements _GetOnboardingSuccess {
+  const _$GetOnboardingSuccessImpl(this.onboarding);
+
+  @override
+  final OnboardingResponse onboarding;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WalletState.getOnboardingSuccess(onboarding: $onboarding)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'WalletState.getOnboardingSuccess'))
+      ..add(DiagnosticsProperty('onboarding', onboarding));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetOnboardingSuccessImpl &&
+            (identical(other.onboarding, onboarding) ||
+                other.onboarding == onboarding));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, onboarding);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetOnboardingSuccessImplCopyWith<_$GetOnboardingSuccessImpl>
+      get copyWith =>
+          __$$GetOnboardingSuccessImplCopyWithImpl<_$GetOnboardingSuccessImpl>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String err) error,
+    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
+    required TResult Function(String err) getWalletTransactionListFailed,
+    required TResult Function(List<TransactionItem> transactions)
+        getWalletTransactionListSuccess,
+    required TResult Function() getWalletTransactionListLoading,
+    required TResult Function(TransactionItem transaction)
+        getWalletTransactionDetailSuccess,
+    required TResult Function() getWalletTransactionDetailLoading,
+    required TResult Function(String err) getWalletTransactionDetailFailed,
+    required TResult Function() getPDoneProfileLoading,
+    required TResult Function(PDoneProfile pDoneProfile) getPDoneProfileSuccess,
+    required TResult Function(String err) getPDoneProfileFailed,
+    required TResult Function() getOnboardingLoading,
+    required TResult Function(OnboardingResponse onboarding)
+        getOnboardingSuccess,
+    required TResult Function(String err) getOnboardingFail,
+  }) {
+    return getOnboardingSuccess(onboarding);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String err)? error,
+    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
+    TResult? Function(String err)? getWalletTransactionListFailed,
+    TResult? Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult? Function()? getWalletTransactionListLoading,
+    TResult? Function(TransactionItem transaction)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function()? getWalletTransactionDetailLoading,
+    TResult? Function(String err)? getWalletTransactionDetailFailed,
+    TResult? Function()? getPDoneProfileLoading,
+    TResult? Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
+    TResult? Function(String err)? getPDoneProfileFailed,
+    TResult? Function()? getOnboardingLoading,
+    TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult? Function(String err)? getOnboardingFail,
+  }) {
+    return getOnboardingSuccess?.call(onboarding);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String err)? error,
+    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
+    TResult Function(String err)? getWalletTransactionListFailed,
+    TResult Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult Function()? getWalletTransactionListLoading,
+    TResult Function(TransactionItem transaction)?
+        getWalletTransactionDetailSuccess,
+    TResult Function()? getWalletTransactionDetailLoading,
+    TResult Function(String err)? getWalletTransactionDetailFailed,
+    TResult Function()? getPDoneProfileLoading,
+    TResult Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
+    TResult Function(String err)? getPDoneProfileFailed,
+    TResult Function()? getOnboardingLoading,
+    TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult Function(String err)? getOnboardingFail,
+    required TResult orElse(),
+  }) {
+    if (getOnboardingSuccess != null) {
+      return getOnboardingSuccess(onboarding);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
+    required TResult Function(_GetWalletTransactionListFailed value)
+        getWalletTransactionListFailed,
+    required TResult Function(_GetWalletTransactionListSuccess value)
+        getWalletTransactionListSuccess,
+    required TResult Function(_GetWalletTransactionListLoading value)
+        getWalletTransactionListLoading,
+    required TResult Function(_GetWalletTransactionDetailSuccess value)
+        getWalletTransactionDetailSuccess,
+    required TResult Function(_GetWalletTransactionDetailLoading value)
+        getWalletTransactionDetailLoading,
+    required TResult Function(_GetWalletTransactionDetailFailed value)
+        getWalletTransactionDetailFailed,
+    required TResult Function(_GetPDoneProfileLoading value)
+        getPDoneProfileLoading,
+    required TResult Function(_GetPDoneProfileSuccess value)
+        getPDoneProfileSuccess,
+    required TResult Function(_GetPDoneProfileFailed value)
+        getPDoneProfileFailed,
+    required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
+    required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
+    required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+  }) {
+    return getOnboardingSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult? Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult? Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult? Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult? Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult? Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+    TResult? Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
+    TResult? Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
+    TResult? Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+  }) {
+    return getOnboardingSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+    TResult Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
+    TResult Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
+    TResult Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    required TResult orElse(),
+  }) {
+    if (getOnboardingSuccess != null) {
+      return getOnboardingSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetOnboardingSuccess implements WalletState {
+  const factory _GetOnboardingSuccess(final OnboardingResponse onboarding) =
+      _$GetOnboardingSuccessImpl;
+
+  OnboardingResponse get onboarding;
+  @JsonKey(ignore: true)
+  _$$GetOnboardingSuccessImplCopyWith<_$GetOnboardingSuccessImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$GetOnboardingFailImplCopyWith<$Res> {
+  factory _$$GetOnboardingFailImplCopyWith(_$GetOnboardingFailImpl value,
+          $Res Function(_$GetOnboardingFailImpl) then) =
+      __$$GetOnboardingFailImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String err});
+}
+
+/// @nodoc
+class __$$GetOnboardingFailImplCopyWithImpl<$Res>
+    extends _$WalletStateCopyWithImpl<$Res, _$GetOnboardingFailImpl>
+    implements _$$GetOnboardingFailImplCopyWith<$Res> {
+  __$$GetOnboardingFailImplCopyWithImpl(_$GetOnboardingFailImpl _value,
+      $Res Function(_$GetOnboardingFailImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? err = null,
+  }) {
+    return _then(_$GetOnboardingFailImpl(
+      null == err
+          ? _value.err
+          : err // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$GetOnboardingFailImpl
+    with DiagnosticableTreeMixin
+    implements _GetOnboardingFail {
+  const _$GetOnboardingFailImpl(this.err);
+
+  @override
+  final String err;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WalletState.getOnboardingFail(err: $err)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'WalletState.getOnboardingFail'))
+      ..add(DiagnosticsProperty('err', err));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GetOnboardingFailImpl &&
+            (identical(other.err, err) || other.err == err));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, err);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GetOnboardingFailImplCopyWith<_$GetOnboardingFailImpl> get copyWith =>
+      __$$GetOnboardingFailImplCopyWithImpl<_$GetOnboardingFailImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String err) error,
+    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
+    required TResult Function(String err) getWalletTransactionListFailed,
+    required TResult Function(List<TransactionItem> transactions)
+        getWalletTransactionListSuccess,
+    required TResult Function() getWalletTransactionListLoading,
+    required TResult Function(TransactionItem transaction)
+        getWalletTransactionDetailSuccess,
+    required TResult Function() getWalletTransactionDetailLoading,
+    required TResult Function(String err) getWalletTransactionDetailFailed,
+    required TResult Function() getPDoneProfileLoading,
+    required TResult Function(PDoneProfile pDoneProfile) getPDoneProfileSuccess,
+    required TResult Function(String err) getPDoneProfileFailed,
+    required TResult Function() getOnboardingLoading,
+    required TResult Function(OnboardingResponse onboarding)
+        getOnboardingSuccess,
+    required TResult Function(String err) getOnboardingFail,
+  }) {
+    return getOnboardingFail(err);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String err)? error,
+    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
+    TResult? Function(String err)? getWalletTransactionListFailed,
+    TResult? Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult? Function()? getWalletTransactionListLoading,
+    TResult? Function(TransactionItem transaction)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function()? getWalletTransactionDetailLoading,
+    TResult? Function(String err)? getWalletTransactionDetailFailed,
+    TResult? Function()? getPDoneProfileLoading,
+    TResult? Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
+    TResult? Function(String err)? getPDoneProfileFailed,
+    TResult? Function()? getOnboardingLoading,
+    TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult? Function(String err)? getOnboardingFail,
+  }) {
+    return getOnboardingFail?.call(err);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String err)? error,
+    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
+    TResult Function(String err)? getWalletTransactionListFailed,
+    TResult Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult Function()? getWalletTransactionListLoading,
+    TResult Function(TransactionItem transaction)?
+        getWalletTransactionDetailSuccess,
+    TResult Function()? getWalletTransactionDetailLoading,
+    TResult Function(String err)? getWalletTransactionDetailFailed,
+    TResult Function()? getPDoneProfileLoading,
+    TResult Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
+    TResult Function(String err)? getPDoneProfileFailed,
+    TResult Function()? getOnboardingLoading,
+    TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult Function(String err)? getOnboardingFail,
+    required TResult orElse(),
+  }) {
+    if (getOnboardingFail != null) {
+      return getOnboardingFail(err);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
+    required TResult Function(_GetWalletTransactionListFailed value)
+        getWalletTransactionListFailed,
+    required TResult Function(_GetWalletTransactionListSuccess value)
+        getWalletTransactionListSuccess,
+    required TResult Function(_GetWalletTransactionListLoading value)
+        getWalletTransactionListLoading,
+    required TResult Function(_GetWalletTransactionDetailSuccess value)
+        getWalletTransactionDetailSuccess,
+    required TResult Function(_GetWalletTransactionDetailLoading value)
+        getWalletTransactionDetailLoading,
+    required TResult Function(_GetWalletTransactionDetailFailed value)
+        getWalletTransactionDetailFailed,
+    required TResult Function(_GetPDoneProfileLoading value)
+        getPDoneProfileLoading,
+    required TResult Function(_GetPDoneProfileSuccess value)
+        getPDoneProfileSuccess,
+    required TResult Function(_GetPDoneProfileFailed value)
+        getPDoneProfileFailed,
+    required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
+    required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
+    required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+  }) {
+    return getOnboardingFail(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult? Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult? Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult? Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult? Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult? Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+    TResult? Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
+    TResult? Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
+    TResult? Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+  }) {
+    return getOnboardingFail?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+    TResult Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
+    TResult Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
+    TResult Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    required TResult orElse(),
+  }) {
+    if (getOnboardingFail != null) {
+      return getOnboardingFail(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _GetOnboardingFail implements WalletState {
+  const factory _GetOnboardingFail(final String err) = _$GetOnboardingFailImpl;
+
+  String get err;
+  @JsonKey(ignore: true)
+  _$$GetOnboardingFailImplCopyWith<_$GetOnboardingFailImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

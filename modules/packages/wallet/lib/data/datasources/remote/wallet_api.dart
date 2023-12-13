@@ -5,6 +5,7 @@ import 'package:wallet/data/datasources/models/response/transaction_details_resp
 import 'package:wallet/data/datasources/models/response/wallet_info_response.dart';
 
 import '../../../core/core.dart';
+import '../models/response/onboarding_response.dart';
 import '../models/response/pdone_profile_response.dart';
 import '../models/response/transactions_response.dart';
 
@@ -18,6 +19,8 @@ class WalletApiConstants {
   static const transactionsDiamondWallet = '/api/v1/transaction/diamond/list';
   static const transactionsCoinWallet = '/api/v1/transaction/coin/list';
   static const pDoneProfile = '/api/v1/p-done/profile';
+  static const onboarding = 'api/v1/onboarding/ecom';
+  
 }
 
 @RestApi()
@@ -66,4 +69,7 @@ abstract class WalletApi {
 
   @GET(WalletApiConstants.pDoneProfile)
   Future<PDoneProfileResponse> getPDoneProfile();
+
+  @GET(WalletApiConstants.onboarding)
+  Future<OnboardingResponse> getOnboarding();
 }

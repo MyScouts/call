@@ -103,7 +103,6 @@ class NotificationCard extends StatelessWidget {
     }
 
     return Container(
-      key: ValueKey(data.id),
       padding: const EdgeInsets.only(bottom: 16),
       width: ScreenUtil().screenWidth,
       height: 106 + 16,

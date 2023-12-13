@@ -104,8 +104,7 @@ class LiveRepositoryImpl extends LiveRepository {
     int? pageSize,
     required bool isFriend,
   }) async {
-    final result = await _liveApi.getListInviteFriend(
-        page: page, pageSize: pageSize, isFriend: isFriend);
+    final result = await _liveApi.getListInviteFriend(page: page, pageSize: pageSize, isFriend: isFriend);
 
     return result.data;
   }
@@ -173,5 +172,26 @@ class LiveRepositoryImpl extends LiveRepository {
   Future<LivePkData> getPk(int id) async {
     final res = await _liveApi.getPk(id);
     return res.data;
+  }
+
+  @override
+  Future<GiftCardLive> getLiveState(int liveID) async {
+    final res = await _liveApi.getLiveStats(liveId: liveID);
+    return res.data;
+  }
+
+  @override
+  Future updatePk(int pkId, bool enableShareMessage) {
+    return _liveApi.updatePk(pkId, enableShareMessage);
+  }
+
+  @override
+  Future startGame(Map<String, dynamic> json) {
+    return _liveApi.startGame(json);
+  }
+
+  @override
+  Future readyGame(int id) {
+    return _liveApi.readyGame(id);
   }
 }

@@ -16,4 +16,6 @@ class WalletEvent with _$WalletEvent {
       _FilterTransactionEvent;
 
   const factory WalletEvent.getPDoneProfile() = _GetPDoneProfileEvent;
+
+  const factory WalletEvent.getOnboarding() = _GetOnboardingEvent;
 }

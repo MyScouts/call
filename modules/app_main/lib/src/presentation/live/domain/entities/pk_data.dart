@@ -1,8 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'live_pk_data.dart';
-
 part 'pk_data.g.dart';
 
 @JsonSerializable()

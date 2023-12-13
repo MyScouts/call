@@ -17,7 +17,8 @@ class GiftCardLive with _$GiftCardLive {
       List<GiversInfo>? giversInfo,
       DateTime? caculateFrom,
       DateTime? refreshAt,
-      int? diamondCount}) = _GiftCardLive;
+      int? diamondCount,
+      int? giftCount}) = _GiftCardLive;
 
   factory GiftCardLive.fromJson(Map<String, Object?> json) => _$GiftCardLiveFromJson(json);
 }

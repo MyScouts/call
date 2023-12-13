@@ -7,6 +7,7 @@ import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
 import 'package:wallet/core/core.dart';
 import 'package:wallet/presentation/presentation.dart';
+import 'package:wallet/presentation/shared/bloc/wallet_bloc.dart';
 import 'package:wallet/presentation/wallet_constant.dart';
 
 import '../../../../domain/entities/wallet/bank_account.dart';
@@ -29,9 +30,6 @@ class _WithdrawScreenState extends State<WithdrawScreen> with ValidationMixin {
 
   final ValueNotifier<bool> _withDrawAllAvailable = ValueNotifier(false);
   final ValueNotifier<bool> _isValid = ValueNotifier(false);
-
-  bool get canWithdraw =>
-      _controller.text.isNotEmpty && _selectedBankAccount != null;
 
   late final _bloc = context.read<BankAccountBloc>();
   BankAccount? _selectedBankAccount;
@@ -97,39 +95,42 @@ class _WithdrawScreenState extends State<WithdrawScreen> with ValidationMixin {
   }
 
   _buildAvailableVnd() {
-    return Center(
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: context.horizontal),
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: const Color(0xFFF8F9FD),
-          borderRadius: WalletConstant.borderRadius12,
-          // image: DecorationImage(
-          //   image: AssetImage(ImageConstants.walletTotalDiamond),
-          //   fit: BoxFit.cover,
-          // ),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 25),
-        child: RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-            text: 'Số dư khả dụng\n',
-            style: context.text.bodyMedium?.copyWith(
-              color: WalletTheme.textColor,
-              fontWeight: FontWeight.w500,
-            ),
-            children: [
-              TextSpan(
-                text: WalletInjectedData.userWallet.availableVnd
-                    .toAppCurrencyString(),
-                style: context.text.headlineLarge?.copyWith(
-                  color: const Color(0xFF085CAF),
-                  fontSize: 28,
-                  height: 1.6,
-                  fontWeight: FontWeight.w700,
-                ),
+    return BlocBuilder<WalletBloc, WalletState>(
+      bloc: injector.get<WalletBloc>(),
+      builder: (context, state) => Center(
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: context.horizontal),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: const Color(0xFFF8F9FD),
+            borderRadius: WalletConstant.borderRadius12,
+            // image: DecorationImage(
+            //   image: AssetImage(ImageConstants.walletTotalDiamond),
+            //   fit: BoxFit.cover,
+            // ),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 25),
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              text: 'Số dư khả dụng\n',
+              style: context.text.bodyMedium?.copyWith(
+                color: WalletTheme.textColor,
+                fontWeight: FontWeight.w500,
               ),
-            ],
+              children: [
+                TextSpan(
+                  text: WalletInjectedData.userWallet.availableVnd
+                      .toAppCurrencyString(),
+                  style: context.text.headlineLarge?.copyWith(
+                    color: const Color(0xFF085CAF),
+                    fontSize: 28,
+                    height: 1.6,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -208,7 +209,8 @@ class _WithdrawScreenState extends State<WithdrawScreen> with ValidationMixin {
                     _controller.clear();
                     _withDrawAllAvailable.value = false;
                     onValidation();
-                    _isValid.value = isValidForm && _selectedBankAccount != null;
+                    _isValid.value =
+                        isValidForm && _selectedBankAccount != null;
                   },
                   iconSize: 12,
                   icon: Container(
@@ -406,13 +408,18 @@ class _WithdrawScreenState extends State<WithdrawScreen> with ValidationMixin {
             title: 'Rút tiền',
             onTap: () {
               final params = WithdrawParams(
-              value: num.parse(_controller.text.replaceAll('.', '')),
-              bankAccount: _selectedBankAccount!,
-              pDoneId: '${WalletInjectedData.user.pDoneId}',
-              taxValue: 100,
-              bankAccountBloc: _bloc,
+                value: num.parse(_controller.text.replaceAll('.', '')),
+                bankAccount: _selectedBankAccount!,
+                pDoneId: '${WalletInjectedData.user.pDoneId}',
               );
-              context.confirmWithdrawTransaction(withdrawParams: params);
+              context
+                  .confirmWithdrawTransaction(withdrawParams: params)
+                  .then((value) {
+                _controller.clear();
+                _withDrawAllAvailable.value = false;
+                onValidation();
+                _isValid.value = isValidForm && _selectedBankAccount != null;
+              });
             },
             disabled: !value,
             width: double.infinity,

@@ -33,24 +33,26 @@ class PipVideoRender extends StatelessWidget {
                 Navigator.push(
                   AppCoordinator.rootNavigator.currentContext!,
                   MaterialPageRoute(
-                    builder: (_) => MultiProvider(
-                      providers: [
-                        Provider<LiveChannelController>.value(
-                          value: controller,
-                        ),
-                        BlocProvider(
-                          create: (_) => getIt<LiveMessageBloc>()
-                            ..add(UpdateMessageHistory(
-                              commentController.state.comments,
-                            )),
-                        ),
-                      ],
-                      child: LiveChannelScreen(
-                        fromPip: true,
-                        liveID: controller.info.id,
-                      ),
-                    ),
-                  ),
+                      builder: (_) => MultiProvider(
+                            providers: [
+                              Provider<LiveChannelController>.value(
+                                value: controller,
+                              ),
+                              BlocProvider(
+                                create: (_) => getIt<LiveMessageBloc>()
+                                  ..add(UpdateMessageHistory(
+                                    commentController.state.comments,
+                                  )),
+                              ),
+                            ],
+                            child: LiveChannelScreen(
+                              fromPip: true,
+                              liveID: controller.info.id,
+                            ),
+                          ),
+                      settings: const RouteSettings(
+                        name: LiveChannelScreen.routerName,
+                      )),
                 );
                 PipHandler.removeOverlay();
               },

@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:injectable/injectable.dart';
+import 'package:wallet/data/datasources/models/request/verify_otp_request.dart';
+import 'package:wallet/data/datasources/models/response/estimate_tax_response.dart';
 
 import '../../domain/domain.dart';
 import '../data.dart';
+import '../datasources/models/request/estimate_tax_request.dart';
 
 @Injectable(as: WalletVndRepository)
 class WalletVndRepositoryImpl implements WalletVndRepository {
@@ -54,9 +57,17 @@ class WalletVndRepositoryImpl implements WalletVndRepository {
   }
 
   @override
-  Future<num> estimateTax(num value) async {
-    final response = await _vndWalletApi.estimateTax(val: value);
-    return response.data;
+  Future<EstimateTaxResponse> estimateTax(num value) async {
+    final request = EstimateTaxRequest(value: value);
+    final response = await _vndWalletApi.estimateTax(body: request);
+    return response;
+  }
+
+  @override
+  Future requestWithdrawOtp() async {
+    final request = VerifyOtpRequest(type: 'WithdrawMoney');
+    final response = await _vndWalletApi.requestOtp(body: request);
+    return response;
   }
 
   @override

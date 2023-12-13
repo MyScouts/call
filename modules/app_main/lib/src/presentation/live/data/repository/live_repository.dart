@@ -26,9 +26,15 @@ abstract class LiveRepository {
 
   Future<GiftCardList> getGiftCardList(int type);
 
-  Future sendGift({required int userId, required int liveId, required int giftId, required int total});
+  Future sendGift(
+      {required int userId,
+      required int liveId,
+      required int giftId,
+      required int total});
 
   Future<GiftCardLive> getInfoGiftCard(int liveID);
+
+  Future<GiftCardLive> getLiveState(int liveID);
 
   Future<GiftCardLive> getDailyDedications(int userId);
 
@@ -67,4 +73,10 @@ abstract class LiveRepository {
   Future deletePK(int id);
 
   Future<LivePkData> getPk(int id);
+
+  Future updatePk(int pkId, bool enableShareMessage);
+
+  Future startGame(Map<String, dynamic> json);
+
+  Future readyGame(int id);
 }
