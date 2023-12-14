@@ -1,7 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
-import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_member.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:flutter/material.dart';
