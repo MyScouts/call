@@ -632,6 +632,8 @@ class LiveChannelController {
 
   final Rx<int> timesAnimation = 0.obs;
 
+  Timer? _timer;
+
   void _onSocketEvent() {
     socketService.on(socketConnectedEvent, (data) {
       debugPrint('kết nối thành công ${socketService.socket.id}');
@@ -678,6 +680,12 @@ class LiveChannelController {
     socketService.on(socketPkRoundFinishEvent, (Map data) {
       debugPrint('$socketPkRoundFinishEvent ===> ${data['round']}');
       _pkStep.value = PkStep.end;
+      if(_timer != null) _timer?.cancel();
+      _timer = Timer.periodic(const Duration(seconds: 30), (timer) {
+        _pkStep.value = PkStep.pending;
+        _diamondsPK.value = [];
+        _giftMembers.value = [];
+      });
     });
 
     socketService.on(socketPkGiftUpdatedEvent, (Map data) {
@@ -911,6 +919,7 @@ class LiveChannelController {
 
     socketService.on(socketPkGameStartEvent, (Map data) {
       _pkStep.value = PkStep.starting;
+      if(_timer != null) _timer?.cancel();
     });
   }
 
