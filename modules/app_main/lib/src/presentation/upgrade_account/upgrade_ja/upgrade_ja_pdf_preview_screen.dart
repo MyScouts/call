@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:app_core/app_core.dart';
@@ -31,10 +30,12 @@ class _UpgradeJAPdfPreviewScreenBody extends StatefulWidget {
   const _UpgradeJAPdfPreviewScreenBody();
 
   @override
-  State<_UpgradeJAPdfPreviewScreenBody> createState() => _UpgradeJAPdfPreviewScreenBodyState();
+  State<_UpgradeJAPdfPreviewScreenBody> createState() =>
+      _UpgradeJAPdfPreviewScreenBodyState();
 }
 
-class _UpgradeJAPdfPreviewScreenBodyState extends State<_UpgradeJAPdfPreviewScreenBody> {
+class _UpgradeJAPdfPreviewScreenBodyState
+    extends State<_UpgradeJAPdfPreviewScreenBody> {
   late final userCubit = context.read<UserCubit>();
 
   late final pDoneInformationBloc = context.read<PDoneInformationBloc>();
@@ -46,7 +47,6 @@ class _UpgradeJAPdfPreviewScreenBodyState extends State<_UpgradeJAPdfPreviewScre
     super.initState();
     pDoneInformationBloc.add(PDoneGetInformationEvent());
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -83,14 +83,13 @@ class _UpgradeJAPdfPreviewScreenBodyState extends State<_UpgradeJAPdfPreviewScre
           return PdfPreview(
             maxPageWidth: 700,
             initialPageFormat: PdfPageFormat.a4,
-            build: (format) =>
-                JAContractPdfPage(
-                  JAContractContentUIModel(
-                    jaContractNumber: '${pDoneId}JA',
-                    user: userCubit.currentUser,
-                    pDoneInformationData: pDoneInformationData,
-                  ),
-                ).buildPdf(format),
+            build: (format) => JAContractPdfPage(
+              JAContractContentUIModel(
+                jaContractNumber: '${pDoneId}JA',
+                user: userCubit.currentUser,
+                pDoneInformationData: pDoneInformationData,
+              ),
+            ).buildPdf(format),
             actions: [
               PdfPreviewAction(
                 icon: const Icon(Icons.save),
@@ -103,9 +102,11 @@ class _UpgradeJAPdfPreviewScreenBodyState extends State<_UpgradeJAPdfPreviewScre
     );
   }
 
-  Future<void> _saveAsFile(BuildContext context,
-      LayoutCallback build,
-      PdfPageFormat pageFormat,) async {
+  Future<void> _saveAsFile(
+    BuildContext context,
+    LayoutCallback build,
+    PdfPageFormat pageFormat,
+  ) async {
     try {
       final bytes = await build(pageFormat);
 

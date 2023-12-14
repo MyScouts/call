@@ -10,15 +10,12 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imagewidget/imagewidget.dart';
-import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:ui/ui.dart';
 
-import '../../../../../blocs/user/user_cubit.dart';
 import '../../../../../blocs/user_action/user_action_cubit.dart';
 import '../../../../../data/models/payloads/user/user_action_payload.dart';
 import '../../../../../data/models/responses/follow_response.dart';
-import '../../../../social/profile/profile_bloc.dart';
 import 'leave_live_confirm.dart';
 import 'live_end_sheet.dart';
 
@@ -76,15 +73,19 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                 ),
                 padding: const EdgeInsets.all(4.0),
                 child: Obx(() {
-                  final host = controller.members.firstWhereOrNull((e) => e.isOwner && e.liveID == controller.info.id);
+                  final host = controller.members.firstWhereOrNull(
+                      (e) => e.isOwner && e.liveID == controller.info.id);
                   return IntrinsicHeight(
                     child: Row(
                       children: [
                         if (host == null || host.info.avatar.trim().isEmpty)
                           GestureDetector(
                             onTap: () {
-                              context.startSelectUser(userId: host!.info.userID).then((value) {
-                                _actionBloc.getFollowUser(userId: host.info.userID);
+                              context
+                                  .startSelectUser(userId: host!.info.userID)
+                                  .then((value) {
+                                _actionBloc.getFollowUser(
+                                    userId: host.info.userID);
                               });
                             },
                             child: SizedBox.square(
@@ -100,8 +101,11 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                         else
                           GestureDetector(
                             onTap: () {
-                              context.startSelectUser(userId: host.info.userID).then((value) {
-                                _actionBloc.getFollowUser(userId: host.info.userID);
+                              context
+                                  .startSelectUser(userId: host.info.userID)
+                                  .then((value) {
+                                _actionBloc.getFollowUser(
+                                    userId: host.info.userID);
                               });
                             },
                             child: CircleNetworkImage(
@@ -134,7 +138,9 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                                 const SizedBox(width: 4),
                                 Obx(() {
                                   return Text(
-                                    controller.liveState.value.diamondCount?.toString() ?? '0',
+                                    controller.liveState.value.diamondCount
+                                            ?.toString() ??
+                                        '0',
                                     style: const TextStyle(
                                       fontSize: 10,
                                       color: Colors.white,
@@ -147,8 +153,9 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                         ),
                         const SizedBox(width: 20),
                         Obx(() {
-                          final host =
-                              controller.members.firstWhereOrNull((e) => e.isOwner && e.liveID == controller.info.id);
+                          final host = controller.members.firstWhereOrNull(
+                              (e) =>
+                                  e.isOwner && e.liveID == controller.info.id);
                           if (host == null) {
                             return const SizedBox();
                           }
@@ -185,7 +192,8 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                           if (index == 0) {
                             return GestureDetector(
                               onTap: () {
-                                context.startSelectUser(userId: element.giver!.id!);
+                                context.startSelectUser(
+                                    userId: element.giver!.id!);
                               },
                               child: SizedBox(
                                 height: 40,
@@ -214,9 +222,11 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                           return SizedBox(
                             child: GestureDetector(
                               onTap: () {
-                                context.startSelectUser(userId: element.giver!.id!);
+                                context.startSelectUser(
+                                    userId: element.giver!.id!);
                               },
-                              child: AvatarWidget(avatar: element.giver?.avatar, size: 30),
+                              child: AvatarWidget(
+                                  avatar: element.giver?.avatar, size: 30),
                             ),
                           );
                         })
@@ -240,14 +250,21 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                       ImageWidget(IconAppConstants.icLiveMember),
                       const SizedBox(width: 2),
                       Obx(
-                        () => Text(
-                          controller.members.length.toString(),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white,
-                          ),
-                        ),
+                        () {
+                          final members = controller.members.value;
+
+                          final liveMembers = members
+                              .where((e) => e.liveID == controller.info.id);
+
+                          return Text(
+                            liveMembers.length.toString(),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white,
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -261,12 +278,14 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                         onRemoved: () {
                           controller.leaveLive();
                           if (controller.me.value.isOwner) {
-                            if (!controller.enablePk.value) {
+                            if (controller.liveType.value !=
+                                LiveChannelType.pk) {
                               Navigator.of(context).pop();
                               Future.delayed(
                                 const Duration(seconds: 1),
                                 () => showModalBottomSheet(
-                                  context: AppCoordinator.rootNavigator.currentContext!,
+                                  context: AppCoordinator
+                                      .rootNavigator.currentContext!,
                                   isScrollControlled: true,
                                   backgroundColor: Colors.transparent,
                                   builder: (_) => const LiveEndSheet(),
@@ -304,7 +323,8 @@ class _LiveButtonAddFriendState extends State<LiveButtonAddFriend> {
   final ValueNotifier<bool> _friendStatus = ValueNotifier(false);
   late UserActionCubit _actionBloc;
 
-  final ValueNotifier<GetUserFollowDetailResponse?> _followInfo = ValueNotifier(null);
+  final ValueNotifier<GetUserFollowDetailResponse?> _followInfo =
+      ValueNotifier(null);
 
   @override
   void initState() {
@@ -331,7 +351,8 @@ class _LiveButtonAddFriendState extends State<LiveButtonAddFriend> {
             hideLoading();
             _friendStatus.value = true;
             if (state.approvalRequired) {
-              showToastMessage("Yêu cầu theo dõi đã được gởi đến người bảo hộ.");
+              showToastMessage(
+                  "Yêu cầu theo dõi đã được gởi đến người bảo hộ.");
             } else {
               showToastMessage("Theo dõi người dùng thành công.");
             }
@@ -358,7 +379,8 @@ class _LiveButtonAddFriendState extends State<LiveButtonAddFriend> {
         builder: (BuildContext context, UserActionState state) {
           return ValueListenableBuilder(
             valueListenable: _followInfo,
-            builder: (BuildContext context, GetUserFollowDetailResponse? value, Widget? child) {
+            builder: (BuildContext context, GetUserFollowDetailResponse? value,
+                Widget? child) {
               final relation = value?.relation;
               if (relation?.isFollower == false) {
                 return GestureDetector(

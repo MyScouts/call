@@ -1,5 +1,6 @@
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
+import 'package:app_main/src/presentation/live/presentation/pk/widget/pk_win_lose_builder.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -7,13 +8,11 @@ import 'package:imagewidget/imagewidget.dart';
 class PkEndGameItem extends StatefulWidget {
   const PkEndGameItem({
     super.key,
-    required this.isWin,
-    required this.isDraw,
     required this.url,
+    required this.status,
   });
 
-  final bool isWin;
-  final bool isDraw;
+  final PkGameStatus status;
   final String url;
 
   @override
@@ -66,9 +65,9 @@ class PkEndGameItemState extends State<PkEndGameItem>
           opacity: animation,
           child: ScaleTransition(
             scale: animation,
-            child: widget.isDraw
+            child: widget.status == PkGameStatus.draw
                 ? _DrawImage(url: widget.url)
-                : (widget.isWin
+                : (widget.status == PkGameStatus.win
                     ? _WinImage(url: widget.url)
                     : _LoseImage(url: widget.url)),
           ),
