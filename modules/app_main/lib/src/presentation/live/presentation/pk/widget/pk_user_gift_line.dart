@@ -21,9 +21,9 @@ class _PkUserGiftLineState extends State<PkUserGiftLine> {
       final members = controller.giftMembers.value;
 
       List<LiveMember> leftMembers =
-          members.where((e) => e.liveID == controller.info.id).toList();
-      List<LiveMember> rightMembers =
           members.where((e) => e.liveID == controller.liveOtherID).toList();
+      List<LiveMember> rightMembers =
+          members.where((e) => e.liveID == controller.info.id).toList();
 
       return SizedBox(
         height: 48,
