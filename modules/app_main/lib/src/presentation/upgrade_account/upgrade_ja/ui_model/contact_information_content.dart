@@ -78,7 +78,7 @@ List<ContactPointInformationUIModel> getContactPointInformation(
         ContactPointInformationRowUIModel(
           title: 'Nơi đăng ký hộ khẩu thường trú',
           value: TextSpan(
-            text: '${model.pDoneInformationData?.currentPlace?.fullAddress}',
+            text: '${model.pDoneInformationData?.birthPlace?.fullAddress}',
             style: defaultTextStyle,
           ),
         ),
@@ -92,7 +92,7 @@ List<ContactPointInformationUIModel> getContactPointInformation(
         ContactPointInformationRowUIModel(
           title: 'ĐT',
           value: TextSpan(
-            text: model.user?.phone ?? '',
+            text: model.user?.phone.formatPhone,
             style: defaultTextStyle,
           ),
         ),
