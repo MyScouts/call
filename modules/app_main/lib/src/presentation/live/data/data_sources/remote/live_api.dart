@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/live/data/model/response/live_list_member_response.dart';
+import 'package:app_main/src/presentation/live/data/model/response/live_pk_stats.dart';
 import 'package:app_main/src/presentation/live/data/model/response/live_stream_category_response.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_pk_data.dart';
@@ -76,6 +77,8 @@ class LiveApiConstant {
   static const String startGame = '/api/live-pk/game';
 
   static const String readyGame = '/api/live-pk/game/round/ready';
+
+  static const String stats = '/api/gift-card/pk-stats';
 }
 
 @RestApi()
@@ -192,6 +195,9 @@ abstract class LiveApi {
 
   @POST(LiveApiConstant.readyGame)
   Future readyGame(@Field('liveId') int id);
+
+  @GET(LiveApiConstant.stats)
+  Future<ApiResponse<LivePkStatsRes>> stats(@Query('pkId') int id);
 
 //
 // @POST(LiveApiConstant.joinLive)

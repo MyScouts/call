@@ -505,14 +505,14 @@ class _LivePKRtc extends StatelessWidget {
       int flexLeft = 1;
       int flexRight = 1;
 
-      if (diamondLeft != null && diamondRight != null) {
-        if (diamondLeft.diamondCount < diamondRight.diamondCount) {
-          flexLeft = 4;
-          flexRight = 6;
-        } else if (diamondLeft.diamondCount > diamondRight.diamondCount) {
-          flexLeft = 6;
-          flexRight = 4;
-        }
+      if ((diamondLeft?.diamondCount ?? 0) >
+          (diamondRight?.diamondCount ?? 0)) {
+        flexLeft = 6;
+        flexRight = 4;
+      } else if ((diamondLeft?.diamondCount ?? 0) <
+          (diamondRight?.diamondCount ?? 0)) {
+        flexLeft = 4;
+        flexRight = 6;
       }
 
       return SizedBox(
@@ -635,7 +635,6 @@ class _LivePKRtc extends StatelessWidget {
               ],
             ),
             Obx(() {
-
               if (controller.pkStep.value != PkStep.pending) {
                 return const Align(
                   alignment: Alignment.center,

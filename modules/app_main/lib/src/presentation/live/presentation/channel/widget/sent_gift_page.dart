@@ -8,7 +8,6 @@ import 'package:injectable/injectable.dart';
 
 import '../../../data/model/response/sent_gift_response.dart';
 import '../live_channel_screen.dart';
-import '../state/live_channel_controller.dart';
 import 'lottie_animation.dart';
 
 class SentGiftPage extends StatelessWidget {
