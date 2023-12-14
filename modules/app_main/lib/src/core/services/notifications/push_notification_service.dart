@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/services/notifications/call_push_service_handler.dart';
+import 'package:app_main/src/data/models/responses/push_call_message_info.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -42,43 +44,10 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
   final pnType = message.data['type'];
   if (pnType is String && pnType == 'CALL_EVENT') {
-    Map<dynamic, dynamic> _notiData = message.data;
-    Map<dynamic, dynamic> _data = json.decode(_notiData['data']);
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
-    if (_data['callStatus'] == 'started') {
-      const AndroidInitializationSettings androidSettings =
-          AndroidInitializationSettings('@drawable/icon_notify');
-      const InitializationSettings initializationSettings =
-          InitializationSettings(android: androidSettings);
-      flutterLocalNotificationsPlugin.initialize(initializationSettings).then((value) async {
-        if (value!) {
-          /// Create channel for notification
-          const AndroidNotificationDetails androidPlatformChannelSpecifics =
-              AndroidNotificationDetails(
-           'channelId', 'channelName',
-            channelDescription: 'channelDescription',
-            importance: Importance.high,
-            priority: Priority.high,
-            category: AndroidNotificationCategory.call,
-            /// Set true for show App in lockScreen
-            fullScreenIntent: true,
-          );
-          const NotificationDetails platformChannelSpecifics =
-              NotificationDetails(android: androidPlatformChannelSpecifics);
-
-          /// Show notification
-          await flutterLocalNotificationsPlugin.show(
-            1234,
-            'Cuộc gọi đến',
-            '',
-            platformChannelSpecifics,
-          );
-        }
-      });
-    } else if (_data['callStatus'] == 'ended') {
-      flutterLocalNotificationsPlugin.cancel(1234);
-    }
+    unawaited(handleCallPN(
+      PushCallMessageInfo.fromJson(jsonDecode(message.data['data'])),
+      flutterLocalNotificationsPlugin,
+    ));
   }
 }
 
