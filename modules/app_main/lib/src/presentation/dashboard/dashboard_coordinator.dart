@@ -102,6 +102,8 @@ extension DashBoardCoordinator on BuildContext {
         return _startPointAllAgency();
       case "ic_marShop":
         return startRegisterMarshop();
+      case "ic_khtx":
+        return startRegisterCustomer();
       default:
         if (path != null) {
           Navigator.of(this).pushNamed(path);

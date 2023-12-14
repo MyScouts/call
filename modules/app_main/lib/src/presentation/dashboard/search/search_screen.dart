@@ -17,100 +17,101 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchCtrl = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
   final SearchCubit _bloc = injector.get<SearchCubit>();
 
   @override
   void initState() {
     super.initState();
+    _focusNode.requestFocus();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => _bloc,
-      child: BlocListener<SearchCubit, SearchState>(
-        listener: (context, state) {
-          print(state);
-        },
-        child: ScaffoldHideKeyboard(
-          body: SafeArea(
-              child: Column(
-            children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: paddingHorizontal),
-                child: Row(
-                  children: [
-                    const CustomBackButton(),
-                    Expanded(
-                      child: TextField(
-                        controller: _searchCtrl,
-                        onChanged: (value) async {
-                          EasyDebounce.debounce(
-                              'testDeb', const Duration(milliseconds: 300),
-                              () async {
-                            _bloc.searchUser(
-                                query: _searchCtrl.text.trim(), isReset: true);
-                          });
-                        },
-                        style: context.text.titleMedium!
-                            .copyWith(color: Colors.grey),
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.zero,
-                          isDense: false,
-                          hintText: "Tìm kiếm...",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none,
-                          ),
-                          prefixIcon:
-                              const Icon(Icons.search, color: AppColors.grey14),
-                          fillColor: const Color(0XFFF2F2F2),
-                          filled: true,
-                          suffixIcon: IconButton(
-                            splashColor: Colors.transparent,
-                            onPressed: () {
-                              _searchCtrl.clear();
-                              _bloc.searchUser(query: "", isReset: true);
-                            },
-                            icon: Container(
-                              padding: const EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                color: const Color(0XFFACACAC),
-                                borderRadius: BorderRadius.circular(90),
-                              ),
-                              child: const Icon(
-                                Icons.clear,
-                                size: 11,
-                                color: AppColors.white,
-                              ),
+      child: ScaffoldHideKeyboard(
+        body: SafeArea(
+            child: Column(
+          children: [
+            Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: paddingHorizontal),
+              child: Row(
+                children: [
+                  const CustomBackButton(),
+                  Expanded(
+                    child: TextField(
+                      focusNode: _focusNode,
+                      controller: _searchCtrl,
+                      onChanged: (value) async {
+                        EasyDebounce.debounce(
+                            'testDeb', const Duration(milliseconds: 300),
+                            () async {
+                          _bloc.searchUser(
+                              query: _searchCtrl.text.trim(), isReset: true);
+                        });
+                      },
+                      style: context.text.titleMedium!
+                          .copyWith(color: Colors.grey),
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.zero,
+                        isDense: false,
+                        hintText: "Tìm kiếm...",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                        prefixIcon:
+                            const Icon(Icons.search, color: AppColors.grey14),
+                        fillColor: const Color(0XFFF2F2F2),
+                        filled: true,
+                        suffixIcon: IconButton(
+                          splashColor: Colors.transparent,
+                          onPressed: () {
+                            _searchCtrl.clear();
+                            _bloc.searchUser(query: "", isReset: true);
+                          },
+                          icon: Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              color: const Color(0XFFACACAC),
+                              borderRadius: BorderRadius.circular(90),
+                            ),
+                            child: const Icon(
+                              Icons.clear,
+                              size: 11,
+                              color: AppColors.white,
                             ),
                           ),
                         ),
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
-              Expanded(child: _buildSearch()),
-            ],
-          )),
-        ),
+            ),
+            Expanded(child: _buildSearch()),
+          ],
+        )),
       ),
     );
   }
 
   _buildUser(SearchDetail user) {
     return GestureDetector(
-      onTap: () => context.startDiary(userId: user.user.id.toString()),
+      onTap: () {
+        _focusNode.unfocus();
+        context.startDiary(userId: user.user.id.toString());
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(

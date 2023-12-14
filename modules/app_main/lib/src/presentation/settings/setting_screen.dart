@@ -121,7 +121,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 children: [
                   _buildSession1(),
                   const SizedBox(height: 10),
-                  _buildSearch(),
+                  // _buildSearch(),
                   const SizedBox(height: 10),
                   _buildSessionMenus(),
                   _buildVersion(),
