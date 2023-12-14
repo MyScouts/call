@@ -31,6 +31,7 @@ import 'package:get/get.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:provider/provider.dart';
 import 'widget/sent_gift_page.dart';
+import 'widget/video_play_virtual.dart';
 
 class LiveChannelScreen extends StatefulWidget {
   const LiveChannelScreen({
@@ -98,14 +99,10 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
   Widget build(BuildContext context) {
     return Obx(() {
       return AnnotatedRegion<SystemUiOverlayStyle>(
-        value: controller.enablePk.value
-            ? SystemUiOverlayStyle.light
-            : SystemUiOverlayStyle.dark,
+        value: controller.enablePk.value ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: controller.enablePk.value
-              ? const Color(0xff032E49)
-              : Colors.black.withOpacity(0.8),
+          backgroundColor: controller.enablePk.value ? const Color(0xff032E49) : Colors.black.withOpacity(0.8),
           body: Focus(
             onFocusChange: (value) {
               if (!value) controller.disableMessage();
@@ -221,8 +218,7 @@ class _LivePk extends StatelessWidget {
           diamonds.sort((a, b) => a.diamondCount.compareTo(b.diamondCount));
 
           if (diamonds.isEmpty) {
-            final host = controller.members
-                .firstWhereOrNull((e) => e.info.userID == controller.hostID);
+            final host = controller.members.firstWhereOrNull((e) => e.info.userID == controller.hostID);
             return Align(
               alignment: Alignment.center,
               child: PkEndGameItem(
@@ -233,11 +229,9 @@ class _LivePk extends StatelessWidget {
             );
           }
 
-          final mD = controller.members
-              .firstWhereOrNull((e) => e.info.userID == diamonds.last.userId);
+          final mD = controller.members.firstWhereOrNull((e) => e.info.userID == diamonds.last.userId);
 
-          final mU = controller.members
-              .firstWhereOrNull((e) => e.info.userID == diamonds.first.userId);
+          final mU = controller.members.firstWhereOrNull((e) => e.info.userID == diamonds.first.userId);
 
           final aU = mU?.info.avatar ?? '';
 
@@ -249,8 +243,7 @@ class _LivePk extends StatelessWidget {
               child: PkEndGameItem(
                 isWin: true,
                 url: aU,
-                isDraw:
-                    diamonds.first.diamondCount == diamonds.last.diamondCount,
+                isDraw: diamonds.first.diamondCount == diamonds.last.diamondCount,
               ),
             );
           }
@@ -279,7 +272,9 @@ class _LiveSimple extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        const _RtcRender(),
+        Obx(() => controller.virtualInfo.value != null
+            ? VideoApp(virtualInfo: controller.info.virtualInfo)
+            : const _RtcRender()),
         const Align(
           alignment: Alignment.topCenter,
           child: SafeArea(child: LiveChannelHeader()),
@@ -309,7 +304,6 @@ class _LiveSimple extends StatelessWidget {
           if (controller.state.value == LiveStreamState.stop) {
             return const LiveEndScreen();
           }
-
           return const SizedBox.shrink();
         }),
       ],
@@ -411,9 +405,8 @@ class _LivePKRtc extends StatelessWidget {
     return Obx(() {
       if (controller.info.pk == null) return const SizedBox.shrink();
 
-      final meInLive = controller.pkData!.lives.firstWhereOrNull(
-              (e) => e.user!.id == controller.me.value.info.userID) !=
-          null;
+      final meInLive =
+          controller.pkData!.lives.firstWhereOrNull((e) => e.user!.id == controller.me.value.info.userID) != null;
 
       final diamondPk = controller.diamondsPK.value;
 
@@ -425,14 +418,11 @@ class _LivePKRtc extends StatelessWidget {
       int rightID;
 
       if (meInLive) {
-        final host = controller.pkData!.lives.firstWhereOrNull(
-            (e) => e.user!.id != controller.me.value.info.userID);
+        final host = controller.pkData!.lives.firstWhereOrNull((e) => e.user!.id != controller.me.value.info.userID);
 
-        diamondLeft =
-            diamondPk.firstWhereOrNull((e) => e.userId == host?.user?.id);
+        diamondLeft = diamondPk.firstWhereOrNull((e) => e.userId == host?.user?.id);
 
-        diamondRight = diamondPk.firstWhereOrNull(
-            (e) => e.userId == controller.me.value.info.userID);
+        diamondRight = diamondPk.firstWhereOrNull((e) => e.userId == controller.me.value.info.userID);
 
         leftID = host?.id ?? 0;
         rightID = controller.info.id;
@@ -468,14 +458,11 @@ class _LivePKRtc extends StatelessWidget {
           ),
         );
       } else {
-        final host = controller.pkData!.lives
-            .firstWhereOrNull((e) => e.user!.id != controller.hostID);
+        final host = controller.pkData!.lives.firstWhereOrNull((e) => e.user!.id != controller.hostID);
 
-        diamondLeft =
-            diamondPk.firstWhereOrNull((e) => e.userId == host?.user?.id);
+        diamondLeft = diamondPk.firstWhereOrNull((e) => e.userId == host?.user?.id);
 
-        diamondRight =
-            diamondPk.firstWhereOrNull((e) => e.userId == controller.hostID);
+        diamondRight = diamondPk.firstWhereOrNull((e) => e.userId == controller.hostID);
 
         leftID = host?.id ?? 0;
         rightID = controller.info.id;
@@ -558,19 +545,16 @@ class _LivePKRtc extends StatelessWidget {
                           );
                         }
 
-                        if (diamonds.first.diamondCount ==
-                            diamonds.last.diamondCount) {
+                        if (diamonds.first.diamondCount == diamonds.last.diamondCount) {
                           return const Align(
                             alignment: Alignment.center,
                             child: SizedBox.shrink(),
                           );
                         }
 
-                        diamonds.sort(
-                            (a, b) => a.diamondCount.compareTo(b.diamondCount));
+                        diamonds.sort((a, b) => a.diamondCount.compareTo(b.diamondCount));
 
-                        final mU = controller.members.firstWhereOrNull(
-                            (e) => e.info.userID == diamonds.first.userId);
+                        final mU = controller.members.firstWhereOrNull((e) => e.info.userID == diamonds.first.userId);
 
                         if (mU?.liveID == leftID) {
                           return Align(
@@ -616,19 +600,16 @@ class _LivePKRtc extends StatelessWidget {
                           );
                         }
 
-                        if (diamonds.first.diamondCount ==
-                            diamonds.last.diamondCount) {
+                        if (diamonds.first.diamondCount == diamonds.last.diamondCount) {
                           return const Align(
                             alignment: Alignment.center,
                             child: SizedBox.shrink(),
                           );
                         }
 
-                        diamonds.sort(
-                            (a, b) => a.diamondCount.compareTo(b.diamondCount));
+                        diamonds.sort((a, b) => a.diamondCount.compareTo(b.diamondCount));
 
-                        final mU = controller.members.firstWhereOrNull(
-                            (e) => e.info.userID == diamonds.first.userId);
+                        final mU = controller.members.firstWhereOrNull((e) => e.info.userID == diamonds.first.userId);
 
                         if (mU?.liveID == rightID) {
                           return Align(
@@ -662,8 +643,7 @@ class _LivePKRtc extends StatelessWidget {
                 );
               }
 
-              if (controller.pkData!.pk.hostID !=
-                  controller.me.value.info.userID) {
+              if (controller.pkData!.pk.hostID != controller.me.value.info.userID) {
                 return const Align(
                   alignment: Alignment.center,
                   child: SizedBox.shrink(),
@@ -712,8 +692,7 @@ class _LivePKRtc extends StatelessWidget {
               );
             }),
             Obx(() {
-              if (controller.pkStep.value != PkStep.started &&
-                  controller.pkStep.value != PkStep.end) {
+              if (controller.pkStep.value != PkStep.started && controller.pkStep.value != PkStep.end) {
                 return const Align(
                   alignment: Alignment.center,
                   child: SizedBox.shrink(),

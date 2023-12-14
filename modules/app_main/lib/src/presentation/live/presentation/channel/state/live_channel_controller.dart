@@ -39,6 +39,7 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 import '../../../data/model/response/gift_card_live.dart';
 import '../../../data/model/response/sent_gift_response.dart';
 import '../../../data/repository/live_repository.dart';
+import '../../../domain/entities/virtual_info.dart';
 import '../widget/sent_gift_page.dart';
 
 enum LiveStreamState {
@@ -199,6 +200,8 @@ class LiveChannelController {
   }
 
   LiveData get info => _info.value;
+
+  Rxn<VirtualInfo> virtualInfo = Rxn<VirtualInfo>();
 
   final RxBool _mic = false.obs;
 
@@ -388,6 +391,34 @@ class LiveChannelController {
         liveID: _info.value.id,
       ).obs;
 
+      getLeaderBoard(_info.value.id);
+
+      _onSocketEvent();
+
+      socketService.connect(
+        '${Configurations.baseUrl}live?id=${_info.value.id}',
+        token: userSharePreferencesUseCase.getToken() ?? '',
+      );
+
+      virtualInfo.value = _info.value.virtualInfo;
+
+      /// nếu là live ảo thì bỏ connect agora
+      if (virtualInfo.value != null) {
+        final members = await getMembers(_info.value.id);
+
+        _members.value = [...members, _me.value];
+
+        // _hostOffline.value = !hostInLive;
+
+        _state.value = LiveStreamState.watching;
+
+        WakelockPlus.enable();
+        // LiveManageState.hostID.value = hostID;
+
+        if (Platform.isAndroid) _initForegroundTask();
+        return;
+      }
+
       for (final i in joinRes.agoraData) {
         if (i.uid == null) continue;
         if (_pkData != null) {
@@ -399,8 +430,6 @@ class LiveChannelController {
         }
       }
       _roomInfoFetching.value = false;
-
-      getLeaderBoard(_info.value.id);
     } catch (e) {
       _state.value = LiveStreamState.stop;
       if (context.mounted) {
@@ -429,13 +458,6 @@ class LiveChannelController {
 
         _members.value = [...members, _me.value];
       }
-
-      _onSocketEvent();
-
-      socketService.connect(
-        '${Configurations.baseUrl}live?id=${_info.value.id}',
-        token: userSharePreferencesUseCase.getToken() ?? '',
-      );
 
       _listenRtcEvent();
 
@@ -643,8 +665,7 @@ class LiveChannelController {
       if (_diamondsPK.isEmpty) {
         _diamondsPK.value = [diamond];
       } else {
-        final x =
-            _diamondsPK.firstWhereOrNull((e) => e.userId == diamond.userId);
+        final x = _diamondsPK.firstWhereOrNull((e) => e.userId == diamond.userId);
         if (x == null) {
           _diamondsPK.value = [..._diamondsPK, diamond];
         } else {
@@ -687,8 +708,7 @@ class LiveChannelController {
       getLeaderBoard(_info.value.id);
       final gift = SentGiftResponse.fromJson(data as Map<String, Object?>);
       if (_enablePk.value) {
-        final member =
-            _members.firstWhereOrNull((e) => e.info.userID == gift.giver?.id);
+        final member = _members.firstWhereOrNull((e) => e.info.userID == gift.giver?.id);
         final ids = _giftMembers.map((e) => e.info.userID);
         if (member != null && !ids.contains(member.info.userID)) {
           _giftMembers.value = [..._giftMembers, member];
@@ -833,8 +853,7 @@ class LiveChannelController {
 
     socketService.on(socketPkStartEvent, (data) {
       if (_me.value.isOwner) {
-        Navigator.popUntil(AppCoordinator.rootNavigator.currentContext!,
-            (route) {
+        Navigator.popUntil(AppCoordinator.rootNavigator.currentContext!, (route) {
           if (route.settings.name == LiveWrapperScreen.routerName) {
             return true;
           }

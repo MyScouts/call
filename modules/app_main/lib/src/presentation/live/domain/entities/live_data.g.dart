@@ -30,6 +30,9 @@ LiveData _$LiveDataFromJson(Map<String, dynamic> json) => LiveData(
       pk: json['pk'] == null
           ? null
           : PkData.fromJson(json['pk'] as Map<String, dynamic>),
+      virtualInfo: json['virtualInfo'] == null
+          ? null
+          : VirtualInfo.fromJson(json['virtualInfo'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$LiveDataToJson(LiveData instance) => <String, dynamic>{
@@ -45,6 +48,7 @@ Map<String, dynamic> _$LiveDataToJson(LiveData instance) => <String, dynamic>{
       'medias': instance.medias,
       'categories': instance.categories,
       'pk': instance.pk,
+      'virtualInfo': instance.virtualInfo,
     };
 
 const _$LiveTypeEnumMap = {

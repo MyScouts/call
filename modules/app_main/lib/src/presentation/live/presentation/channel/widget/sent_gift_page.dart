@@ -267,6 +267,8 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
   }
 
   Widget buildDynamicGift() {
+    final controller = context.read<LiveChannelController>();
+    final times = controller.timesAnimation.value;
     return AnimatedBuilder(
         animation: controller2,
         builder: (context, snapshot) {
@@ -331,7 +333,7 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              'x${widget.giftNumber}',
+                              'x${widget.giftNumber - times + 1}',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
@@ -359,7 +361,7 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
                               widget.gift.giver.getAvatar,
                               width: 53,
                               height: 53,
-                              fit: BoxFit.fill,
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),

@@ -483,7 +483,7 @@ class _UserApi implements UserApi {
     )
             .compose(
               _dio.options,
-              '/api/v1/following/friend',
+              '/api/v1/following/friend?page=1&pageSize=200',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -510,7 +510,7 @@ class _UserApi implements UserApi {
     )
             .compose(
               _dio.options,
-              '/api/v1/following/followers',
+              '/api/v1/following/followers?page=1&pageSize=200',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -537,7 +537,7 @@ class _UserApi implements UserApi {
     )
             .compose(
               _dio.options,
-              '/api/v1/following/followees',
+              '/api/v1/following/followees?page=1&pageSize=200',
               queryParameters: queryParameters,
               data: _data,
             )
