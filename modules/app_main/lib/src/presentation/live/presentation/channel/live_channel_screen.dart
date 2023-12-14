@@ -642,7 +642,7 @@ class _LivePKRtc extends StatelessWidget {
                 );
               }
 
-              if (controller.pkData!.pk.hostID != controller.me.value.info.userID) {
+              if (!meInLive) {
                 return const Align(
                   alignment: Alignment.center,
                   child: SizedBox.shrink(),
