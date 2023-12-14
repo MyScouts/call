@@ -7,6 +7,7 @@ import 'package:app_main/src/presentation/dashboard/search/search_screen.dart';
 import 'package:app_main/src/presentation/dashboard/system_setting/system_setting.dart';
 import 'package:app_main/src/presentation/dashboard/widget/start_team_dialog.dart';
 import 'package:app_main/src/presentation/live/presentation/live_home/live_home_screen.dart';
+import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
@@ -99,6 +100,8 @@ extension DashBoardCoordinator on BuildContext {
         return Navigator.of(this).pushNamed(LiveHomeScreen.routeName);
       case "ic_buff":
         return _startPointAllAgency();
+      case "ic_marShop":
+        return startRegisterMarshop();
       default:
         if (path != null) {
           Navigator.of(this).pushNamed(path);

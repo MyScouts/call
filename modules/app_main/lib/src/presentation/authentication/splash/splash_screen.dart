@@ -2,7 +2,6 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/app/app_cubit.dart';
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
-import 'package:app_main/src/presentation/social/my_profile/my_profile_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,16 +49,20 @@ class _SplashScreenState extends State<SplashScreen> {
           }
         },
         builder: (context, state) {
-          return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 50),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ImageWidget(ImageConstants.bgAppLogo),
-                if (state is AppInitial || state is LoadingAppVersion)
-                  _buildLoading(),
-              ],
+          return PopScope(
+            canPop: false,
+            onPopInvoked: (didPop) => false,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 50),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ImageWidget(ImageConstants.bgAppLogo),
+                  if (state is AppInitial || state is LoadingAppVersion)
+                    _buildLoading(),
+                ],
+              ),
             ),
           );
         },
