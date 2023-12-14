@@ -31,13 +31,32 @@ extension GenderTypeExt on GenderType? {
   }
 }
 
+extension IntExt on int {
+  GenderType? toGender() {
+    switch (this) {
+      case 1:
+        return GenderType.male;
+      case 0:
+        return GenderType.female;
+      case 2:
+        return GenderType.other;
+      default:
+        return null;
+    }
+  }
+}
+
 class GenderInput extends StatefulWidget {
   final Function(int?) onChange;
   final bool required;
+  final bool disabled;
+  final GenderType? initVal;
   const GenderInput({
     super.key,
     required this.onChange,
     this.required = false,
+    this.disabled = false,
+    this.initVal,
   });
 
   @override
@@ -46,6 +65,14 @@ class GenderInput extends StatefulWidget {
 
 class _GenderInputState extends State<GenderInput> {
   GenderType? value;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.initVal != null) {
+      value = widget.initVal;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +101,8 @@ class _GenderInputState extends State<GenderInput> {
         DropdownButtonFormField2<GenderType>(
           isExpanded: true,
           decoration: InputDecoration(
+            fillColor: widget.disabled ? Colors.grey[200] : Colors.white,
+            filled: true,
             contentPadding: const EdgeInsets.symmetric(vertical: 12),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
@@ -95,19 +124,23 @@ class _GenderInputState extends State<GenderInput> {
                     ),
                   ))
               .toList(),
-          validator: (value) {
-            if (value == null) {
-              return 'Chọn giới tính.';
-            }
-            return null;
-          },
-          onChanged: (value) {
-            if (value != null) {
-              widget.onChange(value.toValue());
-              value = value;
-              setState(() {});
-            }
-          },
+          validator: widget.disabled
+              ? null
+              : (value) {
+                  if (value == null) {
+                    return 'Chọn giới tính.';
+                  }
+                  return null;
+                },
+          onChanged: widget.disabled
+              ? null
+              : (value) {
+                  if (value != null) {
+                    widget.onChange(value.toValue());
+                    value = value;
+                    setState(() {});
+                  }
+                },
           onSaved: (value) {
             value = value;
             setState(() {});
