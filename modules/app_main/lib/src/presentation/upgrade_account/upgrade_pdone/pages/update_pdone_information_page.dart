@@ -493,11 +493,9 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                                         countryName: 'VN',
                                         countryCode: '',
                                         address: birthPlaceAddressCtrl.text,
-                                        provinceName:
-                                            birthPlace?.province?.name ?? '',
-                                        districtName:
-                                            birthPlace?.district?.name,
-                                        wardName: birthPlace?.ward?.name),
+                                        provinceName: value.provinceName ?? '',
+                                        districtName: value.districtName ?? '',
+                                        wardName: value.wardName ?? ''),
                                   ),
                                 );
                               },
