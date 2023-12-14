@@ -180,7 +180,7 @@ class _ConfirmInfomationScreenState extends State<ConfirmInfomationScreen> {
                   .map((product) => BuildProductCard(
                         product: product,
                         packProd: products.firstWhere(
-                          (element) => element.id == product.id,
+                          (element) => element.id == product.id.toString(),
                         ),
                         onPriceChange: (prd) {
                           _totalPrice = widget.pack.price;
@@ -219,7 +219,7 @@ class BuildProductCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CachedNetworkImage(imageUrl: product.thumbnail[0]),
+        CachedNetworkImage(imageUrl: product.avatar),
         Text(
           product.name,
           softWrap: true,
@@ -238,7 +238,7 @@ class BuildProductCard extends StatelessWidget {
         QuantityButtonWidget(
           minVal: packProd.minQuantity,
           onChange: (qua) => onPriceChange(RegisterPackProductInfo(
-            id: product.id,
+            id: product.id.toString(),
             quantity: qua,
             price: product.price,
           )),

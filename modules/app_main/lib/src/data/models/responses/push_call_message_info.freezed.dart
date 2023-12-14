@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'push_call_message_info.dart';
 
@@ -37,7 +37,8 @@ mixin _$PushCallMessageInfo {
 abstract class $PushCallMessageInfoCopyWith<$Res> {
   factory $PushCallMessageInfoCopyWith(
           PushCallMessageInfo value, $Res Function(PushCallMessageInfo) then) =
-      _$PushCallMessageInfoCopyWithImpl<$Res>;
+      _$PushCallMessageInfoCopyWithImpl<$Res, PushCallMessageInfo>;
+  @useResult
   $Res call(
       {String? callId,
       int? serial,
@@ -51,14 +52,16 @@ abstract class $PushCallMessageInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PushCallMessageInfoCopyWithImpl<$Res>
+class _$PushCallMessageInfoCopyWithImpl<$Res, $Val extends PushCallMessageInfo>
     implements $PushCallMessageInfoCopyWith<$Res> {
   _$PushCallMessageInfoCopyWithImpl(this._value, this._then);
 
-  final PushCallMessageInfo _value;
   // ignore: unused_field
-  final $Res Function(PushCallMessageInfo) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? callId = freezed,
@@ -69,63 +72,66 @@ class _$PushCallMessageInfoCopyWithImpl<$Res>
     Object? projectId = freezed,
   }) {
     return _then(_value.copyWith(
-      callId: callId == freezed
+      callId: freezed == callId
           ? _value.callId
           : callId // ignore: cast_nullable_to_non_nullable
               as String?,
-      serial: serial == freezed
+      serial: freezed == serial
           ? _value.serial
           : serial // ignore: cast_nullable_to_non_nullable
               as int?,
-      callStatus: callStatus == freezed
+      callStatus: freezed == callStatus
           ? _value.callStatus
           : callStatus // ignore: cast_nullable_to_non_nullable
               as String?,
-      from: from == freezed
+      from: freezed == from
           ? _value.from
           : from // ignore: cast_nullable_to_non_nullable
               as CallUserInfo?,
-      to: to == freezed
+      to: freezed == to
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
               as CallUserInfo?,
-      projectId: projectId == freezed
+      projectId: freezed == projectId
           ? _value.projectId
           : projectId // ignore: cast_nullable_to_non_nullable
               as int?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $CallUserInfoCopyWith<$Res>? get from {
     if (_value.from == null) {
       return null;
     }
 
     return $CallUserInfoCopyWith<$Res>(_value.from!, (value) {
-      return _then(_value.copyWith(from: value));
+      return _then(_value.copyWith(from: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $CallUserInfoCopyWith<$Res>? get to {
     if (_value.to == null) {
       return null;
     }
 
     return $CallUserInfoCopyWith<$Res>(_value.to!, (value) {
-      return _then(_value.copyWith(to: value));
+      return _then(_value.copyWith(to: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$_PushCallMessageInfoCopyWith<$Res>
+abstract class _$$PushCallMessageInfoImplCopyWith<$Res>
     implements $PushCallMessageInfoCopyWith<$Res> {
-  factory _$$_PushCallMessageInfoCopyWith(_$_PushCallMessageInfo value,
-          $Res Function(_$_PushCallMessageInfo) then) =
-      __$$_PushCallMessageInfoCopyWithImpl<$Res>;
+  factory _$$PushCallMessageInfoImplCopyWith(_$PushCallMessageInfoImpl value,
+          $Res Function(_$PushCallMessageInfoImpl) then) =
+      __$$PushCallMessageInfoImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? callId,
       int? serial,
@@ -141,16 +147,14 @@ abstract class _$$_PushCallMessageInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PushCallMessageInfoCopyWithImpl<$Res>
-    extends _$PushCallMessageInfoCopyWithImpl<$Res>
-    implements _$$_PushCallMessageInfoCopyWith<$Res> {
-  __$$_PushCallMessageInfoCopyWithImpl(_$_PushCallMessageInfo _value,
-      $Res Function(_$_PushCallMessageInfo) _then)
-      : super(_value, (v) => _then(v as _$_PushCallMessageInfo));
+class __$$PushCallMessageInfoImplCopyWithImpl<$Res>
+    extends _$PushCallMessageInfoCopyWithImpl<$Res, _$PushCallMessageInfoImpl>
+    implements _$$PushCallMessageInfoImplCopyWith<$Res> {
+  __$$PushCallMessageInfoImplCopyWithImpl(_$PushCallMessageInfoImpl _value,
+      $Res Function(_$PushCallMessageInfoImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_PushCallMessageInfo get _value => super._value as _$_PushCallMessageInfo;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? callId = freezed,
@@ -160,28 +164,28 @@ class __$$_PushCallMessageInfoCopyWithImpl<$Res>
     Object? to = freezed,
     Object? projectId = freezed,
   }) {
-    return _then(_$_PushCallMessageInfo(
-      callId: callId == freezed
+    return _then(_$PushCallMessageInfoImpl(
+      callId: freezed == callId
           ? _value.callId
           : callId // ignore: cast_nullable_to_non_nullable
               as String?,
-      serial: serial == freezed
+      serial: freezed == serial
           ? _value.serial
           : serial // ignore: cast_nullable_to_non_nullable
               as int?,
-      callStatus: callStatus == freezed
+      callStatus: freezed == callStatus
           ? _value.callStatus
           : callStatus // ignore: cast_nullable_to_non_nullable
               as String?,
-      from: from == freezed
+      from: freezed == from
           ? _value.from
           : from // ignore: cast_nullable_to_non_nullable
               as CallUserInfo?,
-      to: to == freezed
+      to: freezed == to
           ? _value.to
           : to // ignore: cast_nullable_to_non_nullable
               as CallUserInfo?,
-      projectId: projectId == freezed
+      projectId: freezed == projectId
           ? _value.projectId
           : projectId // ignore: cast_nullable_to_non_nullable
               as int?,
@@ -191,8 +195,8 @@ class __$$_PushCallMessageInfoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PushCallMessageInfo implements _PushCallMessageInfo {
-  const _$_PushCallMessageInfo(
+class _$PushCallMessageInfoImpl implements _PushCallMessageInfo {
+  const _$PushCallMessageInfoImpl(
       {this.callId,
       this.serial,
       this.callStatus,
@@ -200,8 +204,8 @@ class _$_PushCallMessageInfo implements _PushCallMessageInfo {
       this.to,
       this.projectId});
 
-  factory _$_PushCallMessageInfo.fromJson(Map<String, dynamic> json) =>
-      _$$_PushCallMessageInfoFromJson(json);
+  factory _$PushCallMessageInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PushCallMessageInfoImplFromJson(json);
 
   @override
   final String? callId;
@@ -225,36 +229,32 @@ class _$_PushCallMessageInfo implements _PushCallMessageInfo {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PushCallMessageInfo &&
-            const DeepCollectionEquality().equals(other.callId, callId) &&
-            const DeepCollectionEquality().equals(other.serial, serial) &&
-            const DeepCollectionEquality()
-                .equals(other.callStatus, callStatus) &&
-            const DeepCollectionEquality().equals(other.from, from) &&
-            const DeepCollectionEquality().equals(other.to, to) &&
-            const DeepCollectionEquality().equals(other.projectId, projectId));
+            other is _$PushCallMessageInfoImpl &&
+            (identical(other.callId, callId) || other.callId == callId) &&
+            (identical(other.serial, serial) || other.serial == serial) &&
+            (identical(other.callStatus, callStatus) ||
+                other.callStatus == callStatus) &&
+            (identical(other.from, from) || other.from == from) &&
+            (identical(other.to, to) || other.to == to) &&
+            (identical(other.projectId, projectId) ||
+                other.projectId == projectId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(callId),
-      const DeepCollectionEquality().hash(serial),
-      const DeepCollectionEquality().hash(callStatus),
-      const DeepCollectionEquality().hash(from),
-      const DeepCollectionEquality().hash(to),
-      const DeepCollectionEquality().hash(projectId));
+  int get hashCode =>
+      Object.hash(runtimeType, callId, serial, callStatus, from, to, projectId);
 
   @JsonKey(ignore: true)
   @override
-  _$$_PushCallMessageInfoCopyWith<_$_PushCallMessageInfo> get copyWith =>
-      __$$_PushCallMessageInfoCopyWithImpl<_$_PushCallMessageInfo>(
+  @pragma('vm:prefer-inline')
+  _$$PushCallMessageInfoImplCopyWith<_$PushCallMessageInfoImpl> get copyWith =>
+      __$$PushCallMessageInfoImplCopyWithImpl<_$PushCallMessageInfoImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PushCallMessageInfoToJson(
+    return _$$PushCallMessageInfoImplToJson(
       this,
     );
   }
@@ -267,10 +267,10 @@ abstract class _PushCallMessageInfo implements PushCallMessageInfo {
       final String? callStatus,
       final CallUserInfo? from,
       final CallUserInfo? to,
-      final int? projectId}) = _$_PushCallMessageInfo;
+      final int? projectId}) = _$PushCallMessageInfoImpl;
 
   factory _PushCallMessageInfo.fromJson(Map<String, dynamic> json) =
-      _$_PushCallMessageInfo.fromJson;
+      _$PushCallMessageInfoImpl.fromJson;
 
   @override
   String? get callId;
@@ -286,7 +286,7 @@ abstract class _PushCallMessageInfo implements PushCallMessageInfo {
   int? get projectId;
   @override
   @JsonKey(ignore: true)
-  _$$_PushCallMessageInfoCopyWith<_$_PushCallMessageInfo> get copyWith =>
+  _$$PushCallMessageInfoImplCopyWith<_$PushCallMessageInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -312,7 +312,8 @@ mixin _$CallUserInfo {
 abstract class $CallUserInfoCopyWith<$Res> {
   factory $CallUserInfoCopyWith(
           CallUserInfo value, $Res Function(CallUserInfo) then) =
-      _$CallUserInfoCopyWithImpl<$Res>;
+      _$CallUserInfoCopyWithImpl<$Res, CallUserInfo>;
+  @useResult
   $Res call(
       {String? number,
       String? alias,
@@ -321,13 +322,16 @@ abstract class $CallUserInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CallUserInfoCopyWithImpl<$Res> implements $CallUserInfoCopyWith<$Res> {
+class _$CallUserInfoCopyWithImpl<$Res, $Val extends CallUserInfo>
+    implements $CallUserInfoCopyWith<$Res> {
   _$CallUserInfoCopyWithImpl(this._value, this._then);
 
-  final CallUserInfo _value;
   // ignore: unused_field
-  final $Res Function(CallUserInfo) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? number = freezed,
@@ -336,33 +340,34 @@ class _$CallUserInfoCopyWithImpl<$Res> implements $CallUserInfoCopyWith<$Res> {
     Object? type = freezed,
   }) {
     return _then(_value.copyWith(
-      number: number == freezed
+      number: freezed == number
           ? _value.number
           : number // ignore: cast_nullable_to_non_nullable
               as String?,
-      alias: alias == freezed
+      alias: freezed == alias
           ? _value.alias
           : alias // ignore: cast_nullable_to_non_nullable
               as String?,
-      isOnline: isOnline == freezed
+      isOnline: freezed == isOnline
           ? _value.isOnline
           : isOnline // ignore: cast_nullable_to_non_nullable
               as bool?,
-      type: type == freezed
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_CallUserInfoCopyWith<$Res>
+abstract class _$$CallUserInfoImplCopyWith<$Res>
     implements $CallUserInfoCopyWith<$Res> {
-  factory _$$_CallUserInfoCopyWith(
-          _$_CallUserInfo value, $Res Function(_$_CallUserInfo) then) =
-      __$$_CallUserInfoCopyWithImpl<$Res>;
+  factory _$$CallUserInfoImplCopyWith(
+          _$CallUserInfoImpl value, $Res Function(_$CallUserInfoImpl) then) =
+      __$$CallUserInfoImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? number,
       String? alias,
@@ -371,16 +376,14 @@ abstract class _$$_CallUserInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CallUserInfoCopyWithImpl<$Res>
-    extends _$CallUserInfoCopyWithImpl<$Res>
-    implements _$$_CallUserInfoCopyWith<$Res> {
-  __$$_CallUserInfoCopyWithImpl(
-      _$_CallUserInfo _value, $Res Function(_$_CallUserInfo) _then)
-      : super(_value, (v) => _then(v as _$_CallUserInfo));
+class __$$CallUserInfoImplCopyWithImpl<$Res>
+    extends _$CallUserInfoCopyWithImpl<$Res, _$CallUserInfoImpl>
+    implements _$$CallUserInfoImplCopyWith<$Res> {
+  __$$CallUserInfoImplCopyWithImpl(
+      _$CallUserInfoImpl _value, $Res Function(_$CallUserInfoImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_CallUserInfo get _value => super._value as _$_CallUserInfo;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? number = freezed,
@@ -388,20 +391,20 @@ class __$$_CallUserInfoCopyWithImpl<$Res>
     Object? isOnline = freezed,
     Object? type = freezed,
   }) {
-    return _then(_$_CallUserInfo(
-      number: number == freezed
+    return _then(_$CallUserInfoImpl(
+      number: freezed == number
           ? _value.number
           : number // ignore: cast_nullable_to_non_nullable
               as String?,
-      alias: alias == freezed
+      alias: freezed == alias
           ? _value.alias
           : alias // ignore: cast_nullable_to_non_nullable
               as String?,
-      isOnline: isOnline == freezed
+      isOnline: freezed == isOnline
           ? _value.isOnline
           : isOnline // ignore: cast_nullable_to_non_nullable
               as bool?,
-      type: type == freezed
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -411,15 +414,15 @@ class __$$_CallUserInfoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CallUserInfo implements _CallUserInfo {
-  const _$_CallUserInfo(
+class _$CallUserInfoImpl implements _CallUserInfo {
+  const _$CallUserInfoImpl(
       {this.number,
       this.alias,
       @JsonKey(name: 'is_online') this.isOnline,
       this.type});
 
-  factory _$_CallUserInfo.fromJson(Map<String, dynamic> json) =>
-      _$$_CallUserInfoFromJson(json);
+  factory _$CallUserInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CallUserInfoImplFromJson(json);
 
   @override
   final String? number;
@@ -440,30 +443,27 @@ class _$_CallUserInfo implements _CallUserInfo {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CallUserInfo &&
-            const DeepCollectionEquality().equals(other.number, number) &&
-            const DeepCollectionEquality().equals(other.alias, alias) &&
-            const DeepCollectionEquality().equals(other.isOnline, isOnline) &&
-            const DeepCollectionEquality().equals(other.type, type));
+            other is _$CallUserInfoImpl &&
+            (identical(other.number, number) || other.number == number) &&
+            (identical(other.alias, alias) || other.alias == alias) &&
+            (identical(other.isOnline, isOnline) ||
+                other.isOnline == isOnline) &&
+            (identical(other.type, type) || other.type == type));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(number),
-      const DeepCollectionEquality().hash(alias),
-      const DeepCollectionEquality().hash(isOnline),
-      const DeepCollectionEquality().hash(type));
+  int get hashCode => Object.hash(runtimeType, number, alias, isOnline, type);
 
   @JsonKey(ignore: true)
   @override
-  _$$_CallUserInfoCopyWith<_$_CallUserInfo> get copyWith =>
-      __$$_CallUserInfoCopyWithImpl<_$_CallUserInfo>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$CallUserInfoImplCopyWith<_$CallUserInfoImpl> get copyWith =>
+      __$$CallUserInfoImplCopyWithImpl<_$CallUserInfoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CallUserInfoToJson(
+    return _$$CallUserInfoImplToJson(
       this,
     );
   }
@@ -474,10 +474,10 @@ abstract class _CallUserInfo implements CallUserInfo {
       {final String? number,
       final String? alias,
       @JsonKey(name: 'is_online') final bool? isOnline,
-      final String? type}) = _$_CallUserInfo;
+      final String? type}) = _$CallUserInfoImpl;
 
   factory _CallUserInfo.fromJson(Map<String, dynamic> json) =
-      _$_CallUserInfo.fromJson;
+      _$CallUserInfoImpl.fromJson;
 
   @override
   String? get number;
@@ -490,6 +490,6 @@ abstract class _CallUserInfo implements CallUserInfo {
   String? get type;
   @override
   @JsonKey(ignore: true)
-  _$$_CallUserInfoCopyWith<_$_CallUserInfo> get copyWith =>
+  _$$CallUserInfoImplCopyWith<_$CallUserInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
