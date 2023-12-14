@@ -56,7 +56,7 @@ class LiveBottomAction extends StatelessWidget {
               children: [
                 Obx(() {
                   return SizedBox(
-                    height: controller.enablePk.value
+                    height: controller.liveType.value == LiveChannelType.pk
                         ? 194.h
                         : ScreenUtil().screenHeight / 3,
                     child: Row(
