@@ -5,31 +5,21 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/app_size.dart';
 import 'package:app_main/src/core/services/notification_center.dart';
 import 'package:app_main/src/core/utils/loading_indicator/platform_loading.dart';
-import 'package:app_main/src/presentation/live/domain/entities/live_pk_data.dart';
-import 'package:app_main/src/presentation/live/domain/entities/user_diamond_for_pk.dart';
 import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_bottom_action.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_channel_header.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_end_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/pip_video_render.dart';
-import 'package:app_main/src/presentation/live/presentation/channel/widget/pk_timer_builder.dart';
 import 'package:app_main/src/presentation/live/presentation/live_message/live_message_input.dart';
-import 'package:app_main/src/presentation/live/presentation/live_message/live_opacity_builder.dart';
 import 'package:app_main/src/presentation/live/presentation/live_message/state/live_message_bloc.dart';
 import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
 import 'package:app_main/src/presentation/live/presentation/pip/pip_view.dart';
 import 'package:app_main/src/presentation/live/presentation/pk/live_pk_screen.dart';
-import 'package:app_main/src/presentation/live/presentation/pk/widget/pk_diamond_process.dart';
-import 'package:app_main/src/presentation/live/presentation/pk/widget/pk_lose_builder.dart';
-import 'package:app_main/src/presentation/live/presentation/pk/widget/pk_user_gift_line.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:design_system/generated/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:imagewidget/imagewidget.dart';
 import 'package:provider/provider.dart';
 import 'widget/sent_gift_page.dart';
 import 'widget/video_play_virtual.dart';
@@ -144,9 +134,11 @@ class _LiveSimple extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        Obx(() => controller.virtualInfo.value != null
-            ? VideoApp(virtualInfo: controller.info.virtualInfo)
-            : const _RtcRender()),
+        Obx(
+          () => controller.virtualInfo.value != null
+              ? VideoApp(virtualInfo: controller.info.virtualInfo)
+              : const _RtcRender(),
+        ),
         const Align(
           alignment: Alignment.topCenter,
           child: SafeArea(child: LiveChannelHeader()),
