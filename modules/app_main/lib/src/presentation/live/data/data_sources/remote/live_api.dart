@@ -199,6 +199,9 @@ abstract class LiveApi {
   @GET(LiveApiConstant.stats)
   Future<ApiResponse<LivePkStatsRes>> stats(@Query('pkId') int id);
 
+  @DELETE(LiveApiConstant.startGame)
+  Future deleteGame(@Field('pkId') int pkID);
+
 //
 // @POST(LiveApiConstant.joinLive)
 // Future<ApiResponse<LiveResponse>> joinLive({

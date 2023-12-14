@@ -214,7 +214,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                                   alignment: Alignment.bottomCenter,
                                   child: GradiantButton(
                                     onPressed: handleExchangeTap,
-                                    child: const Text('Xác nhận'),
+                                    child: const Text('Xác nhận',  style: TextStyle(color: AppColors.white),),
                                   ),
                                 )
                               ],

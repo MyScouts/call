@@ -82,4 +82,6 @@ abstract class LiveRepository {
   Future readyGame(int id);
 
   Future<List<LivePkStats>> getStats(int pkID);
+
+  Future deleteGame(int pkID);
 }

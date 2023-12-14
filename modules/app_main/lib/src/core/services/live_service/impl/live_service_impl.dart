@@ -120,13 +120,11 @@ class LiveServiceImpl extends LiveService {
         uid: uid,
         options: ChannelMediaOptions(
           clientRoleType: role,
-          audienceLatencyLevel: isBroadcaster
-              ? null
-              : AudienceLatencyLevelType.audienceLatencyLevelUltraLowLatency,
           publishCameraTrack: isBroadcaster,
           publishMicrophoneTrack: isBroadcaster,
         ),
       );
+
     } catch (e) {
       throw Exception(e);
     }

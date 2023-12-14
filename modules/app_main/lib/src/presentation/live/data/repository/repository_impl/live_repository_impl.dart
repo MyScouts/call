@@ -201,4 +201,9 @@ class LiveRepositoryImpl extends LiveRepository {
     final res = await _liveApi.stats(pkID);
     return res.data.pkStats;
   }
+
+  @override
+  Future deleteGame(int pkID) {
+    return _liveApi.deletePK(pkID);
+  }
 }
