@@ -252,12 +252,14 @@ class LiveChannelController {
         value: this,
         child: PkConfigSheet(
           onGameStarted: (game) async {
-            repository.startGame({
-              'liveId': _info.value.id,
-              'roundCount': game.roundCount,
-              'roundDurationSecond': game.roundDurationSecond,
-              'roundTimeBreak': game.roundTimeBreak,
-            });
+            if(_pkStep.value == PkStep.pending) {
+              repository.startGame({
+                'liveId': _info.value.id,
+                'roundCount': game.roundCount,
+                'roundDurationSecond': game.roundDurationSecond,
+                'roundTimeBreak': game.roundTimeBreak,
+              });
+            }
           },
         ),
       ),
@@ -285,7 +287,9 @@ class LiveChannelController {
       _agora?.token ?? '',
       _agora?.channel ?? '',
       _me.value.info.userID,
-      role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
+      role: _me.value.isOwner
+          ? ClientRoleType.clientRoleBroadcaster
+          : ClientRoleType.clientRoleAudience,
     );
 
     _enablePk.value = false;
@@ -334,7 +338,9 @@ class LiveChannelController {
       _agora?.token ?? '',
       _agora?.channel ?? '',
       _me.value.info.userID,
-      role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
+      role: _me.value.isOwner
+          ? ClientRoleType.clientRoleBroadcaster
+          : ClientRoleType.clientRoleAudience,
     );
 
     _enablePk.value = true;
@@ -465,7 +471,9 @@ class LiveChannelController {
         _agora?.token ?? '',
         _agora?.channel ?? '',
         _me.value.info.userID,
-        role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
+        role: _me.value.isOwner
+            ? ClientRoleType.clientRoleBroadcaster
+            : ClientRoleType.clientRoleAudience,
       );
 
       _hostOffline.value = !hostInLive;
@@ -484,6 +492,7 @@ class LiveChannelController {
         if (_pkData!.latestRound != null) {
           _currentGameRound = _pkData!.latestRound;
           _pkStep.value = PkStep.started;
+          _getPkStats();
         }
       } else {
         _enablePk.value = false;
@@ -497,9 +506,21 @@ class LiveChannelController {
     }
   }
 
+  void _getPkStats() async {
+    if (_pkData == null) return;
+    final res = await repository.getStats(_pkData!.pk.id);
+    _diamondsPK.value = res
+        .map((e) => UserDiamondForPK(
+              userId: e.user.id ?? 0,
+              diamondCount: e.diamondCount,
+            ))
+        .toList();
+  }
+
   Future getMembersPk() async {
     final liveIds = _pkData?.lives.map((e) => e.id).toList() ?? [];
-    final resMembers = await Future.wait(liveIds.map((e) => getMembers(e)).toList());
+    final resMembers =
+        await Future.wait(liveIds.map((e) => getMembers(e)).toList());
 
     _members.value = [...resMembers.first, ...resMembers.last];
   }
@@ -576,7 +597,8 @@ class LiveChannelController {
       androidNotificationOptions: AndroidNotificationOptions(
         channelId: 'notification_channel_id',
         channelName: 'Foreground Notification',
-        channelDescription: 'This notification appears when the foreground service is running.',
+        channelDescription:
+            'This notification appears when the foreground service is running.',
         channelImportance: NotificationChannelImportance.LOW,
         priority: NotificationPriority.LOW,
         iconData: const NotificationIconData(
@@ -655,6 +677,7 @@ class LiveChannelController {
 
     socketService.on(socketPkRoundFinishEvent, (Map data) {
       debugPrint('$socketPkRoundFinishEvent ===> ${data['round']}');
+      _pkStep.value = PkStep.end;
     });
 
     socketService.on(socketPkGiftUpdatedEvent, (Map data) {
@@ -863,6 +886,9 @@ class LiveChannelController {
           if (route.settings.name == LiveChannelScreen.routerName) {
             return true;
           }
+          if (route.settings.name == JoinChannelPasswordProvider.routerName) {
+            return true;
+          }
           return false;
         });
       }
@@ -954,13 +980,18 @@ class LiveChannelController {
 }
 
 extension RemoteVideoStateReasonX on RemoteVideoStateReason {
-  bool get isNetworkCongestion => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
+  bool get isNetworkCongestion =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
 
-  bool get isNetworkRecovery => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
+  bool get isNetworkRecovery =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
 
-  bool get isRemoteOffline => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
+  bool get isRemoteOffline =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
 
-  bool get isRemoteUnmuted => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
+  bool get isRemoteUnmuted =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
 
-  bool get isRemoteInBackground => this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
+  bool get isRemoteInBackground =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
 }

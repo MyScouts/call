@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/live/data/model/response/live_pk_stats.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_category_detail.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_pk_data.dart';
@@ -79,4 +80,6 @@ abstract class LiveRepository {
   Future startGame(Map<String, dynamic> json);
 
   Future readyGame(int id);
+
+  Future<List<LivePkStats>> getStats(int pkID);
 }
