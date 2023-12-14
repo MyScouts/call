@@ -3,7 +3,7 @@ import 'package:localization/localization.dart';
 import '../../app_core.dart';
 
 RegExp phoneRegex = RegExp(r'^\d{10}$');
-RegExp passwordRegex = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$');
+RegExp passwordRegex = RegExp(r'^(?=.*[A-Z])(?=.*[0-9]).{8,}$');
 
 class ValidationHelper {
   static String? phone(String? value) {

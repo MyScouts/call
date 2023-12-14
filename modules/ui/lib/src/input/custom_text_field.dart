@@ -32,25 +32,22 @@ class _CustomTextFieldState extends State<CustomTextField> {
   bool _isError = false;
 
   @override
-  void initState() {
-    super.initState();
-    widget.controller.addListener(() {
-      if (widget.validator != null) {
-        String? error = widget.validator!(widget.controller.text);
-        _isError = error != null;
-        setState(() {});
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return TextFormField(
       key: widget.key,
       controller: widget.controller,
       obscureText: widget.isPassword && !isShowPassword,
       autocorrect: !widget.isPassword,
-      onChanged: widget.onChange,
+      onChanged: (value) {
+        if (widget.onChange != null) {
+          widget.onChange!(value);
+        }
+        if (widget.validator != null) {
+          final String? error = widget.validator!(widget.controller.text);
+          _isError = error != null;
+          setState(() {});
+        }
+      },
       keyboardType: widget.textInputType,
       enableSuggestions: !widget.isPassword,
       autovalidateMode: AutovalidateMode.onUserInteraction,
