@@ -2,12 +2,8 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/app_size.dart';
 import 'package:app_main/src/core/services/stringee/player_manager/single_player_manager.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
-import 'package:app_main/src/presentation/call/1vs1/views/pip_call_render.dart';
-import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
-import 'package:app_main/src/presentation/live/presentation/pip/pip_view.dart';
 import 'package:design_system/design_system.dart';
 import 'package:easy_audio/easy_audio.dart';
 import 'package:flutter/material.dart';
@@ -199,7 +195,8 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with Single
   Widget _buildAppbarByState(Call1vs1State state) {
     return Row(
       children: [
-        const SizedBox(),
+        kSpacingWidth16,
+        const SizedBox(width: 40,),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
