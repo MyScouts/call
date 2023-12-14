@@ -6,6 +6,7 @@ import 'package:app_main/src/presentation/social/following/blocs/following_tab_e
 import 'package:app_main/src/presentation/social/following/blocs/following_tab_state.dart';
 import 'package:app_main/src/presentation/social/following/following_constants.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
+import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -116,48 +117,53 @@ class _FollowingTabState extends State<FollowingTab>
     final displayName =
         followingUser == null ? 'Người bí ẩn' : followingUser.getDisplayName;
 
-    return Container(
-      height: 68,
-      margin: const EdgeInsets.only(bottom: 4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          ProfileAvatar(
-            avatarUrl: followingUser.getAvatar,
-            size: 44,
-            isPDone: followingUserType.isPDone,
-            fontSize: 12,
-            profileTypePadding: 2,
-            avatarPadding: 3,
-            backgroundColor: AppColors.blueEdit,
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  displayName,
-                  style: context.text.titleMedium!.copyWith(fontSize: 16),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  followingUser.getPDoneId,
-                  style: context.text.titleSmall!.copyWith(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
+    return GestureDetector(
+      onTap: (){
+        context.startDiary(userId: followingUser.getUserId.toString());
+      },
+      child: Container(
+        height: 68.h,
+        margin: const EdgeInsets.only(bottom: 4),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            ProfileAvatar(
+              avatarUrl: followingUser.getAvatar,
+              size: 44,
+              isPDone: followingUserType.isPDone,
+              fontSize: 12,
+              profileTypePadding: 2,
+              avatarPadding: 3,
+              backgroundColor: AppColors.blueEdit,
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    displayName,
+                    style: context.text.titleMedium!.copyWith(fontSize: 16),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 2),
+                  Text(
+                    followingUser.getPDoneId,
+                    style: context.text.titleSmall!.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          if (followingUser != null && followingRelation != null)
-            _buildButtonByType(
-              followingRelation: followingRelation,
-              followingUser: followingUser,
-            ),
-        ],
+            if (followingUser != null && followingRelation != null)
+              _buildButtonByType(
+                followingRelation: followingRelation,
+                followingUser: followingUser,
+              ),
+          ],
+        ),
       ),
     );
   }
