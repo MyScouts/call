@@ -86,7 +86,7 @@ class NotificationCard extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                data.title,
+                data.body,
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
