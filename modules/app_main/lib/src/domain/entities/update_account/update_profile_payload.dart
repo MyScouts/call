@@ -15,7 +15,7 @@ class UpdateProfilePayload with _$UpdateProfilePayload {
     @JsonKey(includeIfNull: false) String? firstName,
     @JsonKey(includeIfNull: false) String? lastName,
     @JsonKey(includeIfNull: false) String? middleName,
-    @JsonKey(includeIfNull: false) String? nickname,
+    @JsonKey(includeIfNull: false) String? nickName,
     @JsonKey(includeIfNull: false) int? sex,
     @JsonKey(includeIfNull: false) String? birthday,
     @JsonKey(includeIfNull: false) UpdatePDoneBirthPlacePayload? birthPlace,
