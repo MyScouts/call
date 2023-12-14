@@ -84,18 +84,18 @@ class LiveToolsSheet extends StatelessWidget {
                     icon: Assets.icons_lives_switch_came.svg(),
                     action: controller.switchCamera,
                   ),
-                  if(controller.info.pk == null)
-                  _Item(
-                    title: 'Mời DK',
-                    icon: Assets.icons_lives_pk.svg(),
-                    action: () {
-                      Navigator.of(context).pop();
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (_) => const PkInviteScreen(),
-                      );
-                    },
-                  ),
+                  // if(controller.info.pk == null)
+                  // _Item(
+                  //   title: 'Mời DK',
+                  //   icon: Assets.icons_lives_pk.svg(),
+                  //   action: () {
+                  //     Navigator.of(context).pop();
+                  //     showModalBottomSheet(
+                  //       context: context,
+                  //       builder: (_) => const PkInviteScreen(),
+                  //     );
+                  //   },
+                  // ),
                   _Item(
                     title: 'MarShop',
                     icon: Assets.icons_lives_marshop.svg(),
