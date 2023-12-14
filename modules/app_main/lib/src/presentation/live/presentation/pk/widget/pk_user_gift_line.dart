@@ -40,41 +40,44 @@ class _PkUserGiftLineState extends State<PkUserGiftLine> {
       }
 
       rightMembers =
-          members.where((e) => e.liveID == controller.info.id).toList();
+          members.where((e) => e.liveID != controller.info.id).toList();
 
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Row(
-          children: [
-            Expanded(
-              child: Stack(
-                fit: StackFit.expand,
-                children: leftMembers
-                    .take(10)
-                    .map<Widget>((e) => Positioned(
-                          left: (18 * leftMembers.indexOf(e)).toDouble(),
-                          child: _Avatar(url: e.info.avatar),
-                        ))
-                    .toList()
-                    .separated(const SizedBox(width: 4)),
+      return SizedBox(
+        height: 48,
+        child:Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          child: Row(
+            children: [
+              Expanded(
+                child: Stack(
+                  children: leftMembers
+                      .take(10)
+                      .map<Widget>((e) => Positioned(
+                    top: 0,
+                    left: (18 * leftMembers.indexOf(e)).toDouble(),
+                    child: _Avatar(url: e.info.avatar),
+                  ))
+                      .toList()
+                      .separated(const SizedBox(width: 4)),
+                ),
               ),
-            ),
-            Expanded(
-              child: Stack(
-                fit: StackFit.expand,
-                children: rightMembers
-                    .take(10)
-                    .map<Widget>(
-                      (e) => Positioned(
-                        right: (18 * rightMembers.indexOf(e)).toDouble(),
-                        child: _Avatar(url: e.info.avatar),
-                      ),
-                    )
-                    .toList()
-                    .separated(const SizedBox(width: 4)),
+              Expanded(
+                child: Stack(
+                  children: rightMembers
+                      .take(10)
+                      .map<Widget>(
+                        (e) => Positioned(
+                      top: 0,
+                      right: (18 * rightMembers.indexOf(e)).toDouble(),
+                      child: _Avatar(url: e.info.avatar),
+                    ),
+                  )
+                      .toList()
+                      .separated(const SizedBox(width: 4)),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     });
@@ -88,14 +91,10 @@ class _Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        border: Border.all(color: const Color(0xffFFB800), width: 1.5),
-      ),
-      child: CircleNetworkImage(
-        url: url,
-        size: 29,
-      ),
+    return CircleNetworkImage(
+      url: url,
+      size: 29,
+      border: Border.all(color: const Color(0xffFFB800), width: 1.5),
     );
   }
 }

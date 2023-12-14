@@ -121,6 +121,7 @@ dependencies:
   detectable_text_field: ^3.0.2
   auto_animated_list:
     path: ../auto_animated_list
+  video_player: ^2.8.1
   
 dev_dependencies:
   flutter_test:

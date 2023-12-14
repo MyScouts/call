@@ -33,6 +33,8 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
   late final controller = context.read<LiveChannelController>();
   late final LiveMessageBloc commentController;
 
+  final UserActionCubit _actionBloc = injector.get<UserActionCubit>();
+
   @override
   void initState() {
     commentController = context.read<LiveMessageBloc>();
@@ -81,7 +83,9 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                         if (host == null || host.info.avatar.trim().isEmpty)
                           GestureDetector(
                             onTap: () {
-                              context.startSelectUser(userId: host!.info.userID);
+                              context.startSelectUser(userId: host!.info.userID).then((value) {
+                                _actionBloc.getFollowUser(userId: host.info.userID);
+                              });
                             },
                             child: SizedBox.square(
                               dimension: 28,
@@ -96,7 +100,9 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                         else
                           GestureDetector(
                             onTap: () {
-                              context.startSelectUser(userId: host.info.userID);
+                              context.startSelectUser(userId: host.info.userID).then((value) {
+                                _actionBloc.getFollowUser(userId: host.info.userID);
+                              });
                             },
                             child: CircleNetworkImage(
                               url: host.info.avatar,
@@ -146,8 +152,12 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                           if (host == null) {
                             return const SizedBox();
                           }
+                          if (controller.me.value.isOwner) {
+                            return const SizedBox();
+                          }
                           return LiveButtonAddFriend(
                             id: host.info.userID,
+                            cubit: _actionBloc,
                           );
                         }),
                       ],
@@ -250,8 +260,8 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                       builder: (_) => LeaveLiveConfirm(
                         onRemoved: () {
                           controller.leaveLive();
-                          if(controller.me.value.isOwner) {
-                            if(!controller.enablePk.value) {
+                          if (controller.me.value.isOwner) {
+                            if (!controller.enablePk.value) {
                               Navigator.of(context).pop();
                               Future.delayed(
                                 const Duration(seconds: 1),
@@ -281,9 +291,10 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
 }
 
 class LiveButtonAddFriend extends StatefulWidget {
+  final UserActionCubit cubit;
   final int id;
 
-  const LiveButtonAddFriend({super.key, required this.id});
+  const LiveButtonAddFriend({super.key, required this.id, required this.cubit});
 
   @override
   State<LiveButtonAddFriend> createState() => _LiveButtonAddFriendState();
@@ -291,13 +302,14 @@ class LiveButtonAddFriend extends StatefulWidget {
 
 class _LiveButtonAddFriendState extends State<LiveButtonAddFriend> {
   final ValueNotifier<bool> _friendStatus = ValueNotifier(false);
-  final UserActionCubit _actionBloc = injector.get<UserActionCubit>();
+  late UserActionCubit _actionBloc;
 
   final ValueNotifier<GetUserFollowDetailResponse?> _followInfo = ValueNotifier(null);
 
   @override
   void initState() {
     super.initState();
+    _actionBloc = widget.cubit;
     _actionBloc.getFollowUser(userId: widget.id);
   }
 
@@ -350,10 +362,10 @@ class _LiveButtonAddFriendState extends State<LiveButtonAddFriend> {
               final relation = value?.relation;
               if (relation?.isFollower == false) {
                 return GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     context.read<UserActionCubit>().followUser(
-                      payload: FollowUserPayload(followeeId: widget.id),
-                    );
+                          payload: FollowUserPayload(followeeId: widget.id),
+                        );
                   },
                   child: Container(
                     height: 28,
