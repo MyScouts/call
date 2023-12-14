@@ -21,6 +21,9 @@ UserProfileInfo _$UserProfileInfoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UserProfileInfo {
   DateTime? get birthday => throw _privateConstructorUsedError;
+  String? get firstName => throw _privateConstructorUsedError;
+  String? get middleName => throw _privateConstructorUsedError;
+  String? get lastName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +37,11 @@ abstract class $UserProfileInfoCopyWith<$Res> {
           UserProfileInfo value, $Res Function(UserProfileInfo) then) =
       _$UserProfileInfoCopyWithImpl<$Res, UserProfileInfo>;
   @useResult
-  $Res call({DateTime? birthday});
+  $Res call(
+      {DateTime? birthday,
+      String? firstName,
+      String? middleName,
+      String? lastName});
 }
 
 /// @nodoc
@@ -51,12 +58,27 @@ class _$UserProfileInfoCopyWithImpl<$Res, $Val extends UserProfileInfo>
   @override
   $Res call({
     Object? birthday = freezed,
+    Object? firstName = freezed,
+    Object? middleName = freezed,
+    Object? lastName = freezed,
   }) {
     return _then(_value.copyWith(
       birthday: freezed == birthday
           ? _value.birthday
           : birthday // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      firstName: freezed == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      middleName: freezed == middleName
+          ? _value.middleName
+          : middleName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastName: freezed == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -69,7 +91,11 @@ abstract class _$$UserProfileInfoImplCopyWith<$Res>
       __$$UserProfileInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({DateTime? birthday});
+  $Res call(
+      {DateTime? birthday,
+      String? firstName,
+      String? middleName,
+      String? lastName});
 }
 
 /// @nodoc
@@ -84,12 +110,27 @@ class __$$UserProfileInfoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? birthday = freezed,
+    Object? firstName = freezed,
+    Object? middleName = freezed,
+    Object? lastName = freezed,
   }) {
     return _then(_$UserProfileInfoImpl(
       birthday: freezed == birthday
           ? _value.birthday
           : birthday // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      firstName: freezed == firstName
+          ? _value.firstName
+          : firstName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      middleName: freezed == middleName
+          ? _value.middleName
+          : middleName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastName: freezed == lastName
+          ? _value.lastName
+          : lastName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -97,17 +138,24 @@ class __$$UserProfileInfoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$UserProfileInfoImpl implements _UserProfileInfo {
-  const _$UserProfileInfoImpl({this.birthday});
+  const _$UserProfileInfoImpl(
+      {this.birthday, this.firstName, this.middleName, this.lastName});
 
   factory _$UserProfileInfoImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserProfileInfoImplFromJson(json);
 
   @override
   final DateTime? birthday;
+  @override
+  final String? firstName;
+  @override
+  final String? middleName;
+  @override
+  final String? lastName;
 
   @override
   String toString() {
-    return 'UserProfileInfo(birthday: $birthday)';
+    return 'UserProfileInfo(birthday: $birthday, firstName: $firstName, middleName: $middleName, lastName: $lastName)';
   }
 
   @override
@@ -116,12 +164,19 @@ class _$UserProfileInfoImpl implements _UserProfileInfo {
         (other.runtimeType == runtimeType &&
             other is _$UserProfileInfoImpl &&
             (identical(other.birthday, birthday) ||
-                other.birthday == birthday));
+                other.birthday == birthday) &&
+            (identical(other.firstName, firstName) ||
+                other.firstName == firstName) &&
+            (identical(other.middleName, middleName) ||
+                other.middleName == middleName) &&
+            (identical(other.lastName, lastName) ||
+                other.lastName == lastName));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, birthday);
+  int get hashCode =>
+      Object.hash(runtimeType, birthday, firstName, middleName, lastName);
 
   @JsonKey(ignore: true)
   @override
@@ -139,14 +194,23 @@ class _$UserProfileInfoImpl implements _UserProfileInfo {
 }
 
 abstract class _UserProfileInfo implements UserProfileInfo {
-  const factory _UserProfileInfo({final DateTime? birthday}) =
-      _$UserProfileInfoImpl;
+  const factory _UserProfileInfo(
+      {final DateTime? birthday,
+      final String? firstName,
+      final String? middleName,
+      final String? lastName}) = _$UserProfileInfoImpl;
 
   factory _UserProfileInfo.fromJson(Map<String, dynamic> json) =
       _$UserProfileInfoImpl.fromJson;
 
   @override
   DateTime? get birthday;
+  @override
+  String? get firstName;
+  @override
+  String? get middleName;
+  @override
+  String? get lastName;
   @override
   @JsonKey(ignore: true)
   _$$UserProfileInfoImplCopyWith<_$UserProfileInfoImpl> get copyWith =>

@@ -162,7 +162,7 @@ class _MyProfileScreenState extends State<MyProfileScreen>
         builder: (context, snapshot) {
           return MedialTabBar(
             index: _medialTabController.index,
-            onChange:_onChangeMedialTab,
+            onChange: _onChangeMedialTab,
           );
         },
       ),
@@ -243,7 +243,7 @@ class _MyProfileScreenState extends State<MyProfileScreen>
     required bool isShowMedia,
   }) async {
     final index = postType.index;
-      _onChangeMedialTab(index);
+    _onChangeMedialTab(index);
 
     final data = await context.startCreatePost(
       postType: postType,
@@ -348,7 +348,7 @@ class _MyProfileScreenState extends State<MyProfileScreen>
           initialData: isScrolled,
           builder: (context, snapshot) {
             return IconButton(
-              icon: Icon(Icons.arrow_back_ios,
+              icon: Icon(Icons.arrow_back,
                   color: isScrolled ? AppColors.black : AppColors.white),
               onPressed: () => Navigator.of(context).pop(),
             );
@@ -370,36 +370,42 @@ class _MyProfileScreenState extends State<MyProfileScreen>
                     return TextField(
                       cursorColor: Colors.white,
                       decoration: InputDecoration(
-                        hintText: " Search...",
+                        hintText: "Tìm kiếm",
                         focusedBorder: outlineBorderRadius,
                         enabledBorder: outlineBorderRadius,
                         errorBorder: outlineBorderRadius,
                         disabledBorder: outlineBorderRadius,
                         border: outlineBorderRadius,
                         filled: true,
-                        prefixIcon: IconButton(
-                          icon: Icon(
-                            Icons.search,
+                        prefixIcon: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: ImageWidget(
+                            IconAppConstants.icSearch,
                             color: isScrolled
                                 ? AppColors.grey77
                                 : AppColors.grey80.withOpacity(0.7),
-                            size: 20,
+                            fit: BoxFit.cover,
                           ),
-                          onPressed: () {},
+                        ),
+                        prefixIconConstraints:
+                            const BoxConstraints(maxHeight: 20),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 12,
                         ),
                         fillColor: isScrolled
                             ? AppColors.grey71
                             : AppColors.black13.withOpacity(0.7),
                       ),
-                      style: const TextStyle(
-                        color: AppColors.grey80,
+                      style: TextStyle(
+                        color: AppColors.grey80.withOpacity(0.7),
                         fontSize: 16.0,
                       ),
                     );
                   }),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               child: InkWell(
                 onTap: () {
                   context.startDashboardUtil();
@@ -407,7 +413,7 @@ class _MyProfileScreenState extends State<MyProfileScreen>
                 child: const Icon(
                   Icons.close,
                   color: AppColors.black,
-                  size: 24,
+                  size: 28,
                 ),
               ),
             ),

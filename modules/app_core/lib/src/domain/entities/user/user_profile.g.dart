@@ -12,10 +12,16 @@ _$UserProfileInfoImpl _$$UserProfileInfoImplFromJson(
       birthday: json['birthday'] == null
           ? null
           : DateTime.parse(json['birthday'] as String),
+      firstName: json['firstName'] as String?,
+      middleName: json['middleName'] as String?,
+      lastName: json['lastName'] as String?,
     );
 
 Map<String, dynamic> _$$UserProfileInfoImplToJson(
         _$UserProfileInfoImpl instance) =>
     <String, dynamic>{
       'birthday': instance.birthday?.toIso8601String(),
+      'firstName': instance.firstName,
+      'middleName': instance.middleName,
+      'lastName': instance.lastName,
     };
