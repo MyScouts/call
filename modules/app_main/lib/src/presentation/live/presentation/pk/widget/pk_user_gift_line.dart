@@ -19,32 +19,17 @@ class _PkUserGiftLineState extends State<PkUserGiftLine> {
   Widget build(BuildContext context) {
     final controller = context.read<LiveChannelController>();
     return Obx(() {
-      final meInLive = controller.pkData!.lives.firstWhereOrNull(
-              (e) => e.user!.id == controller.me.value.info.userID) !=
-          null;
-
-      LiveData? host;
-      List<LiveMember> leftMembers = [];
-      List<LiveMember> rightMembers = [];
-
       final members = controller.giftMembers.value;
 
-      if (meInLive) {
-        host = controller.pkData!.lives.firstWhereOrNull(
-            (e) => e.user!.id != controller.me.value.info.userID);
-        leftMembers = members.where((e) => e.liveID == host?.id).toList();
-      } else {
-        host = controller.pkData!.lives
-            .firstWhereOrNull((e) => e.user!.id != controller.hostID);
-        leftMembers = members.where((e) => e.liveID == host?.id).toList();
-      }
-
-      rightMembers =
-          members.where((e) => e.liveID != controller.info.id).toList();
+      List<LiveMember> leftMembers =
+          members.where((e) => e.liveID == controller.info.id).toList();
+      List<LiveMember> rightMembers =
+          members.where((e) => e.liveID == controller.liveOtherID).toList();
 
       return SizedBox(
         height: 48,
-        child:Padding(
+        width: double.infinity,
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
           child: Row(
             children: [
@@ -53,10 +38,10 @@ class _PkUserGiftLineState extends State<PkUserGiftLine> {
                   children: leftMembers
                       .take(10)
                       .map<Widget>((e) => Positioned(
-                    top: 0,
-                    left: (18 * leftMembers.indexOf(e)).toDouble(),
-                    child: _Avatar(url: e.info.avatar),
-                  ))
+                            top: 0,
+                            left: (18 * leftMembers.indexOf(e)).toDouble(),
+                            child: _Avatar(url: e.info.avatar),
+                          ))
                       .toList()
                       .separated(const SizedBox(width: 4)),
                 ),
@@ -67,11 +52,11 @@ class _PkUserGiftLineState extends State<PkUserGiftLine> {
                       .take(10)
                       .map<Widget>(
                         (e) => Positioned(
-                      top: 0,
-                      right: (18 * rightMembers.indexOf(e)).toDouble(),
-                      child: _Avatar(url: e.info.avatar),
-                    ),
-                  )
+                          top: 0,
+                          right: (18 * rightMembers.indexOf(e)).toDouble(),
+                          child: _Avatar(url: e.info.avatar),
+                        ),
+                      )
                       .toList()
                       .separated(const SizedBox(width: 4)),
                 ),

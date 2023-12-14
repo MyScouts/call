@@ -193,7 +193,8 @@ class LiveChannelController {
   final liveState = const GiftCardLive().obs;
 
   LiveMember? get host {
-    final host = _members.firstWhereOrNull((e) => e.isOwner);
+    final host = _members
+        .firstWhereOrNull((e) => e.isOwner && e.liveID == _info.value.id);
     return host;
   }
 
@@ -212,7 +213,8 @@ class LiveChannelController {
 
   int get hostID {
     if (_me.value.isOwner) return _me.value.info.userID;
-    final host = _members.firstWhereOrNull((e) => e.isOwner);
+    final host = _members
+        .firstWhereOrNull((e) => e.isOwner && e.liveID == _info.value.id);
     return host!.info.userID;
   }
 
@@ -706,10 +708,11 @@ class LiveChannelController {
       debugPrint('$socketPkRoundFinishEvent ===> ${data['round']}');
       _pkStep.value = PkStep.end;
       if (_timer != null) _timer?.cancel();
-      _timer = Timer.periodic(const Duration(seconds: 30), (timer) {
+      _timer = Timer.periodic(const Duration(minutes: 5), (timer) {
         _pkStep.value = PkStep.pending;
         _diamondsPK.value = [];
         _giftMembers.value = [];
+        _timer?.cancel();
       });
     });
 
