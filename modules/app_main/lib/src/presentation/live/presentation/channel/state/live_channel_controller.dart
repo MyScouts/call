@@ -293,7 +293,6 @@ class LiveChannelController {
     _roomInfoFetching.value = true;
     final res = await repository.joinLive(id: id, password: _password);
     _info.value = res.data;
-    _liveType.value = LiveChannelType.normal;
     for (final i in res.agoraData) {
       if (i.uid == null) continue;
       if (_me.value.isOwner && i.type == 1) _agora = i;
@@ -317,6 +316,8 @@ class LiveChannelController {
     );
 
     LiveManageState.hostID.value = hostID;
+
+    _liveType.value = LiveChannelType.normal;
   }
 
   BuildContext get context => AppContext.scaffoldContext;
