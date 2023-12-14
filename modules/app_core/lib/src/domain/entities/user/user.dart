@@ -139,7 +139,7 @@ extension UserExtNull on User? {
 }
 
 const _userDefaultName = 'PDone User';
-const _userDefaultEmail = 'pdoneuser@gmail.com';
+const _userDefaultEmail = ' ';
 const _userDefaultNickname = '';
 const _userDefaultBirthday = '01/01/2000';
 const _userDefaultAddress = 'default';
