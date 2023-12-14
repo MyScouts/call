@@ -81,7 +81,7 @@ class _PaymentInformationState extends State<PaymentInformationScreen> {
                   onPressed: () {
                     context.startChat(widget.agency.user?.id ?? 0);
                   },
-                  child: const Text('Liên hệ'),
+                  child: const Text('Liên hệ',  style: TextStyle(color: AppColors.white),),
                 ),
               ),
               const SizedBox(
