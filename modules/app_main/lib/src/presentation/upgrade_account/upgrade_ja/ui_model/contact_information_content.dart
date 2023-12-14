@@ -1,12 +1,11 @@
-import 'dart:developer';
-
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/ui_model/ja_contract_content_ui_model.dart';
 import 'package:app_core/app_core.dart';
 import 'package:pdf/widgets.dart';
 import 'contract_ui_model.dart';
 import 'default_textstyle.dart';
 
-List<ContactPointInformationUIModel> getContactPointInformation(JAContractContentUIModel model) {
+List<ContactPointInformationUIModel> getContactPointInformation(
+    JAContractContentUIModel model) {
   return [
     ContactPointInformationUIModel(
       title: 'CÔNG TY CỔ PHẦN TẬP ĐOÀN CÔNG NGHỆ VIPTAM',
@@ -59,12 +58,12 @@ List<ContactPointInformationUIModel> getContactPointInformation(JAContractConten
     ),
     ContactPointInformationUIModel(
       title: 'ÔNG/BÀ ${model.pDoneInformationData?.fullName}',
-      footer: 'Sau đây gọi  là “Bên B”',
+      footer: 'Sau đây gọi là “Bên B”',
       contents: [
         ContactPointInformationRowUIModel(
           title: 'Sinh ngày',
           value: TextSpan(
-            text: model.user.getBirthday.getDisplayDate(),
+            text: model.pDoneInformationData?.birthday?.getDisplayDate(),
             style: defaultTextStyle,
           ),
         ),
@@ -85,8 +84,10 @@ List<ContactPointInformationUIModel> getContactPointInformation(JAContractConten
         ),
         ContactPointInformationRowUIModel(
           title: 'Chỗ ở hiện tại',
-          value: TextSpan(text: '${model.pDoneInformationData?.currentPlace?.fullAddress}',
-            style: defaultTextStyle,),
+          value: TextSpan(
+            text: '${model.pDoneInformationData?.currentPlace?.fullAddress}',
+            style: defaultTextStyle,
+          ),
         ),
         ContactPointInformationRowUIModel(
           title: 'ĐT',
