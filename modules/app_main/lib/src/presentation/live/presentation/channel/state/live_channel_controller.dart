@@ -252,12 +252,14 @@ class LiveChannelController {
         value: this,
         child: PkConfigSheet(
           onGameStarted: (game) async {
-            repository.startGame({
-              'liveId': _info.value.id,
-              'roundCount': game.roundCount,
-              'roundDurationSecond': game.roundDurationSecond,
-              'roundTimeBreak': game.roundTimeBreak,
-            });
+            if(_pkStep.value == PkStep.pending) {
+              repository.startGame({
+                'liveId': _info.value.id,
+                'roundCount': game.roundCount,
+                'roundDurationSecond': game.roundDurationSecond,
+                'roundTimeBreak': game.roundTimeBreak,
+              });
+            }
           },
         ),
       ),

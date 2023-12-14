@@ -649,13 +649,6 @@ class _LivePKRtc extends StatelessWidget {
                 );
               }
 
-              if (!meInLive) {
-                return const Align(
-                  alignment: Alignment.center,
-                  child: SizedBox.shrink(),
-                );
-              }
-
               return Positioned(
                 top: 0,
                 bottom: 0,
