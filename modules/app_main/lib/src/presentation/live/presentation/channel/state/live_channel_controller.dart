@@ -562,11 +562,6 @@ class LiveChannelController {
     repository.readyGame(_info.value.id);
   }
 
-  Future previewQuit() async {
-    _state.value = LiveStreamState.loading;
-    await service.engine.stopPreview();
-  }
-
   void _listenRtcEvent() {
     service.engine.registerEventHandler(
       RtcEngineEventHandler(
@@ -881,6 +876,13 @@ class LiveChannelController {
       final user = User.fromJson(data['user']);
       if (!isMemberInLive(user.id!)) return;
       if (getMember(user.id!)?.isOwner ?? false) {
+        if (_liveType.value == LiveChannelType.pk) {
+          _pkStep.value = PkStep.pending;
+          _diamondsPK.value = [];
+          _giftMembers.value = [];
+          rejoinNonPk(_info.value.id);
+          return;
+        }
         _state.value = LiveStreamState.stop;
         NotificationCenter.post(channel: refreshLive);
         return;
