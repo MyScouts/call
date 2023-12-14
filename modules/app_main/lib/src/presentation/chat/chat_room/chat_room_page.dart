@@ -1,6 +1,8 @@
 //import 'dart:developer' as developer;
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/di/di.dart';
+import 'package:app_main/src/domain/entities/chat/conversation_model.dart';
+import 'package:app_main/src/presentation/chat/chat_coordinator.dart';
 import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_cubit.dart';
 import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_state.dart';
 import 'package:app_main/src/presentation/chat/widgets/avatar_chat_widget.dart';
@@ -67,7 +69,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
       bloc: _cubit,
       builder: (_, state) {
         return state.when(
-          (messages, conversation, friendStatus, page, canLoadMore, loadMoreError) {
+          (messages, conversation, friendStatus, myType, page, canLoadMore, loadMoreError) {
             return GestureDetector(
               onTap: () {
                 setState(() {
@@ -136,85 +138,11 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                         color: AppColors.white,
                         onSelected: (i) {
                           if (i == 0) {
-                            showDialog(
-                              context: context,
-                              builder: (_) => ChatDialog(
-                                title: 'Xóa cuộc trò chuyện',
-                                content:
-                                    'Cuộc trò chuyện của bạn sẽ được xóa vĩnh viễn và không thể khôi phục',
-                                actionTitle: 'Xóa',
-                                onAction: () {
-                                  _cubit.deleteConversation().then(
-                                        (value) => Navigator.pop(context),
-                                      );
-                                },
-                              ),
-                            );
+                            removeConversation();
                           } else if (i == 1) {
-                            showDialog(
-                              context: context,
-                              builder: (_) => ChatDialog(
-                                title: 'Báo cáo',
-                                actionTitle: 'Gửi',
-                                showCancel: false,
-                                actionColor: AppColors.blueEdit,
-                                contentWidget: TextFormField(
-                                  controller: reportController,
-                                  minLines: 3,
-                                  maxLines: 5,
-                                  decoration: InputDecoration(
-                                    fillColor: AppColors.white,
-                                    hintText: 'Nhập nội dung báo cáo...',
-                                    contentPadding: const EdgeInsets.all(8),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: const BorderSide(
-                                        color: Color(0xffEAEDF0),
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0xffEAEDF0),
-                                      ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                  ),
-                                ),
-                                onAction: () {
-                                  if (reportController.text.isNotEmpty) {
-                                    _cubit.reportUser(
-                                        widget.memberId ??
-                                            conversation.conversation.membersNotMe.first.member.id,
-                                        reportController.text);
-                                  }
-                                },
-                              ),
-                            );
+                            reportUser(conversation.conversation);
                           } else if (i == 2) {
-                            showDialog(
-                              context: context,
-                              builder: (_) => ChatDialog(
-                                title:
-                                    'Chặn ${conversation.conversation.membersNotMe.first.member.displayName}',
-                                content:
-                                    '${conversation.conversation.membersNotMe.first.member.displayName} sẽ không thể :\n\n'
-                                    ' • Xem bài viết trên trang cá nhân của bạn\n'
-                                    ' • Nhắn tin cho bạn\n'
-                                    ' • Thêm bạn làm bạn bè\n'
-                                    ' • Nếu các bạn là bạn bè, chặn tài khoản đồng nghĩa với việc hủy kết bạn',
-                                actionTitle: 'Xác nhận',
-                                actionColor: AppColors.blueEdit,
-                                contentAlign: TextAlign.start,
-                                onAction: () {
-                                  _cubit
-                                      .blockUser(widget.memberId ??
-                                          conversation.conversation.membersNotMe.first.member.id)
-                                      .then(
-                                        (value) => Navigator.pop(context),
-                                      );
-                                },
-                              ),
-                            );
+                            blockUser(conversation.conversation);
                           }
                         },
                         itemBuilder: (BuildContext context) {
@@ -228,13 +156,11 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                     width: 24,
                                     height: 24,
                                   ),
-                                  kSpacingWidth20,
+                                  kSpacingWidth4,
                                   Text(
                                     'Xóa cuộc trò chuyện',
                                     style: context.text.bodyMedium?.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: AppColors.textSecondary,
+                                      color: AppColors.black,
                                     ),
                                   ),
                                 ],
@@ -249,13 +175,11 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                     width: 24,
                                     height: 24,
                                   ),
-                                  kSpacingWidth20,
+                                  kSpacingWidth4,
                                   Text(
                                     'Báo cáo',
                                     style: context.text.bodyMedium?.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: AppColors.textSecondary,
+                                      color: AppColors.black,
                                     ),
                                   ),
                                 ],
@@ -266,17 +190,15 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                               child: Row(
                                 children: [
                                   ImageWidget(
-                                    IconAppConstants.icBlockChat,
+                                    IconAppConstants.icBlockAccount,
                                     width: 24,
                                     height: 24,
                                   ),
-                                  kSpacingWidth20,
+                                  kSpacingWidth4,
                                   Text(
                                     'Chặn tài khoản',
                                     style: context.text.bodyMedium?.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: AppColors.textSecondary,
+                                      color: AppColors.negative,
                                     ),
                                   ),
                                 ],
@@ -295,28 +217,16 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                         onSelected: (i) {
                           switch (i) {
                             case 0:
+                              context.toMemberPage();
                               break;
                             case 1:
                               break;
                             case 2:
-                              showDialog(
-                                context: context,
-                                builder: (_) => ChatDialog(
-                                  title: 'Xóa cuộc trò chuyện',
-                                  content:
-                                  'Cuộc trò chuyện của bạn sẽ được xóa vĩnh viễn và không thể khôi phục',
-                                  actionTitle: 'Xóa',
-                                  onAction: () {
-                                    _cubit.deleteConversation().then(
-                                          (value) => Navigator.pop(context),
-                                    );
-                                  },
-                                ),
-                              );
+                              removeConversation();
                               break;
                           }
                         },
-                        itemBuilder: (BuildContext context) {
+                        itemBuilder: (context) {
                           return [
                             PopupMenuItem<int>(
                               value: 0,
@@ -342,6 +252,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                 ],
                               ),
                             ),
+                            if(myType == 2)
                             PopupMenuItem<int>(
                               value: 1,
                               child: Row(
@@ -372,7 +283,6 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                     height: 24,
                                     child: ImageWidget(
                                       IconAppConstants.icDeleteChat,
-                                      color: AppColors.black,
                                     ),
                                   ),
                                   kSpacingWidth4,
@@ -385,8 +295,32 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                 ],
                               ),
                             ),
-                            PopupMenuItem<int>(
-                              value: 3,
+                            if(myType == 1 || myType == 3)
+                                PopupMenuItem<int>(
+                                value: 3,
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 24,
+                                      height: 24,
+                                      child: ImageWidget(
+                                        IconAppConstants.icReportGroup,
+                                        color: AppColors.black,
+                                      ),
+                                    ),
+                                    kSpacingWidth4,
+                                    Text(
+                                      'Báo cáo',
+                                      style: context.text.bodyMedium?.copyWith(
+                                        color: AppColors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            if(myType == 2)
+                              PopupMenuItem<int>(
+                              value: 4,
                               child: Row(
                                 children: [
                                   SizedBox(
@@ -408,7 +342,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                               ),
                             ),
                             PopupMenuItem<int>(
-                              value: 4,
+                              value: 5,
                               child: Row(
                                 children: [
                                   SizedBox(
@@ -430,7 +364,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                               ),
                             ),
                             PopupMenuItem<int>(
-                              value: 5,
+                              value: 6,
                               child: Row(
                                 children: [
                                   SizedBox(
@@ -446,27 +380,6 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                     'Rời nhóm im lặng',
                                     style: context.text.bodyMedium?.copyWith(
                                       color: AppColors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            PopupMenuItem<int>(
-                              value: 6,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: ImageWidget(
-                                      IconAppConstants.icBlockAccount,
-                                    ),
-                                  ),
-                                  kSpacingWidth4,
-                                  Text(
-                                    'Chặn tài khoản',
-                                    style: context.text.bodyMedium?.copyWith(
-                                      color: AppColors.negative,
                                     ),
                                   ),
                                 ],
@@ -703,6 +616,92 @@ class ChatRoomPageState extends State<ChatRoomPage> {
           ),
         );
       },
+    );
+  }
+
+  void removeConversation() {
+    showDialog(
+      context: context,
+      builder: (_) => ChatDialog(
+        title: 'Xóa cuộc trò chuyện',
+        content:
+        'Cuộc trò chuyện của bạn sẽ được xóa vĩnh viễn và không thể khôi phục',
+        actionTitle: 'Xóa',
+        onAction: () {
+          _cubit.deleteConversation().then(
+                (value) => Navigator.pop(context),
+          );
+        },
+      ),
+    );
+  }
+
+  void blockUser(ConversationModel conversation) {
+    showDialog(
+      context: context,
+      builder: (_) => ChatDialog(
+        title:
+        'Chặn ${conversation.membersNotMe.first.member.displayName}',
+        content:
+        '${conversation.membersNotMe.first.member.displayName} sẽ không thể :\n\n'
+            ' • Xem bài viết trên trang cá nhân của bạn\n'
+            ' • Nhắn tin cho bạn\n'
+            ' • Thêm bạn làm bạn bè\n'
+            ' • Nếu các bạn là bạn bè, chặn tài khoản đồng nghĩa với việc hủy kết bạn',
+        actionTitle: 'Xác nhận',
+        actionColor: AppColors.blueEdit,
+        contentAlign: TextAlign.start,
+        onAction: () {
+          _cubit
+              .blockUser(widget.memberId ??
+              conversation.membersNotMe.first.member.id)
+              .then(
+                (value) => Navigator.pop(context),
+          );
+        },
+      ),
+    );
+  }
+
+  void reportUser(ConversationModel conversation) {
+    showDialog(
+      context: context,
+      builder: (_) => ChatDialog(
+        title: 'Báo cáo',
+        actionTitle: 'Gửi',
+        showCancel: false,
+        actionColor: AppColors.blueEdit,
+        contentWidget: TextFormField(
+          controller: reportController,
+          minLines: 3,
+          maxLines: 5,
+          decoration: InputDecoration(
+            fillColor: AppColors.white,
+            hintText: 'Nhập nội dung báo cáo...',
+            contentPadding: const EdgeInsets.all(8),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(
+                color: Color(0xffEAEDF0),
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: Color(0xffEAEDF0),
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ),
+        onAction: () {
+          if (reportController.text.isNotEmpty) {
+            _cubit.reportUser(
+                widget.memberId ??
+                    conversation.membersNotMe.first.member.id,
+                reportController.text);
+          }
+        },
+      ),
     );
   }
 

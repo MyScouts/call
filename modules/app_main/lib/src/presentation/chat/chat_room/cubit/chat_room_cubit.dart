@@ -10,6 +10,7 @@ import 'package:app_main/src/domain/entities/chat/result_model.dart';
 import 'package:app_main/src/domain/entities/friend/friend_status_model.dart';
 import 'package:app_main/src/domain/usecases/chat_usecase.dart';
 import 'package:app_main/src/domain/usecases/upgrade_account_usecase.dart';
+import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/domain/usecases/user_usecase.dart';
 import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_state.dart';
 import 'package:app_main/src/presentation/chat/conversation/cubit/conversation_cubit.dart';
@@ -33,8 +34,7 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
       emit(const ChatRoomState.loading());
       if (conversationId == null && memberId != null) {
         final User? user = await _userUsecase.geSynctUserById(memberId);
-        final FriendStatusModel friendStatus =
-            await _chatUseCase.getFriendStatus(userId: memberId);
+        final FriendStatusModel friendStatus = await _chatUseCase.getFriendStatus(userId: memberId);
         final ResultModel newConversation = await _chatUseCase.createConversations(
           payload: NewConversationsPayload(
             name: user.getdisplayName,
@@ -52,6 +52,12 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
             messages: response.items ?? [],
             conversation: conversationIdDetail,
             friendStatus: friendStatus,
+            myType: conversationIdDetail.conversation.members
+                    .firstWhereOrNull((element) =>
+                        getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id ==
+                        element.member.id)
+                    ?.type ??
+                0,
             page: 1,
             canLoadMore: response.items?.length == kPageSize,
           ),
@@ -72,6 +78,12 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
               messages: response.items ?? [],
               conversation: conversationIdDetail,
               friendStatus: friendStatus,
+              myType: conversationIdDetail.conversation.members
+                      .firstWhereOrNull((element) =>
+                          getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id ==
+                          element.member.id)
+                      ?.type ??
+                  0,
               page: 1,
               canLoadMore: response.items?.length == kPageSize),
         );

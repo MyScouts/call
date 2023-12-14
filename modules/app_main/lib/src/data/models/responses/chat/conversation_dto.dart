@@ -42,7 +42,5 @@ class ConversationDto extends ConversationModel {
   final int type;
 
   @override
-  List<MemberResponseDto> get membersNotMe => members
-    ..removeWhere(
-        (element) => getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id == element.member.id);
+  List<MemberResponseDto> get membersNotMe => [...members.where((element) => getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id != element.member.id)];
 }

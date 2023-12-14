@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/chat/chat_room/chat_room_page.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -172,6 +173,9 @@ void showFlutterNotification(RemoteMessage message) {
     if (MyNavigatorObserver.listRoute.contains('/join_live')) {
       return;
     }
+  }
+  if(MyNavigatorObserver.listRoute.contains(ChatRoomPage.routeName)) {
+    return;
   }
   flutterLocalNotificationsPlugin.show(
     notification?.hashCode ?? 0,

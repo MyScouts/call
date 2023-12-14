@@ -203,6 +203,7 @@ class IconAppConstants {
   static String icBlockAccount = IconApp.icBlockAccount.path;
   static String icEdit = IconApp.icEdit.path;
   static String icLeaveMute = IconApp.icLeaveMute.path;
+  static String icReportGroup = IconApp.icReportGroup.path;
 
   
 }
@@ -358,9 +359,6 @@ enum IconApp {
   icP('assets/icons/ic_p.png'),
   icC('assets/icons/ic_c.png'),
   icE('assets/icons/ic_e.png'),
-  icLeaveTeam('assets/icons/ic_leave_team.svg'),
-  icDeleteChat('assets/icons/ic_delete.svg'),
-  icReportChat('assets/icons/ic_report_chat.svg'),
 
   ///chat
   icImage('assets/icons/ic_image.svg'),
@@ -373,6 +371,10 @@ enum IconApp {
   icBlockAccount('assets/icons/ic_block_account.svg'),
   icEdit('assets/icons/ic_edit.svg'),
   icLeaveMute('assets/icons/ic_leave_mute.svg'),
+  icReportGroup('assets/icons/ic_report_group.svg'),
+  icLeaveTeam('assets/icons/ic_leave_team.svg'),
+  icDeleteChat('assets/icons/ic_delete_chat.svg'),
+  icReportChat('assets/icons/ic_report_chat.svg'),
 
   ///call
   icUserGroup3('assets/icons/ic_user_group3.svg'),
