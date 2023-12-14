@@ -27,7 +27,7 @@ mixin _$UpdateProfilePayload {
   @JsonKey(includeIfNull: false)
   String? get middleName => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
-  String? get nickname => throw _privateConstructorUsedError;
+  String? get nickName => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
   int? get sex => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
@@ -91,7 +91,7 @@ abstract class $UpdateProfilePayloadCopyWith<$Res> {
       {@JsonKey(includeIfNull: false) String? firstName,
       @JsonKey(includeIfNull: false) String? lastName,
       @JsonKey(includeIfNull: false) String? middleName,
-      @JsonKey(includeIfNull: false) String? nickname,
+      @JsonKey(includeIfNull: false) String? nickName,
       @JsonKey(includeIfNull: false) int? sex,
       @JsonKey(includeIfNull: false) String? birthday,
       @JsonKey(includeIfNull: false) UpdatePDoneBirthPlacePayload? birthPlace,
@@ -137,7 +137,7 @@ class _$UpdateProfilePayloadCopyWithImpl<$Res,
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? middleName = freezed,
-    Object? nickname = freezed,
+    Object? nickName = freezed,
     Object? sex = freezed,
     Object? birthday = freezed,
     Object? birthPlace = freezed,
@@ -174,9 +174,9 @@ class _$UpdateProfilePayloadCopyWithImpl<$Res,
           ? _value.middleName
           : middleName // ignore: cast_nullable_to_non_nullable
               as String?,
-      nickname: freezed == nickname
-          ? _value.nickname
-          : nickname // ignore: cast_nullable_to_non_nullable
+      nickName: freezed == nickName
+          ? _value.nickName
+          : nickName // ignore: cast_nullable_to_non_nullable
               as String?,
       sex: freezed == sex
           ? _value.sex
@@ -308,7 +308,7 @@ abstract class _$$UpdateProfilePayloadImplCopyWith<$Res>
       {@JsonKey(includeIfNull: false) String? firstName,
       @JsonKey(includeIfNull: false) String? lastName,
       @JsonKey(includeIfNull: false) String? middleName,
-      @JsonKey(includeIfNull: false) String? nickname,
+      @JsonKey(includeIfNull: false) String? nickName,
       @JsonKey(includeIfNull: false) int? sex,
       @JsonKey(includeIfNull: false) String? birthday,
       @JsonKey(includeIfNull: false) UpdatePDoneBirthPlacePayload? birthPlace,
@@ -353,7 +353,7 @@ class __$$UpdateProfilePayloadImplCopyWithImpl<$Res>
     Object? firstName = freezed,
     Object? lastName = freezed,
     Object? middleName = freezed,
-    Object? nickname = freezed,
+    Object? nickName = freezed,
     Object? sex = freezed,
     Object? birthday = freezed,
     Object? birthPlace = freezed,
@@ -390,9 +390,9 @@ class __$$UpdateProfilePayloadImplCopyWithImpl<$Res>
           ? _value.middleName
           : middleName // ignore: cast_nullable_to_non_nullable
               as String?,
-      nickname: freezed == nickname
-          ? _value.nickname
-          : nickname // ignore: cast_nullable_to_non_nullable
+      nickName: freezed == nickName
+          ? _value.nickName
+          : nickName // ignore: cast_nullable_to_non_nullable
               as String?,
       sex: freezed == sex
           ? _value.sex
@@ -494,7 +494,7 @@ class _$UpdateProfilePayloadImpl implements _UpdateProfilePayload {
       {@JsonKey(includeIfNull: false) this.firstName,
       @JsonKey(includeIfNull: false) this.lastName,
       @JsonKey(includeIfNull: false) this.middleName,
-      @JsonKey(includeIfNull: false) this.nickname,
+      @JsonKey(includeIfNull: false) this.nickName,
       @JsonKey(includeIfNull: false) this.sex,
       @JsonKey(includeIfNull: false) this.birthday,
       @JsonKey(includeIfNull: false) this.birthPlace,
@@ -532,7 +532,7 @@ class _$UpdateProfilePayloadImpl implements _UpdateProfilePayload {
   final String? middleName;
   @override
   @JsonKey(includeIfNull: false)
-  final String? nickname;
+  final String? nickName;
   @override
   @JsonKey(includeIfNull: false)
   final int? sex;
@@ -602,7 +602,7 @@ class _$UpdateProfilePayloadImpl implements _UpdateProfilePayload {
 
   @override
   String toString() {
-    return 'UpdateProfilePayload(firstName: $firstName, lastName: $lastName, middleName: $middleName, nickname: $nickname, sex: $sex, birthday: $birthday, birthPlace: $birthPlace, currentPlace: $currentPlace, identityNumber: $identityNumber, supplyDate: $supplyDate, supplyAddress: $supplyAddress, height: $height, weight: $weight, maritalStatus: $maritalStatus, bloodGroup: $bloodGroup, academicLevel: $academicLevel, job: $job, interest: $interest, talent: $talent, protector: $protector, protectorPDoneId: $protectorPDoneId, protectorIdentityNumber: $protectorIdentityNumber, protectorEmailPhone: $protectorEmailPhone, protectorPhoneCode: $protectorPhoneCode, otp: $otp, birthCertificateUrl: $birthCertificateUrl)';
+    return 'UpdateProfilePayload(firstName: $firstName, lastName: $lastName, middleName: $middleName, nickName: $nickName, sex: $sex, birthday: $birthday, birthPlace: $birthPlace, currentPlace: $currentPlace, identityNumber: $identityNumber, supplyDate: $supplyDate, supplyAddress: $supplyAddress, height: $height, weight: $weight, maritalStatus: $maritalStatus, bloodGroup: $bloodGroup, academicLevel: $academicLevel, job: $job, interest: $interest, talent: $talent, protector: $protector, protectorPDoneId: $protectorPDoneId, protectorIdentityNumber: $protectorIdentityNumber, protectorEmailPhone: $protectorEmailPhone, protectorPhoneCode: $protectorPhoneCode, otp: $otp, birthCertificateUrl: $birthCertificateUrl)';
   }
 
   @override
@@ -616,8 +616,8 @@ class _$UpdateProfilePayloadImpl implements _UpdateProfilePayload {
                 other.lastName == lastName) &&
             (identical(other.middleName, middleName) ||
                 other.middleName == middleName) &&
-            (identical(other.nickname, nickname) ||
-                other.nickname == nickname) &&
+            (identical(other.nickName, nickName) ||
+                other.nickName == nickName) &&
             (identical(other.sex, sex) || other.sex == sex) &&
             (identical(other.birthday, birthday) ||
                 other.birthday == birthday) &&
@@ -666,7 +666,7 @@ class _$UpdateProfilePayloadImpl implements _UpdateProfilePayload {
         firstName,
         lastName,
         middleName,
-        nickname,
+        nickName,
         sex,
         birthday,
         birthPlace,
@@ -712,7 +712,7 @@ abstract class _UpdateProfilePayload implements UpdateProfilePayload {
           {@JsonKey(includeIfNull: false) final String? firstName,
           @JsonKey(includeIfNull: false) final String? lastName,
           @JsonKey(includeIfNull: false) final String? middleName,
-          @JsonKey(includeIfNull: false) final String? nickname,
+          @JsonKey(includeIfNull: false) final String? nickName,
           @JsonKey(includeIfNull: false) final int? sex,
           @JsonKey(includeIfNull: false) final String? birthday,
           @JsonKey(includeIfNull: false)
@@ -753,7 +753,7 @@ abstract class _UpdateProfilePayload implements UpdateProfilePayload {
   String? get middleName;
   @override
   @JsonKey(includeIfNull: false)
-  String? get nickname;
+  String? get nickName;
   @override
   @JsonKey(includeIfNull: false)
   int? get sex;
