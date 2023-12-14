@@ -9,12 +9,14 @@ import 'package:injectable/injectable.dart';
 @LazySingleton(as: MediaPicker)
 class MediaPickerImpl implements MediaPicker {
   @override
-  Future<List<MediaFile?>?> pickImagesFromGallery() async {
+  Future<List<MediaFile?>?> pickImagesFromGallery({
+    bool allowMultiple = true,
+  }) async {
     try {
       final FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.image,
         allowCompression: true,
-        allowMultiple: true,
+        allowMultiple: allowMultiple,
         lockParentWindow: true,
         withData: true,
       );
