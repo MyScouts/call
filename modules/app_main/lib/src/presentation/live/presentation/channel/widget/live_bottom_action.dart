@@ -58,12 +58,10 @@ class LiveBottomAction extends StatelessWidget {
                   return SizedBox(
                     height: controller.liveType.value == LiveChannelType.pk
                         ? 194.h
-                        : ScreenUtil().screenHeight / 3,
+                        : ScreenUtil().screenHeight * 0.6,
                     child: Row(
                       children: [
-                        const Expanded(
-                          child: LiveCommentWidget(),
-                        ),
+                        const Expanded(child: LiveCommentWidget()),
                         SizedBox(
                           width: 104.w,
                           child: GestureDetector(

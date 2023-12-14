@@ -398,10 +398,8 @@ class LiveChannelController {
 
     _info = joinRes.data.obs;
     if (_info.value.pk != null) {
-      _liveType.value = LiveChannelType.pk;
       _pkData = await repository.getPk(_info.value.id);
     } else {
-      _liveType.value = LiveChannelType.normal;
       _pkData = null;
     }
 
@@ -517,6 +515,10 @@ class LiveChannelController {
           }
           _getPkStats();
         }
+
+        _liveType.value = LiveChannelType.pk;
+      } else {
+        _liveType.value = LiveChannelType.normal;
       }
 
       LiveManageState.hostID.value = hostID;
