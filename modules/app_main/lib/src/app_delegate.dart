@@ -18,8 +18,10 @@ import 'package:injectable/injectable.dart';
 import 'package:app_core/app_core.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'application.dart';
 import 'config/app_config_service.dart';
+import 'core/services/notifications/call_push_service_handler.dart';
 import 'core/services/notifications/notification_service.dart';
 import 'core/services/notifications/push_notification_service.dart';
 import 'di/di.dart';
@@ -35,6 +37,8 @@ abstract class IAppDelegate {
   DeviceService get deviceService => injector.get();
 
   GlobalKey<NavigatorState> get root => AppCoordinatorCore.root;
+
+  SharedPreferences get sharedPreferences => injector.get();
 
   void reset() {
     injector.reset();
@@ -62,7 +66,7 @@ class AppDelegate extends IAppDelegate {
     Configurations().setConfigurationValues(env);
     await configureDependencies(environment: Environment.prod);
     final savedThemeMode = await AdaptiveTheme.getThemeMode();
-
+    await sharedPreferences.setString(keyEndpoint, Configurations.baseUrl);
     if (isMobile) {
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
       await setupFlutterNotifications();
