@@ -75,7 +75,7 @@ class NotificationBloc extends CoreBloc<NotificationEvent, NotificationState> {
       ));
     }
     final search =
-        state.items.where((e) => e.title.contains(event.keyword)).toList();
+        state.items.where((e) => e.body.contains(event.keyword)).toList();
     emit(state.copyWith(
       isSearching: true,
       search: search,

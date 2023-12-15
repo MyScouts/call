@@ -133,6 +133,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
           "districtCode": cuDistrict?.code,
           "wardName": cuWard?.name,
           "wardCode": cuWard?.id.toString(),
+          "address": realAddress.text,
         },
         "birthPlace": {
           "countryName": permanentCountry?.name,
@@ -178,6 +179,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                 districtCode: cuDistrict?.code,
                 wardName: cuWard?.name,
                 wardCode: cuWard!.id.toString(),
+                address: realAddress.text,
               ),
               interest: hobbyController.text,
               talent: talentController.text,
@@ -241,6 +243,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
     bloodType = userBloc.state.pDoneProfile?.bloodGroup ?? '';
     emailController.text = userBloc.state.user?.email ?? '';
     edu = userBloc.state.pDoneProfile?.academicLevel ?? '';
+    realAddress.text = userBloc.state.pDoneProfile?.currentPlace.address ?? '';
     super.initState();
   }
 
@@ -778,12 +781,11 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
             ),
           ),
           InformationFieldWidget(
-            required: widget.isPDone,
-            shouldEnabled: !widget.isPDone,
+            required: false,
+            shouldEnabled: true,
             controller: realAddress,
             type: UpdateInformationType.address,
             onChanged: (String? value) {
-              address = value!;
               onValidation();
             },
           ),

@@ -44,7 +44,9 @@ class NotificationCard extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if ((data.metadata?['user']?['avatar'] ?? '').trim().isEmpty)
+                    if ((data.metadata?['user']?['avatar'] ?? '')
+                        .trim()
+                        .isEmpty)
                       SizedBox.square(
                         dimension: 19 * 2,
                         child: ClipRRect(
@@ -54,7 +56,9 @@ class NotificationCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                    if ((data.metadata?['user']?['avatar'] ?? '').trim().isNotEmpty)
+                    if ((data.metadata?['user']?['avatar'] ?? '')
+                        .trim()
+                        .isNotEmpty)
                       CircleNetworkImage(
                         url: data.metadata?['user']?['avatar'] ?? '',
                         size: 19 * 2,
@@ -98,9 +102,6 @@ class NotificationCard extends StatelessWidget {
         ),
       ),
     );
-    if (isSearching) {
-      return child;
-    }
 
     return Container(
       padding: const EdgeInsets.only(bottom: 16),
