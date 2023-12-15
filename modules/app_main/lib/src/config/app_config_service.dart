@@ -4,9 +4,12 @@ import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/usecases/resource_usecase.dart';
 import 'package:flutter/material.dart';
 
+
 class AppConfigService {
   static String agoraAppID = '';
   static Map<String, dynamic> ekycToken = {};
+
+  static int timeOffset = 0;
 
   static Future init() async {
     final resourceUsecase = getIt<ResourceUsecase>();

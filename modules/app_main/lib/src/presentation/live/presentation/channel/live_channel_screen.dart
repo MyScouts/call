@@ -135,7 +135,7 @@ class _LiveSimple extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         Obx(
-          () => controller.virtualInfo.value != null
+              () => controller.virtualInfo.value != null
               ? VideoApp(virtualInfo: controller.info.virtualInfo)
               : const _RtcRender(),
         ),
@@ -199,34 +199,28 @@ class _RtcRenderState extends State<_RtcRender> {
       if (controller.state.value == LiveStreamState.watching) {
         if (controller.hostInLive) {
           if (controller.me.value.isOwner) {
-            return Hero(
-              tag: 'render owner',
-              child: AgoraVideoView(
-                controller: VideoViewController(
-                  rtcEngine: controller.service.engine,
-                  canvas: const VideoCanvas(
-                    uid: 0,
-                    renderMode: RenderModeType.renderModeHidden,
-                  ),
+            return AgoraVideoView(
+              controller: VideoViewController(
+                rtcEngine: controller.service.engine,
+                canvas: const VideoCanvas(
+                  uid: 0,
+                  renderMode: RenderModeType.renderModeHidden,
                 ),
               ),
             );
           }
 
-          return Hero(
-            tag: controller.hostID,
-            child: AgoraVideoView(
-              controller: VideoViewController.remote(
-                rtcEngine: controller.service.engine,
-                canvas: VideoCanvas(
-                  uid: controller.hostID,
-                  renderMode: RenderModeType.renderModeHidden,
-                  mirrorMode: VideoMirrorModeType.videoMirrorModeEnabled,
-                  sourceType: VideoSourceType.videoSourceCamera,
-                ),
-                connection: RtcConnection(
-                  channelId: controller.agora?.channel,
-                ),
+          return AgoraVideoView(
+            controller: VideoViewController.remote(
+              rtcEngine: controller.service.engine,
+              canvas: VideoCanvas(
+                uid: controller.hostID,
+                renderMode: RenderModeType.renderModeHidden,
+                mirrorMode: VideoMirrorModeType.videoMirrorModeEnabled,
+                sourceType: VideoSourceType.videoSourceCamera,
+              ),
+              connection: RtcConnection(
+                channelId: controller.agora?.channel,
               ),
             ),
           );

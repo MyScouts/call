@@ -708,7 +708,7 @@ class LiveChannelController {
       debugPrint('$socketPkRoundFinishEvent ===> ${data['round']}');
       _pkStep.value = PkStep.end;
       if (_timer != null) _timer?.cancel();
-      _timer = Timer.periodic(const Duration(milliseconds: 30), (timer) {
+      _timer = Timer.periodic(const Duration(minutes: 5), (timer) {
         repository.deleteGame(_pkData!.pk.id);
         _pkStep.value = PkStep.pending;
         _diamondsPK.value = [];
@@ -887,7 +887,8 @@ class LiveChannelController {
           _pkStep.value = PkStep.pending;
           _diamondsPK.value = [];
           _giftMembers.value = [];
-          rejoinNonPk(_info.value.id);
+          _members.value =
+              _members.where((e) => e.info.userID != user.id).toList();
           return;
         }
         _state.value = LiveStreamState.stop;

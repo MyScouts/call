@@ -1,4 +1,3 @@
-import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:flutter/material.dart';
 
 import 'core/coordinator/app_context.dart';
@@ -11,6 +10,7 @@ class AppScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Builder(
         builder: (ctx) {
           AppContext.scaffoldContext = ctx;

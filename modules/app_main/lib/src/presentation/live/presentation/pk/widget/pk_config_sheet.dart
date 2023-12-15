@@ -334,12 +334,19 @@ class _UserCard extends StatelessWidget {
           ),
           Column(
             children: [
-              Text(
-                info.name,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black,
+              Flexible(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Center(
+                    child: Text(
+                      info.name,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(height: 4),
@@ -350,16 +357,17 @@ class _UserCard extends StatelessWidget {
                     width: 16,
                   ),
                   const SizedBox(width: 6),
-                  const Text(
-                    'Chiến binh Lv.1',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      height: 1.2,
-                      color: Color(0xff6E6E6E),
+                  const Expanded(
+                    child: Text(
+                      'Chiến binh Lv.1',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        height: 1.2,
+                        color: Color(0xff6E6E6E),
+                      ),
                     ),
                   ),
-                  const Spacer(),
                   DecoratedBox(
                     decoration: BoxDecoration(
                       color: const Color(0xff8A56FF),
