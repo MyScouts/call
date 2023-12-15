@@ -90,6 +90,14 @@ class ChatUseCase {
     return _chatRepository.getAdmins(conversationId: conversationId);
   }
 
+
+  Future<MemberListModel> getMembers({
+    required int conversationId,
+  }) {
+    return _chatRepository.getMembers(conversationId: conversationId);
+  }
+
+
   Future<ResultModel> renameConversation({
     required int conversationId,
     required String name,

@@ -1,11 +1,15 @@
 //import 'dart:developer' as developer;
+import 'package:app_main/src/presentation/chat/member/tab/admin/admin_tab_widget.dart';
+import 'package:app_main/src/presentation/chat/member/tab/member/member_tab_widget.dart';
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:ui/ui.dart';
 
 class MemberPage extends StatefulWidget {
   static const routeName = 'MemberPage';
+  final bool isAdmin;
+  final int conversationId;
 
-  const MemberPage({super.key});
+  const MemberPage({super.key, required this.isAdmin, required this.conversationId});
 
   @override
   MemberPageState createState() => MemberPageState();
@@ -23,12 +27,29 @@ class MemberPageState extends State<MemberPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BaseAppBar(
-        title: 'Thành viên',
-        actions: [TextButton(onPressed: () {}, child: const Text('Thêm'))],
+      appBar: AppBar(
+        title: const Text('Thành viên'),
+        actions: [
+          TextButton(
+            onPressed: () {},
+            child: Text(
+              'Thêm',
+              style: context.text.bodyLarge?.copyWith(color: AppColors.blueEdit, fontSize: 16),
+            ),
+          ),
+        ],
         bottom: TabBar(
           controller: _tabController,
-          tabs: const <Widget>[
+          labelColor: AppColors.blueEdit,
+          labelStyle: context.text.bodyMedium,
+          unselectedLabelStyle: context.text.bodyMedium,
+          unselectedLabelColor: AppColors.grey40,
+          indicatorColor: AppColors.blueEdit,
+          indicatorSize: TabBarIndicatorSize.tab,
+          indicator: const UnderlineTabIndicator(
+            borderSide: BorderSide(width: 2),
+          ),
+          tabs: const [
             Tab(
               text: 'Tất cả',
             ),
@@ -40,12 +61,13 @@ class MemberPageState extends State<MemberPage> with TickerProviderStateMixin {
       ),
       body: TabBarView(
         controller: _tabController,
-        children: const [
-          Center(
-            child: Text("It's cloudy here"),
+        children: [
+          MemberTabWidget(
+            conversationId: widget.conversationId,
+            isAdmin: widget.isAdmin,
           ),
-          Center(
-            child: Text("It's rainy here"),
+          AdminTabWidget(
+            conversationId: widget.conversationId,
           ),
         ],
       ),

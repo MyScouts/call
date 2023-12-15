@@ -49,6 +49,10 @@ abstract class ChatRepository {
     required int conversationId,
   });
 
+  Future<MemberListModel> getMembers({
+    required int conversationId,
+  });
+
   Future<ResultModel> renameConversation({
     required int conversationId,
     required String name,

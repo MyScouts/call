@@ -29,6 +29,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
   final ChatRoomCubit _cubit = getIt.get();
   final textController = TextEditingController();
   final reportController = TextEditingController();
+  final nameController = TextEditingController();
   final FocusNode _focus = FocusNode();
   final scrollController = ScrollController();
   bool isShowScrollToEnd = false;
@@ -217,12 +218,24 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                         onSelected: (i) {
                           switch (i) {
                             case 0:
-                              context.toMemberPage();
+                              context.toMemberPage(myType == 2, conversation.conversation.id);
                               break;
                             case 1:
+                              changeNameGroup(conversation.conversation);
                               break;
                             case 2:
                               removeConversation();
+                              break;
+                            case 3:
+                              break;
+                            case 4:
+                              context.toBlockMemberPage(conversation.conversation.id);
+                              break;
+                            case 5:
+                              leave(conversation.conversation);
+                              break;
+                            case 6:
+                              leaveMute(conversation.conversation);
                               break;
                           }
                         },
@@ -252,28 +265,28 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                 ],
                               ),
                             ),
-                            if(myType == 2)
-                            PopupMenuItem<int>(
-                              value: 1,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: ImageWidget(
-                                      IconAppConstants.icEdit,
+                            if (myType == 2)
+                              PopupMenuItem<int>(
+                                value: 1,
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 24,
+                                      height: 24,
+                                      child: ImageWidget(
+                                        IconAppConstants.icEdit,
+                                      ),
                                     ),
-                                  ),
-                                  kSpacingWidth4,
-                                  Text(
-                                    'Đổi tên nhóm',
-                                    style: context.text.bodyMedium?.copyWith(
-                                      color: AppColors.black,
+                                    kSpacingWidth4,
+                                    Text(
+                                      'Đổi tên nhóm',
+                                      style: context.text.bodyMedium?.copyWith(
+                                        color: AppColors.black,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
                             PopupMenuItem<int>(
                               value: 2,
                               child: Row(
@@ -295,8 +308,8 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                 ],
                               ),
                             ),
-                            if(myType == 1 || myType == 3)
-                                PopupMenuItem<int>(
+                            if (myType == 1 || myType == 3)
+                              PopupMenuItem<int>(
                                 value: 3,
                                 child: Row(
                                   children: [
@@ -318,29 +331,29 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                   ],
                                 ),
                               ),
-                            if(myType == 2)
+                            if (myType == 2)
                               PopupMenuItem<int>(
-                              value: 4,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: ImageWidget(
-                                      IconAppConstants.icBlockChat,
-                                      color: AppColors.black,
+                                value: 4,
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 24,
+                                      height: 24,
+                                      child: ImageWidget(
+                                        IconAppConstants.icBlockChat,
+                                        color: AppColors.black,
+                                      ),
                                     ),
-                                  ),
-                                  kSpacingWidth4,
-                                  Text(
-                                    'Chặn thành viên',
-                                    style: context.text.bodyMedium?.copyWith(
-                                      color: AppColors.black,
+                                    kSpacingWidth4,
+                                    Text(
+                                      'Chặn thành viên',
+                                      style: context.text.bodyMedium?.copyWith(
+                                        color: AppColors.black,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
                             PopupMenuItem<int>(
                               value: 5,
                               child: Row(
@@ -619,18 +632,89 @@ class ChatRoomPageState extends State<ChatRoomPage> {
     );
   }
 
+  void leaveMute(ConversationModel conversation) {
+    showDialog(
+      context: context,
+      builder: (_) => ChatDialog(
+        title: 'Rời nhóm im lặng',
+        content:
+            'Các thành viên khác sẽ không nhận được\nthông báo về việc bạn rời nhóm\nBạn có chắc chắn muốn rời khỏi nhóm\nnày hay không? ',
+        actionTitle: 'Rời nhóm',
+        onAction: () {
+          _cubit.leave(conversation.id, false).then(
+                (value) => Navigator.pop(context),
+              );
+        },
+      ),
+    );
+  }
+
+  void leave(ConversationModel conversation) {
+    showDialog(
+      context: context,
+      builder: (_) => ChatDialog(
+        title: 'Rời nhóm',
+        content: 'Bạn có chắc chắn muốn rời khỏi nhóm này hay không?',
+        actionTitle: 'Rời nhóm',
+        onAction: () {
+          _cubit.leave(conversation.id, true).then(
+                (value) => Navigator.pop(context),
+              );
+        },
+      ),
+    );
+  }
+
+  void changeNameGroup(ConversationModel conversation) {
+    showDialog(
+      context: context,
+      builder: (_) => ChatDialog(
+        title: 'Chỉnh sửa tên nhóm',
+        actionTitle: 'Lưu',
+        showCancel: false,
+        actionColor: AppColors.blueEdit,
+        contentWidget: TextFormField(
+          controller: nameController,
+          minLines: 3,
+          maxLines: 5,
+          decoration: InputDecoration(
+            fillColor: AppColors.white,
+            hintText: 'Nhập tên nhóm',
+            contentPadding: const EdgeInsets.all(8),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(
+                color: Color(0xffEAEDF0),
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: Color(0xffEAEDF0),
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ),
+        onAction: () {
+          if (nameController.text.isNotEmpty) {
+            _cubit.changeNameGroup(conversation.id, nameController.text);
+          }
+        },
+      ),
+    );
+  }
+
   void removeConversation() {
     showDialog(
       context: context,
       builder: (_) => ChatDialog(
         title: 'Xóa cuộc trò chuyện',
-        content:
-        'Cuộc trò chuyện của bạn sẽ được xóa vĩnh viễn và không thể khôi phục',
+        content: 'Cuộc trò chuyện của bạn sẽ được xóa vĩnh viễn và không thể khôi phục',
         actionTitle: 'Xóa',
         onAction: () {
           _cubit.deleteConversation().then(
                 (value) => Navigator.pop(context),
-          );
+              );
         },
       ),
     );
@@ -640,10 +724,8 @@ class ChatRoomPageState extends State<ChatRoomPage> {
     showDialog(
       context: context,
       builder: (_) => ChatDialog(
-        title:
-        'Chặn ${conversation.membersNotMe.first.member.displayName}',
-        content:
-        '${conversation.membersNotMe.first.member.displayName} sẽ không thể :\n\n'
+        title: 'Chặn ${conversation.membersNotMe.first.member.displayName}',
+        content: '${conversation.membersNotMe.first.member.displayName} sẽ không thể :\n\n'
             ' • Xem bài viết trên trang cá nhân của bạn\n'
             ' • Nhắn tin cho bạn\n'
             ' • Thêm bạn làm bạn bè\n'
@@ -652,12 +734,9 @@ class ChatRoomPageState extends State<ChatRoomPage> {
         actionColor: AppColors.blueEdit,
         contentAlign: TextAlign.start,
         onAction: () {
-          _cubit
-              .blockUser(widget.memberId ??
-              conversation.membersNotMe.first.member.id)
-              .then(
+          _cubit.blockUser(widget.memberId ?? conversation.membersNotMe.first.member.id).then(
                 (value) => Navigator.pop(context),
-          );
+              );
         },
       ),
     );
@@ -695,9 +774,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
         ),
         onAction: () {
           if (reportController.text.isNotEmpty) {
-            _cubit.reportUser(
-                widget.memberId ??
-                    conversation.membersNotMe.first.member.id,
+            _cubit.reportUser(widget.memberId ?? conversation.membersNotMe.first.member.id,
                 reportController.text);
           }
         },

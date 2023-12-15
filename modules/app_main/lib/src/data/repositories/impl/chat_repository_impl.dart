@@ -117,4 +117,10 @@ class ChatRepositoryImpl extends ChatRepository {
     return await _chatApi
         .revokeSecondBoos(conversationId: conversationId, memberId: {'memberId': memberId});
   }
+
+  @override
+  Future<MemberListModel> getMembers({required int conversationId}) async {
+    return await _chatApi.getMembers(conversationId: conversationId);
+  }
+
 }

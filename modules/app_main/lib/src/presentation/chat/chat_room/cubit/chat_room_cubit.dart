@@ -142,6 +142,20 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
     await _userUsecase.reportUser(userId: userId, payload: ReportUserPayload(content: content));
   }
 
+  Future<void> changeNameGroup(int conversationId, String name) async {
+    final ResultModel result =
+        await _chatUseCase.renameConversation(conversationId: conversationId, name: name);
+    if (result.result is bool && result.result) {
+      final conversation =
+          await _chatUseCase.getConversationsDetail(conversationId: conversationId);
+      state.mapOrNull((value) => {emit(value.copyWith(conversation: conversation))});
+    }
+  }
+
+  Future<void> leave(int conversationId, bool isNotice) async {
+    await _chatUseCase.leaveChat(conversationId: conversationId, isNotice: isNotice);
+  }
+
   Future<void> sendImage() async {
     final files = await mediaPicker.pickImagesFromGallery();
     List<String> uploadImages = [];

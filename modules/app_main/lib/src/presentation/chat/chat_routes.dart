@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/chat/block_member/block_member_page.dart';
 import 'package:app_main/src/presentation/chat/create_room/create_room_page.dart';
 import 'package:app_main/src/presentation/chat/member/member_page.dart';
 import 'package:app_main/src/presentation/chat/new_message/new_message_page.dart';
@@ -34,8 +35,14 @@ class ChatRoutes extends RouteModule {
         CreateRoomPage.routeName: (context) {
           return const CreateRoomPage();
         },
+        BlockMemberPage.routeName: (context) {
+          return BlockMemberPage(
+            conversationId: settings.arguments as int,
+          );
+        },
         MemberPage.routeName: (context) {
-          return const MemberPage();
+          final args = settings.arguments as Map<String, dynamic>;
+          return MemberPage(isAdmin: args['isAdmin'], conversationId: args['conversationId']);
         },
       };
 }
