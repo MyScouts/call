@@ -15,6 +15,8 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/ui.dart';
 
+import 'register_marshop/register_pack_action_dialog.dart';
+
 extension UpgradeMarshopCoordinator on BuildContext {
   Future<T?> startRegisterCustomer<T>({String? marshopId}) {
     return Navigator.of(this)
@@ -133,6 +135,23 @@ extension UpgradeMarshopCoordinator on BuildContext {
             image: Assets.images_bg_waiting.path,
             summary:
                 "Bạn sẽ nhận được thông báo ngay khi yêu cầu được xác nhận",
+          );
+        });
+  }
+
+  Future<T?> startConfirmActionPackDialog<T>(
+      {required Function(RegisterPackAction) onChange}) {
+    return showGeneralDialog<T>(
+        context: this,
+        barrierLabel: '',
+        pageBuilder: (context, animation1, animation2) {
+          return ActionDialog(
+            title: "Xác nhận",
+            actionTitle: "Đồng ý",
+            widget: RegisterPackActionDialog(
+              onChange: onChange,
+            ),
+            onAction: () {},
           );
         });
   }

@@ -122,31 +122,34 @@ class _ConfirmInfomationAddressScreenState
                 PrimaryButton(
                   title: "Tiếp tục",
                   onTap: () {
-                    context.read<MarshopCubit>().registerMarshop(
-                          widget.authInfo.id!,
-                          RegisterMarshopPayload(
-                            packId: widget.pack.id,
-                            referralId: widget.marshop.id,
-                            billInfo: RegisterMarshopBillInfo(
-                              addressInfo: RegisterMarshopAddress(
-                                address: _addressCtrl.text.trim(),
-                                countryName: address!.countryName!,
-                                districtName: address!.districtName!,
-                                provinceName: address!.provinceName!,
-                                wardName: address!.wardName!,
-                              ),
-                              priceInfo: RegisterMarshopPrice(
-                                price: widget.pack.price,
-                                shipFee: 0,
-                                tax: 10,
-                              ),
-                              productInfo: widget.productResult
-                                  .map((e) => RegisterMarshopProduct(
-                                      productId: e.id, quantity: e.quantity))
-                                  .toList(),
-                            ),
-                          ),
-                        );
+                    context.startConfirmActionPackDialog(
+                      onChange: (value) {},
+                    );
+                    // context.read<MarshopCubit>().registerMarshop(
+                    //       widget.authInfo.id!,
+                    //       RegisterMarshopPayload(
+                    //         packId: widget.pack.id,
+                    //         referralId: widget.marshop.id,
+                    //         billInfo: RegisterMarshopBillInfo(
+                    //           addressInfo: RegisterMarshopAddress(
+                    //             address: _addressCtrl.text.trim(),
+                    //             countryName: address!.countryName!,
+                    //             districtName: address!.districtName!,
+                    //             provinceName: address!.provinceName!,
+                    //             wardName: address!.wardName!,
+                    //           ),
+                    //           priceInfo: RegisterMarshopPrice(
+                    //             price: widget.pack.price,
+                    //             shipFee: 0,
+                    //             tax: 10,
+                    //           ),
+                    //           productInfo: widget.productResult
+                    //               .map((e) => RegisterMarshopProduct(
+                    //                   productId: e.id, quantity: e.quantity))
+                    //               .toList(),
+                    //         ),
+                    //       ),
+                    //     );
                   },
                   disabled: address == null && _addressCtrl.text.isNotEmpty,
                   width: null,

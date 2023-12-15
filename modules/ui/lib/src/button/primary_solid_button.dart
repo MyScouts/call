@@ -55,6 +55,7 @@ class PrimarySolidButton extends StatelessWidget {
                   Text(
                     title,
                     style: context.text.bodyLarge!.copyWith(
+                      fontWeight: FontWeight.bold,
                       color: disabled
                           ? AppColors.grey72
                           : (textColor ?? AppColors.white),
