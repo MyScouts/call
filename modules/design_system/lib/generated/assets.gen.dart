@@ -14,6 +14,17 @@ import 'package:flutter/services.dart';
 class Assets {
   Assets._();
 
+  /// File path: assets/audio/incoming_call_ringtone.mp3
+  static const String audio_incoming_call_ringtone =
+      'assets/audio/incoming_call_ringtone.mp3';
+
+  /// File path: assets/audio/outgoing_call_ringtone.mp3
+  static const String audio_outgoing_call_ringtone =
+      'assets/audio/outgoing_call_ringtone.mp3';
+
+  /// File path: assets/audio/reaction.mp3
+  static const String audio_reaction = 'assets/audio/reaction.mp3';
+
   /// File path: assets/flags/ad.png
   static const AssetGenImage flags_ad = AssetGenImage('assets/flags/ad.png');
 
@@ -1174,6 +1185,10 @@ class Assets {
   static const AssetGenImage icons_ic_error_circle =
       AssetGenImage('assets/icons/ic_error_circle.png');
 
+  /// File path: assets/icons/ic_expand_call.svg
+  static const SvgGenImage icons_ic_expand_call =
+      SvgGenImage('assets/icons/ic_expand_call.svg');
+
   /// File path: assets/icons/ic_fan.svg
   static const SvgGenImage icons_ic_fan =
       SvgGenImage('assets/icons/ic_fan.svg');
@@ -1317,6 +1332,10 @@ class Assets {
   /// File path: assets/icons/ic_micro.svg
   static const SvgGenImage icons_ic_micro =
       SvgGenImage('assets/icons/ic_micro.svg');
+
+  /// File path: assets/icons/ic_missing_call.svg
+  static const SvgGenImage icons_ic_missing_call =
+      SvgGenImage('assets/icons/ic_missing_call.svg');
 
   /// File path: assets/icons/ic_monitor.svg
   static const SvgGenImage icons_ic_monitor =
@@ -1638,6 +1657,10 @@ class Assets {
   static const SvgGenImage icons_ic_volume =
       SvgGenImage('assets/icons/ic_volume.svg');
 
+  /// File path: assets/icons/ic_volume_on.svg
+  static const SvgGenImage icons_ic_volume_on =
+      SvgGenImage('assets/icons/ic_volume_on.svg');
+
   /// File path: assets/icons/ic_vstore.png
   static const AssetGenImage icons_ic_vstore =
       AssetGenImage('assets/icons/ic_vstore.png');
@@ -1710,6 +1733,18 @@ class Assets {
   static const AssetGenImage icons_lives_avatar =
       AssetGenImage('assets/icons/lives/avatar.png');
 
+  /// File path: assets/icons/lives/beauty.svg
+  static const SvgGenImage icons_lives_beauty =
+      SvgGenImage('assets/icons/lives/beauty.svg');
+
+  /// File path: assets/icons/lives/call.svg
+  static const SvgGenImage icons_lives_call =
+      SvgGenImage('assets/icons/lives/call.svg');
+
+  /// File path: assets/icons/lives/call_video.svg
+  static const SvgGenImage icons_lives_call_video =
+      SvgGenImage('assets/icons/lives/call_video.svg');
+
   /// File path: assets/icons/lives/chevron_down.svg
   static const SvgGenImage icons_lives_chevron_down =
       SvgGenImage('assets/icons/lives/chevron_down.svg');
@@ -1734,6 +1769,10 @@ class Assets {
   static const SvgGenImage icons_lives_gift_1 =
       SvgGenImage('assets/icons/lives/gift_1.svg');
 
+  /// File path: assets/icons/lives/hieuung.svg
+  static const SvgGenImage icons_lives_hieuung =
+      SvgGenImage('assets/icons/lives/hieuung.svg');
+
   /// File path: assets/icons/lives/ic_double_arrow.svg
   static const SvgGenImage icons_lives_ic_double_arrow =
       SvgGenImage('assets/icons/lives/ic_double_arrow.svg');
@@ -1741,6 +1780,10 @@ class Assets {
   /// File path: assets/icons/lives/live.png
   static const AssetGenImage icons_lives_live =
       AssetGenImage('assets/icons/lives/live.png');
+
+  /// File path: assets/icons/lives/live_group.svg
+  static const SvgGenImage icons_lives_live_group =
+      SvgGenImage('assets/icons/lives/live_group.svg');
 
   /// File path: assets/icons/lives/lose.png
   static const AssetGenImage icons_lives_lose =
@@ -1777,6 +1820,10 @@ class Assets {
   /// File path: assets/icons/lives/public.svg
   static const SvgGenImage icons_lives_public =
       SvgGenImage('assets/icons/lives/public.svg');
+
+  /// File path: assets/icons/lives/record.svg
+  static const SvgGenImage icons_lives_record =
+      SvgGenImage('assets/icons/lives/record.svg');
 
   /// File path: assets/icons/lives/search.svg
   static const SvgGenImage icons_lives_search =
@@ -2087,6 +2134,10 @@ class Assets {
   static const SvgGenImage images_img_no_results =
       SvgGenImage('assets/images/img_no_results.svg');
 
+  /// File path: assets/images/img_waiting.png
+  static const AssetGenImage images_img_waiting =
+      AssetGenImage('assets/images/img_waiting.png');
+
   /// File path: assets/images/instagram.webp
   static const AssetGenImage images_instagram =
       AssetGenImage('assets/images/instagram.webp');
@@ -2196,6 +2247,9 @@ class Assets {
 
   /// List of all assets
   List<dynamic> get values => [
+        audio_incoming_call_ringtone,
+        audio_outgoing_call_ringtone,
+        audio_reaction,
         flags_ad,
         flags_ae,
         flags_af,
@@ -2549,6 +2603,7 @@ class Assets {
         icons_ic_edit_2,
         icons_ic_end,
         icons_ic_error_circle,
+        icons_ic_expand_call,
         icons_ic_fan,
         icons_ic_female,
         icons_ic_filter_tick,
@@ -2585,6 +2640,7 @@ class Assets {
         icons_ic_messages,
         icons_ic_mic_off,
         icons_ic_micro,
+        icons_ic_missing_call,
         icons_ic_monitor,
         icons_ic_news,
         icons_ic_newspaper_ban,
@@ -2665,6 +2721,7 @@ class Assets {
         icons_ic_video_rd_trans_active,
         icons_ic_video_volume,
         icons_ic_volume,
+        icons_ic_volume_on,
         icons_ic_vstore,
         icons_ic_waiting,
         icons_ic_wallet,
@@ -2683,14 +2740,19 @@ class Assets {
         icons_live_setting,
         icons_live_share,
         icons_lives_avatar,
+        icons_lives_beauty,
+        icons_lives_call,
+        icons_lives_call_video,
         icons_lives_chevron_down,
         icons_lives_chienbinh,
         icons_lives_draw,
         icons_lives_edit,
         icons_lives_filter,
         icons_lives_gift_1,
+        icons_lives_hieuung,
         icons_lives_ic_double_arrow,
         icons_lives_live,
+        icons_lives_live_group,
         icons_lives_lose,
         icons_lives_lose_small,
         icons_lives_marshop,
@@ -2700,6 +2762,7 @@ class Assets {
         icons_lives_pk,
         icons_lives_pk_2,
         icons_lives_public,
+        icons_lives_record,
         icons_lives_search,
         icons_lives_share,
         icons_lives_start_pk,
@@ -2778,6 +2841,7 @@ class Assets {
         images_img_default_team_banner,
         images_img_empty,
         images_img_no_results,
+        images_img_waiting,
         images_instagram,
         images_live,
         images_loading,

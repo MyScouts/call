@@ -64,11 +64,18 @@ class LiveToolsSheet extends StatelessWidget {
                 crossAxisSpacing: 24,
                 childAspectRatio: 2 / 3,
                 children: [
-                  _Item(
-                    title: 'Chia sẻ',
-                    icon: Assets.icons_lives_share.svg(),
-                    action: () {},
-                  ),
+                  if (controller.info.pk == null)
+                    _Item(
+                      title: 'Mời DK',
+                      icon: Assets.icons_lives_pk.svg(),
+                      action: () {
+                        Navigator.of(context).pop();
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (_) => const PkInviteScreen(),
+                        );
+                      },
+                    ),
                   _Item(
                     title: 'Thu nhỏ',
                     icon: Assets.icons_lives_zoom_in.svg(),
@@ -80,21 +87,39 @@ class LiveToolsSheet extends StatelessWidget {
                     },
                   ),
                   _Item(
-                    title: 'Xoay Cam',
+                    title: 'Lật camera',
                     icon: Assets.icons_lives_switch_came.svg(),
                     action: controller.switchCamera,
                   ),
-                  if(controller.info.pk == null)
                   _Item(
-                    title: 'Mời DK',
-                    icon: Assets.icons_lives_pk.svg(),
-                    action: () {
-                      Navigator.of(context).pop();
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (_) => const PkInviteScreen(),
-                      );
-                    },
+                    title: 'Tắt hình',
+                    icon: Assets.icons_lives_switch_came.svg(),
+                    action: controller.enableVideo,
+                  ),
+                  _Item(
+                    title: 'Mic',
+                    icon: Assets.icons_lives_turn_off_mic.svg(),
+                    action: controller.enableAudio,
+                  ),
+                  _Item(
+                    title: 'Làm đẹp',
+                    icon: Assets.icons_lives_beauty.svg(),
+                    action: () {},
+                  ),
+                  _Item(
+                    title: 'Bộ lọc',
+                    icon: Assets.icons_lives_filter.svg(),
+                    action: () {},
+                  ),
+                  _Item(
+                    title: 'Hiệu ứng',
+                    icon: Assets.icons_lives_hieuung.svg(),
+                    action: () {},
+                  ),
+                  _Item(
+                    title: 'Chia sẻ',
+                    icon: Assets.icons_lives_share.svg(),
+                    action: () {},
                   ),
                   _Item(
                     title: 'MarShop',

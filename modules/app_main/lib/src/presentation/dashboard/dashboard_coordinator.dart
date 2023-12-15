@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/camera/camera_result_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_module.dart';
@@ -107,6 +108,11 @@ extension DashBoardCoordinator on BuildContext {
       default:
         if (path != null) {
           Navigator.of(this).pushNamed(path);
+        } else {
+          showToastMessage(
+            'Tính năng đang được phát triển',
+            ToastMessageType.warning,
+          );
         }
         break;
     }

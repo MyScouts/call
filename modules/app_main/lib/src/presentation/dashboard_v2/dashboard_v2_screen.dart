@@ -93,8 +93,8 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
     super.build(context);
     final List<Widget> children = [
       DashboardCommunity(context: context),
-      const DashboardPersonal(),
-      const DashboardEco()
+      DashboardPersonal(context: context),
+      DashboardEco(context: context)
     ];
 
     return BlocListener<StringeeBloc, StringeeState>(
@@ -161,7 +161,13 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2>
                         Positioned(
                           bottom: 0,
                           left: (ScreenUtil().screenWidth - 32) / 2 + 8,
-                          child: DashBottomFab(key: fabKey),
+                          child: DashBottomFab(
+                            key: fabKey,
+                            onCLose: () {
+                              fabKey.currentState?.revert();
+                              bottomKey.currentState?.disableFab();
+                            },
+                          ),
                         ),
                       ],
                     ),
