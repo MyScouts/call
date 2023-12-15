@@ -540,7 +540,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
             },
           ),
           InformationFieldWidget(
-            required: widget.isPDone,
+            required: false,
             shouldEnabled: true,
             controller: jobController,
             onChanged: (String? value) {
@@ -609,7 +609,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
           ),
           const SizedBox(height: 7),
           InformationFieldWidget(
-            required: widget.isPDone,
+            required: false,
             shouldEnabled: true,
             controller: talentController,
             onChanged: (String? value) {
@@ -619,7 +619,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
           ),
           const SizedBox(height: 7),
           InformationFieldWidget(
-            required: widget.isPDone,
+            required: false,
             shouldEnabled: true,
             controller: hobbyController,
             onChanged: (String? value) {
@@ -991,7 +991,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       builder: (ctx, state) {
         final co = state.countries ?? countries;
         return CountriesDropdown(
-          required: true,
+          required: false,
           countries: co,
           onChange: (country) {
             cuCountry = country;
@@ -1027,7 +1027,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
           final pros = state.provinces ?? provinces;
           return ProvinceDropDown(
             province: cuProvince,
-            required: true,
+            required: false,
             provinces: pros,
             onChange: (province) {
               cuProvince = province;
@@ -1070,7 +1070,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
           final dis = state.districts ?? districts;
           return DistrictDropDown(
             district: cuDistrict,
-            required: true,
+            required: false,
             districts: dis,
             onChange: (district) {
               cuDistrict = district;
@@ -1105,7 +1105,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         final wa = state.wards ?? wards;
         return WardDropDown(
           ward: cuWard,
-          required: true,
+          required: false,
           wards: wa,
           onChange: (ward) {
             cuWard = ward;

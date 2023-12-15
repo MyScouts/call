@@ -21,9 +21,10 @@ ProductDetailResponse _$ProductDetailResponseFromJson(
 
 /// @nodoc
 mixin _$ProductDetailResponse {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  List<String> get thumbnail => throw _privateConstructorUsedError;
+  String get avatar => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
   int get price => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,7 +39,8 @@ abstract class $ProductDetailResponseCopyWith<$Res> {
           $Res Function(ProductDetailResponse) then) =
       _$ProductDetailResponseCopyWithImpl<$Res, ProductDetailResponse>;
   @useResult
-  $Res call({String id, String name, List<String> thumbnail, int price});
+  $Res call(
+      {int id, String name, String avatar, String? description, int price});
 }
 
 /// @nodoc
@@ -57,22 +59,27 @@ class _$ProductDetailResponseCopyWithImpl<$Res,
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? thumbnail = null,
+    Object? avatar = null,
+    Object? description = freezed,
     Object? price = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      thumbnail: null == thumbnail
-          ? _value.thumbnail
-          : thumbnail // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      avatar: null == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
@@ -90,7 +97,8 @@ abstract class _$$ProductDetailResponseImplCopyWith<$Res>
       __$$ProductDetailResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, List<String> thumbnail, int price});
+  $Res call(
+      {int id, String name, String avatar, String? description, int price});
 }
 
 /// @nodoc
@@ -107,22 +115,27 @@ class __$$ProductDetailResponseImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? thumbnail = null,
+    Object? avatar = null,
+    Object? description = freezed,
     Object? price = null,
   }) {
     return _then(_$ProductDetailResponseImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      thumbnail: null == thumbnail
-          ? _value._thumbnail
-          : thumbnail // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      avatar: null == avatar
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
       price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
@@ -137,31 +150,27 @@ class _$ProductDetailResponseImpl implements _ProductDetailResponse {
   const _$ProductDetailResponseImpl(
       {required this.id,
       required this.name,
-      required final List<String> thumbnail,
-      required this.price})
-      : _thumbnail = thumbnail;
+      required this.avatar,
+      this.description,
+      required this.price});
 
   factory _$ProductDetailResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductDetailResponseImplFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final String name;
-  final List<String> _thumbnail;
   @override
-  List<String> get thumbnail {
-    if (_thumbnail is EqualUnmodifiableListView) return _thumbnail;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_thumbnail);
-  }
-
+  final String avatar;
+  @override
+  final String? description;
   @override
   final int price;
 
   @override
   String toString() {
-    return 'ProductDetailResponse(id: $id, name: $name, thumbnail: $thumbnail, price: $price)';
+    return 'ProductDetailResponse(id: $id, name: $name, avatar: $avatar, description: $description, price: $price)';
   }
 
   @override
@@ -171,15 +180,16 @@ class _$ProductDetailResponseImpl implements _ProductDetailResponse {
             other is _$ProductDetailResponseImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality()
-                .equals(other._thumbnail, _thumbnail) &&
+            (identical(other.avatar, avatar) || other.avatar == avatar) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
             (identical(other.price, price) || other.price == price));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name,
-      const DeepCollectionEquality().hash(_thumbnail), price);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, avatar, description, price);
 
   @JsonKey(ignore: true)
   @override
@@ -198,20 +208,23 @@ class _$ProductDetailResponseImpl implements _ProductDetailResponse {
 
 abstract class _ProductDetailResponse implements ProductDetailResponse {
   const factory _ProductDetailResponse(
-      {required final String id,
+      {required final int id,
       required final String name,
-      required final List<String> thumbnail,
+      required final String avatar,
+      final String? description,
       required final int price}) = _$ProductDetailResponseImpl;
 
   factory _ProductDetailResponse.fromJson(Map<String, dynamic> json) =
       _$ProductDetailResponseImpl.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   String get name;
   @override
-  List<String> get thumbnail;
+  String get avatar;
+  @override
+  String? get description;
   @override
   int get price;
   @override

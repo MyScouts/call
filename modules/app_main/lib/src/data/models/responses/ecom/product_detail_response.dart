@@ -6,9 +6,10 @@ part 'product_detail_response.g.dart';
 @freezed
 class ProductDetailResponse with _$ProductDetailResponse {
   const factory ProductDetailResponse({
-    required String id,
+    required int id,
     required String name,
-    required List<String> thumbnail,
+    required String avatar,
+    String? description,
     required int price,
   }) = _ProductDetailResponse;
 

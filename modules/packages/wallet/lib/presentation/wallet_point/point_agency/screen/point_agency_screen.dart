@@ -34,6 +34,7 @@ class _PointAgencyScreenState extends State<PointAgencyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('selectedAgencyId : ${widget.selectedAgencyId}');
     return Scaffold(
       appBar: appbarBuilder(context, title: 'Tìm đại lý xu'),
       body: Padding(
@@ -74,7 +75,10 @@ class _PointAgencyScreenState extends State<PointAgencyScreen> {
                                     ? () => context
                                         .agencyInfo(widget.selectedAgencyId!)
                                     : null,
-                                child: const Text('XEM ĐẠI LÝ'),
+                                child: const Text(
+                                  'XEM ĐẠI LÝ',
+                                  style: TextStyle(color: AppColors.white),
+                                ),
                               ),
                             )
                           ],
@@ -110,8 +114,8 @@ class _PointAgencyScreenState extends State<PointAgencyScreen> {
               .toList(),
           initialValue: null,
           onSelected: (value) {
+            widget.selectedAgencyId = value?.id;
             if (value != null) {
-              widget.selectedAgencyId = value.id;
               _agencyBloc
                   .add(AgencyEvent.getAgencyInfo(widget.selectedAgencyId!));
               // _agencyBloc.add(
@@ -121,7 +125,7 @@ class _PointAgencyScreenState extends State<PointAgencyScreen> {
               Future.delayed(const Duration(milliseconds: 200)).then((value) {
                 setState(() {});
               });
-            }
+            } else {}
           },
           onChanged: (val) {},
         ),
@@ -136,7 +140,8 @@ class _PointAgencyScreenState extends State<PointAgencyScreen> {
       return Container();
     }
 
-    return Expanded(child: Container(
+    return Expanded(
+        child: Container(
       margin: const EdgeInsets.only(top: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,7 +156,7 @@ class _PointAgencyScreenState extends State<PointAgencyScreen> {
               children: [
                 TextSpan(
                   text:
-                  '${agencyResponse!.coinAgency.availableCoin!.toAppCurrencyString(isWithSymbol: false)} xu',
+                      '${agencyResponse!.coinAgency.availableCoin!.toAppCurrencyString(isWithSymbol: false)} xu',
                   style: context.textTheme.titleLarge!
                       .copyWith(fontSize: 18, color: const Color(0xFFC6650C)),
                 ),
@@ -172,7 +177,7 @@ class _PointAgencyScreenState extends State<PointAgencyScreen> {
             ),
             Container(
               decoration:
-              BoxDecoration(borderRadius: BorderRadius.circular(16)),
+                  BoxDecoration(borderRadius: BorderRadius.circular(16)),
               child: Table(
                 border: TableBorder.all(
                   color: const Color(0xFF4B84F7),
@@ -208,27 +213,27 @@ class _PointAgencyScreenState extends State<PointAgencyScreen> {
                   ),
                   ...(agencyResponse!.coinAgency.coinDiscounts ?? [])
                       .map((e) => TableRow(children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Text(
-                        e.thresholdVnd.toAppCurrencyString(),
-                        style: context.textTheme.titleMedium!.copyWith(
-                            color: const Color(0xFF6E6E6E),
-                            fontSize: 16),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Text(
-                        '${e.discountRate}%',
-                        style: context.textTheme.titleMedium!.copyWith(
-                            color: const Color(0xFF6E6E6E),
-                            fontSize: 16),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ]))
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: Text(
+                                e.thresholdVnd.toAppCurrencyString(),
+                                style: context.textTheme.titleMedium!.copyWith(
+                                    color: const Color(0xFF6E6E6E),
+                                    fontSize: 16),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: Text(
+                                '${e.discountRate}%',
+                                style: context.textTheme.titleMedium!.copyWith(
+                                    color: const Color(0xFF6E6E6E),
+                                    fontSize: 16),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ]))
                 ],
               ),
             ),
@@ -270,7 +275,8 @@ class _PointAgencyScreenState extends State<PointAgencyScreen> {
   Widget _agencyBankAccElement(BuildContext context, BankAccount bankAccount) {
     return Container(
       margin: const EdgeInsets.only(top: 16),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8).copyWith(right: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8)
+          .copyWith(right: 24),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: AppColors.black10.withOpacity(0.4))),

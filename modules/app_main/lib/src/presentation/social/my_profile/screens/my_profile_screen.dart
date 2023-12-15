@@ -5,6 +5,7 @@ import 'package:app_main/src/app_dimens.dart';
 import 'package:app_main/src/data/models/payloads/social/create_post_payload.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
+import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
 import 'package:app_main/src/presentation/social/following/following_coordinator.dart';
 import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_event.dart';
 import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_state.dart';
@@ -508,16 +509,20 @@ class _MyProfileScreenState extends State<MyProfileScreen>
                               ),
                             ),
                           const SizedBox(width: 7),
-                          Container(
-                            height: 28,
-                            width: 28,
-                            padding: const EdgeInsets.all(3),
-                            decoration: BoxDecoration(
-                              color: const Color(0XFFE8F0FE),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: ImageWidget(
-                              IconAppConstants.icQrCode,
+                          GestureDetector(
+                            onTap: () =>
+                                context.startQrCode(userInfo: state.userInfo!),
+                            child: Container(
+                              height: 28,
+                              width: 28,
+                              padding: const EdgeInsets.all(3),
+                              decoration: BoxDecoration(
+                                color: const Color(0XFFE8F0FE),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: ImageWidget(
+                                IconAppConstants.icQrCode,
+                              ),
                             ),
                           )
                         ],
@@ -738,7 +743,10 @@ class _MyProfileScreenState extends State<MyProfileScreen>
         });
   }
 
-  Widget _buildPeopleInfo({required int data, required String title, required FollowingType followingType}) {
+  Widget _buildPeopleInfo(
+      {required int data,
+      required String title,
+      required FollowingType followingType}) {
     return Expanded(
       flex: 1,
       child: GestureDetector(

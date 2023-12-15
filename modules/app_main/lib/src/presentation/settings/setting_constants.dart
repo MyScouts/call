@@ -93,7 +93,7 @@ class Setting {
             text: "Tài khoản MarShop",
             icon: IconAppConstants.icMarshop,
             onPressed: () {
-              if (onboarding != null && onboarding.isMarshopCustomer) {
+              if (onboarding != null && onboarding.isMarshopOwner) {
                 context.showToastMessage("Bạn đã là MarShop");
               } else {
                 context.startRegisterMarshop();
