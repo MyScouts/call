@@ -99,8 +99,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
 
   @override
   Widget build(BuildContext context) {
-    final isShowKeyboard = MediaQuery.of(context).viewInsets.bottom.toInt() > 0;
-
+    final isShowKeyboard = MediaQuery.of(Scaffold.of(context).context).viewInsets.bottom.toInt() > 0;
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: context.hideKeyboard,
@@ -190,40 +189,67 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                           0,
                         ),
                       ),
-                      ListView(
-                        children: [
-                          _buildAgencyInformation(
-                              context, agencyInfo.coinAgency),
-                          SizedBox(
-                            height:
-                                MediaQuery.of(context).size.height / 2 - 100,
-                            child: AgencyTabBarWidget(
-                              widgetByMoney: _buildEnterByMoney(context),
-                              widgetByCoin: _buildEnterNumberCoins(context),
+                      SingleChildScrollView(
+                        physics: ClampingScrollPhysics(),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildAgencyInformation(
+                                context, agencyInfo.coinAgency),
+                            SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height / 2 - 100,
+                              child: AgencyTabBarWidget(
+                                widgetByMoney: _buildEnterByMoney(context),
+                                widgetByCoin: _buildEnterNumberCoins(context),
+                              ),
                             ),
-                          ),
-                          _buildBankMethod(),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            color: AppColors.white,
+                            _buildBankMethod(),
+                          ],
+                        ),
+                      ),
+                      Visibility(
+                        visible: !isShowKeyboard,
+                        child: Positioned(
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                _buildCouponCoins(context),
-                                Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: GradiantButton(
-                                    onPressed: handleExchangeTap,
-                                    child: const Text('Xác nhận',  style: TextStyle(color: AppColors.white),),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16),
+                                  color: AppColors.white,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      _buildCouponCoins(context),
+                                      Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: GradiantButton(
+                                          onPressed: handleExchangeTap,
+                                          child: const Text(
+                                            'Xác nhận',
+                                            style: TextStyle(
+                                                color: AppColors.white),
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                )
+                                ),
+                                Container(
+                                  color: AppColors.white,
+                                  height:
+                                      MediaQuery.of(context).padding.bottom +
+                                          16,
+                                ),
                               ],
                             ),
                           ),
-                          SizedBox(
-                            height: MediaQuery.of(context).padding.bottom,
-                          ),
-                        ],
+                        ),
                       )
                     ],
                   );
@@ -278,9 +304,11 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
           ),
           _agencyInformationRow(
               context, 'ID P-DONE', agencyInfo.user?.pDoneId ?? ''),
-          _agencyInformationRow(context, 'Số điện thoại',
-              '${agencyInfo.user?.phoneCode} ${agencyInfo.user?.phone}'),
-          _agencyInformationRow(context, 'Email', agencyInfo.user?.email ?? ''),
+          // if ((agencyInfo.user?.phoneCode != null ||
+          //     agencyInfo.user?.phone != null))
+          //   _agencyInformationRow(context, 'Số điện thoại',
+          //       '${agencyInfo.user?.phoneCode ?? ''} ${agencyInfo.user?.phone ?? ''}'),
+          // if((agencyInfo.user?.email != null))_agencyInformationRow(context, 'Email', agencyInfo.user?.email ?? ''),
         ],
       ),
     );
@@ -511,7 +539,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
           ),
         ),
         const SizedBox(
-          height: 10,
+          height: 4,
         ),
         TextFormField(
           controller: _moneyController,
