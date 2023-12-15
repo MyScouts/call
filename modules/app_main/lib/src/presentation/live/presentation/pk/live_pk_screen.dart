@@ -130,7 +130,7 @@ class _LivePKRtc extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          FlexDiamondBuilder(builder: (l, r) {
+          FlexDiamondBuilder(builder: (l, r, lc, rc) {
             return Row(
               children: [
                 Expanded(

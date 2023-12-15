@@ -7,7 +7,12 @@ import 'package:get/get.dart';
 class FlexDiamondBuilder extends StatefulWidget {
   const FlexDiamondBuilder({super.key, required this.builder});
 
-  final Function(int left, int right) builder;
+  final Function(
+    int left,
+    int right,
+    int leftCount,
+    int rightCount,
+  ) builder;
 
   @override
   State<FlexDiamondBuilder> createState() => _FlexDiamondBuilderState();
@@ -25,7 +30,7 @@ class _FlexDiamondBuilderState extends State<FlexDiamondBuilder> {
         _flexLeft = 1;
         _flexRight = 1;
 
-        return widget.builder(_flexLeft, _flexRight);
+        return widget.builder(_flexLeft, _flexRight, 0, 0);
       }
 
       final diamonds = controller.diamondsPK.value;
@@ -36,17 +41,26 @@ class _FlexDiamondBuilderState extends State<FlexDiamondBuilder> {
       UserDiamondForPK? diamondRight =
           diamonds.firstWhereOrNull((e) => e.userId == controller.hostID);
 
-      if ((diamondLeft?.diamondCount ?? 0) >
-          (diamondRight?.diamondCount ?? 0)) {
+      final leftCount = (diamondLeft?.diamondCount ?? 0);
+      final rightCount = (diamondRight?.diamondCount ?? 0);
+
+      if (leftCount > rightCount) {
         _flexLeft = 6;
         _flexRight = 4;
-      } else if ((diamondLeft?.diamondCount ?? 0) <
-          (diamondRight?.diamondCount ?? 0)) {
+      } else if (leftCount < rightCount) {
         _flexLeft = 4;
         _flexRight = 6;
+      } else {
+        _flexLeft = 1;
+        _flexRight = 1;
       }
 
-      return widget.builder(_flexLeft, _flexRight);
+      return widget.builder(
+        _flexLeft,
+        _flexRight,
+        leftCount,
+        rightCount,
+      );
     });
   }
 }

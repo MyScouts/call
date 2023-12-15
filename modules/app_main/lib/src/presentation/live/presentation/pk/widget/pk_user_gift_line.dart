@@ -1,5 +1,4 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_member.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
@@ -34,36 +33,41 @@ class _PkUserGiftLineState extends State<PkUserGiftLine> {
             children: [
               Expanded(
                 child: Stack(
-                  children: leftMembers
-                      .take(10)
-                      .map<Widget>((e) => Positioned(
-                            top: 0,
-                            left: (18 * leftMembers.indexOf(e)).toDouble(),
-                            child: _Avatar(url: e.info.avatar),
-                          ))
-                      .toList()
-                      .separated(const SizedBox(width: 4)),
+                  children: buildList(
+                    leftMembers.take(10).toList(),
+                  ),
                 ),
               ),
               Expanded(
                 child: Stack(
-                  children: rightMembers
-                      .take(10)
-                      .map<Widget>(
-                        (e) => Positioned(
-                          top: 0,
-                          right: (18 * rightMembers.indexOf(e)).toDouble(),
-                          child: _Avatar(url: e.info.avatar),
-                        ),
-                      )
-                      .toList()
-                      .separated(const SizedBox(width: 4)),
+                  children: buildList(
+                    rightMembers.take(10).toList(),
+                    isLeft: false,
+                  ),
                 ),
               ),
             ],
           ),
         ),
       );
+    });
+  }
+
+  List<Widget> buildList(List<LiveMember> members, {bool isLeft = true}) {
+    return List<Widget>.generate(members.length, (index) {
+      if (isLeft) {
+        return Positioned(
+          top: 0,
+          left: 18 * index / 1.0,
+          child: _Avatar(url: members[index].info.avatar),
+        );
+      } else {
+        return Positioned(
+          top: 0,
+          right: 18 * index / 1.0,
+          child: _Avatar(url: members[index].info.avatar),
+        );
+      }
     });
   }
 }

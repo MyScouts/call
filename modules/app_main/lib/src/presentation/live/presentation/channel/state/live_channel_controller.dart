@@ -773,9 +773,17 @@ class LiveChannelController {
       if (_liveType.value == LiveChannelType.pk) {
         final member =
             _members.firstWhereOrNull((e) => e.info.userID == gift.giver?.id);
-        final ids = _giftMembers.map((e) => e.info.userID);
-        if (member != null && !ids.contains(member.info.userID)) {
-          _giftMembers.value = [..._giftMembers, member];
+        if (member != null) {
+          final ids = _giftMembers.map((e) => e.info.userID);
+          if (ids.contains(member.info.userID)) {
+            final m = _giftMembers
+                .firstWhereOrNull((e) => e.info.userID == member.info.userID);
+            if(m!.liveID != member.liveID) {
+              _giftMembers.value = [..._giftMembers, member];
+            }
+          } else {
+            _giftMembers.value = [..._giftMembers, member];
+          }
         }
       }
       if (gift.giftCard?.metadata?.isStaticGif == true) {
@@ -841,6 +849,7 @@ class LiveChannelController {
         return;
       }
       if (isMemberInLive(user.id!)) return;
+      print(_giftMembers.value);
       final member = LiveMember(
         info: LiveMemberInfo(
           userID: user.id!,

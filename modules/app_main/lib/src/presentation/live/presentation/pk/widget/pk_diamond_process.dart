@@ -4,11 +4,67 @@ import 'package:app_main/src/presentation/live/presentation/channel/state/live_c
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'flex_diamond_builder.dart';
+
 class PkDiamondProcess extends StatelessWidget {
   const PkDiamondProcess({super.key});
 
   @override
   Widget build(BuildContext context) {
+    return FlexDiamondBuilder(
+      builder: (flexLeft, flexRight, leftCount, rightCount) {
+        return Container(
+          height: 22,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            border: Border.all(color: const Color(0xffFFC656), width: 3),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                  flex: flexLeft,
+                  child: AnimatedSize(
+                    duration: const Duration(milliseconds: 300),
+                    child: Container(
+                      color: const Color(0xffFE1D67),
+                      padding: const EdgeInsets.symmetric(horizontal: 9),
+                      child: Text(
+                        '$leftCount',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          height: 1.2,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  )),
+              Expanded(
+                  flex: flexRight,
+                  child: AnimatedSize(
+                    duration: const Duration(milliseconds: 300),
+                    child: Container(
+                      color: const Color(0xff00BBE4),
+                      padding: const EdgeInsets.symmetric(horizontal: 9),
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        '$rightCount',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          height: 1.2,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  )),
+            ],
+          ),
+        );
+      },
+    );
+
     final controller = context.read<LiveChannelController>();
 
     return Obx(() {
