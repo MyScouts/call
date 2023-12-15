@@ -1,6 +1,9 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/domain/entities/media/media_file.dart';
-import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_bloc.dart';
+import 'package:app_main/src/data/models/payloads/social/create_post_payload.dart';
+import 'package:app_main/src/di/di.dart';
+import 'package:app_main/src/presentation/social/my_profile/blocs/post_tab_bloc.dart';
+import 'package:app_main/src/presentation/social/my_profile/blocs/post_tab_event.dart';
+import 'package:app_main/src/presentation/social/my_profile/blocs/post_tab_state.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_coordinator.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/common/subordinate_scroll.dart';
@@ -9,46 +12,72 @@ import 'package:app_main/src/presentation/social/my_profile/screens/widgets/post
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/react_comment_widget.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/profile_avatar.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/react_widget.dart';
+import 'package:app_main/src/presentation/social/widgets/social_refresher.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
 
-import '../../widgets/multiple_image.dart';
+import '../../../widgets/multiple_image.dart';
 
 class PostTab extends StatefulWidget {
   const PostTab({
-    required this.posts,
-    required this.onLoadMore,
     required this.postType,
-    required this.controller,
-    this.newPost,
-    this.mediaFiles,
+    required this.refresh,
+    required this.createPostPayload,
     super.key,
   });
-  final List<Post> posts;
-  final Function onLoadMore;
-  final Post? newPost;
-  final List<MediaFile?>? mediaFiles;
   final PostType postType;
-  final SubordinateScrollController controller;
+  final ValueNotifier<bool> refresh;
+  final ValueNotifier<CreatePostPayload?> createPostPayload;
 
   @override
   State<PostTab> createState() => _PostTabState();
 }
 
 class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  SubordinateScrollController? scrollController;
+  final bloc = getIt<PostTabBloc>();
 
-    widget.controller.addListener(() {
-      if (widget.controller.position.pixels >=
-          widget.controller.position.maxScrollExtent) {
-        widget.onLoadMore();
+  @override
+  void initState() {
+    super.initState();
+
+    _initController();
+    bloc.add(PostTabInitiated(postType: widget.postType));
+    _onListener();
+  }
+
+  void _onListener() {
+    widget.refresh.addListener(() {
+      bloc.add(PostTabRefreshed());
+    });
+
+    widget.createPostPayload.addListener(() {
+      if (widget.createPostPayload.value != null) {
+        bloc.add(
+            CreateNewPost(createPostPayload: widget.createPostPayload.value!));
       }
     });
+  }
+
+  void _initController() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final parentController = PrimaryScrollController.of(context);
+      if (scrollController?.parent != parentController) {
+        scrollController?.dispose();
+        scrollController = SubordinateScrollController(parentController);
+      }
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    scrollController?.dispose();
   }
 
   @override
@@ -57,83 +86,117 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
 
     super.build(context);
 
-    return CustomScrollView(
-      shrinkWrap: true,
-      key: widget.key,
-      physics: const ClampingScrollPhysics(),
-      controller: widget.controller,
-      slivers: [
-        SliverToBoxAdapter(
-          child: Container(
-            color: AppColors.white,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (widget.posts.isNotEmpty) const SizedBox(height: 16),
-                if (widget.newPost != null)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding:
-                            EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                        child: LinearProgressIndicator(
-                          value: null,
-                        ),
-                      ),
-                      IgnorePointer(
-                        child: ColorFiltered(
-                          colorFilter: ColorFilter.mode(
-                            Colors.white.withOpacity(0.5),
-                            BlendMode.hardLight,
+    return BlocProvider(
+      create: (_) => bloc,
+      child: BlocBuilder<PostTabBloc, PostTabState>(
+          buildWhen: (previous, current) =>
+              previous.posts != current.posts ||
+              previous.hasLoadMore != current.hasLoadMore ||
+              previous.newPost != current.newPost ||
+              previous.postMediaFiles != current.postMediaFiles,
+          builder: (context, state) {
+            final posts = state.posts;
+            final newPost = state.newPost;
+
+            if (state.isInitial()) {
+              return const LoadingWidget();
+            }
+
+            if (state.isEmpty()) {
+              return _buildEmptyPosts(paddingLineBottom);
+            }
+
+            return scrollController == null
+                ? const SizedBox.shrink()
+                : SocialRefresher(
+                    controller: bloc.controller,
+                    scrollController: scrollController,
+                    onLoading: () {
+                      bloc.add(PostTabLoadMore());
+                    },
+                    isRefreshing: false,
+                    child: CustomScrollView(
+                      shrinkWrap: true,
+                      key: widget.key,
+                      physics: const ClampingScrollPhysics(),
+                      controller: scrollController,
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: Container(
+                            color: AppColors.white,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (posts!.isNotEmpty)
+                                  const SizedBox(height: 16),
+                                if (newPost != null)
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 16, right: 16, bottom: 16),
+                                        child: LinearProgressIndicator(
+                                          value: null,
+                                        ),
+                                      ),
+                                      IgnorePointer(
+                                        child: ColorFiltered(
+                                          colorFilter: ColorFilter.mode(
+                                            Colors.white.withOpacity(0.5),
+                                            BlendMode.hardLight,
+                                          ),
+                                          child: _buildPost(
+                                            newPost,
+                                            isNewPost: true,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                if (posts.isNotEmpty)
+                                  ...posts.map((post) => _buildPost(post)),
+                              ],
+                            ),
                           ),
-                          child: _buildPost(
-                            widget.newPost!,
-                            isNewPost: true,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                if (widget.posts.isNotEmpty)
-                  ...widget.posts.map((post) => _buildPost(post)),
-              ],
-            ),
-          ),
-        ),
-        SliverFillRemaining(
-            hasScrollBody: false,
-            child: widget.posts.isEmpty && widget.newPost == null
-                ? Padding(
-                    padding: EdgeInsets.only(bottom: paddingLineBottom),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(height: 10),
-                        ImageWidget(
-                          IconAppConstants.icDoubleImage,
-                          width: 80,
-                          height: 80,
-                        ),
-                        const Text(
-                          'Chưa có bài viết nào',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: AppColors.grey76,
-                          ),
-                        ),
+                        )
                       ],
                     ),
-                  )
-                : const SizedBox.shrink()),
-      ],
+                  );
+          }),
+    );
+  }
+
+  Padding _buildEmptyPosts(double paddingLineBottom) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: paddingLineBottom),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: 10),
+          ImageWidget(
+            IconAppConstants.icDoubleImage,
+            width: 80,
+            height: 80,
+          ),
+          const Text(
+            'Chưa có bài viết nào',
+            style: TextStyle(
+              fontSize: 14,
+              color: AppColors.grey76,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildPost(Post post, {bool isNewPost = false}) {
     bool hasMedia = post.getListMedia.isNotEmpty;
     if (isNewPost) {
-      hasMedia = widget.mediaFiles != null && widget.mediaFiles!.isNotEmpty;
+      hasMedia = bloc.state.postMediaFiles != null &&
+          bloc.state.postMediaFiles!.isNotEmpty;
     }
 
     return Column(
@@ -148,7 +211,7 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
                 onTap: () {
                   context.startPostDetail(
                     post: post,
-                    myProfileBloc: context.read<MyProfileBloc>(),
+                    postTabBloc: bloc,
                   );
                 },
                 child: PostHeaderUserInfo(
@@ -194,7 +257,7 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
                 key: UniqueKey(),
                 post: post,
                 isNewPost: isNewPost,
-                myProfileBloc: context.read<MyProfileBloc>(),
+                postTabBloc: bloc,
               ),
               _buildLatestComment(post.latestComment),
             ],
@@ -321,10 +384,11 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
   }) {
     final medias = post.getListMedia;
     if (isNewPost) {
+      final mediaFiles = bloc.state.postMediaFiles!;
       switch (postType) {
         case PostType.text:
           return CommonMultiImageView.multiFile(
-            listFile: widget.mediaFiles!.map((media) {
+            listFile: mediaFiles.map((media) {
               if (media != null) return media.path;
               return '';
             }).toList(),
@@ -332,11 +396,13 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
             radius: 12,
           );
         case PostType.video:
-          return SizedBox(
-            width: double.infinity,
-            child: CommonVideoPlayer(
-              videoType: VideoType.file,
-              source: widget.mediaFiles!.first!.path,
+          return IgnorePointer(
+            child: PostVideoThumbnailWidget(
+              key: UniqueKey(),
+              child: ThumbnailVideoPlayer(
+                videoType: CustomVideoType.file,
+                source: mediaFiles.first!.path,
+              ),
             ),
           );
         default:
@@ -353,38 +419,38 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
               context.startPostDetail(
                 post: post,
                 imageScrollType: ImageScrollType.image1,
-                myProfileBloc: context.read<MyProfileBloc>(),
+                postTabBloc: bloc,
               );
             },
             onTapImage2: () {
               context.startPostDetail(
                 post: post,
                 imageScrollType: ImageScrollType.image2,
-                myProfileBloc: context.read<MyProfileBloc>(),
+                postTabBloc: bloc,
               );
             },
             onTapImage3: () {
               context.startPostDetail(
                 post: post,
                 imageScrollType: ImageScrollType.image3,
-                myProfileBloc: context.read<MyProfileBloc>(),
+                postTabBloc: bloc,
               );
             },
           );
         case PostType.video:
           return PostVideoThumbnailWidget(
+            key: UniqueKey(),
             onTap: () {
               context.startPostPreview(
                 post: post,
-                myProfileBloc: context.read<MyProfileBloc>(),
+                postTabBloc: bloc,
                 currentMediaIndex: -1,
                 onChange: (_) => {},
               );
             },
-            child: CommonVideoPlayer(
-              videoType: VideoType.network,
+            child: ThumbnailVideoPlayer(
+              videoType: CustomVideoType.network,
               source: medias.first.link!,
-              isShowOnlyPlayIcon: true,
             ),
           );
 

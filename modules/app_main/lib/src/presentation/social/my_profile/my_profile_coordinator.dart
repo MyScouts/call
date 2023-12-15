@@ -1,5 +1,5 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_bloc.dart';
+import 'package:app_main/src/presentation/social/my_profile/blocs/post_tab_bloc.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/components/create_post/create_post_screen.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/components/post_detail/post_detail_screen.dart';
@@ -43,7 +43,7 @@ extension MyProfileCoordinator on BuildContext {
 
   Future<T?> startPostDetail<T>({
     required Post post,
-    required MyProfileBloc myProfileBloc,
+    required PostTabBloc postTabBloc,
     ImageScrollType? imageScrollType,
   }) {
     return Navigator.of(this).pushNamed(
@@ -51,7 +51,7 @@ extension MyProfileCoordinator on BuildContext {
       arguments: {
         "post": post,
         "imageScrollType": imageScrollType,
-        "myProfileBloc": myProfileBloc,
+        "postTabBloc": postTabBloc,
       },
     );
   }
@@ -59,7 +59,7 @@ extension MyProfileCoordinator on BuildContext {
   Future<T?> startPostPreview<T>({
     required Post post,
     required int currentMediaIndex,
-    required MyProfileBloc myProfileBloc,
+    required PostTabBloc postTabBloc,
     required Function(Post) onChange,
   }) {
     return Navigator.of(this).pushNamed(
@@ -67,7 +67,7 @@ extension MyProfileCoordinator on BuildContext {
       arguments: {
         "post": post,
         "currentMediaIndex": currentMediaIndex,
-        "myProfileBloc": myProfileBloc,
+        "postTabBloc": postTabBloc,
         "onChange": onChange,
       },
     );

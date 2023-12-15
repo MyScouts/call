@@ -1,6 +1,6 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_bloc.dart';
-import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_event.dart';
+import 'package:app_main/src/presentation/social/my_profile/blocs/post_tab_bloc.dart';
+import 'package:app_main/src/presentation/social/my_profile/blocs/post_tab_event.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/react_intereact_widget.dart';
 import 'package:design_system/design_system.dart';
@@ -10,7 +10,7 @@ import 'package:imagewidget/imagewidget.dart';
 class ReactWidget extends StatefulWidget {
   const ReactWidget({
     required this.post,
-    required this.myProfileBloc,
+    required this.postTabBloc,
     this.isNewPost = false,
     this.isDarkMode = false,
     this.onChange,
@@ -18,7 +18,7 @@ class ReactWidget extends StatefulWidget {
   });
   final Post post;
   final bool isNewPost;
-  final MyProfileBloc myProfileBloc;
+  final PostTabBloc postTabBloc;
   final Function(Post)? onChange;
   final bool isDarkMode;
 
@@ -151,7 +151,7 @@ class _ReactWidgetState extends State<ReactWidget> {
         totalReaction: isLiked ? ++totalReaction : --totalReaction,
       );
 
-      widget.myProfileBloc.add(ReactPostTapped(newPost: post));
+      widget.postTabBloc.add(ReactPostTapped(newPost: post));
       if (widget.onChange != null) {
         widget.onChange!(post);
       }

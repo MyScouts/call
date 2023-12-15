@@ -1,6 +1,6 @@
-import 'package:app_main/src/di/di.dart';
-import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_bloc.dart';
-import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_event.dart';
+import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/social/my_profile/blocs/post_tab_bloc.dart';
+import 'package:app_main/src/presentation/social/my_profile/blocs/post_tab_event.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/react_intereact_widget.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,6 @@ class ReactCommentWidget extends StatefulWidget {
 }
 
 class _ReactCommentWidgetState extends State<ReactCommentWidget> {
-  final myProfileBloc = getIt<MyProfileBloc>();
 
   late int latestCommentTotalReaction;
   @override
@@ -42,7 +41,7 @@ class _ReactCommentWidgetState extends State<ReactCommentWidget> {
           latestCommentTotalReaction = isLiked
               ? ++latestCommentTotalReaction
               : --latestCommentTotalReaction;
-          myProfileBloc.add(ReactLatestCommentTapped(
+          context.read<PostTabBloc>().add(ReactLatestCommentTapped(
             commentId: widget.commentId,
             isHearted: isLiked,
           ));

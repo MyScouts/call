@@ -39,7 +39,7 @@ class MyProfileRoutes extends RouteModule {
           return PostDetailScreen(
             post: args["post"],
             imageScrollType: args["imageScrollType"],
-            myProfileBloc: args["myProfileBloc"],
+            postTabBloc: args["postTabBloc"],
           );
         },
         PostPreviewScreen.routeName: (context) {
@@ -48,7 +48,7 @@ class MyProfileRoutes extends RouteModule {
           return PostPreviewScreen(
             post: args["post"],
             currentMediaIndex: args["currentMediaIndex"],
-            myProfileBloc: args["myProfileBloc"],
+            postTabBloc: args["postTabBloc"],
             onChange: args["onChange"],
           );
         },
