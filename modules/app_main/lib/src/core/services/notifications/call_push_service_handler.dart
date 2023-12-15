@@ -45,11 +45,8 @@ Future<dynamic> handleCallPN(
     ),
   );
   final caller = await userRepository.getUserById(id: callerId).catchError(
-        (_,s) {
-          print(_);
-          print(s);
-        },
-      );
+        (_) => null,
+  );
 
   const androidPlatformChannelSpecifics = AndroidNotificationDetails(
     'vdone_call_push_channel',
@@ -60,6 +57,7 @@ Future<dynamic> handleCallPN(
     ticker: 'incoming_call',
     playSound: true,
     fullScreenIntent: true,
+    category: AndroidNotificationCategory.call,
     sound: RawResourceAndroidNotificationSound('incoming_call_ringtone'),
   );
 
