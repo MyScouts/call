@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.app.vdone.staging"
+    namespace "com.app.vdone"
     compileSdkVersion 33
     ndkVersion flutter.ndkVersion
 
@@ -32,6 +32,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    def keystoreProperties = new Properties()
+    def keystorePropertiesFile = rootProject.file('key.properties')
+    if (keystorePropertiesFile.exists()) {
+       keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    }
+
 
     kotlinOptions {
         jvmTarget = '1.8'
@@ -42,18 +49,58 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.app.vdone.staging"
+        applicationId "com.app.vdone"
         minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
 
-    buildTypes {
+    flavorDimensions "default"
+    productFlavors {
+        production {
+            dimension "default"
+            applicationIdSuffix ""
+            resValue "string", "app_name", "VDONE"
+            versionCode 1
+            versionName "1.0"
+        }
+
+         staging {
+            dimension "default"
+            applicationIdSuffix ".staging"
+            resValue "string", "app_name", "VDONE-STG"
+            versionCode 1
+            versionName "1.0"
+        }
+
+        uat {
+            dimension "default"
+            applicationIdSuffix ".uat"
+            resValue "string", "app_name", "VDONE-UAT"
+            versionCode 1
+            versionName "1.0"
+        }
+    }
+
+     signingConfigs {
+       release {
+           keyAlias keystoreProperties['keyAlias']
+           keyPassword keystoreProperties['keyPassword']
+           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+           storePassword keystoreProperties['storePassword']
+       }
+   }
+
+   buildTypes {
+        profile {
+           signingConfig signingConfigs.debug
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-android.pro'
+        }
+
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+           signingConfig signingConfigs.release
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-android.pro'
         }
