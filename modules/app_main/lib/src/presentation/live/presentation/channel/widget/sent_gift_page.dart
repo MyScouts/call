@@ -4,6 +4,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:injectable/injectable.dart';
 
@@ -279,7 +280,7 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
                 const SizedBox(height: double.infinity, width: double.infinity),
                 Positioned(
                   right: 20,
-                  top: 200,
+                  top: 100.h,
                   child: Stack(
                     clipBehavior: Clip.none,
                     children: [
