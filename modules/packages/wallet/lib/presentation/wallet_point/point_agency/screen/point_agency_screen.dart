@@ -42,7 +42,7 @@ class _PointAgencyScreenState extends State<PointAgencyScreen> {
           context.horizontal,
           25,
           context.horizontal,
-          MediaQuery.of(context).padding.bottom,
+          MediaQuery.of(context).padding.bottom + 16,
         ),
         child: BlocListener<AgencyBloc, AgencyState>(
           listener: (BuildContext context, AgencyState state) {

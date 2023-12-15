@@ -44,8 +44,8 @@ class _AgencyTabBarWidgetState extends State<AgencyTabBarWidget>
           children: [
             _buildTab(),
             const SizedBox(height: 22),
-            Container(
-              height: 250,
+            SizedBox(
+              height: 230,
               child: PageView(
                 physics: const NeverScrollableScrollPhysics(),
                 controller: _pageCtrl,
