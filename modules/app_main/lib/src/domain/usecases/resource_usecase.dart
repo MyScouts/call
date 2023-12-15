@@ -14,7 +14,7 @@ class ResourceUsecase {
     return response;
   }
 
-  Future<GlobalSettingResponse> getGlobalConfig({required String key}) async {
+  Future<GlobalSettingResponse> getGlobalConfig(String key) async {
     return _resourceRepository.getGlobalConfig(key: key);
   }
 
