@@ -38,6 +38,7 @@ class _RegisterPackActionDialogState extends State<RegisterPackActionDialog> {
               onChanged: (val) {
                 if (val != null) {
                   _action = val;
+                  widget.onChange(val);
                 }
                 setState(() {});
               },
@@ -55,6 +56,7 @@ class _RegisterPackActionDialogState extends State<RegisterPackActionDialog> {
               onChanged: (val) {
                 if (val != null) {
                   _action = val;
+                  widget.onChange(val);
                 }
                 setState(() {});
               },

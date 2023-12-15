@@ -92,7 +92,7 @@ class ActionDialog extends StatelessWidget {
                       title: actionTitle,
                       onTap: () {
                         if (isBack) {
-                          Navigator.pop(context);
+                          Navigator.pop(context, true);
                         }
                         onAction.call();
                       },
