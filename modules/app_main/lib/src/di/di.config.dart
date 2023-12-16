@@ -284,6 +284,7 @@ Future<_i1.GetIt> init(
   final upgradeAgreePolicyBlocFactory = _$UpgradeAgreePolicyBlocFactory();
   final diaryBlocFactory = _$DiaryBlocFactory();
   final blocModule = _$BlocModule();
+  final diaryBlocFactory = _$DiaryBlocFactory();
   final dashBoardModule = _$DashBoardModule();
   gh.singleton<_i4.AppDelegate>(_i4.AppDelegate());
   gh.factory<_i5.AuthenticationRoutes>(() => _i5.AuthenticationRoutes());
@@ -503,30 +504,39 @@ Future<_i1.GetIt> init(
         gh<_i51.FollowingUsecase>(),
         gh<_i104.UserUsecase>(),
       ));
-  gh.factory<_i56.GetDetailBloc<dynamic>>(() => communityModule
-      .createDeleteOpenGroupRequestBloc(gh<_i129.CommunityUsecase>()));
-  gh.factory<_i56.GetDetailBloc<_i139.JAStatusResponse>>(() =>
+  gh.factory<_i56.GetDetailBloc<_i140.JAStatusResponse>>(() =>
       upgradeAgreePolicyBlocFactory
-          .createGetJAStatusBloc(gh<_i99.UpgradeAccountUsecase>()));
-  gh.factory<_i56.GetDetailBloc<_i140.OpenGroupRequestResponse>>(() =>
-      communityModule
-          .createGetOpenGroupRequestBloc(gh<_i129.CommunityUsecase>()));
-  gh.factory<_i56.GetDetailBloc<_i141.UpgradeAccountResponse>>(() =>
+          .createGetJAStatusBloc(gh<_i98.UpgradeAccountUsecase>()));
+  gh.factory<_i56.GetDetailBloc<_i3.FanGroup>>(() =>
+      communityModule.createGetFanGroupBloc(gh<_i128.CommunityUsecase>()));
+  gh.factory<_i56.GetDetailBloc<_i141.BankAccount>>(() =>
       upgradeAgreePolicyBlocFactory
-          .createUpgradeAccountBloc(gh<_i99.UpgradeAccountUsecase>()));
-  gh.factory<_i56.GetDetailBloc<_i142.BankAccount>>(() =>
+          .createGetDefaultBankBloc(gh<_i98.UpgradeAccountUsecase>()));
+  gh.factory<_i56.GetDetailBloc<_i142.UpgradeAccountResponse>>(() =>
       upgradeAgreePolicyBlocFactory
-          .createGetDefaultBankBloc(gh<_i99.UpgradeAccountUsecase>()));
-  gh.factory<_i56.GetDetailBlocParam1<Map<String, dynamic>, int>>(() =>
-      diaryBlocFactory.globalPersonSettingBloc(gh<_i94.ResourceUsecase>()));
+          .createUpgradeAccountBloc(gh<_i98.UpgradeAccountUsecase>()));
+  gh.factory<_i56.GetDetailBlocParam1<_i143.GlobalSettingResponse, String>>(
+      () => blocModule.getGlobalBloc(gh<_i93.ResourceUsecase>()));
   gh.factory<
-          _i56.GetDetailBlocParam1<_i143.MarshopResponse,
-              _i144.GetMarshopInfoPayload>>(
-      () => marshopBlocFactory.getMarshopInfo(gh<_i69.MarshopUsecase>()));
+      _i56.GetDetailBlocParam1<_i144.ConfirmRegisterJAResponse,
+          _i145.ConfirmRegisterJAPayload>>(() => upgradeAgreePolicyBlocFactory
+      .createConfirmRegisterJABloc(gh<_i98.UpgradeAccountUsecase>()));
   gh.factory<
-          _i56.GetDetailBlocParam1<_i145.BossCommunityStatusResponse, String>>(
+          _i56
+          .GetDetailBlocParam1<_i146.BossTeamRelinquishStatusResponse, String>>(
       () => communityModule
-          .createGetBossStatusBloc(gh<_i129.CommunityUsecase>()));
+          .createGetBossTeamRelinquishStatusBloc(gh<_i128.CommunityUsecase>()));
+  gh.factory<_i56.GetDetailBlocParam1<_i3.User?, int>>(
+      () => diaryBlocFactory.getUserDetailBloc(gh<_i103.UserUsecase>()));
+  gh.factory<_i56.GetDetailBlocParam1<Map<String, dynamic>, int>>(() =>
+      diaryBlocFactory.globalPersonSettingBloc(gh<_i93.ResourceUsecase>()));
+  gh.factory<_i56.GetDetailBlocParam1<dynamic, _i147.VerifyPhoneOtpPayload>>(
+      () => upgradeAgreePolicyBlocFactory.createUpgradeAccountVerifyPhoneBloc(
+          gh<_i98.UpgradeAccountUsecase>()));
+  gh.factory<
+      _i56.GetDetailBlocParam1<_i142.UpgradeAccountResponse,
+          _i148.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
+      .createResendOTPPhoneBloc(gh<_i98.UpgradeAccountUsecase>()));
   gh.factory<
       _i56.GetDetailBlocParam1<_i141.UpgradeAccountResponse,
           _i146.PDoneActionType>>(() => upgradeAgreePolicyBlocFactory
@@ -549,30 +559,29 @@ Future<_i1.GetIt> init(
   gh.factory<_i56.GetDetailBlocParam1<_i3.User?, int>>(
       () => diaryBlocFactory.getUserDetailBloc(gh<_i104.UserUsecase>()));
   gh.factory<
-          _i56
-          .GetDetailBlocParam1<_i152.BossTeamRelinquishStatusResponse, String>>(
+          _i56.GetDetailBlocParam1<_i152.BossCommunityStatusResponse, String>>(
       () => communityModule
-          .createGetBossTeamRelinquishStatusBloc(gh<_i129.CommunityUsecase>()));
+          .createGetBossStatusBloc(gh<_i128.CommunityUsecase>()));
   gh.factory<
       _i56.GetDetailBlocParam2<_i153.ConfirmResponse, String,
           _i154.ReplyGiveUpBossTeamRolePayload>>(() => communityModule
-      .createReplyGiveUpBossTeamBloc(gh<_i129.CommunityUsecase>()));
+      .createReplyGiveUpBossTeamBloc(gh<_i128.CommunityUsecase>()));
   gh.factory<
       _i56.GetDetailBlocParam2<_i153.ConfirmResponse, String,
           _i155.CommunityType>>(() => communityModule
-      .createRelinquishBossRoleBloc(gh<_i129.CommunityUsecase>()));
-  gh.factory<_i56.GetListBloc<_i156.JoinRequest>>(
-      () => communityModule.joinRequestBloc(gh<_i129.CommunityUsecase>()));
-  gh.factory<_i56.GetListBloc<_i157.GroupRequest>>(() =>
-      communityModule.createGetGroupRequestsBloc(gh<_i129.CommunityUsecase>()));
-  gh.factory<_i56.GetListBloc<_i143.MarshopRegisterPackResponse>>(
-      () => marshopBlocFactory.getMarshopPack(gh<_i69.MarshopUsecase>()));
-  gh.factory<_i56.GetListBloc<_i158.Bank>>(() => upgradeAgreePolicyBlocFactory
-      .createGetListBanksBloc(gh<_i99.UpgradeAccountUsecase>()));
+      .createRelinquishBossRoleBloc(gh<_i128.CommunityUsecase>()));
+  gh.factory<_i56.GetListBloc<_i156.GroupRequest>>(() =>
+      communityModule.createGetGroupRequestsBloc(gh<_i128.CommunityUsecase>()));
+  gh.factory<_i56.GetListBloc<_i157.Bank>>(() => upgradeAgreePolicyBlocFactory
+      .createGetListBanksBloc(gh<_i98.UpgradeAccountUsecase>()));
+  gh.factory<_i56.GetListBloc<_i149.MarshopRegisterPackResponse>>(
+      () => marshopBlocFactory.getMarshopPack(gh<_i68.MarshopUsecase>()));
   gh.factory<_i56.GetListBloc<_i3.Group>>(() =>
-      communityModule.createGetMyGroupsBloc(gh<_i129.CommunityUsecase>()));
+      communityModule.createGetListGroupsBloc(gh<_i128.CommunityUsecase>()));
   gh.factory<_i56.GetListBloc<_i3.Team>>(
-      () => dashBoardModule.getMyTeams(gh<_i129.CommunityUsecase>()));
+      () => dashBoardModule.getMyTeams(gh<_i128.CommunityUsecase>()));
+  gh.factory<_i56.GetListBlocParam1<_i3.Team, String>>(() =>
+      communityModule.createGetListTeamsBloc(gh<_i128.CommunityUsecase>()));
   gh.factory<
           _i56.GetListBlocParam1<_i143.MarshopResponse,
               _i144.GetListMarshopPayload>>(
