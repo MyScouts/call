@@ -10,7 +10,8 @@ class GeneralRoutes extends RouteModule {
   @override
   Map<String, WidgetBuilder> getAll(RouteSettings settings) => {
         TermsAndConditionsScreen.routeName: (context) {
-          return const TermsAndConditionsScreen();
+          final param = settings.arguments as List<Map<String, String>>;
+          return TermsAndConditionsScreen(data: param);
         },
         TeamAndCondictionV2Screen.routeName: (context) {
           return const TeamAndCondictionV2Screen();

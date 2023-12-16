@@ -130,9 +130,12 @@ class _TeamCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isBossTeam = GroupDetailScreen.myId == team.boss?.id;
+    final bloc = context.watch<GroupDetailBloc>();
+    final group = (bloc.state as FetchGroupDetailSuccess).group;
+    bool isBossGroup = GroupDetailScreen.myId == group.boss?.id;
 
     return GestureDetector(
-      onTap: () => isBossTeam
+      onTap: () => isBossGroup || isBossTeam
           ? context.startTeamDetail(
               id: team.id,
               name: team.name,
@@ -246,7 +249,7 @@ class _TeamCard extends StatelessWidget {
                   'Khám phá',
                   style: TextStyle(
                     fontSize: 12,
-                    color: isBossTeam
+                    color: isBossGroup || isBossTeam
                         ? const Color(0xff4B84F7)
                         : const Color(0xffACACAC),
                     fontWeight: FontWeight.w500,

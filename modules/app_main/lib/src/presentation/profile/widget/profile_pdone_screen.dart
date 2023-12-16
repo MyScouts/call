@@ -359,9 +359,9 @@ class _Profile extends StatelessWidget {
                           ),
                           Expanded(
                             child: Text(
-                              '${state.pDoneProfile?.birthPlace.wardName ?? ''},'
-                              ' ${state.pDoneProfile?.birthPlace.districtName ?? ''},'
-                              ' ${state.pDoneProfile?.birthPlace.provinceName ?? ''}',
+                              '${state.pDoneProfile?.birthPlace?.wardName ?? ''},'
+                              ' ${state.pDoneProfile?.birthPlace?.districtName ?? ''},'
+                              ' ${state.pDoneProfile?.birthPlace?.provinceName ?? ''}',
                               style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
@@ -384,9 +384,9 @@ class _Profile extends StatelessWidget {
                           ),
                           Expanded(
                             child: Text(
-                              '${state.pDoneProfile?.currentPlace.wardName ?? ''},'
-                              ' ${state.pDoneProfile?.currentPlace.districtName ?? ''},'
-                              ' ${state.pDoneProfile?.currentPlace.provinceName ?? ''}',
+                              '${state.pDoneProfile?.currentPlace?.wardName ?? ''},'
+                              ' ${state.pDoneProfile?.currentPlace?.districtName ?? ''},'
+                              ' ${state.pDoneProfile?.currentPlace?.provinceName ?? ''}',
                               style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,

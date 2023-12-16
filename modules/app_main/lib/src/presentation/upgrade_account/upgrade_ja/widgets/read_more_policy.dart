@@ -41,7 +41,7 @@ class _ReadMorePolicyState extends State<ReadMorePolicy> {
                     ),
               ),
               GestureDetector(
-                onTap: context.startTermsAndCondition,
+                onTap: () => context.startTermsAndCondition(policyContents),
                 child: Text(
                   'Xem thêm',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(

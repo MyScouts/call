@@ -15,10 +15,14 @@ _$InformationNonePdoneProfileImpl _$$InformationNonePdoneProfileImplFromJson(
       nickName: json['nickName'] as String?,
       sex: json['sex'] as int,
       birthday: json['birthday'] as String,
-      birthPlace: InformationPDoneBirthPlace.fromJson(
-          json['birthPlace'] as Map<String, dynamic>),
-      currentPlace: InformationDPoneCurrentPlace.fromJson(
-          json['currentPlace'] as Map<String, dynamic>),
+      birthPlace: json['birthPlace'] == null
+          ? null
+          : InformationPDoneBirthPlace.fromJson(
+              json['birthPlace'] as Map<String, dynamic>),
+      currentPlace: json['currentPlace'] == null
+          ? null
+          : InformationDPoneCurrentPlace.fromJson(
+              json['currentPlace'] as Map<String, dynamic>),
       height: json['height'] as int?,
       weight: json['weight'] as int?,
       maritalStatus: json['maritalStatus'] as String?,

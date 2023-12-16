@@ -71,7 +71,7 @@ class _StartTeamDialogState extends State<StartTeamDialog> {
         final teamBlocState = context.watch<GetMyTeamsBloc>().state;
 
         List<Team> teams =
-            teamBlocState is GetListDataSuccess<Team> ? teamBlocState.data : [];
+        teamBlocState is GetListDataSuccess<Team> ? teamBlocState.data : [];
 
         return Column(
           mainAxisSize: MainAxisSize.min,
