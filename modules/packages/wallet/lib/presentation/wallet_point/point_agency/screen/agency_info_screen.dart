@@ -99,7 +99,9 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
 
   @override
   Widget build(BuildContext context) {
-    final isShowKeyboard = MediaQuery.of(Scaffold.of(context).context).viewInsets.bottom.toInt() > 0;
+    final isShowKeyboard =
+        MediaQuery.of(Scaffold.of(context).context).viewInsets.bottom.toInt() >
+            0;
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: context.hideKeyboard,
@@ -209,7 +211,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                         ),
                       ),
                       Visibility(
-                        visible: !isShowKeyboard,
+                        visible: isShowKeyboard,
                         child: Positioned(
                           child: Align(
                             alignment: Alignment.bottomCenter,
@@ -348,7 +350,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
         children: [
           _buildReceiveUser(context),
           const SizedBox(
-            height: 24,
+            height: 16,
           ),
           _buildInputMoney(context),
         ],
