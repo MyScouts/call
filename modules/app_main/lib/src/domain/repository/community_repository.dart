@@ -1,7 +1,9 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
 import 'package:app_main/src/data/models/responses/group_request_response.dart';
+import 'package:app_main/src/data/models/responses/join_request_response.dart';
 import 'package:app_main/src/data/models/responses/member_join_request.dart';
+import 'package:app_main/src/data/models/responses/my_group_response.dart';
 import 'package:app_main/src/data/models/responses/my_team_response.dart';
 
 import '../../data/models/payloads/community/reply_give_up_boss_team_role_payload.dart';
@@ -10,6 +12,7 @@ import '../../data/models/responses/boss_community_status_response.dart';
 import '../../data/models/responses/boss_team_relinquish_status_response.dart';
 import '../../data/models/responses/confirm_response.dart';
 import '../../data/models/responses/leave_team_status_response.dart';
+import '../../data/models/responses/open_group_request_response.dart';
 
 abstract class CommunityRepository {
   Future<List<Group>> getGroups();
@@ -80,11 +83,27 @@ abstract class CommunityRepository {
   Future replyLeaveRequest(String teamId, ReplyJoinRequestPayload payload);
 
   Future assignBoss(String teamId, AssignBossPayload payload);
+
   Future revokeBoss(String teamId);
+
   Future<ConfirmResponse> relinquishBossTeam(String id);
 
   Future<BossTeamRelinquishStatusResponse> getBossTeamRelinquishStatus(
       String id);
 
   Future<MyTeamResponse> myTeams();
+
+  Future<MyGroupResponse> myGroups();
+
+  Future<OpenGroupRequestResponse> getOpenGroupRequest();
+
+  Future deleteOpenGroupRequest();
+
+  Future createOpenGroupRequest(String otp);
+
+  Future getOtp();
+
+  Future<JoinRequestResponse> joinRequests();
+
+  Future deleteJoinRequests(int requestId);
 }

@@ -27,9 +27,9 @@ mixin _$InformationNonePdoneProfile {
   String? get nickName => throw _privateConstructorUsedError;
   int get sex => throw _privateConstructorUsedError;
   String get birthday => throw _privateConstructorUsedError;
-  InformationPDoneBirthPlace get birthPlace =>
+  InformationPDoneBirthPlace? get birthPlace =>
       throw _privateConstructorUsedError;
-  InformationDPoneCurrentPlace get currentPlace =>
+  InformationDPoneCurrentPlace? get currentPlace =>
       throw _privateConstructorUsedError;
   int? get height => throw _privateConstructorUsedError;
   int? get weight => throw _privateConstructorUsedError;
@@ -70,8 +70,8 @@ abstract class $InformationNonePdoneProfileCopyWith<$Res> {
       String? nickName,
       int sex,
       String birthday,
-      InformationPDoneBirthPlace birthPlace,
-      InformationDPoneCurrentPlace currentPlace,
+      InformationPDoneBirthPlace? birthPlace,
+      InformationDPoneCurrentPlace? currentPlace,
       int? height,
       int? weight,
       String? maritalStatus,
@@ -90,8 +90,8 @@ abstract class $InformationNonePdoneProfileCopyWith<$Res> {
       Map<String, dynamic>? kycMetadata,
       int? type});
 
-  $InformationPDoneBirthPlaceCopyWith<$Res> get birthPlace;
-  $InformationDPoneCurrentPlaceCopyWith<$Res> get currentPlace;
+  $InformationPDoneBirthPlaceCopyWith<$Res>? get birthPlace;
+  $InformationDPoneCurrentPlaceCopyWith<$Res>? get currentPlace;
 }
 
 /// @nodoc
@@ -114,8 +114,8 @@ class _$InformationNonePdoneProfileCopyWithImpl<$Res,
     Object? nickName = freezed,
     Object? sex = null,
     Object? birthday = null,
-    Object? birthPlace = null,
-    Object? currentPlace = null,
+    Object? birthPlace = freezed,
+    Object? currentPlace = freezed,
     Object? height = freezed,
     Object? weight = freezed,
     Object? maritalStatus = freezed,
@@ -159,14 +159,14 @@ class _$InformationNonePdoneProfileCopyWithImpl<$Res,
           ? _value.birthday
           : birthday // ignore: cast_nullable_to_non_nullable
               as String,
-      birthPlace: null == birthPlace
+      birthPlace: freezed == birthPlace
           ? _value.birthPlace
           : birthPlace // ignore: cast_nullable_to_non_nullable
-              as InformationPDoneBirthPlace,
-      currentPlace: null == currentPlace
+              as InformationPDoneBirthPlace?,
+      currentPlace: freezed == currentPlace
           ? _value.currentPlace
           : currentPlace // ignore: cast_nullable_to_non_nullable
-              as InformationDPoneCurrentPlace,
+              as InformationDPoneCurrentPlace?,
       height: freezed == height
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
@@ -240,8 +240,12 @@ class _$InformationNonePdoneProfileCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $InformationPDoneBirthPlaceCopyWith<$Res> get birthPlace {
-    return $InformationPDoneBirthPlaceCopyWith<$Res>(_value.birthPlace,
+  $InformationPDoneBirthPlaceCopyWith<$Res>? get birthPlace {
+    if (_value.birthPlace == null) {
+      return null;
+    }
+
+    return $InformationPDoneBirthPlaceCopyWith<$Res>(_value.birthPlace!,
         (value) {
       return _then(_value.copyWith(birthPlace: value) as $Val);
     });
@@ -249,8 +253,12 @@ class _$InformationNonePdoneProfileCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $InformationDPoneCurrentPlaceCopyWith<$Res> get currentPlace {
-    return $InformationDPoneCurrentPlaceCopyWith<$Res>(_value.currentPlace,
+  $InformationDPoneCurrentPlaceCopyWith<$Res>? get currentPlace {
+    if (_value.currentPlace == null) {
+      return null;
+    }
+
+    return $InformationDPoneCurrentPlaceCopyWith<$Res>(_value.currentPlace!,
         (value) {
       return _then(_value.copyWith(currentPlace: value) as $Val);
     });
@@ -273,8 +281,8 @@ abstract class _$$InformationNonePdoneProfileImplCopyWith<$Res>
       String? nickName,
       int sex,
       String birthday,
-      InformationPDoneBirthPlace birthPlace,
-      InformationDPoneCurrentPlace currentPlace,
+      InformationPDoneBirthPlace? birthPlace,
+      InformationDPoneCurrentPlace? currentPlace,
       int? height,
       int? weight,
       String? maritalStatus,
@@ -294,9 +302,9 @@ abstract class _$$InformationNonePdoneProfileImplCopyWith<$Res>
       int? type});
 
   @override
-  $InformationPDoneBirthPlaceCopyWith<$Res> get birthPlace;
+  $InformationPDoneBirthPlaceCopyWith<$Res>? get birthPlace;
   @override
-  $InformationDPoneCurrentPlaceCopyWith<$Res> get currentPlace;
+  $InformationDPoneCurrentPlaceCopyWith<$Res>? get currentPlace;
 }
 
 /// @nodoc
@@ -318,8 +326,8 @@ class __$$InformationNonePdoneProfileImplCopyWithImpl<$Res>
     Object? nickName = freezed,
     Object? sex = null,
     Object? birthday = null,
-    Object? birthPlace = null,
-    Object? currentPlace = null,
+    Object? birthPlace = freezed,
+    Object? currentPlace = freezed,
     Object? height = freezed,
     Object? weight = freezed,
     Object? maritalStatus = freezed,
@@ -363,14 +371,14 @@ class __$$InformationNonePdoneProfileImplCopyWithImpl<$Res>
           ? _value.birthday
           : birthday // ignore: cast_nullable_to_non_nullable
               as String,
-      birthPlace: null == birthPlace
+      birthPlace: freezed == birthPlace
           ? _value.birthPlace
           : birthPlace // ignore: cast_nullable_to_non_nullable
-              as InformationPDoneBirthPlace,
-      currentPlace: null == currentPlace
+              as InformationPDoneBirthPlace?,
+      currentPlace: freezed == currentPlace
           ? _value.currentPlace
           : currentPlace // ignore: cast_nullable_to_non_nullable
-              as InformationDPoneCurrentPlace,
+              as InformationDPoneCurrentPlace?,
       height: freezed == height
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
@@ -454,8 +462,8 @@ class _$InformationNonePdoneProfileImpl
       this.nickName,
       required this.sex,
       required this.birthday,
-      required this.birthPlace,
-      required this.currentPlace,
+      this.birthPlace,
+      this.currentPlace,
       this.height,
       this.weight,
       this.maritalStatus,
@@ -492,9 +500,9 @@ class _$InformationNonePdoneProfileImpl
   @override
   final String birthday;
   @override
-  final InformationPDoneBirthPlace birthPlace;
+  final InformationPDoneBirthPlace? birthPlace;
   @override
-  final InformationDPoneCurrentPlace currentPlace;
+  final InformationDPoneCurrentPlace? currentPlace;
   @override
   final int? height;
   @override
@@ -651,8 +659,8 @@ abstract class _InformationNonePdoneProfile
       final String? nickName,
       required final int sex,
       required final String birthday,
-      required final InformationPDoneBirthPlace birthPlace,
-      required final InformationDPoneCurrentPlace currentPlace,
+      final InformationPDoneBirthPlace? birthPlace,
+      final InformationDPoneCurrentPlace? currentPlace,
       final int? height,
       final int? weight,
       final String? maritalStatus,
@@ -687,9 +695,9 @@ abstract class _InformationNonePdoneProfile
   @override
   String get birthday;
   @override
-  InformationPDoneBirthPlace get birthPlace;
+  InformationPDoneBirthPlace? get birthPlace;
   @override
-  InformationDPoneCurrentPlace get currentPlace;
+  InformationDPoneCurrentPlace? get currentPlace;
   @override
   int? get height;
   @override

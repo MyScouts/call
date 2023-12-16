@@ -45,134 +45,111 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          DecoratedBox(
+          Container(
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [
-                  Color(0xffDFEBFD),
-                  Color(0xff2697D6),
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
               borderRadius: BorderRadius.circular(90),
+              image: DecorationImage(image: AssetImage(ImageConstants.profileHeader,package: 'design_system'),fit: BoxFit.fill)
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(2),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(90),
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xff0058DB),
-                      Color(0xff10306F),
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                ),
-                padding: const EdgeInsets.all(4.0),
-                child: Obx(() {
-                  final host = controller.members.firstWhereOrNull(
-                      (e) => e.isOwner && e.liveID == controller.info.id);
-                  return IntrinsicHeight(
-                    child: Row(
-                      children: [
-                        if (host == null || host.info.avatar.trim().isEmpty)
-                          GestureDetector(
-                            onTap: () {
-                              context
-                                  .startSelectUser(userId: host!.info.userID)
-                                  .then((value) {
-                                _actionBloc.getFollowUser(
-                                    userId: host.info.userID);
-                              });
-                            },
-                            child: SizedBox.square(
-                              dimension: 28,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(28 / 2),
-                                child: ImageWidget(
-                                  ImageConstants.defaultUserAvatar,
-                                ),
-                              ),
-                            ),
-                          )
-                        else
-                          GestureDetector(
-                            onTap: () {
-                              context
-                                  .startSelectUser(userId: host.info.userID)
-                                  .then((value) {
-                                _actionBloc.getFollowUser(
-                                    userId: host.info.userID);
-                              });
-                            },
-                            child: CircleNetworkImage(
-                              url: host.info.avatar,
-                              size: 28,
+            padding: const EdgeInsets.all(4.0),
+            child: Obx(() {
+              final host = controller.members.firstWhereOrNull(
+                  (e) => e.isOwner && e.liveID == controller.info.id);
+              return IntrinsicHeight(
+                child: Row(
+                  children: [
+                    if (host == null || host.info.avatar.trim().isEmpty)
+                      GestureDetector(
+                        onTap: () {
+                          context
+                              .startSelectUser(userId: host!.info.userID)
+                              .then((value) {
+                            _actionBloc.getFollowUser(
+                                userId: host.info.userID);
+                          });
+                        },
+                        child: SizedBox.square(
+                          dimension: 28,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(28 / 2),
+                            child: ImageWidget(
+                              ImageConstants.defaultUserAvatar,
                             ),
                           ),
-                        const SizedBox(width: 4),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        ),
+                      )
+                    else
+                      GestureDetector(
+                        onTap: () {
+                          context
+                              .startSelectUser(userId: host.info.userID)
+                              .then((value) {
+                            _actionBloc.getFollowUser(
+                                userId: host.info.userID);
+                          });
+                        },
+                        child: CircleNetworkImage(
+                          url: host.info.avatar,
+                          size: 28,
+                        ),
+                      ),
+                    const SizedBox(width: 4),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          host?.info.name ?? '',
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                              host?.info.name ?? '',
-                              style: const TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
+                            SizedBox.square(
+                              dimension: 12,
+                              child: ImageWidget(
+                                IconAppConstants.icDiamond,
                               ),
                             ),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SizedBox.square(
-                                  dimension: 12,
-                                  child: ImageWidget(
-                                    IconAppConstants.icDiamond,
-                                  ),
+                            const SizedBox(width: 4),
+                            Obx(() {
+                              return Text(
+                                controller.liveState.value.diamondCount
+                                        ?.toString() ??
+                                    '0',
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.white,
                                 ),
-                                const SizedBox(width: 4),
-                                Obx(() {
-                                  return Text(
-                                    controller.liveState.value.diamondCount
-                                            ?.toString() ??
-                                        '0',
-                                    style: const TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.white,
-                                    ),
-                                  );
-                                }),
-                              ],
-                            ),
+                              );
+                            }),
                           ],
                         ),
-                        const SizedBox(width: 20),
-                        Obx(() {
-                          final host = controller.members.firstWhereOrNull(
-                              (e) =>
-                                  e.isOwner && e.liveID == controller.info.id);
-                          if (host == null) {
-                            return const SizedBox();
-                          }
-                          if (controller.me.value.isOwner) {
-                            return const SizedBox();
-                          }
-                          return LiveButtonAddFriend(
-                            id: host.info.userID,
-                            cubit: _actionBloc,
-                          );
-                        }),
                       ],
                     ),
-                  );
-                }),
-              ),
-            ),
+                    const SizedBox(width: 20),
+                    Obx(() {
+                      final host = controller.members.firstWhereOrNull(
+                          (e) =>
+                              e.isOwner && e.liveID == controller.info.id);
+                      if (host == null) {
+                        return const SizedBox();
+                      }
+                      if (controller.me.value.isOwner) {
+                        return const SizedBox();
+                      }
+                      return LiveButtonAddFriend(
+                        id: host.info.userID,
+                        cubit: _actionBloc,
+                      );
+                    }),
+                  ],
+                ),
+              );
+            }),
           ),
           GestureDetector(
             onTap: () {

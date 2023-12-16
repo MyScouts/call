@@ -47,7 +47,6 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
 
   @override
   Widget build(BuildContext context) {
-    final MediaQueryData mediaQueryData = MediaQuery.of(context);
     return SafeArea(
         child: BlocProvider(
       create: (context) => _actionBloc,
@@ -98,6 +97,7 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
               friendStatusCtrl: _friendStatus,
               followInfoCtrl: _followInfo,
               authInfo: _authInfo,
+              isMe: isMe,
               onBoarding: userBloc is OnboardingSuccess ? userBloc.onboarding : null,
             );
           }
@@ -123,7 +123,7 @@ class UserInfoHeader extends StatelessWidget {
     super.key,
     required this.userInfo,
     required this.friendStatusCtrl,
-    this.isMe = false,
+    required this.isMe,
     required this.followInfoCtrl,
     required this.authInfo,
     required this.onBoarding,
@@ -155,7 +155,7 @@ class UserInfoHeader extends StatelessWidget {
               topRight: Radius.circular(16),
             ),
           ),
-          child: Column(children: [
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
             const SizedBox(height: 24),
             Center(
                 child: AppAvatarWidget(

@@ -1,1 +1,1 @@
-enum QrCodeScanType { auth, registerCustomer, registerMarshop }
+enum QrCodeScanType { auth, registerCustomer, registerMarshop, joinTeam }

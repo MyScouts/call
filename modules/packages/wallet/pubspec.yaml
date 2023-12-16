@@ -28,6 +28,7 @@ dependencies:
   injectable: ^2.3.2
   shared_preferences: ^2.2.2
   rxdart: ^0.27.7
+  flutter_keyboard_visibility: ^5.4.1
   retrofit: ^4.0.3
   dio: ^5.3.3
   json_annotation: ^4.8.1

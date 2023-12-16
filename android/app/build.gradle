@@ -23,8 +23,14 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
-    namespace "com.app.vdone.staging"
+    namespace "com.app.vdone"
     compileSdkVersion 33
     ndkVersion flutter.ndkVersion
 
@@ -42,18 +48,59 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.app.vdone.staging"
+        applicationId "com.app.vdone"
         minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
 
-    buildTypes {
+    flavorDimensions "default"
+    productFlavors {
+        production {
+            dimension "default"
+            applicationIdSuffix ""
+            resValue "string", "app_name", "VDONE"
+            versionCode 1
+            versionName "1.0"
+        }
+
+         development {
+            dimension "default"
+            applicationIdSuffix ".staging"
+            resValue "string", "app_name", "VDONE-DEV"
+            versionCode 55
+            versionName "2.1.0"
+        }
+
+         staging {
+            dimension "default"
+            applicationIdSuffix ".staging"
+            resValue "string", "app_name", "VDONE-STG"
+            versionCode 55
+            versionName "2.1.0"
+        }
+    }
+
+     signingConfigs {
+       release {
+           keyAlias keystoreProperties['keyAlias']
+           keyPassword keystoreProperties['keyPassword']
+           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+           storePassword keystoreProperties['storePassword']
+       }
+   }
+
+   buildTypes {
+        profile {
+           signingConfig signingConfigs.debug
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-android.pro'
+        }
+
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-android.pro'
         }
@@ -81,11 +128,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     // setup configuration for sdk eKYC
     implementation project(':ekyc')
-    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.exifinterface:exifinterface:1.0.0'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     implementation "androidx.constraintlayout:constraintlayout:2.0.4"
     implementation 'androidx.appcompat:appcompat:1.6.1'
+    
 }
 

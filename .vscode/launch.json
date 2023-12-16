@@ -11,10 +11,24 @@
             "program": "lib/main_dev.dart",
         },
         {
+            "name": "vdone DEV with flavor",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_dev.dart",
+            "args": [
+                "--flavor",
+                "development"
+            ]
+        },
+        {
             "name": "vdone PROD",
             "request": "launch",
             "type": "dart",
             "program": "lib/main_prod.dart",
+            "args": [
+                "--flavor",
+                "production"
+            ]
         }
     ]
 }

@@ -2,7 +2,6 @@ import 'package:app_main/app_main.dart';
 import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
-import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard_v2/widget/dash_ecom_leading.dart';
@@ -306,7 +305,6 @@ final communityItems = <DashBoardItem>[
     id: 'ic_group',
     title: 'Group',
     backgroundImage: IconAppConstants.icGroupTeam,
-    path: CommunityWidget.routeName,
   ),
   DashBoardIconItem(
     id: 'ic_team',
