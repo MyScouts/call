@@ -9,7 +9,6 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import '../../../domain/usecases/live_usecases.dart';
 import '../live_channel_screen.dart';
-import '../state/live_channel_controller.dart';
 
 class LiveGiftButton extends StatefulWidget {
   const LiveGiftButton({super.key});
@@ -62,8 +61,6 @@ class _LiveGiftButtonState extends State<LiveGiftButton> {
                 child: Ink(
                   decoration:
                       times > 0 ? BoxDecoration(color: Colors.black.withOpacity(0.5), shape: BoxShape.circle) : null,
-                  height: 60,
-                  width: 60,
                   child: ImageWidget(isIcon),
                 ),
               ),
@@ -135,7 +132,6 @@ class CircleAnimation extends StatefulWidget {
 class _CircleAnimationState extends State<CircleAnimation> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
-
   @override
   void initState() {
     _controller = widget.animationController;
@@ -146,7 +142,6 @@ class _CircleAnimationState extends State<CircleAnimation> with SingleTickerProv
     });
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
