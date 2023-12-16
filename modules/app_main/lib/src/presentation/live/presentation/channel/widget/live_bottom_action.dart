@@ -58,12 +58,14 @@ class LiveBottomAction extends StatelessWidget {
                   return SizedBox(
                     height: controller.liveType.value == LiveChannelType.pk
                         ? 194.h
-                        : ScreenUtil().screenHeight / 3,
+                        : ScreenUtil().screenHeight / 4,
                     child: Row(
                       children: [
-                        const Expanded(child: LiveCommentWidget()),
                         SizedBox(
-                          width: 104.w,
+                          width: ScreenUtil().screenWidth * 3 / 4,
+                          child: const LiveCommentWidget(),
+                        ),
+                        Expanded(
                           child: GestureDetector(
                             onDoubleTap: controller.reaction,
                             behavior: HitTestBehavior.opaque,
@@ -104,13 +106,12 @@ class LiveBottomAction extends StatelessWidget {
                                       index: 1);
                                 },
                               ),
-                            if (controller.me.value.isOwner)
-                              LiveButtonAction(
-                                icon: ImageWidget(
-                                  IconAppConstants.icLiveSetting,
-                                ),
-                                onPressed: () => liveSetting(context),
+                            LiveButtonAction(
+                              icon: ImageWidget(
+                                IconAppConstants.icLiveSetting,
                               ),
+                              onPressed: () => liveSetting(context),
+                            ),
                             if (controller.me.value.isOwner)
                               LiveButtonAction(
                                 bgColor: const Color(0xff4B84F7),

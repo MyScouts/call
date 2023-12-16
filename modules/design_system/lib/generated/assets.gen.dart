@@ -1729,6 +1729,10 @@ class Assets {
   static const SvgGenImage icons_live_share =
       SvgGenImage('assets/icons/live_share.svg');
 
+  /// File path: assets/icons/lives/admin_setting.svg
+  static const SvgGenImage icons_lives_admin_setting =
+      SvgGenImage('assets/icons/lives/admin_setting.svg');
+
   /// File path: assets/icons/lives/avatar.png
   static const AssetGenImage icons_lives_avatar =
       AssetGenImage('assets/icons/lives/avatar.png');
@@ -1761,6 +1765,10 @@ class Assets {
   static const SvgGenImage icons_lives_edit =
       SvgGenImage('assets/icons/lives/edit.svg');
 
+  /// File path: assets/icons/lives/edit_setting.svg
+  static const SvgGenImage icons_lives_edit_setting =
+      SvgGenImage('assets/icons/lives/edit_setting.svg');
+
   /// File path: assets/icons/lives/filter.svg
   static const SvgGenImage icons_lives_filter =
       SvgGenImage('assets/icons/lives/filter.svg');
@@ -1768,6 +1776,10 @@ class Assets {
   /// File path: assets/icons/lives/gift_1.svg
   static const SvgGenImage icons_lives_gift_1 =
       SvgGenImage('assets/icons/lives/gift_1.svg');
+
+  /// File path: assets/icons/lives/gift_flash.svg
+  static const SvgGenImage icons_lives_gift_flash =
+      SvgGenImage('assets/icons/lives/gift_flash.svg');
 
   /// File path: assets/icons/lives/hieuung.svg
   static const SvgGenImage icons_lives_hieuung =
@@ -2739,6 +2751,7 @@ class Assets {
         icons_live_send,
         icons_live_setting,
         icons_live_share,
+        icons_lives_admin_setting,
         icons_lives_avatar,
         icons_lives_beauty,
         icons_lives_call,
@@ -2747,8 +2760,10 @@ class Assets {
         icons_lives_chienbinh,
         icons_lives_draw,
         icons_lives_edit,
+        icons_lives_edit_setting,
         icons_lives_filter,
         icons_lives_gift_1,
+        icons_lives_gift_flash,
         icons_lives_hieuung,
         icons_lives_ic_double_arrow,
         icons_lives_live,

@@ -1,5 +1,12 @@
 import 'package:design_system/design_system.dart';
 
+Map<String, LiveType> mapLiveType = {
+  'public': LiveType.public,
+  'password_locked': LiveType.password_locked,
+  'friend_only': LiveType.friend_only,
+  'only_me': LiveType.only_me,
+};
+
 enum LiveType {
   public,
   password_locked,

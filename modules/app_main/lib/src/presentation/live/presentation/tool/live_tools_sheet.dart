@@ -93,7 +93,7 @@ class LiveToolsSheet extends StatelessWidget {
                   ),
                   _Item(
                     title: 'Tắt hình',
-                    icon: Assets.icons_lives_switch_came.svg(),
+                    icon: Assets.icons_lives_turn_off_video.svg(),
                     action: controller.enableVideo,
                   ),
                   _Item(
@@ -117,13 +117,28 @@ class LiveToolsSheet extends StatelessWidget {
                     action: () {},
                   ),
                   _Item(
-                    title: 'Chia sẻ',
-                    icon: Assets.icons_lives_share.svg(),
+                    title: 'Ghi hình',
+                    icon: Assets.icons_lives_record.svg(),
                     action: () {},
                   ),
                   _Item(
-                    title: 'MarShop',
-                    icon: Assets.icons_lives_marshop.svg(),
+                    title: 'Gọi âm thanh',
+                    icon: Assets.icons_lives_call.svg(),
+                    action: () {},
+                  ),
+                  _Item(
+                    title: 'Gọi video',
+                    icon: Assets.icons_lives_call_video.svg(),
+                    action: () {},
+                  ),
+                  _Item(
+                    title: 'Tạo live nhóm',
+                    icon: Assets.icons_lives_live_group.svg(),
+                    action: () {},
+                  ),
+                  _Item(
+                    title: 'Chia sẻ',
+                    icon: Assets.icons_lives_share.svg(),
                     action: () {},
                   ),
                 ],
