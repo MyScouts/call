@@ -8,4 +8,4 @@ echo "CLEAN POD !!!"
 cd $(pwd)/../ios  &&  pod deintegrate && pod install
 
 echo "BUILD ANDROID !!!"
-flutter build  apk --target lib/main_dev.dart
+flutter build apk  --target lib/main_dev.dart --flavor staging

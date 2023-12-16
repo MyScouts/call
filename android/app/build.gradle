@@ -70,13 +70,13 @@ android {
             dimension "default"
             applicationIdSuffix ".staging"
             resValue "string", "app_name", "VDONE-STG"
-            versionCode 1
-            versionName "1.0"
+            versionCode 55
+            versionName "2.1.0"
         }
 
         uat {
             dimension "default"
-            applicationIdSuffix ".uat"
+            applicationIdSuffix ".staging"
             resValue "string", "app_name", "VDONE-UAT"
             versionCode 1
             versionName "1.0"
