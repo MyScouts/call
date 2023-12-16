@@ -87,7 +87,14 @@ class _StartGroupDialogState extends State<StartGroupDialog> {
                                   .firstWhere(
                                       (element) => element.boss?.id == myId)
                                   .groupId;
-                              context.startGroupDetail(id: teamId);
+
+                              Future.delayed(
+                                const Duration(milliseconds: 200),
+                                () {
+                                  Navigator.pop(context);
+                                  context.startGroupDetail(id: teamId);
+                                },
+                              );
                             } else {
                               return _buildDialogContent(
                                 title: 'Thông báo',

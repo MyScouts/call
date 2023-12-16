@@ -7,8 +7,8 @@ import 'package:localization/localization.dart';
 import 'package:ui/ui.dart';
 
 import '../../information_profile/bloc/bloc/information_update_profil_bloc.dart';
-import '../../marshop/widgets/accept_term_with_checkbox_widget.dart';
-import '../../upgrade_account/upgrade_ja/widgets/read_more_policy.dart';
+import '../widgets/accept_term_boss_group_with_checkbox_widget.dart';
+import '../widgets/read_more_policy_boss_group.dart';
 
 class RegisterBossGroupScreen extends StatefulWidget {
   static const routeName = '/register-boss-group';
@@ -78,11 +78,11 @@ class _RegisterBossGroupScreenState extends State<RegisterBossGroupScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
-                      'Điều khoản và chính sách',
+                      'Quy định chung về Boss Group và Boss Team',
                       style: context.text.bodyLarge?.copyWith(
                         fontWeight: FontWeight.w700,
                         fontSize: 16,
@@ -90,10 +90,10 @@ class _RegisterBossGroupScreenState extends State<RegisterBossGroupScreen> {
                       ),
                     ),
                   ),
-                  const ReadMorePolicy(maxLine: 20),
+                  const ReadMorePolicyBossGroup(maxLine: 20),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: AcceptTermWithCheckboxWidget(
+                    child: AcceptTermBossGroupWithCheckboxWidget(
                       acceptTerm: _acceptTerm,
                     ),
                   ),
