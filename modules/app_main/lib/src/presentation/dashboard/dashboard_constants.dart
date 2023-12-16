@@ -1,5 +1,4 @@
 import 'package:app_main/src/presentation/chat/conversation/conversation_page.dart';
-import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/call/phone_book/phone_book_page.dart';
 import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/my_profile_screen.dart';
@@ -201,7 +200,6 @@ final Map<String, DashBoardItem> mapItems = {
     id: 'ic_group',
     title: 'Group Team',
     backgroundImage: IconAppConstants.icGroupTeam,
-    path: CommunityWidget.routeName,
   ),
   'ic_team': DashBoardIconItem(
     id: 'ic_team',
@@ -252,7 +250,6 @@ final communityDefault = {
     id: 'ic_group',
     title: 'Group Team',
     backgroundImage: IconAppConstants.icGroupTeam,
-    path: CommunityWidget.routeName,
   ),
   'ic_team': DashBoardIconItem(
     id: 'ic_team',

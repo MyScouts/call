@@ -1,6 +1,4 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/blocs/community/team_request/team_request_cubit.dart';
-import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_module.dart';
 import 'package:design_system/design_system.dart';
@@ -98,8 +96,10 @@ class _StartTeamDialogState extends State<StartTeamDialog> {
                 onTap: () {
                   Navigator.pop(context);
                   if (teams.isEmpty) {
-                    Navigator.pushNamed(context, CommunityWidget.routeName);
-                    return;
+                    //TODO: new flow
+
+                    // Navigator.pushNamed(context, CommunityWidget.routeName);
+                    // return;
                   }
                   context.startTeamDetail(id: teams[0].id);
                 },

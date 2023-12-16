@@ -10,6 +10,7 @@ import '../../data/models/responses/boss_community_status_response.dart';
 import '../../data/models/responses/confirm_response.dart';
 import '../../data/models/responses/group_request_response.dart';
 import '../../data/models/responses/leave_team_status_response.dart';
+import '../../data/models/responses/open_group_request_response.dart';
 import '../../presentation/community/community_constants.dart';
 import '../repository/community_repository.dart';
 
@@ -161,5 +162,30 @@ class CommunityUsecase {
   Future<List<Team>> myTeams() async {
     final response = await _communityRepository.myTeams();
     return response.teams ?? [];
+  }
+
+  Future<List<Group>> myGroups() async {
+    final response = await _communityRepository.myGroups();
+    return response.groups ?? [];
+  }
+
+  Future<OpenGroupRequestResponse> getOpenGroupRequest() async {
+    final response = await _communityRepository.getOpenGroupRequest();
+    return response;
+  }
+
+  Future<ConfirmResponse> deleteOpenGroupRequest() async {
+    final response = await _communityRepository.deleteOpenGroupRequest();
+    return response;
+  }
+
+  Future<dynamic> createOpenGroupRequest(String otp) async {
+    final response = await _communityRepository.createOpenGroupRequest(otp);
+    return response;
+  }
+
+  Future getOtp() async {
+    final response = await _communityRepository.getOtp();
+    return response;
   }
 }
