@@ -251,7 +251,7 @@ enum IconApp {
   visibilityOff('assets/icons/visibility_off.png'),
   star('assets/icons/star.png'),
   proAds('assets/icons/pro_ads.png'),
-  pro('assets/icons/pro.png'),
+  pro('assets/icons/pro.svg'),
   icArrowLeft('assets/icons/ic_arrow_left.svg'),
   icTv('assets/icons/ic_tv.png'),
   icBird('assets/icons/ic_bird.png'),

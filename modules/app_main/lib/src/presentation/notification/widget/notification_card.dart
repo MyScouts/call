@@ -31,7 +31,7 @@ class NotificationCard extends StatelessWidget {
         ),
         child: Container(
           width: ScreenUtil().screenWidth - 32,
-          height: 106,
+          //height: 106,
           decoration: BoxDecoration(
             color: const Color.fromRGBO(247, 247, 247, 0.7),
             borderRadius: BorderRadius.circular(16),
