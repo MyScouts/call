@@ -23,6 +23,12 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     namespace "com.app.vdone"
     compileSdkVersion 33
@@ -32,13 +38,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
-    def keystoreProperties = new Properties()
-    def keystorePropertiesFile = rootProject.file('key.properties')
-    if (keystorePropertiesFile.exists()) {
-       keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-    }
-
 
     kotlinOptions {
         jvmTarget = '1.8'
@@ -54,6 +53,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
 
     flavorDimensions "default"
@@ -66,20 +66,20 @@ android {
             versionName "1.0"
         }
 
+         development {
+            dimension "default"
+            applicationIdSuffix ".staging"
+            resValue "string", "app_name", "VDONE-DEV"
+            versionCode 55
+            versionName "2.1.0"
+        }
+
          staging {
             dimension "default"
             applicationIdSuffix ".staging"
             resValue "string", "app_name", "VDONE-STG"
             versionCode 55
             versionName "2.1.0"
-        }
-
-        uat {
-            dimension "default"
-            applicationIdSuffix ".staging"
-            resValue "string", "app_name", "VDONE-UAT"
-            versionCode 1
-            versionName "1.0"
         }
     }
 
@@ -100,7 +100,7 @@ android {
         }
 
         release {
-           signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-android.pro'
         }
@@ -128,11 +128,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     // setup configuration for sdk eKYC
     implementation project(':ekyc')
-    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.exifinterface:exifinterface:1.0.0'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     implementation "androidx.constraintlayout:constraintlayout:2.0.4"
     implementation 'androidx.appcompat:appcompat:1.6.1'
+    
 }
 
