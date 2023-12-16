@@ -2,7 +2,6 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class SettingSheet extends StatelessWidget {
   const SettingSheet({super.key});
@@ -55,68 +54,28 @@ class SettingSheet extends StatelessWidget {
                   ),
                 ],
               ),
-              GridView.count(
-                padding: const EdgeInsets.all(16.0),
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                crossAxisCount: 5,
-                crossAxisSpacing: 24,
-                childAspectRatio: 2 / 3,
-                children: [
-                  Obx(() {
-                    final action = controller.enableAudio;
-                    if (controller.mic.value) {
-                      return _Item(
-                        title: 'Tắt tiếng',
-                        icon: Assets.icons_lives_turn_off_mic.svg(),
-                        action: action,
-                      );
-                    }
-
-                    return _Item(
-                      title: 'Bật tiếng',
-                      icon: Assets.icons_lives_turn_on_mic.svg(),
-                      action: action,
-                    );
-                  }),
-                  Obx(() {
-                    final action = controller.enableVideo;
-                    if (controller.video.value) {
-                      return _Item(
-                        title: 'Tắt hình',
-                        icon: Assets.icons_lives_turn_off_video.svg(),
-                        action: action,
-                      );
-                    }
-
-                    return _Item(
-                      title: 'Bật hình',
-                      icon: Assets.icons_lives_turn_on_video.svg(),
-                      action: action,
-                    );
-                  }),
-                  _Item(
-                    title: 'Filter',
-                    icon: Assets.icons_lives_filter.svg(),
-                    action: () {},
-                  ),
-                  _Item(
-                    title: 'Quà tặng nhanh',
-                    icon: Assets.icons_lives_gift_1.svg(),
-                    action: () {},
-                  ),
-                  _Item(
-                    title: 'Sửa tiêu đề',
-                    icon: Assets.icons_lives_edit.svg(),
-                    action: () {},
-                  ),
-                  _Item(
-                    title: 'Sửa chế độ',
-                    icon: Assets.icons_lives_public.svg(),
-                    action: () {},
-                  ),
+              Column(
+                children: <Widget>[
+                  if (!controller.me.value.isOwner)
+                    _Item(
+                      icon: Assets.icons_lives_gift_flash.svg(),
+                      title: 'Cài đặt quà tặng nhanh',
+                      action: () {},
+                    ),
+                  if (controller.me.value.isOwner)
+                    _Item(
+                      icon: Assets.icons_lives_admin_setting.svg(),
+                      title: 'Cài đặt admin quản lý  phòng live',
+                      action: () {},
+                    ),
+                  if (controller.me.value.isOwner)
+                    _Item(
+                      icon: Assets.icons_lives_edit_setting.svg(),
+                      title: 'Sửa live',
+                      action: () {},
+                    ),
                 ],
-              ),
+              )
             ],
           ),
         ),
@@ -142,31 +101,32 @@ class _Item extends StatelessWidget {
     return GestureDetector(
       onTap: action,
       behavior: HitTestBehavior.opaque,
-      child: Column(
-        children: [
-          Container(
-            height: 36,
-            width: 36,
-            decoration: const BoxDecoration(
-              color: Color(0xffE8F0FE),
-              shape: BoxShape.circle,
-            ),
-            alignment: Alignment.center,
-            child: icon,
-          ),
-          const SizedBox(height: 4),
-          Flexible(
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            icon,
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xff6E6E6E),
+                  height: 1.2,
+                ),
               ),
-              textAlign: TextAlign.center,
             ),
-          ),
-        ],
+            RotatedBox(
+              quarterTurns: 3,
+              child: SizedBox.square(
+                dimension: 24,
+                child: Assets.icons_lives_chevron_down.svg(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

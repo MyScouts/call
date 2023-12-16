@@ -12,7 +12,7 @@ class LiveManageState {
     if (joinLive == id && controller == con) return;
     if (joinLive != null) {
       joinLive = null;
-      controller?.leaveLive();
+      controller?.forceLeave();
       controller = null;
     }
     joinLive = id;

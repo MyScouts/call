@@ -313,6 +313,8 @@ class LiveChannelController {
       role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
     );
 
+    reJoinSetting();
+
     LiveManageState.hostID.value = hostID;
 
     _liveType.value = LiveChannelType.normal;
@@ -362,9 +364,21 @@ class LiveChannelController {
       role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
     );
 
+    reJoinSetting();
+
     LiveManageState.hostID.value = hostID;
 
     _liveType.value = LiveChannelType.pk;
+  }
+
+  void reJoinSetting() {
+    if (!_mic.value) {
+      service.disableAudioStream();
+    }
+
+    if (!video.value) {
+      service.disableVideoStream();
+    }
   }
 
   Future<List<LiveMember>> getMembers(int id) async {
@@ -446,7 +460,7 @@ class LiveChannelController {
     } catch (e) {
       _state.value = LiveStreamState.stop;
       if (context.mounted) {
-        Navigator.of(context).pop();
+        Navigator.of(AppCoordinator.rootNavigator.currentContext!).pop();
         context.showToastMessage(
           'Live không còn tồn tại',
           ToastMessageType.error,
@@ -768,7 +782,8 @@ class LiveChannelController {
         if (member != null) {
           final ids = _giftMembers.map((e) => e.info.userID);
           if (ids.contains(member.info.userID)) {
-            final m = _giftMembers.firstWhereOrNull((e) => e.info.userID == member.info.userID);
+            final m = _giftMembers
+                .firstWhereOrNull((e) => e.info.userID == member.info.userID);
             if (m!.liveID != member.liveID) {
               _giftMembers.value = [..._giftMembers, member];
             }
@@ -842,7 +857,6 @@ class LiveChannelController {
         return;
       }
       if (isMemberInLive(user.id!)) return;
-      print(_giftMembers.value);
       final member = LiveMember(
         info: LiveMemberInfo(
           userID: user.id!,
@@ -1006,6 +1020,10 @@ class LiveChannelController {
       }
     }
 
+    leaveSimpleLive();
+  }
+
+  void leaveSimpleLive() async {
     LiveManageState.disable();
     socketService.disconnect();
     service.leaveChannel();
@@ -1029,6 +1047,18 @@ class LiveChannelController {
     WakelockPlus.disable();
 
     NotificationCenter.unsubscribe(channel: sendMessage, observer: this);
+  }
+
+  void forceLeave() {
+    _timer?.cancel();
+
+    if (_info.value.pk != null) {
+      if (_me.value.isOwner) {
+        repository.deletePK(_info.value.id);
+      }
+    }
+
+    leaveSimpleLive();
   }
 }
 

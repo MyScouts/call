@@ -14,3 +14,5 @@ class UpdateGroupDetailEvent extends GroupDetailEvent {
 
   UpdateGroupDetailEvent(this.group);
 }
+
+class GetOtpEvent extends GroupDetailEvent {}

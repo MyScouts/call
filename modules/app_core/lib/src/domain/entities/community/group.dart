@@ -13,12 +13,10 @@ class Group with _$Group {
   const factory Group({
     String? id,
     String? name,
-    bool? isProvincialGroup,
     String? avatar,
     String? banner,
     String? introduction,
     int? teamCount,
-    int? openTeamCount,
     User? boss,
   }) = _Group;
 

@@ -258,6 +258,7 @@ enum IconApp {
   icClock('assets/icons/ic_clock.png'),
   icDoc('assets/icons/ic_doc.png'),
   icDashboardContact('assets/icons/ic_dashboard_contact.png'),
+  icWalletContact('assets/icons/ic_contact_wallet.png'),
   communityGroup('assets/icons/community_group.svg'),
   //modules/design_system/assets/icons/community_survey.svg
   communitySurvey('assets/icons/community_survey.svg'),

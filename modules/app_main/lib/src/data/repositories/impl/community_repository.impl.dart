@@ -1,17 +1,22 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
+import 'package:app_main/src/data/models/payloads/community/otp_payload.dart';
 import 'package:app_main/src/data/models/payloads/community/reply_give_up_boss_team_role_payload.dart';
 import 'package:app_main/src/data/models/responses/boss_community_status_response.dart';
 import 'package:app_main/src/data/models/responses/boss_team_relinquish_status_response.dart';
 import 'package:app_main/src/data/models/responses/confirm_response.dart';
 import 'package:app_main/src/data/models/responses/group_request_response.dart';
+import 'package:app_main/src/data/models/responses/join_request_response.dart';
 import 'package:app_main/src/data/models/responses/leave_team_status_response.dart';
 import 'package:app_main/src/data/models/responses/member_join_request.dart';
+import 'package:app_main/src/data/models/responses/my_group_response.dart';
 import 'package:app_main/src/data/models/responses/my_team_response.dart';
+import 'package:app_main/src/data/models/responses/open_group_request_response.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../domain/repository/community_repository.dart';
 import '../../data_sources/remote/community_api.dart';
+import '../../models/payloads/community/request_boss_group_payload.dart';
 import '../../models/payloads/community/update_community_payload.dart';
 
 @Injectable(as: CommunityRepository)
@@ -225,6 +230,7 @@ class CommunityRepositoryImpl extends CommunityRepository {
     return _communityApi.revokeBoss(teamId);
   }
 
+  @override
   Future<ConfirmResponse> relinquishBossTeam(String id) async {
     return await _communityApi.relinquishBossTeam(id: id);
   }
@@ -238,5 +244,42 @@ class CommunityRepositoryImpl extends CommunityRepository {
   @override
   Future<MyTeamResponse> myTeams() {
     return _communityApi.myTeams();
+  }
+
+  @override
+  Future<MyGroupResponse> myGroups() {
+    return _communityApi.myGroups();
+  }
+
+  @override
+  Future createOpenGroupRequest(String otp) {
+    final payload = RequestBossGroupPayload(otp: otp);
+    return _communityApi.createOpenGroupRequest(payload);
+  }
+
+  @override
+  Future<ConfirmResponse> deleteOpenGroupRequest() {
+    return _communityApi.deleteOpenGroupRequest();
+  }
+
+  @override
+  Future<OpenGroupRequestResponse> getOpenGroupRequest() {
+    return _communityApi.getOpenGroupRequest();
+  }
+
+  @override
+  Future getOtp() {
+    final payload = OtpPayload(type: 'RequestOpenGroup');
+    return _communityApi.getOtp(payload);
+  }
+
+  @override
+  Future<JoinRequestResponse> joinRequests() {
+    return _communityApi.joinRequests();
+  }
+
+  @override
+  Future deleteJoinRequests(int requestId) {
+    return _communityApi.deleteJoinTeam(requestId);
   }
 }
