@@ -38,8 +38,15 @@ class CommunityRoutes extends RouteModule {
         TeamDetailScreen.routeName: (context) {
           final args = settings.arguments as Map<String, dynamic>;
 
-          return BlocProvider<TeamDetailBloc>(
-            create: (context) => get(),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider<TeamDetailBloc>(
+                create: (context) => get(),
+              ),
+              BlocProvider<GetJoinRequestBloc>(
+                create: (context) => get(),
+              ),
+            ],
             child: TeamDetailScreen(
               id: args['id'],
               name: args['name'],

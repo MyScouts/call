@@ -2,7 +2,6 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/camera/camera_result_screen.dart';
-import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:app_main/src/presentation/community/groups/group_listing_bloc.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_module.dart';
@@ -71,7 +70,7 @@ extension DashBoardCoordinator on BuildContext {
   Future<T?> startTeam<T>() async {
     return showGeneralDialog<T>(
       context: this,
-      barrierDismissible: true,
+      barrierDismissible: false,
       barrierLabel: '',
       pageBuilder: (context, animation1, animation2) {
         return MultiBlocProvider(
@@ -87,8 +86,6 @@ extension DashBoardCoordinator on BuildContext {
   }
 
   Future<T?> _startGroup<T>() async {
-    // return startGroupDetail(id: 'VNG359');
-
     return showGeneralDialog<T>(
       context: this,
       barrierDismissible: true,

@@ -4,9 +4,9 @@ part 'confirm_response.g.dart';
 
 @JsonSerializable()
 class ConfirmResponse {
-  final bool? result;
+  final int requestId;
 
-  ConfirmResponse({required this.result});
+  ConfirmResponse({required this.requestId});
 
   factory ConfirmResponse.fromJson(Map<String, dynamic> json) =>
       _$ConfirmResponseFromJson(json);

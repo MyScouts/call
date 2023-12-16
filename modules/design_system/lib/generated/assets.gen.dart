@@ -5,7 +5,7 @@
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal
+// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -16,14 +16,15 @@ class Assets {
 
   /// File path: assets/audio/incoming_call_ringtone.mp3
   static const String audio_incoming_call_ringtone =
-      'assets/audio/incoming_call_ringtone.mp3';
+      'packages/design_system/assets/audio/incoming_call_ringtone.mp3';
 
   /// File path: assets/audio/outgoing_call_ringtone.mp3
   static const String audio_outgoing_call_ringtone =
-      'assets/audio/outgoing_call_ringtone.mp3';
+      'packages/design_system/assets/audio/outgoing_call_ringtone.mp3';
 
   /// File path: assets/audio/reaction.mp3
-  static const String audio_reaction = 'assets/audio/reaction.mp3';
+  static const String audio_reaction =
+      'packages/design_system/assets/audio/reaction.mp3';
 
   /// File path: assets/flags/ad.png
   static const AssetGenImage flags_ad = AssetGenImage('assets/flags/ad.png');
@@ -1101,6 +1102,10 @@ class Assets {
   static const SvgGenImage icons_ic_circle_arrow =
       SvgGenImage('assets/icons/ic_circle_arrow.svg');
 
+  /// File path: assets/icons/ic_circle_success.png
+  static const AssetGenImage icons_ic_circle_success =
+      AssetGenImage('assets/icons/ic_circle_success.png');
+
   /// File path: assets/icons/ic_clear.svg
   static const SvgGenImage icons_ic_clear =
       SvgGenImage('assets/icons/ic_clear.svg');
@@ -2159,7 +2164,8 @@ class Assets {
       AssetGenImage('assets/images/live.png');
 
   /// File path: assets/images/loading.json
-  static const String images_loading = 'assets/images/loading.json';
+  static const String images_loading =
+      'packages/design_system/assets/images/loading.json';
 
   /// File path: assets/images/locket.webp
   static const AssetGenImage images_locket =
@@ -2594,6 +2600,7 @@ class Assets {
         icons_ic_check_circle,
         icons_ic_chevron_right,
         icons_ic_circle_arrow,
+        icons_ic_circle_success,
         icons_ic_clear,
         icons_ic_clock,
         icons_ic_cloud,
@@ -2945,7 +2952,16 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider() => AssetImage(_assetName);
+  ImageProvider provider({
+    AssetBundle? bundle,
+    String? package = 'design_system',
+  }) {
+    return AssetImage(
+      _assetName,
+      bundle: bundle,
+      package: package,
+    );
+  }
 
   String get path => _assetName;
 
@@ -2968,13 +2984,14 @@ class SvgGenImage {
     AlignmentGeometry alignment = Alignment.center,
     bool allowDrawingOutsideViewBox = false,
     WidgetBuilder? placeholderBuilder,
-    Color? color,
-    BlendMode colorBlendMode = BlendMode.srcIn,
     String? semanticsLabel,
     bool excludeFromSemantics = false,
+    SvgTheme theme = const SvgTheme(),
+    ColorFilter? colorFilter,
     Clip clipBehavior = Clip.hardEdge,
-    bool cacheColorFilter = false,
-    SvgTheme? theme,
+    @deprecated Color? color,
+    @deprecated BlendMode colorBlendMode = BlendMode.srcIn,
+    @deprecated bool cacheColorFilter = false,
   }) {
     return SvgPicture.asset(
       _assetName,
@@ -2988,13 +3005,14 @@ class SvgGenImage {
       alignment: alignment,
       allowDrawingOutsideViewBox: allowDrawingOutsideViewBox,
       placeholderBuilder: placeholderBuilder,
-      color: color,
-      colorBlendMode: colorBlendMode,
       semanticsLabel: semanticsLabel,
       excludeFromSemantics: excludeFromSemantics,
+      theme: theme,
+      colorFilter: colorFilter,
+      color: color,
+      colorBlendMode: colorBlendMode,
       clipBehavior: clipBehavior,
       cacheColorFilter: cacheColorFilter,
-      theme: theme,
     );
   }
 

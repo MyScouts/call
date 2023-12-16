@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
 import 'package:app_main/src/data/models/responses/boss_team_relinquish_status_response.dart';
+import 'package:app_main/src/data/models/responses/join_request_response.dart';
 import 'package:app_main/src/data/models/responses/member_join_request.dart';
 import 'package:injectable/injectable.dart';
 
@@ -187,5 +188,14 @@ class CommunityUsecase {
   Future getOtp() async {
     final response = await _communityRepository.getOtp();
     return response;
+  }
+
+  Future<List<JoinRequest>> joinRequests() async {
+    final response = await _communityRepository.joinRequests();
+    return response.requests;
+  }
+
+  Future deleteJoinRequest(int requestId) {
+    return _communityRepository.deleteJoinRequests(requestId);
   }
 }

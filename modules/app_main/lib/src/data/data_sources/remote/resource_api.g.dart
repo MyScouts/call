@@ -168,7 +168,7 @@ class _ResourceApi implements ResourceApi {
     return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
 
-    @override
+  @override
   Future<String> storageUploadUrl(XFile file, String prefix) async {
     final resource = '$prefix${file.name}';
     final _responseGetUrlUpload = StorageUploadUrlResponse.fromJson(

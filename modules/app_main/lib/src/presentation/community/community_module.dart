@@ -55,4 +55,8 @@ abstract class CommunityModule {
   @factory
   GetBossStatusBloc createGetBossStatusBloc(CommunityUsecase usecase) =>
       GetBossStatusBloc(usecase.getBossGroupStatus);
+
+  @factory
+  GetJoinRequestBloc joinRequestBloc(CommunityUsecase usecase) =>
+      GetJoinRequestBloc(usecase.joinRequests);
 }

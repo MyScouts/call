@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_constants.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
@@ -236,13 +237,17 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
       }
 
       if (data['type'] == 'team' && data["id"] != null) {
-        return _validationRoute([], () {
-          context.startTeamDetailFromQR(
-            id: data["id"],
-            bossGroupId: data['bossGroupId'],
-            name: data['name'],
-          );
-        });
+        if (widget.type == QrCodeScanType.joinTeam) {
+          return context.pop(data: data["id"]);
+        } else {
+          return _validationRoute([], () {
+            context.startTeamDetailFromQR(
+              id: data["id"],
+              bossGroupId: data['bossGroupId'],
+              name: data['name'],
+            );
+          });
+        }
       }
 
       if ([QrCodeScanType.registerCustomer, QrCodeScanType.registerMarshop]

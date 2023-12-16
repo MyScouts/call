@@ -29,6 +29,7 @@ import 'group_detail/register_boss_group_screen.dart';
 import 'group_detail/request_boss_group_otp_screen.dart';
 import 'team_detail/pages/ask_to_join_team_screen.dart';
 import 'team_detail/team_detail_screen.dart';
+import 'widgets/ask_join_team_dialog.dart';
 import 'widgets/create_open_group_request_success_dialog.dart';
 
 extension CommunityCoordinator on BuildContext {
@@ -418,6 +419,19 @@ extension CommunityCoordinator on BuildContext {
           onAction: () {
             popNavigator();
           },
+        );
+      },
+    );
+  }
+
+  Future<T?> startAskJoinTeamSuccess<T>({required VoidCallback onAction}) {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: false,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return AskJoinTeamDialog(
+          onCancel: onAction,
         );
       },
     );

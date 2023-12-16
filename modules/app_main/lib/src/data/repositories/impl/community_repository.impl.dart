@@ -6,6 +6,7 @@ import 'package:app_main/src/data/models/responses/boss_community_status_respons
 import 'package:app_main/src/data/models/responses/boss_team_relinquish_status_response.dart';
 import 'package:app_main/src/data/models/responses/confirm_response.dart';
 import 'package:app_main/src/data/models/responses/group_request_response.dart';
+import 'package:app_main/src/data/models/responses/join_request_response.dart';
 import 'package:app_main/src/data/models/responses/leave_team_status_response.dart';
 import 'package:app_main/src/data/models/responses/member_join_request.dart';
 import 'package:app_main/src/data/models/responses/my_group_response.dart';
@@ -270,5 +271,15 @@ class CommunityRepositoryImpl extends CommunityRepository {
   Future getOtp() {
     final payload = OtpPayload(type: 'RequestOpenGroup');
     return _communityApi.getOtp(payload);
+  }
+
+  @override
+  Future<JoinRequestResponse> joinRequests() {
+    return _communityApi.joinRequests();
+  }
+
+  @override
+  Future deleteJoinRequests(int requestId) {
+    return _communityApi.deleteJoinTeam(requestId);
   }
 }
