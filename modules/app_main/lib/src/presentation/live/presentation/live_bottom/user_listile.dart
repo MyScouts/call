@@ -33,6 +33,7 @@ class _UserLisTileState extends State<UserLisTile> {
           AvatarWidget(
             avatar: widget.user.avatar,
             size: 36,
+            isPDone: widget.user.type! > 0,
           ),
           const SizedBox(width: 8),
           Expanded(
@@ -42,7 +43,7 @@ class _UserLisTileState extends State<UserLisTile> {
                 Row(
                   children: [
                     Flexible(
-                      child: Text(widget.user.fullNameStr,
+                      child: Text(widget.user.displayName ?? '',
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,

@@ -170,7 +170,7 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
 
   double opacity = 1;
 
-  late AnimationController controller2;
+  //late AnimationController controller2;
 
   double opacity2 = 1;
 
@@ -182,12 +182,12 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
   void initState() {
     if (widget.isStaticGift) {
       controller = AnimationController(vsync: this, duration: const Duration(seconds: 2));
-      _startAnimation(controller);
+      _startStaticGift();
     } else {
       Lottie.cache.maximumSize = 0;
       if (isJsonFile) {
-        controller2 = AnimationController(vsync: this);
-        startAnimation2(controller2);
+        controller = AnimationController(vsync: this);
+        _startAnimationJson();
       } else {
         int displayTime = 4;
         try {
@@ -195,8 +195,8 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
         } catch (_) {
           displayTime = 4;
         }
-        controller2 = AnimationController(vsync: this, duration: Duration(seconds: displayTime));
-        startAnimation2(controller2);
+        controller = AnimationController(vsync: this, duration: Duration(seconds: displayTime));
+        _startStaticGift();
       }
     }
     super.initState();
@@ -212,44 +212,44 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
     return time;
   }
 
-  void startAnimation2(AnimationController controller) {
-    if (isJsonFile) {
-      controller.addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          final floatingHeartsProvider = widget.provider;
-          floatingHeartsProvider.removeGiftAnimation(widget.key, context: context);
-          Lottie.cache.clear();
-        }
-      });
-    } else {
-      controller.forward().whenComplete(() {
-        final floatingHeartsProvider = widget.provider;
-        floatingHeartsProvider.removeGiftAnimation(widget.key, context: context);
-        controller.dispose();
-      });
-    }
-  }
-
   @override
   void dispose() {
-    if (widget.isStaticGift) {
-      if (!controller.isCompleted) {
-        controller.dispose();
-      }
-    } else {
-      if (!controller2.isCompleted) {
-        controller2.dispose();
-        Lottie.cache.clear();
-      }
+    if (!controller.isCompleted) {
+      controller.dispose();
     }
+    if (isJsonFile) {
+      Lottie.cache.clear();
+    }
+
     super.dispose();
   }
 
-  void _startAnimation(AnimationController controller) {
+  void _startStaticGift() {
+    final liveController = context.findAncestorStateOfType<LiveChannelScreenState>()!.controller;
+    if (liveController.timesAnimation.value == 1) {
+      liveController.countdownGiftController.value = controller;
+    }
     controller.forward().whenComplete(() {
       final floatingHeartsProvider = widget.provider;
       floatingHeartsProvider.removeGift(widget.key);
       controller.dispose();
+    });
+  }
+
+  void _startAnimationJson() {
+    final liveController = context.findAncestorStateOfType<LiveChannelScreenState>()!.controller;
+
+    controller.addStatusListener((status) {
+      if (status == AnimationStatus.forward) {
+        if (liveController.timesAnimation.value == 1) {
+          liveController.countdownGiftController.value = controller;
+        }
+      }
+      if (status == AnimationStatus.completed) {
+        final floatingHeartsProvider = widget.provider;
+        floatingHeartsProvider.removeGiftAnimation(widget.key, context: context);
+        Lottie.cache.clear();
+      }
     });
   }
 
@@ -268,10 +268,10 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
   }
 
   Widget buildDynamicGift() {
-    final controller = context.read<LiveChannelController>();
-    final times = controller.timesAnimation.value;
+    final liveController = context.read<LiveChannelController>();
+    final times = liveController.timesAnimation.value;
     return AnimatedBuilder(
-        animation: controller2,
+        animation: controller,
         builder: (context, snapshot) {
           return Opacity(
             opacity: opacity2,
@@ -334,7 +334,7 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              'x${widget.giftNumber - times + 1}',
+                              'x$times',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
@@ -373,7 +373,7 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
                 isJsonFile
                     ? LottieAnimation(
                         gift: widget.gift,
-                        controller: controller2,
+                        controller: controller,
                       )
                     : Positioned(
                         bottom: 141,

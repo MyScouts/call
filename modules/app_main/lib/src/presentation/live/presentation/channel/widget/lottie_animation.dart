@@ -22,8 +22,7 @@ class LottieAnimation extends StatefulWidget {
   State<LottieAnimation> createState() => _LottieAnimationState();
 }
 
-class _LottieAnimationState extends State<LottieAnimation>
-    with SingleTickerProviderStateMixin {
+class _LottieAnimationState extends State<LottieAnimation> with SingleTickerProviderStateMixin {
   final giftUseCase = injector.get<GiftSharePreferencesUseCase>();
 
   File? fileGift;
@@ -57,13 +56,6 @@ class _LottieAnimationState extends State<LottieAnimation>
   void initState() {
     checkGift();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    widget.controller.dispose();
-    Lottie.cache.clear();
-    super.dispose();
   }
 
   @override

@@ -59,20 +59,19 @@ class User with _$User {
     UserFanGroupInfo? fanGroup,
     UserProfileInfo? profile,
     int? sexCode,
+    int? type,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }
 
 extension UserExtNull on User? {
-  String get getdisplayName => [this?.displayName, _userDefaultName]
-      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getdisplayName =>
+      [this?.displayName, _userDefaultName].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
-  String get getEmail => [this?.email, _userDefaultEmail]
-      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getEmail => [this?.email, _userDefaultEmail].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
-  String get getAddress => [this?.address, _userDefaultAddress]
-      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getAddress => [this?.address, _userDefaultAddress].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
   String get getAvatar => this?.avatar ?? Assets.images_avatar.path;
 
@@ -88,9 +87,7 @@ extension UserExtNull on User? {
     if (this?.fullName != null && this?.fullName?.isNotEmpty == true) {
       return this!.fullName!;
     }
-    return this?.displayName?.replaceRange(
-            this!.displayName!.length - 3, this!.displayName!.length, '***') ??
-        '';
+    return this?.displayName?.replaceRange(this!.displayName!.length - 3, this!.displayName!.length, '***') ?? '';
   }
 
   int get getAge {
@@ -112,8 +109,7 @@ extension UserExtNull on User? {
 
   bool get getIsJA => this?.isJA ?? false;
 
-  bool get getIsHasNickname =>
-      this?.nickname != null && this!.nickname!.isNotEmpty;
+  bool get getIsHasNickname => this?.nickname != null && this!.nickname!.isNotEmpty;
 
   bool get getIsHasEmail => this?.email != null && this!.email!.isNotEmpty;
 
@@ -127,14 +123,19 @@ extension UserExtNull on User? {
   }
 
   String get getPDoneId => this?.pDoneId ?? _userDefaultPDoneId;
+
   Sex get getSex => this?.sex ?? _userDefaultSex;
+
   int get getTotalFollower => this?.totalFollower ?? _userDefaultTotalFollower;
-  int get getTotalFollowing =>
-      this?.totalFollowing ?? _userDefaultTotalFollowing;
+
+  int get getTotalFollowing => this?.totalFollowing ?? _userDefaultTotalFollowing;
+
   int get getTotalFriend => this?.totalFriend ?? _userDefaultTotalFriend;
-  String get getBackgroundImage =>
-      this?.backgroundImages?.first ?? _userDefaultBackground;
+
+  String get getBackgroundImage => this?.backgroundImages?.first ?? _userDefaultBackground;
+
   String get getUserAvatar => this?.avatar ?? _userDefaultUserAvatar;
+
   bool get getIsPdone => this?.isPDone ?? _userIsPDone;
 }
 

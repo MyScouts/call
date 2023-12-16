@@ -65,6 +65,7 @@ mixin _$User {
   UserFanGroupInfo? get fanGroup => throw _privateConstructorUsedError;
   UserProfileInfo? get profile => throw _privateConstructorUsedError;
   int? get sexCode => throw _privateConstructorUsedError;
+  int? get type => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -121,7 +122,8 @@ abstract class $UserCopyWith<$Res> {
       int? vShopPDoneId,
       UserFanGroupInfo? fanGroup,
       UserProfileInfo? profile,
-      int? sexCode});
+      int? sexCode,
+      int? type});
 
   $TeamCopyWith<$Res>? get joinedTeam;
   $UserFanGroupInfoCopyWith<$Res>? get fanGroup;
@@ -186,6 +188,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? fanGroup = freezed,
     Object? profile = freezed,
     Object? sexCode = freezed,
+    Object? type = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -368,6 +371,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.sexCode
           : sexCode // ignore: cast_nullable_to_non_nullable
               as int?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 
@@ -460,7 +467,8 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       int? vShopPDoneId,
       UserFanGroupInfo? fanGroup,
       UserProfileInfo? profile,
-      int? sexCode});
+      int? sexCode,
+      int? type});
 
   @override
   $TeamCopyWith<$Res>? get joinedTeam;
@@ -525,6 +533,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? fanGroup = freezed,
     Object? profile = freezed,
     Object? sexCode = freezed,
+    Object? type = freezed,
   }) {
     return _then(_$UserImpl(
       id: freezed == id
@@ -707,6 +716,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.sexCode
           : sexCode // ignore: cast_nullable_to_non_nullable
               as int?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -759,7 +772,8 @@ class _$UserImpl implements _User {
       this.vShopPDoneId,
       this.fanGroup,
       this.profile,
-      this.sexCode})
+      this.sexCode,
+      this.type})
       : _backgroundImages = backgroundImages;
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
@@ -873,10 +887,12 @@ class _$UserImpl implements _User {
   final UserProfileInfo? profile;
   @override
   final int? sexCode;
+  @override
+  final int? type;
 
   @override
   String toString() {
-    return 'User(id: $id, username: $username, name: $name, nickname: $nickname, email: $email, phone: $phone, avatar: $avatar, sex: $sex, phoneCode: $phoneCode, address: $address, forgotHash: $forgotHash, status: $status, roleId: $roleId, roleMemberCode: $roleMemberCode, createdById: $createdById, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, pDoneId: $pDoneId, displayName: $displayName, fullName: $fullName, isPDone: $isPDone, isFriend: $isFriend, isFollowing: $isFollowing, isFollowed: $isFollowed, totalFollower: $totalFollower, totalFollowing: $totalFollowing, totalFriend: $totalFriend, old: $old, isBlock: $isBlock, backgroundImages: $backgroundImages, defaultBackground: $defaultBackground, isJA: $isJA, isVShop: $isVShop, isLive: $isLive, isSupervisor: $isSupervisor, isModerator: $isModerator, joinedTeam: $joinedTeam, birthday: $birthday, jaAt: $jaAt, vShopId: $vShopId, vShopPDoneId: $vShopPDoneId, fanGroup: $fanGroup, profile: $profile, sexCode: $sexCode)';
+    return 'User(id: $id, username: $username, name: $name, nickname: $nickname, email: $email, phone: $phone, avatar: $avatar, sex: $sex, phoneCode: $phoneCode, address: $address, forgotHash: $forgotHash, status: $status, roleId: $roleId, roleMemberCode: $roleMemberCode, createdById: $createdById, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, pDoneId: $pDoneId, displayName: $displayName, fullName: $fullName, isPDone: $isPDone, isFriend: $isFriend, isFollowing: $isFollowing, isFollowed: $isFollowed, totalFollower: $totalFollower, totalFollowing: $totalFollowing, totalFriend: $totalFriend, old: $old, isBlock: $isBlock, backgroundImages: $backgroundImages, defaultBackground: $defaultBackground, isJA: $isJA, isVShop: $isVShop, isLive: $isLive, isSupervisor: $isSupervisor, isModerator: $isModerator, joinedTeam: $joinedTeam, birthday: $birthday, jaAt: $jaAt, vShopId: $vShopId, vShopPDoneId: $vShopPDoneId, fanGroup: $fanGroup, profile: $profile, sexCode: $sexCode, type: $type)';
   }
 
   @override
@@ -953,7 +969,8 @@ class _$UserImpl implements _User {
             (identical(other.fanGroup, fanGroup) ||
                 other.fanGroup == fanGroup) &&
             (identical(other.profile, profile) || other.profile == profile) &&
-            (identical(other.sexCode, sexCode) || other.sexCode == sexCode));
+            (identical(other.sexCode, sexCode) || other.sexCode == sexCode) &&
+            (identical(other.type, type) || other.type == type));
   }
 
   @JsonKey(ignore: true)
@@ -1004,7 +1021,8 @@ class _$UserImpl implements _User {
         vShopPDoneId,
         fanGroup,
         profile,
-        sexCode
+        sexCode,
+        type
       ]);
 
   @JsonKey(ignore: true)
@@ -1067,7 +1085,8 @@ abstract class _User implements User {
       final int? vShopPDoneId,
       final UserFanGroupInfo? fanGroup,
       final UserProfileInfo? profile,
-      final int? sexCode}) = _$UserImpl;
+      final int? sexCode,
+      final int? type}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -1161,6 +1180,8 @@ abstract class _User implements User {
   UserProfileInfo? get profile;
   @override
   int? get sexCode;
+  @override
+  int? get type;
   @override
   @JsonKey(ignore: true)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>
