@@ -136,7 +136,7 @@ class _$ProvinceImpl implements _Province {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProvinceImpl &&

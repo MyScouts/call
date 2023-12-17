@@ -1,10 +1,12 @@
 import 'package:app_main/src/core/extensions/list_extension.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DashBottomFab extends StatefulWidget {
-  const DashBottomFab({super.key});
+  const DashBottomFab({super.key, required this.onCLose});
+  final VoidCallback onCLose;
 
   @override
   State<DashBottomFab> createState() => DashBottomFabState();
@@ -52,17 +54,35 @@ class DashBottomFabState extends State<DashBottomFab>
                 _Item(
                   title: 'Bài viết',
                   image: Assets.icons_dashboard_edit.svg(),
-                  onTap: () {},
+                  onTap: () {
+                    widget.onCLose();
+                    context.showToastMessage(
+                      'Tính năng đang được phát triển',
+                      ToastMessageType.warning,
+                    );
+                  },
                 ),
                 _Item(
                   title: 'Video',
                   image: Assets.icons_dashboard_video.svg(),
-                  onTap: () {},
+                  onTap: () {
+                    widget.onCLose();
+                    context.showToastMessage(
+                      'Tính năng đang được phát triển',
+                      ToastMessageType.warning,
+                    );
+                  },
                 ),
                 _Item(
                   title: 'Thước phim',
                   image: Assets.icons_dashboard_video_play.svg(),
-                  onTap: () {},
+                  onTap: () {
+                    widget.onCLose();
+                    context.showToastMessage(
+                      'Tính năng đang được phát triển',
+                      ToastMessageType.warning,
+                    );
+                  },
                 ),
               ].separated(const SizedBox(height: 19)),
             ),

@@ -118,7 +118,7 @@ class _$SearchUserResponseImpl implements _SearchUserResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SearchUserResponseImpl &&
@@ -272,7 +272,7 @@ class _$SearchDetailImpl implements _SearchDetail {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SearchDetailImpl &&
@@ -476,7 +476,7 @@ class _$SearchUserImpl implements _SearchUser {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SearchUserImpl &&

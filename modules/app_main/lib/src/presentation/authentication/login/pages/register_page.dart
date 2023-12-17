@@ -326,7 +326,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                             ),
                             TextSpan(
                               recognizer: TapGestureRecognizer()
-                                ..onTap = context.startTermsAndCondition,
+                                ..onTap = context.startTermsAndConditionV2,
                               text: S.current.terms_of_service_and_policies,
                               style: context.text.titleMedium!.copyWith(
                                 color: context.theme.primaryColor,

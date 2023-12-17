@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:wallet/presentation/presentation.dart';
 
-import '../../../../wallet.dart';
 import '../../wallet_constant.dart';
 
 class SuccessDialog extends StatelessWidget {
-  const SuccessDialog({Key? key}) : super(key: key);
+  const SuccessDialog({super.key});
 
   @override
   Widget build(BuildContext context) {

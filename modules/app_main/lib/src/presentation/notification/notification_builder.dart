@@ -45,22 +45,34 @@ class _NotificationBuilderState extends State<NotificationBuilder> {
           alignment: Alignment.centerRight,
           child: Opacity(
             opacity: _opacity,
-            child: Container(
-              width: _size - 12,
-              height: 105,
-              decoration: BoxDecoration(
-                color: const Color.fromRGBO(247, 247, 247, 0.70),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              alignment: Alignment.center,
-              child: Opacity(
-                opacity: _opacity,
-                child: const Text(
-                  'Xoá',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xff3F3F3F),
+            child: GestureDetector(
+              onTap: () {
+                _position = -ScreenUtil().screenWidth;
+                setState(() {
+                  _duration = 150;
+                  calculateOpacity();
+                });
+                Future.delayed(const Duration(milliseconds: 300), () {
+                  widget.onRemoved();
+                });
+              },
+              child: Container(
+                width: _size - 12,
+                height: 105,
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(247, 247, 247, 0.70),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                alignment: Alignment.center,
+                child: Opacity(
+                  opacity: _opacity,
+                  child: const Text(
+                    'Xoá',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xff3F3F3F),
+                    ),
                   ),
                 ),
               ),

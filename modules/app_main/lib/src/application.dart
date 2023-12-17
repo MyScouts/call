@@ -18,6 +18,7 @@ import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'app_dimens.dart';
+import 'app_scaffold.dart';
 import 'app_size.dart';
 import 'core/coordinator/app_coordinator.dart';
 import 'core/utils/toast_message/toast_message.dart';
@@ -91,7 +92,7 @@ class _ApplicationState extends State<Application>
               return Material(
                 child: Stack(
                   children: [
-                    toastBuilder(context, child!),
+                    toastBuilder(context, AppScaffold(child: child!)),
                     Obx(() {
                       if (PipHandler.showPip.value) {
                         return PipHandler.pipView;

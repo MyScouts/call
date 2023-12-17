@@ -3,6 +3,7 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
+import '../../ui.dart';
 import '../button/common_outline_button.dart';
 import '../button/primary_button.dart';
 import 'widgets/dialog_container_widget.dart';
@@ -11,6 +12,7 @@ class ActionDialog extends StatelessWidget {
   final String title;
   final String actionTitle;
   final String? content;
+  final Widget? widget;
   final VoidCallback onAction;
   final VoidCallback? onCancel;
   final bool isBack;
@@ -23,6 +25,7 @@ class ActionDialog extends StatelessWidget {
     this.content,
     this.onCancel,
     this.isBack = true,
+    this.widget,
   });
 
   @override
@@ -33,63 +36,68 @@ class ActionDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (onCancel == null)
-              Container(
-                alignment: Alignment.centerRight,
-                margin: const EdgeInsets.only(bottom: 10),
-                child: GestureDetector(
-                  onTap: Navigator.of(context).pop,
-                  child: const Icon(Icons.close, color: AppColors.grey8),
+            Stack(
+              children: [
+                Center(
+                  child: Text(
+                    title,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineMedium!
+                        .copyWith(fontWeight: FontWeight.w600),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 20,
-                left: 20,
-                right: 20,
-                bottom: 10,
-              ),
-              child: Text(
-                title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineMedium!
-                    .copyWith(fontWeight: FontWeight.w600),
-                textAlign: TextAlign.center,
-              ),
+                if (onCancel == null)
+                  Container(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: Navigator.of(context).pop,
+                      child: const Icon(Icons.close, color: AppColors.grey8),
+                    ),
+                  ),
+              ],
             ),
             if (content != null)
-              Text(
-                content!,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                    fontWeight: FontWeight.w400, color: AppColors.red3),
+              Padding(
+                padding: const EdgeInsets.only(top: 20, bottom: 10),
+                child: Text(
+                  content!,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                      fontWeight: FontWeight.w400, color: AppColors.red3),
+                ),
               ),
+            if (widget != null) widget!,
             Padding(
               padding: const EdgeInsets.only(top: 25),
               child: Row(
                 children: [
                   Expanded(
-                    child: PrimaryButton(
-                      title: actionTitle,
+                    child: PrimarySolidButton(
+                      title: "Huỷ",
                       onTap: () {
-                        if (isBack) {
-                          Navigator.pop(context);
-                        }
-                        onAction.call();
+                        Navigator.of(context).pop();
+                        onCancel?.call();
                       },
+                      color: Colors.grey[200],
+                      textColor: Colors.grey,
                       disabled: false,
                       width: MediaQuery.of(context).size.width,
                     ),
                   ),
                   const SizedBox(width: 20),
                   Expanded(
-                    child: CommonOutlineButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        onCancel?.call();
+                    child: PrimarySolidButton(
+                      title: actionTitle,
+                      onTap: () {
+                        if (isBack) {
+                          Navigator.pop(context, true);
+                        }
+                        onAction.call();
                       },
-                      label: 'Huỷ',
+                      disabled: false,
+                      width: MediaQuery.of(context).size.width,
                     ),
                   ),
                 ],

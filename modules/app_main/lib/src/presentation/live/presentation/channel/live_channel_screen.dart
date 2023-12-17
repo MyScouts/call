@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/app_size.dart';
@@ -10,16 +12,17 @@ import 'package:app_main/src/presentation/live/presentation/channel/widget/live_
 import 'package:app_main/src/presentation/live/presentation/channel/widget/live_end_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/widget/pip_video_render.dart';
 import 'package:app_main/src/presentation/live/presentation/live_message/live_message_input.dart';
-import 'package:app_main/src/presentation/live/presentation/live_message/live_opacity_builder.dart';
 import 'package:app_main/src/presentation/live/presentation/live_message/state/live_message_bloc.dart';
 import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
 import 'package:app_main/src/presentation/live/presentation/pip/pip_view.dart';
+import 'package:app_main/src/presentation/live/presentation/pk/live_pk_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'widget/sent_gift_page.dart';
+import 'widget/video_play_virtual.dart';
 
 class LiveChannelScreen extends StatefulWidget {
   const LiveChannelScreen({
@@ -45,7 +48,7 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
   void initState() {
     commentController = context.read<LiveMessageBloc>();
     if (!widget.fromPip) {
-      controller.join(widget.liveID, context);
+      controller.join(widget.liveID);
     }
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -86,83 +89,38 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: controller.enablePk.value
-            ? const Color(0xff032E49)
-            : Colors.black.withOpacity(0.8),
-        body: Focus(
-          onFocusChange: (value) {
-            if (!value) controller.disableMessage();
-          },
-          child: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-              NotificationCenter.post(channel: showOption);
+      return AnnotatedRegion<SystemUiOverlayStyle>(
+        value: controller.liveType.value == LiveChannelType.pk
+            ? SystemUiOverlayStyle.light
+            : SystemUiOverlayStyle.dark,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: controller.liveType.value == LiveChannelType.pk
+              ? const Color(0xff032E49)
+              : Colors.black.withOpacity(0.8),
+          body: Focus(
+            onFocusChange: (value) {
+              if (!value) controller.disableMessage();
             },
-            behavior: HitTestBehavior.opaque,
-            child: Obx(() {
-              if (controller.enablePk.value) {
-                return const _LivePk();
-              } else {
-                return const _LiveSimple();
-              }
-            }),
+            child: GestureDetector(
+              onTap: () {
+                FocusScope.of(context).unfocus();
+                NotificationCenter.post(channel: showOption);
+                NotificationCenter.post(channel: liveTap);
+              },
+              behavior: HitTestBehavior.opaque,
+              child: Obx(() {
+                if (controller.liveType.value == LiveChannelType.pk) {
+                  return const LivePkScreen();
+                } else {
+                  return const _LiveSimple();
+                }
+              }),
+            ),
           ),
         ),
       );
     });
-  }
-}
-
-class _LivePk extends StatelessWidget {
-  const _LivePk({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = context.read<LiveChannelController>();
-
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        const SingleChildScrollView(
-          child: Column(
-            children: [
-              SafeArea(
-                child: OpacityBuilder(
-                  key: Key('pk live'),
-                  child: LiveChannelHeader(),
-                ),
-              ),
-              SizedBox(height: 16),
-              _LivePKRtc(),
-            ],
-          ),
-        ),
-        const Align(
-          alignment: Alignment.bottomCenter,
-          child: OpacityBuilder(
-            key: Key('pk live'),
-            child: LiveBottomAction(),
-          ),
-        ),
-        IgnorePointer(
-          ignoring: true,
-          child: SentGiftPage(
-            provider: controller.floatingGiftsProvider,
-          ),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Obx(() {
-            if (controller.showMessageInput.value) {
-              return const LiveMessageInput();
-            }
-            return const SizedBox.shrink();
-          }),
-        ),
-      ],
-    );
   }
 }
 
@@ -176,19 +134,18 @@ class _LiveSimple extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        const _RtcRender(),
+        Obx(
+              () => controller.virtualInfo.value != null
+              ? VideoApp(virtualInfo: controller.info.virtualInfo)
+              : const _RtcRender(),
+        ),
         const Align(
           alignment: Alignment.topCenter,
-          child: OpacityBuilder(
-            key: Key('live simple'),
-            child: SafeArea(child: LiveChannelHeader()),
-          ),
+          child: SafeArea(child: LiveChannelHeader()),
         ),
         const Align(
           alignment: Alignment.bottomCenter,
-          child: OpacityBuilder(
-            child: LiveBottomAction(),
-          ),
+          child: LiveBottomAction(),
         ),
         Positioned.fill(
           child: IgnorePointer(
@@ -211,7 +168,6 @@ class _LiveSimple extends StatelessWidget {
           if (controller.state.value == LiveStreamState.stop) {
             return const LiveEndScreen();
           }
-
           return const SizedBox.shrink();
         }),
       ],
@@ -243,34 +199,28 @@ class _RtcRenderState extends State<_RtcRender> {
       if (controller.state.value == LiveStreamState.watching) {
         if (controller.hostInLive) {
           if (controller.me.value.isOwner) {
-            return Hero(
-              tag: 'render owner',
-              child: AgoraVideoView(
-                controller: VideoViewController(
-                  rtcEngine: controller.service.engine,
-                  canvas: const VideoCanvas(
-                    uid: 0,
-                    renderMode: RenderModeType.renderModeHidden,
-                  ),
+            return AgoraVideoView(
+              controller: VideoViewController(
+                rtcEngine: controller.service.engine,
+                canvas: const VideoCanvas(
+                  uid: 0,
+                  renderMode: RenderModeType.renderModeHidden,
                 ),
               ),
             );
           }
 
-          return Hero(
-            tag: controller.hostID,
-            child: AgoraVideoView(
-              controller: VideoViewController.remote(
-                rtcEngine: controller.service.engine,
-                canvas: VideoCanvas(
-                  uid: controller.hostID,
-                  renderMode: RenderModeType.renderModeHidden,
-                  mirrorMode: VideoMirrorModeType.videoMirrorModeEnabled,
-                  sourceType: VideoSourceType.videoSourceCamera,
-                ),
-                connection: RtcConnection(
-                  channelId: controller.agora?.channel,
-                ),
+          return AgoraVideoView(
+            controller: VideoViewController.remote(
+              rtcEngine: controller.service.engine,
+              canvas: VideoCanvas(
+                uid: controller.hostID,
+                renderMode: RenderModeType.renderModeHidden,
+                mirrorMode: VideoMirrorModeType.videoMirrorModeEnabled,
+                sourceType: VideoSourceType.videoSourceCamera,
+              ),
+              connection: RtcConnection(
+                channelId: controller.agora?.channel,
               ),
             ),
           );
@@ -300,105 +250,5 @@ class _RtcRenderState extends State<_RtcRender> {
         }),
       );
     });
-  }
-}
-
-class _LivePKRtc extends StatelessWidget {
-  const _LivePKRtc({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = context.read<LiveChannelController>();
-
-    if (controller.info.pk == null) return const SizedBox.shrink();
-
-    final meInLive = controller.pkData!.lives.firstWhereOrNull(
-            (e) => e.user!.id == controller.me.value.info.userID) !=
-        null;
-
-    Widget left;
-    Widget right;
-
-    if (meInLive) {
-      final host = controller.pkData!.lives.firstWhereOrNull(
-          (e) => e.user!.id != controller.me.value.info.userID);
-      left = AnimatedSize(
-        duration: const Duration(milliseconds: 150),
-        child: AgoraVideoView(
-          controller: VideoViewController.remote(
-            rtcEngine: controller.service.engine,
-            canvas: VideoCanvas(
-              uid: host?.user?.id ?? 0,
-              renderMode: RenderModeType.renderModeHidden,
-              mirrorMode: VideoMirrorModeType.videoMirrorModeEnabled,
-              sourceType: VideoSourceType.videoSourceCamera,
-            ),
-            connection: RtcConnection(
-              channelId: controller.agora?.channel,
-            ),
-          ),
-        ),
-      );
-
-      right = AnimatedSize(
-        duration: const Duration(milliseconds: 150),
-        child: AgoraVideoView(
-          controller: VideoViewController(
-            rtcEngine: controller.service.engine,
-            canvas: const VideoCanvas(
-              uid: 0,
-              renderMode: RenderModeType.renderModeHidden,
-            ),
-          ),
-        ),
-      );
-    } else {
-      final host = controller.pkData!.lives
-          .firstWhereOrNull((e) => e.user!.id != controller.hostID);
-
-      left = AnimatedSize(
-        duration: const Duration(milliseconds: 150),
-        child: AgoraVideoView(
-          controller: VideoViewController.remote(
-            rtcEngine: controller.service.engine,
-            canvas: VideoCanvas(
-              uid: host?.user?.id ?? 0,
-              renderMode: RenderModeType.renderModeHidden,
-              mirrorMode: VideoMirrorModeType.videoMirrorModeEnabled,
-              sourceType: VideoSourceType.videoSourceCamera,
-            ),
-            connection: RtcConnection(
-              channelId: controller.agora?.channel,
-            ),
-          ),
-        ),
-      );
-
-      right = AnimatedSize(
-        duration: const Duration(milliseconds: 150),
-        child: AgoraVideoView(
-          controller: VideoViewController.remote(
-            rtcEngine: controller.service.engine,
-            canvas: VideoCanvas(
-              uid: controller.hostID,
-              renderMode: RenderModeType.renderModeHidden,
-            ),
-            connection: RtcConnection(
-              channelId: controller.agora?.channel,
-            ),
-          ),
-        ),
-      );
-    }
-
-    return SizedBox(
-      height: 343.h,
-      child: Row(
-        children: [
-          Expanded(flex: 1, child: left),
-          Expanded(flex: 1, child: right),
-        ],
-      ),
-    );
   }
 }

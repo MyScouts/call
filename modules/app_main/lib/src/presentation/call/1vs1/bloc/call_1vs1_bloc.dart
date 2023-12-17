@@ -9,6 +9,7 @@ import 'package:app_main/src/data/models/payloads/call/new_call_payload.dart';
 import 'package:app_main/src/data/models/payloads/call/update_call_payload.dart';
 import 'package:app_main/src/domain/entities/call/result_response_model.dart';
 import 'package:app_main/src/domain/usecases/call_usecase.dart';
+import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:stringee_flutter_plugin/stringee_flutter_plugin.dart';
@@ -37,6 +38,8 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
   final UserSharePreferencesUsecase _userSharePreferencesUsecase;
   final UserUsecase _userUsecase;
   final CallUseCase _callUseCase;
+  bool needUpdateCall = false;
+  int status = 1;
 
   late StreamSubscription<CallEvent> _onListenerCallEvent;
 
@@ -60,7 +63,7 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
             participant: participant,
             callType: callType ?? CallType.audio,
             callState: CallState(
-              isSpeaker: true,
+              isSpeaker: (callType ?? CallType.audio) != CallType.audio,
               isEnableCamera: (callType ?? CallType.audio) != CallType.audio,
             ),
             screenState: _call1vs1Service.isIncomingCall
@@ -133,14 +136,10 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
 
     if (_call1vs1Service.isIncomingCall) {
       // Case incoming call
-      log({
-        'where': 'incoming call',
-        'data': _call1vs1Service.call.customDataFromYourServer
-      }.toString());
+      log({'where': 'incoming call', 'data': _call1vs1Service.call.customDataFromYourServer}
+          .toString());
 
-      final participant = await int.tryParse(
-        _call1vs1Service.call.from ?? ''
-      )?.let(
+      final participant = await int.tryParse(_call1vs1Service.call.from ?? '')?.let(
         _userUsecase.geSynctUserById,
       );
 
@@ -148,9 +147,7 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
         data: state.data.copyWith(
           participant: participant,
           screenState: CallScreenState.incomingCall,
-          callState: state.callState.copyWith(
-            callId: _call1vs1Service.call.id
-          ),
+          callState: state.callState.copyWith(callId: _call1vs1Service.call.id),
         ),
       ));
     } else {
@@ -249,6 +246,7 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
           );
         }
       } else if (callEvent.busy || callEvent.ended) {
+        status = 3;
         data = state.data.copyWith(
           screenState: CallScreenState.closed,
         );
@@ -284,10 +282,14 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
 
   Future<void> _onCloseCallEvent(CloseCallEvent event, Emitter<Call1vs1State> emit) async {
     await _onListenerCallEvent.cancel();
-
+    if (state.isMakingACall) {
+      status = 3;
+    } else if (state.isCallClosed) {
+      status =  status == 3 ? 3 : 2;
+    }
     if (state.isIncomingCall) {
       _call1vs1Service.reject();
-    } else if(state.isInCall || state.isMakingACall || state.isLeaving){
+    } else if (state.isInCall || state.isMakingACall || state.isLeaving) {
       _call1vs1Service.hangup();
     }
 
@@ -396,18 +398,23 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
   }
 
   Future<void> createCallId(CallType callType, User? participant) async {
-    if(!_call1vs1Service.isIncomingCall) {
-      response = await _callUseCase.newCall(payload: NewCallPayload(
+    if (!_call1vs1Service.isIncomingCall) {
+      response = await _callUseCase.newCall(
+          payload: NewCallPayload(
         receiverId: participant?.id ?? 0,
         type: callType == CallType.audio ? 1 : 2,
       ));
+      needUpdateCall = true;
     }
   }
 
   Future<void> updateCall() async {
-    if(!_call1vs1Service.isIncomingCall) {
+    if (needUpdateCall) {
       await _callUseCase.updateCall(
-          payload: UpdateCallPayload(type: state.callType == CallType.audio ? 1 : 2), callId: response?.result ?? 0);
+          payload:
+              UpdateCallPayload(type: state.callType == CallType.audio ? 1 : 2, status: status),
+          callId: response?.result ?? 0);
+      needUpdateCall = false;
     }
   }
 }

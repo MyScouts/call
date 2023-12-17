@@ -6,10 +6,10 @@ class PostVideoThumbnailWidget extends StatelessWidget {
   const PostVideoThumbnailWidget({
     super.key,
     required this.child,
-    required this.onTap,
+    this.onTap,
   });
   final Widget child;
-  final Function onTap;
+  final Function? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,12 @@ class PostVideoThumbnailWidget extends StatelessWidget {
       height: 172.h,
       color: AppColors.black,
       child: GestureDetector(
-        onTap: () => onTap(),
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          if(onTap != null){
+            onTap!();
+          }
+        },
         child: child,
       ),
     );

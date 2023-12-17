@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/presentation/general_setting/terms_conditions/widgets/policy_content.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/gestures.dart';
@@ -207,7 +208,7 @@ class _RegisterPDoneAccountPageState extends State<RegisterPDoneAccountPage>
   }
 
   void _onTapPolicy() {
-    context.startTermsAndCondition();
+    context.startTermsAndCondition(policyContents);
   }
 
   void _onChangedCheckbox(bool? value) {

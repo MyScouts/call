@@ -73,7 +73,10 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
           controller: widget.controller,
           liveBottomController: liveBottomController,
         ),
-        ListFriendTab(controller: liveBottomController, liveData: widget.controller.info, isHost: widget.controller.hostInLive),
+        ListFriendTab(
+            controller: liveBottomController,
+            liveData: widget.controller.info,
+            isHost: widget.controller.me.value.isOwner),
         //ListFollowTab(controller: liveBottomController, liveData: widget.controller.info),
         LeaderBoardTab(controller: liveBottomController),
       ];

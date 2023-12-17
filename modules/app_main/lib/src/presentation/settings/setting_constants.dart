@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/app/app_cubit.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
 import 'package:app_main/src/presentation/profile/user_profile_screen.dart';
@@ -80,12 +81,24 @@ class Setting {
           Setting(
             text: "Khách hàng thường xuyên - Market Home",
             icon: IconAppConstants.icMarshopHome,
-            onPressed: context.startRegisterCustomer,
+            onPressed: () {
+              if (onboarding != null && onboarding.isMarshopCustomer) {
+                context.showToastMessage("Bạn đã là Khách hàng thường xuyên");
+              } else {
+                context.startRegisterCustomer();
+              }
+            },
           ),
           Setting(
             text: "Tài khoản MarShop",
             icon: IconAppConstants.icMarshop,
-            onPressed: context.startRegisterMarshop,
+            onPressed: () {
+              if (onboarding != null && onboarding.isMarshopOwner) {
+                context.showToastMessage("Bạn đã là MarShop");
+              } else {
+                context.startRegisterMarshop();
+              }
+            },
           ),
         ],
         [

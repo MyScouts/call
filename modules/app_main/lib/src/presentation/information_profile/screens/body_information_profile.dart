@@ -31,7 +31,8 @@ class BodyInformationProfile extends StatefulWidget {
   State<BodyInformationProfile> createState() => _BodyInformationProfileState();
 }
 
-class _BodyInformationProfileState extends State<BodyInformationProfile> with UpdateInformationProfileMixin {
+class _BodyInformationProfileState extends State<BodyInformationProfile>
+    with UpdateInformationProfileMixin {
   late final userCubit = context.read<UserCubit>();
   late final informationCubit = context.read<InformationPdoneProfileCubit>();
   late final informationBloc = context.read<InformationUpdateProfilBloc>();
@@ -64,7 +65,8 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: SingleChildScrollView(
-        child: BlocListener<InformationUpdateProfilBloc, InformationUpdateProfilState>(
+        child: BlocListener<InformationUpdateProfilBloc,
+            InformationUpdateProfilState>(
           listener: (_, state) {
             if (state is GetInformationPDoneProfileLoading) {
               showLoading();
@@ -72,7 +74,8 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
 
             if (state is GetInformationPDoneProfileSuccess) {
               _informationNonePdoneProfile = state.user.profile;
-              nickNameChanged.value = _informationNonePdoneProfile.birthPlace.countryName!;
+              nickNameChanged.value =
+                  '${_informationNonePdoneProfile.birthPlace?.countryName}';
               hideLoading();
             }
 
@@ -124,7 +127,8 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                 ),
               ),
               TextButton(
-                onPressed: () => Navigator.of(context).push(_createRouteEditTrue(isEdit: true)),
+                onPressed: () => Navigator.of(context)
+                    .push(_createRouteEditTrue(isEdit: true)),
                 child: const Text(
                   "Chỉnh sửa",
                   style: TextStyle(
@@ -308,7 +312,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                 ),
               ),
               Text(
-                _informationNonePdoneProfile.currentPlace.provinceName,
+                '${_informationNonePdoneProfile.currentPlace?.provinceName}',
                 style: const TextStyle(
                   color: AppColors.black,
                   fontWeight: FontWeight.normal,
@@ -330,7 +334,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
                 ),
               ),
               Text(
-                _informationNonePdoneProfile.currentPlace.provinceName,
+                '${_informationNonePdoneProfile.currentPlace?.provinceName}',
                 style: const TextStyle(
                   color: AppColors.black,
                   fontWeight: FontWeight.normal,
@@ -740,7 +744,8 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
 
   Route _createRouteEditTrue({bool isEdit = true}) {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => UpdateInformationProfileScreen(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          UpdateInformationProfileScreen(
         authInfo: _authInfo,
         userCubit: userCubit,
         isEdit: isEdit,
@@ -754,7 +759,8 @@ class _BodyInformationProfileState extends State<BodyInformationProfile> with Up
 
   Route _createRouteNotEdit({bool isEdit = false}) {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => UpdateInformationProfileScreen(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          UpdateInformationProfileScreen(
         authInfo: _authInfo,
         userCubit: userCubit,
         isEdit: isEdit,

@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/live/data/model/response/live_list_member_response.dart';
+import 'package:app_main/src/presentation/live/data/model/response/live_pk_stats.dart';
 import 'package:app_main/src/presentation/live/data/model/response/live_stream_category_response.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_pk_data.dart';
@@ -32,13 +33,14 @@ class LiveApiConstant {
   static const String getListLiveMember = 'api/live/{id}/members';
   static const String kickMember = '/api/live/{id}/kick';
   static const String banMember = '/api/live/{id}/ban';
-  static const String getListLivefollowing =
-      'api/live/following?page={page}&pageSize={pageSize}';
+  static const String getListLivefollowing = 'api/live/following?page={page}&pageSize={pageSize}';
   static const String getListTopLive = 'api/top-live/list';
 
   static const String rbContest = '/api/rb-contest/active';
 
   static const String giftCard = '/api/gift-card/live/{liveId}';
+
+  static const String liveStats = '/api/gift-card/live-stats';
 
   static const String dailyDedications = '/api/gift-card/daily-dedication';
 
@@ -48,8 +50,7 @@ class LiveApiConstant {
 
   static const String festivalsID = '/api/festivals/register-festival/{userId}';
 
-  static const String voteForUser =
-      '/api/gift-card/user/{userId}/report?contestId={contestId}';
+  static const String voteForUser = '/api/gift-card/user/{userId}/report?contestId={contestId}';
 
   static const String defaultConfig = '/api/live/default-config';
 
@@ -70,6 +71,14 @@ class LiveApiConstant {
   static const String pkAccept = '/api/live-pk/accept';
 
   static const String pk = '/api/live-pk/live/{id}';
+
+  static const String updatePk = '/api/live-pk/{id}/config';
+
+  static const String startGame = '/api/live-pk/game';
+
+  static const String readyGame = '/api/live-pk/game/round/ready';
+
+  static const String stats = '/api/gift-card/pk-stats';
 }
 
 @RestApi()
@@ -112,14 +121,18 @@ abstract class LiveApi {
   );
 
   @GET(LiveApiConstant.giftCard)
-  Future<ApiResponse<GiftCardLive>> getInfoGiftCard(
-      {@Path('liveId') required int liveId});
+  Future<ApiResponse<GiftCardLive>> getInfoGiftCard({@Path('liveId') required int liveId});
+
+  @GET(LiveApiConstant.liveStats)
+  Future<ApiResponse<GiftCardLive>> getLiveStats({@Query('liveId') required int liveId});
 
   @GET(LiveApiConstant.dailyDedications)
-  Future<ApiResponse<GiftCardLive>> getDailyDedications({@Query('userId') required int userId});
+  Future<ApiResponse<GiftCardLive>> getDailyDedications(
+      {@Query('userId') required int userId});
 
   @GET(LiveApiConstant.getDedications)
-  Future<ApiResponse<GiftCardLive>> getDedications({@Query('userId') required int userId});
+  Future<ApiResponse<GiftCardLive>> getDedications(
+      {@Query('userId') required int userId});
 
   @POST(LiveApiConstant.createNewLive)
   Future<ApiResponse<LiveData>> createNewLive(
@@ -138,12 +151,10 @@ abstract class LiveApi {
 
   @POST(LiveApiConstant.inviteFriend)
   Future<ApiResponse<dynamic>> inviteFriend(
-      {@Path('id') required String liveId,
-      @Body() required InviteFriendReq user});
+      {@Path('id') required String liveId, @Body() required InviteFriendReq user});
 
   @GET(LiveApiConstant.memberCount)
-  Future<ApiResponse<MemberCountData>> memberCount(
-      {@Query('liveIds') required List<int> liveIds});
+  Future<ApiResponse<MemberCountData>> memberCount({@Query('liveIds') required List<int> liveIds});
 
   @GET(LiveApiConstant.getAllCateGory)
   Future<ApiResponse<LiveStreamCategoryResponse>> getAllCateGory();
@@ -172,6 +183,24 @@ abstract class LiveApi {
 
   @GET(LiveApiConstant.pk)
   Future<ApiResponse<LivePkData>> getPk(@Path('id') int id);
+
+  @PATCH(LiveApiConstant.updatePk)
+  Future updatePk(
+    @Path('id') int pkId,
+    @Field('enableShareMessage') bool enableShareMessage,
+  );
+
+  @POST(LiveApiConstant.startGame)
+  Future startGame(@Body() Map<String, dynamic> json);
+
+  @POST(LiveApiConstant.readyGame)
+  Future readyGame(@Field('liveId') int id);
+
+  @GET(LiveApiConstant.stats)
+  Future<ApiResponse<LivePkStatsRes>> stats(@Query('pkId') int id);
+
+  @DELETE(LiveApiConstant.startGame)
+  Future deleteGame(@Field('pkId') int pkID);
 
 //
 // @POST(LiveApiConstant.joinLive)

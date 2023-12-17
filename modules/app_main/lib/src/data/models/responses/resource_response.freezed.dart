@@ -132,7 +132,7 @@ class _$LatestVersionResponseImpl implements _LatestVersionResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LatestVersionResponseImpl &&
@@ -298,7 +298,7 @@ class _$VersionResponseImpl implements _VersionResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$VersionResponseImpl &&
@@ -448,7 +448,7 @@ class _$GlobalSettingResponseImpl implements _GlobalSettingResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GlobalSettingResponseImpl &&
@@ -587,7 +587,7 @@ class _$GlobalPersonResponseImpl implements _GlobalPersonResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GlobalPersonResponseImpl &&
@@ -628,4 +628,142 @@ abstract class _GlobalPersonResponse implements GlobalPersonResponse {
   @JsonKey(ignore: true)
   _$$GlobalPersonResponseImplCopyWith<_$GlobalPersonResponseImpl>
       get copyWith => throw _privateConstructorUsedError;
+}
+
+RenderPDFResponse _$RenderPDFResponseFromJson(Map<String, dynamic> json) {
+  return _RenderPDFResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RenderPDFResponse {
+  String get url => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $RenderPDFResponseCopyWith<RenderPDFResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RenderPDFResponseCopyWith<$Res> {
+  factory $RenderPDFResponseCopyWith(
+          RenderPDFResponse value, $Res Function(RenderPDFResponse) then) =
+      _$RenderPDFResponseCopyWithImpl<$Res, RenderPDFResponse>;
+  @useResult
+  $Res call({String url});
+}
+
+/// @nodoc
+class _$RenderPDFResponseCopyWithImpl<$Res, $Val extends RenderPDFResponse>
+    implements $RenderPDFResponseCopyWith<$Res> {
+  _$RenderPDFResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? url = null,
+  }) {
+    return _then(_value.copyWith(
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RenderPDFResponseImplCopyWith<$Res>
+    implements $RenderPDFResponseCopyWith<$Res> {
+  factory _$$RenderPDFResponseImplCopyWith(_$RenderPDFResponseImpl value,
+          $Res Function(_$RenderPDFResponseImpl) then) =
+      __$$RenderPDFResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String url});
+}
+
+/// @nodoc
+class __$$RenderPDFResponseImplCopyWithImpl<$Res>
+    extends _$RenderPDFResponseCopyWithImpl<$Res, _$RenderPDFResponseImpl>
+    implements _$$RenderPDFResponseImplCopyWith<$Res> {
+  __$$RenderPDFResponseImplCopyWithImpl(_$RenderPDFResponseImpl _value,
+      $Res Function(_$RenderPDFResponseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? url = null,
+  }) {
+    return _then(_$RenderPDFResponseImpl(
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RenderPDFResponseImpl implements _RenderPDFResponse {
+  const _$RenderPDFResponseImpl({required this.url});
+
+  factory _$RenderPDFResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RenderPDFResponseImplFromJson(json);
+
+  @override
+  final String url;
+
+  @override
+  String toString() {
+    return 'RenderPDFResponse(url: $url)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RenderPDFResponseImpl &&
+            (identical(other.url, url) || other.url == url));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, url);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RenderPDFResponseImplCopyWith<_$RenderPDFResponseImpl> get copyWith =>
+      __$$RenderPDFResponseImplCopyWithImpl<_$RenderPDFResponseImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RenderPDFResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RenderPDFResponse implements RenderPDFResponse {
+  const factory _RenderPDFResponse({required final String url}) =
+      _$RenderPDFResponseImpl;
+
+  factory _RenderPDFResponse.fromJson(Map<String, dynamic> json) =
+      _$RenderPDFResponseImpl.fromJson;
+
+  @override
+  String get url;
+  @override
+  @JsonKey(ignore: true)
+  _$$RenderPDFResponseImplCopyWith<_$RenderPDFResponseImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

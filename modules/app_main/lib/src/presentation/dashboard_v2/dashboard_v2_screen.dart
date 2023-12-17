@@ -27,15 +27,18 @@ class DashBoardScreenV2 extends StatefulWidget {
   State<DashBoardScreenV2> createState() => _DashBoardScreenV2State();
 }
 
-class _DashBoardScreenV2State extends State<DashBoardScreenV2> with AutomaticKeepAliveClientMixin {
+class _DashBoardScreenV2State extends State<DashBoardScreenV2>
+    with AutomaticKeepAliveClientMixin {
   BottomBarType _type = BottomBarType.c;
   final PageController pageController = PageController();
   final GlobalKey<NotificationScreenState> notificationKey = GlobalKey();
   final GlobalKey<ScaffoldState> drawKey = GlobalKey<ScaffoldState>();
   final GlobalKey<DashBottomFabState> fabKey = GlobalKey<DashBottomFabState>();
-  final GlobalKey<DashBoardBottomBarState> bottomKey = GlobalKey<DashBoardBottomBarState>();
+  final GlobalKey<DashBoardBottomBarState> bottomKey =
+      GlobalKey<DashBoardBottomBarState>();
 
-  DashboardSharePreferenceUseCase get useCase => getIt<DashboardSharePreferenceUseCase>();
+  DashboardSharePreferenceUseCase get useCase =>
+      getIt<DashboardSharePreferenceUseCase>();
 
   late final notificationBloc = getIt<NotificationBloc>();
 
@@ -51,8 +54,8 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2> with AutomaticKee
       }
       final id = useCase.getInitPath('$userId') ?? '';
       if (id.trim().isEmpty) return;
-      final item =
-          [...communityItems, ...personalItems, ...ecoItems].firstWhereOrNull((e) => e.id == id);
+      final item = [...communityItems, ...personalItems, ...ecoItems]
+          .firstWhereOrNull((e) => e.id == id);
       final path = item?.path ?? '';
       context.handleStartAppWidget(id: id, path: path);
     });
@@ -90,8 +93,8 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2> with AutomaticKee
     super.build(context);
     final List<Widget> children = [
       DashboardCommunity(context: context),
-      const DashboardPersonal(),
-      const DashboardEco()
+      DashboardPersonal(context: context),
+      DashboardEco(context: context)
     ];
 
     return BlocListener<StringeeBloc, StringeeState>(
@@ -142,7 +145,8 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2> with AutomaticKee
                               child: PageView.builder(
                                 controller: pageController,
                                 itemCount: children.length,
-                                itemBuilder: (context, index) => children[index],
+                                itemBuilder: (context, index) =>
+                                    children[index],
                                 onPageChanged: (page) {
                                   if (mounted) {
                                     setState(() {
@@ -157,7 +161,13 @@ class _DashBoardScreenV2State extends State<DashBoardScreenV2> with AutomaticKee
                         Positioned(
                           bottom: 0,
                           left: (ScreenUtil().screenWidth - 32) / 2 + 8,
-                          child: DashBottomFab(key: fabKey),
+                          child: DashBottomFab(
+                            key: fabKey,
+                            onCLose: () {
+                              fabKey.currentState?.revert();
+                              bottomKey.currentState?.disableFab();
+                            },
+                          ),
                         ),
                       ],
                     ),

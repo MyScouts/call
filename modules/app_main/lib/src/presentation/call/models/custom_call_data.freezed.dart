@@ -152,7 +152,7 @@ class _$CallUserImpl implements _CallUser {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CallUserImpl &&
@@ -340,7 +340,7 @@ class _$CustomCallDataImpl implements _CustomCallData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CustomCallDataImpl &&
@@ -594,7 +594,7 @@ class _$CallDataResultImpl implements _CallDataResult {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CallDataResultImpl &&

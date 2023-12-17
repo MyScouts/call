@@ -95,14 +95,22 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with Single
   Widget build(BuildContext context) {
     mediaData = MediaQuery.of(context);
 
-    return Scaffold(
-      backgroundColor: AppColors.blueEdit,
-      body: BlocConsumer<Call1vs1Bloc, Call1vs1State>(
-        listener: _blocListener,
-        bloc: bloc,
-        builder: (context, state) {
-          return _buildBody(state);
-        },
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (bool didPop) {
+        if (didPop) {
+          return;
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.blueEdit,
+        body: BlocConsumer<Call1vs1Bloc, Call1vs1State>(
+          listener: _blocListener,
+          bloc: bloc,
+          builder: (context, state) {
+            return _buildBody(state);
+          },
+        ),
       ),
     );
   }
@@ -187,13 +195,8 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with Single
   Widget _buildAppbarByState(Call1vs1State state) {
     return Row(
       children: [
-        IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: onBack,
-        ),
+        kSpacingWidth16,
+        const SizedBox(width: 40,),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -206,27 +209,27 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with Single
                   color: AppColors.white,
                 ),
               ),
-              if(state.isInCall && state.callType == CallType.video)
-              TickerBuilder(
-                duration: const Duration(
-                  milliseconds: 300,
+              if (state.isInCall && state.callType == CallType.video)
+                TickerBuilder(
+                  duration: const Duration(
+                    milliseconds: 300,
+                  ),
+                  builder: (context) {
+                    return Text(
+                      state.data.startTime.let((it) {
+                        if (it == null) {
+                          return '00:00';
+                        }
+                        return DateTime.now().difference(it).mmss;
+                      }),
+                      style: context.textTheme.bodySmall?.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: const Color(0xff00ff92),
+                      ),
+                    );
+                  },
                 ),
-                builder: (context) {
-                  return Text(
-                    state.data.startTime.let((it) {
-                      if (it == null) {
-                        return '00:00';
-                      }
-                      return DateTime.now().difference(it).mmss;
-                    }),
-                    style: context.textTheme.bodySmall?.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: const Color(0xff00ff92),
-                    ),
-                  );
-                },
-              ),
             ],
           ),
         ),
@@ -390,8 +393,7 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with Single
     return _buildIconButton(
       size: size ?? 72,
       iconSize: 72,
-      icColor: state.callState.isSpeaker ? null : AppColors.greyLightTextColor,
-      icon: IconAppConstants.icVolume,
+      icon: state.callState.isSpeaker ? IconAppConstants.icVolumeOn : IconAppConstants.icVolume,
       enable: !state.isLeaving,
       onPressed: onPressSpeaker,
     );
@@ -406,7 +408,7 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with Single
       iconSize: 72,
       icon: IconAppConstants.icEnd,
       enable: !state.isLeaving,
-      onPressed: onBack,
+      onPressed: onEndCall,
     );
   }
 
@@ -432,7 +434,7 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with Single
       iconSize: 72,
       icon: IconAppConstants.icEnd,
       enable: !state.isLeaving,
-      onPressed: onBack,
+      onPressed: onEndCall,
     );
   }
 

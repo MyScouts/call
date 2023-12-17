@@ -4,6 +4,8 @@ import 'package:app_main/src/blocs/user_action/user_action_cubit.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/follow_response.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
+import 'package:app_main/src/presentation/social/following/following_coordinator.dart';
+import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:app_main/src/presentation/social/profile/profile_bloc.dart';
 import 'package:app_main/src/presentation/social/social_constants.dart';
@@ -281,25 +283,37 @@ class UserInfoHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
-              child: Column(
-                children: [
-                  ValueListenableBuilder(
-                    valueListenable: friendStatusCtrl,
-                    builder: (context, value, child) {
-                      return Text(
-                        stats.followerCount.toString(),
-                        style: context.text.titleMedium!.copyWith(
-                          fontWeight: FontWeight.w800,
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    "Người hâm mộ",
-                    style: context.text.titleMedium,
-                  ),
-                ],
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  context.startFollowing(
+                    user: userInfo,
+                    followeeCount: stats.followeeCount,
+                    friendCount: stats.friendCount,
+                    followerCount: stats.followerCount,
+                    followingType: FollowingType.follower,
+                  );
+                },
+                child: Column(
+                  children: [
+                    ValueListenableBuilder(
+                      valueListenable: friendStatusCtrl,
+                      builder: (context, value, child) {
+                        return Text(
+                          stats.followerCount.toString(),
+                          style: context.text.titleMedium!.copyWith(
+                            fontWeight: FontWeight.w800,
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      "Người hâm mộ",
+                      style: context.text.titleMedium,
+                    ),
+                  ],
+                ),
               ),
             ),
             Container(
@@ -308,20 +322,32 @@ class UserInfoHeader extends StatelessWidget {
               color: Colors.grey,
             ),
             Expanded(
-              child: Column(
-                children: [
-                  Text(
-                    stats.followeeCount.toString(),
-                    style: context.text.titleMedium!.copyWith(
-                      fontWeight: FontWeight.w800,
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  context.startFollowing(
+                    user: userInfo,
+                    followeeCount: stats.followeeCount,
+                    friendCount: stats.friendCount,
+                    followerCount: stats.followerCount,
+                    followingType: FollowingType.followee,
+                  );
+                },
+                child: Column(
+                  children: [
+                    Text(
+                      stats.followeeCount.toString(),
+                      style: context.text.titleMedium!.copyWith(
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    "Đang theo dõi",
-                    style: context.text.titleMedium,
-                  ),
-                ],
+                    const SizedBox(height: 5),
+                    Text(
+                      "Đang theo dõi",
+                      style: context.text.titleMedium,
+                    ),
+                  ],
+                ),
               ),
             ),
             Container(
@@ -330,20 +356,32 @@ class UserInfoHeader extends StatelessWidget {
               color: Colors.grey,
             ),
             Expanded(
-              child: Column(
-                children: [
-                  Text(
-                    stats.friendCount.toString(),
-                    style: context.text.titleMedium!.copyWith(
-                      fontWeight: FontWeight.w800,
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  context.startFollowing(
+                    user: userInfo,
+                    followeeCount: stats.followeeCount,
+                    friendCount: stats.friendCount,
+                    followerCount: stats.followerCount,
+                    followingType: FollowingType.friend,
+                  );
+                },
+                child: Column(
+                  children: [
+                    Text(
+                      stats.friendCount.toString(),
+                      style: context.text.titleMedium!.copyWith(
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    "Bạn bè",
-                    style: context.text.titleMedium,
-                  ),
-                ],
+                    const SizedBox(height: 5),
+                    Text(
+                      "Bạn bè",
+                      style: context.text.titleMedium,
+                    ),
+                  ],
+                ),
               ),
             )
           ],

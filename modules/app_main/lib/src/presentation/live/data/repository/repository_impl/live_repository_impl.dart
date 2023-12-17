@@ -3,6 +3,7 @@ import 'package:app_main/src/presentation/live/data/data_sources/remote/live_api
 import 'package:app_main/src/presentation/live/data/model/request/invite_friend_req.dart';
 import 'package:app_main/src/presentation/live/data/model/response/data_get_invite_friend.dart';
 import 'package:app_main/src/presentation/live/data/model/response/gift_card_live.dart';
+import 'package:app_main/src/presentation/live/data/model/response/live_pk_stats.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_category_detail.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_member_count.dart';
@@ -104,8 +105,7 @@ class LiveRepositoryImpl extends LiveRepository {
     int? pageSize,
     required bool isFriend,
   }) async {
-    final result = await _liveApi.getListInviteFriend(
-        page: page, pageSize: pageSize, isFriend: isFriend);
+    final result = await _liveApi.getListInviteFriend(page: page, pageSize: pageSize, isFriend: isFriend);
 
     return result.data;
   }
@@ -173,5 +173,37 @@ class LiveRepositoryImpl extends LiveRepository {
   Future<LivePkData> getPk(int id) async {
     final res = await _liveApi.getPk(id);
     return res.data;
+  }
+
+  @override
+  Future<GiftCardLive> getLiveState(int liveID) async {
+    final res = await _liveApi.getLiveStats(liveId: liveID);
+    return res.data;
+  }
+
+  @override
+  Future updatePk(int pkId, bool enableShareMessage) {
+    return _liveApi.updatePk(pkId, enableShareMessage);
+  }
+
+  @override
+  Future startGame(Map<String, dynamic> json) {
+    return _liveApi.startGame(json);
+  }
+
+  @override
+  Future readyGame(int id) {
+    return _liveApi.readyGame(id);
+  }
+
+  @override
+  Future<List<LivePkStats>> getStats(int pkID) async {
+    final res = await _liveApi.stats(pkID);
+    return res.data.pkStats;
+  }
+
+  @override
+  Future deleteGame(int pkID) {
+    return _liveApi.deletePK(pkID);
   }
 }

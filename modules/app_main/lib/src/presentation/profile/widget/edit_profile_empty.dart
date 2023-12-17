@@ -133,6 +133,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
           "districtCode": cuDistrict?.code,
           "wardName": cuWard?.name,
           "wardCode": cuWard?.id.toString(),
+          "address": realAddress.text,
         },
         "birthPlace": {
           "countryName": permanentCountry?.name,
@@ -178,6 +179,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
                 districtCode: cuDistrict?.code,
                 wardName: cuWard?.name,
                 wardCode: cuWard!.id.toString(),
+                address: realAddress.text,
               ),
               interest: hobbyController.text,
               talent: talentController.text,
@@ -241,6 +243,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
     bloodType = userBloc.state.pDoneProfile?.bloodGroup ?? '';
     emailController.text = userBloc.state.user?.email ?? '';
     edu = userBloc.state.pDoneProfile?.academicLevel ?? '';
+    realAddress.text = userBloc.state.pDoneProfile?.currentPlace?.address ?? '';
     super.initState();
   }
 
@@ -540,7 +543,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
             },
           ),
           InformationFieldWidget(
-            required: widget.isPDone,
+            required: false,
             shouldEnabled: true,
             controller: jobController,
             onChanged: (String? value) {
@@ -609,7 +612,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
           ),
           const SizedBox(height: 7),
           InformationFieldWidget(
-            required: widget.isPDone,
+            required: false,
             shouldEnabled: true,
             controller: talentController,
             onChanged: (String? value) {
@@ -619,7 +622,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
           ),
           const SizedBox(height: 7),
           InformationFieldWidget(
-            required: widget.isPDone,
+            required: false,
             shouldEnabled: true,
             controller: hobbyController,
             onChanged: (String? value) {
@@ -778,12 +781,11 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
             ),
           ),
           InformationFieldWidget(
-            required: widget.isPDone,
-            shouldEnabled: !widget.isPDone,
+            required: false,
+            shouldEnabled: true,
             controller: realAddress,
             type: UpdateInformationType.address,
             onChanged: (String? value) {
-              address = value!;
               onValidation();
             },
           ),
@@ -868,7 +870,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       listener: (_, state) {
         if (state is GetListProvincesSuccess) {
           final pros = state.provinces ?? provinces;
-          final proName = userBloc.state.pDoneProfile?.birthPlace.provinceName;
+          final proName = userBloc.state.pDoneProfile?.birthPlace?.provinceName;
           if (proName != null) {
             permanentProvince =
                 pros.firstWhereOrNull((e) => e.name!.contains(proName));
@@ -909,7 +911,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       listener: (ctx, state) {
         if (state is GetDistrictsSuccess) {
           final dis = state.districts ?? districts;
-          final district = userBloc.state.pDoneProfile?.birthPlace.districtName;
+          final district = userBloc.state.pDoneProfile?.birthPlace?.districtName;
           if (district != null) {
             permanentDistrict = dis
                 .firstWhereOrNull((e) => e.name?.contains(district) ?? false);
@@ -951,7 +953,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       listener: (ctx, state) {
         if (state is GetWardsSuccess) {
           final wa = state.wards ?? wards;
-          final warName = userBloc.state.pDoneProfile?.birthPlace.wardName;
+          final warName = userBloc.state.pDoneProfile?.birthPlace?.wardName;
           if (warName != null) {
             permanentWard =
                 wa.firstWhereOrNull((e) => e.name?.contains(warName) ?? false);
@@ -991,7 +993,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       builder: (ctx, state) {
         final co = state.countries ?? countries;
         return CountriesDropdown(
-          required: true,
+          required: false,
           countries: co,
           onChange: (country) {
             cuCountry = country;
@@ -1009,7 +1011,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         if (state is GetListProvincesSuccess2) {
           final pros = state.provinces ?? provinces;
           final proName =
-              userBloc.state.pDoneProfile?.currentPlace.provinceName;
+              userBloc.state.pDoneProfile?.currentPlace?.provinceName;
           if (proName != null) {
             cuProvince =
                 pros.firstWhereOrNull((e) => e.name!.contains(proName));
@@ -1027,7 +1029,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
           final pros = state.provinces ?? provinces;
           return ProvinceDropDown(
             province: cuProvince,
-            required: true,
+            required: false,
             provinces: pros,
             onChange: (province) {
               cuProvince = province;
@@ -1052,7 +1054,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         if (state is GetDistrictsSuccess2) {
           final dis = state.districts ?? districts;
           final district =
-              userBloc.state.pDoneProfile?.currentPlace.districtName;
+              userBloc.state.pDoneProfile?.currentPlace?.districtName;
           if (district != null) {
             cuDistrict = dis
                 .firstWhereOrNull((e) => e.name?.contains(district) ?? false);
@@ -1070,7 +1072,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
           final dis = state.districts ?? districts;
           return DistrictDropDown(
             district: cuDistrict,
-            required: true,
+            required: false,
             districts: dis,
             onChange: (district) {
               cuDistrict = district;
@@ -1091,7 +1093,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
       listener: (ctx, state) {
         if (state is GetWardsSuccess2) {
           final wa = state.wards ?? wards;
-          final warName = userBloc.state.pDoneProfile?.currentPlace.wardName;
+          final warName = userBloc.state.pDoneProfile?.currentPlace?.wardName;
           if (warName != null) {
             cuWard =
                 wa.firstWhereOrNull((e) => e.name?.contains(warName) ?? false);
@@ -1105,7 +1107,7 @@ class _EditProfileEmptyState extends State<EditProfileEmpty>
         final wa = state.wards ?? wards;
         return WardDropDown(
           ward: cuWard,
-          required: true,
+          required: false,
           wards: wa,
           onChange: (ward) {
             cuWard = ward;

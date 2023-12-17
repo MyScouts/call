@@ -8,6 +8,7 @@ import 'package:app_main/src/data/models/responses/marshop_response.dart';
 import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/authentication/widget/custom_text_field.dart';
 import 'package:app_main/src/presentation/marshop/marshop_bloc.dart';
+import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
 import 'package:app_main/src/presentation/marshop/register_customer/register_customer_coordinator.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_constants.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
@@ -247,6 +248,24 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
                     color: Colors.red,
                   ),
                 ),
+              const SizedBox(height: 10),
+              Center(
+                child: GestureDetector(
+                  onTap: () =>
+                      context.startMarshopReferralScreen().then((value) {
+                    if (value != null && value is String) {
+                      _marshopIdCtrl.text = value;
+                      _handleCheckMarshop();
+                    }
+                  }),
+                  child: Text(
+                    "Bạn chưa có MarShop giới thiệu ?",
+                    style: context.text.bodyMedium!.copyWith(
+                      color: context.theme.primaryColor,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         );

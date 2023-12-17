@@ -81,7 +81,7 @@ class _PaymentInformationState extends State<PaymentInformationScreen> {
                   onPressed: () {
                     context.startChat(widget.agency.user?.id ?? 0);
                   },
-                  child: const Text('Liên hệ'),
+                  child: const Text('Liên hệ',  style: TextStyle(color: AppColors.white),),
                 ),
               ),
               const SizedBox(
@@ -112,7 +112,7 @@ class _PaymentInformationState extends State<PaymentInformationScreen> {
           _paymentInformationRow(
               context, 'Tên đại lý', (widget.agency.name ?? '').toUpperCase()),
           _paymentInformationRow(context, 'Số xu nhận',
-              widget.paymentInfo.coin.toAppCurrencyString(isWithSymbol: false)),
+              '${(widget.paymentInfo.coin + widget.paymentInfo.bonusCoin).toAppCurrencyString(isWithSymbol: false)} Xu'),
           _paymentInformationRow(context, 'ID người nhận', widget.rPDoneUserId),
           _paymentInformationRow(context, 'Khuyến mãi',
               '${widget.exchangeCoinResponse.coinDiscount?.discountRate ?? 0}%'),

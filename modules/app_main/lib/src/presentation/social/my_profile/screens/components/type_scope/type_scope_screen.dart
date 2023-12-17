@@ -1,7 +1,9 @@
 import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
+import 'package:app_main/src/presentation/social/widgets/social_appbar_widget.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 class TypeScopeScreen extends StatefulWidget {
@@ -30,7 +32,9 @@ class _TypeScopeScreenState extends State<TypeScopeScreen> {
     final paddingBottom = MediaQuery.viewPaddingOf(context).bottom;
 
     return Scaffold(
-      appBar: _buildAppBar(),
+      appBar: const SocialAppBarWidget(
+        titleText: 'Đối tượng của bài viết',
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -88,7 +92,7 @@ class _TypeScopeScreenState extends State<TypeScopeScreen> {
                 ],
               ),
             ),
-            child: Center(
+            child: const Center(
               child: Text(
                 'Xong',
                 style: TextStyle(
@@ -108,55 +112,92 @@ class _TypeScopeScreenState extends State<TypeScopeScreen> {
     required ScopeType scopeType,
     required String subtitle,
   }) {
-    return RadioListTile<ScopeType>(
-      title: Text(
-        scopeType.text,
-        style: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-      value: scopeType,
-      groupValue: typeScopeSelected,
-      onChanged: (ScopeType? value) {
-        setState(() {
-          typeScopeSelected = value!;
-        });
-      },
-      secondary: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ImageWidget(scopeType.iconName, width: 24, height: 24),
-        ],
-      ),
-      subtitle: Padding(
-        padding: const EdgeInsets.only(top: 4),
-        child: Text(
-          subtitle,
-          style: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w400,
-            color: AppColors.greyLightTextColor,
+    return Container(
+      height: 72.h,
+      padding: const EdgeInsets.only(left: 16, right: 16),
+      child: customRadioTile<ScopeType>(
+          onChanged: (ScopeType? value) {
+            setState(() {
+              typeScopeSelected = value!;
+            });
+          },
+          groupValue: typeScopeSelected,
+          value: scopeType,
+          secondary: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 2),
+                child: ImageWidget(
+                  scopeType.iconName,
+                  width: 24,
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+            ],
           ),
-        ),
-      ),
-      controlAffinity: ListTileControlAffinity.trailing,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  scopeType.text,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Text(
+                    subtitle,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.greyLightTextColor,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )),
     );
   }
 
-  AppBar _buildAppBar() {
-    return AppBar(
-      title: Text(
-        'Đối tượng của bài viết',
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      centerTitle: true,
-      elevation: 0,
-      shape: const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.transparent),
+  Widget customRadioTile<T>({
+    required Function(T?) onChanged,
+    required Widget child,
+    required T groupValue,
+    required T value,
+    required Widget secondary,
+  }) {
+    return InkWell(
+      onTap: () {
+        onChanged(value);
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Row(
+              children: [
+                secondary,
+                Expanded(child: child),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 20,
+            width: 20,
+            child: Radio<T>(
+              value: value,
+              groupValue: groupValue,
+              onChanged: (value) {},
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -9,10 +9,10 @@ class LiveManageState {
   static RxInt hostID = 0.obs;
 
   static void join(int id, LiveChannelController con) {
-    if (joinLive == id) return;
+    if (joinLive == id && controller == con) return;
     if (joinLive != null) {
       joinLive = null;
-      controller?.leaveLive();
+      controller?.forceLeave();
       controller = null;
     }
     joinLive = id;

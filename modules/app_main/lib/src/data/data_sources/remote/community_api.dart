@@ -3,6 +3,7 @@ import 'package:app_main/src/core/networking/data_rows_response.dart';
 import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
 import 'package:app_main/src/data/models/payloads/community/reply_give_up_boss_team_role_payload.dart';
 import 'package:app_main/src/data/models/responses/group_request_response.dart';
+import 'package:app_main/src/data/models/responses/join_request_response.dart';
 import 'package:app_main/src/data/models/responses/member_join_request.dart';
 import 'package:app_main/src/data/models/responses/my_team_response.dart';
 import 'package:app_main/src/data/models/responses/team_member_response.dart';
@@ -10,6 +11,8 @@ import 'package:app_main/src/data/models/responses/team_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../../models/payloads/community/otp_payload.dart';
+import '../../models/payloads/community/request_boss_group_payload.dart';
 import '../../models/payloads/community/update_community_payload.dart';
 import '../../models/responses/api_response.dart';
 import '../../models/responses/boss_community_status_response.dart';
@@ -17,6 +20,8 @@ import '../../models/responses/boss_team_relinquish_status_response.dart';
 import '../../models/responses/confirm_response.dart';
 import '../../models/responses/group_response.dart';
 import '../../models/responses/leave_team_status_response.dart';
+import '../../models/responses/my_group_response.dart';
+import '../../models/responses/open_group_request_response.dart';
 
 part 'community_api.g.dart';
 
@@ -64,6 +69,12 @@ class CommunityApiConstants {
       '/api/v1/team/{id}/boss-status';
   static const String kickMember = '/api/v1/team/{teamId}/member/{userId}';
   static const String myTeam = 'api/v1/team/me';
+  static const String myGroup = 'api/v1/group/me';
+  static const String openGroupRequest = 'api/v1/group/open-request';
+  static const String otp = 'api/v1/auth/otp';
+  static const String joinRequest = 'api/v1/team/join-requests';
+  static const String joinRequestDetail =
+      'api/v1/team/join-requests/{requestId}';
 }
 
 @RestApi()
@@ -210,6 +221,7 @@ abstract class CommunityApi {
 
   @POST(CommunityApiConstants.revokeBoss)
   Future revokeBoss(@Path() String teamId);
+
   @POST(CommunityApiConstants.relinquishBossTeam)
   Future<ConfirmResponse> relinquishBossTeam({
     @Path('id') required String id,
@@ -227,4 +239,27 @@ abstract class CommunityApi {
 
   @GET(CommunityApiConstants.myTeam)
   Future<MyTeamResponse> myTeams();
+
+  @GET(CommunityApiConstants.myGroup)
+  Future<MyGroupResponse> myGroups();
+
+  @GET(CommunityApiConstants.openGroupRequest)
+  Future<OpenGroupRequestResponse> getOpenGroupRequest();
+
+  @DELETE(CommunityApiConstants.openGroupRequest)
+  Future<ConfirmResponse> deleteOpenGroupRequest();
+
+  @POST(CommunityApiConstants.openGroupRequest)
+  Future createOpenGroupRequest(@Body() RequestBossGroupPayload body);
+
+  @POST(CommunityApiConstants.otp)
+  Future getOtp(@Body() OtpPayload body);
+
+  @GET(CommunityApiConstants.joinRequest)
+  Future<JoinRequestResponse> joinRequests();
+
+  @DELETE(CommunityApiConstants.joinRequestDetail)
+  Future deleteJoinTeam(
+    @Path('requestId') int requestId,
+  );
 }

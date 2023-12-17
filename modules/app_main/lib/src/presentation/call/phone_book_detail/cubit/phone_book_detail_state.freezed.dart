@@ -156,7 +156,7 @@ class _$PhoneBookDetailStateDataImpl implements PhoneBookDetailStateData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PhoneBookDetailStateDataImpl &&
@@ -293,7 +293,7 @@ class _$PhoneBookDetailStateLoadingImpl implements PhoneBookDetailStateLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PhoneBookDetailStateLoadingImpl);
@@ -427,7 +427,7 @@ class _$PhoneBookDetailStateErrorImpl implements PhoneBookDetailStateError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PhoneBookDetailStateErrorImpl &&

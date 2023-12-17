@@ -32,9 +32,9 @@ class UserApiConstants {
   static const onboarding = "api/v1/onboarding/ecom";
   static const updatePDoneProfile = "api/v1/p-done/profile";
   static const updateNonePDoneProfile = "api/v1/p-done/non-p-done-profile";
-  static const listFriends = "/api/v1/following/friend";
-  static const listFollowers = '/api/v1/following/followers';
-  static const listFollowees = "/api/v1/following/followees";
+  static const listFriends = "/api/v1/following/friend?page=1&pageSize=200";
+  static const listFollowers = '/api/v1/following/followers?page=1&pageSize=200';
+  static const listFollowees = "/api/v1/following/followees?page=1&pageSize=200";
   static const invite = "api/v1/team/{id}/invite";
   static const email = "api/v1/user/email";
   static const genEmail = "api/v1/user/add-email-otp";

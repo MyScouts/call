@@ -21,7 +21,10 @@ class FetchTeamsMemberSuccess extends FetchTeamDetailSuccess {
 
 class AskToJoinLoading extends TeamDetailInitial {}
 
-class AskToJoinSuccess extends TeamDetailInitial {}
+class AskToJoinSuccess extends TeamDetailInitial {
+  final int requestId;
+  AskToJoinSuccess({required this.requestId});
+}
 
 class AskToJoinError<T> extends TeamDetailInitial {
   final dynamic error;
@@ -66,4 +69,13 @@ class RevokeBossSuccess extends TeamDetailInitial {}
 class RevokeBossFail extends TeamDetailInitial {
   final String message;
   RevokeBossFail({required this.message});
+}
+
+class OnCancelJoinTeam extends TeamDetailInitial {}
+
+class CancelJoinTeamSuccess extends TeamDetailInitial {}
+
+class CancelJoinTeamFail extends TeamDetailInitial {
+  final String message;
+  CancelJoinTeamFail({required this.message});
 }

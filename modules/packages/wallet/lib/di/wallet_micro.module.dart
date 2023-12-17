@@ -6,7 +6,6 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i2;
 
-import 'package:app_core/app_core.dart' as _i30;
 import 'package:injectable/injectable.dart' as _i1;
 import 'package:shared_preferences/shared_preferences.dart' as _i7;
 import 'package:wallet/core/core.dart' as _i6;
@@ -87,7 +86,6 @@ class WalletPackageModule extends _i1.MicroPackageModule {
           gh<_i16.WalletDiamondRepository>(),
           gh<_i28.WalletPointRepository>(),
         ));
-    // gh.factory(<_i30.AppCoordinatorShared>() => _i30.AppCoordinatorCore());
   }
 }
 

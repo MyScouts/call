@@ -7,6 +7,7 @@ class NotificationData {
   final String title;
   final bool isRead;
   final String type;
+  final String body;
   @Default({})
   final Map<String, dynamic>? metadata;
   final DateTime? createdAt;
@@ -16,6 +17,7 @@ class NotificationData {
     required this.id,
     required this.type,
     required this.isRead,
+    required this.body,
     required this.createdAt,
     this.metadata,
   });

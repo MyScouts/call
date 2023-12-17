@@ -63,6 +63,7 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
           ? null
           : UserProfileInfo.fromJson(json['profile'] as Map<String, dynamic>),
       sexCode: json['sexCode'] as int?,
+      type: json['type'] as int?,
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
@@ -112,6 +113,7 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'fanGroup': instance.fanGroup,
       'profile': instance.profile,
       'sexCode': instance.sexCode,
+      'type': instance.type,
     };
 
 const _$SexEnumMap = {

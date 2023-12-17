@@ -6,7 +6,8 @@ import 'package:retrofit/http.dart';
 part 'ecom_api.g.dart';
 
 class EcomAPIConstants {
-  static const String productDetail = 'ecom/api/product/{productId}';
+  static const String productDetail =
+      'api/v1/marshop/register-pack-products/{productId}';
 }
 
 @RestApi()

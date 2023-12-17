@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:app_main/src/core/networking/interceptors/api_token_interceptor.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,7 +31,14 @@ class NetworkingFactory {
     final dio = Dio(BaseOptions(
       baseUrl: baseUrl,
       headers: headers,
-    ));
+    ))..interceptors.add(ApiTokenInterceptor(
+        sharedPreferences,
+        onLogout: onLogout,
+      ));
+    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () =>
+    HttpClient()
+    ..badCertificateCallback =
+    (X509Certificate cert, String host, int port) => true;
 
     dio.interceptors.add(
       ApiTokenInterceptor(sharedPreferences, onLogout: onLogout),

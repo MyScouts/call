@@ -3,6 +3,19 @@ import 'package:design_system/design_system.dart';
 class MyProfileConstant {
   static const int textPostPageSize = 5;
 
+  static const int pDoneSubjectLength = 1000; // 1000 từ
+  static const int pDoneContentLength = 1000; // 1000 từ
+  static const int pDoneImagesLength = 50; // 50 ảnh
+  static const int pDoneVideoSecondsDuration = 1800; // 30 phút
+  static const int pDoneFilmSecondsDuration = 420; // 7 phút
+
+
+  static const int subjectLength = 1000; // 1000 từ
+  static const int contentLength = 1000; // 1000 từ
+  static const int imagesLength = 20; // 20 ảnh
+  static const int videoSecondsDuration = 600; // 10 phút
+  static const int filmSecondsDuration = 10; // 10 giây
+
   static String reactText({
     required int totalReact,
     required bool isHearted,
@@ -40,11 +53,11 @@ enum PostType {
   }
 
   static PostType getTypeByText(String text) {
-    if(text == PostType.text.name){
+    if (text == PostType.text.name) {
       return PostType.text;
     }
 
-    if(text == PostType.video.name){
+    if (text == PostType.video.name) {
       return PostType.video;
     }
 
@@ -90,4 +103,12 @@ extension ReactTypeEx on ReactType {
   String get getName => name.toUpperCase();
 }
 
-enum ImageScrollType {image1, image2, image3}
+enum ImageScrollType { image1, image2, image3 }
+
+enum FollowingType { follower, followee, friend }
+
+extension FollowingTypeEx on FollowingType {
+  bool get isFollowee => this == FollowingType.followee;
+  bool get isFollower => this == FollowingType.follower;
+  bool get isFriend => this == FollowingType.friend;
+}

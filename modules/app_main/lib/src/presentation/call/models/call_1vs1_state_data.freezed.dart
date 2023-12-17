@@ -232,7 +232,7 @@ class _$Call1vs1StateDataImpl implements _Call1vs1StateData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$Call1vs1StateDataImpl &&
@@ -537,7 +537,7 @@ class _$CallStateImpl implements _CallState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CallStateImpl &&

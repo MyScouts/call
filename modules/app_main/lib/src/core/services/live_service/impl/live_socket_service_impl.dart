@@ -8,6 +8,7 @@ const socketConnectionTimeOutEvent = 'connection timeout';
 const socketReConnectEvent = 'reconnect';
 const socketUserJoinEvent = 'userJoinLive';
 const socketGiftGiven = 'giftGiven';
+const socketGiftInfoUpdated = 'giftInfoUpdated';
 const socketUserLeaveEvent = 'userLeaveLive';
 const socketKickFromLiveEvent = 'userKickedFromLive';
 const socketBannedEvent = 'userBannedFromReaction';
@@ -19,7 +20,10 @@ const socketInvitePkEvent = 'invitePk';
 const socketPkMessageEvent = 'pkMessage';
 const socketReadyPkEvent = 'readyForPk';
 const socketPkGiftUpdatedEvent = 'pkGiftUpdated';
-const socketPkGameFinishEvent = 'pkgameFinished';
+const socketPkGameFinishEvent = 'pkGameFinished ';
+const socketPkGameStartEvent = 'pkGameStart';
+const socketPkRoundStartEvent = 'pkRoundStart';
+const socketPkRoundFinishEvent = 'pkRoundFinished';
 
 @Injectable(as: LiveSocketService)
 class LiveSocketServiceImpl extends LiveSocketService {
@@ -49,6 +53,7 @@ class LiveSocketServiceImpl extends LiveSocketService {
     _socket!
       ..on(socketUserJoinEvent, (data) => emit(socketUserJoinEvent, data))
       ..on(socketGiftGiven, (data) => emit(socketGiftGiven, data))
+      ..on(socketGiftInfoUpdated, (data) => emit(socketGiftInfoUpdated, data))
       ..on(socketUserLeaveEvent, (data) => emit(socketUserLeaveEvent, data))
       ..on(socketMessageEvent, (data) => emit(socketMessageEvent, data))
       ..on(socketKickFromLiveEvent,
@@ -63,7 +68,12 @@ class LiveSocketServiceImpl extends LiveSocketService {
       ..on(socketPkGiftUpdatedEvent,
           (data) => emit(socketPkGiftUpdatedEvent, data))
       ..on(socketPkGameFinishEvent,
-              (data) => emit(socketPkGameFinishEvent, data))
+          (data) => emit(socketPkGameFinishEvent, data))
+      ..on(socketPkGameStartEvent, (data) => emit(socketPkGameStartEvent, data))
+      ..on(socketPkRoundStartEvent,
+          (data) => emit(socketPkRoundStartEvent, data))
+      ..on(socketPkRoundFinishEvent,
+          (data) => emit(socketPkRoundFinishEvent, data))
       ..onConnect(_handleConnect)
       ..onConnectError(_handleConnectionFailure)
       ..onConnectTimeout(_handleConnectionTimeout)

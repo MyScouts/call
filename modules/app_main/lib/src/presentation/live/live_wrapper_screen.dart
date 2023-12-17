@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/join_channel_provider.dart';
-import 'package:app_main/src/presentation/live/presentation/channel/live_channel_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/create/live_create_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/create/state/live_create_controller.dart';
 import 'package:flutter/material.dart';

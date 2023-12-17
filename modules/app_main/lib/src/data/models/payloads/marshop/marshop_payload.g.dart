@@ -23,6 +23,7 @@ Map<String, dynamic> _$RegisterCustomerPayloadToJson(
 RegisterMarshopPayload _$RegisterMarshopPayloadFromJson(
         Map<String, dynamic> json) =>
     RegisterMarshopPayload(
+      otp: json['otp'] as String,
       packId: json['packId'] as int,
       referralId: json['referralId'] as int,
       billInfo: RegisterMarshopBillInfo.fromJson(
@@ -32,6 +33,7 @@ RegisterMarshopPayload _$RegisterMarshopPayloadFromJson(
 Map<String, dynamic> _$RegisterMarshopPayloadToJson(
         RegisterMarshopPayload instance) =>
     <String, dynamic>{
+      'otp': instance.otp,
       'packId': instance.packId,
       'referralId': instance.referralId,
       'billInfo': instance.billInfo,

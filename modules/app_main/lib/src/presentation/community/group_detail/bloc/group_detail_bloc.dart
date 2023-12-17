@@ -17,6 +17,7 @@ class GroupDetailBloc extends Bloc<GroupDetailEvent, GroupDetailState> {
   GroupDetailBloc(this._communityUsecase) : super(GroupDetailInitial()) {
     on<FetchGroupDetailEvent>(_onFetchGroupDetailEvent);
     on<UpdateGroupDetailEvent>(_onUpdateGroupDetailEvent);
+    on<GetOtpEvent>(_onGetOtpEvent);
   }
 
   FutureOr<void> _onFetchGroupDetailEvent(
@@ -43,5 +44,14 @@ class GroupDetailBloc extends Bloc<GroupDetailEvent, GroupDetailState> {
   FutureOr<void> _onUpdateGroupDetailEvent(
       UpdateGroupDetailEvent event, Emitter<GroupDetailState> emit) {
     emit(FetchGroupDetailSuccess(event.group));
+  }
+
+  Future<FutureOr<void>> _onGetOtpEvent(
+      GetOtpEvent event, Emitter<GroupDetailState> emit) async {
+    try {
+      emit(GetOtpLoading());
+      await _communityUsecase.getOtp();
+      emit(GetOtpSuccess());
+    } catch (_) {}
   }
 }

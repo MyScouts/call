@@ -29,7 +29,6 @@ class _AppPhoneInputState extends State<AppPhoneInput> {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
-      key: const ValueKey("phone"),
       onChange: widget.onChange,
       controller: widget.controller,
       validator: (phone) {
