@@ -14,7 +14,6 @@ extension NotificationCoordinator on BuildContext {
   Future<T?> startOpenNotification<T>(Map<String, dynamic> notification) async {
     LoggerService.print('[fcm] startOpenNotification: '
         '${notification.toString()}');
-    print('noti ${notification.toString()}');
 
     final payload = notification['data'];
     final type = MessageTypeFB.values.firstWhereOrNull((element) => element.type == payload['type']);

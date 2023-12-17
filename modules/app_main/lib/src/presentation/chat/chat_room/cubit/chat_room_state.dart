@@ -10,7 +10,8 @@ abstract class ChatRoomState with _$ChatRoomState {
       {required List<MessageModel> messages,
       required ConversationDetailResponseModel conversation,
       FriendStatusModel? friendStatus,
-      required int page,
+        required int myType,
+        required int page,
       required bool canLoadMore,
       bool? loadMoreError}) = ChatRoomStateData;
   const factory ChatRoomState.loading() = ChatRoomStateLoading;

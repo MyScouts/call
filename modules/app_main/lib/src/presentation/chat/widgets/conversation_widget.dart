@@ -56,7 +56,9 @@ class _ConversationWidgetState extends State<ConversationWidget> {
         child: Row(
           children: [
             AvatarConversationWidget(
-              members: widget.data.membersNotMe,
+              members: widget.data.members,
+              membersNotMe: widget.data.membersNotMe,
+              type: widget.data.type,
             ),
             kSpacingWidth16,
             Expanded(
@@ -75,7 +77,7 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                   kSpacingHeight6,
                   if (widget.data.latestMessage?.type != 1)
                     Text(
-                      '[${widget.data.latestMessage?.sender?.displayName} ${widget.data.latestMessage?.type == 2 ? 'đã tạo cuộc trò chuyện' : 'dã đổi tên cuộc trò chuyện'}]',
+                      widget.data.latestMessage?.des ??'',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: context.textTheme.bodyMedium?.copyWith(
