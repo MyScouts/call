@@ -14,9 +14,11 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 class ContractViewScreen extends StatefulWidget {
   static const String routeName = 'contract-view';
   final TypeContract type;
+  final dynamic payload;
   const ContractViewScreen({
     super.key,
     required this.type,
+    this.payload,
   });
 
   @override
@@ -50,7 +52,10 @@ class _ContractViewScreenState extends State<ContractViewScreen> {
   @override
   void initState() {
     super.initState();
-    _bloc.renderPDF(type: widget.type);
+    _bloc.renderPDF(
+      type: widget.type,
+      payload: widget.payload,
+    );
   }
 
   @override

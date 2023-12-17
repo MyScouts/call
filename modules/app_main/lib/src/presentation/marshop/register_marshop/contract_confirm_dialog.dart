@@ -1,7 +1,11 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/data/models/payloads/resource/resource_payload.dart';
 import 'package:app_main/src/presentation/app_coordinator.dart';
+import 'package:app_main/src/presentation/general_setting/contracts/contract_constant.dart';
+import 'package:app_main/src/presentation/general_setting/general_coordinator.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/register_pack_action_dialog.dart';
 import 'package:design_system/design_system.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/ui.dart';
 
@@ -82,6 +86,8 @@ class _ContractConfirmDialogState extends State<ContractConfirmDialog> {
                     TextSpan(children: [
                       const TextSpan(text: "Tôi đã đọc và đồng ý với "),
                       TextSpan(
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => _handleClickContract(),
                         text: widget.action == RegisterPackAction.buy
                             ? "Hợp đồng mua hàng "
                             : "Hợp đồng thuê hàng ",
@@ -133,6 +139,17 @@ class _ContractConfirmDialogState extends State<ContractConfirmDialog> {
           ),
         )
       ],
+    );
+  }
+
+  void _handleClickContract() {
+    context.startContractView(
+      type: widget.action == RegisterPackAction.buy
+          ? TypeContract.purchasePack
+          : TypeContract.rentPack,
+      payload: widget.action == RegisterPackAction.buy
+          ? PurchaseMarShopPackParam()
+          : RentMarShopPackParam(),
     );
   }
 }

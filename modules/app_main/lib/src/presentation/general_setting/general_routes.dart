@@ -24,6 +24,7 @@ class GeneralRoutes extends RouteModule {
             create: (context) => injector.get<ContractBlocCubit>(),
             child: ContractViewScreen(
               type: param['type'],
+              payload: param['payload'],
             ),
           );
         },

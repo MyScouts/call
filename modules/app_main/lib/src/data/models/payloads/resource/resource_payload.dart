@@ -33,3 +33,51 @@ class BossGroupContractPram with _$BossGroupContractPram {
   factory BossGroupContractPram.fromJson(Map<String, dynamic> json) =>
       _$BossGroupContractPramFromJson(json);
 }
+
+@freezed
+class RentMarShopPackParam with _$RentMarShopPackParam {
+  const factory RentMarShopPackParam({
+    String? date,
+    String? month,
+    String? year,
+    String? identityNumber,
+    String? issuedDate,
+    String? issuedPlace,
+    String? address,
+    String? phoneNumber,
+    String? email,
+    String? representative,
+    String? position,
+    String? rentCost,
+    String? wordRentCost,
+    String? depositAmount,
+    String? wordDepositAmount,
+    String? taxCode,
+  }) = _RentMarShopPackParam;
+
+  factory RentMarShopPackParam.fromJson(Map<String, dynamic> json) =>
+      _$RentMarShopPackParamFromJson(json);
+}
+
+@freezed
+class PurchaseMarShopPackParam with _$PurchaseMarShopPackParam {
+  const factory PurchaseMarShopPackParam({
+    String? date,
+    String? month,
+    String? year,
+    String? address,
+    String? taxCode,
+    String? identityNumber,
+    String? issuedDate,
+    String? issuedPlace,
+    String? phoneNumber,
+    String? email,
+    String? representative,
+    String? position,
+    String? price,
+    String? wordPrice,
+  }) = _PurchaseMarShopPackParam;
+
+  factory PurchaseMarShopPackParam.fromJson(Map<String, dynamic> json) =>
+      _$PurchaseMarShopPackParamFromJson(json);
+}

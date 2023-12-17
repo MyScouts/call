@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/resource/resource_payload.dart';
 import 'package:app_main/src/data/models/responses/update_none_pdone_profile_response.dart';
 import 'package:app_main/src/domain/entities/update_account/information_none_pdone_profile.dart';
@@ -19,7 +20,10 @@ class ContractBlocCubit extends Cubit<ContractBlocState> {
     this._userUsecase,
   ) : super(ContractBlocInitial());
 
-  renderPDF({required TypeContract type}) async {
+  renderPDF({
+    required TypeContract type,
+    dynamic payload,
+  }) async {
     if (state is OnRenderPDF) return;
     try {
       emit(OnRenderPDF());
@@ -35,20 +39,62 @@ class ContractBlocCubit extends Cubit<ContractBlocState> {
         profile.currentPlace?.address
       ];
       address.removeWhere((element) => element == null || element.isEmpty);
-      BossGroupContractPram params = BossGroupContractPram(
-        address: address.join(","),
-        birthday: profile.birthday,
-        date: now.day.toString(),
-        month: now.month.toString(),
-        year: now.year.toString(),
-        email: "",
-        fullName: profile.firstName ?? "",
-        identityNumber: profile.identityNumber ?? '',
-        issuedDate: profile.supplyDate ?? '',
-        issuer: "",
-        phoneNumber: "",
-      );
+      dynamic params;
 
+      switch (type) {
+        case TypeContract.bossGroup:
+          params = BossGroupContractPram(
+            address: address.join(","),
+            birthday: profile.birthday,
+            date: now.day.toString(),
+            month: now.month.toString(),
+            year: now.year.toString(),
+            email: "",
+            fullName: profile.firstName ?? "",
+            identityNumber: profile.identityNumber ?? '',
+            issuedDate: now.toYYYYmmdd,
+            issuer: "",
+            phoneNumber: "",
+          );
+          break;
+        case TypeContract.rentPack:
+          params = (payload as RentMarShopPackParam).copyWith(
+            address: address.join(","),
+            date: now.day.toString(),
+            month: now.month.toString(),
+            year: now.year.toString(),
+            issuedDate: now.toYYYYmmdd,
+            identityNumber: profile.identityNumber ?? '',
+            phoneNumber: "",
+            depositAmount: "",
+            email: "",
+            issuedPlace: "",
+            position: "",
+            rentCost: "",
+            representative: "",
+            wordDepositAmount: "",
+            wordRentCost: "",
+            taxCode: "",
+          );
+        case TypeContract.purchasePack:
+          params = (payload as PurchaseMarShopPackParam).copyWith(
+            address: address.join(","),
+            date: now.day.toString(),
+            month: now.month.toString(),
+            year: now.year.toString(),
+            issuedDate: now.toYYYYmmdd,
+            identityNumber: profile.identityNumber ?? '',
+            phoneNumber: "",
+            email: "",
+            issuedPlace: "",
+            position: "",
+            price: "",
+            representative: "",
+            taxCode: "",
+            wordPrice: "",
+          );
+        default:
+      }
       final pdfResponse = await _resourceUsecase.renderPDF(RenderPDFPayload(
         type: type.getValue(),
         params: params,

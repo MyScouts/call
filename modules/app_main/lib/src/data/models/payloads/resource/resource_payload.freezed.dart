@@ -531,3 +531,901 @@ abstract class _BossGroupContractPram implements BossGroupContractPram {
   _$$BossGroupContractPramImplCopyWith<_$BossGroupContractPramImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
+
+RentMarShopPackParam _$RentMarShopPackParamFromJson(Map<String, dynamic> json) {
+  return _RentMarShopPackParam.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RentMarShopPackParam {
+  String? get date => throw _privateConstructorUsedError;
+  String? get month => throw _privateConstructorUsedError;
+  String? get year => throw _privateConstructorUsedError;
+  String? get identityNumber => throw _privateConstructorUsedError;
+  String? get issuedDate => throw _privateConstructorUsedError;
+  String? get issuedPlace => throw _privateConstructorUsedError;
+  String? get address => throw _privateConstructorUsedError;
+  String? get phoneNumber => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  String? get representative => throw _privateConstructorUsedError;
+  String? get position => throw _privateConstructorUsedError;
+  String? get rentCost => throw _privateConstructorUsedError;
+  String? get wordRentCost => throw _privateConstructorUsedError;
+  String? get depositAmount => throw _privateConstructorUsedError;
+  String? get wordDepositAmount => throw _privateConstructorUsedError;
+  String? get taxCode => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $RentMarShopPackParamCopyWith<RentMarShopPackParam> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RentMarShopPackParamCopyWith<$Res> {
+  factory $RentMarShopPackParamCopyWith(RentMarShopPackParam value,
+          $Res Function(RentMarShopPackParam) then) =
+      _$RentMarShopPackParamCopyWithImpl<$Res, RentMarShopPackParam>;
+  @useResult
+  $Res call(
+      {String? date,
+      String? month,
+      String? year,
+      String? identityNumber,
+      String? issuedDate,
+      String? issuedPlace,
+      String? address,
+      String? phoneNumber,
+      String? email,
+      String? representative,
+      String? position,
+      String? rentCost,
+      String? wordRentCost,
+      String? depositAmount,
+      String? wordDepositAmount,
+      String? taxCode});
+}
+
+/// @nodoc
+class _$RentMarShopPackParamCopyWithImpl<$Res,
+        $Val extends RentMarShopPackParam>
+    implements $RentMarShopPackParamCopyWith<$Res> {
+  _$RentMarShopPackParamCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? date = freezed,
+    Object? month = freezed,
+    Object? year = freezed,
+    Object? identityNumber = freezed,
+    Object? issuedDate = freezed,
+    Object? issuedPlace = freezed,
+    Object? address = freezed,
+    Object? phoneNumber = freezed,
+    Object? email = freezed,
+    Object? representative = freezed,
+    Object? position = freezed,
+    Object? rentCost = freezed,
+    Object? wordRentCost = freezed,
+    Object? depositAmount = freezed,
+    Object? wordDepositAmount = freezed,
+    Object? taxCode = freezed,
+  }) {
+    return _then(_value.copyWith(
+      date: freezed == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as String?,
+      month: freezed == month
+          ? _value.month
+          : month // ignore: cast_nullable_to_non_nullable
+              as String?,
+      year: freezed == year
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as String?,
+      identityNumber: freezed == identityNumber
+          ? _value.identityNumber
+          : identityNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      issuedDate: freezed == issuedDate
+          ? _value.issuedDate
+          : issuedDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      issuedPlace: freezed == issuedPlace
+          ? _value.issuedPlace
+          : issuedPlace // ignore: cast_nullable_to_non_nullable
+              as String?,
+      address: freezed == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneNumber: freezed == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      representative: freezed == representative
+          ? _value.representative
+          : representative // ignore: cast_nullable_to_non_nullable
+              as String?,
+      position: freezed == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rentCost: freezed == rentCost
+          ? _value.rentCost
+          : rentCost // ignore: cast_nullable_to_non_nullable
+              as String?,
+      wordRentCost: freezed == wordRentCost
+          ? _value.wordRentCost
+          : wordRentCost // ignore: cast_nullable_to_non_nullable
+              as String?,
+      depositAmount: freezed == depositAmount
+          ? _value.depositAmount
+          : depositAmount // ignore: cast_nullable_to_non_nullable
+              as String?,
+      wordDepositAmount: freezed == wordDepositAmount
+          ? _value.wordDepositAmount
+          : wordDepositAmount // ignore: cast_nullable_to_non_nullable
+              as String?,
+      taxCode: freezed == taxCode
+          ? _value.taxCode
+          : taxCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RentMarShopPackParamImplCopyWith<$Res>
+    implements $RentMarShopPackParamCopyWith<$Res> {
+  factory _$$RentMarShopPackParamImplCopyWith(_$RentMarShopPackParamImpl value,
+          $Res Function(_$RentMarShopPackParamImpl) then) =
+      __$$RentMarShopPackParamImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String? date,
+      String? month,
+      String? year,
+      String? identityNumber,
+      String? issuedDate,
+      String? issuedPlace,
+      String? address,
+      String? phoneNumber,
+      String? email,
+      String? representative,
+      String? position,
+      String? rentCost,
+      String? wordRentCost,
+      String? depositAmount,
+      String? wordDepositAmount,
+      String? taxCode});
+}
+
+/// @nodoc
+class __$$RentMarShopPackParamImplCopyWithImpl<$Res>
+    extends _$RentMarShopPackParamCopyWithImpl<$Res, _$RentMarShopPackParamImpl>
+    implements _$$RentMarShopPackParamImplCopyWith<$Res> {
+  __$$RentMarShopPackParamImplCopyWithImpl(_$RentMarShopPackParamImpl _value,
+      $Res Function(_$RentMarShopPackParamImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? date = freezed,
+    Object? month = freezed,
+    Object? year = freezed,
+    Object? identityNumber = freezed,
+    Object? issuedDate = freezed,
+    Object? issuedPlace = freezed,
+    Object? address = freezed,
+    Object? phoneNumber = freezed,
+    Object? email = freezed,
+    Object? representative = freezed,
+    Object? position = freezed,
+    Object? rentCost = freezed,
+    Object? wordRentCost = freezed,
+    Object? depositAmount = freezed,
+    Object? wordDepositAmount = freezed,
+    Object? taxCode = freezed,
+  }) {
+    return _then(_$RentMarShopPackParamImpl(
+      date: freezed == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as String?,
+      month: freezed == month
+          ? _value.month
+          : month // ignore: cast_nullable_to_non_nullable
+              as String?,
+      year: freezed == year
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as String?,
+      identityNumber: freezed == identityNumber
+          ? _value.identityNumber
+          : identityNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      issuedDate: freezed == issuedDate
+          ? _value.issuedDate
+          : issuedDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      issuedPlace: freezed == issuedPlace
+          ? _value.issuedPlace
+          : issuedPlace // ignore: cast_nullable_to_non_nullable
+              as String?,
+      address: freezed == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneNumber: freezed == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      representative: freezed == representative
+          ? _value.representative
+          : representative // ignore: cast_nullable_to_non_nullable
+              as String?,
+      position: freezed == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as String?,
+      rentCost: freezed == rentCost
+          ? _value.rentCost
+          : rentCost // ignore: cast_nullable_to_non_nullable
+              as String?,
+      wordRentCost: freezed == wordRentCost
+          ? _value.wordRentCost
+          : wordRentCost // ignore: cast_nullable_to_non_nullable
+              as String?,
+      depositAmount: freezed == depositAmount
+          ? _value.depositAmount
+          : depositAmount // ignore: cast_nullable_to_non_nullable
+              as String?,
+      wordDepositAmount: freezed == wordDepositAmount
+          ? _value.wordDepositAmount
+          : wordDepositAmount // ignore: cast_nullable_to_non_nullable
+              as String?,
+      taxCode: freezed == taxCode
+          ? _value.taxCode
+          : taxCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RentMarShopPackParamImpl implements _RentMarShopPackParam {
+  const _$RentMarShopPackParamImpl(
+      {this.date,
+      this.month,
+      this.year,
+      this.identityNumber,
+      this.issuedDate,
+      this.issuedPlace,
+      this.address,
+      this.phoneNumber,
+      this.email,
+      this.representative,
+      this.position,
+      this.rentCost,
+      this.wordRentCost,
+      this.depositAmount,
+      this.wordDepositAmount,
+      this.taxCode});
+
+  factory _$RentMarShopPackParamImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RentMarShopPackParamImplFromJson(json);
+
+  @override
+  final String? date;
+  @override
+  final String? month;
+  @override
+  final String? year;
+  @override
+  final String? identityNumber;
+  @override
+  final String? issuedDate;
+  @override
+  final String? issuedPlace;
+  @override
+  final String? address;
+  @override
+  final String? phoneNumber;
+  @override
+  final String? email;
+  @override
+  final String? representative;
+  @override
+  final String? position;
+  @override
+  final String? rentCost;
+  @override
+  final String? wordRentCost;
+  @override
+  final String? depositAmount;
+  @override
+  final String? wordDepositAmount;
+  @override
+  final String? taxCode;
+
+  @override
+  String toString() {
+    return 'RentMarShopPackParam(date: $date, month: $month, year: $year, identityNumber: $identityNumber, issuedDate: $issuedDate, issuedPlace: $issuedPlace, address: $address, phoneNumber: $phoneNumber, email: $email, representative: $representative, position: $position, rentCost: $rentCost, wordRentCost: $wordRentCost, depositAmount: $depositAmount, wordDepositAmount: $wordDepositAmount, taxCode: $taxCode)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RentMarShopPackParamImpl &&
+            (identical(other.date, date) || other.date == date) &&
+            (identical(other.month, month) || other.month == month) &&
+            (identical(other.year, year) || other.year == year) &&
+            (identical(other.identityNumber, identityNumber) ||
+                other.identityNumber == identityNumber) &&
+            (identical(other.issuedDate, issuedDate) ||
+                other.issuedDate == issuedDate) &&
+            (identical(other.issuedPlace, issuedPlace) ||
+                other.issuedPlace == issuedPlace) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.representative, representative) ||
+                other.representative == representative) &&
+            (identical(other.position, position) ||
+                other.position == position) &&
+            (identical(other.rentCost, rentCost) ||
+                other.rentCost == rentCost) &&
+            (identical(other.wordRentCost, wordRentCost) ||
+                other.wordRentCost == wordRentCost) &&
+            (identical(other.depositAmount, depositAmount) ||
+                other.depositAmount == depositAmount) &&
+            (identical(other.wordDepositAmount, wordDepositAmount) ||
+                other.wordDepositAmount == wordDepositAmount) &&
+            (identical(other.taxCode, taxCode) || other.taxCode == taxCode));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      date,
+      month,
+      year,
+      identityNumber,
+      issuedDate,
+      issuedPlace,
+      address,
+      phoneNumber,
+      email,
+      representative,
+      position,
+      rentCost,
+      wordRentCost,
+      depositAmount,
+      wordDepositAmount,
+      taxCode);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RentMarShopPackParamImplCopyWith<_$RentMarShopPackParamImpl>
+      get copyWith =>
+          __$$RentMarShopPackParamImplCopyWithImpl<_$RentMarShopPackParamImpl>(
+              this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RentMarShopPackParamImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RentMarShopPackParam implements RentMarShopPackParam {
+  const factory _RentMarShopPackParam(
+      {final String? date,
+      final String? month,
+      final String? year,
+      final String? identityNumber,
+      final String? issuedDate,
+      final String? issuedPlace,
+      final String? address,
+      final String? phoneNumber,
+      final String? email,
+      final String? representative,
+      final String? position,
+      final String? rentCost,
+      final String? wordRentCost,
+      final String? depositAmount,
+      final String? wordDepositAmount,
+      final String? taxCode}) = _$RentMarShopPackParamImpl;
+
+  factory _RentMarShopPackParam.fromJson(Map<String, dynamic> json) =
+      _$RentMarShopPackParamImpl.fromJson;
+
+  @override
+  String? get date;
+  @override
+  String? get month;
+  @override
+  String? get year;
+  @override
+  String? get identityNumber;
+  @override
+  String? get issuedDate;
+  @override
+  String? get issuedPlace;
+  @override
+  String? get address;
+  @override
+  String? get phoneNumber;
+  @override
+  String? get email;
+  @override
+  String? get representative;
+  @override
+  String? get position;
+  @override
+  String? get rentCost;
+  @override
+  String? get wordRentCost;
+  @override
+  String? get depositAmount;
+  @override
+  String? get wordDepositAmount;
+  @override
+  String? get taxCode;
+  @override
+  @JsonKey(ignore: true)
+  _$$RentMarShopPackParamImplCopyWith<_$RentMarShopPackParamImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+PurchaseMarShopPackParam _$PurchaseMarShopPackParamFromJson(
+    Map<String, dynamic> json) {
+  return _PurchaseMarShopPackParam.fromJson(json);
+}
+
+/// @nodoc
+mixin _$PurchaseMarShopPackParam {
+  String? get date => throw _privateConstructorUsedError;
+  String? get month => throw _privateConstructorUsedError;
+  String? get year => throw _privateConstructorUsedError;
+  String? get address => throw _privateConstructorUsedError;
+  String? get taxCode => throw _privateConstructorUsedError;
+  String? get identityNumber => throw _privateConstructorUsedError;
+  String? get issuedDate => throw _privateConstructorUsedError;
+  String? get issuedPlace => throw _privateConstructorUsedError;
+  String? get phoneNumber => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
+  String? get representative => throw _privateConstructorUsedError;
+  String? get position => throw _privateConstructorUsedError;
+  String? get price => throw _privateConstructorUsedError;
+  String? get wordPrice => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $PurchaseMarShopPackParamCopyWith<PurchaseMarShopPackParam> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PurchaseMarShopPackParamCopyWith<$Res> {
+  factory $PurchaseMarShopPackParamCopyWith(PurchaseMarShopPackParam value,
+          $Res Function(PurchaseMarShopPackParam) then) =
+      _$PurchaseMarShopPackParamCopyWithImpl<$Res, PurchaseMarShopPackParam>;
+  @useResult
+  $Res call(
+      {String? date,
+      String? month,
+      String? year,
+      String? address,
+      String? taxCode,
+      String? identityNumber,
+      String? issuedDate,
+      String? issuedPlace,
+      String? phoneNumber,
+      String? email,
+      String? representative,
+      String? position,
+      String? price,
+      String? wordPrice});
+}
+
+/// @nodoc
+class _$PurchaseMarShopPackParamCopyWithImpl<$Res,
+        $Val extends PurchaseMarShopPackParam>
+    implements $PurchaseMarShopPackParamCopyWith<$Res> {
+  _$PurchaseMarShopPackParamCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? date = freezed,
+    Object? month = freezed,
+    Object? year = freezed,
+    Object? address = freezed,
+    Object? taxCode = freezed,
+    Object? identityNumber = freezed,
+    Object? issuedDate = freezed,
+    Object? issuedPlace = freezed,
+    Object? phoneNumber = freezed,
+    Object? email = freezed,
+    Object? representative = freezed,
+    Object? position = freezed,
+    Object? price = freezed,
+    Object? wordPrice = freezed,
+  }) {
+    return _then(_value.copyWith(
+      date: freezed == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as String?,
+      month: freezed == month
+          ? _value.month
+          : month // ignore: cast_nullable_to_non_nullable
+              as String?,
+      year: freezed == year
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as String?,
+      address: freezed == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String?,
+      taxCode: freezed == taxCode
+          ? _value.taxCode
+          : taxCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      identityNumber: freezed == identityNumber
+          ? _value.identityNumber
+          : identityNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      issuedDate: freezed == issuedDate
+          ? _value.issuedDate
+          : issuedDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      issuedPlace: freezed == issuedPlace
+          ? _value.issuedPlace
+          : issuedPlace // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneNumber: freezed == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      representative: freezed == representative
+          ? _value.representative
+          : representative // ignore: cast_nullable_to_non_nullable
+              as String?,
+      position: freezed == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as String?,
+      price: freezed == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String?,
+      wordPrice: freezed == wordPrice
+          ? _value.wordPrice
+          : wordPrice // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$PurchaseMarShopPackParamImplCopyWith<$Res>
+    implements $PurchaseMarShopPackParamCopyWith<$Res> {
+  factory _$$PurchaseMarShopPackParamImplCopyWith(
+          _$PurchaseMarShopPackParamImpl value,
+          $Res Function(_$PurchaseMarShopPackParamImpl) then) =
+      __$$PurchaseMarShopPackParamImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String? date,
+      String? month,
+      String? year,
+      String? address,
+      String? taxCode,
+      String? identityNumber,
+      String? issuedDate,
+      String? issuedPlace,
+      String? phoneNumber,
+      String? email,
+      String? representative,
+      String? position,
+      String? price,
+      String? wordPrice});
+}
+
+/// @nodoc
+class __$$PurchaseMarShopPackParamImplCopyWithImpl<$Res>
+    extends _$PurchaseMarShopPackParamCopyWithImpl<$Res,
+        _$PurchaseMarShopPackParamImpl>
+    implements _$$PurchaseMarShopPackParamImplCopyWith<$Res> {
+  __$$PurchaseMarShopPackParamImplCopyWithImpl(
+      _$PurchaseMarShopPackParamImpl _value,
+      $Res Function(_$PurchaseMarShopPackParamImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? date = freezed,
+    Object? month = freezed,
+    Object? year = freezed,
+    Object? address = freezed,
+    Object? taxCode = freezed,
+    Object? identityNumber = freezed,
+    Object? issuedDate = freezed,
+    Object? issuedPlace = freezed,
+    Object? phoneNumber = freezed,
+    Object? email = freezed,
+    Object? representative = freezed,
+    Object? position = freezed,
+    Object? price = freezed,
+    Object? wordPrice = freezed,
+  }) {
+    return _then(_$PurchaseMarShopPackParamImpl(
+      date: freezed == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as String?,
+      month: freezed == month
+          ? _value.month
+          : month // ignore: cast_nullable_to_non_nullable
+              as String?,
+      year: freezed == year
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as String?,
+      address: freezed == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String?,
+      taxCode: freezed == taxCode
+          ? _value.taxCode
+          : taxCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      identityNumber: freezed == identityNumber
+          ? _value.identityNumber
+          : identityNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      issuedDate: freezed == issuedDate
+          ? _value.issuedDate
+          : issuedDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      issuedPlace: freezed == issuedPlace
+          ? _value.issuedPlace
+          : issuedPlace // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneNumber: freezed == phoneNumber
+          ? _value.phoneNumber
+          : phoneNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: freezed == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      representative: freezed == representative
+          ? _value.representative
+          : representative // ignore: cast_nullable_to_non_nullable
+              as String?,
+      position: freezed == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as String?,
+      price: freezed == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String?,
+      wordPrice: freezed == wordPrice
+          ? _value.wordPrice
+          : wordPrice // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$PurchaseMarShopPackParamImpl implements _PurchaseMarShopPackParam {
+  const _$PurchaseMarShopPackParamImpl(
+      {this.date,
+      this.month,
+      this.year,
+      this.address,
+      this.taxCode,
+      this.identityNumber,
+      this.issuedDate,
+      this.issuedPlace,
+      this.phoneNumber,
+      this.email,
+      this.representative,
+      this.position,
+      this.price,
+      this.wordPrice});
+
+  factory _$PurchaseMarShopPackParamImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PurchaseMarShopPackParamImplFromJson(json);
+
+  @override
+  final String? date;
+  @override
+  final String? month;
+  @override
+  final String? year;
+  @override
+  final String? address;
+  @override
+  final String? taxCode;
+  @override
+  final String? identityNumber;
+  @override
+  final String? issuedDate;
+  @override
+  final String? issuedPlace;
+  @override
+  final String? phoneNumber;
+  @override
+  final String? email;
+  @override
+  final String? representative;
+  @override
+  final String? position;
+  @override
+  final String? price;
+  @override
+  final String? wordPrice;
+
+  @override
+  String toString() {
+    return 'PurchaseMarShopPackParam(date: $date, month: $month, year: $year, address: $address, taxCode: $taxCode, identityNumber: $identityNumber, issuedDate: $issuedDate, issuedPlace: $issuedPlace, phoneNumber: $phoneNumber, email: $email, representative: $representative, position: $position, price: $price, wordPrice: $wordPrice)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PurchaseMarShopPackParamImpl &&
+            (identical(other.date, date) || other.date == date) &&
+            (identical(other.month, month) || other.month == month) &&
+            (identical(other.year, year) || other.year == year) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.taxCode, taxCode) || other.taxCode == taxCode) &&
+            (identical(other.identityNumber, identityNumber) ||
+                other.identityNumber == identityNumber) &&
+            (identical(other.issuedDate, issuedDate) ||
+                other.issuedDate == issuedDate) &&
+            (identical(other.issuedPlace, issuedPlace) ||
+                other.issuedPlace == issuedPlace) &&
+            (identical(other.phoneNumber, phoneNumber) ||
+                other.phoneNumber == phoneNumber) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.representative, representative) ||
+                other.representative == representative) &&
+            (identical(other.position, position) ||
+                other.position == position) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.wordPrice, wordPrice) ||
+                other.wordPrice == wordPrice));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      date,
+      month,
+      year,
+      address,
+      taxCode,
+      identityNumber,
+      issuedDate,
+      issuedPlace,
+      phoneNumber,
+      email,
+      representative,
+      position,
+      price,
+      wordPrice);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PurchaseMarShopPackParamImplCopyWith<_$PurchaseMarShopPackParamImpl>
+      get copyWith => __$$PurchaseMarShopPackParamImplCopyWithImpl<
+          _$PurchaseMarShopPackParamImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$PurchaseMarShopPackParamImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _PurchaseMarShopPackParam implements PurchaseMarShopPackParam {
+  const factory _PurchaseMarShopPackParam(
+      {final String? date,
+      final String? month,
+      final String? year,
+      final String? address,
+      final String? taxCode,
+      final String? identityNumber,
+      final String? issuedDate,
+      final String? issuedPlace,
+      final String? phoneNumber,
+      final String? email,
+      final String? representative,
+      final String? position,
+      final String? price,
+      final String? wordPrice}) = _$PurchaseMarShopPackParamImpl;
+
+  factory _PurchaseMarShopPackParam.fromJson(Map<String, dynamic> json) =
+      _$PurchaseMarShopPackParamImpl.fromJson;
+
+  @override
+  String? get date;
+  @override
+  String? get month;
+  @override
+  String? get year;
+  @override
+  String? get address;
+  @override
+  String? get taxCode;
+  @override
+  String? get identityNumber;
+  @override
+  String? get issuedDate;
+  @override
+  String? get issuedPlace;
+  @override
+  String? get phoneNumber;
+  @override
+  String? get email;
+  @override
+  String? get representative;
+  @override
+  String? get position;
+  @override
+  String? get price;
+  @override
+  String? get wordPrice;
+  @override
+  @JsonKey(ignore: true)
+  _$$PurchaseMarShopPackParamImplCopyWith<_$PurchaseMarShopPackParamImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}

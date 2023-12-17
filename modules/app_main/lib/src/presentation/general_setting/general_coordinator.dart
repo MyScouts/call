@@ -19,10 +19,12 @@ extension GeneralCoordinator on BuildContext {
 
   Future<T?> startContractView<T>({
     required TypeContract type,
+    dynamic payload,
   }) {
     return Navigator.of(this)
         .pushNamed(ContractViewScreen.routeName, arguments: {
       'type': type,
+      'payload': payload,
     });
   }
 }
