@@ -40,6 +40,7 @@ export 'src/domain/entities/social/post.dart';
 export 'src/domain/entities/update_information/update_information_type.dart';
 export 'src/domain/entities/update_information/update_pdone_options.dart';
 export 'src/domain/entities/user/user.dart';
+export 'src/domain/entities/user/user_info.dart';
 export 'src/domain/usecase/design_resource_usecase.dart';
 export 'src/domain/usecase/user_share_preferences_usecase.dart';
 export 'src/helpers/validation_helper.dart';

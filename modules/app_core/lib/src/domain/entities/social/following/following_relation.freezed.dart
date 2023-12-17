@@ -200,7 +200,7 @@ class _$FollowingRelationImpl implements _FollowingRelation {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FollowingRelationImpl &&

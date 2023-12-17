@@ -148,4 +148,8 @@ class UserUsecase {
   Future replyFollow(ReplyFollowPayload payload) {
     return _userRepository.replyFollowRequest(payload);
   }
+
+  Future<UserInfo> getMe() {
+    return _userRepository.getMe();
+  }
 }

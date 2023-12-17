@@ -41,6 +41,8 @@ class ContractBlocCubit extends Cubit<ContractBlocState> {
       address.removeWhere((element) => element == null || element.isEmpty);
       dynamic params;
 
+      UserInfo _userInfo = await _userUsecase.getMe();
+
       switch (type) {
         case TypeContract.bossGroup:
           params = BossGroupContractPram(
@@ -49,12 +51,12 @@ class ContractBlocCubit extends Cubit<ContractBlocState> {
             date: now.day.toString(),
             month: now.month.toString(),
             year: now.year.toString(),
-            email: "",
+            email: _userInfo.email ?? "",
             fullName: profile.firstName ?? "",
             identityNumber: profile.identityNumber ?? '',
             issuedDate: now.toYYYYmmdd,
             issuer: "",
-            phoneNumber: "",
+            phoneNumber: _userInfo.phone,
           );
           break;
         case TypeContract.rentPack:
@@ -65,9 +67,9 @@ class ContractBlocCubit extends Cubit<ContractBlocState> {
             year: now.year.toString(),
             issuedDate: now.toYYYYmmdd,
             identityNumber: profile.identityNumber ?? '',
-            phoneNumber: "",
+            phoneNumber: _userInfo.phone,
             depositAmount: "",
-            email: "",
+            email: _userInfo.email,
             issuedPlace: "",
             position: "",
             rentCost: "",
@@ -84,8 +86,8 @@ class ContractBlocCubit extends Cubit<ContractBlocState> {
             year: now.year.toString(),
             issuedDate: now.toYYYYmmdd,
             identityNumber: profile.identityNumber ?? '',
-            phoneNumber: "",
-            email: "",
+            phoneNumber: _userInfo.phone,
+            email: _userInfo.email,
             issuedPlace: "",
             position: "",
             price: "",
