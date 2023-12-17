@@ -59,7 +59,7 @@ class ChatRepositoryImpl extends ChatRepository {
   }
 
   @override
-  Future<MemberListModel> addMember(
+  Future<ResultModel> addMember(
       {required int conversationId, required List<int> userIds}) async {
     return await _chatApi.addMember(conversationId: conversationId, userIds: {'userIds': userIds});
   }

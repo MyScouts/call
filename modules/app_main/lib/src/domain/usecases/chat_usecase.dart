@@ -77,7 +77,7 @@ class ChatUseCase {
     return _friendRepository.getFriendStatus(userId: userId);
   }
 
-  Future<MemberListModel> addMember({
+  Future<ResultModel> addMember({
     required int conversationId,
     required List<int> userIds,
   }) {

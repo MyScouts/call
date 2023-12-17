@@ -7,6 +7,7 @@ import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_cubit.d
 import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_state.dart';
 import 'package:app_main/src/presentation/chat/widgets/avatar_chat_widget.dart';
 import 'package:app_main/src/presentation/chat/widgets/message_widget.dart';
+import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
   final ChatRoomCubit _cubit = getIt.get();
   final textController = TextEditingController();
   final reportController = TextEditingController();
+  final reportGroupController = TextEditingController();
   final nameController = TextEditingController();
   final FocusNode _focus = FocusNode();
   final scrollController = ScrollController();
@@ -105,181 +107,77 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                 appBar: BaseAppBar(
                   isClose: false,
                   backgroundColor: AppColors.white,
-                  titleWidget: Row(
-                    children: [
-                      AvatarChatWidget(
-                        members: conversation.conversation.membersNotMe,
-                        type: conversation.conversation.type,
-                      ),
-                      kSpacingWidth8,
-                      Column(
-                        children: [
-                          Text(
-                            conversation.conversation.type == 1
-                                ? conversation.conversation.membersNotMe.first.member.displayName ??
-                                    ''
-                                : conversation.conversation.name ?? '',
-                            style: context.textTheme.labelLarge?.copyWith(
-                              fontSize: 16,
+                  titleWidget: InkWell(
+                    onTap: conversation.conversation.type == 1
+                        ? () {
+                            context.startDiary(
+                                userId: conversation.conversation.membersNotMe.first.member.id
+                                    .toString());
+                          }
+                        : null,
+                    child: Row(
+                      children: [
+                        AvatarChatWidget(
+                          members: conversation.conversation.members,
+                          membersNotMe: conversation.conversation.membersNotMe,
+                          type: conversation.conversation.type,
+                        ),
+                        kSpacingWidth8,
+                        Column(
+                          children: [
+                            Text(
+                              conversation.conversation.type == 1
+                                  ? conversation
+                                          .conversation.membersNotMe.first.member.displayName ??
+                                      ''
+                                  : conversation.conversation.name ?? '',
+                              style: context.textTheme.labelLarge?.copyWith(
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                          kSpacingHeight6,
-                          const Text(''),
-                        ],
-                      )
-                    ],
+                            kSpacingHeight6,
+                            const Text(''),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                   actions: [
                     if (conversation.conversation.type == 1)
-                      PopupMenuButton<int>(
-                        icon: const Icon(
-                          Icons.more_vert,
-                          color: AppColors.black,
+                      Theme(
+                        data: Theme.of(context).copyWith(
+                          cardColor: AppColors.white,
                         ),
-                        color: AppColors.white,
-                        onSelected: (i) {
-                          if (i == 0) {
-                            removeConversation();
-                          } else if (i == 1) {
-                            reportUser(conversation.conversation);
-                          } else if (i == 2) {
-                            blockUser(conversation.conversation);
-                          }
-                        },
-                        itemBuilder: (BuildContext context) {
-                          return [
-                            PopupMenuItem<int>(
-                              value: 0,
-                              child: Row(
-                                children: [
-                                  ImageWidget(
-                                    IconAppConstants.icDeleteChat,
-                                    width: 24,
-                                    height: 24,
-                                  ),
-                                  kSpacingWidth4,
-                                  Text(
-                                    'Xóa cuộc trò chuyện',
-                                    style: context.text.bodyMedium?.copyWith(
-                                      color: AppColors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            PopupMenuItem<int>(
-                              value: 1,
-                              child: Row(
-                                children: [
-                                  ImageWidget(
-                                    IconAppConstants.icReportChat,
-                                    width: 24,
-                                    height: 24,
-                                  ),
-                                  kSpacingWidth4,
-                                  Text(
-                                    'Báo cáo',
-                                    style: context.text.bodyMedium?.copyWith(
-                                      color: AppColors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            PopupMenuItem<int>(
-                              value: 2,
-                              child: Row(
-                                children: [
-                                  ImageWidget(
-                                    IconAppConstants.icBlockAccount,
-                                    width: 24,
-                                    height: 24,
-                                  ),
-                                  kSpacingWidth4,
-                                  Text(
-                                    'Chặn tài khoản',
-                                    style: context.text.bodyMedium?.copyWith(
-                                      color: AppColors.negative,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ];
-                        },
-                      ),
-                    if (conversation.conversation.type == 2)
-                      PopupMenuButton<int>(
-                        icon: const Icon(
-                          Icons.more_vert,
-                          color: AppColors.black,
-                        ),
-                        color: AppColors.white,
-                        onSelected: (i) {
-                          switch (i) {
-                            case 0:
-                              context.toMemberPage(myType == 2, conversation.conversation.id);
-                              break;
-                            case 1:
-                              changeNameGroup(conversation.conversation);
-                              break;
-                            case 2:
+                        child: PopupMenuButton<int>(
+                          icon: const Icon(
+                            Icons.more_vert,
+                            color: AppColors.black,
+                          ),
+                          color: AppColors.white,
+                          surfaceTintColor: AppColors.white,
+                          onSelected: (i) {
+                            if (i == 0) {
                               removeConversation();
-                              break;
-                            case 3:
-                              break;
-                            case 4:
-                              context.toBlockMemberPage(conversation.conversation.id);
-                              break;
-                            case 5:
-                              leave(conversation.conversation);
-                              break;
-                            case 6:
-                              leaveMute(conversation.conversation);
-                              break;
-                          }
-                        },
-                        itemBuilder: (context) {
-                          return [
-                            PopupMenuItem<int>(
-                              value: 0,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'Số thành viên',
-                                    style: context.text.bodyMedium?.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                      color: AppColors.black,
-                                    ),
-                                  ),
-                                  kSpacingWidth4,
-                                  Text(
-                                    '${conversation.conversation.members.length} thành viên',
-                                    style: context.text.bodyMedium?.copyWith(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                      color: AppColors.blueEdit,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            if (myType == 2)
+                            } else if (i == 1) {
+                              reportUser(conversation.conversation);
+                            } else if (i == 2) {
+                              blockUser(conversation.conversation);
+                            }
+                          },
+                          itemBuilder: (BuildContext context) {
+                            return [
                               PopupMenuItem<int>(
-                                value: 1,
+                                value: 0,
                                 child: Row(
                                   children: [
-                                    SizedBox(
+                                    ImageWidget(
+                                      IconAppConstants.icDeleteChat,
                                       width: 24,
                                       height: 24,
-                                      child: ImageWidget(
-                                        IconAppConstants.icEdit,
-                                      ),
                                     ),
                                     kSpacingWidth4,
                                     Text(
-                                      'Đổi tên nhóm',
+                                      'Xóa cuộc trò chuyện',
                                       style: context.text.bodyMedium?.copyWith(
                                         color: AppColors.black,
                                       ),
@@ -287,39 +185,14 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                   ],
                                 ),
                               ),
-                            PopupMenuItem<int>(
-                              value: 2,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: ImageWidget(
-                                      IconAppConstants.icDeleteChat,
-                                    ),
-                                  ),
-                                  kSpacingWidth4,
-                                  Text(
-                                    'Xóa cuộc trò chuyện',
-                                    style: context.text.bodyMedium?.copyWith(
-                                      color: AppColors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            if (myType == 1 || myType == 3)
                               PopupMenuItem<int>(
-                                value: 3,
+                                value: 1,
                                 child: Row(
                                   children: [
-                                    SizedBox(
+                                    ImageWidget(
+                                      IconAppConstants.icReportChat,
                                       width: 24,
                                       height: 24,
-                                      child: ImageWidget(
-                                        IconAppConstants.icReportGroup,
-                                        color: AppColors.black,
-                                      ),
                                     ),
                                     kSpacingWidth4,
                                     Text(
@@ -331,22 +204,128 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                   ],
                                 ),
                               ),
-                            if (myType == 2)
                               PopupMenuItem<int>(
-                                value: 4,
+                                value: 2,
+                                child: Row(
+                                  children: [
+                                    ImageWidget(
+                                      IconAppConstants.icBlockAccount,
+                                      width: 24,
+                                      height: 24,
+                                    ),
+                                    kSpacingWidth4,
+                                    Text(
+                                      'Chặn tài khoản',
+                                      style: context.text.bodyMedium?.copyWith(
+                                        color: AppColors.negative,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ];
+                          },
+                        ),
+                      ),
+                    if (conversation.conversation.type == 2)
+                      Theme(
+                        data: Theme.of(context).copyWith(
+                          cardColor: AppColors.white,
+                        ),
+                        child: PopupMenuButton<int>(
+                          icon: const Icon(
+                            Icons.more_vert,
+                            color: AppColors.black,
+                          ),
+                          surfaceTintColor: AppColors.white,
+                          color: AppColors.white,
+                          onSelected: (i) {
+                            switch (i) {
+                              case 0:
+                                context.toMemberPage(myType == 2, conversation.conversation.id);
+                                break;
+                              case 1:
+                                changeNameGroup(conversation.conversation);
+                                break;
+                              case 2:
+                                removeConversation();
+                                break;
+                              case 3:
+                                reportGroup(conversation.conversation);
+                                break;
+                              case 4:
+                                context.toBlockMemberPage(conversation.conversation.id);
+                                break;
+                              case 5:
+                                leave(conversation.conversation);
+                                break;
+                              case 6:
+                                leaveMute(conversation.conversation);
+                                break;
+                            }
+                          },
+                          itemBuilder: (context) {
+                            return [
+                              PopupMenuItem<int>(
+                                value: 0,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Số thành viên',
+                                      style: context.text.bodyMedium?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                        color: AppColors.black,
+                                      ),
+                                    ),
+                                    kSpacingWidth4,
+                                    Text(
+                                      '${conversation.conversation.members.length} thành viên',
+                                      style: context.text.bodyMedium?.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16,
+                                        color: AppColors.blueEdit,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              if (myType == 2)
+                                PopupMenuItem<int>(
+                                  value: 1,
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 24,
+                                        height: 24,
+                                        child: ImageWidget(
+                                          IconAppConstants.icEdit,
+                                        ),
+                                      ),
+                                      kSpacingWidth4,
+                                      Text(
+                                        'Đổi tên nhóm',
+                                        style: context.text.bodyMedium?.copyWith(
+                                          color: AppColors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              PopupMenuItem<int>(
+                                value: 2,
                                 child: Row(
                                   children: [
                                     SizedBox(
                                       width: 24,
                                       height: 24,
                                       child: ImageWidget(
-                                        IconAppConstants.icBlockChat,
-                                        color: AppColors.black,
+                                        IconAppConstants.icDeleteChat,
                                       ),
                                     ),
                                     kSpacingWidth4,
                                     Text(
-                                      'Chặn thành viên',
+                                      'Xóa cuộc trò chuyện',
                                       style: context.text.bodyMedium?.copyWith(
                                         color: AppColors.black,
                                       ),
@@ -354,52 +333,99 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                   ],
                                 ),
                               ),
-                            PopupMenuItem<int>(
-                              value: 5,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: ImageWidget(
-                                      IconAppConstants.icLeaveTeam,
-                                      color: AppColors.black,
-                                    ),
+                              if (myType == 1 || myType == 3)
+                                PopupMenuItem<int>(
+                                  value: 3,
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 24,
+                                        height: 24,
+                                        child: ImageWidget(
+                                          IconAppConstants.icReportGroup,
+                                          color: AppColors.black,
+                                        ),
+                                      ),
+                                      kSpacingWidth4,
+                                      Text(
+                                        'Báo cáo',
+                                        style: context.text.bodyMedium?.copyWith(
+                                          color: AppColors.black,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  kSpacingWidth4,
-                                  Text(
-                                    'Rời nhóm',
-                                    style: context.text.bodyMedium?.copyWith(
-                                      color: AppColors.black,
-                                    ),
+                                ),
+                              if (myType == 2)
+                                PopupMenuItem<int>(
+                                  value: 4,
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 24,
+                                        height: 24,
+                                        child: ImageWidget(
+                                          IconAppConstants.icBlockChat,
+                                          color: AppColors.black,
+                                        ),
+                                      ),
+                                      kSpacingWidth4,
+                                      Text(
+                                        'Chặn thành viên',
+                                        style: context.text.bodyMedium?.copyWith(
+                                          color: AppColors.black,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
+                              PopupMenuItem<int>(
+                                value: 5,
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 24,
+                                      height: 24,
+                                      child: ImageWidget(
+                                        IconAppConstants.icLeaveTeam,
+                                        color: AppColors.black,
+                                      ),
+                                    ),
+                                    kSpacingWidth4,
+                                    Text(
+                                      'Rời nhóm',
+                                      style: context.text.bodyMedium?.copyWith(
+                                        color: AppColors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            PopupMenuItem<int>(
-                              value: 6,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 24,
-                                    height: 24,
-                                    child: ImageWidget(
-                                      IconAppConstants.icLeaveMute,
-                                      color: AppColors.black,
+                              PopupMenuItem<int>(
+                                value: 6,
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 24,
+                                      height: 24,
+                                      child: ImageWidget(
+                                        IconAppConstants.icLeaveMute,
+                                        color: AppColors.black,
+                                      ),
                                     ),
-                                  ),
-                                  kSpacingWidth4,
-                                  Text(
-                                    'Rời nhóm im lặng',
-                                    style: context.text.bodyMedium?.copyWith(
-                                      color: AppColors.black,
+                                    kSpacingWidth4,
+                                    Text(
+                                      'Rời nhóm im lặng',
+                                      style: context.text.bodyMedium?.copyWith(
+                                        color: AppColors.black,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ];
-                        },
+                            ];
+                          },
+                        ),
                       ),
                   ],
                 ),
@@ -422,7 +448,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                   message: messages[index],
                                   showSeen: index == 0,
                                   showTime: index == 0 ||
-                                      index - 1 > 0 &&
+                                      index - 1 >= 0 &&
                                           messages[index].sender?.id !=
                                               messages[index - 1].sender?.id,
                                 );
@@ -778,6 +804,41 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                 reportController.text);
           }
         },
+      ),
+    );
+  }
+
+  void reportGroup(ConversationModel conversation) {
+    showDialog(
+      context: context,
+      builder: (_) => ChatDialog(
+        title: 'Báo cáo',
+        actionTitle: 'Gửi',
+        showCancel: false,
+        actionColor: AppColors.blueEdit,
+        contentWidget: TextFormField(
+          controller: reportGroupController,
+          minLines: 3,
+          maxLines: 5,
+          decoration: InputDecoration(
+            fillColor: AppColors.white,
+            hintText: 'Nhập nội dung báo cáo...',
+            contentPadding: const EdgeInsets.all(8),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(
+                color: Color(0xffEAEDF0),
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: Color(0xffEAEDF0),
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ),
+        onAction: () {},
       ),
     );
   }

@@ -25,7 +25,7 @@ class UserActiveWidget extends StatelessWidget {
       child: SizedBox(
         width: 70,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             AvatarMemberWidget(
               size: 70,

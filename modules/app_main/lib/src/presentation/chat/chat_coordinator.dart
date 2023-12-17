@@ -1,3 +1,4 @@
+import 'package:app_main/src/presentation/chat/add_member/add_member_page.dart';
 import 'package:app_main/src/presentation/chat/block_member/block_member_page.dart';
 import 'package:app_main/src/presentation/chat/chat_room/chat_room_page.dart';
 import 'package:app_main/src/presentation/chat/conversation/conversation_page.dart';
@@ -43,6 +44,10 @@ extension ChatCoordinator on BuildContext {
 
   Future<T?> toBlockMemberPage<T>(int conversationId) {
     return Navigator.of(this).pushNamed(BlockMemberPage.routeName, arguments: conversationId);
+  }
+
+  Future<T?> toAddMemberPage<T>(int conversationId) {
+    return Navigator.of(this).pushNamed(AddMemberPage.routeName, arguments: conversationId);
   }
 
   Future<T?> replaceChatRoom<T>({

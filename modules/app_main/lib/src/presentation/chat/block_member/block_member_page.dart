@@ -43,21 +43,34 @@ class BlockMemberPageState extends State<BlockMemberPage> {
                   itemBuilder: (_, index) {
                     return MemberWidget(
                       data: data.membersNotMe[index],
-                      showAction: false,
                       onTapWidget: () {
                         showDialog(
                           context: context,
                           builder: (_) => ChatDialog(
                             title: 'Chặn ${data.membersNotMe[index].member.displayName}',
-                            content:
-                                '${data.membersNotMe[index].member.displayName} sẽ không thể :\n\n'
-                                ' • Xem bài viết trên trang cá nhân của bạn\n'
-                                ' • Nhắn tin cho bạn\n'
-                                ' • Thêm bạn làm bạn bè\n'
-                                ' • Nếu các bạn là bạn bè, chặn tài khoản đồng nghĩa với việc hủy kết bạn',
-                            actionTitle: 'Xác nhận',
-                            actionColor: AppColors.blueEdit,
-                            contentAlign: TextAlign.start,
+                            contentWidget: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    '${data.membersNotMe[index].member.displayName} sẽ không thể :',
+                                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.textSecondary,
+                                        fontSize: 14)),
+                                kSpacingHeight12,
+                                Text(
+                                    ' - Xem bài viết trên trang cá nhân của bạn\n'
+                                    ' - Nhắn tin cho bạn\n'
+                                    ' - Thêm bạn làm bạn bè\n'
+                                    ' - Nếu các bạn là bạn bè, chặn tài khoản đồng nghĩa với việc hủy kết bạn',
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.textSecondary,
+                                        fontSize: 12))
+                              ],
+                            ),
+                            actionTitle: 'Chặn',
+                            actionColor: AppColors.negative,
                             onAction: () {
                               _cubit.blockUser(data.membersNotMe[index].member.id).then(
                                     (value) => Navigator.pop(context),

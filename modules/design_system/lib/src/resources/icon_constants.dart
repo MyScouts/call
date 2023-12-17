@@ -204,6 +204,11 @@ class IconAppConstants {
   static String icEdit = IconApp.icEdit.path;
   static String icLeaveMute = IconApp.icLeaveMute.path;
   static String icReportGroup = IconApp.icReportGroup.path;
+  static String icKick = IconApp.icKick.path;
+  static String icKickMute = IconApp.icKickMute.path;
+  static String icSetAdmin = IconApp.icSetAdmin.path;
+  static String icSetSecondAdmin = IconApp.icSetSecondAdmin.path;
+  static String icRemoveSecondAdmin = IconApp.icRemoveSecondAdmin.path;
 
   
 }
@@ -375,6 +380,11 @@ enum IconApp {
   icLeaveTeam('assets/icons/ic_leave_team.svg'),
   icDeleteChat('assets/icons/ic_delete_chat.svg'),
   icReportChat('assets/icons/ic_report_chat.svg'),
+  icKick('assets/icons/ic_kick.svg'),
+  icKickMute('assets/icons/ic_kick_mute.svg'),
+  icSetAdmin('assets/icons/ic_set_admin.svg'),
+  icSetSecondAdmin('assets/icons/ic_set_second_admin.svg'),
+  icRemoveSecondAdmin('assets/icons/ic_remove_second_admin.svg'),
 
   ///call
   icUserGroup3('assets/icons/ic_user_group3.svg'),

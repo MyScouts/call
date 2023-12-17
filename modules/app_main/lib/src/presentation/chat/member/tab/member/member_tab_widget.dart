@@ -1,11 +1,13 @@
 //import 'dart:developer' as developer;
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/di/di.dart';
+import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/presentation/chat/member/tab/member/cubit/member_tab_cubit.dart';
 import 'package:app_main/src/presentation/chat/member/tab/member/cubit/member_tab_state.dart';
 import 'package:app_main/src/presentation/chat/member/widgets/member_widget.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
 
@@ -51,7 +53,127 @@ class MemberTabWidgetState extends State<MemberTabWidget> {
                             itemBuilder: (_, index) {
                               return MemberWidget(
                                 data: data.members[index],
-                                onTap: () {},
+                                action: widget.isAdmin &&
+                                        data.members[index].member.id !=
+                                            getIt
+                                                .get<UserSharePreferencesUsecase>()
+                                                .getUserInfo()
+                                                ?.id
+                                    ? Theme(
+                                        data: Theme.of(context).copyWith(
+                                          cardColor: AppColors.white,
+                                        ),
+                                        child: PopupMenuButton(
+                                          color: AppColors.white,
+                                          surfaceTintColor: AppColors.white,
+                                          icon: const Icon(
+                                            Icons.more_vert,
+                                            color: AppColors.black,
+                                          ),
+                                          position: PopupMenuPosition.under,
+                                          onSelected: (i) {
+                                            int memberId = data.members[index].member.id;
+                                            switch (i) {
+                                              case 0:
+                                                _cubit.setAdmin(widget.conversationId, memberId).then((value) {
+                                                  Navigator.pop(context);
+                                                });
+                                                break;
+                                              case 1:
+                                                _cubit.setSecondAdmin(
+                                                    widget.conversationId, memberId);
+                                                break;
+                                              case 2:
+                                                _cubit.kick(widget.conversationId, memberId);
+                                                break;
+                                              case 3:
+                                                _cubit.kickMute(widget.conversationId, memberId);
+                                                break;
+                                            }
+                                          },
+                                          itemBuilder: (_) {
+                                            return [
+                                              PopupMenuItem<int>(
+                                                value: 0,
+                                                child: Row(
+                                                  children: [
+                                                    ImageWidget(
+                                                      IconAppConstants.icSetAdmin,
+                                                      width: 24,
+                                                      height: 24,
+                                                    ),
+                                                    kSpacingWidth4,
+                                                    Text(
+                                                      'Nhượng quyền chủ phòng',
+                                                      style: context.text.bodyMedium?.copyWith(
+                                                        color: AppColors.black,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              PopupMenuItem<int>(
+                                                value: 1,
+                                                child: Row(
+                                                  children: [
+                                                    ImageWidget(
+                                                      IconAppConstants.icSetSecondAdmin,
+                                                      width: 24,
+                                                      height: 24,
+                                                    ),
+                                                    kSpacingWidth4,
+                                                    Text(
+                                                      'Chọn làm phó phòng',
+                                                      style: context.text.bodyMedium?.copyWith(
+                                                        color: AppColors.black,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              PopupMenuItem<int>(
+                                                value: 2,
+                                                child: Row(
+                                                  children: [
+                                                    ImageWidget(
+                                                      IconAppConstants.icSetAdmin,
+                                                      width: 24,
+                                                      height: 24,
+                                                    ),
+                                                    kSpacingWidth4,
+                                                    Text(
+                                                      'Loại khỏi nhóm',
+                                                      style: context.text.bodyMedium?.copyWith(
+                                                        color: AppColors.black,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              PopupMenuItem<int>(
+                                                value: 3,
+                                                child: Row(
+                                                  children: [
+                                                    ImageWidget(
+                                                      IconAppConstants.icSetAdmin,
+                                                      width: 24,
+                                                      height: 24,
+                                                    ),
+                                                    kSpacingWidth4,
+                                                    Text(
+                                                      'Loại khỏi nhóm trong im lặng',
+                                                      style: context.text.bodyMedium?.copyWith(
+                                                        color: AppColors.black,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ];
+                                          },
+                                        ),
+                                      )
+                                    : null,
                               );
                             },
                             separatorBuilder: (_, __) => kSpacingHeight12,

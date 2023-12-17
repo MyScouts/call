@@ -10,12 +10,12 @@ class MemberWidget extends StatelessWidget {
   final MemberResponseModel data;
   final VoidCallback? onTap;
   final VoidCallback? onTapWidget;
-  final bool showAction;
+  final Widget? action;
   const MemberWidget({
     super.key,
     required this.data,
     this.onTap,
-    this.showAction = true,
+    this.action,
     this.onTapWidget,
   });
 
@@ -52,7 +52,8 @@ class MemberWidget extends StatelessWidget {
             ],
           ),
           kSpacer,
-          if (showAction) IconButton(onPressed: onTap, icon: const Icon(Icons.more_vert)),
+          if (action != null)
+            action!
         ],
       ),
     );

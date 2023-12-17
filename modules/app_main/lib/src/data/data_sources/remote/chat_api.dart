@@ -81,7 +81,7 @@ abstract class ChatApi {
   });
 
   @POST(ChatApiConstant.memberChat)
-  Future<MemberListDto> addMember({
+  Future<ResultDto> addMember({
     @Path('conversationId') required int conversationId,
     @Body() required Map<String, List<int>> userIds,
   });

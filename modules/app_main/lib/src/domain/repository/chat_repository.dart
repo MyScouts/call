@@ -40,7 +40,7 @@ abstract class ChatRepository {
     required int pageSize,
   });
 
-  Future<MemberListModel> addMember({
+  Future<ResultModel> addMember({
     required int conversationId,
     required List<int> userIds,
   });

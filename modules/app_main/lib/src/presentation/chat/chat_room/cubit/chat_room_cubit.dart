@@ -120,7 +120,14 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
       if (_conversationId == message.conversationId &&
           value.messages.firstWhereOrNull((element) => element.messageId == message.messageId) ==
               null) {
-        emit(value.copyWith(messages: [message, ...value.messages]));
+        if (message.type != 3 && message.type != 2 && message.type != 11) {
+          final conversationDetail =
+              await _chatUseCase.getConversationsDetail(conversationId: _conversationId);
+          emit(value
+              .copyWith(conversation: conversationDetail, messages: [message, ...value.messages]));
+        } else {
+          emit(value.copyWith(messages: [message, ...value.messages]));
+        }
       }
     });
   }

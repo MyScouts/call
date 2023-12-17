@@ -1,4 +1,5 @@
 //import 'dart:developer' as developer;
+import 'package:app_main/src/presentation/chat/chat_coordinator.dart';
 import 'package:app_main/src/presentation/chat/member/tab/admin/admin_tab_widget.dart';
 import 'package:app_main/src/presentation/chat/member/tab/member/member_tab_widget.dart';
 import 'package:design_system/design_system.dart';
@@ -30,13 +31,16 @@ class MemberPageState extends State<MemberPage> with TickerProviderStateMixin {
       appBar: AppBar(
         title: const Text('Thành viên'),
         actions: [
-          TextButton(
-            onPressed: () {},
-            child: Text(
-              'Thêm',
-              style: context.text.bodyLarge?.copyWith(color: AppColors.blueEdit, fontSize: 16),
+          if (widget.isAdmin)
+            TextButton(
+              onPressed: () {
+                context.toAddMemberPage(widget.conversationId);
+              },
+              child: Text(
+                'Thêm',
+                style: context.text.bodyLarge?.copyWith(color: AppColors.blueEdit, fontSize: 16),
+              ),
             ),
-          ),
         ],
         bottom: TabBar(
           controller: _tabController,
@@ -47,7 +51,7 @@ class MemberPageState extends State<MemberPage> with TickerProviderStateMixin {
           indicatorColor: AppColors.blueEdit,
           indicatorSize: TabBarIndicatorSize.tab,
           indicator: const UnderlineTabIndicator(
-            borderSide: BorderSide(width: 2),
+            borderSide: BorderSide(width: 2,color: AppColors.blueEdit),
           ),
           tabs: const [
             Tab(
@@ -68,6 +72,7 @@ class MemberPageState extends State<MemberPage> with TickerProviderStateMixin {
           ),
           AdminTabWidget(
             conversationId: widget.conversationId,
+            isAdmin: widget.isAdmin,
           ),
         ],
       ),

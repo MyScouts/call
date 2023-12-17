@@ -261,7 +261,7 @@ class _ChatApi implements ChatApi {
   }
 
   @override
-  Future<MemberListDto> addMember({
+  Future<ResultDto> addMember({
     required int conversationId,
     required Map<String, List<int>> userIds,
   }) async {
@@ -271,7 +271,7 @@ class _ChatApi implements ChatApi {
     final _data = <String, dynamic>{};
     _data.addAll(userIds);
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<MemberListDto>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<ResultDto>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -287,7 +287,7 @@ class _ChatApi implements ChatApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = MemberListDto.fromJson(_result.data!);
+    final value = ResultDto.fromJson(_result.data!);
     return value;
   }
 

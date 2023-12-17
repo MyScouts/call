@@ -10,5 +10,6 @@ abstract class MessageModel {
   bool get seen;
   DateTime get createdAt;
   String? get message;
+  String? get des;
   MetaDataModel? get metadata;
 }
