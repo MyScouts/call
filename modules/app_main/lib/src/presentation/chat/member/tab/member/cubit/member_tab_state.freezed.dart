@@ -125,7 +125,7 @@ class _$MemberTabStateDataImpl implements MemberTabStateData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MemberTabStateDataImpl &&
@@ -249,7 +249,7 @@ class _$MemberTabStateLoadingImpl implements MemberTabStateLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MemberTabStateLoadingImpl);
@@ -376,7 +376,7 @@ class _$MemberTabStateErrorImpl implements MemberTabStateError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MemberTabStateErrorImpl &&

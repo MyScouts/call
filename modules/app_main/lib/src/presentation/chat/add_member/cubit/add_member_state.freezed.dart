@@ -183,7 +183,7 @@ class _$AddMemberStateDataImpl implements AddMemberStateData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddMemberStateDataImpl &&
@@ -334,7 +334,7 @@ class _$AddMemberStateLoadingImpl implements AddMemberStateLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddMemberStateLoadingImpl);
@@ -467,7 +467,7 @@ class _$AddMemberStateErrorImpl implements AddMemberStateError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddMemberStateErrorImpl &&

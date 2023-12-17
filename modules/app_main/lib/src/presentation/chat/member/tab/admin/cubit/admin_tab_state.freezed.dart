@@ -125,7 +125,7 @@ class _$AdminTabStateDataImpl implements AdminTabStateData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AdminTabStateDataImpl &&
@@ -248,7 +248,7 @@ class _$AdminTabStateLoadingImpl implements AdminTabStateLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AdminTabStateLoadingImpl);
@@ -375,7 +375,7 @@ class _$AdminTabStateErrorImpl implements AdminTabStateError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AdminTabStateErrorImpl &&
