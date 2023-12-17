@@ -10,6 +10,7 @@ import 'package:app_main/src/domain/entities/chat/result_model.dart';
 import 'package:app_main/src/domain/entities/friend/friend_status_model.dart';
 import 'package:app_main/src/domain/usecases/chat_usecase.dart';
 import 'package:app_main/src/domain/usecases/upgrade_account_usecase.dart';
+import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/domain/usecases/user_usecase.dart';
 import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_state.dart';
 import 'package:app_main/src/presentation/chat/conversation/cubit/conversation_cubit.dart';
@@ -33,8 +34,7 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
       emit(const ChatRoomState.loading());
       if (conversationId == null && memberId != null) {
         final User? user = await _userUsecase.geSynctUserById(memberId);
-        final FriendStatusModel friendStatus =
-            await _chatUseCase.getFriendStatus(userId: memberId);
+        final FriendStatusModel friendStatus = await _chatUseCase.getFriendStatus(userId: memberId);
         final ResultModel newConversation = await _chatUseCase.createConversations(
           payload: NewConversationsPayload(
             name: user.getdisplayName,
@@ -52,6 +52,12 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
             messages: response.items ?? [],
             conversation: conversationIdDetail,
             friendStatus: friendStatus,
+            myType: conversationIdDetail.conversation.members
+                    .firstWhereOrNull((element) =>
+                        getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id ==
+                        element.member.id)
+                    ?.type ??
+                0,
             page: 1,
             canLoadMore: response.items?.length == kPageSize,
           ),
@@ -72,6 +78,12 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
               messages: response.items ?? [],
               conversation: conversationIdDetail,
               friendStatus: friendStatus,
+              myType: conversationIdDetail.conversation.members
+                      .firstWhereOrNull((element) =>
+                          getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id ==
+                          element.member.id)
+                      ?.type ??
+                  0,
               page: 1,
               canLoadMore: response.items?.length == kPageSize),
         );
@@ -108,7 +120,14 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
       if (_conversationId == message.conversationId &&
           value.messages.firstWhereOrNull((element) => element.messageId == message.messageId) ==
               null) {
-        emit(value.copyWith(messages: [message, ...value.messages]));
+        if (message.type != 3 && message.type != 2 && message.type != 11) {
+          final conversationDetail =
+              await _chatUseCase.getConversationsDetail(conversationId: _conversationId);
+          emit(value
+              .copyWith(conversation: conversationDetail, messages: [message, ...value.messages]));
+        } else {
+          emit(value.copyWith(messages: [message, ...value.messages]));
+        }
       }
     });
   }
@@ -128,6 +147,20 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
 
   Future<void> reportUser(int userId, String content) async {
     await _userUsecase.reportUser(userId: userId, payload: ReportUserPayload(content: content));
+  }
+
+  Future<void> changeNameGroup(int conversationId, String name) async {
+    final ResultModel result =
+        await _chatUseCase.renameConversation(conversationId: conversationId, name: name);
+    if (result.result is bool && result.result) {
+      final conversation =
+          await _chatUseCase.getConversationsDetail(conversationId: conversationId);
+      state.mapOrNull((value) => {emit(value.copyWith(conversation: conversation))});
+    }
+  }
+
+  Future<void> leave(int conversationId, bool isNotice) async {
+    await _chatUseCase.leaveChat(conversationId: conversationId, isNotice: isNotice);
   }
 
   Future<void> sendImage() async {
