@@ -208,7 +208,7 @@ class _$ConversationStateDataImpl implements ConversationStateData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ConversationStateDataImpl &&
@@ -387,7 +387,7 @@ class _$ConversationStateLoadingImpl implements ConversationStateLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ConversationStateLoadingImpl);
@@ -537,7 +537,7 @@ class _$ConversationStateErrorImpl implements ConversationStateError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ConversationStateErrorImpl &&

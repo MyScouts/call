@@ -133,7 +133,7 @@ class _$OpenGroupRequestResponseImpl implements _OpenGroupRequestResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OpenGroupRequestResponseImpl &&
@@ -284,7 +284,7 @@ class _$OpenGroupRequestImpl implements _OpenGroupRequest {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OpenGroupRequestImpl &&

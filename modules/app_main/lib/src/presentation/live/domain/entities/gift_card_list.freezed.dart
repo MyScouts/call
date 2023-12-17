@@ -136,7 +136,7 @@ class _$GiftCardListImpl implements _GiftCardList {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GiftCardListImpl &&
@@ -458,7 +458,7 @@ class _$GiftCardImpl implements _GiftCard {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GiftCardImpl &&
@@ -665,7 +665,7 @@ class _$MetaDataImpl implements _MetaData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MetaDataImpl &&

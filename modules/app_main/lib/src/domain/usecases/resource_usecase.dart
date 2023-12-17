@@ -1,3 +1,4 @@
+import 'package:app_main/src/data/models/payloads/resource/resource_payload.dart';
 import 'package:app_main/src/data/models/responses/resource_response.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
@@ -28,5 +29,10 @@ class ResourceUsecase {
     final res =
         await _resourceRepository.storageUploadUrl(XFile(filePath), prefix);
     return res;
+  }
+
+  Future<String> renderPDF(RenderPDFPayload payload) async {
+    final response = await _resourceRepository.renderPDF(payload);
+    return response.url;
   }
 }

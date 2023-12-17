@@ -122,7 +122,8 @@ dependencies:
   auto_animated_list:
     path: ../auto_animated_list
   video_player: ^2.8.1
-  
+  syncfusion_flutter_pdfviewer: ^23.1.39
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

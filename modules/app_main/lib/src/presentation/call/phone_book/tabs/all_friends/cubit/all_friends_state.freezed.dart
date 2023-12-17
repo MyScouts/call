@@ -152,7 +152,7 @@ class _$AllFriendsStateDataImpl implements AllFriendsStateData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AllFriendsStateDataImpl &&
@@ -288,7 +288,7 @@ class _$AllFriendsStateLoadingImpl implements AllFriendsStateLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AllFriendsStateLoadingImpl);
@@ -418,7 +418,7 @@ class _$AllFriendsStateErrorImpl implements AllFriendsStateError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AllFriendsStateErrorImpl &&

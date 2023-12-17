@@ -1,3 +1,5 @@
+import 'package:app_main/src/presentation/general_setting/contracts/contract_constant.dart';
+import 'package:app_main/src/presentation/general_setting/contracts/contract_view_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'terms_conditions/terms_conditions_screen.dart';
@@ -13,5 +15,14 @@ extension GeneralCoordinator on BuildContext {
 
   Future<T?> startTermsAndConditionV2<T>() {
     return Navigator.of(this).pushNamed(TeamAndCondictionV2Screen.routeName);
+  }
+
+  Future<T?> startContractView<T>({
+    required TypeContract type,
+  }) {
+    return Navigator.of(this)
+        .pushNamed(ContractViewScreen.routeName, arguments: {
+      'type': type,
+    });
   }
 }

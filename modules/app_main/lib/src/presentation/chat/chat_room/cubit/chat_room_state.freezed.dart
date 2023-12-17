@@ -200,7 +200,7 @@ class _$ChatRoomStateDataImpl implements ChatRoomStateData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChatRoomStateDataImpl &&
@@ -373,7 +373,7 @@ class _$ChatRoomStateLoadingImpl implements ChatRoomStateLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChatRoomStateLoadingImpl);
@@ -521,7 +521,7 @@ class _$ChatRoomStateErrorImpl implements ChatRoomStateError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChatRoomStateErrorImpl &&

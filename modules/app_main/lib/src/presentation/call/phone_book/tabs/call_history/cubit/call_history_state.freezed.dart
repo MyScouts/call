@@ -152,7 +152,7 @@ class _$CallHistoryStateDataImpl implements CallHistoryStateData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CallHistoryStateDataImpl &&
@@ -289,7 +289,7 @@ class _$CallHistoryStateLoadingImpl implements CallHistoryStateLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CallHistoryStateLoadingImpl);
@@ -420,7 +420,7 @@ class _$CallHistoryStateErrorImpl implements CallHistoryStateError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CallHistoryStateErrorImpl &&

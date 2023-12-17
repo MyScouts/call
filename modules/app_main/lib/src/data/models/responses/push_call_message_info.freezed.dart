@@ -226,7 +226,7 @@ class _$PushCallMessageInfoImpl implements _PushCallMessageInfo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PushCallMessageInfoImpl &&
@@ -440,7 +440,7 @@ class _$CallUserInfoImpl implements _CallUserInfo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CallUserInfoImpl &&

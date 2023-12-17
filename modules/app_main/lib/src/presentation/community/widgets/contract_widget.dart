@@ -1,3 +1,5 @@
+import 'package:app_main/src/presentation/general_setting/contracts/contract_constant.dart';
+import 'package:app_main/src/presentation/general_setting/general_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +30,9 @@ class ContractWidget extends StatelessWidget {
               color: isAccepted == true ? AppColors.blue31 : Colors.grey,
             ),
             recognizer: TapGestureRecognizer()
-              //TODO: navigate to Boss Group contract PDF
-              // ..onTap = context.startExportJAPdfPreview,
+              ..onTap = () => context.startContractView(
+                    type: TypeContract.bossGroup,
+                  ),
           ),
           const TextSpan(text: ' của VDONE')
         ],
