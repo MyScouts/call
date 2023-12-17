@@ -17,10 +17,12 @@ class CustomTextField extends StatefulWidget {
     this.node,
     this.onError,
     this.readOnly = false,
+    this.suffix,
   });
   final TextEditingController controller;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final Widget? suffix;
   final String hintText;
   final TextStyle? hintStyle;
   final ValueChanged<String>? onChange;
@@ -41,22 +43,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
   bool _isError = false;
 
   @override
-  void initState() {
-    super.initState();
-    widget.controller.addListener(() {
-      if (widget.validator != null) {
-        String? error = widget.validator!(widget.controller.text);
-        _isError = error != null;
-        setState(() {});
-
-        if (widget.onError != null) {
-          widget.onError!(error);
-        }
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,12 +57,27 @@ class _CustomTextFieldState extends State<CustomTextField> {
           controller: widget.controller,
           obscureText: widget.isPassword && !isShowPassword,
           autocorrect: !widget.isPassword,
-          onChanged: widget.onChange,
+          onChanged: (value) {
+            if (widget.onChange != null) {
+              widget.onChange!(value);
+            }
+
+            if (widget.validator != null) {
+              String? error = widget.validator!(widget.controller.text);
+              _isError = error != null;
+              setState(() {});
+
+              if (widget.onError != null) {
+                widget.onError!(error);
+              }
+            }
+          },
           keyboardType: widget.textInputType,
           enableSuggestions: !widget.isPassword,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: widget.validator,
           decoration: InputDecoration(
+            suffix: widget.suffix,
             prefixIcon: widget.prefixIcon,
             suffixIcon: widget.isPassword
                 ? InkWell(

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class ReadMorePolicy extends StatefulWidget {
   final int? maxLine;
+
   const ReadMorePolicy({super.key, this.maxLine});
 
   @override
@@ -24,22 +25,26 @@ class _ReadMorePolicyState extends State<ReadMorePolicy> {
             children: [
               Text(
                 policyContents.first['title'].toString(),
-                style: Theme.of(context).textTheme.headlineLarge,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFF373737),
+                      height: 20 / 14,
+                    ),
               ),
               Text(
                 policyContents.first['content'].toString(),
                 maxLines: widget.maxLine ?? 18,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       height: 1.5,
                       fontWeight: FontWeight.w400,
                     ),
               ),
               GestureDetector(
-                onTap: context.startTermsAndCondition,
+                onTap: () => context.startTermsAndCondition(policyContents),
                 child: Text(
                   'Xem thêm',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         height: 1.5,
                         color: AppColors.blue25,
                         fontWeight: FontWeight.w400,

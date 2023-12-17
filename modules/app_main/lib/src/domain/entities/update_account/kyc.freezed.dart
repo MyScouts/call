@@ -203,7 +203,7 @@ class _$KycImpl implements _Kyc {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$KycImpl &&

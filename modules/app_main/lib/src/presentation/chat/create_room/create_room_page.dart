@@ -40,14 +40,7 @@ class CreateRoomPageState extends State<CreateRoomPage> {
           (friends, listChoice, page, canLoadMore, keySearch, step) {
             return Scaffold(
               appBar: BaseAppBar(
-                title: 'Tạo cuộc gọi nhóm',
-                onPressed: () {
-                  if (step == 1) {
-                    Navigator.pop(context);
-                  } else {
-                    _cubit.previousStep();
-                  }
-                },
+                title: 'Tạo nhóm chat',
                 isClose: false,
                 actions: [
                   TextButton(

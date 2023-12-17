@@ -135,9 +135,7 @@ class _UpdateBankAccountScreenState extends State<UpdateBankAccountScreen>
                               }
                               _bankAccountHolderCtrl.clear();
                               _bankNumberCtrl.clear();
-                              setState(() {
-                                _selectedBank = null;
-                              });
+                              _selectedBank = null;
                             },
                           );
                         },

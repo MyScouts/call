@@ -1,3 +1,4 @@
+import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/live/domain/entities/gift_card_list.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:design_system/design_system.dart';
@@ -6,8 +7,8 @@ import 'package:get/get.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
+import '../../../domain/usecases/live_usecases.dart';
 import '../live_channel_screen.dart';
-import '../state/live_channel_controller.dart';
 
 class LiveGiftButton extends StatefulWidget {
   const LiveGiftButton({super.key});
@@ -19,6 +20,8 @@ class LiveGiftButton extends StatefulWidget {
 class _LiveGiftButtonState extends State<LiveGiftButton> {
   String isIcon = IconAppConstants.icLiveGift;
 
+  final LiveUseCase _useCase = getIt.get<LiveUseCase>();
+
   GiftCard? giftCard;
 
   Widget bodyGift() {
@@ -26,49 +29,55 @@ class _LiveGiftButtonState extends State<LiveGiftButton> {
 
     return Obx(() {
       final times = controller.timesAnimation.value;
-      return IgnorePointer(
-        ignoring: times > 0,
-        child: InkWell(
-          onTap: () {
-            context.showBottomGift(controller).then((value) {
-              if (value is GiftCard) {
-                giftCard = value;
-                setState(() {
-                  isIcon = value.imageGift!;
-                });
+      return InkWell(
+        onTap: () async {
+          if (times > 0) {
+            try {
+              await _useCase.sendGift(
+                  userId: controller.info.user!.id!, liveId: controller.info.id, giftId: giftCard!.id!, total: 1);
+              controller.timesAnimation.value++;
+            } catch (e) {}
+            return;
+          }
+          context.showBottomGift(controller).then((value) {
+            if (value is GiftCard) {
+              if (value.metadata?.isStaticGif == true) {
+                return;
               }
-            });
-          },
-          child: SizedBox(
-            height: 60,
-            width: 60,
-            child: Stack(
-              children: [
-                Opacity(
-                  opacity: times > 0 ? 0.8 : 1,
-                  child: Ink(
-                    decoration:
-                        times > 0 ? BoxDecoration(color: Colors.black.withOpacity(0.5), shape: BoxShape.circle) : null,
-                    height: 60,
-                    width: 60,
-                    child: ImageWidget(isIcon),
-                  ),
+              giftCard = value;
+              setState(() {
+                isIcon = value.imageGift!;
+              });
+            }
+          });
+        },
+        child: SizedBox(
+          height: 60,
+          width: 60,
+          child: Stack(
+            children: [
+              Opacity(
+                opacity: times > 0 ? 0.8 : 1,
+                child: Ink(
+                  decoration:
+                      times > 0 ? BoxDecoration(color: Colors.black.withOpacity(0.5), shape: BoxShape.circle) : null,
+                  child: ImageWidget(isIcon),
                 ),
-                Visibility(
-                    visible: times > 0,
-                    child: Center(
-                        child: Text(
-                      times.toString(),
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white, shadows: [
-                        Shadow(
-                          offset: Offset(0, 0),
-                          blurRadius: 3.0,
-                          color: Color.fromARGB(255, 0, 0, 0),
-                        ),
-                      ]),
-                    )))
-              ],
-            ),
+              ),
+              Visibility(
+                  visible: times > 0,
+                  child: Center(
+                      child: Text(
+                    times.toString(),
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white, shadows: [
+                      Shadow(
+                        offset: Offset(0, 0),
+                        blurRadius: 3.0,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                      ),
+                    ]),
+                  )))
+            ],
           ),
         ),
       );
@@ -81,20 +90,23 @@ class _LiveGiftButtonState extends State<LiveGiftButton> {
 
     return Obx(() {
       final times = controller.timesAnimation.value;
-      if (times == 1) {
-        int second = int.parse(giftCard!.metadata!.displayTime!.toString());
+      if (times == 1 && controller.countdownGiftController.value != null) {
         return Stack(
           children: [
             Center(child: bodyGift()),
-            Center(
-              child: CircleAnimation(
-                duration: Duration(seconds: second + 2),
-                afterAnimation: () {
-                  setState(() {
-                    isIcon = IconAppConstants.icLiveGift;
-                  });
-                },
-                child: const SizedBox(),
+            IgnorePointer(
+              ignoring: true,
+              child: Center(
+                child: CircleAnimation(
+                  key: GlobalKey(),
+                  afterAnimation: () {
+                    setState(() {
+                      isIcon = IconAppConstants.icLiveGift;
+                    });
+                  },
+                  animationController: controller.countdownGiftController.value!,
+                  child: const SizedBox(),
+                ),
               ),
             ),
           ],
@@ -107,10 +119,11 @@ class _LiveGiftButtonState extends State<LiveGiftButton> {
 
 class CircleAnimation extends StatefulWidget {
   final Widget child;
-  final Duration duration;
   final VoidCallback afterAnimation;
+  final AnimationController animationController;
 
-  const CircleAnimation({super.key, required this.child, required this.duration, required this.afterAnimation});
+  const CircleAnimation(
+      {super.key, required this.child, required this.afterAnimation, required this.animationController});
 
   @override
   State<CircleAnimation> createState() => _CircleAnimationState();
@@ -121,8 +134,7 @@ class _CircleAnimationState extends State<CircleAnimation> with SingleTickerProv
 
   @override
   void initState() {
-    _controller = AnimationController(vsync: this, duration: widget.duration);
-    _controller.forward();
+    _controller = widget.animationController;
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         widget.afterAnimation.call();

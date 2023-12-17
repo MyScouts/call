@@ -1,10 +1,9 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/blocs/marshop/marshop_cubit.dart';
-import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/payloads/marshop/marshop_payload.dart';
 import 'package:app_main/src/data/models/responses/marshop_response.dart';
 import 'package:app_main/src/domain/entities/update_account/update_place_information_payload.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
+import 'package:app_main/src/presentation/marshop/register_marshop/confirm_infomation_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/bloc/place_information/place_information_bloc.dart';
 import 'package:design_system/design_system.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
@@ -12,18 +11,23 @@ import 'package:flutter/material.dart';
 import 'package:ui/ui.dart';
 
 import '../../upgrade_account/upgrade_pdone/views/widgets/place_information_widget.dart';
+import 'register_pack_action_dialog.dart';
 
 class ConfirmInfomationAddressScreen extends StatefulWidget {
   static String routeName = 'confirm-infomation-address';
   final User authInfo;
   final MarshopResponse marshop;
   final MarshopRegisterPackResponse pack;
+  final int totalPrice;
+  final List<RegisterPackProductInfo> productResult;
 
   const ConfirmInfomationAddressScreen({
     super.key,
     required this.pack,
     required this.authInfo,
     required this.marshop,
+    required this.productResult,
+    required this.totalPrice,
   });
 
   @override
@@ -35,89 +39,78 @@ class _ConfirmInfomationAddressScreenState
     extends State<ConfirmInfomationAddressScreen> {
   final TextEditingController _addressCtrl = TextEditingController();
   UpdatePlaceInformationPayload? address;
+  RegisterPackAction? _action;
   @override
   Widget build(BuildContext context) {
-    return BlocListener<MarshopCubit, MarshopState>(
-      listener: (context, state) {
-        if (state is OnRegisterMarshop) {
-          showLoading();
-        }
-
-        if (state is RegisterMarshopFail) {
-          hideLoading();
-          showToastMessage(state.message, ToastMessageType.error);
-        }
-
-        if (state is RegisterMarshopSuccess) {
-          hideLoading();
-          context.startTransactionDetail(
-            pack: widget.pack,
-            authInfo: widget.authInfo,
-            marshop: widget.marshop,
-            address: address!,
-          );
-        }
-      },
-      child: Scaffold(
-        appBar: const BaseAppBar(
-          title: "Xác nhận thông tin",
-          isClose: false,
-        ),
-        body: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: paddingHorizontal,
-              vertical: 20,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: ExtendedNestedScrollView(
-                    onlyOneScrollInBody: true,
-                    headerSliverBuilder: (context, innerBoxIsScrolled) => [],
-                    body: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildRules(),
-                          const SizedBox(height: 10),
-                          BlocProvider<PlaceInformationBloc>(
-                            create: (context) => injector.get(),
-                            child: PlaceInformationWidget(
-                              title: 'Thêm địa chỉ',
-                              onUpdatePlaceInformation: (value) {
-                                address = value;
-                                setState(() {});
-                              },
-                              addressCtrl: _addressCtrl,
-                              required: true,
-                            ),
+    return Scaffold(
+      appBar: const BaseAppBar(
+        title: "Xác nhận thông tin",
+        isClose: false,
+      ),
+      body: Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: paddingHorizontal,
+            vertical: 20,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: ExtendedNestedScrollView(
+                  onlyOneScrollInBody: true,
+                  headerSliverBuilder: (context, innerBoxIsScrolled) => [],
+                  body: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildRules(),
+                        const SizedBox(height: 10),
+                        BlocProvider<PlaceInformationBloc>(
+                          create: (context) => injector.get(),
+                          child: PlaceInformationWidget(
+                            title: 'Thêm địa chỉ',
+                            onUpdatePlaceInformation: (value) {
+                              address = value;
+                              setState(() {});
+                            },
+                            addressCtrl: _addressCtrl,
+                            required: true,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                RichText(
-                  text: TextSpan(
-                      text: "Tổng tiền: ",
-                      style: context.textTheme.bodyLarge,
-                      children: [
-                        TextSpan(
-                            text: widget.pack.price.toAppCurrencyString(),
-                            style: context.textTheme.titleLarge!.copyWith(
-                              color: context.theme.primaryColor,
-                              fontWeight: FontWeight.w700,
-                            ))
-                      ]),
-                ),
-                const SizedBox(height: 15),
-                PrimaryButton(
-                  title: "Tiếp tục",
-                  onTap: () {
-                    context.read<MarshopCubit>().registerMarshop(
-                          widget.authInfo.id!,
-                          RegisterMarshopPayload(
+              ),
+              RichText(
+                text: TextSpan(
+                    text: "Tổng tiền: ",
+                    style: context.textTheme.bodyLarge,
+                    children: [
+                      TextSpan(
+                          text: widget.totalPrice.toAppCurrencyString(),
+                          style: context.textTheme.titleLarge!.copyWith(
+                            color: context.theme.primaryColor,
+                            fontWeight: FontWeight.w700,
+                          ))
+                    ]),
+              ),
+              const SizedBox(height: 15),
+              PrimaryButton(
+                title: "Tiếp tục",
+                onTap: () {
+                  context.startConfirmActionPackDialog(
+                    onChange: (value) {
+                      _action = value;
+                      setState(() {});
+                    },
+                  ).then((value) {
+                    if (_action != null) {
+                      context.startContractConfirm(
+                        action: _action!,
+                        onConfirm: () => context.startRegisterMarshopOTP(
+                          payload: RegisterMarshopPayload(
+                            otp: "",
                             packId: widget.pack.id,
                             referralId: widget.marshop.id,
                             billInfo: RegisterMarshopBillInfo(
@@ -133,18 +126,29 @@ class _ConfirmInfomationAddressScreenState
                                 shipFee: 0,
                                 tax: 10,
                               ),
-                              productInfo: [],
+                              productInfo: widget.productResult
+                                  .map((e) => RegisterMarshopProduct(
+                                      productId: e.id, quantity: e.quantity))
+                                  .toList(),
                             ),
                           ),
-                        );
-                  },
-                  disabled: address == null && _addressCtrl.text.isNotEmpty,
-                  width: null,
-                ),
-                const SizedBox(height: 15),
-              ],
-            )),
-      ),
+                          pack: widget.pack,
+                          authInfo: widget.authInfo,
+                          marshop: widget.marshop,
+                          address: address!,
+                          productResult: widget.productResult,
+                          totalPrice: widget.totalPrice,
+                        ),
+                      );
+                    }
+                  });
+                },
+                disabled: address == null && _addressCtrl.text.isNotEmpty,
+                width: null,
+              ),
+              const SizedBox(height: 15),
+            ],
+          )),
     );
   }
 

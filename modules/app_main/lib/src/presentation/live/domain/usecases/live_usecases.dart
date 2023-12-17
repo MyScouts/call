@@ -86,4 +86,8 @@ class LiveUseCase {
   Future<Live> getListLivefollowing({required int page, required int pageSize, bool? isFriend}) {
     return _liveRepository.getListLivefollowing(page: page, pageSize: pageSize, isFriend: isFriend ?? false);
   }
+
+  Future<bool> invitePK(Map<String, dynamic> json) {
+    return _liveRepository.invitePK(json);
+  }
 }

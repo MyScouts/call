@@ -2,15 +2,14 @@
   import 'package:app_core/app_core.dart';
   import 'package:app_main/src/di/di.dart';
   import 'package:app_main/src/domain/entities/chat/member_model.dart';
-  import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
-  import 'package:app_main/src/presentation/call/call_1v1/call_1v1_coordinator.dart';
   import 'package:app_main/src/presentation/call/phone_book_detail/cubit/phone_book_detail_cubit.dart';
   import 'package:app_main/src/presentation/call/phone_book_detail/cubit/phone_book_detail_state.dart';
-  import 'package:app_main/src/presentation/call/widgets/avatar_caller_widget.dart';
   import 'package:app_main/src/presentation/call/widgets/call_button_widget.dart';
   import 'package:app_main/src/presentation/call/widgets/call_history_detail_widget.dart';
   import 'package:app_main/src/presentation/call/widgets/no_data_widget.dart';
   import 'package:app_main/src/presentation/call/widgets/video_call_button_widget.dart';
+  import 'package:app_main/src/presentation/call/call_coordinator.dart';
+  import 'package:app_main/src/presentation/call/models/call_1vs1_state_data.dart';
   import 'package:design_system/design_system.dart';
   import 'package:flutter/material.dart';
   import 'package:imagewidget/imagewidget.dart';
@@ -103,7 +102,7 @@
               ),
               kSpacingHeight12,
               Text(
-                widget.data.fullName ?? '',
+                widget.data.displayName ?? '',
                 style: context.textTheme.titleMedium!.copyWith(
                   fontSize: 16,
                   color: AppColors.black,
@@ -125,11 +124,8 @@
                   Expanded(
                     child: CallButtonWidget(
                       onTap: () async {
-                        await context.startCall(
-                          toUserId: widget.data.id.toString(),
-                          isVideo: false,
-                          fromUserId:
-                              getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id.toString(),
+                        await context.startCallById(
+                          participantID: widget.data.id,
                         );
                         _cubit.init(widget.data.id);
                       },
@@ -139,11 +135,9 @@
                   Expanded(
                     child: VideoCallButtonWidget(
                       onTap: () async {
-                         await context.startCall(
-                          toUserId: widget.data.id.toString(),
-                          isVideo: true,
-                          fromUserId:
-                              getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id.toString(),
+                         await context.startCallById(
+                           participantID: widget.data.id,
+                           callType: CallType.video
                         );
                         _cubit.init(widget.data.id);
                       },

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/domain/usecases/resource_usecase.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../data/models/payloads/community/update_community_payload.dart';
@@ -13,9 +14,11 @@ part 'edit_community_detail_state.dart';
 class EditCommunityDetailBloc
     extends Bloc<EditCommunityDetailEvent, EditCommunityDetailState> {
   final CommunityUsecase _communityUsecase;
+  final ResourceUsecase _resourceUsecase;
 
   EditCommunityDetailBloc(
     this._communityUsecase,
+    this._resourceUsecase,
     @factoryParam Community community,
   ) : super(EditCommunityDetailInitial(community)) {
     on<UserChangeAvatarEvent>(_mapUserChangeAvatarEvent);
@@ -28,7 +31,8 @@ class EditCommunityDetailBloc
       Emitter<EditCommunityDetailState> emit) async {
     try {
       emit(UserChangeAvatar(state.community, localImg: event.localImg));
-      final res = await _communityUsecase.uploadNewImage(event.localImg);
+      final res =
+          await _resourceUsecase.storageUploadUrl(event.localImg, "avatar");
 
       emit(
         UserChangeAvatarSuccess(state.community.copyWith(avatar: res),
@@ -43,7 +47,8 @@ class EditCommunityDetailBloc
       Emitter<EditCommunityDetailState> emit) async {
     try {
       emit(UserChangeBanner(state.community, localImg: event.localImg));
-      final res = await _communityUsecase.uploadNewImage(event.localImg);
+      final res =
+          await _resourceUsecase.storageUploadUrl(event.localImg, "banner");
 
       emit(
         UserChangeBannerSuccess(state.community.copyWith(banner: res),

@@ -8,10 +8,10 @@ part of 'confirm_response.dart';
 
 ConfirmResponse _$ConfirmResponseFromJson(Map<String, dynamic> json) =>
     ConfirmResponse(
-      result: json['result'] as bool?,
+      requestId: json['requestId'] as int,
     );
 
 Map<String, dynamic> _$ConfirmResponseToJson(ConfirmResponse instance) =>
     <String, dynamic>{
-      'result': instance.result,
+      'requestId': instance.requestId,
     };

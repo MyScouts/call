@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:app_main/src/presentation/live/presentation/live_home/live_home_screen.dart';
+import 'package:app_main/src/presentation/live/presentation/pk/invite/pk_invite_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
@@ -63,11 +64,18 @@ class LiveToolsSheet extends StatelessWidget {
                 crossAxisSpacing: 24,
                 childAspectRatio: 2 / 3,
                 children: [
-                  _Item(
-                    title: 'Chia sẻ',
-                    icon: Assets.icons_lives_share.svg(),
-                    action: () {},
-                  ),
+                  if (controller.info.pk == null)
+                    _Item(
+                      title: 'Mời DK',
+                      icon: Assets.icons_lives_pk.svg(),
+                      action: () {
+                        Navigator.of(context).pop();
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (_) => const PkInviteScreen(),
+                        );
+                      },
+                    ),
                   _Item(
                     title: 'Thu nhỏ',
                     icon: Assets.icons_lives_zoom_in.svg(),
@@ -79,23 +87,59 @@ class LiveToolsSheet extends StatelessWidget {
                     },
                   ),
                   _Item(
-                    title: 'Xoay Cam',
+                    title: 'Lật camera',
                     icon: Assets.icons_lives_switch_came.svg(),
                     action: controller.switchCamera,
                   ),
                   _Item(
-                    title: 'Mời PK',
-                    icon: Assets.icons_lives_pk.svg(),
-                    action: () {
-
-                    },
+                    title: 'Tắt hình',
+                    icon: Assets.icons_lives_turn_off_video.svg(),
+                    action: controller.enableVideo,
                   ),
                   _Item(
-                    title: 'MarShop',
-                    icon: Assets.icons_lives_marshop.svg(),
-                    action: () {
-
-                    },
+                    title: 'Mic',
+                    icon: Assets.icons_lives_turn_off_mic.svg(),
+                    action: controller.enableAudio,
+                  ),
+                  _Item(
+                    title: 'Làm đẹp',
+                    icon: Assets.icons_lives_beauty.svg(),
+                    action: () {},
+                  ),
+                  _Item(
+                    title: 'Bộ lọc',
+                    icon: Assets.icons_lives_filter.svg(),
+                    action: () {},
+                  ),
+                  _Item(
+                    title: 'Hiệu ứng',
+                    icon: Assets.icons_lives_hieuung.svg(),
+                    action: () {},
+                  ),
+                  _Item(
+                    title: 'Ghi hình',
+                    icon: Assets.icons_lives_record.svg(),
+                    action: () {},
+                  ),
+                  _Item(
+                    title: 'Gọi âm thanh',
+                    icon: Assets.icons_lives_call.svg(),
+                    action: () {},
+                  ),
+                  _Item(
+                    title: 'Gọi video',
+                    icon: Assets.icons_lives_call_video.svg(),
+                    action: () {},
+                  ),
+                  _Item(
+                    title: 'Tạo live nhóm',
+                    icon: Assets.icons_lives_live_group.svg(),
+                    action: () {},
+                  ),
+                  _Item(
+                    title: 'Chia sẻ',
+                    icon: Assets.icons_lives_share.svg(),
+                    action: () {},
                   ),
                 ],
               ),

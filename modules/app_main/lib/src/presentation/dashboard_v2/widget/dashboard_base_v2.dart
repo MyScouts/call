@@ -1,7 +1,7 @@
 import 'package:app_main/app_main.dart';
 import 'package:app_main/src/core/extensions/list_extension.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
-import 'package:app_main/src/presentation/community/community.component.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard_v2/widget/dash_ecom_leading.dart';
@@ -199,9 +199,29 @@ class DashboardCommunity extends DashboardBaseV2 {
           Positioned.fill(
             child: Row(
               children: [
-                Expanded(child: Container()),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      context.showToastMessage(
+                        'Tính năng đang được phát triển',
+                        ToastMessageType.warning,
+                      );
+                    },
+                    child: Container(),
+                  ),
+                ),
                 const SizedBox(width: 5),
-                Expanded(child: Container()),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      context.showToastMessage(
+                        'Tính năng đang được phát triển',
+                        ToastMessageType.warning,
+                      );
+                    },
+                    child: Container(),
+                  ),
+                ),
                 const SizedBox(width: 5),
                 Expanded(
                   child: GestureDetector(
@@ -217,7 +237,9 @@ class DashboardCommunity extends DashboardBaseV2 {
 }
 
 class DashboardPersonal extends DashboardBaseV2 {
-  const DashboardPersonal({super.key});
+  final BuildContext context;
+
+  const DashboardPersonal({super.key, required this.context});
 
   @override
   Widget get leading => const DashBoardPsLeading();
@@ -229,9 +251,17 @@ class DashboardPersonal extends DashboardBaseV2 {
   Widget get center => const DashboardPsCenter();
 
   @override
-  Widget get bottom => ImageWidget(
-        Assets.icons_dashboard_live_mock_2.path,
-        fit: BoxFit.fill,
+  Widget get bottom => GestureDetector(
+        onTap: () {
+          context.showToastMessage(
+            'Tính năng đang được phát triển',
+            ToastMessageType.warning,
+          );
+        },
+        child: ImageWidget(
+          Assets.icons_dashboard_live_mock_2.path,
+          fit: BoxFit.fill,
+        ),
       );
 
   @override
@@ -239,7 +269,9 @@ class DashboardPersonal extends DashboardBaseV2 {
 }
 
 class DashboardEco extends DashboardBaseV2 {
-  const DashboardEco({super.key});
+  final BuildContext context;
+
+  const DashboardEco({super.key, required this.context});
 
   @override
   Widget get leading => const DashBoardEcoLeading();
@@ -251,9 +283,17 @@ class DashboardEco extends DashboardBaseV2 {
   Widget get center => const DashEcoCenter();
 
   @override
-  Widget get bottom => ImageWidget(
-        Assets.icons_dashboard_live_mock_3.path,
-        fit: BoxFit.fill,
+  Widget get bottom => GestureDetector(
+        onTap: () {
+          context.showToastMessage(
+            'Tính năng đang được phát triển',
+            ToastMessageType.warning,
+          );
+        },
+        child: ImageWidget(
+          Assets.icons_dashboard_live_mock_3.path,
+          fit: BoxFit.fill,
+        ),
       );
 
   @override
@@ -265,7 +305,6 @@ final communityItems = <DashBoardItem>[
     id: 'ic_group',
     title: 'Group',
     backgroundImage: IconAppConstants.icGroupTeam,
-    path: CommunityWidget.routeName,
   ),
   DashBoardIconItem(
     id: 'ic_team',

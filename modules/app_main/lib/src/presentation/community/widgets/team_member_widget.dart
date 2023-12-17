@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/ui.dart';
 
@@ -15,6 +16,7 @@ class TeamMemberWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () => context.startDiary(userId: user.id.toString()),
       leading: AvatarWidget(avatar: user.avatar),
       contentPadding: EdgeInsets.zero,
       title: Text(

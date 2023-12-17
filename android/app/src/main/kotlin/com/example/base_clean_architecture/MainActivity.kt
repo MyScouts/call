@@ -1,4 +1,4 @@
-package com.app.vdone.staging
+package com.app.vdone
 
 import android.app.Activity
 import android.content.Intent

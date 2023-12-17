@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/chat/chat_room/chat_room_page.dart';
+import 'package:app_main/src/core/services/notifications/call_push_service_handler.dart';
+import 'package:app_main/src/data/models/responses/push_call_message_info.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -41,7 +44,12 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   debugPrint('[Push] Background message $message');
 
   final pnType = message.data['type'];
-  if (pnType is String && pnType == 'CALL_EVENT') {}
+  if (pnType is String && pnType == 'CALL_EVENT') {
+    unawaited(handleCallPN(
+      PushCallMessageInfo.fromJson(jsonDecode(message.data['data'])),
+      flutterLocalNotificationsPlugin,
+    ));
+  }
 }
 
 /// Create a [AndroidNotificationChannel] for heads up notifications
@@ -138,7 +146,8 @@ enum MessageTypeFB {
 @pragma('vm:entry-point')
 void _onDidReceiveLocalNotification(int id, String? title, String? body, String? payload) {}
 
-const AndroidNotificationDetails _androidNotificationDetails = AndroidNotificationDetails('channelId', 'channelName',
+const AndroidNotificationDetails _androidNotificationDetails = AndroidNotificationDetails(
+    'channelId', 'channelName',
     channelDescription: 'channelDescription',
     playSound: true,
     priority: Priority.high,
@@ -172,6 +181,9 @@ void showFlutterNotification(RemoteMessage message) {
     if (MyNavigatorObserver.listRoute.contains('/join_live')) {
       return;
     }
+  }
+  if(MyNavigatorObserver.listRoute.contains(ChatRoomPage.routeName)) {
+    return;
   }
   flutterLocalNotificationsPlugin.show(
     notification?.hashCode ?? 0,

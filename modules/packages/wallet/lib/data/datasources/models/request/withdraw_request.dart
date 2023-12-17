@@ -6,12 +6,12 @@ part 'withdraw_request.g.dart';
 class WithdrawRequest {
   final int bankAccountId;
   final num value;
-  final String fromSource;
+  final String otp;
 
   WithdrawRequest({
     required this.value,
     required this.bankAccountId,
-    required this.fromSource,
+    required this.otp,
   });
 
   factory WithdrawRequest.fromJson(Map<String, dynamic> json) =>

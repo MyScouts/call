@@ -252,26 +252,11 @@ enum TransactionValueType {
 enum TransactionResolvedStatus {
   failed,
   succeed,
+  rejected,
   pending;
-
-  static TransactionResolvedStatus getInstance(int val) {
-    return TransactionResolvedStatus.values
-        .firstWhere((element) => val == element.valInt);
-  }
 }
 
 extension TransactionStatusExt on TransactionResolvedStatus {
-  int get valInt {
-    switch (this) {
-      case TransactionResolvedStatus.pending:
-        return 0;
-      case TransactionResolvedStatus.succeed:
-        return 1;
-      case TransactionResolvedStatus.failed:
-        return 2;
-    }
-  }
-
   String get text {
     switch (this) {
       case TransactionResolvedStatus.pending:
@@ -280,6 +265,8 @@ extension TransactionStatusExt on TransactionResolvedStatus {
         return 'Thành công';
       case TransactionResolvedStatus.failed:
         return 'Thất bại';
+      case TransactionResolvedStatus.rejected:
+        return 'Bị từ chối';
     }
   }
 
@@ -290,6 +277,7 @@ extension TransactionStatusExt on TransactionResolvedStatus {
       case TransactionResolvedStatus.succeed:
         return const Color(0xFF00A65F);
       case TransactionResolvedStatus.failed:
+      case TransactionResolvedStatus.rejected:
         return const Color(0xFFDE372D);
     }
   }
@@ -308,6 +296,7 @@ enum TransactionType {
   DIAMOND_AVAILABLE('DIAMOND_AVAILABLE'),
   VND_AVAILABLE('VND_AVAILABLE'),
   REQUEST_WITHDRAW_VND('REQUEST_WITHDRAW_VND'),
+  LUCKY_WHEEL('LUCKY_WHEEL'),
   WITHDRAW_VND_COMPLETED('WITHDRAW_VND_COMPLETED');
 
   static TransactionType getInstance(String val) {
@@ -354,6 +343,8 @@ extension TransactionTypeExt on TransactionType {
         return 'Nhận từ ví VNĐ chờ duyệt';
       case TransactionType.WITHDRAW_VND_COMPLETED:
         return 'Rút tiền về tài khoản ngân hàng';
+      case TransactionType.LUCKY_WHEEL:
+        return 'Vòng quay may mắn';
     }
   }
 
@@ -384,6 +375,8 @@ extension TransactionTypeExt on TransactionType {
         return 'Rút tiền từ ví VNĐ';
       case TransactionType.WITHDRAW_VND_COMPLETED:
         return 'Rút tiền về tài khoản ngân hàng';
+      case TransactionType.LUCKY_WHEEL:
+        return 'Vòng quay may mắn';
     }
   }
 
@@ -418,6 +411,8 @@ extension TransactionTypeExt on TransactionType {
         return '-';
       case TransactionType.WITHDRAW_VND_COMPLETED:
         return '';
+      case TransactionType.LUCKY_WHEEL:
+        return '+';
     }
   }
 }

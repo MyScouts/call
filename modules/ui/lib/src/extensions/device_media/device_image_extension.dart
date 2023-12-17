@@ -1,3 +1,4 @@
+import 'package:app_core/app_core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:easy_device_media/device_media.dart';
 import 'package:flutter/foundation.dart';
@@ -32,16 +33,19 @@ extension DeviceImageExtension on BuildContext {
     return pickedImage<T?>(DeviceMediaSource.camera, needCrop: needCrop);
   }
 
-  Future<T?> showUpdateCover<T>() async {
-    return showModelUpdatePhoto<T?>(CropType.rectangle);
+  Future<T?> showUpdateCover<T>({String? title}) async {
+    return showModelUpdatePhoto<T?>(CropType.rectangle, title: title);
   }
 
-  Future<T?> showUpdateAvatar<T>() async {
-    return showModelUpdatePhoto<T?>(CropType.circle);
+  Future<T?> showUpdateAvatar<T>({String? title}) async {
+    return showModelUpdatePhoto<T?>(CropType.circle, title: title);
   }
 
-  Future<T?> showModelUpdatePhoto<T>(CropType type,
-      {bool useCrop = true}) async {
+  Future<T?> showModelUpdatePhoto<T>(
+    CropType type, {
+    bool useCrop = true,
+    String? title,
+  }) async {
     return showModalBottomSheet<T?>(
       context: this,
       barrierColor: Colors.black26,
@@ -53,6 +57,35 @@ extension DeviceImageExtension on BuildContext {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                if (title != null)
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Expanded(
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: CloseButton(),
+                        ),
+                      ),
+                      Expanded(
+                          child: Text(
+                        title,
+                        style: context.textTheme.titleMedium,
+                      )),
+                      const Expanded(child: SizedBox()),
+                    ],
+                  ),
+                if (title != null) const Divider(),
+                ListTile(
+                  onTap: () {
+                    pickedImage(DeviceMediaSource.camera, needCrop: useCrop)
+                        .then((value) => Navigator.of(context).pop(value));
+                  },
+                  leading: const Icon(Icons.photo_camera_outlined),
+                  title: Text(S.of(context).lbl_Camera),
+                  minLeadingWidth: 0,
+                ),
                 ListTile(
                   onTap: () {
                     pickedImage(
@@ -63,15 +96,6 @@ extension DeviceImageExtension on BuildContext {
                   },
                   leading: const Icon(Icons.photo_outlined),
                   title: Text(S.of(context).lbl_Gallery),
-                  minLeadingWidth: 0,
-                ),
-                ListTile(
-                  onTap: () {
-                    pickedImage(DeviceMediaSource.camera, needCrop: useCrop)
-                        .then((value) => Navigator.of(context).pop(value));
-                  },
-                  leading: const Icon(Icons.photo_camera_outlined),
-                  title: Text(S.of(context).lbl_Camera),
                   minLeadingWidth: 0,
                 ),
               ],
@@ -217,7 +241,8 @@ extension DeviceImageExtension on BuildContext {
                       (value) => Navigator.of(this).pop(value),
                     );
                   },
-                  leading: CircleImageWidget(IconAppConstants.camera2, radius: 22),
+                  leading:
+                      CircleImageWidget(IconAppConstants.camera2, radius: 22),
                   title: const Text('Sử dụng camera'),
                   horizontalTitleGap: 10,
                   contentPadding: EdgeInsets.zero,
@@ -230,7 +255,8 @@ extension DeviceImageExtension on BuildContext {
                       cropType: type,
                     ).then((value) => Navigator.of(this).pop(value));
                   },
-                  leading: CircleImageWidget(IconAppConstants.gallery, radius: 22),
+                  leading:
+                      CircleImageWidget(IconAppConstants.gallery, radius: 22),
                   title: const Text('Chọn ảnh từ thư viện'),
                   horizontalTitleGap: 10,
                   contentPadding: EdgeInsets.zero,

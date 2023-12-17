@@ -1,6 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/extensions/string_extension.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +11,6 @@ import 'package:ui/ui.dart';
 
 import '../../../../data/models/payloads/upgrade_account/upgrade_pdone/pdone_verify_protector.dart';
 import '../../../../domain/entities/update_account/update_pdone_birth_place_payload.dart';
-import '../../../../domain/entities/update_account/update_place_information_payload.dart';
 import '../../../../domain/entities/update_account/update_profile_payload.dart';
 import '../../../shared/extensions/validation_extension.dart';
 import '../../upgrade_account_constants.dart';
@@ -133,7 +133,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       firstName: firstNameCtrl.text,
       lastName: lastNameCtrl.text,
       middleName: middleNameCtrl.text,
-      nickname: nickNameCtrl.text,
+      nickName: nickNameCtrl.text,
       sex: gender,
       birthday: birthDay?.toYYYYmmdd ?? '',
       identityNumber: identifyNumberCtrl.text,
@@ -205,6 +205,12 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       identifyNumberCtrl.text = eKycData['id'] ?? '';
       final nameArr = eKycData['name'].toString().split(" ");
 
+      if (nameArr.length > 3) {
+        firstNameCtrl.text = nameArr[0];
+        middleNameCtrl.text = nameArr.sublist(1, nameArr.length - 1).join(" ");
+        lastNameCtrl.text = nameArr[nameArr.length - 1];
+      }
+
       if (nameArr.length == 3) {
         firstNameCtrl.text = nameArr[0];
         middleNameCtrl.text = nameArr[1];
@@ -233,10 +239,15 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       birthDay = eKycData['birth_day'].toString().parseDateTime();
       supplyDate = eKycData['issue_date'].toString().parseDateTime();
       expiryDate = eKycData['valid_date'].toString().parseDateTime();
-      if (DateTime.now().year - (birthDay?.year ?? 0) >= 18) {
+
+      final age = DateTime.now().year - (birthDay?.year ?? 0);
+      if (age >= 18) {
         pDoneAPICaller = PDoneAPICaller.adult;
         // pDoneAPICaller = PDoneAPICaller.teenager;
       } else {
+        if (age <= 15) {
+          return context.pop();
+        }
         pDoneAPICaller = PDoneAPICaller.teenager;
         // pDoneAPICaller = PDoneAPICaller.adult;
       }
@@ -329,7 +340,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                       required: true,
                       controller: nickNameCtrl,
                       onChanged: (value) =>
-                          onUpdatePayload(payload.copyWith(nickname: value)),
+                          onUpdatePayload(payload.copyWith(nickName: value)),
                       type: UpdateInformationType.nickName,
                       validator: (value) => context.validateEmptyInfo(
                         nickNameCtrl.text,
@@ -342,12 +353,6 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                       label: UpdateInformationType.birthDay.title(context),
                       child: InputDateTimeWidget(
                         hintText: 'Ngày sinh',
-                        // validator: (value) {
-                        //   return context.validateEmptyInfo(
-                        //     bpProvinceCtrl.text,
-                        //     'Vui lòng nhập ngày sinh',
-                        //   );
-                        // },
                         useHorizontalLayout: true,
                         enabled: pDoneOptionMethod !=
                             PDoneOptionMethod.userIdentityCard,
@@ -356,7 +361,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                         formatText: (date) => S
                             .of(context)
                             .formatDateDDmmYYYYhhMM(date, date)
-                            .split('|')
+                            .split(' ')
                             .first,
                         max: maxBirthDay,
                         onChange: (dateTime) {
@@ -367,6 +372,9 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
 
                     /// Giới tính - Ngày sinh
                     GenderInput(
+                      initVal: gender.toGender(),
+                      disabled: pDoneOptionMethod ==
+                          PDoneOptionMethod.userIdentityCard,
                       onChange: (sex) {
                         if (sex != null) {
                           gender = sex;
@@ -485,11 +493,9 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                                         countryName: 'VN',
                                         countryCode: '',
                                         address: birthPlaceAddressCtrl.text,
-                                        provinceName:
-                                            birthPlace?.province?.name ?? '',
-                                        districtName:
-                                            birthPlace?.district?.name,
-                                        wardName: birthPlace?.ward?.name),
+                                        provinceName: value.provinceName ?? '',
+                                        districtName: value.districtName ?? '',
+                                        wardName: value.wardName ?? ''),
                                   ),
                                 );
                               },
@@ -554,7 +560,7 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
                                     formatText: (date) => S
                                         .of(context)
                                         .formatDateDDmmYYYYhhMM(date, date)
-                                        .split('|')
+                                        .split(' ')
                                         .first,
                                     max: DateTime.now(),
                                     onChange: (dateTime) {

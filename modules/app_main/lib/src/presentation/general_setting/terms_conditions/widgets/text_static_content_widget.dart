@@ -25,7 +25,11 @@ class TextStaticContentWidget extends StatelessWidget {
               children: [
                 Text(
                   e['title'].toString(),
-                  style: Theme.of(context).textTheme.headlineLarge,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: const Color(0xFF373737),
+                    height: 1.6,
+                  ),
                 ),
                 if (e['content'] != null)
                   Text(

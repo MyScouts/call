@@ -18,11 +18,14 @@ import 'package:injectable/injectable.dart';
 import 'package:app_core/app_core.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'application.dart';
 import 'config/app_config_service.dart';
+import 'core/services/notifications/call_push_service_handler.dart';
 import 'core/services/notifications/notification_service.dart';
 import 'core/services/notifications/push_notification_service.dart';
 import 'di/di.dart';
+import 'presentation/call/stringee_bloc/stringee_bloc.dart';
 
 abstract class IAppDelegate {
   Future<Widget> build(Map<String, dynamic> env);
@@ -34,6 +37,8 @@ abstract class IAppDelegate {
   DeviceService get deviceService => injector.get();
 
   GlobalKey<NavigatorState> get root => AppCoordinatorCore.root;
+
+  SharedPreferences get sharedPreferences => injector.get();
 
   void reset() {
     injector.reset();
@@ -61,30 +66,23 @@ class AppDelegate extends IAppDelegate {
     Configurations().setConfigurationValues(env);
     await configureDependencies(environment: Environment.prod);
     final savedThemeMode = await AdaptiveTheme.getThemeMode();
-
+    await sharedPreferences.setString(keyEndpoint, Configurations.baseUrl);
     if (isMobile) {
-      /// CONFIG NOTIFICATION
-      /// Set the background messaging handler early on,
-      /// as a named top-level function
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
       await setupFlutterNotifications();
-      // if (Configurations.isProduction) {
-      //   FirebaseMessaging.onBackgroundMessage(
-      //       firebaseMessagingBackgroundHandler);
-      //   await setupFlutterNotifications();
-      // }
 
-      unawaited(SystemChrome.setPreferredOrientations(
-          [DeviceOrientation.portraitUp]));
+      unawaited(SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+      ]));
       unawaited(deviceService.setStatusBar());
       unawaited(deviceService.updateNavigationBarColors(false));
     }
 
     String initialRoute = SplashScreen.routeName;
     if (userSharePreferencesUsecase.isAuthenticated) {
-      await AppConfigService.init();
+      injector.get<AuthCubit>().autoLogin();
+      unawaited(AppConfigService.init());
       isAuthenticate.add(true);
-      // initialRoute = DashBoardScreen.routeName;
     }
 
     if (Configurations.isStudio) {
@@ -103,6 +101,7 @@ class AppDelegate extends IAppDelegate {
         BlocProvider<AppCubit>(create: (_) => injector.get()),
         Provider<LiveChannelController>(create: (_) => getIt()),
         BlocProvider<LiveMessageBloc>(create: (_) => getIt()),
+        BlocProvider<StringeeBloc>(create: (context) => injector.get()),
       ],
       savedThemeMode: savedThemeMode,
       initialRoute: initialRoute,

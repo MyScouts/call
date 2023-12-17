@@ -1,7 +1,7 @@
-import 'dart:io';
-
+import 'package:app_main/src/data/models/payloads/resource/resource_payload.dart';
 import 'package:app_main/src/data/models/responses/resource_response.dart';
 import 'package:app_main/src/domain/repository/resource_repository.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data_sources/remote/resource_api.dart';
@@ -15,44 +15,29 @@ class ResourceRepositoryImpl extends ResourceRepository {
   );
 
   @override
-  Future<String> uploadImage(File file) async {
-    final result = await _resourceApi.uploadImage(file);
-
-    return result.data['filename'];
-  }
-
-  @override
-  Future<String> uploadVideo(File file) async {
-    final result = await _resourceApi.uploadVideo(file);
-
-    return result.data['filename'];
-  }
-
-  @override
-  Future<String> uploadFile(File file) async {
-    final result = await _resourceApi.uploadFile(file);
-
-    return result.data['filename'];
-  }
-
-  @override
   Future<VersionResponse?> latestVersion({required String type}) async {
     final response = await _resourceApi.latestVersion(type: type);
     return response.appVersion;
   }
 
-  // @override
-  // Future<List<MediaModel>> getMedias(
-  //   String role,
-  //   String type,
-  //   String category,
-  // ) async {
-  //   final result = await _resourceApi.getMedias(
-  //     role: role,
-  //     type: type,
-  //     category: category,
-  //   );
-  //
-  //   return result.data;
-  // }
+  @override
+  Future<GlobalSettingResponse> getGlobalConfig({required String key}) {
+    return _resourceApi.getGlobalSetting(key);
+  }
+
+  @override
+  Future<GlobalPersonResponse> getGlobalPersonSetting({required int userId}) {
+    return _resourceApi.getGlobalPeronSetting(userId);
+  }
+
+  @override
+  Future<String> storageUploadUrl(XFile xFile, String prefix) async {
+    final res = await _resourceApi.storageUploadUrl(xFile, prefix);
+    return res;
+  }
+
+  @override
+  Future<RenderPDFResponse> renderPDF(RenderPDFPayload payload) {
+    return _resourceApi.renderPDF(payload.toJson());
+  }
 }

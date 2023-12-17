@@ -34,6 +34,7 @@ export 'src/expandable_fab/expandable_fab.dart';
 /// extensions
 export 'src/extensions/device_media/device_image_extension.dart';
 export 'src/extensions/device_media/picked_file.dart';
+export 'src/input/custom_radio_title.dart';
 export 'src/input/date_time_widget.dart';
 export 'src/input/infomation_layout_field_widget.dart';
 export 'src/input/information_field_widget.dart';
@@ -56,8 +57,13 @@ export 'src/social/avatar_widget.dart';
 export 'src/text/read_more_hashtag_widget.dart';
 export 'src/text/read_more_widget.dart';
 export 'src/text/requirement_check_list_widget.dart';
+//ticker
+export 'src/ticket/ticker_builder_widget.dart';
+export 'src/ticket/ticket_widget.dart';
 //video
 export 'src/video/common_video_player.dart';
+export 'src/video/custom_video_player.dart';
+export 'src/video/thumbnail_video_player.dart';
 export 'src/widget/app_avatar_widget.dart';
 export 'src/widget/empty_data/empty_data_widget.dart';
 export 'src/widget/empty_data/emptydata_list_widget.dart';

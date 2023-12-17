@@ -167,4 +167,11 @@ class AuthRepositoryImpl extends UserRepository {
   Future replyFollowRequest(ReplyFollowPayload payload) {
     return _userAPI.replyRequest(payload);
   }
+
+  @override
+  Future<User?> getUserPublicInfo({required int id}) async {
+    final res = await _userAPI.getUserPublicInfo(id: id);
+
+    return res.user;
+  }
 }

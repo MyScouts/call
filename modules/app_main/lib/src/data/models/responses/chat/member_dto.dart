@@ -6,7 +6,15 @@ part 'member_dto.g.dart';
 class MemberDto extends MemberModel {
   factory MemberDto.fromJson(Map<String, dynamic> json) => _$MemberDtoFromJson(json);
 
-  MemberDto({required this.avatar, required this.birthday, required this.displayName, required this.fullName, required this.id, required this.pDoneId, required this.sexCode});
+  MemberDto(
+      {required this.avatar,
+      required this.type,
+      required this.birthday,
+      required this.displayName,
+      required this.fullName,
+      required this.id,
+      required this.pDoneId,
+      required this.sexCode});
 
   Map<String, dynamic> toJson() => _$MemberDtoToJson(this);
 
@@ -30,4 +38,7 @@ class MemberDto extends MemberModel {
 
   @override
   final int? sexCode;
+
+  @override
+  final int? type;
 }

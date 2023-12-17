@@ -8,7 +8,6 @@ import 'package:app_main/src/data/models/responses/confirm_register_ja_response.
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
 import 'package:app_main/src/presentation/settings/widget/item_setting_widget.dart';
-import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
@@ -17,6 +16,7 @@ import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
 
+import '../social/my_profile/screens/my_profile_screen.dart';
 import '../upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -33,13 +33,14 @@ class _SettingScreenState extends State<SettingScreen> {
   late User _authInfo;
   OnBoarding? _onboarding;
   PackageInfo? currentPackageInfo;
+  User? _userPublicInfo;
 
   @override
   void initState() {
     super.initState();
     _authInfo = userCubit.currentUser!;
     userCubit.onboarding();
-    userCubit.fetchUser();
+    userCubit.getUserPublicInfo(userCubit.currentUser!.id!);
   }
 
   @override
@@ -62,6 +63,16 @@ class _SettingScreenState extends State<SettingScreen> {
               }
               if (state is OnboardingSuccess) {
                 _onboarding = state.onboarding;
+                Future.delayed(const Duration(milliseconds: 200)).then((value) {
+                  setState(() {});
+                });
+                userCubit.fetchUser();
+              }
+              if (state is GetUserPublicInfoSuccess) {
+                _userPublicInfo = state.user;
+                Future.delayed(const Duration(milliseconds: 200)).then((value) {
+                  setState(() {});
+                });
               }
             },
           ),
@@ -110,7 +121,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 children: [
                   _buildSession1(),
                   const SizedBox(height: 10),
-                  _buildSearch(),
+                  // _buildSearch(),
                   const SizedBox(height: 10),
                   _buildSessionMenus(),
                   _buildVersion(),
@@ -133,6 +144,7 @@ class _SettingScreenState extends State<SettingScreen> {
         user: userCubit.currentUser?.copyWith(
           isJA: _onboarding?.isJA,
           isPDone: _onboarding?.isPdone ?? false,
+          birthday: _userPublicInfo?.birthday,
         ),
       );
     } else if (state is GetDetailError) {
@@ -210,9 +222,7 @@ class _SettingScreenState extends State<SettingScreen> {
       children: Setting.session1Menus(
         context,
         user: userCubit.currentUser,
-        onUpdate: () {
-          userCubit.onboarding();
-        },
+        onUpdate: () => userCubit.onboarding(),
         onboarding: _onboarding,
         osType: currentPlatformName,
         isProduction: Configurations.isProduction,
@@ -222,7 +232,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   _buildSession1() {
     return GestureDetector(
-      onTap: () => context.startDiary(userId: _authInfo.id.toString()),
+      onTap: () => Navigator.pushNamed(context, MyProfileScreen.routeName),
       child: Container(
         padding: const EdgeInsets.symmetric(
           vertical: 15,

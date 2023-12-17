@@ -21,7 +21,11 @@ class UserUsecase {
 
   Future<User?> geSynctUserById(int id) async {
     final user = await _userRepository.getUserById(id: id);
-    // unawaited(_chatUsecase.updateUserInfo(user));
+    return user;
+  }
+
+  Future<User?> getUserPublicInfo(int id) async {
+    final user = await _userRepository.getUserPublicInfo(id: id);
     return user;
   }
 

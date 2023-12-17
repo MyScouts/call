@@ -55,6 +55,7 @@ class _RegisterMarshopPackScreenState extends State<RegisterMarshopPackScreen> {
                   pack: _pack!,
                   authInfo: widget.authInfo,
                   marshop: widget.marshop,
+
                 ),
                 disabled: _pack == null,
                 width: null,

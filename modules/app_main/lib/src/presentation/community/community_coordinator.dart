@@ -13,42 +13,35 @@ import 'package:app_main/src/presentation/community/team_detail/pages/team_reque
 import 'package:app_main/src/presentation/community/team_detail/pages/update_team_options_screen.dart';
 import 'package:app_main/src/presentation/community/widgets/ask_asign_boss_modal.dart';
 import 'package:app_main/src/presentation/community/widgets/assign_boss_modal.dart';
+import 'package:app_main/src/presentation/community/widgets/confirm_group_team_contract_dialog.dart';
 import 'package:app_main/src/presentation/community/widgets/request_waitting_modal.dart';
 import 'package:app_main/src/presentation/community/widgets/revoke_boss_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
+import 'package:wallet/core/core.dart';
 
 import 'community_constants.dart';
 import 'edit_community_detail/edit_community_detail_screen.dart';
-import 'edit_fan_group/edit_fan_group_screen.dart';
-import 'fan_group_detail/fan_group_detail_screen.dart';
 import 'group_detail/group_detail_screen.dart';
 import 'group_detail/group_request_list_screen.dart';
+import 'group_detail/register_boss_group_screen.dart';
+import 'group_detail/request_boss_group_otp_screen.dart';
 import 'team_detail/pages/ask_to_join_team_screen.dart';
 import 'team_detail/team_detail_screen.dart';
+import 'widgets/ask_join_team_dialog.dart';
+import 'widgets/create_open_group_request_success_dialog.dart';
 
 extension CommunityCoordinator on BuildContext {
-  Future<T?> startGroupDetail<T>(
-      {required String? id, String? groupName, String? cover}) {
-    // if (!isAuthenticated) {
-    //   return startLogin<T>(hasDashboard: true);
-    // }
-
+  Future<T?> startGroupDetail<T>({required String? id}) {
     return Navigator.of(this)
         .pushNamed(GroupDetailScreen.routeName, arguments: {
       'id': id,
-      'groupName': groupName,
-      'cover': cover,
     });
   }
 
   Future<T?> startTeamDetail<T>(
       {required String? id, String? name, int? bossGroupId}) {
-    // if (!isAuthenticated) {
-    //   return startLogin<T>(hasDashboard: true);
-    // }
-
     return Navigator.of(this).pushNamed(TeamDetailScreen.routeName, arguments: {
       'id': id,
       'name': name,
@@ -74,20 +67,6 @@ extension CommunityCoordinator on BuildContext {
         .pushNamed(EditCommunityDetailScreen.routeName, arguments: {
       'community': community,
       'type': type,
-    });
-  }
-
-  Future<T?> startFanGroupDetail<T>(FanGroup fanGroup) {
-    return Navigator.of(this)
-        .pushNamed(FanGroupDetailScreen.routeName, arguments: {
-      'fanGroup': fanGroup,
-    });
-  }
-
-  Future<T?> startEditFanGroup<T>(FanGroup fanGroup) {
-    return Navigator.of(this)
-        .pushNamed(EditFanGroupScreen.routeName, arguments: {
-      'fanGroup': fanGroup,
     });
   }
 
@@ -403,5 +382,58 @@ extension CommunityCoordinator on BuildContext {
 
   Future<T?> startCommunityNotification<T>() {
     return Navigator.of(this).pushNamed(CommunityNotificationScreen.routeName);
+  }
+
+  Future<T?> startRegisterBossGroup<T>() {
+    return Navigator.of(this).pushNamed(RegisterBossGroupScreen.routeName);
+  }
+
+  Future<T?> startRequestBossGroupOtp<T>() {
+    return Navigator.of(this).pushNamed(RequestBossGroupOtpScreen.routeName);
+  }
+
+  Future<T?> startConfirmContract<T>() {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierLabel: '',
+      barrierDismissible: true,
+      pageBuilder: (context, animation1, animation2) {
+        return ConfirmGroupTeamDialog(
+          onAction: () => startRequestBossGroupOtp().then((value) {
+            if (value == true) {
+              startDialogRegisterSuccess();
+            }
+          }),
+        );
+      },
+    );
+  }
+
+  Future<T?> startDialogRegisterSuccess<T>() {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierLabel: '',
+      barrierDismissible: true,
+      pageBuilder: (context, animation1, animation2) {
+        return CreateOpenGroupRequestSuccessDialog(
+          onAction: () {
+            popNavigator();
+          },
+        );
+      },
+    );
+  }
+
+  Future<T?> startAskJoinTeamSuccess<T>({required VoidCallback onAction}) {
+    return showGeneralDialog<T>(
+      context: this,
+      barrierDismissible: false,
+      barrierLabel: '',
+      pageBuilder: (context, animation1, animation2) {
+        return AskJoinTeamDialog(
+          onCancel: onAction,
+        );
+      },
+    );
   }
 }

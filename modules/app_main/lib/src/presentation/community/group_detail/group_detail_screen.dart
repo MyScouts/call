@@ -3,7 +3,6 @@ import 'package:app_main/src/app_dimens.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/community/community_coordinator.dart';
-import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
@@ -21,6 +20,7 @@ class GroupDetailScreen extends StatefulWidget {
   final String id;
 
   static const String routeName = '/groups';
+  static final myId = injector<UserCubit>().currentUser?.id;
 
   @override
   State<GroupDetailScreen> createState() => _GroupDetailScreenState();
@@ -90,7 +90,7 @@ class _GroupDetailScreenState extends State<GroupDetailScreen> {
 }
 
 class _GroupTeam extends StatelessWidget {
-  const _GroupTeam({super.key});
+  const _GroupTeam();
 
   @override
   Widget build(BuildContext context) {
@@ -123,17 +123,24 @@ class _GroupTeam extends StatelessWidget {
 }
 
 class _TeamCard extends StatelessWidget {
-  const _TeamCard({super.key, required this.team});
+  const _TeamCard({required this.team});
 
   final Team team;
 
   @override
   Widget build(BuildContext context) {
+    bool isBossTeam = GroupDetailScreen.myId == team.boss?.id;
+    final bloc = context.watch<GroupDetailBloc>();
+    final group = (bloc.state as FetchGroupDetailSuccess).group;
+    bool isBossGroup = GroupDetailScreen.myId == group.boss?.id;
+
     return GestureDetector(
-      onTap: () => context.startTeamDetail(
-        id: team.id,
-        name: team.name,
-      ),
+      onTap: () => isBossGroup || isBossTeam
+          ? context.startTeamDetail(
+              id: team.id,
+              name: team.name,
+            )
+          : null,
       child: Container(
         padding: const EdgeInsets.all(12.0),
         decoration: BoxDecoration(
@@ -238,11 +245,13 @@ class _TeamCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Text(
+                Text(
                   'Khám phá',
                   style: TextStyle(
                     fontSize: 12,
-                    color: Color(0xff4B84F7),
+                    color: isBossGroup || isBossTeam
+                        ? const Color(0xff4B84F7)
+                        : const Color(0xffACACAC),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -256,7 +265,7 @@ class _TeamCard extends StatelessWidget {
 }
 
 class _GroupDescription extends StatelessWidget {
-  const _GroupDescription({super.key});
+  const _GroupDescription();
 
   @override
   Widget build(BuildContext context) {
@@ -267,7 +276,7 @@ class _GroupDescription extends StatelessWidget {
 }
 
 class _BossGroup extends StatelessWidget {
-  const _BossGroup({super.key});
+  const _BossGroup();
 
   @override
   Widget build(BuildContext context) {
@@ -324,7 +333,7 @@ class _BossGroup extends StatelessWidget {
 }
 
 class _CmGroupBasics extends StatelessWidget {
-  const _CmGroupBasics({super.key});
+  const _CmGroupBasics();
 
   @override
   Widget build(BuildContext context) {
@@ -443,7 +452,7 @@ class _CmOverviewHeaderDelegate extends SliverPersistentHeaderDelegate {
 }
 
 class _Avatar extends StatelessWidget {
-  const _Avatar({super.key});
+  const _Avatar();
 
   @override
   Widget build(BuildContext context) {
@@ -484,7 +493,7 @@ class _Avatar extends StatelessWidget {
 }
 
 class _TopBarRightButtons extends StatelessWidget {
-  const _TopBarRightButtons({super.key});
+  const _TopBarRightButtons();
 
   @override
   Widget build(BuildContext context) {
@@ -498,9 +507,15 @@ class _TopBarRightButtons extends StatelessWidget {
     if (canEdit) {
       content = GestureDetector(
         onTap: () {
-          context.startUpdateGroupOptions(
+          context
+              .startUpdateGroupOptions(
             community: Community.copyWithGroup(group),
-          );
+          )
+              .then((value) {
+            if (value) {
+              bloc.add(FetchGroupDetailEvent(group.id!));
+            }
+          });
         },
         behavior: HitTestBehavior.opaque,
         child: Padding(
@@ -521,7 +536,7 @@ class _TopBarRightButtons extends StatelessWidget {
 }
 
 class _TopBarBackButton extends StatelessWidget {
-  const _TopBarBackButton({super.key});
+  const _TopBarBackButton();
 
   @override
   Widget build(BuildContext context) {
@@ -543,7 +558,7 @@ const appBgGradient = LinearGradient(
 );
 
 class _CollapsedTopBar extends StatelessWidget {
-  const _CollapsedTopBar({super.key});
+  const _CollapsedTopBar();
 
   @override
   Widget build(BuildContext context) {
@@ -601,15 +616,13 @@ class _CollapsedTopBar extends StatelessWidget {
 }
 
 class _GroupBanner extends StatelessWidget {
-  const _GroupBanner({super.key});
+  const _GroupBanner();
 
   @override
   Widget build(BuildContext context) {
     final group =
         (context.watch<GroupDetailBloc>().state as FetchGroupDetailSuccess)
             .group;
-    final imageWidth = (screenWidth * pixelRatio).round();
-
     if (group.banner == null || group.banner!.isEmpty) {
       return ImageWidget(
         ImageConstants.imgDefaultTeamBanner,

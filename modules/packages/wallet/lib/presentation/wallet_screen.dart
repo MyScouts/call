@@ -30,7 +30,7 @@ class _WalletScreenState extends State<WalletScreen> {
 
   @override
   void initState() {
-    bloc.add(const WalletEvent.getWalletInfo());
+    bloc.add(const WalletEvent.getOnboarding());
     super.initState();
   }
 
@@ -45,8 +45,19 @@ class _WalletScreenState extends State<WalletScreen> {
       backgroundColor: WalletTheme.bgColor,
       extendBodyBehindAppBar: true,
       body: AutoHideKeyboard(
-        child: BlocBuilder<WalletBloc, WalletState>(
+        child: BlocConsumer<WalletBloc, WalletState>(
           bloc: bloc,
+          listener: (context, state) {
+            state.whenOrNull(
+              getOnboardingSuccess: (data) {
+                bloc.add(const WalletEvent.getWalletInfo());
+                WalletInjectedData.setUser = WalletInjectedData.user.copyWith(
+                  isJA: data.isJA,
+                  isPDone: data.isPdone ?? false,
+                );
+              },
+            );
+          },
           buildWhen: (previous, current) =>
               current.whenOrNull(
                 getWalletInfoSuccess: (walletInfo) => true,
@@ -64,7 +75,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       children: [
                         ImageWidget(ImageConstants.imgWalletHeader),
                         Positioned(
-                          top: MediaQuery.of(context).padding.top + 50,
+                          top: MediaQuery.of(context).padding.top + 5,
                           left: 0,
                           right: 0,
                           child: Center(
@@ -82,7 +93,7 @@ class _WalletScreenState extends State<WalletScreen> {
                           ),
                         ),
                         Positioned(
-                          top: MediaQuery.of(context).padding.top + 50,
+                          top: MediaQuery.of(context).padding.top + 5,
                           right: 20,
                           child: GestureDetector(
                             onTap:
@@ -95,7 +106,7 @@ class _WalletScreenState extends State<WalletScreen> {
                           child: Padding(
                             padding: EdgeInsets.fromLTRB(
                               20,
-                              MediaQuery.of(context).padding.top + 50 + 65,
+                              MediaQuery.of(context).padding.top + 60,
                               20,
                               20,
                             ),

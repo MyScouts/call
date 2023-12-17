@@ -7,20 +7,22 @@ import 'package:app_main/src/core/socket/chat_socket.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_cubit.dart';
 import 'package:app_main/src/presentation/chat/conversation/cubit/conversation_cubit.dart';
+import 'package:app_main/src/presentation/chat/conversation/conversation_page.dart';
 import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
 import 'package:app_main/src/presentation/routes.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:localization/localization.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'app_dimens.dart';
+import 'app_scaffold.dart';
 import 'app_size.dart';
 import 'core/coordinator/app_coordinator.dart';
 import 'core/utils/toast_message/toast_message.dart';
+import 'presentation/chat/chat_room/chat_room_page.dart';
 import 'presentation/notification/notification_coordinator.dart';
 
 class Application extends StatefulWidget {
@@ -46,7 +48,8 @@ class Application extends StatefulWidget {
   State<Application> createState() => _ApplicationState();
 }
 
-class _ApplicationState extends State<Application> with WidgetsBindingObserver, NotificationMixin {
+class _ApplicationState extends State<Application>
+    with WidgetsBindingObserver, NotificationMixin {
   Widget _buildMaterialApp({
     required Locale? locale,
     ThemeData? light,
@@ -89,7 +92,7 @@ class _ApplicationState extends State<Application> with WidgetsBindingObserver, 
               return Material(
                 child: Stack(
                   children: [
-                    toastBuilder(context, child!),
+                    toastBuilder(context, AppScaffold(child: child!)),
                     Obx(() {
                       if (PipHandler.showPip.value) {
                         return PipHandler.pipView;
@@ -127,9 +130,13 @@ class _ApplicationState extends State<Application> with WidgetsBindingObserver, 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-    //   ChatSocket().connect();
-      getIt.get<ConversationCubit>().loadNewConversation();
-      getIt.get<ChatRoomCubit>().loadMessages();
+      //   ChatSocket().connect();
+      if (MyNavigatorObserver.listRoute.contains(ChatRoomPage.routeName)) {
+        getIt.get<ChatRoomCubit>().loadMessages();
+      } else if (MyNavigatorObserver.listRoute
+          .contains(ConversationPage.routeName)) {
+        getIt.get<ConversationCubit>().loadNewConversation();
+      }
     }
     // else if (state == AppLifecycleState.paused) {
     //   ChatSocket().disconnect();
@@ -164,7 +171,8 @@ class _ApplicationState extends State<Application> with WidgetsBindingObserver, 
 
   @override
   void onListenerOpenNotification(Map<String, dynamic> notification) {
-    AppCoordinator.rootNavigator.currentContext?.startOpenNotification(notification);
+    AppCoordinator.rootNavigator.currentContext
+        ?.startOpenNotification(notification);
   }
 
   @override
@@ -176,7 +184,8 @@ final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 class MyNavigatorObserver extends NavigatorObserver {
   static List<Route<dynamic>> routeStack = [];
 
-  static List<String> get listRoute => routeStack.map((e) => e.settings.name ?? 'null').toList();
+  static List<String> get listRoute =>
+      routeStack.map((e) => e.settings.name ?? 'null').toList();
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {

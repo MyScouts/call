@@ -20,11 +20,13 @@ class RegisterCustomerPayload {
 
 @JsonSerializable()
 class RegisterMarshopPayload {
+  final String otp;
   final int packId;
   final int referralId;
   final RegisterMarshopBillInfo billInfo;
 
   RegisterMarshopPayload({
+    required this.otp,
     required this.packId,
     required this.referralId,
     required this.billInfo,
@@ -56,7 +58,7 @@ class RegisterMarshopBillInfo {
 
 @JsonSerializable()
 class RegisterMarshopProduct {
-  final int productId;
+  final String productId;
   final int quantity;
 
   RegisterMarshopProduct({

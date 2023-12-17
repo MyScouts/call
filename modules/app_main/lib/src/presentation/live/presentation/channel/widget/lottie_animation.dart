@@ -8,7 +8,6 @@ import 'package:path_provider/path_provider.dart';
 import '../../../data/model/response/sent_gift_response.dart';
 import '../../../domain/usecases/gift_share_preferences_usecase.dart';
 
-
 class LottieAnimation extends StatefulWidget {
   final SentGiftResponse gift;
   final AnimationController controller;
@@ -23,8 +22,7 @@ class LottieAnimation extends StatefulWidget {
   State<LottieAnimation> createState() => _LottieAnimationState();
 }
 
-class _LottieAnimationState extends State<LottieAnimation>
-    with SingleTickerProviderStateMixin {
+class _LottieAnimationState extends State<LottieAnimation> with SingleTickerProviderStateMixin {
   final giftUseCase = injector.get<GiftSharePreferencesUseCase>();
 
   File? fileGift;
@@ -61,27 +59,23 @@ class _LottieAnimationState extends State<LottieAnimation>
   }
 
   @override
-  void dispose() {
-    widget.controller.dispose();
-    Lottie.cache.clear();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Center(
       child: Center(
         child: fileGift == null
             ? const SizedBox()
-            : Lottie.file(fileGift!,
+            : Lottie.file(
+                fileGift!,
                 width: double.infinity,
                 height: double.infinity,
                 fit: BoxFit.fitWidth,
                 repeat: false,
-                controller: widget.controller, onLoaded: (composition) {
-                widget.controller.duration = composition.duration;
-                widget.controller.forward();
-              }),
+                controller: widget.controller,
+                onLoaded: (composition) {
+                  widget.controller.duration = composition.duration;
+                  widget.controller.forward();
+                },
+              ),
       ),
     );
   }

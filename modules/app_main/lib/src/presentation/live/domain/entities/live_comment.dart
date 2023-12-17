@@ -29,10 +29,12 @@ class SystemMessage extends LiveMessageData {
 
 class UserMessage extends LiveMessageData {
   final LiveMember member;
+  final int? liveId;
 
   UserMessage({
     required this.member,
     required super.message,
     required super.createdAt,
+    this.liveId,
   });
 }

@@ -311,7 +311,7 @@ class _AuthApi implements AuthApi {
     )
         .compose(
           _dio.options,
-          'api/users/change-password',
+          'api/v1/user/password',
           queryParameters: queryParameters,
           data: _data,
         )

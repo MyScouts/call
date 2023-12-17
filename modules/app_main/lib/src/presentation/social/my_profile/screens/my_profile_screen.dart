@@ -9,7 +9,8 @@ import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_eve
 import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_state.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_coordinator.dart';
-import 'package:app_main/src/presentation/social/my_profile/screens/common/subordinate_scroll.dart';
+import 'package:app_main/src/presentation/social/my_profile/screens/components/my_profile_info_user.dart';
+import 'package:app_main/src/presentation/social/my_profile/screens/widgets/medial_tab_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
@@ -18,9 +19,8 @@ import 'package:imagewidget/imagewidget.dart';
 
 import '../blocs/my_profile_bloc.dart';
 import 'widgets/my_profile_create_post.dart';
-import 'components/medial_tabs/post_tab.dart';
-import 'components/medial_tabs/reels_tab.dart';
-import 'widgets/medial_tab_bar.dart';
+import 'components/ultility_tabs/medial_tabs/post_tab.dart';
+import 'components/ultility_tabs/medial_tabs/reels_tab.dart';
 import 'widgets/profile_avatar.dart';
 
 class MyProfileScreen extends StatefulWidget {
@@ -36,9 +36,11 @@ class _MyProfileScreenState extends State<MyProfileScreen>
     with TickerProviderStateMixin {
   final bloc = getIt<MyProfileBloc>();
 
-  late TabController _medialTabController;
-  final scrollControllers = <SubordinateScrollController?>[null, null, null];
+  // final postTabKey = const PageStorageKey('post-tab');
+  // final videoTabKey = const PageStorageKey('video-tab');
+  // final reelsTabKey = const PageStorageKey('reels-tab');
 
+  late TabController _medialTabController;
   bool isScrolled = false;
 
   @override
@@ -58,9 +60,6 @@ class _MyProfileScreenState extends State<MyProfileScreen>
     super.dispose();
     _medialTabController.dispose();
     bloc.isScrolledController.close();
-    for (final scrollController in scrollControllers) {
-      scrollController?.dispose();
-    }
     bloc.switchTabController.close();
   }
 
@@ -86,11 +85,7 @@ class _MyProfileScreenState extends State<MyProfileScreen>
             notificationPredicate: (notification) {
               return notification.depth == 2;
             },
-            onRefresh: () {
-              bloc.add(MyProfileRefreshed());
-
-              return Future.value(null);
-            },
+            onRefresh: _onRefresh,
             child: ExtendedNestedScrollView(
               headerSliverBuilder:
                   (BuildContext context, bool innerBoxIsScrolled) {
@@ -120,82 +115,40 @@ class _MyProfileScreenState extends State<MyProfileScreen>
                 color: AppColors.white,
                 child: TabBarView(
                   controller: _medialTabController,
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    BlocBuilder<MyProfileBloc, MyProfileState>(
-                        buildWhen: (previous, current) =>
-                            previous.textPosts != current.textPosts ||
-                            previous.hasTextPostLoadMore !=
-                                current.hasTextPostLoadMore ||
-                            previous.newTextPost != current.newTextPost ||
-                            previous.textPostMediaFiles !=
-                                current.textPostMediaFiles,
-                        builder: (context, state) {
-                          final parentController =
-                              PrimaryScrollController.of(context);
-                          const postType = PostType.text;
-
-                          if (scrollControllers[postType.index]?.parent !=
-                              parentController) {
-                            scrollControllers[postType.index]?.dispose();
-                            scrollControllers[postType.index] =
-                                SubordinateScrollController(parentController);
-                          }
-
-                          return PostTab(
-                            controller: scrollControllers[0]!,
-                            postType: PostType.text,
-                            posts: state.textPosts,
-                            newPost: state.newTextPost,
-                            mediaFiles: state.textPostMediaFiles,
-                            key: const PageStorageKey('post-tab'),
-                            onLoadMore: () {
-                              if (!state.hasTextPostLoadMore) return;
-
-                              bloc.add(MyProfileLoadMore());
-                            },
-                          );
-                        }),
-                    BlocBuilder<MyProfileBloc, MyProfileState>(
-                        buildWhen: (previous, current) =>
-                            previous.videoPosts != current.videoPosts ||
-                            previous.hasVideoPostLoadMore !=
-                                current.hasVideoPostLoadMore ||
-                            previous.newVideoPost != current.newVideoPost ||
-                            previous.videoPostMediaFiles !=
-                                current.videoPostMediaFiles,
-                        builder: (context, state) {
-                          final parentController =
-                              PrimaryScrollController.of(context);
-                          const postType = PostType.video;
-                          if (scrollControllers[postType.index]?.parent !=
-                              parentController) {
-                            scrollControllers[postType.index]?.dispose();
-                            scrollControllers[postType.index] =
-                                SubordinateScrollController(parentController);
-                          }
-                          return PostTab(
-                            controller: scrollControllers[postType.index]!,
-                            postType: PostType.video,
-                            posts: state.videoPosts,
-                            newPost: state.newVideoPost,
-                            mediaFiles: state.videoPostMediaFiles,
-                            key: const PageStorageKey('video-tab'),
-                            onLoadMore: () {
-                              if (!state.hasVideoPostLoadMore) return;
-
-                              bloc.add(MyProfileLoadMore());
-                            },
-                          );
-                        }),
-                    const ReelsTab(
-                      key: PageStorageKey('reels-tab'),
+                    PostTab(
+                      postType: PostType.text,
+                      refresh: bloc.postTabRefresh,
+                      createPostPayload: bloc.createTextPostPayload,
                     ),
+                    PostTab(
+                      postType: PostType.video,
+                      refresh: bloc.videoTabRefresh,
+                      createPostPayload: bloc.createVideoPostPayload,
+                    ),
+                    ReelsTab(),
                   ],
                 ),
               ),
             ),
           )),
     );
+  }
+
+  Future<void> _onRefresh() {
+    bloc.add(MyProfileRefreshed());
+
+    switch (bloc.state.currentPostType) {
+      case PostType.text:
+        bloc.postTabRefresh.value = !bloc.postTabRefresh.value;
+      case PostType.video:
+        bloc.videoTabRefresh.value = !bloc.videoTabRefresh.value;
+      case PostType.film:
+        bloc.reelsTabRefresh.value = !bloc.reelsTabRefresh.value;
+    }
+
+    return Future.value(null);
   }
 
   SliverAppBar _buildMedialTabs() {
@@ -205,17 +158,14 @@ class _MyProfileScreenState extends State<MyProfileScreen>
       automaticallyImplyLeading: false,
       titleSpacing: 0,
       title: StreamBuilder<int>(
-          stream: bloc.switchTabController.stream,
-          builder: (context, snapshot) {
-            return MedialTabBar(
-              index: _medialTabController.index,
-              onChange: (index) {
-                _medialTabController.animateTo(index);
-                bloc.switchTabController.add(index);
-                bloc.add(IndividualSwitchTab(index: index));
-              },
-            );
-          }),
+        stream: bloc.switchTabController.stream,
+        builder: (context, snapshot) {
+          return MedialTabBar(
+            index: _medialTabController.index,
+            onChange:_onChangeMedialTab,
+          );
+        },
+      ),
       centerTitle: false,
       elevation: 0,
       leadingWidth: 0,
@@ -226,6 +176,12 @@ class _MyProfileScreenState extends State<MyProfileScreen>
         borderSide: BorderSide(color: Colors.transparent),
       ),
     );
+  }
+
+  void _onChangeMedialTab(int index) {
+    _medialTabController.animateTo(index);
+    bloc.switchTabController.add(index);
+    bloc.add(IndividualSwitchTab(index: index));
   }
 
   SliverAppBar _buildCreatePost() {
@@ -287,9 +243,7 @@ class _MyProfileScreenState extends State<MyProfileScreen>
     required bool isShowMedia,
   }) async {
     final index = postType.index;
-    _medialTabController.animateTo(index);
-    bloc.switchTabController.add(index);
-    bloc.add(IndividualSwitchTab(index: index));
+      _onChangeMedialTab(index);
 
     final data = await context.startCreatePost(
       postType: postType,
@@ -362,225 +316,12 @@ class _MyProfileScreenState extends State<MyProfileScreen>
     return SliverToBoxAdapter(
       child: BlocBuilder<MyProfileBloc, MyProfileState>(
           buildWhen: (previous, current) =>
-              previous.userInfo != current.userInfo,
+              previous.userInfo != current.userInfo ||
+              previous.userFollowDetail != current.userFollowDetail,
           builder: (context, state) {
-            final displayName = state.userInfo.getdisplayName;
-            final nickname = state.userInfo.getNickname;
-            final pDoneId = state.userInfo.getPDoneId;
-            final sexIcon = state.userInfo.getSex.getIcon();
-            final sexTextColor = state.userInfo.getSex.getTextColor();
-            final sexBackgroundColor =
-                state.userInfo.getSex.getBackgroundColor();
-            final age = state.userInfo.getAge;
-            final joinedteamAvatar = state.userInfo?.joinedTeam?.avatar ?? '';
-            final joinedteamName = state.userInfo?.joinedTeam?.name ?? '';
-
-            return Column(
-              children: [
-                Container(
-                  color: AppColors.white,
-                  child: Column(
-                    children: [
-                      Text(
-                        displayName,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      if (nickname.isNotEmpty)
-                        Text(
-                          nickname,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.grey76,
-                          ),
-                        ),
-                      if (nickname.isNotEmpty) const SizedBox(height: 8),
-                      Text(
-                        'ID: $pDoneId',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: sexBackgroundColor,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            alignment: Alignment.center,
-                            child: Row(
-                              children: [
-                                ImageWidget(
-                                  sexIcon,
-                                  width: 15,
-                                  height: 15,
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  age != 0 ? '$age' : '',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: sexTextColor,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 7),
-                          Container(
-                            height: 28,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.blueEdit,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: const Row(
-                              children: [
-                                Text(
-                                  'LV.1',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: AppColors.white,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          if (joinedteamName.isNotEmpty)
-                            const SizedBox(width: 7),
-                          if (joinedteamName.isNotEmpty)
-                            Flexible(
-                              child: Container(
-                                height: 28,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 4),
-                                decoration: BoxDecoration(
-                                  color: AppColors.blue6,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    SizedBox(
-                                      width: 12,
-                                      child: CircleAvatar(
-                                        child: joinedteamAvatar.isEmpty
-                                            ? const SizedBox.shrink()
-                                            : ImageWidget(joinedteamAvatar),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 4),
-                                    Flexible(
-                                      child: Text(
-                                        joinedteamName,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 4),
-                                    const Icon(
-                                      Icons.arrow_forward_ios_sharp,
-                                      size: 10,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          const SizedBox(width: 7),
-                          Container(
-                            height: 28,
-                            width: 28,
-                            padding: const EdgeInsets.all(3),
-                            decoration: BoxDecoration(
-                              color: const Color(0XFFE8F0FE),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: ImageWidget(
-                              IconAppConstants.icQrCode,
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      BlocBuilder<MyProfileBloc, MyProfileState>(
-                          buildWhen: (previous, current) =>
-                              previous.userFollowDetail !=
-                              current.userFollowDetail,
-                          builder: (context, state) {
-                            final totalFollower =
-                                state.userFollowDetail?.stats.followerCount ??
-                                    0;
-                            final totalFollowing =
-                                state.userFollowDetail?.stats.followeeCount ??
-                                    0;
-                            final totalFriend =
-                                state.userFollowDetail?.stats.friendCount ?? 0;
-
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              child: Row(
-                                children: [
-                                  _buildPeopleInfo(
-                                    data: totalFollower,
-                                    title: 'Người hâm mộ',
-                                  ),
-                                  Container(
-                                    height: 20,
-                                    width: 1,
-                                    color: Colors.grey,
-                                  ),
-                                  _buildPeopleInfo(
-                                    data: totalFollowing,
-                                    title: 'Đang theo dõi',
-                                  ),
-                                  Container(
-                                    height: 20,
-                                    width: 1,
-                                    color: Colors.grey,
-                                  ),
-                                  _buildPeopleInfo(
-                                    data: totalFriend,
-                                    title: 'Bạn bè',
-                                  ),
-                                ],
-                              ),
-                            );
-                          }),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: 24,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(borderRadius),
-                      bottomRight: Radius.circular(borderRadius),
-                    ),
-                    color: AppColors.white,
-                  ),
-                )
-              ],
+            return MyProfileInfoUser(
+              userFollowDetail: state.userFollowDetail,
+              userInfo: state.userInfo,
             );
           }),
     );
@@ -601,6 +342,7 @@ class _MyProfileScreenState extends State<MyProfileScreen>
       titleSpacing: 0,
       elevation: 0,
       centerTitle: false,
+      backgroundColor: AppColors.white,
       leading: StreamBuilder<bool>(
           stream: bloc.isScrolledController.stream,
           initialData: isScrolled,
@@ -680,8 +422,9 @@ class _MyProfileScreenState extends State<MyProfileScreen>
           isScrolled = constraints.maxHeight <= imageAvatar;
           bloc.isScrolledController.add(isScrolled);
 
-          return SizedBox(
+          return Container(
             height: expandedHeight,
+            color: AppColors.white,
             child: isScrolled
                 ? const SizedBox.shrink()
                 : _buildStackAvatarBackground(bgHeight, imageAvatar),
@@ -734,31 +477,6 @@ class _MyProfileScreenState extends State<MyProfileScreen>
         });
   }
 
-  Widget _buildPeopleInfo({required int data, required String title}) {
-    return Expanded(
-      flex: 1,
-      child: Column(
-        children: [
-          Text(
-            data.toString(),
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildDivider() {
     return const Padding(
       padding: EdgeInsets.symmetric(horizontal: 3),
@@ -768,7 +486,6 @@ class _MyProfileScreenState extends State<MyProfileScreen>
 
   Widget _buildItemUltility(String text, {bool isSelected = false}) {
     return Expanded(
-      flex: 3,
       child: InkWell(
         onTap: () => print('OnTap ultility'),
         child: Container(

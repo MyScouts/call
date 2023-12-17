@@ -10,12 +10,12 @@ WithdrawRequest _$WithdrawRequestFromJson(Map<String, dynamic> json) =>
     WithdrawRequest(
       value: json['value'] as num,
       bankAccountId: json['bankAccountId'] as int,
-      fromSource: json['fromSource'] as String,
+      otp: json['otp'] as String,
     );
 
 Map<String, dynamic> _$WithdrawRequestToJson(WithdrawRequest instance) =>
     <String, dynamic>{
       'bankAccountId': instance.bankAccountId,
       'value': instance.value,
-      'fromSource': instance.fromSource,
+      'otp': instance.otp,
     };

@@ -37,7 +37,7 @@ class LiveController {
 
   final listCategorySelect = <LiveCategoryDetail>[].obs;
 
-  Future<void> getListLive() async {
+  Future<void> getListLive({bool isShowMessage = true}) async {
     try {
       live.value = await _useCase.getListLive(
         page: 1,
@@ -50,9 +50,11 @@ class LiveController {
             .memberCount(live.value.lives!.map((e) => e.id!).toList());
       }
       if (live.value.lives?.isEmpty == true) {
-        AppCoordinator.rootNavigator.currentContext?.showNoticeDialog(
-          title: 'Không có live nào phù hợp với yêu cầu',
-        );
+        if(isShowMessage) {
+          AppCoordinator.rootNavigator.currentContext?.showNoticeDialog(
+            title: 'Không có live nào phù hợp với yêu cầu',
+          );
+        }
       }
     } catch (e) {}
   }

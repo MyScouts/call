@@ -28,6 +28,8 @@ dependencies:
     path: ../reorderable
   staggered_reorderable:
     path: ../staggered_reorderable
+  easy_audio:
+    path: ../plugins/easy_audio
 
   wallet:
     path: ../packages/wallet
@@ -117,7 +119,11 @@ dependencies:
   pulsator: ^1.0.0+2
   percent_indicator: ^4.2.3
   detectable_text_field: ^3.0.2
-  
+  auto_animated_list:
+    path: ../auto_animated_list
+  video_player: ^2.8.1
+  syncfusion_flutter_pdfviewer: ^23.1.39
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

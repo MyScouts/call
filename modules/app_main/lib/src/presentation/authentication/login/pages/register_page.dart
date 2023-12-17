@@ -91,7 +91,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
             phoneCode: _phoneCode,
             phoneNumber: _phoneCtrl.text.trim(),
             password: _passwordCtrl.text,
-            birthDay: birthDay?.toYYYYmmdd ?? '1999-01-01',
+            birthDay: birthDay?.toYYYYmmdd ?? DateTime.now().toYYYYmmdd,
             sex: _gender ?? 2,
           );
         }
@@ -326,7 +326,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                             ),
                             TextSpan(
                               recognizer: TapGestureRecognizer()
-                                ..onTap = context.startTermsAndCondition,
+                                ..onTap = context.startTermsAndConditionV2,
                               text: S.current.terms_of_service_and_policies,
                               style: context.text.titleMedium!.copyWith(
                                 color: context.theme.primaryColor,
@@ -357,7 +357,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
           phone: _phoneCtrl.text.trim(),
           password: _passwordCtrl.text,
           phoneCode: _phoneCode.replaceAll("+", ""),
-          birthday: birthDay?.toYYYYmmdd ?? '1999-01-01',
+          birthday: birthDay?.toYYYYmmdd ?? DateTime.now().toYYYYmmdd,
           sex: _gender ?? 2,
         );
   }

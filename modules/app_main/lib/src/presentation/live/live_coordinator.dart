@@ -1,6 +1,6 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/join_channel_provider.dart';
-import 'package:app_main/src/presentation/live/presentation/channel/live_channel_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/create/widget/live_category_picker.dart';
 import 'package:app_main/src/presentation/live/presentation/create/widget/live_set_password.dart';
 import 'package:app_main/src/presentation/live/presentation/create/widget/live_title_picker.dart';
@@ -124,7 +124,7 @@ extension LiveCoordinator on BuildContext {
   Future<T?> startSelectUser<T>({required int userId}) {
     return showModalBottomSheet(
       context: this,
-      isScrollControlled: true,
+      isScrollControlled: false,
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) => BlocProvider<GetUserByIdBloc>(
         create: (context) => injector.get(),
@@ -144,5 +144,9 @@ extension LiveCoordinator on BuildContext {
         id: id,
       ),
     );
+  }
+
+  Future<T?> startLiveWrapper<T>() {
+    return Navigator.of(this).pushNamed(LiveWrapperScreen.routerName);
   }
 }

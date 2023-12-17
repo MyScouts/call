@@ -17,6 +17,7 @@ class ConfirmInfomationScreen extends StatefulWidget {
   final MarshopRegisterPackResponse pack;
   final User authInfo;
   final MarshopResponse marshop;
+
   const ConfirmInfomationScreen({
     super.key,
     required this.pack,
@@ -32,6 +33,9 @@ class ConfirmInfomationScreen extends StatefulWidget {
 class _ConfirmInfomationScreenState extends State<ConfirmInfomationScreen> {
   ListProductBloc get _bloc => context.read<ListProductBloc>();
   List<String> productIds = [];
+  List<MarshopRegisterPackProduct> products = [];
+  final List<RegisterPackProductInfo> _prodResults = [];
+  late int _totalPrice;
 
   @override
   void initState() {
@@ -39,9 +43,17 @@ class _ConfirmInfomationScreenState extends State<ConfirmInfomationScreen> {
     for (var element in widget.pack.rules) {
       if (element.products.isNotEmpty) {
         productIds.addAll(element.products.map((e) => e.id));
+        _prodResults.addAll(element.products.map(
+          (e) => RegisterPackProductInfo(
+            id: e.id,
+            quantity: e.minQuantity,
+            price: 0,
+          ),
+        ));
+        products.addAll(element.products);
       }
     }
-
+    _totalPrice = widget.pack.price;
     _bloc.add(GetListDataParam1Event(productIds));
   }
 
@@ -86,7 +98,7 @@ class _ConfirmInfomationScreenState extends State<ConfirmInfomationScreen> {
                     style: context.textTheme.bodyLarge,
                     children: [
                       TextSpan(
-                          text: widget.pack.price.toAppCurrencyString(),
+                          text: _totalPrice.toAppCurrencyString(),
                           style: context.textTheme.titleLarge!.copyWith(
                             color: context.theme.primaryColor,
                             fontWeight: FontWeight.w700,
@@ -100,6 +112,8 @@ class _ConfirmInfomationScreenState extends State<ConfirmInfomationScreen> {
                   pack: widget.pack,
                   authInfo: widget.authInfo,
                   marshop: widget.marshop,
+                  totalPrice: _totalPrice,
+                  productResult: _prodResults,
                 ),
                 disabled: false,
                 width: null,
@@ -163,7 +177,24 @@ class _ConfirmInfomationScreenState extends State<ConfirmInfomationScreen> {
           crossAxisSpacing: 10,
           children: state is GetListDataSuccess<ProductDetailResponse>
               ? state.data
-                  .map((product) => BuildProductCard(product: product))
+                  .map((product) => BuildProductCard(
+                        product: product,
+                        packProd: products.firstWhere(
+                          (element) => element.id == product.id.toString(),
+                        ),
+                        onPriceChange: (prd) {
+                          _totalPrice = widget.pack.price;
+                          for (var item in _prodResults) {
+                            int index = _prodResults.indexOf(item);
+                            if (item.id == prd.id) {
+                              _prodResults[index].quantity = prd.quantity;
+                            }
+                            _totalPrice +=
+                                (_prodResults[index].quantity * prd.price);
+                          }
+                          setState(() {});
+                        },
+                      ))
                   .toList()
               : [],
         );
@@ -172,58 +203,58 @@ class _ConfirmInfomationScreenState extends State<ConfirmInfomationScreen> {
   }
 }
 
-class BuildProductCard extends StatefulWidget {
+class BuildProductCard extends StatelessWidget {
   final ProductDetailResponse product;
+  final MarshopRegisterPackProduct packProd;
+  final Function(RegisterPackProductInfo) onPriceChange;
   const BuildProductCard({
     super.key,
     required this.product,
+    required this.packProd,
+    required this.onPriceChange,
   });
-
-  @override
-  State<BuildProductCard> createState() => _BuildProductCardState();
-}
-
-class _BuildProductCardState extends State<BuildProductCard> {
-  final ValueNotifier<int> _notifier = ValueNotifier(0);
-
-  @override
-  void initState() {
-    super.initState();
-    _notifier.value = widget.product.price;
-  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CachedNetworkImage(imageUrl: widget.product.thumbnail[0]),
+        CachedNetworkImage(imageUrl: product.avatar),
         Text(
-          widget.product.name,
+          product.name,
           softWrap: true,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: context.textTheme.titleMedium,
         ),
         const SizedBox(height: 5),
-        ValueListenableBuilder(
-          valueListenable: _notifier,
-          builder: (context, value, child) {
-            return Text(
-              value.toAppCurrencyString(),
-              style: context.textTheme.titleMedium!.copyWith(
-                color: context.theme.primaryColor,
-              ),
-            );
-          },
+        Text(
+          product.price.toAppCurrencyString(),
+          style: context.textTheme.titleMedium!.copyWith(
+            color: context.theme.primaryColor,
+          ),
         ),
         const SizedBox(height: 5),
         QuantityButtonWidget(
-          onChange: (qua) {
-            _notifier.value = widget.product.price * qua;
-          },
+          minVal: packProd.minQuantity,
+          onChange: (qua) => onPriceChange(RegisterPackProductInfo(
+            id: product.id.toString(),
+            quantity: qua,
+            price: product.price,
+          )),
         ),
       ],
     );
   }
+}
+
+class RegisterPackProductInfo {
+  final String id;
+  final int price;
+  int quantity;
+  RegisterPackProductInfo({
+    required this.id,
+    required this.quantity,
+    required this.price,
+  });
 }

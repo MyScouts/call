@@ -52,13 +52,20 @@ class _TransactionFilterSheetState extends State<TransactionFilterSheet> {
       TransactionType.BUY_COIN_FROM_AGENCY,
       TransactionType.LIVE_GIFT,
       TransactionType.LIVE_VOTE,
+      TransactionType.LUCKY_WHEEL,
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: DecoratedBox(
+        decoration: const BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(12),
+          ),
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -72,6 +79,7 @@ class _TransactionFilterSheetState extends State<TransactionFilterSheet> {
             _buildStatus(),
             const SizedBox(height: 25),
             _buildButtons(),
+            SizedBox(height: MediaQuery.of(context).padding.bottom)
           ],
         ),
       ),
@@ -80,9 +88,11 @@ class _TransactionFilterSheetState extends State<TransactionFilterSheet> {
 
   _buildHeader() {
     return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: context.horizontal,
-        vertical: 20,
+      padding: EdgeInsets.only(
+        left: context.horizontal,
+        right: context.horizontal,
+        top: 20,
+        bottom: 15,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -179,7 +189,13 @@ class _TransactionFilterSheetState extends State<TransactionFilterSheet> {
             child: Wrap(
               spacing: 10,
               runSpacing: 10,
-              children: TransactionResolvedStatus.values
+              children: (widget.walletType == WalletType.coin
+                      ? TransactionResolvedStatus.values
+                      : [
+                          TransactionResolvedStatus.pending,
+                          TransactionResolvedStatus.succeed,
+                          TransactionResolvedStatus.failed
+                        ])
                   .map(
                     (status) => _buildChip(
                       text: status.text,
@@ -249,12 +265,13 @@ class _TransactionFilterSheetState extends State<TransactionFilterSheet> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(90),
-          border: Border.all(
-            color:
-                isSelected ? const Color(0xFF4B84F7) : const Color(0xFFD0D6DD),
-          ),
-        ),
+            borderRadius: BorderRadius.circular(90),
+            border: Border.all(
+              color: isSelected
+                  ? const Color(0xFF4B84F7)
+                  : const Color(0xFFD0D6DD),
+            ),
+            color: AppColors.white),
         child: Text(
           text,
           style: context.text.titleLarge?.copyWith(

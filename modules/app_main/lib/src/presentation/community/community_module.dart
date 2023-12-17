@@ -7,20 +7,17 @@ import 'groups/group_listing_bloc.dart';
 @module
 abstract class CommunityModule {
   @factory
-  GetListGroupsBloc createGetListGroupsBloc(CommunityUsecase usecase) =>
-      GetListGroupsBloc(usecase.getGroups);
+  GetMyGroupsBloc createGetMyGroupsBloc(CommunityUsecase usecase) =>
+      GetMyGroupsBloc(usecase.myGroups);
+
+  @factory
+  GetOpenGroupRequestBloc createGetOpenGroupRequestBloc(
+          CommunityUsecase usecase) =>
+      GetOpenGroupRequestBloc(usecase.getOpenGroupRequest);
 
   @factory
   GetListTeamsBloc createGetListTeamsBloc(CommunityUsecase usecase) =>
       GetListTeamsBloc(usecase.getTeamByGroupID);
-
-  @factory
-  GetFanGroupBloc createGetFanGroupBloc(CommunityUsecase usecase) =>
-      GetFanGroupBloc(usecase.getFanGroup);
-
-  @factory
-  GetBossStatusBloc createGetBossStatusBloc(CommunityUsecase usecase) =>
-      GetBossStatusBloc(usecase.getBossGroupStatus);
 
   @factory
   RelinquishBossRoleBloc createRelinquishBossRoleBloc(
@@ -40,4 +37,26 @@ abstract class CommunityModule {
   GetBossTeamRelinquishStatusBloc createGetBossTeamRelinquishStatusBloc(
           CommunityUsecase usecase) =>
       GetBossTeamRelinquishStatusBloc(usecase.getBossTeamRelinquishStatus);
+
+  // @factory
+  // GetOTPBloc createGetOTPBloc(CommunityUsecase usecase) =>
+  //     GetOTPBloc(usecase.getOtp);
+
+  @factory
+  DeleteOpenGroupRequestBloc createDeleteOpenGroupRequestBloc(
+          CommunityUsecase usecase) =>
+      DeleteOpenGroupRequestBloc(usecase.deleteOpenGroupRequest);
+
+  @factory
+  CreateOpenGroupRequestBloc createCreateOpenGroupRequestBloc(
+          CommunityUsecase usecase) =>
+      CreateOpenGroupRequestBloc(usecase.createOpenGroupRequest);
+
+  @factory
+  GetBossStatusBloc createGetBossStatusBloc(CommunityUsecase usecase) =>
+      GetBossStatusBloc(usecase.getBossGroupStatus);
+
+  @factory
+  GetJoinRequestBloc joinRequestBloc(CommunityUsecase usecase) =>
+      GetJoinRequestBloc(usecase.joinRequests);
 }

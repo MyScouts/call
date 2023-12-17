@@ -4,12 +4,16 @@ import 'package:app_main/src/blocs/user_action/user_action_cubit.dart';
 import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart';
 import 'package:app_main/src/data/models/responses/follow_response.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
+import 'package:app_main/src/presentation/social/following/following_coordinator.dart';
+import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
+import 'package:app_main/src/presentation/social/profile/profile_bloc.dart';
 import 'package:app_main/src/presentation/social/social_constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
 
 // class UserInfoHeader extends StatefulWidget {
@@ -39,16 +43,8 @@ class UserInfoHeader extends StatelessWidget {
     if (relation.hasPendingApproval != null && relation.hasPendingApproval!) {
       return true;
     }
-    // if (followInfoCtrl.value == null) return true;
-    // final followInfo = followInfoCtrl.value!.relation;
-
-    // if (followInfo.isFollowee || followInfo.isFriend) return false;
-
     if (onBoarding != null) {
-      if (onBoarding!.isPdone && authInfo.old <= 15) {
-        // print(authInfo.old);
-        // return true;
-      }
+      if (onBoarding!.isPdone && authInfo.old <= 15) {}
     }
 
     return false;
@@ -56,24 +52,28 @@ class UserInfoHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<UserCubit, UserState>(
-      listener: (context, state) {},
-      child: Container(
-        padding: const EdgeInsets.only(bottom: 20),
-        decoration: const BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(30),
-            bottomRight: Radius.circular(30),
+    return BlocProvider(
+      create: (context) => injector.get<GlobalPersonSettingBloc>()
+        ..add(GetDetailDataParam1Event(userInfo.id)),
+      child: BlocListener<UserCubit, UserState>(
+        listener: (context, state) {},
+        child: Container(
+          padding: const EdgeInsets.only(bottom: 20),
+          decoration: const BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(30),
+            ),
           ),
+          child: Column(children: [
+            _buildBgAvatar(context),
+            const SizedBox(height: 60),
+            _buildUserName(context),
+            const SizedBox(height: 10),
+            _buildUserInfo(context),
+          ]),
         ),
-        child: Column(children: [
-          _buildBgAvatar(context),
-          const SizedBox(height: 60),
-          _buildUserName(context),
-          const SizedBox(height: 10),
-          _buildUserInfo(context),
-        ]),
       ),
     );
   }
@@ -82,20 +82,7 @@ class UserInfoHeader extends StatelessWidget {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        CachedNetworkImage(
-          height: 180,
-          width: MediaQuery.of(context).size.width,
-          fit: BoxFit.cover,
-          imageUrl: userInfo.defaultBackground ?? "",
-          errorWidget: (context, url, error) {
-            return ImageWidget(
-              ImageConstants.defaultUserBackground,
-              height: 180,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            );
-          },
-        ),
+        _buildBackground(context),
         Positioned(
           top: 130,
           left: 0,
@@ -200,39 +187,47 @@ class UserInfoHeader extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (userInfo.sex != null)
-            Container(
-              height: 25,
+            IntrinsicHeight(
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  color: const Color(0XFFFFEDF8),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  children: [
+                    ImageWidget(
+                      userInfo.sex!.getIcon(),
+                      height: 15,
+                    ),
+                    const SizedBox(width: 3),
+                    Text(
+                      userInfo.old.toString(),
+                      style: context.text.titleSmall!.copyWith(height: 0),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          const SizedBox(width: 5),
+          IntrinsicHeight(
+            child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
-                color: const Color(0XFFFFEDF8),
+                color: const Color(0XFF4B84F7),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
                 children: [
-                  ImageWidget(userInfo.sex!.getIcon()),
                   Text(
-                    userInfo.old.toString(),
-                    style: context.text.titleMedium,
+                    "LV.1",
+                    style: context.text.titleSmall!.copyWith(
+                      color: AppColors.white,
+                    ),
                   ),
                 ],
               ),
-            ),
-          const SizedBox(width: 5),
-          Container(
-            height: 25,
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            decoration: BoxDecoration(
-              color: const Color(0XFF4B84F7),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              children: [
-                Text(
-                  "LV.1",
-                  style: context.text.titleMedium!
-                      .copyWith(color: AppColors.white),
-                ),
-              ],
             ),
           ),
           if (userInfo.joinedTeam != null) const SizedBox(width: 5),
@@ -288,25 +283,37 @@ class UserInfoHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
-              child: Column(
-                children: [
-                  ValueListenableBuilder(
-                    valueListenable: friendStatusCtrl,
-                    builder: (context, value, child) {
-                      return Text(
-                        stats.followerCount.toString(),
-                        style: context.text.titleMedium!.copyWith(
-                          fontWeight: FontWeight.w800,
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    "Người hâm mộ",
-                    style: context.text.titleMedium,
-                  ),
-                ],
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  context.startFollowing(
+                    user: userInfo,
+                    followeeCount: stats.followeeCount,
+                    friendCount: stats.friendCount,
+                    followerCount: stats.followerCount,
+                    followingType: FollowingType.follower,
+                  );
+                },
+                child: Column(
+                  children: [
+                    ValueListenableBuilder(
+                      valueListenable: friendStatusCtrl,
+                      builder: (context, value, child) {
+                        return Text(
+                          stats.followerCount.toString(),
+                          style: context.text.titleMedium!.copyWith(
+                            fontWeight: FontWeight.w800,
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      "Người hâm mộ",
+                      style: context.text.titleMedium,
+                    ),
+                  ],
+                ),
               ),
             ),
             Container(
@@ -315,20 +322,32 @@ class UserInfoHeader extends StatelessWidget {
               color: Colors.grey,
             ),
             Expanded(
-              child: Column(
-                children: [
-                  Text(
-                    stats.followeeCount.toString(),
-                    style: context.text.titleMedium!.copyWith(
-                      fontWeight: FontWeight.w800,
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  context.startFollowing(
+                    user: userInfo,
+                    followeeCount: stats.followeeCount,
+                    friendCount: stats.friendCount,
+                    followerCount: stats.followerCount,
+                    followingType: FollowingType.followee,
+                  );
+                },
+                child: Column(
+                  children: [
+                    Text(
+                      stats.followeeCount.toString(),
+                      style: context.text.titleMedium!.copyWith(
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    "Đang theo dõi",
-                    style: context.text.titleMedium,
-                  ),
-                ],
+                    const SizedBox(height: 5),
+                    Text(
+                      "Đang theo dõi",
+                      style: context.text.titleMedium,
+                    ),
+                  ],
+                ),
               ),
             ),
             Container(
@@ -337,20 +356,32 @@ class UserInfoHeader extends StatelessWidget {
               color: Colors.grey,
             ),
             Expanded(
-              child: Column(
-                children: [
-                  Text(
-                    stats.friendCount.toString(),
-                    style: context.text.titleMedium!.copyWith(
-                      fontWeight: FontWeight.w800,
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  context.startFollowing(
+                    user: userInfo,
+                    followeeCount: stats.followeeCount,
+                    friendCount: stats.friendCount,
+                    followerCount: stats.followerCount,
+                    followingType: FollowingType.friend,
+                  );
+                },
+                child: Column(
+                  children: [
+                    Text(
+                      stats.friendCount.toString(),
+                      style: context.text.titleMedium!.copyWith(
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    "Bạn bè",
-                    style: context.text.titleMedium,
-                  ),
-                ],
+                    const SizedBox(height: 5),
+                    Text(
+                      "Bạn bè",
+                      style: context.text.titleMedium,
+                    ),
+                  ],
+                ),
               ),
             )
           ],
@@ -455,5 +486,27 @@ class UserInfoHeader extends StatelessWidget {
         }
       });
     }
+  }
+
+  _buildBackground(BuildContext context) {
+    return BlocBuilder<GlobalPersonSettingBloc, GetDetailState>(
+      builder: (context, state) {
+        final setting = (state is GetDetailDataSuccess) ? state.data : null;
+        return CachedNetworkImage(
+          height: 180,
+          width: MediaQuery.of(context).size.width,
+          fit: BoxFit.cover,
+          imageUrl: setting?['user_bg'] ?? '',
+          errorWidget: (context, url, error) {
+            return ImageWidget(
+              ImageConstants.defaultUserBackground,
+              height: 180,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            );
+          },
+        );
+      },
+    );
   }
 }

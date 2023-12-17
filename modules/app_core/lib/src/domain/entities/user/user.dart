@@ -59,25 +59,24 @@ class User with _$User {
     UserFanGroupInfo? fanGroup,
     UserProfileInfo? profile,
     int? sexCode,
+    int? type,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }
 
 extension UserExtNull on User? {
-  String get getdisplayName => [this?.displayName, _userDefaultName]
-      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getdisplayName =>
+      [this?.displayName, _userDefaultName].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
-  String get getEmail => [this?.email, _userDefaultEmail]
-      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getEmail => [this?.email, _userDefaultEmail].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
-  String get getAddress => [this?.address, _userDefaultAddress]
-      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getAddress => [this?.address, _userDefaultAddress].firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
   String get getAvatar => this?.avatar ?? Assets.images_avatar.path;
 
   String get getNickname => this?.nickname ?? _userDefaultNickname;
-  
+
   String get getBirthday {
     final DateTime? birthday = this?.birthday;
 
@@ -89,18 +88,20 @@ extension UserExtNull on User? {
       return this!.fullName!;
     }
     return this?.displayName?.replaceRange(this!.displayName!.length - 3, this!.displayName!.length, '***') ?? '';
-
   }
 
   int get getAge {
-    final DateTime? birthday = this?.profile?.birthday;
-
+    DateTime? birthday;
+    if (this?.birthday != null) {
+      final age = calculateAge(this!.birthday!);
+      return age;
+    }
+    birthday = this?.profile?.birthday;
     if (birthday == null) {
       return 0;
     }
 
     final age = calculateAge(birthday);
-
     return age;
   }
 
@@ -108,8 +109,7 @@ extension UserExtNull on User? {
 
   bool get getIsJA => this?.isJA ?? false;
 
-  bool get getIsHasNickname =>
-      this?.nickname != null && this!.nickname!.isNotEmpty;
+  bool get getIsHasNickname => this?.nickname != null && this!.nickname!.isNotEmpty;
 
   bool get getIsHasEmail => this?.email != null && this!.email!.isNotEmpty;
 
@@ -123,19 +123,24 @@ extension UserExtNull on User? {
   }
 
   String get getPDoneId => this?.pDoneId ?? _userDefaultPDoneId;
+
   Sex get getSex => this?.sex ?? _userDefaultSex;
+
   int get getTotalFollower => this?.totalFollower ?? _userDefaultTotalFollower;
-  int get getTotalFollowing =>
-      this?.totalFollowing ?? _userDefaultTotalFollowing;
+
+  int get getTotalFollowing => this?.totalFollowing ?? _userDefaultTotalFollowing;
+
   int get getTotalFriend => this?.totalFriend ?? _userDefaultTotalFriend;
-  String get getBackgroundImage =>
-      this?.backgroundImages?.first ?? _userDefaultBackground;
+
+  String get getBackgroundImage => this?.backgroundImages?.first ?? _userDefaultBackground;
+
   String get getUserAvatar => this?.avatar ?? _userDefaultUserAvatar;
+
   bool get getIsPdone => this?.isPDone ?? _userIsPDone;
 }
 
 const _userDefaultName = 'PDone User';
-const _userDefaultEmail = 'pdoneuser@gmail.com';
+const _userDefaultEmail = ' ';
 const _userDefaultNickname = '';
 const _userDefaultBirthday = '01/01/2000';
 const _userDefaultAddress = 'default';

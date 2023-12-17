@@ -22,6 +22,14 @@ class WalletTransactionItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final formatterDate = DateFormat('dd/MM/yyyy - HH:mm');
 
+    final value =
+        (transactionItem.transactionType == TransactionType.LIVE_GIFT.value ||
+                    transactionItem.transactionType ==
+                        TransactionType.LIVE_VOTE.value) &&
+                walletType == WalletType.diamond
+            ? transactionItem.toValue
+            : transactionItem.fromValue;
+
     return GestureDetector(
       onTap: onTap?.call,
       child: IntrinsicHeight(
@@ -77,7 +85,7 @@ class WalletTransactionItemWidget extends StatelessWidget {
                       text: '${TransactionType.values.firstWhere(
                             (type) =>
                                 type.value == transactionItem.transactionType,
-                          ).operator(context, receiverPDoneId: transactionItem.receiver?.pDoneId, walletType: walletType)} ${transactionItem.fromValue.toAppCurrencyString(
+                          ).operator(context, receiverPDoneId: transactionItem.receiver?.pDoneId, walletType: walletType)} ${value.toAppCurrencyString(
                         isWithSymbol: false,
                       )}',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(

@@ -131,7 +131,7 @@ class _$ListMarshopResponseImpl implements _ListMarshopResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ListMarshopResponseImpl &&
@@ -328,7 +328,7 @@ class _$MarshopResponseImpl implements _MarshopResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MarshopResponseImpl &&
@@ -545,7 +545,7 @@ class _$MarshopUserInfoImpl implements _MarshopUserInfo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MarshopUserInfoImpl &&
@@ -720,7 +720,7 @@ class _$MarshopRegisterPacksResponseImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MarshopRegisterPacksResponseImpl &&
@@ -923,7 +923,7 @@ class _$MarshopRegisterPackResponseImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MarshopRegisterPackResponseImpl &&
@@ -1139,7 +1139,7 @@ class _$MarshopRegisterPackRuleImpl implements _MarshopRegisterPackRule {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MarshopRegisterPackRuleImpl &&
@@ -1203,6 +1203,8 @@ MarshopRegisterPackProduct _$MarshopRegisterPackProductFromJson(
 /// @nodoc
 mixin _$MarshopRegisterPackProduct {
   String get id => throw _privateConstructorUsedError;
+  int get minQuantity => throw _privateConstructorUsedError;
+  int get maxQuantity => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1217,7 +1219,7 @@ abstract class $MarshopRegisterPackProductCopyWith<$Res> {
       _$MarshopRegisterPackProductCopyWithImpl<$Res,
           MarshopRegisterPackProduct>;
   @useResult
-  $Res call({String id});
+  $Res call({String id, int minQuantity, int maxQuantity});
 }
 
 /// @nodoc
@@ -1235,12 +1237,22 @@ class _$MarshopRegisterPackProductCopyWithImpl<$Res,
   @override
   $Res call({
     Object? id = null,
+    Object? minQuantity = null,
+    Object? maxQuantity = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      minQuantity: null == minQuantity
+          ? _value.minQuantity
+          : minQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      maxQuantity: null == maxQuantity
+          ? _value.maxQuantity
+          : maxQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -1254,7 +1266,7 @@ abstract class _$$MarshopRegisterPackProductImplCopyWith<$Res>
       __$$MarshopRegisterPackProductImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id});
+  $Res call({String id, int minQuantity, int maxQuantity});
 }
 
 /// @nodoc
@@ -1271,12 +1283,22 @@ class __$$MarshopRegisterPackProductImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? minQuantity = null,
+    Object? maxQuantity = null,
   }) {
     return _then(_$MarshopRegisterPackProductImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      minQuantity: null == minQuantity
+          ? _value.minQuantity
+          : minQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
+      maxQuantity: null == maxQuantity
+          ? _value.maxQuantity
+          : maxQuantity // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -1284,7 +1306,8 @@ class __$$MarshopRegisterPackProductImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$MarshopRegisterPackProductImpl implements _MarshopRegisterPackProduct {
-  const _$MarshopRegisterPackProductImpl({required this.id});
+  const _$MarshopRegisterPackProductImpl(
+      {required this.id, this.minQuantity = 0, this.maxQuantity = 0});
 
   factory _$MarshopRegisterPackProductImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -1292,23 +1315,33 @@ class _$MarshopRegisterPackProductImpl implements _MarshopRegisterPackProduct {
 
   @override
   final String id;
+  @override
+  @JsonKey()
+  final int minQuantity;
+  @override
+  @JsonKey()
+  final int maxQuantity;
 
   @override
   String toString() {
-    return 'MarshopRegisterPackProduct(id: $id)';
+    return 'MarshopRegisterPackProduct(id: $id, minQuantity: $minQuantity, maxQuantity: $maxQuantity)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MarshopRegisterPackProductImpl &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.minQuantity, minQuantity) ||
+                other.minQuantity == minQuantity) &&
+            (identical(other.maxQuantity, maxQuantity) ||
+                other.maxQuantity == maxQuantity));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, id, minQuantity, maxQuantity);
 
   @JsonKey(ignore: true)
   @override
@@ -1327,14 +1360,20 @@ class _$MarshopRegisterPackProductImpl implements _MarshopRegisterPackProduct {
 
 abstract class _MarshopRegisterPackProduct
     implements MarshopRegisterPackProduct {
-  const factory _MarshopRegisterPackProduct({required final String id}) =
-      _$MarshopRegisterPackProductImpl;
+  const factory _MarshopRegisterPackProduct(
+      {required final String id,
+      final int minQuantity,
+      final int maxQuantity}) = _$MarshopRegisterPackProductImpl;
 
   factory _MarshopRegisterPackProduct.fromJson(Map<String, dynamic> json) =
       _$MarshopRegisterPackProductImpl.fromJson;
 
   @override
   String get id;
+  @override
+  int get minQuantity;
+  @override
+  int get maxQuantity;
   @override
   @JsonKey(ignore: true)
   _$$MarshopRegisterPackProductImplCopyWith<_$MarshopRegisterPackProductImpl>

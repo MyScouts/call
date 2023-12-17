@@ -34,6 +34,7 @@ export 'src/domain/entities/community/group_detail.dart';
 export 'src/domain/entities/community/team.dart';
 export 'src/domain/entities/onboarding/onboarding.dart';
 export 'src/domain/entities/social/comment.dart';
+export 'src/domain/entities/social/following/following.dart';
 export 'src/domain/entities/social/media.dart';
 export 'src/domain/entities/social/post.dart';
 export 'src/domain/entities/update_information/update_information_type.dart';

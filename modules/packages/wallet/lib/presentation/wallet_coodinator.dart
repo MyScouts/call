@@ -1,6 +1,12 @@
 import 'package:app_core/app_core.dart';
 import 'package:flutter/material.dart';
+import 'package:wallet/data/data.dart';
+import 'package:wallet/presentation/wallet_point/point_agency/screen/point_agency_screen.dart';
+import 'package:wallet/presentation/wallet_vnd/dialog/waiting_dialog.dart';
+import 'package:wallet/presentation/wallet_vnd/withdraw/screens/verify_otp_withdraw_screen.dart';
 import 'package:wallet/presentation/transaction_history_detail_screen.dart';
+import 'package:wallet/presentation/wallet_vnd/dialog/notification_dialog.dart';
+import 'package:wallet/presentation/wallet_vnd/withdraw/screens/withdraw_screen.dart';
 
 import '../core/configuratons/configurations.dart';
 import '../core/utils/extension.dart';
@@ -15,12 +21,11 @@ import 'wallet_vnd/bank_account/screens/add_bank_account_screen.dart';
 import 'wallet_vnd/bank_account/screens/bank_account_details_screen.dart';
 import 'wallet_vnd/bank_account/screens/bank_account_veryfy_otp_screen.dart';
 import 'wallet_vnd/bank_account/screens/bank_accounts_screen.dart';
-import 'wallet_vnd/dialog/choose_bank_account_dialog.dart';
+import 'wallet_vnd/bank_account/screens/confirm_information_screen.dart';
 import 'wallet_vnd/dialog/delete_bank_account_dialog.dart';
 import 'wallet_vnd/dialog/succes_dialog.dart';
 import 'wallet_vnd/dialog/warning_dialog.dart';
 import 'wallet_vnd/withdraw/screens/confirm_withdraw_transaction_screen.dart';
-import 'wallet_vnd/withdraw/screens/create_withdraw_order_screen.dart';
 
 extension WalletCoordinator on BuildContext {
   Future<T?> startMyWallet<T>(User? user) {
@@ -30,6 +35,9 @@ extension WalletCoordinator on BuildContext {
 
     return Navigator.of(this).pushNamed(WalletScreen.routeName);
   }
+
+  Future<T?> pointAllAgencyExternal<T>() =>
+      Navigator.of(this).pushNamed(PointAgencyScreen.routeName);
 
   Future<T?> bankAccounts<T>() {
     return Navigator.of(this).pushNamed(BankAccountsScreen.routeName);
@@ -85,14 +93,6 @@ extension WalletCoordinator on BuildContext {
     );
   }
 
-  Future<T?> createWithdrawOrder<T>(
-      {required BankAccountParams bankAccountParams}) {
-    return Navigator.of(this).pushNamed<T>(
-      CreateWithdrawOrderScreen.routeName,
-      arguments: bankAccountParams,
-    );
-  }
-
   Future<T?> confirmWithdrawTransaction<T>(
       {required WithdrawParams withdrawParams}) {
     return Navigator.of(this).pushNamed(
@@ -108,33 +108,6 @@ extension WalletCoordinator on BuildContext {
       builder: (_) => const WarningDialog(),
     );
   }
-
-  Future<void> showChooseBankAccountDialog(
-      {required BankAccountBloc bankAccountBloc}) async {
-    await showDialog(
-      context: this,
-      barrierDismissible: false,
-      builder: (_) => BlocProvider.value(
-        value: bankAccountBloc,
-        child: const ChooseBankAccountDialog(),
-      ),
-    );
-  }
-
-  // Future<void> showRegisterJaDialog(
-  //     {required WalletType walletType,
-  //     bool isPipLive = false,
-  //     String? content}) async {
-  //   await showDialog(
-  //     context: this,
-  //     barrierDismissible: false,
-  //     builder: (_) => RegisterJADialog(
-  //       walletType: walletType,
-  //       isPipLive: isPipLive,
-  //       content: content,
-  //     ),
-  //   );
-  // }
 
   Future<void> showSuccessDialog() async {
     await showDialog(
@@ -168,5 +141,56 @@ extension WalletCoordinator on BuildContext {
       TransactionHistoryDetailScreen.routeName,
       arguments: params,
     );
+  }
+
+  Future<T?> startConfirmBankAccountInformation<T>({
+    required AddBankAccountParams params,
+    required BankAccountBloc bloc,
+  }) {
+    return Navigator.of(this).pushNamed(
+      ConfirmInformationScreen.routeName,
+      arguments: {'params': params, 'bloc': bloc},
+    );
+  }
+
+  Future<T?> startWithdraw<T>() {
+    return Navigator.of(this).pushNamed(WithdrawScreen.routeName);
+  }
+
+  Future<T?> startVerifyOTPScreen<T>(WithdrawRequest request) {
+    return Navigator.of(this).pushNamed(
+      VerifyOTPWithdrawScreen.routeName,
+      arguments: request,
+    );
+  }
+
+  Future<void> showNotificationDialog({
+    String? actionTitle,
+    VoidCallback? onAction,
+    required String content,
+  }) async {
+    await showDialog(
+      context: this,
+      barrierDismissible: false,
+      builder: (_) => NotificationDialog(
+        content: content,
+        actionTitle: actionTitle,
+        onAction: onAction,
+      ),
+    );
+  }
+
+  Future<void> showWaitingDialog({
+    required VoidCallback onAction,
+  }) async {
+    await showDialog(
+      context: this,
+      barrierDismissible: false,
+      builder: (_) => WaitingDialog(onAction: onAction),
+    );
+  }
+
+  void backToWithdraw<T>() {
+    return popUntilNavigator(ModalRoute.withName(WithdrawScreen.routeName));
   }
 }

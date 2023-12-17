@@ -21,12 +21,10 @@ class AuthApiConstant {
       "api/v1/auth/sms/reset-password-token";
   static const String resetPassword = "api/v1/auth/sms/reset-password";
   static const String otpV1 = "api/v1/auth/otp";
-
   static const getOtp = '/api/sms/send-otp';
   static const authClaimV1 = '/api/v1/auth/code/claim';
   static const authClaimV2 = '/api/v1/tablet/code/claim';
-
-  static const String changePassword = "api/users/change-password";
+  static const String changePassword = "api/v1/user/password";
 }
 
 @RestApi()

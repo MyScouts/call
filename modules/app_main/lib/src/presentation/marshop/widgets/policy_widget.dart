@@ -1,4 +1,5 @@
 import 'package:app_main/src/presentation/general_setting/general_coordinator.dart';
+import 'package:app_main/src/presentation/general_setting/terms_conditions/widgets/policy_content.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class PolicyWidget extends StatelessWidget {
               color: isAccepted == true ? AppColors.blue31 : Colors.grey,
             ),
             recognizer: TapGestureRecognizer()
-              ..onTap = context.startTermsAndCondition,
+              ..onTap = () => context.startTermsAndCondition(policyContents),
           ),
           const TextSpan(text: 'của VDONE')
         ],

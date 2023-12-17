@@ -132,7 +132,7 @@ class _$LatestVersionResponseImpl implements _LatestVersionResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LatestVersionResponseImpl &&
@@ -298,7 +298,7 @@ class _$VersionResponseImpl implements _VersionResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$VersionResponseImpl &&
@@ -344,5 +344,426 @@ abstract class _VersionResponse implements VersionResponse {
   @override
   @JsonKey(ignore: true)
   _$$VersionResponseImplCopyWith<_$VersionResponseImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+GlobalSettingResponse _$GlobalSettingResponseFromJson(
+    Map<String, dynamic> json) {
+  return _GlobalSettingResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$GlobalSettingResponse {
+  String get value => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GlobalSettingResponseCopyWith<GlobalSettingResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GlobalSettingResponseCopyWith<$Res> {
+  factory $GlobalSettingResponseCopyWith(GlobalSettingResponse value,
+          $Res Function(GlobalSettingResponse) then) =
+      _$GlobalSettingResponseCopyWithImpl<$Res, GlobalSettingResponse>;
+  @useResult
+  $Res call({String value});
+}
+
+/// @nodoc
+class _$GlobalSettingResponseCopyWithImpl<$Res,
+        $Val extends GlobalSettingResponse>
+    implements $GlobalSettingResponseCopyWith<$Res> {
+  _$GlobalSettingResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? value = null,
+  }) {
+    return _then(_value.copyWith(
+      value: null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$GlobalSettingResponseImplCopyWith<$Res>
+    implements $GlobalSettingResponseCopyWith<$Res> {
+  factory _$$GlobalSettingResponseImplCopyWith(
+          _$GlobalSettingResponseImpl value,
+          $Res Function(_$GlobalSettingResponseImpl) then) =
+      __$$GlobalSettingResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String value});
+}
+
+/// @nodoc
+class __$$GlobalSettingResponseImplCopyWithImpl<$Res>
+    extends _$GlobalSettingResponseCopyWithImpl<$Res,
+        _$GlobalSettingResponseImpl>
+    implements _$$GlobalSettingResponseImplCopyWith<$Res> {
+  __$$GlobalSettingResponseImplCopyWithImpl(_$GlobalSettingResponseImpl _value,
+      $Res Function(_$GlobalSettingResponseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? value = null,
+  }) {
+    return _then(_$GlobalSettingResponseImpl(
+      value: null == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$GlobalSettingResponseImpl implements _GlobalSettingResponse {
+  const _$GlobalSettingResponseImpl({required this.value});
+
+  factory _$GlobalSettingResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GlobalSettingResponseImplFromJson(json);
+
+  @override
+  final String value;
+
+  @override
+  String toString() {
+    return 'GlobalSettingResponse(value: $value)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GlobalSettingResponseImpl &&
+            (identical(other.value, value) || other.value == value));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, value);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GlobalSettingResponseImplCopyWith<_$GlobalSettingResponseImpl>
+      get copyWith => __$$GlobalSettingResponseImplCopyWithImpl<
+          _$GlobalSettingResponseImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$GlobalSettingResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _GlobalSettingResponse implements GlobalSettingResponse {
+  const factory _GlobalSettingResponse({required final String value}) =
+      _$GlobalSettingResponseImpl;
+
+  factory _GlobalSettingResponse.fromJson(Map<String, dynamic> json) =
+      _$GlobalSettingResponseImpl.fromJson;
+
+  @override
+  String get value;
+  @override
+  @JsonKey(ignore: true)
+  _$$GlobalSettingResponseImplCopyWith<_$GlobalSettingResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+GlobalPersonResponse _$GlobalPersonResponseFromJson(Map<String, dynamic> json) {
+  return _GlobalPersonResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$GlobalPersonResponse {
+  dynamic get setting => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GlobalPersonResponseCopyWith<GlobalPersonResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $GlobalPersonResponseCopyWith<$Res> {
+  factory $GlobalPersonResponseCopyWith(GlobalPersonResponse value,
+          $Res Function(GlobalPersonResponse) then) =
+      _$GlobalPersonResponseCopyWithImpl<$Res, GlobalPersonResponse>;
+  @useResult
+  $Res call({dynamic setting});
+}
+
+/// @nodoc
+class _$GlobalPersonResponseCopyWithImpl<$Res,
+        $Val extends GlobalPersonResponse>
+    implements $GlobalPersonResponseCopyWith<$Res> {
+  _$GlobalPersonResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? setting = freezed,
+  }) {
+    return _then(_value.copyWith(
+      setting: freezed == setting
+          ? _value.setting
+          : setting // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$GlobalPersonResponseImplCopyWith<$Res>
+    implements $GlobalPersonResponseCopyWith<$Res> {
+  factory _$$GlobalPersonResponseImplCopyWith(_$GlobalPersonResponseImpl value,
+          $Res Function(_$GlobalPersonResponseImpl) then) =
+      __$$GlobalPersonResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({dynamic setting});
+}
+
+/// @nodoc
+class __$$GlobalPersonResponseImplCopyWithImpl<$Res>
+    extends _$GlobalPersonResponseCopyWithImpl<$Res, _$GlobalPersonResponseImpl>
+    implements _$$GlobalPersonResponseImplCopyWith<$Res> {
+  __$$GlobalPersonResponseImplCopyWithImpl(_$GlobalPersonResponseImpl _value,
+      $Res Function(_$GlobalPersonResponseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? setting = freezed,
+  }) {
+    return _then(_$GlobalPersonResponseImpl(
+      setting: freezed == setting
+          ? _value.setting
+          : setting // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$GlobalPersonResponseImpl implements _GlobalPersonResponse {
+  const _$GlobalPersonResponseImpl({required this.setting});
+
+  factory _$GlobalPersonResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$GlobalPersonResponseImplFromJson(json);
+
+  @override
+  final dynamic setting;
+
+  @override
+  String toString() {
+    return 'GlobalPersonResponse(setting: $setting)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GlobalPersonResponseImpl &&
+            const DeepCollectionEquality().equals(other.setting, setting));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(setting));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GlobalPersonResponseImplCopyWith<_$GlobalPersonResponseImpl>
+      get copyWith =>
+          __$$GlobalPersonResponseImplCopyWithImpl<_$GlobalPersonResponseImpl>(
+              this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$GlobalPersonResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _GlobalPersonResponse implements GlobalPersonResponse {
+  const factory _GlobalPersonResponse({required final dynamic setting}) =
+      _$GlobalPersonResponseImpl;
+
+  factory _GlobalPersonResponse.fromJson(Map<String, dynamic> json) =
+      _$GlobalPersonResponseImpl.fromJson;
+
+  @override
+  dynamic get setting;
+  @override
+  @JsonKey(ignore: true)
+  _$$GlobalPersonResponseImplCopyWith<_$GlobalPersonResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+RenderPDFResponse _$RenderPDFResponseFromJson(Map<String, dynamic> json) {
+  return _RenderPDFResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$RenderPDFResponse {
+  String get url => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $RenderPDFResponseCopyWith<RenderPDFResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RenderPDFResponseCopyWith<$Res> {
+  factory $RenderPDFResponseCopyWith(
+          RenderPDFResponse value, $Res Function(RenderPDFResponse) then) =
+      _$RenderPDFResponseCopyWithImpl<$Res, RenderPDFResponse>;
+  @useResult
+  $Res call({String url});
+}
+
+/// @nodoc
+class _$RenderPDFResponseCopyWithImpl<$Res, $Val extends RenderPDFResponse>
+    implements $RenderPDFResponseCopyWith<$Res> {
+  _$RenderPDFResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? url = null,
+  }) {
+    return _then(_value.copyWith(
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$RenderPDFResponseImplCopyWith<$Res>
+    implements $RenderPDFResponseCopyWith<$Res> {
+  factory _$$RenderPDFResponseImplCopyWith(_$RenderPDFResponseImpl value,
+          $Res Function(_$RenderPDFResponseImpl) then) =
+      __$$RenderPDFResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String url});
+}
+
+/// @nodoc
+class __$$RenderPDFResponseImplCopyWithImpl<$Res>
+    extends _$RenderPDFResponseCopyWithImpl<$Res, _$RenderPDFResponseImpl>
+    implements _$$RenderPDFResponseImplCopyWith<$Res> {
+  __$$RenderPDFResponseImplCopyWithImpl(_$RenderPDFResponseImpl _value,
+      $Res Function(_$RenderPDFResponseImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? url = null,
+  }) {
+    return _then(_$RenderPDFResponseImpl(
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$RenderPDFResponseImpl implements _RenderPDFResponse {
+  const _$RenderPDFResponseImpl({required this.url});
+
+  factory _$RenderPDFResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RenderPDFResponseImplFromJson(json);
+
+  @override
+  final String url;
+
+  @override
+  String toString() {
+    return 'RenderPDFResponse(url: $url)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RenderPDFResponseImpl &&
+            (identical(other.url, url) || other.url == url));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, url);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RenderPDFResponseImplCopyWith<_$RenderPDFResponseImpl> get copyWith =>
+      __$$RenderPDFResponseImplCopyWithImpl<_$RenderPDFResponseImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RenderPDFResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _RenderPDFResponse implements RenderPDFResponse {
+  const factory _RenderPDFResponse({required final String url}) =
+      _$RenderPDFResponseImpl;
+
+  factory _RenderPDFResponse.fromJson(Map<String, dynamic> json) =
+      _$RenderPDFResponseImpl.fromJson;
+
+  @override
+  String get url;
+  @override
+  @JsonKey(ignore: true)
+  _$$RenderPDFResponseImplCopyWith<_$RenderPDFResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

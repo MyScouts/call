@@ -24,3 +24,33 @@ class VersionResponse with _$VersionResponse {
   factory VersionResponse.fromJson(Map<String, dynamic> json) =>
       _$VersionResponseFromJson(json);
 }
+
+@freezed
+class GlobalSettingResponse with _$GlobalSettingResponse {
+  const factory GlobalSettingResponse({
+    required String value,
+  }) = _GlobalSettingResponse;
+
+  factory GlobalSettingResponse.fromJson(Map<String, dynamic> json) =>
+      _$GlobalSettingResponseFromJson(json);
+}
+
+@freezed
+class GlobalPersonResponse with _$GlobalPersonResponse {
+  const factory GlobalPersonResponse({
+    required dynamic setting,
+  }) = _GlobalPersonResponse;
+
+  factory GlobalPersonResponse.fromJson(Map<String, dynamic> json) =>
+      _$GlobalPersonResponseFromJson(json);
+}
+
+@freezed
+class RenderPDFResponse with _$RenderPDFResponse {
+  const factory RenderPDFResponse({
+    required String url,
+  }) = _RenderPDFResponse;
+
+  factory RenderPDFResponse.fromJson(Map<String, dynamic> json) =>
+      _$RenderPDFResponseFromJson(json);
+}

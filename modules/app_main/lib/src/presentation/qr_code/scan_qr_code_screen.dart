@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_constants.dart';
 import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
@@ -35,7 +36,6 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   late final userCubit = context.read<UserCubit>();
   late User _authInfo;
-  final ValueNotifier<String?> _result = ValueNotifier(null);
   final ValueNotifier<bool> _flashCtrl = ValueNotifier(false);
   Scanner.QRViewController? controller;
 
@@ -177,7 +177,6 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
             child: IconButton(
               onPressed: () async {
                 final ImagePicker picker = ImagePicker();
-
                 final XFile? image =
                     await picker.pickImage(source: ImageSource.gallery);
                 if (image != null) {
@@ -185,9 +184,10 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
                       QRCodeDartScanDecoder(formats: [BarcodeFormat.QR_CODE]);
                   Result? result = await decoder.decodeFile(image);
                   if (result != null) {
-                    _result.value = result.text;
+                    return _handleListener(result.text);
                   }
                 }
+                showToastMessage("Mã QR không hợp lệ", ToastMessageType.error);
               },
               icon: const Icon(
                 Icons.photo_library_outlined,
@@ -225,68 +225,82 @@ class _ScanQrCodeScanScreenState extends State<ScanQrCodeScanScreen> {
     );
   }
 
-  void _handleListener(String? code) {
+  _handleListener(String? code) {
     if (code == null) return;
     controller?.pauseCamera();
     if (code.isJSON() && jsonDecode(code) is! int) {
       final data = jsonDecode(code);
       if (data['type'] == 'diary' && data["id"] != null) {
-        context.startReplaceDiary(userId: data["id"].toString());
-        return;
+        return _validationRoute([], () {
+          context.startReplaceDiary(userId: data["id"].toString());
+        });
       }
 
       if (data['type'] == 'team' && data["id"] != null) {
-        context.startTeamDetailFromQR(
-          id: data["id"],
-          bossGroupId: data['bossGroupId'],
-          name: data['name'],
-        );
-        return;
+        if (widget.type == QrCodeScanType.joinTeam) {
+          return context.pop(data: data["id"]);
+        } else {
+          return _validationRoute([], () {
+            context.startTeamDetailFromQR(
+              id: data["id"],
+              bossGroupId: data['bossGroupId'],
+              name: data['name'],
+            );
+          });
+        }
       }
 
       if ([QrCodeScanType.registerCustomer, QrCodeScanType.registerMarshop]
           .contains(widget.type)) {
-        Navigator.pop(context, data['marshopId'].toString());
-        return;
+        return _validationRoute(
+            [QrCodeScanType.registerCustomer, QrCodeScanType.registerMarshop],
+            () {
+          Navigator.pop(context, data['pDoneId'].toString());
+        });
       }
 
       if (data['type'] == 'auth1') {
-        context.confirmLoginQrCode(
-          type: AuthClaimType.v1,
-          code: data['code'],
-        );
-        return;
+        return _validationRoute([], () {
+          context.confirmLoginQrCode(
+            type: AuthClaimType.v1,
+            code: data['code'],
+            pDoneId: data['pDoneId'] ?? "",
+          );
+        });
       }
 
       if (data['type'] == 'auth2') {
-        context.confirmLoginQrCode(
-          type: AuthClaimType.v2,
-          code: data['code'],
-          marshopId: data['marshopId'].toString(),
-        );
-        return;
+        return _validationRoute([], () {
+          context.confirmLoginQrCode(
+            type: AuthClaimType.v2,
+            code: data['code'],
+            marshopId: data['marshopId'].toString(),
+            pDoneId: data['pDoneId'] ?? "",
+          );
+        });
       }
-    } else {
-      if ((code.toString().contains("_auth1") ||
-          code.toString().contains("_auth2"))) {
-        AuthClaimType type = code.toString().contains("_auth2")
-            ? AuthClaimType.v2
-            : AuthClaimType.v1;
-        context.confirmLoginQrCode(
-          type: type,
-          code:
-              code.toString().replaceAll("_auth1", "").replaceAll("_auth2", ""),
-        );
-        return;
-      }
-      showToastMessage("Mã QR không hợp lệ", ToastMessageType.error);
-      Future.delayed(
-        const Duration(milliseconds: 300),
-        () {
-          controller?.resumeCamera();
-        },
-      );
-      // Navigator.pop(context, code);
     }
+    showToastMessage("Mã QR không hợp lệ", ToastMessageType.error);
+    Future.delayed(
+      const Duration(milliseconds: 300),
+      () {
+        controller?.resumeCamera();
+      },
+    );
+  }
+
+  _validationRoute(List<QrCodeScanType> types, Function callback) {
+    if (widget.type == null ||
+        types.isNotEmpty && types.contains(widget.type)) {
+      return callback();
+    }
+    showToastMessage("Mã QR không hợp lệ", ToastMessageType.error);
+    Future.delayed(
+      const Duration(milliseconds: 300),
+      () {
+        controller?.resumeCamera();
+      },
+    );
+    return true;
   }
 }

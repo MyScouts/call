@@ -130,7 +130,7 @@ class _$OtpImpl implements _Otp {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OtpImpl &&

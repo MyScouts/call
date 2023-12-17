@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "691629872810",
+    "project_id": "vdone-prod",
+    "storage_bucket": "vdone-prod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:691629872810:android:9181d464e51c2578cb62d3",
+        "android_client_info": {
+          "package_name": "com.app.vdone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDLAZjNS0x9AhtoHWniGPh7MIFaifNo0Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

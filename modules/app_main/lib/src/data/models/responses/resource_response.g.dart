@@ -36,3 +36,39 @@ Map<String, dynamic> _$$VersionResponseImplToJson(
       'force': instance.force,
       'note': instance.note,
     };
+
+_$GlobalSettingResponseImpl _$$GlobalSettingResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$GlobalSettingResponseImpl(
+      value: json['value'] as String,
+    );
+
+Map<String, dynamic> _$$GlobalSettingResponseImplToJson(
+        _$GlobalSettingResponseImpl instance) =>
+    <String, dynamic>{
+      'value': instance.value,
+    };
+
+_$GlobalPersonResponseImpl _$$GlobalPersonResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$GlobalPersonResponseImpl(
+      setting: json['setting'],
+    );
+
+Map<String, dynamic> _$$GlobalPersonResponseImplToJson(
+        _$GlobalPersonResponseImpl instance) =>
+    <String, dynamic>{
+      'setting': instance.setting,
+    };
+
+_$RenderPDFResponseImpl _$$RenderPDFResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$RenderPDFResponseImpl(
+      url: json['url'] as String,
+    );
+
+Map<String, dynamic> _$$RenderPDFResponseImplToJson(
+        _$RenderPDFResponseImpl instance) =>
+    <String, dynamic>{
+      'url': instance.url,
+    };

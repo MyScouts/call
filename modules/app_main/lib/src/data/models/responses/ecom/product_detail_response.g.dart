@@ -9,10 +9,10 @@ part of 'product_detail_response.dart';
 _$ProductDetailResponseImpl _$$ProductDetailResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$ProductDetailResponseImpl(
-      id: json['id'] as String,
+      id: json['id'] as int,
       name: json['name'] as String,
-      thumbnail:
-          (json['thumbnail'] as List<dynamic>).map((e) => e as String).toList(),
+      avatar: json['avatar'] as String,
+      description: json['description'] as String?,
       price: json['price'] as int,
     );
 
@@ -21,6 +21,7 @@ Map<String, dynamic> _$$ProductDetailResponseImplToJson(
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'thumbnail': instance.thumbnail,
+      'avatar': instance.avatar,
+      'description': instance.description,
       'price': instance.price,
     };

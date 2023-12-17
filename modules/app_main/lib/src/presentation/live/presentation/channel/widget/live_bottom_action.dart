@@ -54,24 +54,28 @@ class LiveBottomAction extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 3,
-                  child: Row(
-                    children: [
-                      const Expanded(
-                        child: LiveCommentWidget(),
-                      ),
-                      SizedBox(
-                        width: 104.w,
-                        child: GestureDetector(
-                          onDoubleTap: controller.reaction,
-                          behavior: HitTestBehavior.opaque,
-                          child: const LiveReactionScreen(),
+                Obx(() {
+                  return SizedBox(
+                    height: controller.liveType.value == LiveChannelType.pk
+                        ? 194.h
+                        : ScreenUtil().screenHeight / 4,
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: ScreenUtil().screenWidth * 3 / 4,
+                          child: const LiveCommentWidget(),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
+                        Expanded(
+                          child: GestureDetector(
+                            onDoubleTap: controller.reaction,
+                            behavior: HitTestBehavior.opaque,
+                            child: const LiveReactionScreen(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
                 Obx(() {
                   final controller = context.read<LiveChannelController>();
                   return Row(
@@ -98,16 +102,16 @@ class LiveBottomAction extends StatelessWidget {
                               LiveButtonAction(
                                 icon: ImageWidget(IconAppConstants.icLive2User),
                                 onPressed: () {
-                                  context.showBottomSheetLive(controller, index: 1);
+                                  context.showBottomSheetLive(controller,
+                                      index: 1);
                                 },
                               ),
-                            if (controller.me.value.isOwner)
-                              LiveButtonAction(
-                                icon: ImageWidget(
-                                  IconAppConstants.icLiveSetting,
-                                ),
-                                onPressed: () => liveSetting(context),
+                            LiveButtonAction(
+                              icon: ImageWidget(
+                                IconAppConstants.icLiveSetting,
                               ),
+                              onPressed: () => liveSetting(context),
+                            ),
                             if (controller.me.value.isOwner)
                               LiveButtonAction(
                                 bgColor: const Color(0xff4B84F7),
@@ -124,7 +128,8 @@ class LiveBottomAction extends StatelessWidget {
                                 onPressed: () {},
                               ),
                             const Spacer(),
-                            if (!controller.me.value.isOwner) const LiveRoseButton(),
+                            if (!controller.me.value.isOwner)
+                              const LiveRoseButton(),
                           ].separated(const SizedBox(width: 10)),
                         ),
                       ),
@@ -140,37 +145,5 @@ class LiveBottomAction extends StatelessWidget {
         return const SizedBox.shrink();
       }
     });
-  }
-}
-
-class _ActionBan extends StatelessWidget {
-  const _ActionBan({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 12),
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.3),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: const Padding(
-        padding: EdgeInsets.all(4.0),
-        child: Text(
-          'Nghiêm cấm tất cả các nội dung không lành'
-          ' mạnh, thô tục, tình dục (bao gồm tình dục'
-          ' trẻ em), trái với thuần phong mỹ tục;'
-          ' các nội dụng liên quan đến chống phá'
-          ' nhà nước, vi phamj bản quyền hoặc pháp'
-          ' luật trong phòng live. Nếu vi phạm,'
-          ' VDONE sẽ tạm ngưng hoặc xóa tài khoản'
-          ' của bạn.',
-          style: TextStyle(
-            fontSize: 13,
-            color: Color(0xffB6B5BA),
-          ),
-        ),
-      ),
-    );
   }
 }

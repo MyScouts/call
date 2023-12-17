@@ -1,12 +1,12 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
-import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
+import 'package:app_main/src/presentation/live/live_magane_state.dart';
 import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
-import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:draggable_float_widget/draggable_float_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart' as t;
 import 'package:imagewidget/imagewidget.dart';
 
 import '../../../../../app_main.dart';
@@ -92,7 +92,7 @@ class _LiveHomeScreenState extends State<LiveHomeScreen>
                                       width: 40,
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                          color: context.theme.primaryColor,
+                                          color: Theme.of(context).primaryColor,
                                           width: 2,
                                         ),
                                         borderRadius: BorderRadius.circular(90),
@@ -158,7 +158,7 @@ class _LiveHomeScreenState extends State<LiveHomeScreen>
                             height: 35,
                             child: IconButton(
                               padding: EdgeInsets.zero,
-                              onPressed: () => context.startDashboardUtil(),
+                              onPressed: () => Navigator.pop(context),
                               icon: const Icon(Icons.close),
                               highlightColor: Colors.transparent,
                             ),
@@ -181,33 +181,39 @@ class _LiveHomeScreenState extends State<LiveHomeScreen>
               ),
             ),
           ),
-          DraggableFloatWidget(
-            config: const DraggableFloatWidgetBaseConfig(
-                isFullScreen: true,
-                initPositionYInTop: false,
-                initPositionYMarginBorder: 50,
-                borderBottom: 0,
-                animDuration: Duration(milliseconds: 150)),
-            onTap: () {
-              Navigator.of(context).pushNamed(LiveWrapperScreen.routerName);
-            },
-            child: Container(
-              height: 70,
-              width: 70,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromRGBO(0, 148, 255, 0.4),
-                    blurRadius: 27,
-                    spreadRadius: 2,
-                    offset: Offset(0, 1),
-                  ),
-                ],
+          t.Obx(() {
+            final id = context.read<UserCubit>().currentUser?.id ?? -1;
+            if (LiveManageState.hostID.value == id) {
+              return const SizedBox.shrink();
+            }
+            return DraggableFloatWidget(
+              config: const DraggableFloatWidgetBaseConfig(
+                  isFullScreen: true,
+                  initPositionYInTop: false,
+                  initPositionYMarginBorder: 50,
+                  borderBottom: 0,
+                  animDuration: Duration(milliseconds: 150)),
+              onTap: () {
+                Navigator.of(context).pushNamed(LiveWrapperScreen.routerName);
+              },
+              child: Container(
+                height: 70,
+                width: 70,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color.fromRGBO(0, 148, 255, 0.4),
+                      blurRadius: 27,
+                      spreadRadius: 2,
+                      offset: Offset(0, 1),
+                    ),
+                  ],
+                ),
+                child: ImageWidget(Assets.icons_lives_live.path),
               ),
-              child: ImageWidget(Assets.icons_lives_live.path),
-            ),
-          )
+            );
+          })
         ],
       ),
     );

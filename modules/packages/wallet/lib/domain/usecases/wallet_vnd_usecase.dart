@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:injectable/injectable.dart';
+import 'package:wallet/data/datasources/models/response/onboarding_response.dart';
 
 import '../../data/data.dart';
+import '../../data/datasources/models/response/estimate_tax_response.dart';
 import '../entities/bank/bank.dart';
 import '../entities/otp/otp.dart';
 import '../entities/wallet/bank_account.dart';
@@ -47,8 +49,12 @@ class WalletVndUseCase {
     return _walletVndRepository.deleteBankAccount(bankId: bankId);
   }
 
-  Future<num> estimateTax({required num value}) {
+  Future<EstimateTaxResponse> estimateTax({required num value}) {
     return _walletVndRepository.estimateTax(value);
+  }
+
+  Future requestWithdrawOtp() {
+    return _walletVndRepository.requestWithdrawOtp();
   }
 
   Future<void> withdraw({required WithdrawRequest request}) {

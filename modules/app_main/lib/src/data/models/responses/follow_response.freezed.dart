@@ -164,7 +164,7 @@ class _$GetUserFollowDetailResponseImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GetUserFollowDetailResponseImpl &&
@@ -345,7 +345,7 @@ class _$GetUserFollowStartResponseImpl implements _GetUserFollowStartResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GetUserFollowStartResponseImpl &&
@@ -556,7 +556,7 @@ class _$GetUserFollowRelationResponseImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GetUserFollowRelationResponseImpl &&
@@ -727,7 +727,7 @@ class _$ApprovedRequestResponseImpl implements _ApprovedRequestResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ApprovedRequestResponseImpl &&
@@ -955,7 +955,7 @@ class _$ApprovedRequestDetailImpl implements _ApprovedRequestDetail {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ApprovedRequestDetailImpl &&
@@ -1209,7 +1209,7 @@ class _$ApprovedRequestUserImpl implements _ApprovedRequestUser {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ApprovedRequestUserImpl &&

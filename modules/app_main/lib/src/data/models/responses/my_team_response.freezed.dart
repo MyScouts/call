@@ -119,7 +119,7 @@ class _$MyTeamResponseImpl implements _MyTeamResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MyTeamResponseImpl &&
