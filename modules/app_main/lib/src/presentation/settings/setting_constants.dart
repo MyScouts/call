@@ -117,7 +117,7 @@ class Setting {
             icon: IconAppConstants.icVersion,
             onPressed: () => context.read<AppCubit>().getAppVersion(
                   type: osType,
-                  isProduction: isProduction,
+                  isProduction: true,
                 ),
           ),
         ]
