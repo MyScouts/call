@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:app_main/src/data/models/payloads/resource/resource_payload.dart';
 import 'package:app_main/src/data/models/responses/resource_response.dart';
 import 'package:camera/camera.dart';
 import 'package:dio/dio.dart';

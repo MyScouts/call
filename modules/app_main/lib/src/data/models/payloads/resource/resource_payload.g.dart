@@ -23,6 +23,7 @@ Map<String, dynamic> _$$RenderPDFPayloadImplToJson(
 _$BossGroupContractPramImpl _$$BossGroupContractPramImplFromJson(
         Map<String, dynamic> json) =>
     _$BossGroupContractPramImpl(
+      contractNumber: json['contractNumber'] as String,
       date: json['date'] as String,
       month: json['month'] as String,
       year: json['year'] as String,
@@ -39,6 +40,7 @@ _$BossGroupContractPramImpl _$$BossGroupContractPramImplFromJson(
 Map<String, dynamic> _$$BossGroupContractPramImplToJson(
         _$BossGroupContractPramImpl instance) =>
     <String, dynamic>{
+      'contractNumber': instance.contractNumber,
       'date': instance.date,
       'month': instance.month,
       'year': instance.year,
@@ -55,6 +57,7 @@ Map<String, dynamic> _$$BossGroupContractPramImplToJson(
 _$RentMarShopPackParamImpl _$$RentMarShopPackParamImplFromJson(
         Map<String, dynamic> json) =>
     _$RentMarShopPackParamImpl(
+      contractNumber: json['contractNumber'] as String?,
       date: json['date'] as String?,
       month: json['month'] as String?,
       year: json['year'] as String?,
@@ -76,6 +79,7 @@ _$RentMarShopPackParamImpl _$$RentMarShopPackParamImplFromJson(
 Map<String, dynamic> _$$RentMarShopPackParamImplToJson(
         _$RentMarShopPackParamImpl instance) =>
     <String, dynamic>{
+      'contractNumber': instance.contractNumber,
       'date': instance.date,
       'month': instance.month,
       'year': instance.year,
@@ -97,6 +101,7 @@ Map<String, dynamic> _$$RentMarShopPackParamImplToJson(
 _$PurchaseMarShopPackParamImpl _$$PurchaseMarShopPackParamImplFromJson(
         Map<String, dynamic> json) =>
     _$PurchaseMarShopPackParamImpl(
+      contractNumber: json['contractNumber'] as String?,
       date: json['date'] as String?,
       month: json['month'] as String?,
       year: json['year'] as String?,
@@ -116,6 +121,7 @@ _$PurchaseMarShopPackParamImpl _$$PurchaseMarShopPackParamImplFromJson(
 Map<String, dynamic> _$$PurchaseMarShopPackParamImplToJson(
         _$PurchaseMarShopPackParamImpl instance) =>
     <String, dynamic>{
+      'contractNumber': instance.contractNumber,
       'date': instance.date,
       'month': instance.month,
       'year': instance.year,

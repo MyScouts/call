@@ -177,6 +177,7 @@ BossGroupContractPram _$BossGroupContractPramFromJson(
 
 /// @nodoc
 mixin _$BossGroupContractPram {
+  String get contractNumber => throw _privateConstructorUsedError;
   String get date => throw _privateConstructorUsedError;
   String get month => throw _privateConstructorUsedError;
   String get year => throw _privateConstructorUsedError;
@@ -202,7 +203,8 @@ abstract class $BossGroupContractPramCopyWith<$Res> {
       _$BossGroupContractPramCopyWithImpl<$Res, BossGroupContractPram>;
   @useResult
   $Res call(
-      {String date,
+      {String contractNumber,
+      String date,
       String month,
       String year,
       String fullName,
@@ -229,6 +231,7 @@ class _$BossGroupContractPramCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? contractNumber = null,
     Object? date = null,
     Object? month = null,
     Object? year = null,
@@ -242,6 +245,10 @@ class _$BossGroupContractPramCopyWithImpl<$Res,
     Object? email = null,
   }) {
     return _then(_value.copyWith(
+      contractNumber: null == contractNumber
+          ? _value.contractNumber
+          : contractNumber // ignore: cast_nullable_to_non_nullable
+              as String,
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -300,7 +307,8 @@ abstract class _$$BossGroupContractPramImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String date,
+      {String contractNumber,
+      String date,
       String month,
       String year,
       String fullName,
@@ -325,6 +333,7 @@ class __$$BossGroupContractPramImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? contractNumber = null,
     Object? date = null,
     Object? month = null,
     Object? year = null,
@@ -338,6 +347,10 @@ class __$$BossGroupContractPramImplCopyWithImpl<$Res>
     Object? email = null,
   }) {
     return _then(_$BossGroupContractPramImpl(
+      contractNumber: null == contractNumber
+          ? _value.contractNumber
+          : contractNumber // ignore: cast_nullable_to_non_nullable
+              as String,
       date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -390,7 +403,8 @@ class __$$BossGroupContractPramImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$BossGroupContractPramImpl implements _BossGroupContractPram {
   const _$BossGroupContractPramImpl(
-      {required this.date,
+      {required this.contractNumber,
+      required this.date,
       required this.month,
       required this.year,
       required this.fullName,
@@ -405,6 +419,8 @@ class _$BossGroupContractPramImpl implements _BossGroupContractPram {
   factory _$BossGroupContractPramImpl.fromJson(Map<String, dynamic> json) =>
       _$$BossGroupContractPramImplFromJson(json);
 
+  @override
+  final String contractNumber;
   @override
   final String date;
   @override
@@ -430,7 +446,7 @@ class _$BossGroupContractPramImpl implements _BossGroupContractPram {
 
   @override
   String toString() {
-    return 'BossGroupContractPram(date: $date, month: $month, year: $year, fullName: $fullName, birthday: $birthday, identityNumber: $identityNumber, issuer: $issuer, issuedDate: $issuedDate, address: $address, phoneNumber: $phoneNumber, email: $email)';
+    return 'BossGroupContractPram(contractNumber: $contractNumber, date: $date, month: $month, year: $year, fullName: $fullName, birthday: $birthday, identityNumber: $identityNumber, issuer: $issuer, issuedDate: $issuedDate, address: $address, phoneNumber: $phoneNumber, email: $email)';
   }
 
   @override
@@ -438,6 +454,8 @@ class _$BossGroupContractPramImpl implements _BossGroupContractPram {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BossGroupContractPramImpl &&
+            (identical(other.contractNumber, contractNumber) ||
+                other.contractNumber == contractNumber) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.month, month) || other.month == month) &&
             (identical(other.year, year) || other.year == year) &&
@@ -460,6 +478,7 @@ class _$BossGroupContractPramImpl implements _BossGroupContractPram {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      contractNumber,
       date,
       month,
       year,
@@ -489,7 +508,8 @@ class _$BossGroupContractPramImpl implements _BossGroupContractPram {
 
 abstract class _BossGroupContractPram implements BossGroupContractPram {
   const factory _BossGroupContractPram(
-      {required final String date,
+      {required final String contractNumber,
+      required final String date,
       required final String month,
       required final String year,
       required final String fullName,
@@ -504,6 +524,8 @@ abstract class _BossGroupContractPram implements BossGroupContractPram {
   factory _BossGroupContractPram.fromJson(Map<String, dynamic> json) =
       _$BossGroupContractPramImpl.fromJson;
 
+  @override
+  String get contractNumber;
   @override
   String get date;
   @override
@@ -538,6 +560,7 @@ RentMarShopPackParam _$RentMarShopPackParamFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RentMarShopPackParam {
+  String? get contractNumber => throw _privateConstructorUsedError;
   String? get date => throw _privateConstructorUsedError;
   String? get month => throw _privateConstructorUsedError;
   String? get year => throw _privateConstructorUsedError;
@@ -568,7 +591,8 @@ abstract class $RentMarShopPackParamCopyWith<$Res> {
       _$RentMarShopPackParamCopyWithImpl<$Res, RentMarShopPackParam>;
   @useResult
   $Res call(
-      {String? date,
+      {String? contractNumber,
+      String? date,
       String? month,
       String? year,
       String? identityNumber,
@@ -600,6 +624,7 @@ class _$RentMarShopPackParamCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? contractNumber = freezed,
     Object? date = freezed,
     Object? month = freezed,
     Object? year = freezed,
@@ -618,6 +643,10 @@ class _$RentMarShopPackParamCopyWithImpl<$Res,
     Object? taxCode = freezed,
   }) {
     return _then(_value.copyWith(
+      contractNumber: freezed == contractNumber
+          ? _value.contractNumber
+          : contractNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -695,7 +724,8 @@ abstract class _$$RentMarShopPackParamImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? date,
+      {String? contractNumber,
+      String? date,
       String? month,
       String? year,
       String? identityNumber,
@@ -724,6 +754,7 @@ class __$$RentMarShopPackParamImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? contractNumber = freezed,
     Object? date = freezed,
     Object? month = freezed,
     Object? year = freezed,
@@ -742,6 +773,10 @@ class __$$RentMarShopPackParamImplCopyWithImpl<$Res>
     Object? taxCode = freezed,
   }) {
     return _then(_$RentMarShopPackParamImpl(
+      contractNumber: freezed == contractNumber
+          ? _value.contractNumber
+          : contractNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -814,7 +849,8 @@ class __$$RentMarShopPackParamImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RentMarShopPackParamImpl implements _RentMarShopPackParam {
   const _$RentMarShopPackParamImpl(
-      {this.date,
+      {this.contractNumber,
+      this.date,
       this.month,
       this.year,
       this.identityNumber,
@@ -834,6 +870,8 @@ class _$RentMarShopPackParamImpl implements _RentMarShopPackParam {
   factory _$RentMarShopPackParamImpl.fromJson(Map<String, dynamic> json) =>
       _$$RentMarShopPackParamImplFromJson(json);
 
+  @override
+  final String? contractNumber;
   @override
   final String? date;
   @override
@@ -869,7 +907,7 @@ class _$RentMarShopPackParamImpl implements _RentMarShopPackParam {
 
   @override
   String toString() {
-    return 'RentMarShopPackParam(date: $date, month: $month, year: $year, identityNumber: $identityNumber, issuedDate: $issuedDate, issuedPlace: $issuedPlace, address: $address, phoneNumber: $phoneNumber, email: $email, representative: $representative, position: $position, rentCost: $rentCost, wordRentCost: $wordRentCost, depositAmount: $depositAmount, wordDepositAmount: $wordDepositAmount, taxCode: $taxCode)';
+    return 'RentMarShopPackParam(contractNumber: $contractNumber, date: $date, month: $month, year: $year, identityNumber: $identityNumber, issuedDate: $issuedDate, issuedPlace: $issuedPlace, address: $address, phoneNumber: $phoneNumber, email: $email, representative: $representative, position: $position, rentCost: $rentCost, wordRentCost: $wordRentCost, depositAmount: $depositAmount, wordDepositAmount: $wordDepositAmount, taxCode: $taxCode)';
   }
 
   @override
@@ -877,6 +915,8 @@ class _$RentMarShopPackParamImpl implements _RentMarShopPackParam {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RentMarShopPackParamImpl &&
+            (identical(other.contractNumber, contractNumber) ||
+                other.contractNumber == contractNumber) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.month, month) || other.month == month) &&
             (identical(other.year, year) || other.year == year) &&
@@ -909,6 +949,7 @@ class _$RentMarShopPackParamImpl implements _RentMarShopPackParam {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      contractNumber,
       date,
       month,
       year,
@@ -944,7 +985,8 @@ class _$RentMarShopPackParamImpl implements _RentMarShopPackParam {
 
 abstract class _RentMarShopPackParam implements RentMarShopPackParam {
   const factory _RentMarShopPackParam(
-      {final String? date,
+      {final String? contractNumber,
+      final String? date,
       final String? month,
       final String? year,
       final String? identityNumber,
@@ -964,6 +1006,8 @@ abstract class _RentMarShopPackParam implements RentMarShopPackParam {
   factory _RentMarShopPackParam.fromJson(Map<String, dynamic> json) =
       _$RentMarShopPackParamImpl.fromJson;
 
+  @override
+  String? get contractNumber;
   @override
   String? get date;
   @override
@@ -1009,6 +1053,7 @@ PurchaseMarShopPackParam _$PurchaseMarShopPackParamFromJson(
 
 /// @nodoc
 mixin _$PurchaseMarShopPackParam {
+  String? get contractNumber => throw _privateConstructorUsedError;
   String? get date => throw _privateConstructorUsedError;
   String? get month => throw _privateConstructorUsedError;
   String? get year => throw _privateConstructorUsedError;
@@ -1037,7 +1082,8 @@ abstract class $PurchaseMarShopPackParamCopyWith<$Res> {
       _$PurchaseMarShopPackParamCopyWithImpl<$Res, PurchaseMarShopPackParam>;
   @useResult
   $Res call(
-      {String? date,
+      {String? contractNumber,
+      String? date,
       String? month,
       String? year,
       String? address,
@@ -1067,6 +1113,7 @@ class _$PurchaseMarShopPackParamCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? contractNumber = freezed,
     Object? date = freezed,
     Object? month = freezed,
     Object? year = freezed,
@@ -1083,6 +1130,10 @@ class _$PurchaseMarShopPackParamCopyWithImpl<$Res,
     Object? wordPrice = freezed,
   }) {
     return _then(_value.copyWith(
+      contractNumber: freezed == contractNumber
+          ? _value.contractNumber
+          : contractNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -1153,7 +1204,8 @@ abstract class _$$PurchaseMarShopPackParamImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? date,
+      {String? contractNumber,
+      String? date,
       String? month,
       String? year,
       String? address,
@@ -1182,6 +1234,7 @@ class __$$PurchaseMarShopPackParamImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? contractNumber = freezed,
     Object? date = freezed,
     Object? month = freezed,
     Object? year = freezed,
@@ -1198,6 +1251,10 @@ class __$$PurchaseMarShopPackParamImplCopyWithImpl<$Res>
     Object? wordPrice = freezed,
   }) {
     return _then(_$PurchaseMarShopPackParamImpl(
+      contractNumber: freezed == contractNumber
+          ? _value.contractNumber
+          : contractNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
       date: freezed == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
@@ -1262,7 +1319,8 @@ class __$$PurchaseMarShopPackParamImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PurchaseMarShopPackParamImpl implements _PurchaseMarShopPackParam {
   const _$PurchaseMarShopPackParamImpl(
-      {this.date,
+      {this.contractNumber,
+      this.date,
       this.month,
       this.year,
       this.address,
@@ -1280,6 +1338,8 @@ class _$PurchaseMarShopPackParamImpl implements _PurchaseMarShopPackParam {
   factory _$PurchaseMarShopPackParamImpl.fromJson(Map<String, dynamic> json) =>
       _$$PurchaseMarShopPackParamImplFromJson(json);
 
+  @override
+  final String? contractNumber;
   @override
   final String? date;
   @override
@@ -1311,7 +1371,7 @@ class _$PurchaseMarShopPackParamImpl implements _PurchaseMarShopPackParam {
 
   @override
   String toString() {
-    return 'PurchaseMarShopPackParam(date: $date, month: $month, year: $year, address: $address, taxCode: $taxCode, identityNumber: $identityNumber, issuedDate: $issuedDate, issuedPlace: $issuedPlace, phoneNumber: $phoneNumber, email: $email, representative: $representative, position: $position, price: $price, wordPrice: $wordPrice)';
+    return 'PurchaseMarShopPackParam(contractNumber: $contractNumber, date: $date, month: $month, year: $year, address: $address, taxCode: $taxCode, identityNumber: $identityNumber, issuedDate: $issuedDate, issuedPlace: $issuedPlace, phoneNumber: $phoneNumber, email: $email, representative: $representative, position: $position, price: $price, wordPrice: $wordPrice)';
   }
 
   @override
@@ -1319,6 +1379,8 @@ class _$PurchaseMarShopPackParamImpl implements _PurchaseMarShopPackParam {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PurchaseMarShopPackParamImpl &&
+            (identical(other.contractNumber, contractNumber) ||
+                other.contractNumber == contractNumber) &&
             (identical(other.date, date) || other.date == date) &&
             (identical(other.month, month) || other.month == month) &&
             (identical(other.year, year) || other.year == year) &&
@@ -1346,6 +1408,7 @@ class _$PurchaseMarShopPackParamImpl implements _PurchaseMarShopPackParam {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      contractNumber,
       date,
       month,
       year,
@@ -1378,7 +1441,8 @@ class _$PurchaseMarShopPackParamImpl implements _PurchaseMarShopPackParam {
 
 abstract class _PurchaseMarShopPackParam implements PurchaseMarShopPackParam {
   const factory _PurchaseMarShopPackParam(
-      {final String? date,
+      {final String? contractNumber,
+      final String? date,
       final String? month,
       final String? year,
       final String? address,
@@ -1396,6 +1460,8 @@ abstract class _PurchaseMarShopPackParam implements PurchaseMarShopPackParam {
   factory _PurchaseMarShopPackParam.fromJson(Map<String, dynamic> json) =
       _$PurchaseMarShopPackParamImpl.fromJson;
 
+  @override
+  String? get contractNumber;
   @override
   String? get date;
   @override

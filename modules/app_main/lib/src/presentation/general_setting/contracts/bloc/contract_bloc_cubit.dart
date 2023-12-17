@@ -46,6 +46,7 @@ class ContractBlocCubit extends Cubit<ContractBlocState> {
       switch (type) {
         case TypeContract.bossGroup:
           params = BossGroupContractPram(
+            contractNumber: _userInfo.pDoneId,
             address: address.join(","),
             birthday: profile.birthday,
             date: now.day.toString(),
@@ -61,6 +62,7 @@ class ContractBlocCubit extends Cubit<ContractBlocState> {
           break;
         case TypeContract.rentPack:
           params = (payload as RentMarShopPackParam).copyWith(
+            contractNumber: "${_userInfo.pDoneId}M",
             address: address.join(","),
             date: now.day.toString(),
             month: now.month.toString(),
@@ -80,6 +82,7 @@ class ContractBlocCubit extends Cubit<ContractBlocState> {
           );
         case TypeContract.purchasePack:
           params = (payload as PurchaseMarShopPackParam).copyWith(
+            contractNumber: "${_userInfo.pDoneId}M",
             address: address.join(","),
             date: now.day.toString(),
             month: now.month.toString(),

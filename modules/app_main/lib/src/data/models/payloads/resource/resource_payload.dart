@@ -17,6 +17,7 @@ class RenderPDFPayload with _$RenderPDFPayload {
 @freezed
 class BossGroupContractPram with _$BossGroupContractPram {
   const factory BossGroupContractPram({
+    required String contractNumber,
     required String date,
     required String month,
     required String year,
@@ -37,6 +38,7 @@ class BossGroupContractPram with _$BossGroupContractPram {
 @freezed
 class RentMarShopPackParam with _$RentMarShopPackParam {
   const factory RentMarShopPackParam({
+    String? contractNumber,
     String? date,
     String? month,
     String? year,
@@ -62,6 +64,7 @@ class RentMarShopPackParam with _$RentMarShopPackParam {
 @freezed
 class PurchaseMarShopPackParam with _$PurchaseMarShopPackParam {
   const factory PurchaseMarShopPackParam({
+    String? contractNumber,
     String? date,
     String? month,
     String? year,
