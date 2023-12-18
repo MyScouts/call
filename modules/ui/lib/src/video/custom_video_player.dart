@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -55,6 +56,8 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   bool isShowBottomChild = true;
   bool isMute = false;
   final seekTime = const Duration(seconds: 15);
+  final durationHideInfo = const Duration(seconds: 3);
+  Timer? timer;
 
   @override
   void initState() {
@@ -63,12 +66,25 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     _initDefaultValue();
   }
 
-  void _initDefaultValue(){
+  void _initDefaultValue() {
     isShowInfo = widget.isShowInfo;
     isPlaying = widget.isPlaying;
     isFullscreen = widget.isFullscreen;
     isShowBottomChild = widget.isShowBottomChild;
     isMute = widget.isMute;
+  }
+
+  void _startTimer() {
+    timer = Timer.periodic(durationHideInfo, (time) {
+      setState(() {
+        isShowInfo = false;
+      });
+    });
+  }
+
+  void _resetTimer() {
+    timer?.cancel();
+    _startTimer();
   }
 
   Future<void> _initController() async {
@@ -91,12 +107,18 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
       setState(() {});
     }
 
+    _startTimer();
+
     videoPlayerController.addListener(() {
-      if (videoPlayerController.value.position ==
-          videoPlayerController.value.duration) {
+      final duration = videoPlayerController.value.duration;
+      final position = videoPlayerController.value.position;
+
+      if (position == duration) {
         setState(() {
-          isPlaying = false;
+          isPlaying = true;
         });
+        videoPlayerController.play();
+        _resetTimer();
       }
     });
   }
@@ -105,6 +127,7 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   void dispose() {
     super.dispose();
     videoPlayerController.dispose();
+    timer?.cancel();
   }
 
   @override
@@ -116,7 +139,9 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
     return Stack(
       children: [
         GestureDetector(
+          behavior: HitTestBehavior.translucent,
           onTap: () {
+            _resetTimer();
             setState(() {
               isShowInfo = !isShowInfo;
             });
@@ -193,7 +218,12 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: VideoSlider(videoPlayerController),
+              child: VideoSlider(
+                videoPlayerController,
+                onChange: () {
+                  _resetTimer();
+                },
+              ),
             ),
             if (widget.bottomChild != null && isShowBottomChild)
               widget.bottomChild!,
@@ -231,6 +261,7 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   Widget _buildBackTime() {
     return GestureDetector(
       onTap: () {
+        _resetTimer();
         setState(() {
           final position = videoPlayerController.value.position;
           if (position.inSeconds != 0) {
@@ -253,6 +284,8 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   Widget _buildVolume() {
     return GestureDetector(
       onTap: () {
+        _resetTimer();
+
         setState(() {
           isMute = !isMute;
           if (isMute) {
@@ -275,6 +308,8 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   Widget _buildFullscreen() {
     return GestureDetector(
       onTap: () {
+        _resetTimer();
+
         setState(() {
           isFullscreen = !isFullscreen;
           isShowInfo = false;
@@ -307,6 +342,8 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
   Widget _buildPlay() {
     return GestureDetector(
       onTap: () {
+        _resetTimer();
+
         setState(() {
           isPlaying = !isPlaying;
           isPlaying
@@ -353,10 +390,12 @@ class _CustomVideoPlayerState extends State<CustomVideoPlayer> {
 class VideoSlider extends StatefulWidget {
   const VideoSlider(
     this.controller, {
+    required this.onChange,
     super.key,
   });
 
   final VideoPlayerController controller;
+  final Function onChange;
 
   @override
   State<VideoSlider> createState() => _VideoSliderState();
@@ -371,7 +410,6 @@ class _VideoSliderState extends State<VideoSlider> {
       setState(() {});
     };
   }
-
   late VoidCallback listener;
 
   VideoPlayerController get controller => widget.controller;
@@ -412,6 +450,7 @@ class _VideoSliderState extends State<VideoSlider> {
                 controller.seekTo(Duration(
                   seconds: (value * duration).toInt(),
                 ));
+                widget.onChange();
               },
               activeColor: Colors.blue,
               thumbColor: Colors.white,

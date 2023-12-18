@@ -150,7 +150,7 @@ class _$CheckProtectorPayloadImpl implements _CheckProtectorPayload {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CheckProtectorPayloadImpl &&

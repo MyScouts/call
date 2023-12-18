@@ -266,7 +266,7 @@ class _$FestivalImpl implements _Festival {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FestivalImpl &&

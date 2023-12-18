@@ -1,6 +1,4 @@
 import 'package:app_main/src/presentation/chat/conversation/conversation_page.dart';
-import 'package:app_main/src/presentation/community/community.component.dart';
-import 'package:app_main/src/presentation/dashboard/system_setting/system_setting.dart';
 import 'package:app_main/src/presentation/call/phone_book/phone_book_page.dart';
 import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/my_profile_screen.dart';
@@ -148,7 +146,9 @@ class DashBoardGroupItem extends DashBoardItem {
       title: json['title'],
       backgroundImage: json['background_image'],
       path: json['path'],
-      items: List.from(json['items'] ?? []).map((e) => DashBoardIconItem.fromJson(e)).toList(),
+      items: List.from(json['items'] ?? [])
+          .map((e) => DashBoardIconItem.fromJson(e))
+          .toList(),
     );
   }
 
@@ -175,7 +175,10 @@ final Map<String, DashBoardItem> mapItems = {
     height: 2,
   ),
   'ic_live': DashBoardIconItem(
-      id: 'ic_live', title: 'Live', backgroundImage: IconAppConstants.icLive, path: LiveHomeScreen.routeName),
+      id: 'ic_live',
+      title: 'Live',
+      backgroundImage: IconAppConstants.icLive,
+      path: LiveHomeScreen.routeName),
   'ic_wallet': DashBoardIconItem(
     id: 'ic_wallet',
     title: 'Ví',
@@ -197,7 +200,6 @@ final Map<String, DashBoardItem> mapItems = {
     id: 'ic_group',
     title: 'Group Team',
     backgroundImage: IconAppConstants.icGroupTeam,
-    path: CommunityWidget.routeName,
   ),
   'ic_team': DashBoardIconItem(
     id: 'ic_team',
@@ -248,7 +250,6 @@ final communityDefault = {
     id: 'ic_group',
     title: 'Group Team',
     backgroundImage: IconAppConstants.icGroupTeam,
-    path: CommunityWidget.routeName,
   ),
   'ic_team': DashBoardIconItem(
     id: 'ic_team',

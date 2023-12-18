@@ -1,6 +1,9 @@
+import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/general_setting/contracts/bloc/contract_bloc_cubit.dart';
+import 'package:app_main/src/presentation/general_setting/contracts/contract_view_screen.dart';
+import 'package:app_main/src/presentation/general_setting/terms_conditions/terms_conditions_v2_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:mobilehub_core/mobilehub_core.dart';
 
 import 'terms_conditions/terms_conditions_screen.dart';
 
@@ -8,17 +11,22 @@ import 'terms_conditions/terms_conditions_screen.dart';
 class GeneralRoutes extends RouteModule {
   @override
   Map<String, WidgetBuilder> getAll(RouteSettings settings) => {
-        // AccountGeneralScreen.routeName: (context) {
-        //   return const AccountGeneralScreen();
-        // },
         TermsAndConditionsScreen.routeName: (context) {
-          return const TermsAndConditionsScreen();
+          final param = settings.arguments as List<Map<String, String>>;
+          return TermsAndConditionsScreen(data: param);
         },
-        // TutorialAccountScreen.routeName: (context) {
-        //   return const TutorialAccountScreen();
-        // },
-        // ContractJAScreen.routeName: (context) {
-        //   return const ContractJAScreen();
-        // },
+        TeamAndCondictionV2Screen.routeName: (context) {
+          return const TeamAndCondictionV2Screen();
+        },
+        ContractViewScreen.routeName: (context) {
+          final param = settings.arguments as Map<String, dynamic>;
+          return BlocProvider(
+            create: (context) => injector.get<ContractBlocCubit>(),
+            child: ContractViewScreen(
+              type: param['type'],
+              payload: param['payload'],
+            ),
+          );
+        },
       };
 }

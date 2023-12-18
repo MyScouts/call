@@ -32,6 +32,7 @@ NotificationDataResponse _$NotificationDataResponseFromJson(
           ? null
           : DateTime.parse(json['createdAt'] as String),
       metadata: json['metadata'] as Map<String, dynamic>?,
+      body: json['body'] as String,
     );
 
 Map<String, dynamic> _$NotificationDataResponseToJson(
@@ -41,6 +42,7 @@ Map<String, dynamic> _$NotificationDataResponseToJson(
       'title': instance.title,
       'isRead': instance.isRead,
       'type': instance.type,
+      'body': instance.body,
       'metadata': instance.metadata,
       'createdAt': instance.createdAt?.toIso8601String(),
     };

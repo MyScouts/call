@@ -4,17 +4,12 @@ import 'package:ui/ui.dart';
 import 'widgets/policy_content.dart';
 import 'widgets/text_static_content_widget.dart';
 
-class TermsAndConditionsScreen extends StatefulWidget {
+class TermsAndConditionsScreen extends StatelessWidget {
+  final List<Map<String, String>> data;
   static const String routeName = '/terms-conditions';
 
-  const TermsAndConditionsScreen({Key? key}) : super(key: key);
+  const TermsAndConditionsScreen({super.key, required this.data});
 
-  @override
-  State<TermsAndConditionsScreen> createState() =>
-      _TermsAndConditionsScreenState();
-}
-
-class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,8 +24,8 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
           onPressed: Navigator.of(context).pop,
         ),
       ),
-      body: const AutoHideKeyboard(
-        child: TextStaticContentWidget(contents: policyContents),
+      body: AutoHideKeyboard(
+        child: TextStaticContentWidget(contents: data),
       ),
     );
   }

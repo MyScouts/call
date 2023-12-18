@@ -483,7 +483,7 @@ class _UserApi implements UserApi {
     )
             .compose(
               _dio.options,
-              '/api/v1/following/friend',
+              '/api/v1/following/friend?page=1&pageSize=200',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -510,7 +510,7 @@ class _UserApi implements UserApi {
     )
             .compose(
               _dio.options,
-              '/api/v1/following/followers',
+              '/api/v1/following/followers?page=1&pageSize=200',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -537,7 +537,7 @@ class _UserApi implements UserApi {
     )
             .compose(
               _dio.options,
-              '/api/v1/following/followees',
+              '/api/v1/following/followees?page=1&pageSize=200',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -768,6 +768,33 @@ class _UserApi implements UserApi {
               baseUrl,
             ))));
     final value = UserPublicInfoResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<GetMeResponse> getMe() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<GetMeResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/v1/user/me',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = GetMeResponse.fromJson(_result.data!);
     return value;
   }
 

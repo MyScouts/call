@@ -174,4 +174,10 @@ class AuthRepositoryImpl extends UserRepository {
 
     return res.user;
   }
+
+  @override
+  Future<UserInfo> getMe() async {
+    final response = await _userAPI.getMe();
+    return response.user;
+  }
 }

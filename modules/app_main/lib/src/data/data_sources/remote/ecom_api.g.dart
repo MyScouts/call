@@ -32,7 +32,7 @@ class _EcomAPI implements EcomAPI {
     )
             .compose(
               _dio.options,
-              'ecom/api/product/${productId}',
+              'api/v1/marshop/register-pack-products/${productId}',
               queryParameters: queryParameters,
               data: _data,
             )

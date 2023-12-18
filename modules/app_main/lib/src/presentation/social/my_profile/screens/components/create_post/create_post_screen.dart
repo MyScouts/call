@@ -1,13 +1,12 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/app_dimens.dart';
 import 'package:app_main/src/di/di.dart';
-import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_coordinator.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/components/create_post/blocs/create_post_bloc.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/components/create_post/blocs/create_post_event.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/components/create_post/blocs/create_post_state.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/multiple_image.dart';
-import 'package:app_main/src/data/models/payloads/social/create_post_payload.dart';
 import 'package:app_main/src/presentation/social/widgets/social_appbar_widget.dart';
 import 'package:design_system/design_system.dart';
 import 'package:detectable_text_field/widgets/detectable_text_editing_controller.dart';
@@ -82,7 +81,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   Widget build(BuildContext context) {
     const avatarSize = 52.0;
     const maxLinesSubject = 10;
-    const minLinesSubject = 3;
+    const minLinesSubject = 2;
     final keyBoardHeight = MediaQuery.of(context).viewInsets.bottom;
     const padding = 16.0;
     final paddingLineBottom = MediaQuery.viewPaddingOf(context).bottom;
@@ -220,7 +219,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 double paddingBottom = isVerticleAction
                     ? keyBoardHeight
                     : (isShowKeyBoard ? keyBoardHeight : paddingLineBottom);
-
+    
                 return Container(
                   padding: EdgeInsets.only(bottom: paddingBottom),
                   color: AppColors.white,
@@ -278,8 +277,12 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     ),
                   )
                 : CommonMultiImageView.multiFile(
-                    width: double.infinity,
+                    width: screenWidth,
+                    height: screenWidth,
                     listFile: state.files.map((e) => e!.path).toList(),
+                    spacing: 19, 
+                    isFixedImage1: true,
+                    autoCalculatedHeight: true,
                   ),
           ],
         );
@@ -352,7 +355,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             text: 'Gắn thẻ',
             isShowDivider: false,
           ),
-          SizedBox(height: paddingLineBottom),
+          SizedBox(height: paddingLineBottom + 12),
         ],
       ),
     );
@@ -439,6 +442,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     state.typeScopeSelected.iconName,
                     width: 15,
                     height: 15,
+                    color: AppColors.grey76,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -517,15 +521,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               builder: (context, state) {
             return InkWell(
               onTap: () {
-                if (state.isShowPostButton) {
-                  final createPostPayload = CreatePostPayload(
-                    scopeType: state.typeScopeSelected,
-                    subject: state.subject,
-                    content: state.content,
+                if (widget.user != null) {
+                  bloc.add(PostButtonTapped(
                     postType: widget.postType,
-                    mediaFiles: state.files,
-                  );
-                  context.pop(data: createPostPayload);
+                    user: widget.user!,
+                  ));
                 }
               },
               child: Container(

@@ -19,6 +19,7 @@ class ResourceApiConstant {
   static const String latestVersion = 'api/v1/app-version/type/{type}/latest';
   static const String globalSetting = 'api/v1/setting/{key}';
   static const String userConfig = "api/v1/setting/personal/user/{userId}";
+  static const String renderPDF = "api/v1/render-pdf";
 }
 
 @RestApi()
@@ -48,4 +49,7 @@ abstract class ResourceApi {
   Future<GlobalPersonResponse> getGlobalPeronSetting(
     @Path('userId') int userId,
   );
+
+  @POST(ResourceApiConstant.renderPDF)
+  Future<RenderPDFResponse> renderPDF(@Body() dynamic payload);
 }

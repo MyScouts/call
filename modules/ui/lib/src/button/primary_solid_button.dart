@@ -52,12 +52,16 @@ class PrimarySolidButton extends StatelessWidget {
                       margin: const EdgeInsets.only(right: 8),
                       child: prefix,
                     ),
-                  Text(
-                    title,
-                    style: context.text.bodyLarge!.copyWith(
-                      color: disabled
-                          ? AppColors.grey72
-                          : (textColor ?? AppColors.white),
+                  Flexible(
+                    child: Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: context.text.titleMedium!.copyWith(
+                        height: 1,
+                        color: disabled
+                            ? AppColors.grey72
+                            : (textColor ?? AppColors.white),
+                      ),
                     ),
                   ),
                 ],

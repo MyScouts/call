@@ -81,7 +81,7 @@ class _UpgradeEkycScreenState extends State<UpgradeEkycScreen> {
                 final postCode = eKycData['post_code'][0];
                 payload = payload.copyWith(
                   identityNumber: eKycData['id'] ?? '',
-                  nickname: eKycData['name'] ?? '',
+                  nickName: eKycData['name'] ?? '',
                   birthPlace: UpdatePDoneBirthPlacePayload(
                     wardId: postCode['ward'][1],
                     provinceId: postCode['city'][1],

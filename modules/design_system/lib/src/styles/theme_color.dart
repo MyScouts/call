@@ -153,6 +153,7 @@ class AppColors {
 
   /// gray
   static const Color gray500 = Color(0xFF6E6E6E);
+  static const Color gray400 = Color(0xFF8C8C8C);
 
   /// bg
   static const Color bgFa = Color(0xFFFAFAFA);
@@ -168,4 +169,7 @@ class AppColors {
   static const Color bgCard = Color(0xFFF8F8F8);
 
   static const Color lineColor = Color(0xFFEAEDF0);
+
+
+  static const Color negative = Color(0xFFDE372D);
 }

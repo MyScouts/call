@@ -167,7 +167,7 @@ class _$UpdatePDoneKYCPayloadImpl implements _UpdatePDoneKYCPayload {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UpdatePDoneKYCPayloadImpl &&

@@ -6,6 +6,7 @@ import 'package:app_main/src/presentation/marshop/register_customer/register_cus
 import 'package:app_main/src/presentation/marshop/register_marshop/%20marshop_referral_code_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/confirm_infomation_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/confirm_information_address_screen.dart';
+import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_otp_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_pack_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/register_pack_detail_screen.dart';
@@ -82,6 +83,18 @@ class MarkShopRoutes extends RouteModule {
         TransactionDetailScreen.routeName: (context) {
           final args = settings.arguments as Map<String, dynamic>;
           return TransactionDetailScreen(
+            pack: args['pack'],
+            authInfo: args['authInfo'],
+            marshop: args['marshop'],
+            address: args['address'],
+            productResult: args['productResult'],
+            totalPrice: args['totalPrice'],
+          );
+        },
+        RegisterMarShopOTPScreen.routeName: (context) {
+          final args = settings.arguments as Map<String, dynamic>;
+          return RegisterMarShopOTPScreen(
+            payload: args['payload'],
             pack: args['pack'],
             authInfo: args['authInfo'],
             marshop: args['marshop'],

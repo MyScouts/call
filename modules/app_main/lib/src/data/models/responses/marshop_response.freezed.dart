@@ -131,7 +131,7 @@ class _$ListMarshopResponseImpl implements _ListMarshopResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ListMarshopResponseImpl &&
@@ -328,7 +328,7 @@ class _$MarshopResponseImpl implements _MarshopResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MarshopResponseImpl &&
@@ -545,7 +545,7 @@ class _$MarshopUserInfoImpl implements _MarshopUserInfo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MarshopUserInfoImpl &&
@@ -720,7 +720,7 @@ class _$MarshopRegisterPacksResponseImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MarshopRegisterPacksResponseImpl &&
@@ -923,7 +923,7 @@ class _$MarshopRegisterPackResponseImpl
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MarshopRegisterPackResponseImpl &&
@@ -1139,7 +1139,7 @@ class _$MarshopRegisterPackRuleImpl implements _MarshopRegisterPackRule {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MarshopRegisterPackRuleImpl &&
@@ -1328,7 +1328,7 @@ class _$MarshopRegisterPackProductImpl implements _MarshopRegisterPackProduct {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MarshopRegisterPackProductImpl &&

@@ -45,3 +45,8 @@ class KickMember extends TeamDetailEvent {
   final String teamId;
   KickMember(this.userId, this.teamId);
 }
+
+class CancelJoinTeamEvent extends TeamDetailEvent {
+  final int requestId;
+  CancelJoinTeamEvent(this.requestId);
+}

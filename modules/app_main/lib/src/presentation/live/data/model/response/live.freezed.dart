@@ -130,7 +130,7 @@ class _$LiveImpl implements _Live {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LiveImpl &&

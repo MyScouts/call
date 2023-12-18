@@ -59,6 +59,7 @@ class User with _$User {
     UserFanGroupInfo? fanGroup,
     UserProfileInfo? profile,
     int? sexCode,
+    int? type,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -127,19 +128,26 @@ extension UserExtNull on User? {
   }
 
   String get getPDoneId => this?.pDoneId ?? _userDefaultPDoneId;
+
   Sex get getSex => this?.sex ?? _userDefaultSex;
+
   int get getTotalFollower => this?.totalFollower ?? _userDefaultTotalFollower;
+
   int get getTotalFollowing =>
       this?.totalFollowing ?? _userDefaultTotalFollowing;
+
   int get getTotalFriend => this?.totalFriend ?? _userDefaultTotalFriend;
+
   String get getBackgroundImage =>
       this?.backgroundImages?.first ?? _userDefaultBackground;
+
   String get getUserAvatar => this?.avatar ?? _userDefaultUserAvatar;
+
   bool get getIsPdone => this?.isPDone ?? _userIsPDone;
 }
 
 const _userDefaultName = 'PDone User';
-const _userDefaultEmail = 'pdoneuser@gmail.com';
+const _userDefaultEmail = ' ';
 const _userDefaultNickname = '';
 const _userDefaultBirthday = '01/01/2000';
 const _userDefaultAddress = 'default';

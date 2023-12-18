@@ -39,6 +39,7 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 import '../../../data/model/response/gift_card_live.dart';
 import '../../../data/model/response/sent_gift_response.dart';
 import '../../../data/repository/live_repository.dart';
+import '../../../domain/entities/virtual_info.dart';
 import '../widget/sent_gift_page.dart';
 
 enum LiveStreamState {
@@ -66,6 +67,13 @@ enum PkStep {
 enum PkAction {
   none,
   preEnd;
+}
+
+enum LiveChannelType {
+  unKnow,
+  normal,
+  pk,
+  virtual;
 }
 
 @injectable
@@ -133,10 +141,6 @@ class LiveChannelController {
 
   RxBool get showMessageInput => _showMessageInput;
 
-  final RxBool _enablePk = false.obs;
-
-  RxBool get enablePk => _enablePk;
-
   LivePkData? _pkData;
 
   LivePkData? get pkData => _pkData;
@@ -167,6 +171,20 @@ class LiveChannelController {
     return false;
   }
 
+  int get hostOtherID {
+    if (_pkData == null) throw Exception('not live pk');
+    final user = _pkData?.lives.firstWhereOrNull((e) => e.user?.id != hostID);
+    if (user == null) throw Exception('host leave live');
+    return user.user!.id!;
+  }
+
+  int get liveOtherID {
+    if (_pkData == null) throw Exception('not live pk');
+    final live = _pkData?.lives.firstWhereOrNull((e) => e.id != _info.value.id);
+    if (live == null) throw Exception('host leave live');
+    return live.id;
+  }
+
   bool get hostInLive {
     if (_me.value.isOwner) return true;
     return host != null;
@@ -175,7 +193,7 @@ class LiveChannelController {
   final liveState = const GiftCardLive().obs;
 
   LiveMember? get host {
-    final host = _members.firstWhereOrNull((e) => e.isOwner);
+    final host = _members.firstWhereOrNull((e) => e.isOwner && e.liveID == _info.value.id);
     return host;
   }
 
@@ -194,11 +212,15 @@ class LiveChannelController {
 
   int get hostID {
     if (_me.value.isOwner) return _me.value.info.userID;
-    final host = _members.firstWhereOrNull((e) => e.isOwner);
+    final host = _members.firstWhereOrNull((e) => e.isOwner && e.liveID == _info.value.id);
     return host!.info.userID;
   }
 
   LiveData get info => _info.value;
+
+  final Rxn<VirtualInfo> _virtualInfo = Rxn<VirtualInfo>();
+
+  Rxn<VirtualInfo> get virtualInfo => _virtualInfo;
 
   final RxBool _mic = false.obs;
 
@@ -207,6 +229,10 @@ class LiveChannelController {
   final RxBool _video = false.obs;
 
   RxBool get video => _video;
+
+  final Rx<LiveChannelType> _liveType = LiveChannelType.normal.obs;
+
+  Rx<LiveChannelType> get liveType => _liveType;
 
   void switchCamera() {
     service.switchCamera();
@@ -249,12 +275,14 @@ class LiveChannelController {
         value: this,
         child: PkConfigSheet(
           onGameStarted: (game) async {
-            repository.startGame({
-              'liveId': _info.value.id,
-              'roundCount': game.roundCount,
-              'roundDurationSecond': 30,
-              'roundTimeBreak': game.roundTimeBreak,
-            });
+            if (_pkStep.value == PkStep.pending) {
+              repository.startGame({
+                'liveId': _info.value.id,
+                'roundCount': game.roundCount,
+                'roundDurationSecond': game.roundDurationSecond,
+                'roundTimeBreak': game.roundTimeBreak,
+              });
+            }
           },
         ),
       ),
@@ -285,9 +313,11 @@ class LiveChannelController {
       role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
     );
 
-    _enablePk.value = false;
+    reJoinSetting();
 
     LiveManageState.hostID.value = hostID;
+
+    _liveType.value = LiveChannelType.normal;
   }
 
   BuildContext get context => AppContext.scaffoldContext;
@@ -334,9 +364,21 @@ class LiveChannelController {
       role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
     );
 
-    _enablePk.value = true;
+    reJoinSetting();
 
     LiveManageState.hostID.value = hostID;
+
+    _liveType.value = LiveChannelType.pk;
+  }
+
+  void reJoinSetting() {
+    if (!_mic.value) {
+      service.disableAudioStream();
+    }
+
+    if (!video.value) {
+      service.disableVideoStream();
+    }
   }
 
   Future<List<LiveMember>> getMembers(int id) async {
@@ -350,10 +392,10 @@ class LiveChannelController {
       if (_pkData == null && i.id == _info.value.user?.id) isOwner = true;
       result.add(LiveMember(
         info: LiveMemberInfo(
-          userID: i.id ?? 0,
-          name: i.nickname ?? i.fullName ?? i.displayName ?? '',
-          avatar: i.avatar ?? '',
-        ),
+            userID: i.id ?? 0,
+            name: i.nickname ?? i.fullName ?? i.displayName ?? '',
+            avatar: i.avatar ?? '',
+            type: i.type ?? 0),
         isOwner: isOwner,
         liveID: id,
       ));
@@ -361,50 +403,64 @@ class LiveChannelController {
     return result;
   }
 
+  Future _initLiveInfo(List res) async {
+    final joinRes = res.first as JoinLiveResponse;
+    final user = res.last as User;
+
+    _info = joinRes.data.obs;
+    if (_info.value.pk != null) {
+      _pkData = await repository.getPk(_info.value.id);
+    } else {
+      _pkData = null;
+    }
+
+    _me = LiveMember(
+      info: LiveMemberInfo(
+        userID: user.id ?? 0,
+        name: user.nickname ?? user.fullName ?? user.displayName ?? '',
+        avatar: user.avatar ?? '',
+        type: user.type ?? 0,
+      ),
+      isOwner: _info.value.user?.id == user.id,
+      liveID: _info.value.id,
+    ).obs;
+
+    if (_info.value.virtualInfo != null) {
+      _virtualInfo.value = _info.value.virtualInfo;
+      _liveType.value = LiveChannelType.virtual;
+      return;
+    }
+
+    for (final i in joinRes.agoraData) {
+      if (i.uid == null) continue;
+      if (_pkData != null) {
+        if (_me.value.isOwner && i.type == 3) _agora = i;
+        if (!_me.value.isOwner && i.type == 2) _agora = i;
+      } else {
+        if (_me.value.isOwner && i.type == 1) _agora = i;
+        if (!_me.value.isOwner && i.type == 0) _agora = i;
+      }
+    }
+  }
+
   void join(int id) async {
     LiveManageState.join(id, this);
     try {
+      ///lấy thông tin room và thông tin người join
       final res = await Future.wait([
         repository.joinLive(id: id, password: _password),
         userUseCase.getProfile(),
       ]);
-      final joinRes = res.first as JoinLiveResponse;
-      _info = joinRes.data.obs;
-      if (_info.value.pk != null) {
-        _pkData = await repository.getPk(id);
-      } else {
-        _pkData = null;
-      }
-      final user = res.last as User?;
-      if (user == null) return;
 
-      _me = LiveMember(
-        info: LiveMemberInfo(
-          userID: user.id ?? 0,
-          name: user.nickname ?? user.fullName ?? user.displayName ?? '',
-          avatar: user.avatar ?? '',
-        ),
-        isOwner: _info.value.user?.id == user.id,
-        liveID: _info.value.id,
-      ).obs;
+      await _initLiveInfo(res);
 
-      for (final i in joinRes.agoraData) {
-        if (i.uid == null) continue;
-        if (_pkData != null) {
-          if (_me.value.isOwner && i.type == 3) _agora = i;
-          if (!_me.value.isOwner && i.type == 2) _agora = i;
-        } else {
-          if (_me.value.isOwner && i.type == 1) _agora = i;
-          if (!_me.value.isOwner && i.type == 0) _agora = i;
-        }
-      }
       _roomInfoFetching.value = false;
 
       getLeaderBoard(_info.value.id);
     } catch (e) {
       _state.value = LiveStreamState.stop;
       if (context.mounted) {
-        Navigator.of(context).pop();
+        Navigator.of(AppCoordinator.rootNavigator.currentContext!).pop();
         context.showToastMessage(
           'Live không còn tồn tại',
           ToastMessageType.error,
@@ -437,14 +493,16 @@ class LiveChannelController {
         token: userSharePreferencesUseCase.getToken() ?? '',
       );
 
-      _listenRtcEvent();
+      if (_liveType.value != LiveChannelType.virtual) {
+        _listenRtcEvent();
 
-      await service.joinChannel(
-        _agora?.token ?? '',
-        _agora?.channel ?? '',
-        _me.value.info.userID,
-        role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
-      );
+        await service.joinChannel(
+          _agora?.token ?? '',
+          _agora?.channel ?? '',
+          _me.value.info.userID,
+          role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
+        );
+      }
 
       _hostOffline.value = !hostInLive;
 
@@ -458,21 +516,44 @@ class LiveChannelController {
       }
 
       if (_pkData != null) {
-        _enablePk.value = true;
         if (_pkData!.latestRound != null) {
           _currentGameRound = _pkData!.latestRound;
-          _pkStep.value = PkStep.started;
+          if (_currentGameRound?.endAt.isAfter(DateTime.now()) ?? false) {
+            _pkStep.value = PkStep.started;
+          } else {
+            _pkStep.value = PkStep.end;
+          }
+          _getPkStats();
         }
+
+        _liveType.value = LiveChannelType.pk;
       } else {
-        _enablePk.value = false;
+        _liveType.value = LiveChannelType.normal;
       }
 
       LiveManageState.hostID.value = hostID;
 
       if (Platform.isAndroid) _initForegroundTask();
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
+  }
+
+  void _getPkStats() async {
+    if (_pkData == null) return;
+    final res = await repository.getStats(_pkData!.pk.id);
+    final diamonds = res
+        .map(
+          (e) => UserDiamondForPK(
+            userId: e.user.id ?? 0,
+            diamondCount: e.diamondCount,
+          ),
+        )
+        .toList();
+    setDiamonds(diamonds);
+  }
+
+  void setDiamonds(List<UserDiamondForPK> diamonds) {
+    _diamondsPK.value = diamonds;
+    _diamondsPK.sort((a, b) => a.diamondCount.compareTo(b.diamondCount));
   }
 
   Future getMembersPk() async {
@@ -490,11 +571,6 @@ class LiveChannelController {
 
   void readyPk() {
     repository.readyGame(_info.value.id);
-  }
-
-  Future previewQuit() async {
-    _state.value = LiveStreamState.loading;
-    await service.engine.stopPreview();
   }
 
   void _listenRtcEvent() {
@@ -588,6 +664,10 @@ class LiveChannelController {
 
   final Rx<int> timesAnimation = 0.obs;
 
+   Rxn<AnimationController> countdownGiftController  = Rxn<AnimationController>();
+
+  Timer? _timer;
+
   void _onSocketEvent() {
     socketService.on(socketConnectedEvent, (data) {
       debugPrint('kết nối thành công ${socketService.socket.id}');
@@ -633,6 +713,15 @@ class LiveChannelController {
 
     socketService.on(socketPkRoundFinishEvent, (Map data) {
       debugPrint('$socketPkRoundFinishEvent ===> ${data['round']}');
+      _pkStep.value = PkStep.end;
+      if (_timer != null) _timer?.cancel();
+      _timer = Timer.periodic(const Duration(minutes: 5), (timer) {
+        repository.deleteGame(_pkData!.pk.id);
+        _pkStep.value = PkStep.pending;
+        _diamondsPK.value = [];
+        _giftMembers.value = [];
+        _timer?.cancel();
+      });
     });
 
     socketService.on(socketPkGiftUpdatedEvent, (Map data) {
@@ -643,15 +732,16 @@ class LiveChannelController {
       if (_diamondsPK.isEmpty) {
         _diamondsPK.value = [diamond];
       } else {
-        final x =
-            _diamondsPK.firstWhereOrNull((e) => e.userId == diamond.userId);
+        final x = _diamondsPK.firstWhereOrNull((e) => e.userId == diamond.userId);
         if (x == null) {
-          _diamondsPK.value = [..._diamondsPK, diamond];
+          setDiamonds([..._diamondsPK, diamond]);
         } else {
-          _diamondsPK.value = _diamondsPK.map((e) {
+          final diamonds = _diamondsPK.map((e) {
             if (e.userId == diamond.userId) return diamond;
             return e;
           }).toList();
+
+          setDiamonds(diamonds);
         }
       }
     });
@@ -672,6 +762,7 @@ class LiveChannelController {
             userID: user.id ?? 0,
             avatar: user.avatar ?? '',
             name: user.nickname ?? user.fullName ?? user.displayName ?? '',
+            type: user.type ?? 0,
           ),
           isOwner: false,
           liveID: data['liveId'],
@@ -686,12 +777,19 @@ class LiveChannelController {
       debugPrint('$socketGiftGiven ===> $data');
       getLeaderBoard(_info.value.id);
       final gift = SentGiftResponse.fromJson(data as Map<String, Object?>);
-      if (_enablePk.value) {
-        final member =
-            _members.firstWhereOrNull((e) => e.info.userID == gift.giver?.id);
-        final ids = _giftMembers.map((e) => e.info.userID);
-        if (member != null && !ids.contains(member.info.userID)) {
-          _giftMembers.value = [..._giftMembers, member];
+      if (_liveType.value == LiveChannelType.pk) {
+        final member = _members.firstWhereOrNull((e) => e.info.userID == gift.giver?.id);
+        if (member != null) {
+          final ids = _giftMembers.map((e) => e.info.userID);
+          if (ids.contains(member.info.userID)) {
+            final m = _giftMembers
+                .firstWhereOrNull((e) => e.info.userID == member.info.userID);
+            if (m!.liveID != member.liveID) {
+              _giftMembers.value = [..._giftMembers, member];
+            }
+          } else {
+            _giftMembers.value = [..._giftMembers, member];
+          }
         }
       }
       if (gift.giftCard?.metadata?.isStaticGif == true) {
@@ -701,7 +799,9 @@ class LiveChannelController {
         );
       } else {
         if (gift.giver?.id.toString() == _me.value.info.userID.toString()) {
-          timesAnimation.value = gift.total!;
+          if (timesAnimation.value <= 0) {
+            timesAnimation.value = gift.total!;
+          }
         }
         for (int j = 1; j <= gift.total!; j++) {
           floatingGiftsProvider.addGiftAnimation(
@@ -713,10 +813,10 @@ class LiveChannelController {
       final message = UserMessage(
         member: LiveMember(
           info: LiveMemberInfo(
-            userID: gift.giver!.id!,
-            name: gift.giver!.displayName!,
-            avatar: gift.giver?.avatar ?? '',
-          ),
+              userID: gift.giver!.id!,
+              name: gift.giver!.displayName!,
+              avatar: gift.giver?.avatar ?? '',
+              type: gift.giver?.type ?? 0),
           liveID: _info.value.id,
         ),
         message: 'đã tặng ${gift.giftCard?.name} x${gift.total}',
@@ -734,7 +834,7 @@ class LiveChannelController {
       debugPrint('$socketUserJoinEvent ===> ${data['user']}');
       final user = User.fromJson(data['user']);
       if (_me.value.info.userID == user.id) {
-        if (_me.value.isOwner && _enablePk.value) return;
+        if (_me.value.isOwner && _liveType.value == LiveChannelType.pk) return;
         NotificationCenter.post(
           channel: receiveMessage,
           options: SystemMessage(
@@ -762,6 +862,7 @@ class LiveChannelController {
           userID: user.id!,
           name: user.nickname ?? user.fullName ?? user.displayName ?? '',
           avatar: user.avatar ?? '',
+          type: user.type ?? 0,
         ),
         isOwner: user.id == _info.value.user?.id,
         liveID: data['liveId'],
@@ -799,6 +900,13 @@ class LiveChannelController {
       final user = User.fromJson(data['user']);
       if (!isMemberInLive(user.id!)) return;
       if (getMember(user.id!)?.isOwner ?? false) {
+        if (_liveType.value == LiveChannelType.pk) {
+          _pkStep.value = PkStep.pending;
+          _diamondsPK.value = [];
+          _giftMembers.value = [];
+          _members.value = _members.where((e) => e.info.userID != user.id).toList();
+          return;
+        }
         _state.value = LiveStreamState.stop;
         NotificationCenter.post(channel: refreshLive);
         return;
@@ -833,8 +941,7 @@ class LiveChannelController {
 
     socketService.on(socketPkStartEvent, (data) {
       if (_me.value.isOwner) {
-        Navigator.popUntil(AppCoordinator.rootNavigator.currentContext!,
-            (route) {
+        Navigator.popUntil(AppCoordinator.rootNavigator.currentContext!, (route) {
           if (route.settings.name == LiveWrapperScreen.routerName) {
             return true;
           }
@@ -842,6 +949,9 @@ class LiveChannelController {
             return true;
           }
           if (route.settings.name == LiveChannelScreen.routerName) {
+            return true;
+          }
+          if (route.settings.name == JoinChannelPasswordProvider.routerName) {
             return true;
           }
           return false;
@@ -866,6 +976,7 @@ class LiveChannelController {
 
     socketService.on(socketPkGameStartEvent, (Map data) {
       _pkStep.value = PkStep.starting;
+      if (_timer != null) _timer?.cancel();
     });
   }
 
@@ -899,6 +1010,7 @@ class LiveChannelController {
   }
 
   void leaveLive() async {
+    _timer?.cancel();
     if (_info.value.pk != null) {
       if (_me.value.isOwner) {
         await repository.deletePK(_info.value.id).onError((error, stackTrace) {
@@ -908,6 +1020,10 @@ class LiveChannelController {
       }
     }
 
+    leaveSimpleLive();
+  }
+
+  void leaveSimpleLive() async {
     LiveManageState.disable();
     socketService.disconnect();
     service.leaveChannel();
@@ -931,6 +1047,18 @@ class LiveChannelController {
     WakelockPlus.disable();
 
     NotificationCenter.unsubscribe(channel: sendMessage, observer: this);
+  }
+
+  void forceLeave() {
+    _timer?.cancel();
+
+    if (_info.value.pk != null) {
+      if (_me.value.isOwner) {
+        repository.deletePK(_info.value.id);
+      }
+    }
+
+    leaveSimpleLive();
   }
 }
 

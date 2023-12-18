@@ -41,7 +41,7 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
     _,
     Emitter<UserProfileState> emit,
   ) async {
-    final files = await mediaPicker.pickImagesFromGallery();
+    final files = await mediaPicker.pickImagesFromGallery(allowMultiple: false);
     if (files == null) return;
     final file = files.first;
 
@@ -74,7 +74,7 @@ class UserProfileBloc extends CoreBloc<UserProfileEvent, UserProfileState> {
     _,
     Emitter<UserProfileState> emit,
   ) async {
-    final files = await mediaPicker.pickImagesFromGallery();
+    final files = await mediaPicker.pickImagesFromGallery(allowMultiple: false);
     if (files == null) return;
     final file = files.first;
 

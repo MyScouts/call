@@ -1,7 +1,5 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
-import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_member.dart';
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:flutter/material.dart';
@@ -19,64 +17,57 @@ class _PkUserGiftLineState extends State<PkUserGiftLine> {
   Widget build(BuildContext context) {
     final controller = context.read<LiveChannelController>();
     return Obx(() {
-      final meInLive = controller.pkData!.lives.firstWhereOrNull(
-              (e) => e.user!.id == controller.me.value.info.userID) !=
-          null;
-
-      LiveData? host;
-      List<LiveMember> leftMembers = [];
-      List<LiveMember> rightMembers = [];
-
       final members = controller.giftMembers.value;
 
-      if (meInLive) {
-        host = controller.pkData!.lives.firstWhereOrNull(
-            (e) => e.user!.id != controller.me.value.info.userID);
-        leftMembers = members.where((e) => e.liveID == host?.id).toList();
-      } else {
-        host = controller.pkData!.lives
-            .firstWhereOrNull((e) => e.user!.id != controller.hostID);
-        leftMembers = members.where((e) => e.liveID == host?.id).toList();
-      }
-
-      rightMembers =
+      List<LiveMember> leftMembers =
+          members.where((e) => e.liveID == controller.liveOtherID).toList();
+      List<LiveMember> rightMembers =
           members.where((e) => e.liveID == controller.info.id).toList();
 
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Row(
-          children: [
-            Expanded(
-              child: Stack(
-                fit: StackFit.expand,
-                children: leftMembers
-                    .take(10)
-                    .map<Widget>((e) => Positioned(
-                          left: (18 * leftMembers.indexOf(e)).toDouble(),
-                          child: _Avatar(url: e.info.avatar),
-                        ))
-                    .toList()
-                    .separated(const SizedBox(width: 4)),
+      return SizedBox(
+        height: 48,
+        width: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          child: Row(
+            children: [
+              Expanded(
+                child: Stack(
+                  children: buildList(
+                    leftMembers.take(10).toList(),
+                  ),
+                ),
               ),
-            ),
-            Expanded(
-              child: Stack(
-                fit: StackFit.expand,
-                children: rightMembers
-                    .take(10)
-                    .map<Widget>(
-                      (e) => Positioned(
-                        right: (18 * rightMembers.indexOf(e)).toDouble(),
-                        child: _Avatar(url: e.info.avatar),
-                      ),
-                    )
-                    .toList()
-                    .separated(const SizedBox(width: 4)),
+              Expanded(
+                child: Stack(
+                  children: buildList(
+                    rightMembers.take(10).toList(),
+                    isLeft: false,
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
+    });
+  }
+
+  List<Widget> buildList(List<LiveMember> members, {bool isLeft = true}) {
+    return List<Widget>.generate(members.length, (index) {
+      if (isLeft) {
+        return Positioned(
+          top: 0,
+          left: 18 * index / 1.0,
+          child: _Avatar(url: members[index].info.avatar),
+        );
+      } else {
+        return Positioned(
+          top: 0,
+          right: 18 * index / 1.0,
+          child: _Avatar(url: members[index].info.avatar),
+        );
+      }
     });
   }
 }
@@ -88,14 +79,10 @@ class _Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        border: Border.all(color: const Color(0xffFFB800), width: 1.5),
-      ),
-      child: CircleNetworkImage(
-        url: url,
-        size: 29,
-      ),
+    return CircleNetworkImage(
+      url: url,
+      size: 29,
+      border: Border.all(color: const Color(0xffFFB800), width: 1.5),
     );
   }
 }

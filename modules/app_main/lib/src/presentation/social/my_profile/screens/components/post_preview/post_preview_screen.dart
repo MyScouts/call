@@ -1,5 +1,5 @@
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_bloc.dart';
+import 'package:app_main/src/presentation/social/my_profile/blocs/post_tab_bloc.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/post_header_user_info.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/react_widget.dart';
@@ -17,7 +17,7 @@ class PostPreviewScreen extends StatefulWidget {
 
   const PostPreviewScreen({
     required this.post,
-    required this.myProfileBloc,
+    required this.postTabBloc,
     required this.currentMediaIndex,
     required this.onChange,
     super.key,
@@ -25,7 +25,7 @@ class PostPreviewScreen extends StatefulWidget {
 
   final Post post;
   final int currentMediaIndex;
-  final MyProfileBloc myProfileBloc;
+  final PostTabBloc postTabBloc;
   final Function(Post) onChange;
 
   @override
@@ -126,7 +126,7 @@ class _PostPreviewScreenState extends State<PostPreviewScreen> {
           ReactWidget(
             post: widget.post,
             isNewPost: false,
-            myProfileBloc: widget.myProfileBloc,
+            postTabBloc: widget.postTabBloc,
             isDarkMode: true,
             onChange: (Post newPost) {
               widget.onChange(newPost);

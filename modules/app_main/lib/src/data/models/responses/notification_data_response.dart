@@ -23,6 +23,7 @@ class NotificationDataResponse extends NotificationData {
     required super.isRead,
     required super.createdAt,
     super.metadata,
+    required super.body,
   });
 
   factory NotificationDataResponse.fromJson(Map<String, dynamic> json) =>

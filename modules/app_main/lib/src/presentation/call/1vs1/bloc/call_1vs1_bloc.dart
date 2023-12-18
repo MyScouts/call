@@ -246,6 +246,7 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
           );
         }
       } else if (callEvent.busy || callEvent.ended) {
+        status = 3;
         data = state.data.copyWith(
           screenState: CallScreenState.closed,
         );
@@ -284,7 +285,7 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
     if (state.isMakingACall) {
       status = 3;
     } else if (state.isCallClosed) {
-      status = 2;
+      status =  status == 3 ? 3 : 2;
     }
     if (state.isIncomingCall) {
       _call1vs1Service.reject();

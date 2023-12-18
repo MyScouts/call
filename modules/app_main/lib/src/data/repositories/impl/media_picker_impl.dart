@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app_main/src/data/repositories/media_picker.dart';
 import 'package:app_main/src/domain/entities/media/media_file.dart';
 import 'package:file_picker/file_picker.dart';
@@ -5,16 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
+import 'package:video_player/video_player.dart';
 
 @LazySingleton(as: MediaPicker)
 class MediaPickerImpl implements MediaPicker {
   @override
-  Future<List<MediaFile?>?> pickImagesFromGallery() async {
+  Future<List<MediaFile?>?> pickImagesFromGallery({
+    bool allowMultiple = true,
+  }) async {
     try {
       final FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.image,
         allowCompression: true,
-        allowMultiple: true,
+        allowMultiple: allowMultiple,
         lockParentWindow: true,
         withData: true,
       );
@@ -92,8 +97,15 @@ class MediaPickerImpl implements MediaPicker {
 
       if (xFile == null) return null;
 
+      final file = File(xFile.path);
+
+      VideoPlayerController controller = VideoPlayerController.file(file);
+      await controller.initialize();
+
       return MediaFile(
         path: xFile.path,
+        size: file.lengthSync(),
+        videoDuration: controller.value.duration,
       );
     } catch (error) {
       if (error is PlatformException) rethrow;

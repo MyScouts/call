@@ -3,6 +3,7 @@ import 'package:app_main/src/presentation/live/data/data_sources/remote/live_api
 import 'package:app_main/src/presentation/live/data/model/request/invite_friend_req.dart';
 import 'package:app_main/src/presentation/live/data/model/response/data_get_invite_friend.dart';
 import 'package:app_main/src/presentation/live/data/model/response/gift_card_live.dart';
+import 'package:app_main/src/presentation/live/data/model/response/live_pk_stats.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_category_detail.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_data.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_member_count.dart';
@@ -193,5 +194,16 @@ class LiveRepositoryImpl extends LiveRepository {
   @override
   Future readyGame(int id) {
     return _liveApi.readyGame(id);
+  }
+
+  @override
+  Future<List<LivePkStats>> getStats(int pkID) async {
+    final res = await _liveApi.stats(pkID);
+    return res.data.pkStats;
+  }
+
+  @override
+  Future deleteGame(int pkID) {
+    return _liveApi.deletePK(pkID);
   }
 }

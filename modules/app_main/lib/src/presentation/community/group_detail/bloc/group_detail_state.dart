@@ -18,3 +18,7 @@ class FetchTeamsSuccess extends FetchGroupDetailSuccess {
 
   FetchTeamsSuccess(this.teams, super.group);
 }
+
+class GetOtpSuccess extends GroupDetailState {}
+
+class GetOtpLoading extends GroupDetailState {}

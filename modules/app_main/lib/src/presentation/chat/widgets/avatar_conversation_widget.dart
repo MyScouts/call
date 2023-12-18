@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 
 class AvatarConversationWidget extends StatelessWidget {
   final List<MemberResponseModel> members;
-  const AvatarConversationWidget({super.key, required this.members});
+  final List<MemberResponseModel> membersNotMe;
+  final int type;
+  const AvatarConversationWidget(
+      {super.key, required this.members, required this.membersNotMe, required this.type});
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +17,17 @@ class AvatarConversationWidget extends StatelessWidget {
       width: 60,
       height: 60,
       child: Stack(children: [
-        if (members.length == 1)
-          AvatarMemberWidget(avatar: members.first.member.avatar ?? '', size: 60)
+        if (type == 1 || members.length == 1)
+          if (membersNotMe.isNotEmpty)
+            AvatarMemberWidget(
+              size: 60,
+              avatar: membersNotMe.first.member.avatar ?? '',
+            )
+          else
+            AvatarMemberWidget(
+              size: 60,
+              avatar: members.first.member.avatar ?? '',
+            )
         else if (members.length == 2) ...[
           Positioned(
             top: 0,

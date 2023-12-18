@@ -167,7 +167,7 @@ class _$NewMessageStateDataImpl implements NewMessageStateData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NewMessageStateDataImpl &&
@@ -314,7 +314,7 @@ class _$NewMessageStateLoadingImpl implements NewMessageStateLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NewMessageStateLoadingImpl);
@@ -447,7 +447,7 @@ class _$NewMessageStateErrorImpl implements NewMessageStateError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NewMessageStateErrorImpl &&

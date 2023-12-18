@@ -1,7 +1,7 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/app_dimens.dart';
 import 'package:app_main/src/app_size.dart';
-import 'package:app_main/src/presentation/social/my_profile/blocs/my_profile_bloc.dart';
+import 'package:app_main/src/presentation/social/my_profile/blocs/post_tab_bloc.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_coordinator.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/post_header_user_info.dart';
@@ -20,13 +20,13 @@ class PostDetailScreen extends StatefulWidget {
 
   const PostDetailScreen(
       {required this.post,
-      required this.myProfileBloc,
+      required this.postTabBloc,
       this.imageScrollType,
       super.key});
 
   final Post post;
   final ImageScrollType? imageScrollType;
-  final MyProfileBloc myProfileBloc;
+  final PostTabBloc postTabBloc;
 
   @override
   State<PostDetailScreen> createState() => _PostDetailScreenState();
@@ -132,7 +132,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                     key: UniqueKey(),
                     post: post,
                     isNewPost: false,
-                    myProfileBloc: widget.myProfileBloc,
+                    postTabBloc: widget.postTabBloc,
                     onChange: (Post newPost) {
                       post = newPost;
                     },
@@ -188,7 +188,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
   Future<void> _handleOnTapMedia(int index) async {
     await context.startPostPreview(
         post: post,
-        myProfileBloc: widget.myProfileBloc,
+        postTabBloc: widget.postTabBloc,
         currentMediaIndex: index,
         onChange: (Post newPost) {
           post = newPost;

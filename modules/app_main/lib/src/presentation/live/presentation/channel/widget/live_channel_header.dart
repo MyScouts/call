@@ -10,15 +10,12 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imagewidget/imagewidget.dart';
-import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:ui/ui.dart';
 
-import '../../../../../blocs/user/user_cubit.dart';
 import '../../../../../blocs/user_action/user_action_cubit.dart';
 import '../../../../../data/models/payloads/user/user_action_payload.dart';
 import '../../../../../data/models/responses/follow_response.dart';
-import '../../../../social/profile/profile_bloc.dart';
 import 'leave_live_confirm.dart';
 import 'live_end_sheet.dart';
 
@@ -33,6 +30,8 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
   late final controller = context.read<LiveChannelController>();
   late final LiveMessageBloc commentController;
 
+  final UserActionCubit _actionBloc = injector.get<UserActionCubit>();
+
   @override
   void initState() {
     commentController = context.read<LiveMessageBloc>();
@@ -46,116 +45,111 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          DecoratedBox(
+          Container(
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [
-                  Color(0xffDFEBFD),
-                  Color(0xff2697D6),
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
               borderRadius: BorderRadius.circular(90),
+              image: DecorationImage(image: AssetImage(ImageConstants.profileHeader,package: 'design_system'),fit: BoxFit.fill)
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(2),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(90),
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xff0058DB),
-                      Color(0xff10306F),
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                ),
-                padding: const EdgeInsets.all(4.0),
-                child: Obx(() {
-                  final host = controller.members.firstWhereOrNull((e) => e.isOwner && e.liveID == controller.info.id);
-                  return IntrinsicHeight(
-                    child: Row(
-                      children: [
-                        if (host == null || host.info.avatar.trim().isEmpty)
-                          GestureDetector(
-                            onTap: () {
-                              context.startSelectUser(userId: host!.info.userID);
-                            },
-                            child: SizedBox.square(
-                              dimension: 28,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(28 / 2),
-                                child: ImageWidget(
-                                  ImageConstants.defaultUserAvatar,
-                                ),
-                              ),
-                            ),
-                          )
-                        else
-                          GestureDetector(
-                            onTap: () {
-                              context.startSelectUser(userId: host.info.userID);
-                            },
-                            child: CircleNetworkImage(
-                              url: host.info.avatar,
-                              size: 28,
+            padding: const EdgeInsets.all(4.0),
+            child: Obx(() {
+              final host = controller.members.firstWhereOrNull(
+                  (e) => e.isOwner && e.liveID == controller.info.id);
+              return IntrinsicHeight(
+                child: Row(
+                  children: [
+                    if (host == null || host.info.avatar.trim().isEmpty)
+                      GestureDetector(
+                        onTap: () {
+                          context
+                              .startSelectUser(userId: host!.info.userID)
+                              .then((value) {
+                            _actionBloc.getFollowUser(
+                                userId: host.info.userID);
+                          });
+                        },
+                        child: SizedBox.square(
+                          dimension: 28,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(28 / 2),
+                            child: ImageWidget(
+                              ImageConstants.defaultUserAvatar,
                             ),
                           ),
-                        const SizedBox(width: 4),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        ),
+                      )
+                    else
+                      GestureDetector(
+                        onTap: () {
+                          context
+                              .startSelectUser(userId: host.info.userID)
+                              .then((value) {
+                            _actionBloc.getFollowUser(
+                                userId: host.info.userID);
+                          });
+                        },
+                        child: CircleNetworkImage(
+                          url: host.info.avatar,
+                          size: 28,
+                        ),
+                      ),
+                    const SizedBox(width: 4),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          host?.info.name ?? '',
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                              host?.info.name ?? '',
-                              style: const TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
+                            SizedBox.square(
+                              dimension: 12,
+                              child: ImageWidget(
+                                IconAppConstants.icDiamond,
                               ),
                             ),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                SizedBox.square(
-                                  dimension: 12,
-                                  child: ImageWidget(
-                                    IconAppConstants.icDiamond,
-                                  ),
+                            const SizedBox(width: 4),
+                            Obx(() {
+                              return Text(
+                                controller.liveState.value.diamondCount
+                                        ?.toString() ??
+                                    '0',
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.white,
                                 ),
-                                const SizedBox(width: 4),
-                                Obx(() {
-                                  return Text(
-                                    controller.liveState.value.diamondCount?.toString() ?? '0',
-                                    style: const TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.white,
-                                    ),
-                                  );
-                                }),
-                              ],
-                            ),
+                              );
+                            }),
                           ],
                         ),
-                        const SizedBox(width: 20),
-                        Obx(() {
-                          final host =
-                              controller.members.firstWhereOrNull((e) => e.isOwner && e.liveID == controller.info.id);
-                          if (host == null) {
-                            return const SizedBox();
-                          }
-                          return LiveButtonAddFriend(
-                            id: host.info.userID,
-                          );
-                        }),
                       ],
                     ),
-                  );
-                }),
-              ),
-            ),
+                    const SizedBox(width: 20),
+                    Obx(() {
+                      final host = controller.members.firstWhereOrNull(
+                          (e) =>
+                              e.isOwner && e.liveID == controller.info.id);
+                      if (host == null) {
+                        return const SizedBox();
+                      }
+                      if (controller.me.value.isOwner) {
+                        return const SizedBox();
+                      }
+                      return LiveButtonAddFriend(
+                        id: host.info.userID,
+                        cubit: _actionBloc,
+                      );
+                    }),
+                  ],
+                ),
+              );
+            }),
           ),
           GestureDetector(
             onTap: () {
@@ -175,7 +169,8 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                           if (index == 0) {
                             return GestureDetector(
                               onTap: () {
-                                context.startSelectUser(userId: element.giver!.id!);
+                                context.startSelectUser(
+                                    userId: element.giver!.id!);
                               },
                               child: SizedBox(
                                 height: 40,
@@ -204,9 +199,11 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                           return SizedBox(
                             child: GestureDetector(
                               onTap: () {
-                                context.startSelectUser(userId: element.giver!.id!);
+                                context.startSelectUser(
+                                    userId: element.giver!.id!);
                               },
-                              child: AvatarWidget(avatar: element.giver?.avatar, size: 30),
+                              child: AvatarWidget(
+                                  avatar: element.giver?.avatar, size: 30),
                             ),
                           );
                         })
@@ -230,14 +227,21 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                       ImageWidget(IconAppConstants.icLiveMember),
                       const SizedBox(width: 2),
                       Obx(
-                        () => Text(
-                          controller.members.length.toString(),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white,
-                          ),
-                        ),
+                        () {
+                          final members = controller.members.value;
+
+                          final liveMembers = members
+                              .where((e) => e.liveID == controller.info.id);
+
+                          return Text(
+                            liveMembers.length.toString(),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white,
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -250,13 +254,15 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                       builder: (_) => LeaveLiveConfirm(
                         onRemoved: () {
                           controller.leaveLive();
-                          if(controller.me.value.isOwner) {
-                            if(!controller.enablePk.value) {
+                          if (controller.me.value.isOwner) {
+                            if (controller.liveType.value !=
+                                LiveChannelType.pk) {
                               Navigator.of(context).pop();
                               Future.delayed(
                                 const Duration(seconds: 1),
                                 () => showModalBottomSheet(
-                                  context: AppCoordinator.rootNavigator.currentContext!,
+                                  context: AppCoordinator
+                                      .rootNavigator.currentContext!,
                                   isScrollControlled: true,
                                   backgroundColor: Colors.transparent,
                                   builder: (_) => const LiveEndSheet(),
@@ -281,9 +287,10 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
 }
 
 class LiveButtonAddFriend extends StatefulWidget {
+  final UserActionCubit cubit;
   final int id;
 
-  const LiveButtonAddFriend({super.key, required this.id});
+  const LiveButtonAddFriend({super.key, required this.id, required this.cubit});
 
   @override
   State<LiveButtonAddFriend> createState() => _LiveButtonAddFriendState();
@@ -291,13 +298,15 @@ class LiveButtonAddFriend extends StatefulWidget {
 
 class _LiveButtonAddFriendState extends State<LiveButtonAddFriend> {
   final ValueNotifier<bool> _friendStatus = ValueNotifier(false);
-  final UserActionCubit _actionBloc = injector.get<UserActionCubit>();
+  late UserActionCubit _actionBloc;
 
-  final ValueNotifier<GetUserFollowDetailResponse?> _followInfo = ValueNotifier(null);
+  final ValueNotifier<GetUserFollowDetailResponse?> _followInfo =
+      ValueNotifier(null);
 
   @override
   void initState() {
     super.initState();
+    _actionBloc = widget.cubit;
     _actionBloc.getFollowUser(userId: widget.id);
   }
 
@@ -319,7 +328,8 @@ class _LiveButtonAddFriendState extends State<LiveButtonAddFriend> {
             hideLoading();
             _friendStatus.value = true;
             if (state.approvalRequired) {
-              showToastMessage("Yêu cầu theo dõi đã được gởi đến người bảo hộ.");
+              showToastMessage(
+                  "Yêu cầu theo dõi đã được gởi đến người bảo hộ.");
             } else {
               showToastMessage("Theo dõi người dùng thành công.");
             }
@@ -346,14 +356,15 @@ class _LiveButtonAddFriendState extends State<LiveButtonAddFriend> {
         builder: (BuildContext context, UserActionState state) {
           return ValueListenableBuilder(
             valueListenable: _followInfo,
-            builder: (BuildContext context, GetUserFollowDetailResponse? value, Widget? child) {
+            builder: (BuildContext context, GetUserFollowDetailResponse? value,
+                Widget? child) {
               final relation = value?.relation;
               if (relation?.isFollower == false) {
                 return GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     context.read<UserActionCubit>().followUser(
-                      payload: FollowUserPayload(followeeId: widget.id),
-                    );
+                          payload: FollowUserPayload(followeeId: widget.id),
+                        );
                   },
                   child: Container(
                     height: 28,

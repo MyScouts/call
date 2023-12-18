@@ -29,6 +29,7 @@ class TeamDetailBloc extends Bloc<TeamDetailEvent, TeamDetailState> {
       onKickMember,
       transformer: (event, mapper) => event.asyncExpand(mapper),
     );
+    on<CancelJoinTeamEvent>(_cancelJoinTeamRequest);
   }
 
   void onKickMember(KickMember event, Emitter<TeamDetailState> emit) {
@@ -48,14 +49,14 @@ class TeamDetailBloc extends Bloc<TeamDetailEvent, TeamDetailState> {
   FutureOr<void> _onFetchTeamDetailEvent(
       FetchTeamDetailEvent event, Emitter<TeamDetailState> emit) async {
     emit(LoadingTeamDetail());
-
-    final team = await _communityUsecase.getTeamById(event.id);
-
-    emit(FetchTeamDetailSuccess(team));
-
-    final members = await _communityUsecase.getMembers(event.id);
-
-    emit(FetchTeamsMemberSuccess(members, team));
+    try {
+      final team = await _communityUsecase.getTeamById(event.id);
+      emit(FetchTeamDetailSuccess(team));
+      final members = await _communityUsecase.getMembers(event.id);
+      emit(FetchTeamsMemberSuccess(members, team));
+    } catch (e) {
+      emit(TeamDetailError(e));
+    }
   }
 
   FutureOr<void> _onUpdateTeamDetailEvent(
@@ -68,9 +69,9 @@ class TeamDetailBloc extends Bloc<TeamDetailEvent, TeamDetailState> {
     emit(AskToJoinLoading());
 
     try {
-      await _communityUsecase.askToJoinTeam(event.teamId);
+      final response = await _communityUsecase.askToJoinTeam(event.teamId);
 
-      emit(AskToJoinSuccess());
+      emit(AskToJoinSuccess(requestId: response.requestId));
     } on DioException catch (e) {
       emit(AskToJoinError(e));
       if (kDebugMode) {
@@ -166,6 +167,24 @@ class TeamDetailBloc extends Bloc<TeamDetailEvent, TeamDetailState> {
     } catch (error) {
       String err = S.current.messages_server_internal_error.capitalize();
       emit(RevokeBossFail(message: err));
+    }
+  }
+
+  FutureOr<void> _cancelJoinTeamRequest(
+      CancelJoinTeamEvent event, Emitter<TeamDetailState> emit) async {
+    if (state is OnCancelJoinTeam) return;
+    try {
+      emit(OnCancelJoinTeam());
+      await _communityUsecase.deleteJoinRequest(event.requestId);
+      emit(CancelJoinTeamSuccess());
+    } on DioException catch (error) {
+      final data = error.response!.data;
+      String err = S.current.messages_server_internal_error.capitalize();
+      print(data);
+      emit(CancelJoinTeamFail(message: err));
+    } catch (error) {
+      String err = S.current.messages_server_internal_error.capitalize();
+      emit(CancelJoinTeamFail(message: err));
     }
   }
 }

@@ -74,4 +74,6 @@ abstract class UserRepository {
   Future<ApprovedRequestResponse> approvedRequests();
 
   Future replyFollowRequest(ReplyFollowPayload payload);
+
+  Future<UserInfo> getMe();
 }

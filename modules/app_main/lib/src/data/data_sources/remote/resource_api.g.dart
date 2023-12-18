@@ -138,6 +138,33 @@ class _ResourceApi implements ResourceApi {
     return value;
   }
 
+  @override
+  Future<RenderPDFResponse> renderPDF(dynamic payload) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = payload;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<RenderPDFResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'api/v1/render-pdf',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = RenderPDFResponse.fromJson(_result.data!);
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||
@@ -168,7 +195,7 @@ class _ResourceApi implements ResourceApi {
     return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
 
-    @override
+  @override
   Future<String> storageUploadUrl(XFile file, String prefix) async {
     final resource = '$prefix${file.name}';
     final _responseGetUrlUpload = StorageUploadUrlResponse.fromJson(

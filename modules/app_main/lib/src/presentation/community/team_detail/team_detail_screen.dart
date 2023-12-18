@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/data/models/responses/join_request_response.dart';
+import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:design_system/design_system.dart';
 
@@ -10,11 +12,13 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:ui/ui.dart';
 
 import '../community_constants.dart';
+import '../groups/group_listing_bloc.dart';
 import '../widgets/team_member_widget.dart';
 import 'bloc/team_detail_bloc.dart';
 
@@ -39,6 +43,7 @@ class TeamDetailScreen extends StatefulWidget {
 class _TeamDetailScreenState extends State<TeamDetailScreen>
     with TickerProviderStateMixin {
   TeamDetailBloc get teamDetailBloc => context.read();
+  GetJoinRequestBloc get joinRequestsBloc => context.read();
 
   final myId = injector.get<UserCubit>().currentUser?.id;
 
@@ -46,112 +51,121 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
   void initState() {
     super.initState();
     teamDetailBloc.add(FetchTeamDetailEvent(widget.id));
+    joinRequestsBloc.add(GetListDataEvent());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<TeamDetailBloc, TeamDetailState>(
-        listener: _onTeamDetailBlocListen,
-        buildWhen: (prev, current) =>
-            current is FetchTeamDetailSuccess ||
-            current is FetchTeamsMemberSuccess ||
-            current is LoadingTeamDetail,
-        builder: (context, state) {
-          Team? team;
-          List<User> members = [];
+      body: BlocListener<GetJoinRequestBloc, GetListState>(
+        listener: (context, state) {
+          print(state);
+        },
+        child: BlocConsumer<TeamDetailBloc, TeamDetailState>(
+          listener: _onTeamDetailBlocListen,
+          buildWhen: (prev, current) =>
+              current is FetchTeamDetailSuccess ||
+              current is FetchTeamsMemberSuccess ||
+              current is LoadingTeamDetail,
+          builder: (context, state) {
+            Team? team;
+            List<User> members = [];
 
-          if (state is LoadingTeamDetail) {
-            return const LoadingWidget();
-          }
+            if (state is LoadingTeamDetail) {
+              return const LoadingWidget();
+            }
 
-          if (state is FetchTeamDetailSuccess) {
-            team = state.team;
-          }
-          if (state is FetchTeamsMemberSuccess) {
-            members = state.members;
-          }
+            if (state is FetchTeamDetailSuccess) {
+              team = state.team;
+            }
+            if (state is FetchTeamsMemberSuccess) {
+              members = state.members;
+            }
 
-          var banner = ImageConstants.imgDefaultTeamBanner;
-          if (team?.banner != null) {
-            banner = team!.banner!;
-          }
+            var banner = ImageConstants.imgDefaultTeamBanner;
+            if (team?.banner != null) {
+              banner = team!.banner!;
+            }
 
-          final isBossGroup = myId == team?.group?.boss?.id;
-          final isBossTeam = myId == team?.boss?.id;
+            final isBossGroup = myId == team?.group?.boss?.id;
+            final isBossTeam = myId == team?.boss?.id;
 
-          final canUpdateMembers = isBossGroup || isBossTeam;
-          final isMember = members.map((mem) => mem.id).toList().contains(myId);
+            final canUpdateMembers = isBossGroup || isBossTeam;
+            final isMember =
+                members.map((mem) => mem.id).toList().contains(myId);
 
-          return SliverLayoutNestedScrollView(
-            cover: ImageWidget(
-              banner.replaceAll('///', '//'),
-              width: MediaQuery.of(context).size.width,
-            ),
-            actionAppBar: canUpdateMembers
-                ? IconButton(
-                    onPressed: () {
-                      if (isBossGroup && isBossTeam || isBossTeam) {
-                        context
-                            .startUpdateTeamOptionsScreen(team: team!)
-                            .then((value) {
-                          if (value != null && (value is bool && value)) {
-                            teamDetailBloc.add(FetchTeamDetailEvent(widget.id));
-                          }
-                        });
-                      } else if (isBossGroup) {
-                        context
-                            .startBossGroupMenu(
-                                team: team!, onRevokeBoss: () => {})
-                            .then((value) {
-                          if (value != null && value == true) {
-                            teamDetailBloc.add(FetchTeamDetailEvent(widget.id));
-                          }
-                        });
-                      }
-                    },
-                    icon: const Icon(Icons.more_vert),
-                  )
-                : null,
-            bodyBuilder: (ScrollController scrollController) {
-              return CustomScrollView(
-                controller: scrollController,
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _teamHeaderWidget(team),
-                          if (canUpdateMembers)
-                            _actionButtons(showInvite: !isBossTeam),
-                          _introductionWidget(team),
-                          if (!canUpdateMembers && !isMember)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 15),
-                              child: _askToJoinBtn(
-                                canAskToJoin: members.length < 500,
-                                teamId: '${team?.id}',
+            return SliverLayoutNestedScrollView(
+              cover: ImageWidget(
+                banner.replaceAll('///', '//'),
+                width: MediaQuery.of(context).size.width,
+              ),
+              actionAppBar: canUpdateMembers
+                  ? IconButton(
+                      onPressed: () {
+                        if (isBossGroup && isBossTeam || isBossTeam) {
+                          context
+                              .startUpdateTeamOptionsScreen(team: team!)
+                              .then((value) {
+                            if (value != null && (value is bool && value)) {
+                              teamDetailBloc
+                                  .add(FetchTeamDetailEvent(widget.id));
+                            }
+                          });
+                        } else if (isBossGroup) {
+                          context
+                              .startBossGroupMenu(
+                                  team: team!, onRevokeBoss: () => {})
+                              .then((value) {
+                            if (value != null && value == true) {
+                              teamDetailBloc
+                                  .add(FetchTeamDetailEvent(widget.id));
+                            }
+                          });
+                        }
+                      },
+                      icon: const Icon(Icons.more_vert),
+                    )
+                  : null,
+              bodyBuilder: (ScrollController scrollController) {
+                return CustomScrollView(
+                  controller: scrollController,
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _teamHeaderWidget(team),
+                            if (canUpdateMembers)
+                              _actionButtons(showInvite: !isBossTeam),
+                            _introductionWidget(team),
+                            if (!canUpdateMembers && !isMember)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15),
+                                child: _askToJoinBtn(
+                                  canAskToJoin: members.length < 500,
+                                  teamId: '${team?.id}',
+                                ),
                               ),
+                            if (!canUpdateMembers && isMember)
+                              _askToLeaveBtn(teamId: '${team?.id}'),
+                            const SizedBox(height: 20),
+                            _membersWidget(
+                              members: members,
+                              isBossGroup: isBossGroup,
+                              team: team!,
                             ),
-                          if (!canUpdateMembers && isMember)
-                            _askToLeaveBtn(teamId: '${team?.id}'),
-                          const SizedBox(height: 20),
-                          _membersWidget(
-                            members: members,
-                            isBossGroup: isBossGroup,
-                            team: team!,
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              );
-            },
-          );
-        },
+                  ],
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
@@ -349,13 +363,58 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
   }
 
   Widget _askToJoinBtn({required bool canAskToJoin, required String teamId}) {
-    return PrimaryButton(
-      title: 'Tham gia team',
-      onTap: () {
-        context.startAskToJoinTeam(teamId);
+    return BlocBuilder<GetJoinRequestBloc, GetListState>(
+      builder: (context, state) {
+        List<JoinRequest> requests =
+            state is GetListDataSuccess<JoinRequest> ? state.data : [];
+        final requesting = requests
+            .firstWhereOrNull((element) => element.team.id == widget.id);
+        if (requesting != null) {
+          return GestureDetector(
+            onTap: () {
+              teamDetailBloc.add(CancelJoinTeamEvent(requesting.id));
+            },
+            child: Container(
+              alignment: Alignment.center,
+              height: 48,
+              decoration: BoxDecoration(
+                  color: const Color(0xFFFFEEEC),
+                  borderRadius: BorderRadius.circular(10)),
+              child: RichText(
+                text: TextSpan(
+                  text: '',
+                  children: <InlineSpan>[
+                    WidgetSpan(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          'Huỷ yêu cầu tham gia Team',
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    height: 1.5,
+                                    color: AppColors.red3,
+                                  ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
+
+        return PrimaryButton(
+          title: 'Tham gia team',
+          onTap: () {
+            teamDetailBloc.add(AskToJoinEvent(widget.id));
+          },
+          disabled: !canAskToJoin,
+          width: MediaQuery.of(context).size.width,
+        );
       },
-      disabled: !canAskToJoin,
-      width: MediaQuery.of(context).size.width,
     );
   }
 
@@ -472,6 +531,43 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
   }
 
   void _onTeamDetailBlocListen(BuildContext context, TeamDetailState state) {
+    if (state is AskToJoinLoading) {
+      showLoading();
+    }
+
+    if (state is AskToJoinSuccess) {
+      hideLoading();
+      joinRequestsBloc.add(GetListDataEvent());
+      context.startAskJoinTeamSuccess(
+        onAction: () {
+          context.pop();
+          teamDetailBloc.add(
+            CancelJoinTeamEvent(state.requestId),
+          );
+        },
+      );
+    }
+
+    if (state is AskToJoinError) {
+      hideLoading();
+      showToastMessage("Yêu cầu tham gia Team thất bại");
+    }
+
+    if (state is OnCancelJoinTeam) {
+      showLoading();
+    }
+
+    if (state is CancelJoinTeamSuccess) {
+      hideLoading();
+      showToastMessage("Huỷ yêu cầu tham gia Team thành công");
+      joinRequestsBloc.add(GetListDataEvent());
+    }
+
+    if (state is CancelJoinTeamFail) {
+      hideLoading();
+      showToastMessage("Huỷ yêu cầu tham gia Team thất bại");
+    }
+
     if (state is FetchTeamsMemberSuccess) {
       if (state.team.boss == null && state.team.group?.boss?.id == myId) {
         context.askAssignBoss(team: state.team).then((value) {
@@ -481,6 +577,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
         });
       }
     }
+
     if (state is GetLeaveTeamStatusLoading) {
       context.showLoading();
     } else if (state is GetLeaveTeamStatusSuccess) {

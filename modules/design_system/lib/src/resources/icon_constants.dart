@@ -203,6 +203,15 @@ class IconAppConstants {
 
   static String icRadioButtonCheck = IconApp.icRadioButtonCheck.path;
   static String icRadioButton = IconApp.icRadioButton.path;
+  static String icBlockAccount = IconApp.icBlockAccount.path;
+  static String icEdit = IconApp.icEdit.path;
+  static String icLeaveMute = IconApp.icLeaveMute.path;
+  static String icReportGroup = IconApp.icReportGroup.path;
+  static String icKick = IconApp.icKick.path;
+  static String icKickMute = IconApp.icKickMute.path;
+  static String icSetAdmin = IconApp.icSetAdmin.path;
+  static String icSetSecondAdmin = IconApp.icSetSecondAdmin.path;
+  static String icRemoveSecondAdmin = IconApp.icRemoveSecondAdmin.path;
 
   
 }
@@ -251,7 +260,7 @@ enum IconApp {
   visibilityOff('assets/icons/visibility_off.png'),
   star('assets/icons/star.png'),
   proAds('assets/icons/pro_ads.png'),
-  pro('assets/icons/pro.png'),
+  pro('assets/icons/pro.svg'),
   icArrowLeft('assets/icons/ic_arrow_left.svg'),
   icTv('assets/icons/ic_tv.png'),
   icBird('assets/icons/ic_bird.png'),
@@ -359,9 +368,6 @@ enum IconApp {
   icP('assets/icons/ic_p.png'),
   icC('assets/icons/ic_c.png'),
   icE('assets/icons/ic_e.png'),
-  icLeaveTeam('assets/icons/ic_leave_team.svg'),
-  icDeleteChat('assets/icons/ic_delete_chat.svg'),
-  icReportChat('assets/icons/ic_report_chat.svg'),
 
   ///chat
   icImage('assets/icons/ic_image.svg'),
@@ -371,6 +377,18 @@ enum IconApp {
   icMicOff('assets/icons/ic_mic_off.svg'),
   icRadioButton('assets/icons/ic_radio_button.svg'),
   icRadioButtonCheck('assets/icons/ic_radio_button_check.svg'),
+  icBlockAccount('assets/icons/ic_block_account.svg'),
+  icEdit('assets/icons/ic_edit.svg'),
+  icLeaveMute('assets/icons/ic_leave_mute.svg'),
+  icReportGroup('assets/icons/ic_report_group.svg'),
+  icLeaveTeam('assets/icons/ic_leave_team.svg'),
+  icDeleteChat('assets/icons/ic_delete_chat.svg'),
+  icReportChat('assets/icons/ic_report_chat.svg'),
+  icKick('assets/icons/ic_kick.svg'),
+  icKickMute('assets/icons/ic_kick_mute.svg'),
+  icSetAdmin('assets/icons/ic_set_admin.svg'),
+  icSetSecondAdmin('assets/icons/ic_set_second_admin.svg'),
+  icRemoveSecondAdmin('assets/icons/ic_remove_second_admin.svg'),
 
   ///call
   icUserGroup3('assets/icons/ic_user_group3.svg'),

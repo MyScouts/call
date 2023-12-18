@@ -306,7 +306,7 @@ class _$UpgradeAccountImpl implements _UpgradeAccount {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UpgradeAccountImpl &&
@@ -497,7 +497,7 @@ class _$JobImpl implements _Job {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$JobImpl &&
@@ -645,7 +645,7 @@ class _$GenderImpl implements _Gender {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GenderImpl &&
@@ -795,7 +795,7 @@ class _$ProtectorImpl implements _Protector {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProtectorImpl &&
@@ -948,7 +948,7 @@ class _$BloodGroupImpl implements _BloodGroup {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BloodGroupImpl &&
@@ -1101,7 +1101,7 @@ class _$MaritalStatusImpl implements _MaritalStatus {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MaritalStatusImpl &&
@@ -1254,7 +1254,7 @@ class _$AcademicLevelImpl implements _AcademicLevel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AcademicLevelImpl &&
@@ -1406,7 +1406,7 @@ class _$InterestImpl implements _Interest {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InterestImpl &&
@@ -1559,7 +1559,7 @@ class _$AutocompleteOptionImpl implements _AutocompleteOption {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AutocompleteOptionImpl &&
@@ -1712,7 +1712,7 @@ class _$TalentImpl implements _Talent {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TalentImpl &&

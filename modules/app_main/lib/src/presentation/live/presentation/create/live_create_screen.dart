@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/loading_indicator/platform_loading.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/repositories/media_picker.dart';
@@ -9,12 +12,15 @@ import 'package:app_main/src/domain/entities/media/media_file.dart';
 import 'package:app_main/src/domain/usecases/upgrade_account_usecase.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_category_detail.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_type.dart';
+import 'package:app_main/src/presentation/live/domain/usecases/live_share_preferences_usecase.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:app_main/src/presentation/live/live_wrapper_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/create/state/live_create_controller.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:camera/camera.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'dart:ui' as ui;
 
@@ -34,6 +40,35 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
   List<LiveCategoryDetail> _cates = [];
   MediaFile? _file;
   String? _password;
+  String? _url;
+
+  @override
+  void initState() {
+    _initData();
+    super.initState();
+  }
+
+  int get uid => context.read<UserCubit>().currentUser?.id ?? 0;
+
+  void _initData() {
+    final cache = getIt<LiveSharePreferenceUseCase>().getLiveCreate(uid);
+    if (cache.isNotEmpty) {
+      _title = cache['title'] ?? '';
+      _cates = List.from(cache['cates'] ?? [])
+          .map((e) => LiveCategoryDetail.fromJson(e))
+          .toList();
+      _url = cache['url'];
+    }
+  }
+
+  void saveData() {
+    final data = {
+      'title': _title,
+      'cates': _cates.map((e) => e.toJson()).toList(),
+      'url': _url,
+    };
+    getIt<LiveSharePreferenceUseCase>().saveLiveCreate(uid, jsonEncode(data));
+  }
 
   @override
   void didChangeDependencies() {
@@ -44,20 +79,26 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
 
   void createLive() async {
     context.showLoading();
-    final update = await getIt<UpgradeAccountUsecase>().uploadBirthCer(
-      XFile(_file!.path),
-      'live',
-    );
+
+    String update;
+    if (_url != null) {
+      update = _url!;
+    } else {
+      update = await getIt<UpgradeAccountUsecase>().uploadBirthCer(
+        XFile(_file!.path),
+        'live',
+      );
+    }
 
     try {
       final data = await controller.createLive({
         'title': _title,
         'type': _type.name,
-        if (_type.isPasswordLocked) 'password': "haha",
+        if (_type.isPasswordLocked) 'password': _password,
         'categoryIds': _cates.map((e) => e.id).toList(),
         'medias': [update],
-        if (_password != null) 'password': _password,
       });
+      _url = update;
       if (mounted) {
         context.hideLoading();
       }
@@ -65,6 +106,7 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
         if (_password != null) controller.setPass(_password!);
         controller.startStream();
       }
+      saveData();
     } catch (e) {
       if (mounted) {
         context.hideLoading();
@@ -80,6 +122,79 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
     setState(() {
       _file = files.first;
     });
+  }
+
+  void typePicker() {
+    context.showLiveTypePicker(
+      onChanged: (type) {
+        setState(() {
+          _type = type;
+        });
+        if (_type == LiveType.password_locked) {
+          Future.delayed(const Duration(seconds: 1), () {
+            context.showSetPassword((p0) {
+              _password = p0;
+            });
+          });
+        } else {
+          _password = null;
+        }
+      },
+      type: _type,
+    );
+  }
+
+  Widget buildImage() {
+    Widget child;
+    if (_url != null) {
+      child = ClipRRect(
+        borderRadius: BorderRadius.circular(
+          4,
+        ),
+        child: CachedNetworkImage(
+          imageUrl: _url ?? '',
+          cacheKey: '$_url 56',
+          width: 56,
+          height: 56,
+          fit: BoxFit.cover,
+          maxWidthDiskCache: ScreenUtil().screenWidth.toInt(),
+        ),
+      );
+    } else if (_file != null) {
+      child = ClipRRect(
+        borderRadius: BorderRadius.circular(
+          4,
+        ),
+        child: SizedBox.square(
+          dimension: 56,
+          child: Image.file(
+            File(_file!.path),
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+    } else {
+      child = Container(
+        width: 60,
+        decoration: BoxDecoration(
+          color: Colors.grey,
+          borderRadius: BorderRadius.circular(
+            4.0,
+          ),
+        ),
+        alignment: Alignment.center,
+        child: const Icon(
+          Icons.camera_alt_outlined,
+          color: Colors.white,
+        ),
+      );
+    }
+
+    return GestureDetector(
+      onTap: mediaPicker,
+      behavior: HitTestBehavior.opaque,
+      child: child,
+    );
   }
 
   @override
@@ -129,44 +244,7 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
                                   child: IntrinsicHeight(
                                     child: Row(
                                       children: [
-                                        if (_file == null)
-                                          GestureDetector(
-                                            onTap: mediaPicker,
-                                            behavior: HitTestBehavior.opaque,
-                                            child: Container(
-                                              width: 60,
-                                              decoration: BoxDecoration(
-                                                color: Colors.grey,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                  4.0,
-                                                ),
-                                              ),
-                                              alignment: Alignment.center,
-                                              child: const Icon(
-                                                Icons.camera_alt_outlined,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        if (_file != null)
-                                          GestureDetector(
-                                            onTap: mediaPicker,
-                                            behavior: HitTestBehavior.opaque,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                4,
-                                              ),
-                                              child: SizedBox.square(
-                                                dimension: 56,
-                                                child: Image.file(
-                                                  File(_file!.path),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                        buildImage(),
                                         const SizedBox(width: 10),
                                         Column(
                                           mainAxisSize: MainAxisSize.min,
@@ -205,30 +283,7 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
                                             ),
                                             const SizedBox(height: 12),
                                             GestureDetector(
-                                              onTap: () {
-                                                context.showLiveTypePicker(
-                                                  onChanged: (type) {
-                                                    setState(() {
-                                                      _type = type;
-                                                    });
-                                                    if (_type ==
-                                                        LiveType
-                                                            .password_locked) {
-                                                      Future.delayed(
-                                                          const Duration(
-                                                              seconds: 1), () {
-                                                        context.showSetPassword(
-                                                            (p0) {
-                                                          _password = p0;
-                                                        });
-                                                      });
-                                                    } else {
-                                                      _password = null;
-                                                    }
-                                                  },
-                                                  type: _type,
-                                                );
-                                              },
+                                              onTap: typePicker,
                                               behavior: HitTestBehavior.opaque,
                                               child: _LiveType(type: _type),
                                             ),
@@ -339,7 +394,7 @@ class _LiveCreateScreenState extends State<LiveCreateScreen> {
                       return;
                     }
 
-                    if (_file == null) {
+                    if (_file == null && _url == null) {
                       showToastMessage(
                         'Vui lòng chọn hình ảnh cho live',
                         ToastMessageType.error,

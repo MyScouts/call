@@ -31,7 +31,7 @@ class NotificationCard extends StatelessWidget {
         ),
         child: Container(
           width: ScreenUtil().screenWidth - 32,
-          height: 106,
+          //height: 106,
           decoration: BoxDecoration(
             color: const Color.fromRGBO(247, 247, 247, 0.7),
             borderRadius: BorderRadius.circular(16),
@@ -44,7 +44,9 @@ class NotificationCard extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if ((data.metadata?['user']?['avatar'] ?? '').trim().isEmpty)
+                    if ((data.metadata?['user']?['avatar'] ?? '')
+                        .trim()
+                        .isEmpty)
                       SizedBox.square(
                         dimension: 19 * 2,
                         child: ClipRRect(
@@ -54,7 +56,9 @@ class NotificationCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                    if ((data.metadata?['user']?['avatar'] ?? '').trim().isNotEmpty)
+                    if ((data.metadata?['user']?['avatar'] ?? '')
+                        .trim()
+                        .isNotEmpty)
                       CircleNetworkImage(
                         url: data.metadata?['user']?['avatar'] ?? '',
                         size: 19 * 2,
@@ -86,7 +90,7 @@ class NotificationCard extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                data.title,
+                data.body,
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -98,9 +102,6 @@ class NotificationCard extends StatelessWidget {
         ),
       ),
     );
-    if (isSearching) {
-      return child;
-    }
 
     return Container(
       padding: const EdgeInsets.only(bottom: 16),
