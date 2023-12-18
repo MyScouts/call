@@ -7,6 +7,7 @@ import 'package:app_main/src/presentation/social/my_profile/blocs/post_tab_state
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_coordinator.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/common/subordinate_scroll.dart';
+import 'package:app_main/src/presentation/social/my_profile/screens/widgets/empty_post.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/post_header_user_info.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/post_video_thumbnail_widget.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/react_comment_widget.dart';
@@ -82,8 +83,6 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
-    final paddingLineBottom = MediaQuery.viewPaddingOf(context).bottom;
-
     super.build(context);
 
     return BlocProvider(
@@ -103,7 +102,7 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
             }
 
             if (state.isEmpty()) {
-              return _buildEmptyPosts(paddingLineBottom);
+              return EmptyPost(postType: widget.postType);
             }
 
             return scrollController == null
@@ -165,30 +164,6 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
                     ),
                   );
           }),
-    );
-  }
-
-  Padding _buildEmptyPosts(double paddingLineBottom) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: paddingLineBottom),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(height: 10),
-          ImageWidget(
-            IconAppConstants.icDoubleImage,
-            width: 80,
-            height: 80,
-          ),
-          const Text(
-            'Chưa có bài viết nào',
-            style: TextStyle(
-              fontSize: 14,
-              color: AppColors.grey76,
-            ),
-          ),
-        ],
-      ),
     );
   }
 

@@ -20,7 +20,7 @@ class VideoAppbarWidget extends StatelessWidget {
       child: IconButton(
         onPressed: () => context.pop(),
         icon: const Icon(
-          Icons.arrow_back_ios,
+          Icons.arrow_back,
           color: AppColors.white,
         ),
       ),

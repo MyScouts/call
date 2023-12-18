@@ -12,6 +12,7 @@ import 'package:injectable/injectable.dart';
 import 'package:localization/generated/l10n.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:wallet/core/networking/exception/api_exception.dart';
 
 import '../my_profile_constants.dart';
 import 'post_tab_event.dart';
@@ -177,15 +178,36 @@ class PostTabBloc extends CoreBloc<PostTabEvent, PostTabState> {
       newPost = await _postUsecase.createPost(event.createPostPayload);
       newPost = newPost.copyWith(user: state.userInfo);
       _totalNewPost++;
+      emit(state.copyWith(
+        newPost: null,
+        posts: [newPost, ...state.posts!],
+        postMediaFiles: [],
+      ));
+    } on ApiException catch (e) {
+      AppCoordinator.rootNavigator.currentContext?.showToastMessage(
+        e.message,
+        ToastMessageType.error,
+      );
+      emit(state.copyWith(
+        newPost: null,
+        postMediaFiles: [],
+      ));
+    } on DioException catch (_) {
+      AppCoordinator.rootNavigator.currentContext?.showToastMessage(
+        S.current.messages_server_internal_error.capitalize(),
+        ToastMessageType.error,
+      );
+      emit(state.copyWith(
+        newPost: null,
+        postMediaFiles: [],
+      ));
     } catch (e) {
       AppCoordinator.rootNavigator.currentContext?.showToastMessage(
         S.current.messages_server_internal_error.capitalize(),
         ToastMessageType.error,
       );
-    } finally {
       emit(state.copyWith(
         newPost: null,
-        posts: [newPost, ...state.posts!],
         postMediaFiles: [],
       ));
     }

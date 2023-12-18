@@ -10,6 +10,9 @@ part 'user_profile.g.dart';
 class UserProfileInfo with _$UserProfileInfo {
   const factory UserProfileInfo({
     DateTime? birthday,
+    String? firstName,
+    String? middleName,
+    String? lastName,
   }) = _UserProfileInfo;
 
   factory UserProfileInfo.fromJson(Map<String, dynamic> json) =>

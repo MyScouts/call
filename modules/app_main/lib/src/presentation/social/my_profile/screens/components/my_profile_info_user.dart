@@ -1,6 +1,5 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/responses/follow_response.dart';
-import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
 import 'package:app_main/src/presentation/social/following/following_coordinator.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:design_system/design_system.dart';
@@ -19,7 +18,10 @@ class MyProfileInfoUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final displayName = userInfo.getdisplayName;
-    final nickname = userInfo.getNickname;
+    // final firstName = userInfo?.profile?.firstName ?? '';
+    // final middleName = userInfo?.profile?.middleName ?? '';
+    // final lastName = userInfo?.profile?.lastName ?? '';
+    // final fullName = '$firstName $middleName $lastName';
     final pDoneId = userInfo.getPDoneId;
     final sexIcon = userInfo.getSex.getIcon();
     final sexTextColor = userInfo.getSex.getTextColor();
@@ -46,16 +48,17 @@ class MyProfileInfoUser extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 2),
-              if (nickname.isNotEmpty)
-                Text(
-                  '($nickname)',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.grey76,
-                  ),
-                ),
-              if (nickname.isNotEmpty) const SizedBox(height: 8),
+              // (NDNghia) Hiện tại bỏ, đã confirm
+              // if (fullName.isNotEmpty)
+              //   Text(
+              //     '($fullName)',
+              //     style: const TextStyle(
+              //       fontSize: 14,
+              //       fontWeight: FontWeight.w500,
+              //       color: AppColors.grey76,
+              //     ),
+              //   ),
+              // if (fullName.isNotEmpty) const SizedBox(height: 8),
               Text(
                 'ID: $pDoneId',
                 style: const TextStyle(
@@ -163,19 +166,16 @@ class MyProfileInfoUser extends StatelessWidget {
                       ),
                     ),
                   const SizedBox(width: 7),
-                  GestureDetector(
-                    onTap: () => context.startQrCode(userInfo: userInfo!),
-                    child: Container(
-                      height: 28,
-                      width: 28,
-                      padding: const EdgeInsets.all(3),
-                      decoration: BoxDecoration(
-                        color: const Color(0XFFE8F0FE),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: ImageWidget(
-                        IconAppConstants.icQrCode,
-                      ),
+                  Container(
+                    height: 28,
+                    width: 28,
+                    padding: const EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                      color: const Color(0XFFE8F0FE),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ImageWidget(
+                      IconAppConstants.icQrCode,
                     ),
                   )
                 ],

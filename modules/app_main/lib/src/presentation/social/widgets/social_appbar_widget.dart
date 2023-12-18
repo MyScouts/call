@@ -1,3 +1,4 @@
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
 class SocialAppBarWidget extends StatelessWidget
@@ -22,6 +23,10 @@ class SocialAppBarWidget extends StatelessWidget
       elevation: 0,
       shape: const OutlineInputBorder(
         borderSide: BorderSide(color: Colors.transparent),
+      ),
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back, color: AppColors.black),
+        onPressed: () => Navigator.of(context).pop(),
       ),
     );
   }

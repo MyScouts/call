@@ -52,6 +52,7 @@ class ProfileAvatar extends StatelessWidget {
                 child: ImageWidget(
                   url,
                   width: size,
+                  height: size,
                   fit: BoxFit.cover,
                 ),
               ),
