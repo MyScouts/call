@@ -1,8 +1,5 @@
-
-
 import 'package:app_main/src/domain/entities/chat/message_model.dart';
 
-import 'member_model.dart';
 import 'member_response_model.dart';
 
 abstract class ConversationModel {
@@ -13,5 +10,4 @@ abstract class ConversationModel {
   List<MemberResponseModel> get members;
   List<MemberResponseModel> get membersNotMe;
   MessageModel? get latestMessage;
-
 }

@@ -1,12 +1,9 @@
-import 'dart:typed_data';
-
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:camera/camera.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
 
 class CameraScreen extends StatefulWidget {
   static const String routeName = 'camera';
@@ -19,7 +16,6 @@ class CameraScreen extends StatefulWidget {
 class _CameraScreenState extends State<CameraScreen> {
   CameraController? controller;
   late List<CameraDescription> _cameras;
-  final textRecognizer = GoogleMlKit.vision.textRecognizer();
 
   @override
   void initState() {
@@ -64,20 +60,6 @@ class _CameraScreenState extends State<CameraScreen> {
     } catch (e) {
       print("Error processing image: $e");
     }
-  }
-
-  Uint8List _concatenatePlanes(List<Plane> planes) {
-    final bytes = planes.map((plane) => plane.bytes).toList();
-    final allBytes =
-        Uint8List(planes.fold(0, (count, plane) => count + plane.bytes.length));
-    int offset = 0;
-
-    for (final planeBytes in bytes) {
-      allBytes.setRange(offset, offset + planeBytes.length, planeBytes);
-      offset += planeBytes.length;
-    }
-
-    return allBytes;
   }
 
   @override
