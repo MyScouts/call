@@ -1,4 +1,6 @@
+import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/common/subordinate_scroll.dart';
+import 'package:app_main/src/presentation/social/my_profile/screens/widgets/empty_post.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 
@@ -43,25 +45,31 @@ class _ReelsTabState extends State<ReelsTab>
     super.build(context);
     return scrollController == null
         ? const SizedBox.shrink()
-        : CustomScrollView(
-            shrinkWrap: true,
-            key: widget.key,
-            physics: const ClampingScrollPhysics(),
-            controller: scrollController,
-            slivers: [
-              SliverToBoxAdapter(
-                child: Container(
-                  color: AppColors.white,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('Thước phim'),
-                    ],
-                  ),
-                ),
-              )
-            ],
+        : EmptyPost(
+            postType: PostType.film,
           );
+
+    //  CustomScrollView(
+    //     shrinkWrap: true,
+    //     key: widget.key,
+    //     physics: const ClampingScrollPhysics(),
+    //     controller: scrollController,
+    //     slivers: [
+    //       SliverToBoxAdapter(
+    //         child: Container(
+    //           color: AppColors.white,
+    //           child: Column(
+    //             mainAxisAlignment: MainAxisAlignment.center,
+    //             children: [
+    //               EmptyPost(
+    //                 postType: PostType.film,
+    //               ),
+    //             ],
+    //           ),
+    //         ),
+    //       )
+    //     ],
+    //   );
   }
 
   @override

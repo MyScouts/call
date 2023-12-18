@@ -42,9 +42,8 @@ class LiveBottomAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.read<LiveChannelController>();
     return Obx(() {
-      final controller = context.read<LiveChannelController>();
-
       if (controller.state.value == LiveStreamState.watching) {
         return Padding(
           padding: const EdgeInsets.all(16.0),
@@ -77,41 +76,40 @@ class LiveBottomAction extends StatelessWidget {
                   );
                 }),
                 Obx(() {
-                  final controller = context.read<LiveChannelController>();
                   return Row(
                     children: [
                       Expanded(
                         child: Row(
                           children: <Widget>[
                             LiveButtonAction(
+                              icon: ImageWidget(IconAppConstants.icLiveComment),
+                              onPressed: controller.enableMessage,
+                            ),
+                            LiveButtonAction(
                               icon: ImageWidget(
                                 IconAppConstants.icLiveMarshop,
                               ),
                               onPressed: () {},
-                            ),
-                            LiveButtonAction(
-                              icon: ImageWidget(IconAppConstants.icLiveComment),
-                              onPressed: controller.enableMessage,
                             ),
                             if (controller.me.value.isOwner)
                               LiveButtonAction(
                                 icon: ImageWidget(IconAppConstants.icLiveShare),
                                 onPressed: () {},
                               ),
-                            if (!controller.me.value.isOwner)
+                            // if (!controller.me.value.isOwner)
+                            //   LiveButtonAction(
+                            //     icon: ImageWidget(IconAppConstants.icLive2User),
+                            //     onPressed: () {
+                            //       context.showBottomSheetLive(controller,
+                            //           index: 1);
+                            //     },
+                            //   ),
                               LiveButtonAction(
-                                icon: ImageWidget(IconAppConstants.icLive2User),
-                                onPressed: () {
-                                  context.showBottomSheetLive(controller,
-                                      index: 1);
-                                },
+                                icon: ImageWidget(
+                                  IconAppConstants.icLive2User,
+                                ),
+                                onPressed: () => liveSetting(context),
                               ),
-                            LiveButtonAction(
-                              icon: ImageWidget(
-                                IconAppConstants.icLiveSetting,
-                              ),
-                              onPressed: () => liveSetting(context),
-                            ),
                             if (controller.me.value.isOwner)
                               LiveButtonAction(
                                 bgColor: const Color(0xff4B84F7),

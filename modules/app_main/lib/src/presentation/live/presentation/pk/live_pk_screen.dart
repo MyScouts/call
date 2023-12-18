@@ -154,7 +154,7 @@ class _LivePKRtc extends StatelessWidget {
 
                             if (status == PkGameStatus.win) {
                               return Align(
-                                alignment: Alignment.bottomLeft,
+                                alignment: Alignment.bottomRight,
                                 child: SizedBox.square(
                                   dimension: 61,
                                   child: Assets.icons_lives_win_small.image(),
@@ -163,7 +163,7 @@ class _LivePKRtc extends StatelessWidget {
                             }
 
                             return Align(
-                              alignment: Alignment.bottomLeft,
+                              alignment: Alignment.bottomRight,
                               child: SizedBox.square(
                                 dimension: 61,
                                 child: Assets.icons_lives_lose_small.image(),
@@ -196,7 +196,7 @@ class _LivePKRtc extends StatelessWidget {
 
                             if (status == PkGameStatus.win) {
                               return Align(
-                                alignment: Alignment.bottomRight,
+                                alignment: Alignment.bottomLeft,
                                 child: SizedBox.square(
                                   dimension: 61,
                                   child: Assets.icons_lives_win_small.image(),
@@ -205,7 +205,7 @@ class _LivePKRtc extends StatelessWidget {
                             }
 
                             return Align(
-                              alignment: Alignment.bottomRight,
+                              alignment: Alignment.bottomLeft,
                               child: SizedBox.square(
                                 dimension: 61,
                                 child: Assets.icons_lives_lose_small.image(),

@@ -7,6 +7,7 @@ import 'package:app_main/src/domain/usecases/comment_usecase.dart';
 import 'package:app_main/src/data/models/payloads/social/create_post_payload.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
+import 'package:wallet/core/networking/exception/api_exception.dart';
 
 @injectable
 class PostUsecase {
@@ -57,9 +58,15 @@ class PostUsecase {
     if (payload.mediaFiles != null && payload.mediaFiles!.isNotEmpty) {
       for (var mediaFile in payload.mediaFiles!) {
         if (mediaFile != null) {
-          final url =
-              await _resourceApi.storageUploadUrl(XFile(mediaFile.path), '');
-          urlMedias.add(url);
+          try {
+            final url =
+                await _resourceApi.storageUploadUrl(XFile('mediaFile.path'), '');
+            urlMedias.add(url);
+          } catch (e) {
+            throw ApiException(
+              message: 'Có lỗi khi upload ảnh',
+            );
+          }
         }
       }
     }

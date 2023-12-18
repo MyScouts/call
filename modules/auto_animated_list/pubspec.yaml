@@ -3,12 +3,6 @@ description: >-
   ListView Widget that supports automatic animations 
   when list items are changed.
 version: 1.0.4
-homepage: https://github.com/eterkit/flutter-packages/tree/main/auto_animated_list
-repository: https://github.com/eterkit/flutter-packages
-screenshots:
-  - description: 'Example of auto animated list.'
-    path: example.gif
-
 environment:
   sdk: ">=2.17.0 <3.0.0"
   flutter: ">=2.0.0"

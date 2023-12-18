@@ -1,8 +1,6 @@
-import 'package:app_main/src/data/models/responses/chat/member_dto.dart';
 import 'package:app_main/src/data/models/responses/chat/message_dto.dart';
 import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/domain/entities/chat/conversation_model.dart';
-import 'package:app_main/src/domain/entities/chat/member_model.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -11,7 +9,8 @@ part 'conversation_dto.g.dart';
 
 @JsonSerializable()
 class ConversationDto extends ConversationModel {
-  factory ConversationDto.fromJson(Map<String, dynamic> json) => _$ConversationDtoFromJson(json);
+  factory ConversationDto.fromJson(Map<String, dynamic> json) =>
+      _$ConversationDtoFromJson(json);
 
   ConversationDto(
       {required this.countUnSeen,
@@ -42,5 +41,9 @@ class ConversationDto extends ConversationModel {
   final int type;
 
   @override
-  List<MemberResponseDto> get membersNotMe => [...members.where((element) => getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id != element.member.id)];
+  List<MemberResponseDto> get membersNotMe => [
+        ...members.where((element) =>
+            getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id !=
+            element.member.id)
+      ];
 }

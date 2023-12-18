@@ -9,9 +9,8 @@ class CreatePostInitiated extends CreatePostEvent {}
 
 class PostButtonTapped extends CreatePostEvent {
   final PostType postType;
-  final User user;
 
-  PostButtonTapped({required this.user, required this.postType});
+  PostButtonTapped({required this.postType});
 }
 
 class SubjectTextFieldChanged extends CreatePostEvent {
@@ -31,7 +30,12 @@ class FilesChanged extends CreatePostEvent {
 
 class MediaTapped extends CreatePostEvent {
   final PostType postType;
-  MediaTapped(this.postType);
+  final User user;
+
+  MediaTapped({
+    required this.postType,
+    required this.user,
+  });
 }
 
 class RemoveMediaTapped extends CreatePostEvent {}

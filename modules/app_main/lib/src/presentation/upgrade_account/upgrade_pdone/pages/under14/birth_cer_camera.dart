@@ -6,7 +6,6 @@ import 'package:camera/camera.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:ui/ui.dart';
 
 class BirthCerCameraScreen extends StatefulWidget {
@@ -20,7 +19,6 @@ class _BirthCerCameraScreenState extends State<BirthCerCameraScreen>
     with WidgetsBindingObserver {
   CameraController? controller;
   late List<CameraDescription> _cameras;
-  final textRecognizer = GoogleMlKit.vision.textRecognizer();
 
   XFile? captureFile;
 
@@ -32,7 +30,6 @@ class _BirthCerCameraScreenState extends State<BirthCerCameraScreen>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     controller?.dispose();
   }
@@ -50,9 +47,6 @@ class _BirthCerCameraScreenState extends State<BirthCerCameraScreen>
         return;
       }
       controller!.setFlashMode(FlashMode.off);
-      controller!.startImageStream((CameraImage availableImage) {
-        processCameraImage(availableImage);
-      });
       setState(() {});
     }).catchError((Object e) {
       if (e is CameraException) {
@@ -66,28 +60,6 @@ class _BirthCerCameraScreenState extends State<BirthCerCameraScreen>
         }
       }
     });
-  }
-
-  Future<void> processCameraImage(CameraImage image) async {
-    try {
-      // print(image);
-    } catch (e) {
-      // print("Error processing image: $e");
-    }
-  }
-
-  Uint8List _concatenatePlanes(List<Plane> planes) {
-    final bytes = planes.map((plane) => plane.bytes).toList();
-    final allBytes =
-        Uint8List(planes.fold(0, (count, plane) => count + plane.bytes.length));
-    int offset = 0;
-
-    for (final planeBytes in bytes) {
-      allBytes.setRange(offset, offset + planeBytes.length, planeBytes);
-      offset += planeBytes.length;
-    }
-
-    return allBytes;
   }
 
   @override
@@ -184,7 +156,7 @@ class _BirthCerCameraScreenState extends State<BirthCerCameraScreen>
         ),
         Image.file(
           File(captureFile!.path),
-          height: MediaQuery.of(context).size.height*0.6,
+          height: MediaQuery.of(context).size.height * 0.6,
         ),
         const Spacer(),
         Padding(
