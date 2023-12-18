@@ -44,7 +44,6 @@ class LiveBottomAction extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = context.read<LiveChannelController>();
     return Obx(() {
-
       if (controller.state.value == LiveStreamState.watching) {
         return Padding(
           padding: const EdgeInsets.all(16.0),
@@ -83,14 +82,14 @@ class LiveBottomAction extends StatelessWidget {
                         child: Row(
                           children: <Widget>[
                             LiveButtonAction(
+                              icon: ImageWidget(IconAppConstants.icLiveComment),
+                              onPressed: controller.enableMessage,
+                            ),
+                            LiveButtonAction(
                               icon: ImageWidget(
                                 IconAppConstants.icLiveMarshop,
                               ),
                               onPressed: () {},
-                            ),
-                            LiveButtonAction(
-                              icon: ImageWidget(IconAppConstants.icLiveComment),
-                              onPressed: controller.enableMessage,
                             ),
                             if (controller.me.value.isOwner)
                               LiveButtonAction(
@@ -105,12 +104,12 @@ class LiveBottomAction extends StatelessWidget {
                             //           index: 1);
                             //     },
                             //   ),
-                            LiveButtonAction(
-                              icon: ImageWidget(
-                                IconAppConstants.icLiveSetting,
+                              LiveButtonAction(
+                                icon: ImageWidget(
+                                  IconAppConstants.icLive2User,
+                                ),
+                                onPressed: () => liveSetting(context),
                               ),
-                              onPressed: () => liveSetting(context),
-                            ),
                             if (controller.me.value.isOwner)
                               LiveButtonAction(
                                 bgColor: const Color(0xff4B84F7),
