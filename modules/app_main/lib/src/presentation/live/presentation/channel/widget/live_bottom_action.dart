@@ -42,8 +42,8 @@ class LiveBottomAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.read<LiveChannelController>();
     return Obx(() {
-      final controller = context.read<LiveChannelController>();
 
       if (controller.state.value == LiveStreamState.watching) {
         return Padding(
@@ -77,7 +77,6 @@ class LiveBottomAction extends StatelessWidget {
                   );
                 }),
                 Obx(() {
-                  final controller = context.read<LiveChannelController>();
                   return Row(
                     children: [
                       Expanded(
@@ -98,14 +97,14 @@ class LiveBottomAction extends StatelessWidget {
                                 icon: ImageWidget(IconAppConstants.icLiveShare),
                                 onPressed: () {},
                               ),
-                            if (!controller.me.value.isOwner)
-                              LiveButtonAction(
-                                icon: ImageWidget(IconAppConstants.icLive2User),
-                                onPressed: () {
-                                  context.showBottomSheetLive(controller,
-                                      index: 1);
-                                },
-                              ),
+                            // if (!controller.me.value.isOwner)
+                            //   LiveButtonAction(
+                            //     icon: ImageWidget(IconAppConstants.icLive2User),
+                            //     onPressed: () {
+                            //       context.showBottomSheetLive(controller,
+                            //           index: 1);
+                            //     },
+                            //   ),
                             LiveButtonAction(
                               icon: ImageWidget(
                                 IconAppConstants.icLiveSetting,

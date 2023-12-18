@@ -459,6 +459,8 @@ class LiveChannelController {
       getLeaderBoard(_info.value.id);
     } catch (e) {
       _state.value = LiveStreamState.stop;
+      LiveManageState.disable();
+      NotificationCenter.post(channel: refreshLive);
       if (context.mounted) {
         Navigator.of(AppCoordinator.rootNavigator.currentContext!).pop();
         context.showToastMessage(
@@ -534,7 +536,9 @@ class LiveChannelController {
       LiveManageState.hostID.value = hostID;
 
       if (Platform.isAndroid) _initForegroundTask();
-    } catch (e) {}
+    } catch (e) {
+      LiveManageState.disable();
+    }
   }
 
   void _getPkStats() async {

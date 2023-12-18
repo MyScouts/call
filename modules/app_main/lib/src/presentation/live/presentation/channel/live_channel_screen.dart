@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/app_size.dart';
@@ -93,29 +92,32 @@ class LiveChannelScreenState extends State<LiveChannelScreen> {
         value: controller.liveType.value == LiveChannelType.pk
             ? SystemUiOverlayStyle.light
             : SystemUiOverlayStyle.dark,
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: controller.liveType.value == LiveChannelType.pk
-              ? const Color(0xff032E49)
-              : Colors.black.withOpacity(0.8),
-          body: Focus(
-            onFocusChange: (value) {
-              if (!value) controller.disableMessage();
-            },
-            child: GestureDetector(
-              onTap: () {
-                FocusScope.of(context).unfocus();
-                NotificationCenter.post(channel: showOption);
-                NotificationCenter.post(channel: liveTap);
+        child: PopScope(
+          canPop: false,
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: controller.liveType.value == LiveChannelType.pk
+                ? const Color(0xff032E49)
+                : Colors.black.withOpacity(0.8),
+            body: Focus(
+              onFocusChange: (value) {
+                if (!value) controller.disableMessage();
               },
-              behavior: HitTestBehavior.opaque,
-              child: Obx(() {
-                if (controller.liveType.value == LiveChannelType.pk) {
-                  return const LivePkScreen();
-                } else {
-                  return const _LiveSimple();
-                }
-              }),
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).unfocus();
+                  NotificationCenter.post(channel: showOption);
+                  NotificationCenter.post(channel: liveTap);
+                },
+                behavior: HitTestBehavior.opaque,
+                child: Obx(() {
+                  if (controller.liveType.value == LiveChannelType.pk) {
+                    return const LivePkScreen();
+                  } else {
+                    return const _LiveSimple();
+                  }
+                }),
+              ),
             ),
           ),
         ),
