@@ -15,6 +15,7 @@ import 'package:wallet/presentation/shared/widgets/toast_message/toast_message.d
 import 'package:wallet/presentation/wallet_point/wallet_point_coodinator.dart';
 import 'package:wallet/presentation/wallet_point/point_agency/bloc/agency_bloc.dart';
 import '../../../../../wallet.dart';
+import '../../../../core/configuratons/configurations.dart';
 import '../../../../core/theme/wallet_theme.dart';
 import '../../../../core/utils/deboun_callback.dart';
 import '../../../../core/utils/input_formatter.dart';
@@ -56,6 +57,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
   @override
   void initState() {
     _agencyBloc.add(AgencyEvent.getAgencyInfo(widget.agencyId));
+    _userIDController.text = WalletInjectedData.user.pDoneId ?? '';
     super.initState();
   }
 
