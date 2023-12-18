@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/domain/entities/media/media_file.dart';
 import 'package:app_main/src/presentation/social/my_profile/blocs/post_tab_bloc.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/components/create_post/create_post_screen.dart';
@@ -8,10 +9,28 @@ import 'package:app_main/src/presentation/social/my_profile/screens/components/t
 import 'package:app_main/src/presentation/social/my_profile/screens/my_profile_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'screens/components/create_film/create_film_screen.dart';
+
 extension MyProfileCoordinator on BuildContext {
   Future<T?> startMyProfile<T>() {
     return Navigator.of(this).pushNamed(MyProfileScreen.routeName);
   }
+
+  Future<T?> startCreateFilm<T>({
+    required PostType postType,
+    required User user,
+    required MediaFile mediaFile,
+  }) {
+    return Navigator.of(this).pushNamed(
+      CreateFilmScreen.routeName,
+      arguments: {
+        "postType": postType,
+        "user": user,
+        "mediaFile": mediaFile,
+      },
+    );
+  }
+
 
   Future<T?> startCreatePost<T>({
     required PostType postType,

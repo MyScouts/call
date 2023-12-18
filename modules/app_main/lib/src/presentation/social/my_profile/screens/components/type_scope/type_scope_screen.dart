@@ -9,10 +9,17 @@ import 'package:imagewidget/imagewidget.dart';
 class TypeScopeScreen extends StatefulWidget {
   static const String routeName = "type_scope";
 
-  const TypeScopeScreen(
-      {required this.postType, required this.typeScopeSelected, super.key});
+  const TypeScopeScreen({
+    required this.postType,
+    required this.typeScopeSelected,
+    this.isScreen = false,
+    this.onChange,
+    super.key,
+  });
   final PostType postType;
   final ScopeType typeScopeSelected;
+  final bool isScreen;
+  final Function(ScopeType)? onChange;
 
   @override
   State<TypeScopeScreen> createState() => _TypeScopeScreenState();
@@ -30,46 +37,12 @@ class _TypeScopeScreenState extends State<TypeScopeScreen> {
   @override
   Widget build(BuildContext context) {
     final paddingBottom = MediaQuery.viewPaddingOf(context).bottom;
-
+    if(!widget.isScreen) return _buildBody();
     return Scaffold(
       appBar: const SocialAppBarWidget(
         titleText: 'Đối tượng của bài viết',
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 24),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              'Ai có thể xem được bài viết của bạn?',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          _buildScope(
-            scopeType: ScopeType.public,
-            subtitle: 'Bất kỳ ai cũng có thể xem bài viết của bạn',
-          ),
-          _buildScope(
-            scopeType: ScopeType.friend,
-            subtitle: 'Chỉ bạn bè của bạn mới có thể xem bài viết',
-          ),
-          if (widget.postType.isVideo)
-            _buildScope(
-              scopeType: ScopeType.follower,
-              subtitle:
-                  'Chỉ những người hâm mộ đã theo dõi bạn mới có thể xem video',
-            ),
-          _buildScope(
-            scopeType: ScopeType.onlyMe,
-            subtitle: 'Chỉ mình tôi',
-          ),
-        ],
-      ),
+      body: _buildBody(),
       bottomSheet: Container(
         color: Colors.white,
         child: InkWell(
@@ -108,6 +81,44 @@ class _TypeScopeScreenState extends State<TypeScopeScreen> {
     );
   }
 
+  Column _buildBody() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 24),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            'Ai có thể xem được bài viết của bạn?',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        _buildScope(
+          scopeType: ScopeType.public,
+          subtitle: 'Bất kỳ ai cũng có thể xem bài viết của bạn',
+        ),
+        _buildScope(
+          scopeType: ScopeType.friend,
+          subtitle: 'Chỉ bạn bè của bạn mới có thể xem bài viết',
+        ),
+        if (widget.postType.isVideo || widget.postType.isFilm)
+          _buildScope(
+            scopeType: ScopeType.follower,
+            subtitle:
+                'Chỉ những người hâm mộ đã theo dõi bạn mới có thể xem video',
+          ),
+        _buildScope(
+          scopeType: ScopeType.onlyMe,
+          subtitle: 'Chỉ mình tôi',
+        ),
+      ],
+    );
+  }
+
   Widget _buildScope({
     required ScopeType scopeType,
     required String subtitle,
@@ -119,6 +130,9 @@ class _TypeScopeScreenState extends State<TypeScopeScreen> {
           onChanged: (ScopeType? value) {
             setState(() {
               typeScopeSelected = value!;
+              if(widget.onChange != null){
+                widget.onChange!(typeScopeSelected);
+              }
             });
           },
           groupValue: typeScopeSelected,

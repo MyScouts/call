@@ -28,11 +28,13 @@ class PostTab extends StatefulWidget {
     required this.postType,
     required this.refresh,
     required this.createPostPayload,
+    required this.userInfo,
     super.key,
   });
   final PostType postType;
   final ValueNotifier<bool> refresh;
   final ValueNotifier<CreatePostPayload?> createPostPayload;
+  final User userInfo;
 
   @override
   State<PostTab> createState() => _PostTabState();
@@ -47,7 +49,10 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
     super.initState();
 
     _initController();
-    bloc.add(PostTabInitiated(postType: widget.postType));
+    bloc.add(PostTabInitiated(
+      postType: widget.postType,
+      userInfo: widget.userInfo,
+    ));
     _onListener();
   }
 
@@ -126,16 +131,17 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                if (posts!.isNotEmpty)
-                                  const SizedBox(height: 16),
+                                if (posts!.isNotEmpty) SizedBox(height: 16.w),
                                 if (newPost != null)
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      const Padding(
+                                      Padding(
                                         padding: EdgeInsets.only(
-                                            left: 16, right: 16, bottom: 16),
+                                            left: 16.w,
+                                            right: 16.w,
+                                            bottom: 16.w),
                                         child: LinearProgressIndicator(
                                           value: null,
                                         ),
@@ -178,7 +184,7 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding:  EdgeInsets.symmetric(horizontal: 16.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -255,7 +261,7 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(right: 16),
+              padding:  EdgeInsets.only(right: 16.w),
               child: ProfileAvatar(
                 avatarUrl: latestComment.user.getUserAvatar,
                 size: 42,
