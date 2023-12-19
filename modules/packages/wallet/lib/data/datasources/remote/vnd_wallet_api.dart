@@ -1,10 +1,11 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:app_core/app_core.dart';
+import 'package:cross_file/cross_file.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:wallet/data/datasources/models/request/estimate_tax_request.dart';
-import 'package:wallet/data/datasources/models/response/onboarding_response.dart';
 
 import '../../../core/core.dart';
 import '../../../core/networking/api_response.dart';
@@ -12,6 +13,7 @@ import '../../../domain/domain.dart';
 import '../models/models.dart';
 import '../models/request/verify_otp_request.dart';
 import '../models/response/estimate_tax_response.dart';
+import '../models/response/storage_upload_url_response.dart';
 
 part 'vnd_wallet_api.g.dart';
 
@@ -75,4 +77,7 @@ abstract class VndWalletApi {
   Future<void> setDefaultBankAccount(
       {@Path('id') required int id,
       @Body() required Map<String, dynamic> body});
+
+  Future<String> storageUploadUrl(XFile file, String prefix);
+
 }

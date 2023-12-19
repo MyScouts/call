@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:app_core/app_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -73,20 +71,23 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     on<_FilterTransactionEvent>((event, emit) async {
       try {
         emit(const _GetWalletTransactionListLoading());
-        final transactionList = transactions.where((transaction) {
-          final transactionResolvedStatus = TransactionResolvedStatus.values
-              .firstWhere(
-                  (status) => status.name == transaction.resolvedStatus);
-          final transactionType = TransactionType.values
-              .firstWhere((type) => type.value == transaction.transactionType);
-          if (event.filter.status.isEmpty) {
-            return event.filter.type.contains(transactionType);
-          } else if (event.filter.type.isEmpty) {
-            return event.filter.status.contains(transactionResolvedStatus);
-          }
-          return event.filter.status.contains(transactionResolvedStatus) &&
-              event.filter.type.contains(transactionType);
-        }).toList();
+        List<TransactionItem> transactionList = transactions;
+        if(event.filter.status.isNotEmpty || event.filter.type.isNotEmpty){
+          transactionList = transactions.where((transaction) {
+            final transactionResolvedStatus = TransactionResolvedStatus.values
+                .firstWhere(
+                    (status) => status.name == transaction.resolvedStatus);
+            final transactionType = TransactionType.values
+                .firstWhere((type) => type.value == transaction.transactionType);
+            if (event.filter.status.isEmpty) {
+              return event.filter.type.contains(transactionType);
+            } else if (event.filter.type.isEmpty) {
+              return event.filter.status.contains(transactionResolvedStatus);
+            }
+            return event.filter.status.contains(transactionResolvedStatus) &&
+                event.filter.type.contains(transactionType);
+          }).toList();
+        }
         emit(_GetWalletTransactionListSuccess(transactions: transactionList));
       } on DioException catch (e) {
         const errorMessage = 'Đã xảy ra lỗi';
