@@ -121,7 +121,7 @@ class UserInfoHeader extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             Text(
-              userInfo.getdisplayName,
+              userInfo.getDisplayName,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: context.text.titleMedium!.copyWith(

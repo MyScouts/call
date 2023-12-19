@@ -47,7 +47,7 @@ class _FriendMenuActionsState extends State<FriendMenuActions> {
                   ),
                 ),
                 Text(
-                  widget.userInfo.getdisplayName,
+                  widget.userInfo.getDisplayName,
                   style: context.text.titleMedium!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),

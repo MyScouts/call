@@ -74,7 +74,7 @@ class _FollowingScreenState extends State<FollowingScreen>
 
   @override
   Widget build(BuildContext context) {
-    final displayName = widget.user.getdisplayName;
+    final displayName = widget.user.getDisplayName;
     return BlocProvider(
       create: (_) => bloc,
       child: Scaffold(

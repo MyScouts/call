@@ -18,7 +18,7 @@ class MyProfileInfoUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final displayName = userInfo.getdisplayName;
+    final displayName = userInfo.getDisplayName;
     // final firstName = userInfo?.profile?.firstName ?? '';
     // final middleName = userInfo?.profile?.middleName ?? '';
     // final lastName = userInfo?.profile?.lastName ?? '';

@@ -65,8 +65,8 @@ class PostHeaderUserInfo extends StatelessWidget {
         Row(
           children: [
             Text(
-              user.getdisplayName,
-              style:  TextStyle(
+              user.getDisplayName,
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
                 color: isDarkMode ? AppColors.white : AppColors.black10,

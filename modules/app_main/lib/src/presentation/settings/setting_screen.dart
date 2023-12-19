@@ -267,7 +267,7 @@ class _SettingScreenState extends State<SettingScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _authInfo.getdisplayName,
+                  _authInfo.getDisplayName,
                   style: context.textTheme.titleMedium!.copyWith(
                     fontSize: 15,
                     color: AppColors.black,

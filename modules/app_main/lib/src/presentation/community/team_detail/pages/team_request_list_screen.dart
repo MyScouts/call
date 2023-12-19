@@ -263,7 +263,7 @@ class _JoinRequestPageState extends State<JoinRequestPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                member.user.getdisplayName,
+                                member.user.getDisplayName,
                                 style: context.textTheme.titleMedium!.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -279,7 +279,7 @@ class _JoinRequestPageState extends State<JoinRequestPage> {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        "Yêu cầu vào Team của ${member.user.getdisplayName}",
+                        "Yêu cầu vào Team của ${member.user.getDisplayName}",
                         style: context.textTheme.titleMedium!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -467,7 +467,7 @@ class _LeaveRequestPage extends State<LeaveRequestPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  member.user.getdisplayName,
+                                  member.user.getDisplayName,
                                   style:
                                       context.textTheme.titleMedium!.copyWith(
                                     fontWeight: FontWeight.bold,
@@ -486,7 +486,7 @@ class _LeaveRequestPage extends State<LeaveRequestPage> {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        "Yêu cầu rời Team của ${member.user.getdisplayName}",
+                        "Yêu cầu rời Team của ${member.user.getDisplayName}",
                         style: context.textTheme.titleMedium!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),

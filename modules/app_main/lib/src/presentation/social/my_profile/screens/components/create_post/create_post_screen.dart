@@ -134,7 +134,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        widget.user?.getdisplayName ?? '',
+                                        widget.user?.getDisplayName ?? '',
                                         style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,

@@ -184,7 +184,7 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 16.w),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -261,7 +261,7 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding:  EdgeInsets.only(right: 16.w),
+              padding: EdgeInsets.only(right: 16.w),
               child: ProfileAvatar(
                 avatarUrl: latestComment.user.getUserAvatar,
                 size: 42,
@@ -286,7 +286,7 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
                               child: Row(
                                 children: [
                                   Text(
-                                    latestComment.user.getdisplayName,
+                                    latestComment.user.getDisplayName,
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,

@@ -440,7 +440,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile>
                 ),
               ),
               Text(
-                _authInfo.getdisplayName,
+                _authInfo.getDisplayName,
                 style: const TextStyle(
                   color: AppColors.black,
                   fontWeight: FontWeight.normal,
@@ -462,7 +462,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile>
                 ),
               ),
               Text(
-                _authInfo.getdisplayName,
+                _authInfo.getDisplayName,
                 style: const TextStyle(
                   color: AppColors.black,
                   fontWeight: FontWeight.normal,
@@ -484,7 +484,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile>
                 ),
               ),
               Text(
-                _authInfo.getdisplayName,
+                _authInfo.getDisplayName,
                 style: const TextStyle(
                   color: AppColors.black,
                   fontWeight: FontWeight.normal,
@@ -522,7 +522,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile>
                 ),
               ),
               Text(
-                _authInfo.getdisplayName,
+                _authInfo.getDisplayName,
                 style: const TextStyle(
                   color: AppColors.black,
                   fontWeight: FontWeight.normal,
@@ -544,7 +544,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile>
                 ),
               ),
               Text(
-                _authInfo.getdisplayName,
+                _authInfo.getDisplayName,
                 style: const TextStyle(
                   color: AppColors.black,
                   fontWeight: FontWeight.normal,
@@ -687,7 +687,7 @@ class _BodyInformationProfileState extends State<BodyInformationProfile>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      _authInfo.getdisplayName,
+                      _authInfo.getDisplayName,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

@@ -66,13 +66,9 @@ class User with _$User {
 }
 
 extension UserExtNull on User? {
-  @Deprecated('getdisplayName deprecated.')
-  String get getdisplayName => [this?.displayName, _userDefaultName]
-      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getDisplayName => this?.displayName ?? _userDefaultName;
 
-  @Deprecated('getEmail deprecated.')
-  String get getEmail => [this?.email, _userDefaultEmail]
-      .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
+  String get getEmail => this?.email ?? _userDefaultEmail;
 
   @Deprecated('getAddress deprecated.')
   String get getAddress => [this?.address, _userDefaultAddress]

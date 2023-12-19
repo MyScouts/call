@@ -42,7 +42,7 @@ class _DiaryMenuActionsState extends State<DiaryMenuActions> {
                   ),
                 ),
                 Text(
-                  widget.userInfo.getdisplayName,
+                  widget.userInfo.getDisplayName,
                   style: context.text.titleMedium!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
