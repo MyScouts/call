@@ -717,13 +717,13 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
   }
 
   @override
-  Future<ApiResponse<PDoneInformationResponse>> pDoneProfile() async {
+  Future<PDoneInformationResponse> pDoneProfile() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<PDoneInformationResponse>>(Options(
+        _setStreamType<PDoneInformationResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -739,10 +739,7 @@ class _UpgradeAccountApi implements UpgradeAccountApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<PDoneInformationResponse>.fromJson(
-      _result.data!,
-      (json) => PDoneInformationResponse.fromJson(json as Map<String, dynamic>),
-    );
+    final value = PDoneInformationResponse.fromJson(_result.data!);
     return value;
   }
 

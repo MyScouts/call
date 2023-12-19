@@ -51,7 +51,7 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
     super.initState();
     _authInfo = userCubit.currentUser!;
     context.read<MarshopCubit>().getMarShopInfo(userId: _authInfo.id!);
-    userCubit.onboarding();
+    userCubit.getOnboarding();
     if (widget.marshopId != null) {
       _marshopIdCtrl.text = widget.marshopId!;
     }

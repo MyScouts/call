@@ -87,6 +87,7 @@ class _MedialTabBarState extends State<MedialTabBar> {
                 style: TextStyle(
                   fontSize: 14,
                   color: selected ? AppColors.blueEdit : AppColors.grey78,
+                  fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),

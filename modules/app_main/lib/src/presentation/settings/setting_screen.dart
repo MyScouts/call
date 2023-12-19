@@ -43,7 +43,7 @@ class _SettingScreenState extends State<SettingScreen> {
   void initState() {
     super.initState();
     _authInfo = userCubit.currentUser!;
-    userCubit.onboarding();
+    userCubit.getOnboarding();
     userCubit.getUserPublicInfo(userCubit.currentUser!.id!);
   }
 
@@ -229,7 +229,7 @@ class _SettingScreenState extends State<SettingScreen> {
       children: Setting.session1Menus(
         context,
         user: userCubit.currentUser,
-        onUpdate: () => userCubit.onboarding(),
+        onUpdate: () => userCubit.getOnboarding(),
         onboarding: _onboarding,
         osType: currentPlatformName,
         isProduction: Configurations.isProduction,
@@ -267,7 +267,7 @@ class _SettingScreenState extends State<SettingScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _authInfo.getdisplayName,
+                  _authInfo.getDisplayName,
                   style: context.textTheme.titleMedium!.copyWith(
                     fontSize: 15,
                     color: AppColors.black,

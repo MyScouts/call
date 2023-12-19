@@ -83,9 +83,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const avatarSize = 52.0;
+    final avatarSize = 52.w;
     final keyBoardHeight = MediaQuery.of(context).viewInsets.bottom;
-    const padding = 16.0;
+    final padding = 16.w;
     final paddingLineBottom = MediaQuery.viewPaddingOf(context).bottom;
 
     return GestureDetector(
@@ -98,7 +98,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
           resizeToAvoidBottomInset: true,
           appBar: _buildAppBar(),
           body: Container(
-              padding: const EdgeInsets.symmetric(vertical: padding),
+              padding: EdgeInsets.symmetric(vertical: padding),
               child: CustomScrollView(
                 slivers: [
                   SliverFillRemaining(
@@ -107,8 +107,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: padding),
+                          padding: EdgeInsets.symmetric(horizontal: padding),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -135,7 +134,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        widget.user?.getdisplayName ?? '',
+                                        widget.user?.getDisplayName ?? '',
                                         style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
@@ -182,7 +181,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                                     contentFocusNode.requestFocus();
                                   },
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(
+                                    padding: EdgeInsets.symmetric(
                                         horizontal: padding),
                                     child: _buildInput(
                                       controller: contentController,

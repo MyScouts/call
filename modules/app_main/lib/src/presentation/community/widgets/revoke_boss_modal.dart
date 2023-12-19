@@ -42,7 +42,7 @@ class RevokeBossModal extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  member.getdisplayName,
+                  member.getDisplayName,
                   style: context.textTheme.titleMedium!.copyWith(
                     fontWeight: FontWeight.w700,
                     fontSize: 18,

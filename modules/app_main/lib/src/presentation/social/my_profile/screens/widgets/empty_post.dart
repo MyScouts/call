@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 class EmptyPost extends StatelessWidget {
-  const EmptyPost({super.key, required this.postType});
+  const EmptyPost(
+      {super.key, required this.postType, this.hasBottomInset = true});
   final PostType postType;
+  final bool hasBottomInset;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class EmptyPost extends StatelessWidget {
     }
 
     return Padding(
-      padding: EdgeInsets.only(bottom: bottomInset),
+      padding: EdgeInsets.only(bottom: hasBottomInset ? bottomInset : 0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

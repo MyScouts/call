@@ -60,13 +60,14 @@ class _AddTeamMemberSheetState extends State<AddTeamMemberSheet> {
                   onPressed: () async {
                     context.showLoading();
                     final state = context.read<TeamDetailBloc>().state;
-                    if(state is FetchTeamsMemberSuccess){
+                    if (state is FetchTeamsMemberSuccess) {
                       final team = state.team;
                       await controller.confirm(team.id ?? '');
                       context.hideLoading();
 
-                      if(controller.addFriend.isEmpty){
-                        context.showToastMessage('Chưa có người nào được chọn', ToastMessageType.warning);
+                      if (controller.addFriend.isEmpty) {
+                        context.showToastMessage('Chưa có người nào được chọn',
+                            ToastMessageType.warning);
                       } else {
                         Navigator.of(context).pop();
                         context.showToastMessage('Mời thành viên thành công');
@@ -294,7 +295,7 @@ class _UserFriendCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  user.getdisplayName,
+                  user.getDisplayName,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -384,7 +385,7 @@ class _CircleUser extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            user.getdisplayName,
+            user.getDisplayName,
             maxLines: 2,
             style: const TextStyle(
               fontSize: 12,

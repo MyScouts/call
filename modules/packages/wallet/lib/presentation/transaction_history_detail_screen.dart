@@ -91,11 +91,9 @@ class _TransactionHistoryDetailScreenState
   }
 
   _buildStatusWidget(TransactionItem data) {
-    final value =
-    (data.transactionType == TransactionType.LIVE_GIFT.value ||
-        data.transactionType ==
-            TransactionType.LIVE_VOTE.value) &&
-        walletType == WalletType.diamond
+    final value = (data.transactionType == TransactionType.LIVE_GIFT.value ||
+                data.transactionType == TransactionType.LIVE_VOTE.value) &&
+            walletType == WalletType.diamond
         ? data.toValue
         : data.fromValue;
 
@@ -194,7 +192,7 @@ class _TransactionHistoryDetailScreenState
                       data.sender!.fullName != null &&
                       data.sender!.fullName!.isNotEmpty
                   ? data.sender!.fullName!
-                  : '${data.sender?.getdisplayName}',
+                  : '${data.sender?.getDisplayName}',
             ),
           if (data.transactionType == TransactionType.LIVE_GIFT.name &&
               walletType == WalletType.diamond)

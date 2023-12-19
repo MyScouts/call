@@ -42,7 +42,7 @@ class AssignBossModal extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  member.getdisplayName,
+                  member.getDisplayName,
                   style: context.textTheme.titleMedium!.copyWith(
                     fontWeight: FontWeight.w700,
                     fontSize: 18,
@@ -74,7 +74,7 @@ class AssignBossModal extends StatelessWidget {
                 ),
                 children: [
                   TextSpan(
-                    text: member.getdisplayName,
+                    text: member.getDisplayName,
                     style: context.textTheme.titleMedium!.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,

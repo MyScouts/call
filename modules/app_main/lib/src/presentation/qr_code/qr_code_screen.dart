@@ -114,7 +114,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        widget.userInfo.getdisplayName,
+                        widget.userInfo.getDisplayName,
                         style: context.textTheme.titleMedium!.copyWith(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

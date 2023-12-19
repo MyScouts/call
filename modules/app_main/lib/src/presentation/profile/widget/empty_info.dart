@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/profile/state/user_profile_bloc.dart';
 import 'package:app_main/src/presentation/profile/widget/profile_none_pdone_view.dart';
 import 'package:app_main/src/presentation/profile/widget/use_header.dart';
+import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -9,7 +10,11 @@ import 'package:imagewidget/imagewidget.dart';
 import 'edit_profile_empty.dart';
 
 class InfoEmpty extends StatefulWidget {
-  const InfoEmpty({super.key});
+  final bool isPDone;
+  const InfoEmpty({
+    super.key,
+    required this.isPDone,
+  });
 
   @override
   State<InfoEmpty> createState() => _InfoEmptyState();
@@ -59,7 +64,7 @@ class _InfoEmptyState extends State<InfoEmpty> {
                       const SizedBox(height: 6),
                       const SizedBox(height: 40),
                       Text(
-                        user.getdisplayName,
+                        user.getDisplayName,
                         style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 18,
@@ -92,12 +97,15 @@ class _InfoEmptyState extends State<InfoEmpty> {
                             );
                           }
 
-                          if (state.pDoneProfile == null) {
+                          if (!widget.isPDone) {
                             return _Empty(
                               onUpdate: () {
-                                setState(() {
+                                if (widget.isPDone) {
                                   _isUpdate = true;
-                                });
+                                  setState(() {});
+                                } else {
+                                  context.startUpgradePDone();
+                                }
                               },
                             );
                           }

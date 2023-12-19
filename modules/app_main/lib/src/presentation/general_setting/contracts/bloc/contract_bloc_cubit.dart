@@ -38,65 +38,93 @@ class ContractBlocCubit extends Cubit<ContractBlocState> {
         profile.currentPlace?.wardName,
         profile.currentPlace?.address
       ];
+
+      List<String?> birthAddress = [
+        profile.birthPlace?.countryName,
+        profile.birthPlace?.provinceName,
+        profile.birthPlace?.districtName,
+        profile.birthPlace?.wardName,
+        profile.birthPlace?.address
+      ];
       address.removeWhere((element) => element == null || element.isEmpty);
       dynamic params;
 
-      UserInfo _userInfo = await _userUsecase.getMe();
+      UserInfo userInfo = await _userUsecase.getMe();
 
       switch (type) {
         case TypeContract.bossGroup:
           params = BossGroupContractPram(
-            contractNumber: _userInfo.pDoneId,
+            contractNumber: userInfo.pDoneId,
             address: address.join(","),
             birthday: profile.birthday,
             date: now.day.toString(),
             month: now.month.toString(),
             year: now.year.toString(),
-            email: _userInfo.email ?? "",
-            fullName: profile.firstName ?? "",
+            email: userInfo.email ?? "",
+            fullName: userInfo.fullName ?? "",
             identityNumber: profile.identityNumber ?? '',
-            issuedDate: now.toYYYYmmdd,
-            issuer: "",
-            phoneNumber: _userInfo.phone,
+            phoneNumber: userInfo.phone,
+            residentAddress: profile.supplyAddress ?? "",
+            issuedDate: profile.supplyDate ?? now.ddMMyyyy,
+            issuer: profile.supplyAddress ?? "",
           );
           break;
         case TypeContract.rentPack:
           params = (payload as RentMarShopPackParam).copyWith(
-            contractNumber: "${_userInfo.pDoneId}M",
+            contractNumber: "${userInfo.pDoneId}M",
             address: address.join(","),
             date: now.day.toString(),
             month: now.month.toString(),
             year: now.year.toString(),
-            issuedDate: now.toYYYYmmdd,
+            issuedDate: profile.supplyDate ?? now.ddMMyyyy,
             identityNumber: profile.identityNumber ?? '',
-            phoneNumber: _userInfo.phone,
+            phoneNumber: userInfo.phone,
             depositAmount: "",
-            email: _userInfo.email,
-            issuedPlace: "",
+            email: userInfo.email,
+            issuedPlace: profile.supplyAddress,
             position: "",
             rentCost: "",
             representative: "",
             wordDepositAmount: "",
             wordRentCost: "",
             taxCode: "",
+            residentAddress: birthAddress.join(","),
           );
         case TypeContract.purchasePack:
           params = (payload as PurchaseMarShopPackParam).copyWith(
-            contractNumber: "${_userInfo.pDoneId}M",
+            contractNumber: "${userInfo.pDoneId}M",
             address: address.join(","),
             date: now.day.toString(),
             month: now.month.toString(),
             year: now.year.toString(),
-            issuedDate: now.toYYYYmmdd,
+            issuedDate: profile.supplyDate ?? now.ddMMyyyy,
             identityNumber: profile.identityNumber ?? '',
-            phoneNumber: _userInfo.phone,
-            email: _userInfo.email,
-            issuedPlace: "",
+            phoneNumber: userInfo.phone,
+            email: userInfo.email,
+            issuedPlace: profile.supplyAddress,
             position: "",
             price: "",
             representative: "",
             taxCode: "",
             wordPrice: "",
+            residentAddress: birthAddress.join(","),
+          );
+        case TypeContract.jA:
+          params = JAContractParam(
+            contractNumber: "${userInfo.pDoneId}JA",
+            address: address.join(","),
+            birthday: profile.birthday,
+            date: now.day.toString(),
+            month: now.month.toString(),
+            year: now.year.toString(),
+            email: userInfo.email ?? "",
+            fullName: userInfo.fullName ?? "",
+            fullname: userInfo.fullName ?? "",
+            identityNumber: profile.identityNumber ?? '',
+            issuedDate: profile.supplyDate ?? now.ddMMyyyy,
+            issuer: profile.supplyAddress ?? "",
+            phoneNumber: userInfo.phone.formatPhone ?? "",
+            residentAddress: birthAddress.join(","),
           );
         default:
       }

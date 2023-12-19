@@ -51,7 +51,7 @@ class _RegisterCustomerScreenState extends State<RegisterCustomerScreen>
   void initState() {
     super.initState();
     _authInfo = userCubit.currentUser!;
-    userCubit.onboarding();
+    userCubit.getOnboarding();
     if (widget.marshopId != null) {
       _marshopIdCtrl.text = widget.marshopId!;
       _handleCheckMarshop();

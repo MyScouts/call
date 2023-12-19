@@ -231,7 +231,7 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
                               const SizedBox(width: 5),
                               Flexible(
                                 child: Text(
-                                  team?.boss?.getdisplayName ??
+                                  team?.boss?.getDisplayName ??
                                       'Không có Boss Team',
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)

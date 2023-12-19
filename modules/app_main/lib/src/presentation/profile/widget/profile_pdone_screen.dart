@@ -53,7 +53,7 @@ class _ProfilePDoneScreenState extends State<ProfilePDoneScreen> {
                       const SizedBox(height: 6),
                       const SizedBox(height: 40),
                       Text(
-                        user.getdisplayName,
+                        user.getDisplayName,
                         style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 18,

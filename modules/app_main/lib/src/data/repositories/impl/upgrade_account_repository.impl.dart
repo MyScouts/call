@@ -210,8 +210,7 @@ class UpgradeAccountRepositoryImpl extends UpgradeAccountRepository {
 
   @override
   Future<PDoneInformationResponse> pDoneProfile() async {
-    final res = await _upgradeAccountApi.pDoneProfile();
-    return res.data;
+    return _upgradeAccountApi.pDoneProfile();
   }
 
   @override
