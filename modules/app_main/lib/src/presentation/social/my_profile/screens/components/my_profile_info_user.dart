@@ -4,6 +4,7 @@ import 'package:app_main/src/presentation/social/following/following_coordinator
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 class MyProfileInfoUser extends StatelessWidget {
@@ -182,7 +183,7 @@ class MyProfileInfoUser extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Row(
                   children: [
                     _buildPeopleInfo(

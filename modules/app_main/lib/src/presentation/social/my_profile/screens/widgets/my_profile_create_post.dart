@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/profile_avatar.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 class MyProfileCreatePost extends StatelessWidget {
@@ -51,7 +52,7 @@ class MyProfileCreatePost extends StatelessWidget {
             ],
           ),
           Wrap(
-            spacing: 8,
+            spacing: 16.w,
             children: [
               _buildIcon(
                 iconName: IconAppConstants.icVideoRd,

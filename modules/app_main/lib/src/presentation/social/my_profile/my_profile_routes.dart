@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/social/my_profile/screens/components/create_film/create_film_screen.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/components/create_post/create_post_screen.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/components/post_detail/post_detail_screen.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/components/post_preview/post_preview_screen.dart';
@@ -15,6 +16,15 @@ class MyProfileRoutes extends RouteModule {
   Map<String, WidgetBuilder> getAll(RouteSettings settings) => {
         MyProfileScreen.routeName: (context) {
           return const MyProfileScreen();
+        },
+        CreateFilmScreen.routeName: (context) {
+          final args = settings.arguments as Map<String, dynamic>;
+
+          return CreateFilmScreen(
+            postType: args["postType"],
+            user: args["user"],
+            mediaFile: args["mediaFile"],
+          );
         },
         CreatePostScreen.routeName: (context) {
           final args = settings.arguments as Map<String, dynamic>;

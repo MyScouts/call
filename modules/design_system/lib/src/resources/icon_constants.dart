@@ -212,8 +212,10 @@ class IconAppConstants {
   static String icSetAdmin = IconApp.icSetAdmin.path;
   static String icSetSecondAdmin = IconApp.icSetSecondAdmin.path;
   static String icRemoveSecondAdmin = IconApp.icRemoveSecondAdmin.path;
+  static String icSaved = IconApp.icSaved.path;
+  static String icLiked = IconApp.icLiked.path;
+  static String icPlay = IconApp.icPlay.path;
 
-  
 }
 
 enum IconApp {
@@ -437,7 +439,11 @@ enum IconApp {
   icVideoFullscreen('assets/icons/ic_video_fullscreen.svg'),
   icVideoBackTime('assets/icons/ic_video_back_time.svg'),
   icVideoNextTime('assets/icons/ic_video_next_time.svg'),
-  icVideoVolume('assets/icons/ic_video_volume.svg');
+  icVideoVolume('assets/icons/ic_video_volume.svg'),
+  icSaved('assets/icons/ic_saved.svg'),
+  icLiked('assets/icons/ic_liked.svg'),
+  icPlay('assets/icons/ic_play.svg');
+
 
   const IconApp(this.path);
 

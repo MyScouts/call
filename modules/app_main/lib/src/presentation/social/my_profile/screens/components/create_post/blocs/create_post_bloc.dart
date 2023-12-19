@@ -88,64 +88,25 @@ class CreatePostBloc extends CoreBloc<CreatePostEvent, CreatePostState> {
   }
 
   void onMediaTapped(MediaTapped event, Emitter<CreatePostState> emit) async {
-    bool canPost = false;
-    String errorMessage = '';
-
-    List<MediaFile?>? mediaFiles;
+    List<MediaFile?>? mediaFiles = [];
     if (event.postType.isText) {
       mediaFiles = await _mediaPicker.pickImagesFromGallery();
     }
 
     if (event.postType.isVideo) {
       final mediaFile = await _mediaPicker.pickVideoFromGallery();
-      mediaFiles?.add(mediaFile);
+      mediaFiles!.add(mediaFile);
     }
 
     if (mediaFiles == null || mediaFiles.isEmpty) return;
 
-    if (event.user.getIsPDone) {
-      canPost = inputRequired(
-        mediaFiles: mediaFiles,
-        postType: event.postType,
-        imagesLength: MyProfileConstant.pDoneImagesLength,
-        videoSecondsDuration: MyProfileConstant.pDoneVideoSecondsDuration,
-        filmSecondsDuration: MyProfileConstant.pDoneFilmSecondsDuration,
-        onErrorImagesLength: () {
-          errorMessage =
-              'Tài khoản PDone chỉ được đăng tối đa ${MyProfileConstant.pDoneImagesLength} ảnh';
-        },
-        onErrorVideoSecondsDuration: () {
-          errorMessage =
-              'Tài khoản PDone chỉ được đăng video tối đa ${MyProfileConstant.pDoneVideoSecondsDuration} phút';
-        },
-        onErrorFilmSecondsDuration: () {
-          errorMessage =
-              'Tài khoản PDone chỉ được đăng thước phim tối đa ${MyProfileConstant.pDoneFilmSecondsDuration} phút';
-        },
-      );
-    } else {
-      canPost = inputRequired(
-        mediaFiles: mediaFiles,
-        postType: event.postType,
-        imagesLength: MyProfileConstant.imagesLength,
-        videoSecondsDuration: MyProfileConstant.videoSecondsDuration,
-        filmSecondsDuration: MyProfileConstant.filmSecondsDuration,
-        onErrorImagesLength: () {
-          errorMessage =
-              'Tài khoản thường chỉ được đăng tối đa ${MyProfileConstant.imagesLength} ảnh';
-        },
-        onErrorVideoSecondsDuration: () {
-          errorMessage =
-              'Tài khoản thường chỉ được đăng video tối đa ${MyProfileConstant.videoSecondsDuration} phút';
-        },
-        onErrorFilmSecondsDuration: () {
-          errorMessage =
-              'Tài khoản thường chỉ được đăng thước phim tối đa ${MyProfileConstant.filmSecondsDuration} phút';
-        },
-      );
-    }
+    final output = MyProfileConstant.checkInput(
+      isPDone: event.user.getIsPDone,
+      mediaFiles: mediaFiles,
+      postType: event.postType,
+    );
 
-    if (canPost) {
+    if (output.canPost) {
       if (event.postType.isText) {
         emit(state.copyWith(
           files: [...state.files, ...mediaFiles],
@@ -158,7 +119,8 @@ class CreatePostBloc extends CoreBloc<CreatePostEvent, CreatePostState> {
         ));
       }
     } else {
-      AppCoordinator.rootNavigator.currentContext?.showToastText(errorMessage);
+      AppCoordinator.rootNavigator.currentContext
+          ?.showToastText(output.errorMessage);
     }
   }
 
@@ -178,44 +140,5 @@ class CreatePostBloc extends CoreBloc<CreatePostEvent, CreatePostState> {
     required String content,
   }) {
     return subject.isNotEmpty && content.isNotEmpty;
-  }
-
-  bool inputRequired({
-    required List<MediaFile?>? mediaFiles,
-    required int imagesLength,
-    required int videoSecondsDuration,
-    required int filmSecondsDuration,
-    required PostType postType,
-    required Function() onErrorImagesLength,
-    required Function() onErrorVideoSecondsDuration,
-    required Function() onErrorFilmSecondsDuration,
-  }) {
-    if (mediaFiles != null) {
-      switch (postType) {
-        case PostType.text:
-          if (mediaFiles.length > imagesLength) {
-            onErrorImagesLength();
-            return false;
-          }
-        case PostType.video:
-          for (final file in mediaFiles) {
-            if (file!.videoDuration.inSeconds > videoSecondsDuration) {
-              onErrorVideoSecondsDuration();
-              return false;
-            }
-          }
-        case PostType.film:
-          for (final file in mediaFiles) {
-            if (file!.videoDuration.inSeconds > filmSecondsDuration) {
-              onErrorFilmSecondsDuration();
-              return false;
-            }
-          }
-      }
-
-      return true;
-    }
-
-    return false;
   }
 }

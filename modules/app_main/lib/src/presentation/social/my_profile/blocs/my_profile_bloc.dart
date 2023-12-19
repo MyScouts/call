@@ -36,7 +36,7 @@ class MyProfileBloc extends CoreBloc<MyProfileEvent, MyProfileState> {
       ValueNotifier<CreatePostPayload?>(null);
 
   final ValueNotifier<bool> videoTabRefresh = ValueNotifier<bool>(false);
-  final ValueNotifier<bool> reelsTabRefresh = ValueNotifier<bool>(false);
+  final ValueNotifier<bool> filmTabRefresh = ValueNotifier<bool>(false);
 
   // function
 
