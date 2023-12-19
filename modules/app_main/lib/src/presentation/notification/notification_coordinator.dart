@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/chat/chat_coordinator.dart';
 import 'package:app_main/src/presentation/chat/chat_room/chat_room_page.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
@@ -16,7 +17,8 @@ extension NotificationCoordinator on BuildContext {
         '${notification.toString()}');
 
     final payload = notification['data'];
-    final type = MessageTypeFB.values.firstWhereOrNull((element) => element.type == payload['type']);
+    final type =
+        MessageTypeFB.values.firstWhereOrNull((element) => element.type == payload['type']);
     if (type == MessageTypeFB.inviteToLive || type == MessageTypeFB.liveCreated) {
       //join_live
       // nếu đang trong phòng live thì k hiện thông báo nữa
@@ -32,8 +34,15 @@ extension NotificationCoordinator on BuildContext {
       }
       return AppCoordinator.rootNavigator.currentContext!.joinLive(liveData['liveId']);
     }
-    if (MyNavigatorObserver.listRoute.contains(ChatRoomPage.routeName)) {
-      return null;
+    if (type == MessageTypeFB.newMessage) {
+      if (MyNavigatorObserver.listRoute.contains(ChatRoomPage.routeName)) {
+        return null;
+      }
+      final conversationData = jsonDecode(payload['data']);
+      if (conversationData['conversationId'] != null) {
+        return AppCoordinator.rootNavigator.currentContext!
+            .startChatRoom(conversationId: conversationData['conversationId']);
+      }
     }
     // final dataModelDetail = notification['data'];
     //

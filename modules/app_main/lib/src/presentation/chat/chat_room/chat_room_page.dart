@@ -108,42 +108,46 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                   isClose: false,
                   backgroundColor: AppColors.white,
                   titleWidget: InkWell(
-                    onTap: conversation.conversation.type == 1
+                    onTap: conversation.type == 1
                         ? () {
                             context.startDiary(
-                                userId: conversation.conversation.membersNotMe.first.member.id
+                                userId: conversation.membersNotMe.first.member.id
                                     .toString());
                           }
                         : null,
                     child: Row(
                       children: [
                         AvatarChatWidget(
-                          members: conversation.conversation.members,
-                          membersNotMe: conversation.conversation.membersNotMe,
-                          type: conversation.conversation.type,
+                          members: conversation.members,
+                          membersNotMe: conversation.membersNotMe,
+                          type: conversation.type,
                         ),
                         kSpacingWidth8,
-                        Column(
-                          children: [
-                            Text(
-                              conversation.conversation.type == 1
-                                  ? conversation
-                                          .conversation.membersNotMe.first.member.displayName ??
-                                      ''
-                                  : conversation.conversation.name ?? '',
-                              style: context.textTheme.labelLarge?.copyWith(
-                                fontSize: 16,
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                conversation.type == 1
+                                    ? conversation.membersNotMe.first.member.displayName ??
+                                        ''
+                                    : conversation.name ?? '',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: context.textTheme.labelLarge?.copyWith(
+                                  fontSize: 16,
+                                ),
                               ),
-                            ),
-                            kSpacingHeight6,
-                            const Text(''),
-                          ],
+                              kSpacingHeight6,
+                              const Text(''),
+                            ],
+                          ),
                         )
                       ],
                     ),
                   ),
                   actions: [
-                    if (conversation.conversation.type == 1)
+                    if (conversation.type == 1)
                       Theme(
                         data: Theme.of(context).copyWith(
                           cardColor: AppColors.white,
@@ -159,9 +163,9 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                             if (i == 0) {
                               removeConversation();
                             } else if (i == 1) {
-                              reportUser(conversation.conversation);
+                              reportUser(conversation);
                             } else if (i == 2) {
-                              blockUser(conversation.conversation);
+                              blockUser(conversation);
                             }
                           },
                           itemBuilder: (BuildContext context) {
@@ -227,7 +231,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                           },
                         ),
                       ),
-                    if (conversation.conversation.type == 2)
+                    if (conversation.type == 2)
                       Theme(
                         data: Theme.of(context).copyWith(
                           cardColor: AppColors.white,
@@ -242,25 +246,25 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                           onSelected: (i) {
                             switch (i) {
                               case 0:
-                                context.toMemberPage(myType == 2, conversation.conversation.id);
+                                context.toMemberPage(myType, conversation.id);
                                 break;
                               case 1:
-                                changeNameGroup(conversation.conversation);
+                                changeNameGroup(conversation);
                                 break;
                               case 2:
                                 removeConversation();
                                 break;
                               case 3:
-                                reportGroup(conversation.conversation);
+                                reportGroup(conversation);
                                 break;
                               case 4:
-                                context.toBlockMemberPage(conversation.conversation.id);
+                                context.toBlockMemberPage(conversation.id);
                                 break;
                               case 5:
-                                leave(conversation.conversation);
+                                leave(conversation);
                                 break;
                               case 6:
-                                leaveMute(conversation.conversation);
+                                leaveMute(conversation);
                                 break;
                             }
                           },
@@ -280,7 +284,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                     ),
                                     kSpacingWidth4,
                                     Text(
-                                      '${conversation.conversation.members.length} thành viên',
+                                      '${conversation.members.length} thành viên',
                                       style: context.text.bodyMedium?.copyWith(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 16,
@@ -290,7 +294,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                   ],
                                 ),
                               ),
-                              if (myType == 2)
+                              if (myType == 2 || myType == 3)
                                 PopupMenuItem<int>(
                                   value: 1,
                                   child: Row(
@@ -333,7 +337,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                   ],
                                 ),
                               ),
-                              if (myType == 1 || myType == 3)
+                              if (myType == 1)
                                 PopupMenuItem<int>(
                                   value: 3,
                                   child: Row(
@@ -356,7 +360,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                     ],
                                   ),
                                 ),
-                              if (myType == 2)
+                              if (myType == 2 || myType == 3)
                                 PopupMenuItem<int>(
                                   value: 4,
                                   child: Row(
@@ -473,7 +477,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                               if (friendStatus.relation.isBlocking) ...[
                                 Text('Bạn đã chặn ', style: context.text.bodyMedium),
                                 Text(
-                                  conversation.conversation.membersNotMe.first.member.displayName ??
+                                  conversation.membersNotMe.first.member.displayName ??
                                       '',
                                   style: context.text.bodyMedium?.copyWith(
                                     fontWeight: FontWeight.w600,
@@ -481,7 +485,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                 ),
                               ] else ...[
                                 Text(
-                                  conversation.conversation.membersNotMe.first.member.displayName ??
+                                  conversation.membersNotMe.first.member.displayName ??
                                       '',
                                   style: context.text.bodyMedium?.copyWith(
                                     fontWeight: FontWeight.w600,
@@ -510,12 +514,17 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                 child: InkWell(
                                   borderRadius: BorderRadius.circular(50),
                                   onTap: () {
+                                    _focus.unfocus();
                                     if (emojiShowing) {
                                       setState(() {
                                         emojiShowing = false;
                                       });
                                     }
-                                    _cubit.sendImage();
+                                    _cubit.sendImage().then((value) {
+                                      if(value != null && value.isNotEmpty) {
+                                        showError(value);
+                                      }
+                                    });
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(8),
@@ -703,6 +712,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
           controller: nameController,
           minLines: 3,
           maxLines: 5,
+          maxLength: 50,
           decoration: InputDecoration(
             fillColor: AppColors.white,
             hintText: 'Nhập tên nhóm',
@@ -746,6 +756,19 @@ class ChatRoomPageState extends State<ChatRoomPage> {
     );
   }
 
+  void showError(String content) {
+    showDialog(
+      context: context,
+      builder: (_) => ChatDialog(
+        title: 'Thông báo',
+        content: content,
+        actionTitle: 'Xác nhận',
+        showCancel: false,
+        actionColor: AppColors.blueEdit,
+      ),
+    );
+  }
+
   void blockUser(ConversationModel conversation) {
     showDialog(
       context: context,
@@ -780,6 +803,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
           controller: reportController,
           minLines: 3,
           maxLines: 5,
+          maxLength: 255,
           decoration: InputDecoration(
             fillColor: AppColors.white,
             hintText: 'Nhập nội dung báo cáo...',
@@ -820,6 +844,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
           controller: reportGroupController,
           minLines: 3,
           maxLines: 5,
+          maxLength: 255,
           decoration: InputDecoration(
             fillColor: AppColors.white,
             hintText: 'Nhập nội dung báo cáo...',
@@ -845,7 +870,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
 
   @override
   void dispose() {
-    _cubit.readMessage();
+    _cubit.endChat();
     super.dispose();
   }
 }
