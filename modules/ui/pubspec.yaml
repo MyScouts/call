@@ -46,6 +46,7 @@ dependencies:
   shimmer: ^3.0.0
   video_player: ^2.8.1 
   chewie: ^1.7.4
+  flutter_html: ^3.0.0-beta.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
