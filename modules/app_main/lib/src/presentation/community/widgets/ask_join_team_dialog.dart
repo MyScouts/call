@@ -50,7 +50,7 @@ class _AskJoinTeamDialogState extends State<AskJoinTeamDialog> {
         ),
         const SizedBox(height: 10),
         Text(
-          "Yêu cầu đăng ký Team thành công Vui lòng chờ cho đến khi Admin phê duyệt!",
+          "Yêu cầu đăng ký Team thành công Vui lòng chờ cho đến khi Bos Team phê duyệt!",
           textAlign: TextAlign.center,
           style: context.textTheme.bodyMedium,
         ),
