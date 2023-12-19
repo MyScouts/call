@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/responses/follow_response.dart';
+import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
 import 'package:app_main/src/presentation/social/following/following_coordinator.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:design_system/design_system.dart';
@@ -167,16 +168,19 @@ class MyProfileInfoUser extends StatelessWidget {
                       ),
                     ),
                   const SizedBox(width: 7),
-                  Container(
-                    height: 28,
-                    width: 28,
-                    padding: const EdgeInsets.all(3),
-                    decoration: BoxDecoration(
-                      color: const Color(0XFFE8F0FE),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: ImageWidget(
-                      IconAppConstants.icQrCode,
+                  GestureDetector(
+                    onTap: () => context.startQrCode(userInfo: userInfo!),
+                    child: Container(
+                      height: 28,
+                      width: 28,
+                      padding: const EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                        color: const Color(0XFFE8F0FE),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ImageWidget(
+                        IconAppConstants.icQrCode,
+                      ),
                     ),
                   )
                 ],
