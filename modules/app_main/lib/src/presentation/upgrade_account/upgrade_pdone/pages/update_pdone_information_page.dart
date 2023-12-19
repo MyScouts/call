@@ -238,7 +238,6 @@ class _UpdatePDoneInformationPageState extends State<UpdatePDoneInformationPage>
       bpWardCtrl.text = postCode['ward'][1];
       birthDay = eKycData['birth_day'].toString().parseDateTime();
       supplyDate = eKycData['issue_date'].toString().parseDateTime();
-      expiryDate = eKycData['valid_date'].toString().parseDateTime();
 
       final age = DateTime.now().year - (birthDay?.year ?? 0);
       if (age >= 18) {
