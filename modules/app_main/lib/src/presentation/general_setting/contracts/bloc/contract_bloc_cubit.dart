@@ -53,7 +53,7 @@ class ContractBlocCubit extends Cubit<ContractBlocState> {
             month: now.month.toString(),
             year: now.year.toString(),
             email: _userInfo.email ?? "",
-            fullName: profile.firstName ?? "",
+            fullName: _userInfo.fullName ?? "",
             identityNumber: profile.identityNumber ?? '',
             issuedDate: now.toYYYYmmdd,
             issuer: "",
