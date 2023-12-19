@@ -62,15 +62,49 @@ class _AddTeamMemberSheetState extends State<AddTeamMemberSheet> {
                     final state = context.read<TeamDetailBloc>().state;
                     if (state is FetchTeamsMemberSuccess) {
                       final team = state.team;
-                      await controller.confirm(team.id ?? '');
-                      context.hideLoading();
+                      try {
+                        await controller.confirm(team.id ?? '');
+                        Future.delayed(
+                          Duration.zero,
+                          () => context.hideLoading(),
+                        );
 
-                      if (controller.addFriend.isEmpty) {
-                        context.showToastMessage('Chưa có người nào được chọn',
-                            ToastMessageType.warning);
-                      } else {
-                        Navigator.of(context).pop();
-                        context.showToastMessage('Mời thành viên thành công');
+                        if (controller.addFriend.isEmpty) {
+                          Future.delayed(
+                            Duration.zero,
+                            () => context.showToastMessage(
+                              'Chưa có người nào được chọn',
+                              ToastMessageType.warning,
+                            ),
+                          );
+                        } else {
+                          Future.delayed(Duration.zero, () {
+                            Navigator.of(context).pop();
+                            context
+                                .showToastMessage('Mời thành viên thành công');
+                          });
+                        }
+                      } on DioException catch (e) {
+                        hideLoading();
+                        String code = e.response?.data['code'];
+                        switch (code) {
+                          case "USER_ALREADY_HAVE_TEAM":
+                            Future.delayed(Duration.zero, () {
+                              context.showToastMessage(
+                                'Trong danh sách bạn chọn có người dùng đã ở trong Team khác',
+                                ToastMessageType.error,
+                              );
+                            });
+                            break;
+                          default:
+                            Future.delayed(Duration.zero, () {
+                              context.showToastMessage(
+                                'Mời thành viên không thành công',
+                                ToastMessageType.error,
+                              );
+                            });
+                            break;
+                        }
                       }
                     }
                   },
@@ -410,7 +444,7 @@ class AddMemberChangeNotifier extends ChangeNotifier {
 
   List<User> _friends = [];
 
-  List<User> _addFriend = [];
+  final List<User> _addFriend = [];
 
   List<User> get addFriend => _addFriend;
 
