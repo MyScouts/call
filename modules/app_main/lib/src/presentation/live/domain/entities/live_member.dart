@@ -7,7 +7,12 @@ class LiveMemberInfo extends Equatable {
   final String avatar;
   final int type;
 
-  const LiveMemberInfo({required this.userID, required this.name, required this.avatar, required this.type});
+  const LiveMemberInfo({
+    required this.userID,
+    required this.name,
+    required this.avatar,
+    required this.type,
+  });
 
   @override
   List<Object?> get props => [userID, name, avatar, type];

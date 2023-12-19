@@ -19,6 +19,7 @@ _$UserInfoImpl _$$UserInfoImplFromJson(Map<String, dynamic> json) =>
       phone: json['phone'] as String,
       email: json['email'] as String?,
       sexCode: json['sexCode'] as int?,
+      type: json['type'] as int?,
     );
 
 Map<String, dynamic> _$$UserInfoImplToJson(_$UserInfoImpl instance) =>
@@ -32,4 +33,5 @@ Map<String, dynamic> _$$UserInfoImplToJson(_$UserInfoImpl instance) =>
       'phone': instance.phone,
       'email': instance.email,
       'sexCode': instance.sexCode,
+      'type': instance.type,
     };

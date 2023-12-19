@@ -137,7 +137,7 @@ class _LiveSimple extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         Obx(
-              () => controller.virtualInfo.value != null
+          () => controller.virtualInfo.value != null
               ? VideoApp(virtualInfo: controller.info.virtualInfo)
               : const _RtcRender(),
         ),
