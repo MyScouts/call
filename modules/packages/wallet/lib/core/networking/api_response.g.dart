@@ -7,9 +7,9 @@ part of 'api_response.dart';
 // **************************************************************************
 
 ApiResponse<T> _$ApiResponseFromJson<T>(
-    Map<String, dynamic> json,
-    T Function(Object? json) fromJsonT,
-    ) {
+  Map<String, dynamic> json,
+  T Function(Object? json) fromJsonT,
+) {
   dynamic data;
   if (json['data'] != null) {
     data = _$nullableGenericFromJson(json['data'], fromJsonT);
@@ -25,7 +25,6 @@ ApiResponse<T> _$ApiResponseFromJson<T>(
     data: data,
   );
 }
-
 
 Map<String, dynamic> _$ApiResponseToJson<T>(
   ApiResponse<T> instance,
