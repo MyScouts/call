@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app_main/app_main.dart';
 import 'package:app_main/src/config/app_config_service.dart';
 import 'package:app_main/src/core/services/notifications/notification_service.dart';
@@ -115,14 +117,12 @@ class AuthenticationUsecase {
   Future syncUser() async {
     _chatSocket.connect();
     final user = await _userRepository.getProfile();
-    String stringeeToken =
-        (await _userRepository.getStringgeToken() as Map)['result'];
-    _userSharePreferencesUsecase.saveStringeeToken(stringeeToken);
     _userSharePreferencesUsecase.saveUserInfo(user!);
     isAuthenticate.add(true);
-    await AppConfigService.init();
-    await _userRepository.onboarding();
-    await _syncFCMToken();
+    unawaited(await AppConfigService.init());
+    unawaited(_userRepository.onboarding());
+    unawaited(_syncFCMToken());
+    unawaited(_syncStringeeToken());
   }
 
   Future authClaimV1(AuthClaimPayload payload) async {
@@ -143,6 +143,12 @@ class AuthenticationUsecase {
     if (fcmToken?.isNotEmpty ?? false) {
       await _userSharePreferencesUsecase.saveFCMToken(fcmToken!);
     }
+  }
+
+  Future<void> _syncStringeeToken() async {
+    String stringeeToken =
+        (await _userRepository.getStringgeToken() as Map)['result'];
+    _userSharePreferencesUsecase.saveStringeeToken(stringeeToken);
   }
 }
 
