@@ -34,7 +34,10 @@ class AskToJoinError<T> extends TeamDetailInitial {
 
 class AskToLeaveTeamLoading extends TeamDetailInitial {}
 
-class AskToLeaveTeamSuccess extends TeamDetailInitial {}
+class AskToLeaveTeamSuccess extends TeamDetailInitial {
+  final bool approveRequired;
+  AskToLeaveTeamSuccess({required this.approveRequired});
+}
 
 class GetLeaveTeamStatusLoading extends TeamDetailInitial {}
 

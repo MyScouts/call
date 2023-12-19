@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
+import 'package:app_main/src/data/models/responses/ask_join_team_response.dart';
 import 'package:app_main/src/data/models/responses/group_request_response.dart';
 import 'package:app_main/src/data/models/responses/join_request_response.dart';
 import 'package:app_main/src/data/models/responses/member_join_request.dart';
@@ -64,7 +65,7 @@ abstract class CommunityRepository {
   Future<ConfirmResponse> replyGiveUpBossTeamRole(
       String id, ReplyGiveUpBossTeamRolePayload payload);
 
-  Future<ConfirmResponse> askToJoinTeam(String id);
+  Future<AskJoinTeamResponse> askToJoinTeam(String id);
 
   Future<ConfirmResponse> askToLeaveTeam(String id);
 
