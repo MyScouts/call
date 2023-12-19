@@ -35,6 +35,7 @@ _$BossGroupContractPramImpl _$$BossGroupContractPramImplFromJson(
       address: json['address'] as String,
       phoneNumber: json['phoneNumber'] as String,
       email: json['email'] as String,
+      residentAddress: json['residentAddress'] as String,
     );
 
 Map<String, dynamic> _$$BossGroupContractPramImplToJson(
@@ -52,6 +53,7 @@ Map<String, dynamic> _$$BossGroupContractPramImplToJson(
       'address': instance.address,
       'phoneNumber': instance.phoneNumber,
       'email': instance.email,
+      'residentAddress': instance.residentAddress,
     };
 
 _$RentMarShopPackParamImpl _$$RentMarShopPackParamImplFromJson(
@@ -74,6 +76,7 @@ _$RentMarShopPackParamImpl _$$RentMarShopPackParamImplFromJson(
       depositAmount: json['depositAmount'] as String?,
       wordDepositAmount: json['wordDepositAmount'] as String?,
       taxCode: json['taxCode'] as String?,
+      residentAddress: json['residentAddress'] as String?,
     );
 
 Map<String, dynamic> _$$RentMarShopPackParamImplToJson(
@@ -96,6 +99,7 @@ Map<String, dynamic> _$$RentMarShopPackParamImplToJson(
       'depositAmount': instance.depositAmount,
       'wordDepositAmount': instance.wordDepositAmount,
       'taxCode': instance.taxCode,
+      'residentAddress': instance.residentAddress,
     };
 
 _$PurchaseMarShopPackParamImpl _$$PurchaseMarShopPackParamImplFromJson(
@@ -116,6 +120,7 @@ _$PurchaseMarShopPackParamImpl _$$PurchaseMarShopPackParamImplFromJson(
       position: json['position'] as String?,
       price: json['price'] as String?,
       wordPrice: json['wordPrice'] as String?,
+      residentAddress: json['residentAddress'] as String?,
     );
 
 Map<String, dynamic> _$$PurchaseMarShopPackParamImplToJson(
@@ -136,4 +141,43 @@ Map<String, dynamic> _$$PurchaseMarShopPackParamImplToJson(
       'position': instance.position,
       'price': instance.price,
       'wordPrice': instance.wordPrice,
+      'residentAddress': instance.residentAddress,
+    };
+
+_$JAContractParamImpl _$$JAContractParamImplFromJson(
+        Map<String, dynamic> json) =>
+    _$JAContractParamImpl(
+      contractNumber: json['contractNumber'] as String,
+      date: json['date'] as String,
+      month: json['month'] as String,
+      year: json['year'] as String,
+      fullName: json['fullName'] as String,
+      fullname: json['fullname'] as String,
+      birthday: json['birthday'] as String,
+      identityNumber: json['identityNumber'] as String,
+      issuer: json['issuer'] as String,
+      issuedDate: json['issuedDate'] as String,
+      residentAddress: json['residentAddress'] as String,
+      address: json['address'] as String,
+      phoneNumber: json['phoneNumber'] as String,
+      email: json['email'] as String,
+    );
+
+Map<String, dynamic> _$$JAContractParamImplToJson(
+        _$JAContractParamImpl instance) =>
+    <String, dynamic>{
+      'contractNumber': instance.contractNumber,
+      'date': instance.date,
+      'month': instance.month,
+      'year': instance.year,
+      'fullName': instance.fullName,
+      'fullname': instance.fullname,
+      'birthday': instance.birthday,
+      'identityNumber': instance.identityNumber,
+      'issuer': instance.issuer,
+      'issuedDate': instance.issuedDate,
+      'residentAddress': instance.residentAddress,
+      'address': instance.address,
+      'phoneNumber': instance.phoneNumber,
+      'email': instance.email,
     };

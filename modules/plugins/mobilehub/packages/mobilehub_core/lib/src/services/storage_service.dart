@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
@@ -12,6 +12,8 @@ abstract class StorageService {
       [String package = 'packages/design_system']);
 
   Future<ByteData> getFileData(String path);
+
+  Future<File> savedApplicationFile(String url);
 }
 
 @Injectable(as: StorageService)
@@ -28,6 +30,24 @@ class StorageServiceImpl extends StorageService {
     return file.writeAsBytes(
       data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes),
     );
+  }
+
+  @override
+  Future<File> savedApplicationFile(String url) async {
+    final Completer<File> completer = Completer();
+    try {
+      final filename = url.substring(url.lastIndexOf('/') + 1);
+      final request = await HttpClient().getUrl(Uri.parse(url));
+      final response = await request.close();
+      final bytes = await consolidateHttpClientResponseBytes(response);
+      final dir = await getApplicationDocumentsDirectory();
+      final file = File('${dir.path}/$filename');
+      await file.writeAsBytes(bytes, flush: true);
+      completer.complete(file);
+    } catch (e) {
+      throw Exception('Error parsing asset file!');
+    }
+    return completer.future;
   }
 
   @override

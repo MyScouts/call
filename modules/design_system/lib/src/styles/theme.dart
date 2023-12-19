@@ -131,6 +131,7 @@ extension ThemeDataExt on ThemeData {
         errorBorder: themeDecoration.textInputErrorBorder,
       ),
       appBarTheme: AppBarTheme(
+        surfaceTintColor: Colors.white,
         backgroundColor: dataThemeColor.scaffoldBackground,
         titleTextStyle: themeText.textTitleAppbarThemeStyle,
         toolbarHeight: 48,

@@ -74,8 +74,6 @@ class AppColors {
   static const Color grey81 = Color(0xffF4F4F4);
   static const Color grey82 = Color(0xffC8C8C8);
 
-
-
   /// white
   static const Color white = Color(0xffffffff);
 
@@ -113,7 +111,6 @@ class AppColors {
   static const Color blue35 = Color(0xffEDF4FF);
   static const Color blue36 = Color(0xff015CB5);
   static const Color blue37 = Color(0xff0E86FC);
-  
 
   /// pink
   static const Color pink10 = Color(0xffFF7FD2);
@@ -169,7 +166,6 @@ class AppColors {
   static const Color bgCard = Color(0xFFF8F8F8);
 
   static const Color lineColor = Color(0xFFEAEDF0);
-
 
   static const Color negative = Color(0xFFDE372D);
 }
