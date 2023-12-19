@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
+import 'package:app_main/src/presentation/general_setting/contracts/bloc/contract_bloc_cubit.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/views/widgets/upgrade_ekyc_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/upgrade_ja_pdf_preview_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/upgrade_pdone_screen.dart';
@@ -8,6 +9,7 @@ import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/views/up
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
+import '../general_setting/contracts/contract_constant.dart';
 import '../settings/contract_ja/contract_ja_screen.dart';
 import '../shared/user/bloc/user_bloc.dart';
 import 'upgrade_ja/upgrade_agree_policy.bloc.dart';
@@ -36,6 +38,11 @@ class UpgradeAccountRoutes extends RouteModule {
               BlocProvider<UserCubit>.value(
                 value: context.read<UserCubit>(),
               ),
+              BlocProvider<ContractBlocCubit>.value(
+                  value: injector.get()
+                    ..renderPDF(
+                      type: TypeContract.jA,
+                    )),
             ],
             child: UpgradeJAScreen(team: args['team']),
           );
@@ -80,7 +87,10 @@ class UpgradeAccountRoutes extends RouteModule {
           );
         },
         ContractJAScreen.routeName: (context) {
-          return const ContractJAScreen();
+          return BlocProvider(
+            create: (context) => injector.get<ContractBlocCubit>(),
+            child: const ContractJAScreen(),
+          );
         },
         UpgradePDoneOTPScreen.routeName: (context) {
           final args = settings.arguments as Map;

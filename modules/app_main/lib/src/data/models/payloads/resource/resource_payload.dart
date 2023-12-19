@@ -29,6 +29,7 @@ class BossGroupContractPram with _$BossGroupContractPram {
     required String address,
     required String phoneNumber,
     required String email,
+    required String residentAddress,
   }) = _BossGroupContractPram;
 
   factory BossGroupContractPram.fromJson(Map<String, dynamic> json) =>
@@ -55,6 +56,7 @@ class RentMarShopPackParam with _$RentMarShopPackParam {
     String? depositAmount,
     String? wordDepositAmount,
     String? taxCode,
+    String? residentAddress,
   }) = _RentMarShopPackParam;
 
   factory RentMarShopPackParam.fromJson(Map<String, dynamic> json) =>
@@ -79,8 +81,32 @@ class PurchaseMarShopPackParam with _$PurchaseMarShopPackParam {
     String? position,
     String? price,
     String? wordPrice,
+    String? residentAddress,
   }) = _PurchaseMarShopPackParam;
 
   factory PurchaseMarShopPackParam.fromJson(Map<String, dynamic> json) =>
       _$PurchaseMarShopPackParamFromJson(json);
+}
+
+@freezed
+class JAContractParam with _$JAContractParam {
+  const factory JAContractParam({
+    required String contractNumber,
+    required String date,
+    required String month,
+    required String year,
+    required String fullName,
+    required String fullname,
+    required String birthday,
+    required String identityNumber,
+    required String issuer,
+    required String issuedDate,
+    required String residentAddress,
+    required String address,
+    required String phoneNumber,
+    required String email,
+  }) = _JAContractParam;
+
+  factory JAContractParam.fromJson(Map<String, dynamic> json) =>
+      _$JAContractParamFromJson(json);
 }

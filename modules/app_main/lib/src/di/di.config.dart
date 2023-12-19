@@ -294,6 +294,7 @@ Future<_i1.GetIt> init(
   final upgradeAgreePolicyBlocFactory = _$UpgradeAgreePolicyBlocFactory();
   final blocModule = _$BlocModule();
   final diaryBlocFactory = _$DiaryBlocFactory();
+  final blocModule = _$BlocModule();
   final dashBoardModule = _$DashBoardModule();
   gh.singleton<_i4.AppDelegate>(_i4.AppDelegate());
   gh.factory<_i5.AuthenticationRoutes>(() => _i5.AuthenticationRoutes());
@@ -730,6 +731,8 @@ class _$ConfigModule extends _i202.ConfigModule {}
 class _$MarshopBlocFactory extends _i203.MarshopBlocFactory {}
 
 class _$PlaceModule extends _i81.PlaceModule {}
+
+class _$CommunityModule extends _i202.CommunityModule {}
 
 class _$UpgradeAgreePolicyBlocFactory
     extends _i204.UpgradeAgreePolicyBlocFactory {}

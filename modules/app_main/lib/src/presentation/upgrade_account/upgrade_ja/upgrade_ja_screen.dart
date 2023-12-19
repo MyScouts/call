@@ -2,16 +2,18 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/domain/entities/update_account/bank_acount/bank_account.dart';
+import 'package:app_main/src/presentation/general_setting/contracts/bloc/contract_bloc_cubit.dart';
 import 'package:app_main/src/presentation/settings/setting_screen.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/widgets/accept_term_with_checkbox_widget.dart';
-import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/widgets/read_more_policy.dart';
 import 'package:app_main/src/presentation/upgrade_account/upgrade_pdone/bloc/pdone_information/pdone_information_bloc.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
+import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:ui/ui.dart';
 
 import '../../../data/models/responses/upgrade_account_response.dart';
@@ -27,7 +29,10 @@ class UpgradeJAScreen extends StatefulWidget {
   State<UpgradeJAScreen> createState() => _UpgradeJAScreenState();
 }
 
-class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin {
+class _UpgradeJAScreenState extends State<UpgradeJAScreen>
+    with ValidationMixin {
+  final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
+  final StorageService _storageService = injector.get();
   String _getTitleAppBar() {
     if (widget.team != null) {
       return "Đăng ký tham gia ${widget.team?.name ?? ''}";
@@ -37,7 +42,8 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
 
   final _acceptTerm = ValueNotifier(false);
 
-  late final GetDefaultBankBloc getDefaultBankBloc = context.read<GetDefaultBankBloc>();
+  late final GetDefaultBankBloc getDefaultBankBloc =
+      context.read<GetDefaultBankBloc>();
 
   @override
   void dispose() {
@@ -103,8 +109,10 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
             ),
             Text(
               'Số: ${pDoneId}JA',
-              style:
-                  Theme.of(context).textTheme.bodyMedium!.copyWith(color: const Color(0xff828282)),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: const Color(0xff828282)),
             ),
           ],
         ),
@@ -118,109 +126,144 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
             ModalRoute.withName(SettingScreen.routeName),
           ),
         ),
+        actions: [
+          BlocBuilder<ContractBlocCubit, ContractBlocState>(
+            builder: (context, state) {
+              if (state is RenderPDFSuccess) {
+                return IconButton(
+                  onPressed: () async {
+                    showLoading();
+                    try {
+                      await _storageService.savedApplicationFile(state.url);
+                      hideLoading();
+                      showToastMessage("Lưu hợp đồng thành công");
+                    } catch (e) {
+                      hideLoading();
+                      showToastMessage("Lưu hợp đồng thất bại");
+                    }
+                  },
+                  icon: const Icon(Icons.file_download_outlined),
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+        ],
       ),
       body: BlocListener<UpgradeJABloc, GetDetailState>(
         listener: _onListenUpgradeAgreePolicyBloc,
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                children: [
-                  const ReadMorePolicy(),
-                  BlocConsumer<GetDefaultBankBloc, GetDetailState>(
-                    listener: _onListenGetDefaultBankBloc,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * .5,
+                  child: BlocBuilder<ContractBlocCubit, ContractBlocState>(
+                    bloc: context.read(),
                     builder: (context, state) {
-                      if (state is GetDetailDataSuccess<BankAccount>) {
-                        defaultBank = state.data;
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Thông tin tài khoản ngân hàng',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineMedium
-                                    ?.copyWith(fontWeight: FontWeight.w600),
-                              ),
-                              const SizedBox(height: 10),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ..._bankAccountField(
-                                    title: 'Tên ngân hàng',
-                                    leading: Container(
-                                      height: 35,
-                                      width: 60,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.white,
-                                        borderRadius: BorderRadius.circular(2),
-                                        border: Border.all(color: AppColors.greyBorder),
-                                      ),
-                                      child: Image.network('${defaultBank?.bank?.logo}',
-                                          fit: BoxFit.fill),
-                                    ),
-                                    content: defaultBank?.bank?.shortName ?? '',
-                                  ),
-                                  const SizedBox(height: 15),
-                                  ..._bankAccountField(
-                                    title: 'Số tài khoản',
-                                    content: defaultBank?.bankNumber ?? '',
-                                  ),
-                                  const SizedBox(height: 15),
-                                  ..._bankAccountField(
-                                    title: 'Tên chủ tài khoản',
-                                    content: defaultBank?.bankHolder ?? '',
-                                  ),
-                                ],
-                              )
-                            ],
+                      if (state is RenderPDFSuccess) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: SfPdfViewer.network(
+                            state.url,
+                            key: _pdfViewerKey,
                           ),
                         );
+                      } else if (state is OnRenderPDF) {
+                        return const LoadingWidget();
                       }
                       return const SizedBox();
                     },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                    child: PrimarySolidButton(
-                      title: 'Xem hợp đồng',
-                      onTap: () {
-                        context.startExportJAPdfPreview();
-                      },
-                      disabled: false,
-                      width: MediaQuery.sizeOf(context).width / 2,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                BlocConsumer<GetDefaultBankBloc, GetDetailState>(
+                  listener: _onListenGetDefaultBankBloc,
+                  builder: (context, state) {
+                    if (state is GetDetailDataSuccess<BankAccount>) {
+                      defaultBank = state.data;
+                      return Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Thông tin tài khoản ngân hàng',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium
+                                  ?.copyWith(fontWeight: FontWeight.w600),
+                            ),
+                            const SizedBox(height: 10),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ..._bankAccountField(
+                                  title: 'Tên ngân hàng',
+                                  leading: Container(
+                                    height: 35,
+                                    width: 60,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.white,
+                                      borderRadius: BorderRadius.circular(2),
+                                      border: Border.all(
+                                          color: AppColors.greyBorder),
+                                    ),
+                                    child: Image.network(
+                                        '${defaultBank?.bank?.logo}',
+                                        fit: BoxFit.fill),
+                                  ),
+                                  content: defaultBank?.bank?.shortName ?? '',
+                                ),
+                                const SizedBox(height: 15),
+                                ..._bankAccountField(
+                                  title: 'Số tài khoản',
+                                  content: defaultBank?.bankNumber ?? '',
+                                ),
+                                const SizedBox(height: 15),
+                                ..._bankAccountField(
+                                  title: 'Tên chủ tài khoản',
+                                  content: defaultBank?.bankHolder ?? '',
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      );
+                    }
+                    return const SizedBox();
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: AcceptTermWithCheckboxWidget(acceptTerm: _acceptTerm),
+                ),
+                ValueListenableBuilder(
+                  valueListenable: _acceptTerm,
+                  builder: (_, __, ___) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).padding.bottom + 20,
+                          right: 20,
+                          left: 20,
+                          top: 10),
+                      child: PrimaryButton(
+                        width: MediaQuery.of(context).size.width,
+                        title: S.current.register,
+                        onTap: () {
+                          if (defaultBank == null) {
+                            return context.startDialogUpdateBankAccount();
+                          }
+                          upgradeJABloc.add(GetDetailDataEvent());
+                        },
+                        disabled: !_acceptTerm.value,
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: AcceptTermWithCheckboxWidget(acceptTerm: _acceptTerm),
-            ),
-            ValueListenableBuilder(
-              valueListenable: _acceptTerm,
-              builder: (_, __, ___) {
-                return Padding(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).padding.bottom + 20, right: 20, left: 20, top: 10),
-                  child: PrimaryButton(
-                    width: MediaQuery.of(context).size.width,
-                    title: S.current.register,
-                    onTap: () {
-                      if (defaultBank == null) {
-                        return context.startDialogUpdateBankAccount();
-                      }
-                      upgradeJABloc.add(GetDetailDataEvent());
-                    },
-                    disabled: !_acceptTerm.value,
-                  ),
-                );
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -234,7 +277,10 @@ class _UpgradeJAScreenState extends State<UpgradeJAScreen> with ValidationMixin 
     return [
       Text(
         '$title:',
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w400),
+        style: Theme.of(context)
+            .textTheme
+            .bodyLarge
+            ?.copyWith(fontWeight: FontWeight.w400),
       ),
       const SizedBox(height: 10),
       Container(

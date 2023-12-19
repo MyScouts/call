@@ -11,54 +11,53 @@ part 'user.freezed.dart';
 
 part 'user.g.dart';
 
-@Deprecated('User deprecated.')
 @freezed
 class User with _$User {
   const factory User({
     int? id,
-    String? username,
-    String? name,
-    String? nickname,
+    @Deprecated('username deprecated.') String? username,
+    @Deprecated('name deprecated.') String? name,
+    @Deprecated('nickname deprecated.') String? nickname,
     String? email,
     String? phone,
     String? avatar,
-    Sex? sex,
+    @Deprecated('sex deprecated.') Sex? sex,
     String? phoneCode,
-    String? address,
-    String? forgotHash,
-    int? status,
-    int? roleId,
-    String? roleMemberCode,
-    int? createdById,
-    String? createdAt,
-    String? updatedAt,
-    String? deletedAt,
+    @Deprecated('address deprecated.') String? address,
+    @Deprecated('forgotHash deprecated.') String? forgotHash,
+    @Deprecated('status deprecated.') int? status,
+    @Deprecated('roleId deprecated.') int? roleId,
+    @Deprecated('roleMemberCode deprecated.') String? roleMemberCode,
+    @Deprecated('createdById deprecated.') int? createdById,
+    @Deprecated('createdAt deprecated.') String? createdAt,
+    @Deprecated('updatedAt deprecated.') String? updatedAt,
+    @Deprecated('deletedAt deprecated.') String? deletedAt,
     String? pDoneId,
     String? displayName,
     String? fullName,
-    @Default(false) bool isPDone,
-    @Default(false) bool isFriend,
-    @Default(false) bool isFollowing,
-    @Default(false) bool isFollowed,
-    @Default(0) int totalFollower,
-    @Default(0) int totalFollowing,
-    @Default(0) int totalFriend,
-    @Default(0) int old,
-    @Default(false) bool isBlock,
-    List<String>? backgroundImages,
-    String? defaultBackground,
-    bool? isJA,
-    bool? isVShop,
-    bool? isLive,
-    bool? isSupervisor,
-    bool? isModerator,
-    Team? joinedTeam,
+    @Deprecated('isPDone deprecated.') @Default(false) bool isPDone,
+    @Deprecated('isFriend deprecated.') @Default(false) bool isFriend,
+    @Deprecated('isFollowing deprecated.') @Default(false) bool isFollowing,
+    @Deprecated('isFollowed deprecated.') @Default(false) bool isFollowed,
+    @Deprecated('totalFollower deprecated.') @Default(0) int totalFollower,
+    @Deprecated('totalFollowing deprecated.') @Default(0) int totalFollowing,
+    @Deprecated('totalFriend deprecated.') @Default(0) int totalFriend,
+    @Deprecated('old deprecated.') @Default(0) int old,
+    @Deprecated('isBlock deprecated.') @Default(false) bool isBlock,
+    @Deprecated('backgroundImages deprecated.') List<String>? backgroundImages,
+    @Deprecated('defaultBackground deprecated.') String? defaultBackground,
+    @Deprecated('isJA deprecated.') bool? isJA,
+    @Deprecated('isVShop deprecated.') bool? isVShop,
+    @Deprecated('isLive deprecated.') bool? isLive,
+    @Deprecated('isSupervisor deprecated.') bool? isSupervisor,
+    @Deprecated('isModerator deprecated.') bool? isModerator,
+    @Deprecated('joinedTeam deprecated.') Team? joinedTeam,
     DateTime? birthday,
-    DateTime? jaAt,
-    String? vShopId,
-    int? vShopPDoneId,
-    UserFanGroupInfo? fanGroup,
-    UserProfileInfo? profile,
+    @Deprecated('jaAt deprecated.') DateTime? jaAt,
+    @Deprecated('vShopId deprecated.') String? vShopId,
+    @Deprecated('vShopPDoneId deprecated.') int? vShopPDoneId,
+    @Deprecated('fanGroup deprecated.') UserFanGroupInfo? fanGroup,
+    @Deprecated('profile deprecated.') UserProfileInfo? profile,
     int? sexCode,
     int? type,
   }) = _User;
@@ -79,13 +78,11 @@ extension UserExtNull on User? {
   String get getAddress => [this?.address, _userDefaultAddress]
       .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
-  @Deprecated('getAvatar deprecated.')
   String get getAvatar => this?.avatar ?? Assets.images_avatar.path;
 
   @Deprecated('getNickname deprecated.')
   String get getNickname => this?.nickname ?? _userDefaultNickname;
 
-  @Deprecated('getBirthday deprecated.')
   String get getBirthday {
     final DateTime? birthday = this?.birthday;
 
@@ -102,7 +99,6 @@ extension UserExtNull on User? {
         '';
   }
 
-  @Deprecated('getAge deprecated.')
   int get getAge {
     DateTime? birthday;
     if (this?.birthday != null) {
@@ -128,7 +124,6 @@ extension UserExtNull on User? {
   bool get getIsHasNickname =>
       this?.nickname != null && this!.nickname!.isNotEmpty;
 
-  @Deprecated('getIsHasEmail deprecated.')
   bool get getIsHasEmail => this?.email != null && this!.email!.isNotEmpty;
 
   @Deprecated('User deprecated.')

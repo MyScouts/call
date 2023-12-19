@@ -21,48 +21,83 @@ User _$UserFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$User {
   int? get id => throw _privateConstructorUsedError;
+  @Deprecated('username deprecated.')
   String? get username => throw _privateConstructorUsedError;
+  @Deprecated('name deprecated.')
   String? get name => throw _privateConstructorUsedError;
+  @Deprecated('nickname deprecated.')
   String? get nickname => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
   String? get avatar => throw _privateConstructorUsedError;
+  @Deprecated('sex deprecated.')
   Sex? get sex => throw _privateConstructorUsedError;
   String? get phoneCode => throw _privateConstructorUsedError;
+  @Deprecated('address deprecated.')
   String? get address => throw _privateConstructorUsedError;
+  @Deprecated('forgotHash deprecated.')
   String? get forgotHash => throw _privateConstructorUsedError;
+  @Deprecated('status deprecated.')
   int? get status => throw _privateConstructorUsedError;
+  @Deprecated('roleId deprecated.')
   int? get roleId => throw _privateConstructorUsedError;
+  @Deprecated('roleMemberCode deprecated.')
   String? get roleMemberCode => throw _privateConstructorUsedError;
+  @Deprecated('createdById deprecated.')
   int? get createdById => throw _privateConstructorUsedError;
+  @Deprecated('createdAt deprecated.')
   String? get createdAt => throw _privateConstructorUsedError;
+  @Deprecated('updatedAt deprecated.')
   String? get updatedAt => throw _privateConstructorUsedError;
+  @Deprecated('deletedAt deprecated.')
   String? get deletedAt => throw _privateConstructorUsedError;
   String? get pDoneId => throw _privateConstructorUsedError;
   String? get displayName => throw _privateConstructorUsedError;
   String? get fullName => throw _privateConstructorUsedError;
+  @Deprecated('isPDone deprecated.')
   bool get isPDone => throw _privateConstructorUsedError;
+  @Deprecated('isFriend deprecated.')
   bool get isFriend => throw _privateConstructorUsedError;
+  @Deprecated('isFollowing deprecated.')
   bool get isFollowing => throw _privateConstructorUsedError;
+  @Deprecated('isFollowed deprecated.')
   bool get isFollowed => throw _privateConstructorUsedError;
+  @Deprecated('totalFollower deprecated.')
   int get totalFollower => throw _privateConstructorUsedError;
+  @Deprecated('totalFollowing deprecated.')
   int get totalFollowing => throw _privateConstructorUsedError;
+  @Deprecated('totalFriend deprecated.')
   int get totalFriend => throw _privateConstructorUsedError;
+  @Deprecated('old deprecated.')
   int get old => throw _privateConstructorUsedError;
+  @Deprecated('isBlock deprecated.')
   bool get isBlock => throw _privateConstructorUsedError;
+  @Deprecated('backgroundImages deprecated.')
   List<String>? get backgroundImages => throw _privateConstructorUsedError;
+  @Deprecated('defaultBackground deprecated.')
   String? get defaultBackground => throw _privateConstructorUsedError;
+  @Deprecated('isJA deprecated.')
   bool? get isJA => throw _privateConstructorUsedError;
+  @Deprecated('isVShop deprecated.')
   bool? get isVShop => throw _privateConstructorUsedError;
+  @Deprecated('isLive deprecated.')
   bool? get isLive => throw _privateConstructorUsedError;
+  @Deprecated('isSupervisor deprecated.')
   bool? get isSupervisor => throw _privateConstructorUsedError;
+  @Deprecated('isModerator deprecated.')
   bool? get isModerator => throw _privateConstructorUsedError;
+  @Deprecated('joinedTeam deprecated.')
   Team? get joinedTeam => throw _privateConstructorUsedError;
   DateTime? get birthday => throw _privateConstructorUsedError;
+  @Deprecated('jaAt deprecated.')
   DateTime? get jaAt => throw _privateConstructorUsedError;
+  @Deprecated('vShopId deprecated.')
   String? get vShopId => throw _privateConstructorUsedError;
+  @Deprecated('vShopPDoneId deprecated.')
   int? get vShopPDoneId => throw _privateConstructorUsedError;
+  @Deprecated('fanGroup deprecated.')
   UserFanGroupInfo? get fanGroup => throw _privateConstructorUsedError;
+  @Deprecated('profile deprecated.')
   UserProfileInfo? get profile => throw _privateConstructorUsedError;
   int? get sexCode => throw _privateConstructorUsedError;
   int? get type => throw _privateConstructorUsedError;
@@ -79,49 +114,50 @@ abstract class $UserCopyWith<$Res> {
   @useResult
   $Res call(
       {int? id,
-      String? username,
-      String? name,
-      String? nickname,
+      @Deprecated('username deprecated.') String? username,
+      @Deprecated('name deprecated.') String? name,
+      @Deprecated('nickname deprecated.') String? nickname,
       String? email,
       String? phone,
       String? avatar,
-      Sex? sex,
+      @Deprecated('sex deprecated.') Sex? sex,
       String? phoneCode,
-      String? address,
-      String? forgotHash,
-      int? status,
-      int? roleId,
-      String? roleMemberCode,
-      int? createdById,
-      String? createdAt,
-      String? updatedAt,
-      String? deletedAt,
+      @Deprecated('address deprecated.') String? address,
+      @Deprecated('forgotHash deprecated.') String? forgotHash,
+      @Deprecated('status deprecated.') int? status,
+      @Deprecated('roleId deprecated.') int? roleId,
+      @Deprecated('roleMemberCode deprecated.') String? roleMemberCode,
+      @Deprecated('createdById deprecated.') int? createdById,
+      @Deprecated('createdAt deprecated.') String? createdAt,
+      @Deprecated('updatedAt deprecated.') String? updatedAt,
+      @Deprecated('deletedAt deprecated.') String? deletedAt,
       String? pDoneId,
       String? displayName,
       String? fullName,
-      bool isPDone,
-      bool isFriend,
-      bool isFollowing,
-      bool isFollowed,
-      int totalFollower,
-      int totalFollowing,
-      int totalFriend,
-      int old,
-      bool isBlock,
+      @Deprecated('isPDone deprecated.') bool isPDone,
+      @Deprecated('isFriend deprecated.') bool isFriend,
+      @Deprecated('isFollowing deprecated.') bool isFollowing,
+      @Deprecated('isFollowed deprecated.') bool isFollowed,
+      @Deprecated('totalFollower deprecated.') int totalFollower,
+      @Deprecated('totalFollowing deprecated.') int totalFollowing,
+      @Deprecated('totalFriend deprecated.') int totalFriend,
+      @Deprecated('old deprecated.') int old,
+      @Deprecated('isBlock deprecated.') bool isBlock,
+      @Deprecated('backgroundImages deprecated.')
       List<String>? backgroundImages,
-      String? defaultBackground,
-      bool? isJA,
-      bool? isVShop,
-      bool? isLive,
-      bool? isSupervisor,
-      bool? isModerator,
-      Team? joinedTeam,
+      @Deprecated('defaultBackground deprecated.') String? defaultBackground,
+      @Deprecated('isJA deprecated.') bool? isJA,
+      @Deprecated('isVShop deprecated.') bool? isVShop,
+      @Deprecated('isLive deprecated.') bool? isLive,
+      @Deprecated('isSupervisor deprecated.') bool? isSupervisor,
+      @Deprecated('isModerator deprecated.') bool? isModerator,
+      @Deprecated('joinedTeam deprecated.') Team? joinedTeam,
       DateTime? birthday,
-      DateTime? jaAt,
-      String? vShopId,
-      int? vShopPDoneId,
-      UserFanGroupInfo? fanGroup,
-      UserProfileInfo? profile,
+      @Deprecated('jaAt deprecated.') DateTime? jaAt,
+      @Deprecated('vShopId deprecated.') String? vShopId,
+      @Deprecated('vShopPDoneId deprecated.') int? vShopPDoneId,
+      @Deprecated('fanGroup deprecated.') UserFanGroupInfo? fanGroup,
+      @Deprecated('profile deprecated.') UserProfileInfo? profile,
       int? sexCode,
       int? type});
 
@@ -424,49 +460,50 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   @useResult
   $Res call(
       {int? id,
-      String? username,
-      String? name,
-      String? nickname,
+      @Deprecated('username deprecated.') String? username,
+      @Deprecated('name deprecated.') String? name,
+      @Deprecated('nickname deprecated.') String? nickname,
       String? email,
       String? phone,
       String? avatar,
-      Sex? sex,
+      @Deprecated('sex deprecated.') Sex? sex,
       String? phoneCode,
-      String? address,
-      String? forgotHash,
-      int? status,
-      int? roleId,
-      String? roleMemberCode,
-      int? createdById,
-      String? createdAt,
-      String? updatedAt,
-      String? deletedAt,
+      @Deprecated('address deprecated.') String? address,
+      @Deprecated('forgotHash deprecated.') String? forgotHash,
+      @Deprecated('status deprecated.') int? status,
+      @Deprecated('roleId deprecated.') int? roleId,
+      @Deprecated('roleMemberCode deprecated.') String? roleMemberCode,
+      @Deprecated('createdById deprecated.') int? createdById,
+      @Deprecated('createdAt deprecated.') String? createdAt,
+      @Deprecated('updatedAt deprecated.') String? updatedAt,
+      @Deprecated('deletedAt deprecated.') String? deletedAt,
       String? pDoneId,
       String? displayName,
       String? fullName,
-      bool isPDone,
-      bool isFriend,
-      bool isFollowing,
-      bool isFollowed,
-      int totalFollower,
-      int totalFollowing,
-      int totalFriend,
-      int old,
-      bool isBlock,
+      @Deprecated('isPDone deprecated.') bool isPDone,
+      @Deprecated('isFriend deprecated.') bool isFriend,
+      @Deprecated('isFollowing deprecated.') bool isFollowing,
+      @Deprecated('isFollowed deprecated.') bool isFollowed,
+      @Deprecated('totalFollower deprecated.') int totalFollower,
+      @Deprecated('totalFollowing deprecated.') int totalFollowing,
+      @Deprecated('totalFriend deprecated.') int totalFriend,
+      @Deprecated('old deprecated.') int old,
+      @Deprecated('isBlock deprecated.') bool isBlock,
+      @Deprecated('backgroundImages deprecated.')
       List<String>? backgroundImages,
-      String? defaultBackground,
-      bool? isJA,
-      bool? isVShop,
-      bool? isLive,
-      bool? isSupervisor,
-      bool? isModerator,
-      Team? joinedTeam,
+      @Deprecated('defaultBackground deprecated.') String? defaultBackground,
+      @Deprecated('isJA deprecated.') bool? isJA,
+      @Deprecated('isVShop deprecated.') bool? isVShop,
+      @Deprecated('isLive deprecated.') bool? isLive,
+      @Deprecated('isSupervisor deprecated.') bool? isSupervisor,
+      @Deprecated('isModerator deprecated.') bool? isModerator,
+      @Deprecated('joinedTeam deprecated.') Team? joinedTeam,
       DateTime? birthday,
-      DateTime? jaAt,
-      String? vShopId,
-      int? vShopPDoneId,
-      UserFanGroupInfo? fanGroup,
-      UserProfileInfo? profile,
+      @Deprecated('jaAt deprecated.') DateTime? jaAt,
+      @Deprecated('vShopId deprecated.') String? vShopId,
+      @Deprecated('vShopPDoneId deprecated.') int? vShopPDoneId,
+      @Deprecated('fanGroup deprecated.') UserFanGroupInfo? fanGroup,
+      @Deprecated('profile deprecated.') UserProfileInfo? profile,
       int? sexCode,
       int? type});
 
@@ -729,49 +766,50 @@ class __$$UserImplCopyWithImpl<$Res>
 class _$UserImpl implements _User {
   const _$UserImpl(
       {this.id,
-      this.username,
-      this.name,
-      this.nickname,
+      @Deprecated('username deprecated.') this.username,
+      @Deprecated('name deprecated.') this.name,
+      @Deprecated('nickname deprecated.') this.nickname,
       this.email,
       this.phone,
       this.avatar,
-      this.sex,
+      @Deprecated('sex deprecated.') this.sex,
       this.phoneCode,
-      this.address,
-      this.forgotHash,
-      this.status,
-      this.roleId,
-      this.roleMemberCode,
-      this.createdById,
-      this.createdAt,
-      this.updatedAt,
-      this.deletedAt,
+      @Deprecated('address deprecated.') this.address,
+      @Deprecated('forgotHash deprecated.') this.forgotHash,
+      @Deprecated('status deprecated.') this.status,
+      @Deprecated('roleId deprecated.') this.roleId,
+      @Deprecated('roleMemberCode deprecated.') this.roleMemberCode,
+      @Deprecated('createdById deprecated.') this.createdById,
+      @Deprecated('createdAt deprecated.') this.createdAt,
+      @Deprecated('updatedAt deprecated.') this.updatedAt,
+      @Deprecated('deletedAt deprecated.') this.deletedAt,
       this.pDoneId,
       this.displayName,
       this.fullName,
-      this.isPDone = false,
-      this.isFriend = false,
-      this.isFollowing = false,
-      this.isFollowed = false,
-      this.totalFollower = 0,
-      this.totalFollowing = 0,
-      this.totalFriend = 0,
-      this.old = 0,
-      this.isBlock = false,
+      @Deprecated('isPDone deprecated.') this.isPDone = false,
+      @Deprecated('isFriend deprecated.') this.isFriend = false,
+      @Deprecated('isFollowing deprecated.') this.isFollowing = false,
+      @Deprecated('isFollowed deprecated.') this.isFollowed = false,
+      @Deprecated('totalFollower deprecated.') this.totalFollower = 0,
+      @Deprecated('totalFollowing deprecated.') this.totalFollowing = 0,
+      @Deprecated('totalFriend deprecated.') this.totalFriend = 0,
+      @Deprecated('old deprecated.') this.old = 0,
+      @Deprecated('isBlock deprecated.') this.isBlock = false,
+      @Deprecated('backgroundImages deprecated.')
       final List<String>? backgroundImages,
-      this.defaultBackground,
-      this.isJA,
-      this.isVShop,
-      this.isLive,
-      this.isSupervisor,
-      this.isModerator,
-      this.joinedTeam,
+      @Deprecated('defaultBackground deprecated.') this.defaultBackground,
+      @Deprecated('isJA deprecated.') this.isJA,
+      @Deprecated('isVShop deprecated.') this.isVShop,
+      @Deprecated('isLive deprecated.') this.isLive,
+      @Deprecated('isSupervisor deprecated.') this.isSupervisor,
+      @Deprecated('isModerator deprecated.') this.isModerator,
+      @Deprecated('joinedTeam deprecated.') this.joinedTeam,
       this.birthday,
-      this.jaAt,
-      this.vShopId,
-      this.vShopPDoneId,
-      this.fanGroup,
-      this.profile,
+      @Deprecated('jaAt deprecated.') this.jaAt,
+      @Deprecated('vShopId deprecated.') this.vShopId,
+      @Deprecated('vShopPDoneId deprecated.') this.vShopPDoneId,
+      @Deprecated('fanGroup deprecated.') this.fanGroup,
+      @Deprecated('profile deprecated.') this.profile,
       this.sexCode,
       this.type})
       : _backgroundImages = backgroundImages;
@@ -782,10 +820,13 @@ class _$UserImpl implements _User {
   @override
   final int? id;
   @override
+  @Deprecated('username deprecated.')
   final String? username;
   @override
+  @Deprecated('name deprecated.')
   final String? name;
   @override
+  @Deprecated('nickname deprecated.')
   final String? nickname;
   @override
   final String? email;
@@ -794,26 +835,36 @@ class _$UserImpl implements _User {
   @override
   final String? avatar;
   @override
+  @Deprecated('sex deprecated.')
   final Sex? sex;
   @override
   final String? phoneCode;
   @override
+  @Deprecated('address deprecated.')
   final String? address;
   @override
+  @Deprecated('forgotHash deprecated.')
   final String? forgotHash;
   @override
+  @Deprecated('status deprecated.')
   final int? status;
   @override
+  @Deprecated('roleId deprecated.')
   final int? roleId;
   @override
+  @Deprecated('roleMemberCode deprecated.')
   final String? roleMemberCode;
   @override
+  @Deprecated('createdById deprecated.')
   final int? createdById;
   @override
+  @Deprecated('createdAt deprecated.')
   final String? createdAt;
   @override
+  @Deprecated('updatedAt deprecated.')
   final String? updatedAt;
   @override
+  @Deprecated('deletedAt deprecated.')
   final String? deletedAt;
   @override
   final String? pDoneId;
@@ -823,33 +874,43 @@ class _$UserImpl implements _User {
   final String? fullName;
   @override
   @JsonKey()
+  @Deprecated('isPDone deprecated.')
   final bool isPDone;
   @override
   @JsonKey()
+  @Deprecated('isFriend deprecated.')
   final bool isFriend;
   @override
   @JsonKey()
+  @Deprecated('isFollowing deprecated.')
   final bool isFollowing;
   @override
   @JsonKey()
+  @Deprecated('isFollowed deprecated.')
   final bool isFollowed;
   @override
   @JsonKey()
+  @Deprecated('totalFollower deprecated.')
   final int totalFollower;
   @override
   @JsonKey()
+  @Deprecated('totalFollowing deprecated.')
   final int totalFollowing;
   @override
   @JsonKey()
+  @Deprecated('totalFriend deprecated.')
   final int totalFriend;
   @override
   @JsonKey()
+  @Deprecated('old deprecated.')
   final int old;
   @override
   @JsonKey()
+  @Deprecated('isBlock deprecated.')
   final bool isBlock;
   final List<String>? _backgroundImages;
   @override
+  @Deprecated('backgroundImages deprecated.')
   List<String>? get backgroundImages {
     final value = _backgroundImages;
     if (value == null) return null;
@@ -860,30 +921,42 @@ class _$UserImpl implements _User {
   }
 
   @override
+  @Deprecated('defaultBackground deprecated.')
   final String? defaultBackground;
   @override
+  @Deprecated('isJA deprecated.')
   final bool? isJA;
   @override
+  @Deprecated('isVShop deprecated.')
   final bool? isVShop;
   @override
+  @Deprecated('isLive deprecated.')
   final bool? isLive;
   @override
+  @Deprecated('isSupervisor deprecated.')
   final bool? isSupervisor;
   @override
+  @Deprecated('isModerator deprecated.')
   final bool? isModerator;
   @override
+  @Deprecated('joinedTeam deprecated.')
   final Team? joinedTeam;
   @override
   final DateTime? birthday;
   @override
+  @Deprecated('jaAt deprecated.')
   final DateTime? jaAt;
   @override
+  @Deprecated('vShopId deprecated.')
   final String? vShopId;
   @override
+  @Deprecated('vShopPDoneId deprecated.')
   final int? vShopPDoneId;
   @override
+  @Deprecated('fanGroup deprecated.')
   final UserFanGroupInfo? fanGroup;
   @override
+  @Deprecated('profile deprecated.')
   final UserProfileInfo? profile;
   @override
   final int? sexCode;
@@ -1042,49 +1115,51 @@ class _$UserImpl implements _User {
 abstract class _User implements User {
   const factory _User(
       {final int? id,
-      final String? username,
-      final String? name,
-      final String? nickname,
+      @Deprecated('username deprecated.') final String? username,
+      @Deprecated('name deprecated.') final String? name,
+      @Deprecated('nickname deprecated.') final String? nickname,
       final String? email,
       final String? phone,
       final String? avatar,
-      final Sex? sex,
+      @Deprecated('sex deprecated.') final Sex? sex,
       final String? phoneCode,
-      final String? address,
-      final String? forgotHash,
-      final int? status,
-      final int? roleId,
-      final String? roleMemberCode,
-      final int? createdById,
-      final String? createdAt,
-      final String? updatedAt,
-      final String? deletedAt,
+      @Deprecated('address deprecated.') final String? address,
+      @Deprecated('forgotHash deprecated.') final String? forgotHash,
+      @Deprecated('status deprecated.') final int? status,
+      @Deprecated('roleId deprecated.') final int? roleId,
+      @Deprecated('roleMemberCode deprecated.') final String? roleMemberCode,
+      @Deprecated('createdById deprecated.') final int? createdById,
+      @Deprecated('createdAt deprecated.') final String? createdAt,
+      @Deprecated('updatedAt deprecated.') final String? updatedAt,
+      @Deprecated('deletedAt deprecated.') final String? deletedAt,
       final String? pDoneId,
       final String? displayName,
       final String? fullName,
-      final bool isPDone,
-      final bool isFriend,
-      final bool isFollowing,
-      final bool isFollowed,
-      final int totalFollower,
-      final int totalFollowing,
-      final int totalFriend,
-      final int old,
-      final bool isBlock,
+      @Deprecated('isPDone deprecated.') final bool isPDone,
+      @Deprecated('isFriend deprecated.') final bool isFriend,
+      @Deprecated('isFollowing deprecated.') final bool isFollowing,
+      @Deprecated('isFollowed deprecated.') final bool isFollowed,
+      @Deprecated('totalFollower deprecated.') final int totalFollower,
+      @Deprecated('totalFollowing deprecated.') final int totalFollowing,
+      @Deprecated('totalFriend deprecated.') final int totalFriend,
+      @Deprecated('old deprecated.') final int old,
+      @Deprecated('isBlock deprecated.') final bool isBlock,
+      @Deprecated('backgroundImages deprecated.')
       final List<String>? backgroundImages,
+      @Deprecated('defaultBackground deprecated.')
       final String? defaultBackground,
-      final bool? isJA,
-      final bool? isVShop,
-      final bool? isLive,
-      final bool? isSupervisor,
-      final bool? isModerator,
-      final Team? joinedTeam,
+      @Deprecated('isJA deprecated.') final bool? isJA,
+      @Deprecated('isVShop deprecated.') final bool? isVShop,
+      @Deprecated('isLive deprecated.') final bool? isLive,
+      @Deprecated('isSupervisor deprecated.') final bool? isSupervisor,
+      @Deprecated('isModerator deprecated.') final bool? isModerator,
+      @Deprecated('joinedTeam deprecated.') final Team? joinedTeam,
       final DateTime? birthday,
-      final DateTime? jaAt,
-      final String? vShopId,
-      final int? vShopPDoneId,
-      final UserFanGroupInfo? fanGroup,
-      final UserProfileInfo? profile,
+      @Deprecated('jaAt deprecated.') final DateTime? jaAt,
+      @Deprecated('vShopId deprecated.') final String? vShopId,
+      @Deprecated('vShopPDoneId deprecated.') final int? vShopPDoneId,
+      @Deprecated('fanGroup deprecated.') final UserFanGroupInfo? fanGroup,
+      @Deprecated('profile deprecated.') final UserProfileInfo? profile,
       final int? sexCode,
       final int? type}) = _$UserImpl;
 
@@ -1093,10 +1168,13 @@ abstract class _User implements User {
   @override
   int? get id;
   @override
+  @Deprecated('username deprecated.')
   String? get username;
   @override
+  @Deprecated('name deprecated.')
   String? get name;
   @override
+  @Deprecated('nickname deprecated.')
   String? get nickname;
   @override
   String? get email;
@@ -1105,26 +1183,36 @@ abstract class _User implements User {
   @override
   String? get avatar;
   @override
+  @Deprecated('sex deprecated.')
   Sex? get sex;
   @override
   String? get phoneCode;
   @override
+  @Deprecated('address deprecated.')
   String? get address;
   @override
+  @Deprecated('forgotHash deprecated.')
   String? get forgotHash;
   @override
+  @Deprecated('status deprecated.')
   int? get status;
   @override
+  @Deprecated('roleId deprecated.')
   int? get roleId;
   @override
+  @Deprecated('roleMemberCode deprecated.')
   String? get roleMemberCode;
   @override
+  @Deprecated('createdById deprecated.')
   int? get createdById;
   @override
+  @Deprecated('createdAt deprecated.')
   String? get createdAt;
   @override
+  @Deprecated('updatedAt deprecated.')
   String? get updatedAt;
   @override
+  @Deprecated('deletedAt deprecated.')
   String? get deletedAt;
   @override
   String? get pDoneId;
@@ -1133,50 +1221,72 @@ abstract class _User implements User {
   @override
   String? get fullName;
   @override
+  @Deprecated('isPDone deprecated.')
   bool get isPDone;
   @override
+  @Deprecated('isFriend deprecated.')
   bool get isFriend;
   @override
+  @Deprecated('isFollowing deprecated.')
   bool get isFollowing;
   @override
+  @Deprecated('isFollowed deprecated.')
   bool get isFollowed;
   @override
+  @Deprecated('totalFollower deprecated.')
   int get totalFollower;
   @override
+  @Deprecated('totalFollowing deprecated.')
   int get totalFollowing;
   @override
+  @Deprecated('totalFriend deprecated.')
   int get totalFriend;
   @override
+  @Deprecated('old deprecated.')
   int get old;
   @override
+  @Deprecated('isBlock deprecated.')
   bool get isBlock;
   @override
+  @Deprecated('backgroundImages deprecated.')
   List<String>? get backgroundImages;
   @override
+  @Deprecated('defaultBackground deprecated.')
   String? get defaultBackground;
   @override
+  @Deprecated('isJA deprecated.')
   bool? get isJA;
   @override
+  @Deprecated('isVShop deprecated.')
   bool? get isVShop;
   @override
+  @Deprecated('isLive deprecated.')
   bool? get isLive;
   @override
+  @Deprecated('isSupervisor deprecated.')
   bool? get isSupervisor;
   @override
+  @Deprecated('isModerator deprecated.')
   bool? get isModerator;
   @override
+  @Deprecated('joinedTeam deprecated.')
   Team? get joinedTeam;
   @override
   DateTime? get birthday;
   @override
+  @Deprecated('jaAt deprecated.')
   DateTime? get jaAt;
   @override
+  @Deprecated('vShopId deprecated.')
   String? get vShopId;
   @override
+  @Deprecated('vShopPDoneId deprecated.')
   int? get vShopPDoneId;
   @override
+  @Deprecated('fanGroup deprecated.')
   UserFanGroupInfo? get fanGroup;
   @override
+  @Deprecated('profile deprecated.')
   UserProfileInfo? get profile;
   @override
   int? get sexCode;
