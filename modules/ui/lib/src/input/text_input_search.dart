@@ -1,9 +1,9 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
-import 'package:searchfield/searchfield.dart';
 
 import '../social/avatar_widget.dart';
+import 'widgets/searchfield.dart';
 
 const avatarMarginRight = 78.0;
 const itemHeight = 44.0;
