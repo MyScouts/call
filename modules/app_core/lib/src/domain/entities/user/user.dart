@@ -11,6 +11,7 @@ part 'user.freezed.dart';
 
 part 'user.g.dart';
 
+@Deprecated('User deprecated.')
 @freezed
 class User with _$User {
   const factory User({
@@ -66,25 +67,32 @@ class User with _$User {
 }
 
 extension UserExtNull on User? {
+  @Deprecated('getdisplayName deprecated.')
   String get getdisplayName => [this?.displayName, _userDefaultName]
       .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
+  @Deprecated('getEmail deprecated.')
   String get getEmail => [this?.email, _userDefaultEmail]
       .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
+  @Deprecated('getAddress deprecated.')
   String get getAddress => [this?.address, _userDefaultAddress]
       .firstWhereOrNull((e) => e != null && e.isNotEmpty)!;
 
+  @Deprecated('getAvatar deprecated.')
   String get getAvatar => this?.avatar ?? Assets.images_avatar.path;
 
+  @Deprecated('getNickname deprecated.')
   String get getNickname => this?.nickname ?? _userDefaultNickname;
 
+  @Deprecated('getBirthday deprecated.')
   String get getBirthday {
     final DateTime? birthday = this?.birthday;
 
     return birthday != null ? birthday.toString() : _userDefaultBirthday;
   }
 
+  @Deprecated('fullNameStr deprecated.')
   String get fullNameStr {
     if (this?.fullName != null && this?.fullName?.isNotEmpty == true) {
       return this!.fullName!;
@@ -94,6 +102,7 @@ extension UserExtNull on User? {
         '';
   }
 
+  @Deprecated('getAge deprecated.')
   int get getAge {
     DateTime? birthday;
     if (this?.birthday != null) {
@@ -109,15 +118,20 @@ extension UserExtNull on User? {
     return age;
   }
 
+  @Deprecated('getIsPDone deprecated.')
   bool get getIsPDone => this?.isPDone ?? false;
 
+  @Deprecated('getIsJA deprecated.')
   bool get getIsJA => this?.isJA ?? false;
 
+  @Deprecated('getIsHasNickname deprecated.')
   bool get getIsHasNickname =>
       this?.nickname != null && this!.nickname!.isNotEmpty;
 
+  @Deprecated('getIsHasEmail deprecated.')
   bool get getIsHasEmail => this?.email != null && this!.email!.isNotEmpty;
 
+  @Deprecated('User deprecated.')
   bool isUnderFifteen(DateTime? birthDay) {
     if (birthDay == null) {
       return false;
@@ -127,22 +141,30 @@ extension UserExtNull on User? {
     return age < 15;
   }
 
+  @Deprecated('getPDoneId deprecated.')
   String get getPDoneId => this?.pDoneId ?? _userDefaultPDoneId;
 
+  @Deprecated('getSex deprecated.')
   Sex get getSex => this?.sex ?? _userDefaultSex;
 
+  @Deprecated('getTotalFollower deprecated.')
   int get getTotalFollower => this?.totalFollower ?? _userDefaultTotalFollower;
 
+  @Deprecated('getTotalFollowing deprecated.')
   int get getTotalFollowing =>
       this?.totalFollowing ?? _userDefaultTotalFollowing;
 
+  @Deprecated('getTotalFriend deprecated.')
   int get getTotalFriend => this?.totalFriend ?? _userDefaultTotalFriend;
 
+  @Deprecated('getBackgroundImage deprecated.')
   String get getBackgroundImage =>
       this?.backgroundImages?.first ?? _userDefaultBackground;
 
+  @Deprecated('getUserAvatar deprecated.')
   String get getUserAvatar => this?.avatar ?? _userDefaultUserAvatar;
 
+  @Deprecated('getIsPdone deprecated.')
   bool get getIsPdone => this?.isPDone ?? _userIsPDone;
 }
 

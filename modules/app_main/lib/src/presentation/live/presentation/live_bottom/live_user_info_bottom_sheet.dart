@@ -29,7 +29,8 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
   final UserActionCubit _actionBloc = injector.get<UserActionCubit>();
 
   GetUserByIdBloc get _userByIdBloc => context.read<GetUserByIdBloc>();
-  final ValueNotifier<GetUserFollowDetailResponse?> _followInfo = ValueNotifier(null);
+  final ValueNotifier<GetUserFollowDetailResponse?> _followInfo =
+      ValueNotifier(null);
   late final _userCubit = context.read<UserCubit>();
   late User _authInfo;
 
@@ -39,7 +40,7 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
   void initState() {
     super.initState();
     _authInfo = _userCubit.currentUser!;
-    _userCubit.onboarding();
+    _userCubit.getOnboarding();
     _userId = widget.userId;
     _userByIdBloc.add(GetDetailDataParam1Event(_userId));
     _actionBloc.getFollowUser(userId: _userId);
@@ -63,7 +64,8 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
             hideLoading();
             _friendStatus.value = true;
             if (state.approvalRequired) {
-              showToastMessage("Yêu cầu theo dõi đã được gởi đến người bảo hộ.");
+              showToastMessage(
+                  "Yêu cầu theo dõi đã được gởi đến người bảo hộ.");
             } else {
               showToastMessage("Theo dõi người dùng thành công.");
             }
@@ -98,7 +100,8 @@ class _LiveUserInfoBottomViewState extends State<LiveUserInfoBottomView> {
               followInfoCtrl: _followInfo,
               authInfo: _authInfo,
               isMe: isMe,
-              onBoarding: userBloc is OnboardingSuccess ? userBloc.onboarding : null,
+              onBoarding:
+                  userBloc is OnboardingSuccess ? userBloc.onboarding : null,
             );
           }
           return const SizedBox(
@@ -143,7 +146,8 @@ class UserInfoHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => injector.get<GlobalPersonSettingBloc>()..add(GetDetailDataParam1Event(userInfo.id)),
+      create: (context) => injector.get<GlobalPersonSettingBloc>()
+        ..add(GetDetailDataParam1Event(userInfo.id)),
       child: BlocListener<UserCubit, UserState>(
         listener: (context, state) {},
         child: Container(
@@ -210,7 +214,8 @@ class UserInfoHeader extends StatelessWidget {
               )
           ],
         ),
-        if (userInfo.username != null && userInfo.username!.isNotEmpty) const SizedBox(height: 3),
+        if (userInfo.username != null && userInfo.username!.isNotEmpty)
+          const SizedBox(height: 3),
         if (userInfo.username != null && userInfo.username!.isNotEmpty)
           Text(
             "(${userInfo.username})",
@@ -251,7 +256,8 @@ class UserInfoHeader extends StatelessWidget {
           if (userInfo.sex != null)
             IntrinsicHeight(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
                   color: const Color(0XFFFFEDF8),
                   borderRadius: BorderRadius.circular(10),
@@ -296,7 +302,8 @@ class UserInfoHeader extends StatelessWidget {
             Flexible(
               child: Container(
                 height: 25,
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
                   color: const Color(0XFFECF5FE),
                   borderRadius: BorderRadius.circular(10),
@@ -450,7 +457,9 @@ class UserInfoHeader extends StatelessWidget {
           onTap: () async {
             context.showDiaryActions(userInfo: userInfo).then((result) {
               if (result != null) {
-                context.read<UserActionCubit>().getFollowUser(userId: userInfo.id!);
+                context
+                    .read<UserActionCubit>()
+                    .getFollowUser(userId: userInfo.id!);
               }
             });
           },
@@ -472,7 +481,8 @@ class UserInfoHeader extends StatelessWidget {
     );
   }
 
-  _onFriendAction(BuildContext context, GetUserFollowRelationResponse relation) async {
+  _onFriendAction(
+      BuildContext context, GetUserFollowRelationResponse relation) async {
     if (!relation.isFollower) {
       context.read<UserActionCubit>().followUser(
             payload: FollowUserPayload(followeeId: userInfo.id!),

@@ -121,6 +121,7 @@ class AuthenticationUsecase {
     _userSharePreferencesUsecase.saveUserInfo(user!);
     isAuthenticate.add(true);
     await AppConfigService.init();
+    await _userRepository.onboarding();
     await _syncFCMToken();
   }
 
