@@ -73,6 +73,8 @@ class _ConversationWidgetState extends State<ConversationWidget> {
                     style: context.textTheme.labelLarge?.copyWith(
                       fontSize: 16,
                     ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   kSpacingHeight6,
                   if (widget.data.latestMessage?.type != 1)

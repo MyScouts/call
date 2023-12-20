@@ -139,6 +139,7 @@ class CreateRoomPageState extends State<CreateRoomPage> {
                             data: ThemeData(),
                             child: TextField(
                               controller: _editingController,
+                              maxLength: 50,
                               onChanged: (value) {
                                 setState(() {});
                               },

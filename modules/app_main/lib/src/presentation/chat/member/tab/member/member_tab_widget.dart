@@ -12,10 +12,10 @@ import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
 
 class MemberTabWidget extends StatefulWidget {
-  final bool isAdmin;
+  final int type;
   final int conversationId;
 
-  const MemberTabWidget({super.key, required this.isAdmin, required this.conversationId});
+  const MemberTabWidget({super.key, required this.type, required this.conversationId});
 
   @override
   MemberTabWidgetState createState() => MemberTabWidgetState();
@@ -53,12 +53,13 @@ class MemberTabWidgetState extends State<MemberTabWidget> {
                             itemBuilder: (_, index) {
                               return MemberWidget(
                                 data: data.members[index],
-                                action: widget.isAdmin &&
+                                action: widget.type == 2 || widget.type == 3 &&
                                         data.members[index].member.id !=
                                             getIt
                                                 .get<UserSharePreferencesUsecase>()
                                                 .getUserInfo()
-                                                ?.id
+                                                ?.id &&
+                                        data.members[index].type != 2
                                     ? Theme(
                                         data: Theme.of(context).copyWith(
                                           cardColor: AppColors.white,
@@ -75,7 +76,9 @@ class MemberTabWidgetState extends State<MemberTabWidget> {
                                             int memberId = data.members[index].member.id;
                                             switch (i) {
                                               case 0:
-                                                _cubit.setAdmin(widget.conversationId, memberId).then((value) {
+                                                _cubit
+                                                    .setAdmin(widget.conversationId, memberId)
+                                                    .then((value) {
                                                   Navigator.pop(context);
                                                 });
                                                 break;
@@ -84,15 +87,20 @@ class MemberTabWidgetState extends State<MemberTabWidget> {
                                                     widget.conversationId, memberId);
                                                 break;
                                               case 2:
-                                                _cubit.kick(widget.conversationId, memberId);
+                                                _cubit.revokeSecondAdmin(
+                                                    widget.conversationId, memberId);
                                                 break;
                                               case 3:
+                                                _cubit.kick(widget.conversationId, memberId);
+                                                break;
+                                              case 4:
                                                 _cubit.kickMute(widget.conversationId, memberId);
                                                 break;
                                             }
                                           },
                                           itemBuilder: (_) {
                                             return [
+                                              if(widget.type == 2)
                                               PopupMenuItem<int>(
                                                 value: 0,
                                                 child: Row(
@@ -112,27 +120,48 @@ class MemberTabWidgetState extends State<MemberTabWidget> {
                                                   ],
                                                 ),
                                               ),
-                                              PopupMenuItem<int>(
-                                                value: 1,
-                                                child: Row(
-                                                  children: [
-                                                    ImageWidget(
-                                                      IconAppConstants.icSetSecondAdmin,
-                                                      width: 24,
-                                                      height: 24,
-                                                    ),
-                                                    kSpacingWidth4,
-                                                    Text(
-                                                      'Chọn làm phó phòng',
-                                                      style: context.text.bodyMedium?.copyWith(
-                                                        color: AppColors.black,
+                                              if (data.members[index].type == 1)
+                                                PopupMenuItem<int>(
+                                                  value: 1,
+                                                  child: Row(
+                                                    children: [
+                                                      ImageWidget(
+                                                        IconAppConstants.icSetSecondAdmin,
+                                                        width: 24,
+                                                        height: 24,
                                                       ),
-                                                    ),
-                                                  ],
+                                                      kSpacingWidth4,
+                                                      Text(
+                                                        'Chọn làm phó phòng',
+                                                        style: context.text.bodyMedium?.copyWith(
+                                                          color: AppColors.black,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              else if (data.members[index].type == 3)
+                                                PopupMenuItem<int>(
+                                                  value: 2,
+                                                  child: Row(
+                                                    children: [
+                                                      ImageWidget(
+                                                        IconAppConstants.icSetSecondAdmin,
+                                                        width: 24,
+                                                        height: 24,
+                                                      ),
+                                                      kSpacingWidth4,
+                                                      Text(
+                                                        'Xoá quyền phó phòng',
+                                                        style: context.text.bodyMedium?.copyWith(
+                                                          color: AppColors.black,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
                                               PopupMenuItem<int>(
-                                                value: 2,
+                                                value: 3,
                                                 child: Row(
                                                   children: [
                                                     ImageWidget(
@@ -151,7 +180,7 @@ class MemberTabWidgetState extends State<MemberTabWidget> {
                                                 ),
                                               ),
                                               PopupMenuItem<int>(
-                                                value: 3,
+                                                value: 4,
                                                 child: Row(
                                                   children: [
                                                     ImageWidget(

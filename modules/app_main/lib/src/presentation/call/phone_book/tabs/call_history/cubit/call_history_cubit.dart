@@ -16,7 +16,7 @@ class CallHistoryCubit extends Cubit<CallHistoryState> {
       final CallHistoryResponseModel data =
           await _callUseCase.getCallHistory(page: 1, pageSize: 10);
       emit(CallHistoryState(data: data.items, canLoadMore: data.items.length == 10, page: 1));
-    } catch (e,s) {
+    } catch (e) {
       emit(CallHistoryState.error(e));
     }
   }

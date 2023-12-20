@@ -48,7 +48,7 @@ class ChatRoutes extends RouteModule {
         },
         MemberPage.routeName: (context) {
           final args = settings.arguments as Map<String, dynamic>;
-          return MemberPage(isAdmin: args['isAdmin'], conversationId: args['conversationId']);
+          return MemberPage(type: args['type'], conversationId: args['conversationId']);
         },
       };
 }

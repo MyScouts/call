@@ -20,7 +20,7 @@ mixin _$ChatRoomState {
   TResult when<TResult extends Object?>(
     TResult Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
             int myType,
             int page,
@@ -35,7 +35,7 @@ mixin _$ChatRoomState {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
             int myType,
             int page,
@@ -50,7 +50,7 @@ mixin _$ChatRoomState {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
             int myType,
             int page,
@@ -112,7 +112,7 @@ abstract class _$$ChatRoomStateDataImplCopyWith<$Res> {
   @useResult
   $Res call(
       {List<MessageModel> messages,
-      ConversationDetailResponseModel conversation,
+      ConversationModel conversation,
       FriendStatusModel? friendStatus,
       int myType,
       int page,
@@ -147,7 +147,7 @@ class __$$ChatRoomStateDataImplCopyWithImpl<$Res>
       conversation: null == conversation
           ? _value.conversation
           : conversation // ignore: cast_nullable_to_non_nullable
-              as ConversationDetailResponseModel,
+              as ConversationModel,
       friendStatus: freezed == friendStatus
           ? _value.friendStatus
           : friendStatus // ignore: cast_nullable_to_non_nullable
@@ -194,7 +194,7 @@ class _$ChatRoomStateDataImpl implements ChatRoomStateData {
   }
 
   @override
-  final ConversationDetailResponseModel conversation;
+  final ConversationModel conversation;
   @override
   final FriendStatusModel? friendStatus;
   @override
@@ -252,7 +252,7 @@ class _$ChatRoomStateDataImpl implements ChatRoomStateData {
   TResult when<TResult extends Object?>(
     TResult Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
             int myType,
             int page,
@@ -271,7 +271,7 @@ class _$ChatRoomStateDataImpl implements ChatRoomStateData {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
             int myType,
             int page,
@@ -290,7 +290,7 @@ class _$ChatRoomStateDataImpl implements ChatRoomStateData {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
             int myType,
             int page,
@@ -346,7 +346,7 @@ class _$ChatRoomStateDataImpl implements ChatRoomStateData {
 abstract class ChatRoomStateData implements ChatRoomState {
   const factory ChatRoomStateData(
       {required final List<MessageModel> messages,
-      required final ConversationDetailResponseModel conversation,
+      required final ConversationModel conversation,
       final FriendStatusModel? friendStatus,
       required final int myType,
       required final int page,
@@ -354,7 +354,7 @@ abstract class ChatRoomStateData implements ChatRoomState {
       final bool? loadMoreError}) = _$ChatRoomStateDataImpl;
 
   List<MessageModel> get messages;
-  ConversationDetailResponseModel get conversation;
+  ConversationModel get conversation;
   FriendStatusModel? get friendStatus;
   int get myType;
   int get page;
@@ -406,7 +406,7 @@ class _$ChatRoomStateLoadingImpl implements ChatRoomStateLoading {
   TResult when<TResult extends Object?>(
     TResult Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
             int myType,
             int page,
@@ -424,7 +424,7 @@ class _$ChatRoomStateLoadingImpl implements ChatRoomStateLoading {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
             int myType,
             int page,
@@ -442,7 +442,7 @@ class _$ChatRoomStateLoadingImpl implements ChatRoomStateLoading {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
             int myType,
             int page,
@@ -566,7 +566,7 @@ class _$ChatRoomStateErrorImpl implements ChatRoomStateError {
   TResult when<TResult extends Object?>(
     TResult Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
             int myType,
             int page,
@@ -584,7 +584,7 @@ class _$ChatRoomStateErrorImpl implements ChatRoomStateError {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
             int myType,
             int page,
@@ -602,7 +602,7 @@ class _$ChatRoomStateErrorImpl implements ChatRoomStateError {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
             int myType,
             int page,

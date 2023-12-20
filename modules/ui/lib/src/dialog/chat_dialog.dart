@@ -15,7 +15,7 @@ class ChatDialog extends StatelessWidget {
   final String? content;
   final Widget? contentWidget;
   final TextAlign? contentAlign;
-  final VoidCallback onAction;
+  final VoidCallback? onAction;
   final VoidCallback? onCancel;
   final bool isBack;
   final bool showCancel;
@@ -24,7 +24,7 @@ class ChatDialog extends StatelessWidget {
     super.key,
     required this.title,
     required this.actionTitle,
-    required this.onAction,
+    this.onAction,
     this.content,
     this.onCancel,
     this.isBack = true,
@@ -113,7 +113,7 @@ class ChatDialog extends StatelessWidget {
                         if (isBack) {
                           Navigator.pop(context);
                         }
-                        onAction.call();
+                        onAction?.call();
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),

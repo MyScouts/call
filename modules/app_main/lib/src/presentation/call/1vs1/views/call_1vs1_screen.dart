@@ -262,7 +262,7 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen>
             ),
             const SizedBox(height: 26),
             Text(
-              state.participant.getDisplayName,
+              state.participant?.displayName ?? '',
               style: context.textTheme.labelLarge?.copyWith(
                 color: Colors.white,
               ),
@@ -300,13 +300,19 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen>
         );
 
       case CallScreenState.incomingCall:
-        return Text(
-          state.callType == CallType.audio
-              ? 'Cuộc gọi thường đến từ ${state.participant?.displayName}'
-              : 'Cuộc gọi video đến từ ${state.participant?.displayName}',
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 20.0,
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Center(
+            child: Text(
+              state.callType == CallType.audio
+                  ? 'Cuộc gọi thường đến từ ${state.participant?.displayName ?? ''}'
+                  : 'Cuộc gọi video đến từ ${state.participant?.displayName ?? ''}',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20.0,
+              ),
+            ),
           ),
         );
       case CallScreenState.makingACall:
