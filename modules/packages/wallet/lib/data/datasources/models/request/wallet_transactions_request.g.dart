@@ -9,9 +9,9 @@ part of 'wallet_transactions_request.dart';
 WalletTransactionsRequest _$WalletTransactionsRequestFromJson(
         Map<String, dynamic> json) =>
     WalletTransactionsRequest(
-      page: json['page'] as int?,
-      pageSize: json['pageSize'] as int?,
-      category: json['category'] as String?,
+      page: json['page'] as int? ?? 1,
+      pageSize: json['pageSize'] as int? ?? 10,
+      transactionType: json['transactionType'] as String?,
       fromTimestamp: json['fromTimestamp'] as num?,
       toTimestamp: json['toTimestamp'] as num?,
     );
@@ -21,7 +21,7 @@ Map<String, dynamic> _$WalletTransactionsRequestToJson(
     <String, dynamic>{
       'page': instance.page,
       'pageSize': instance.pageSize,
-      'category': instance.category,
+      'transactionType': instance.transactionType,
       'fromTimestamp': instance.fromTimestamp,
       'toTimestamp': instance.toTimestamp,
     };
