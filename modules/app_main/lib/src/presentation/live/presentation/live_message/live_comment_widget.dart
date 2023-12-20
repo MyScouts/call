@@ -15,9 +15,20 @@ class LiveCommentWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LiveMessageBloc, LiveMessageState>(
       builder: (_, state) {
-        return AnimatedOpacity(
-          opacity: 1.0,
-          duration: const Duration(microseconds: 300),
+        return ShaderMask(
+          blendMode: BlendMode.dstOut,
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [
+              Colors.white,
+              Colors.transparent,
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.center,
+            stops: [
+              0.1,
+              1.0
+            ],
+          ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
           child: ListView.separated(
             padding: const EdgeInsets.symmetric(vertical: 16),
             reverse: true,
@@ -98,7 +109,7 @@ class LiveCommentCard extends StatelessWidget {
                               text: ' tham gia',
                               style: TextStyle(
                                 color: Color(0xffAAF6A3),
-                                fontSize: 13,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -138,7 +149,7 @@ class LiveCommentCard extends StatelessWidget {
                           text: comment.message,
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 13,
+                            fontSize: 15,
                           ),
                         ),
                       ]),
@@ -189,7 +200,7 @@ class LiveCommentCard extends StatelessWidget {
                         text: '${cm.member.info.name}: ',
                         style: const TextStyle(
                           color: Color(0xffB6B5BA),
-                          fontSize: 13,
+                          fontSize: 15,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -197,7 +208,7 @@ class LiveCommentCard extends StatelessWidget {
                         text: cm.message,
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 13,
+                          fontSize: 15,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

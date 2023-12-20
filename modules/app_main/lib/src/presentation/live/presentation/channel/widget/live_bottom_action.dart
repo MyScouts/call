@@ -61,39 +61,7 @@ class LiveBottomAction extends StatelessWidget {
                       children: [
                         SizedBox(
                           width: ScreenUtil().screenWidth * 3 / 4,
-                          child: Stack(
-                            clipBehavior: Clip.none,
-                            children: [
-                              const LiveCommentWidget(),
-                              // Positioned(
-                              //   top: 0,
-                              //   left: -16,
-                              //   right: -100,
-                              //   child: ClipRect(
-                              //     child: BackdropFilter(
-                              //       filter: ui.ImageFilter.blur(
-                              //         sigmaX: 0,
-                              //         sigmaY: 0
-                              //       ),
-                              //       child: Container(
-                              //         height: 100,
-                              //         width: double.infinity,
-                              //         decoration: BoxDecoration(
-                              //             gradient: LinearGradient(
-                              //               colors: [
-                              //                 const Color(0xff042E49),
-                              //                 Colors.white.withOpacity(0.0),
-                              //               ],
-                              //               begin: Alignment.topCenter,
-                              //               end: Alignment.bottomCenter,
-                              //             )
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   )
-                              // ),
-                            ],
-                          ),
+                          child: const LiveCommentWidget(),
                         ),
                         Expanded(
                           child: GestureDetector(
