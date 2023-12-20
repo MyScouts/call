@@ -13,7 +13,10 @@ class ViewerTab extends StatefulWidget {
   final LiveChannelController controller;
   final LiveBottomController liveBottomController;
 
-  const ViewerTab({super.key, required this.controller, required this.liveBottomController});
+  const ViewerTab(
+      {super.key,
+      required this.controller,
+      required this.liveBottomController});
 
   @override
   State<ViewerTab> createState() => _ViewerTabState();
@@ -23,24 +26,31 @@ class _ViewerTabState extends State<ViewerTab> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
+      final members = widget.controller.members.value
+          .where((e) => e.liveID == widget.controller.info.id)
+          .toList();
+
       return ListView.separated(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                context.startSelectUser(userId: widget.controller.members[index].info.userID);
+                context.startSelectUser(userId: members[index].info.userID);
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 9),
                 child: Row(
                   children: [
                     Text((index + 1).toString(),
-                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xff8B8E9A))),
+                        style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xff8B8E9A))),
                     const SizedBox(width: 10),
                     AvatarWidget(
-                      avatar: widget.controller.members[index].info.avatar,
+                      avatar: members[index].info.avatar,
                       size: 36,
-                      isPDone: widget.controller.members[index].info.type > 0,
+                      isPDone: members[index].info.type > 0,
                     ),
                     const SizedBox(width: 8),
                     Expanded(
@@ -50,7 +60,7 @@ class _ViewerTabState extends State<ViewerTab> {
                           Row(
                             children: [
                               Flexible(
-                                child: Text(widget.controller.members[index].info.name,
+                                child: Text(members[index].info.name,
                                     style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
@@ -58,15 +68,22 @@ class _ViewerTabState extends State<ViewerTab> {
                               ),
                               const SizedBox(width: 8),
                               Visibility(
-                                visible: widget.controller.members[index].isOwner,
+                                visible: members[index].isOwner,
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 4, horizontal: 8),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      gradient: const LinearGradient(colors: [Color(0xff3679F6), Color(0xff79F7DD)])),
+                                      gradient: const LinearGradient(colors: [
+                                        Color(0xff3679F6),
+                                        Color(0xff79F7DD)
+                                      ])),
                                   child: const Text("Chủ phòng",
                                       style: TextStyle(
-                                          fontSize: 8, fontWeight: FontWeight.w700, height: 1, color: Colors.white)),
+                                          fontSize: 8,
+                                          fontWeight: FontWeight.w700,
+                                          height: 1,
+                                          color: Colors.white)),
                                 ),
                               )
                             ],
@@ -90,10 +107,12 @@ class _ViewerTabState extends State<ViewerTab> {
                       ),
                     ),
                     Obx(() {
-                      final count = widget.liveBottomController.giftCardLive.value.giversInfo?.firstWhereOrNull(
-                          (element) => element.giver?.id == widget.controller.members[index].info.userID);
+                      final count = widget
+                          .liveBottomController.giftCardLive.value.giversInfo
+                          ?.firstWhereOrNull((element) =>
+                              element.giver?.id == members[index].info.userID);
                       return Visibility(
-                        visible: !widget.controller.members[index].isOwner,
+                        visible: !members[index].isOwner,
                         child: Row(
                           children: [
                             Text(count?.coinSrt ?? '',
@@ -119,7 +138,7 @@ class _ViewerTabState extends State<ViewerTab> {
           separatorBuilder: (context, index) {
             return const SizedBox(height: 0);
           },
-          itemCount: widget.controller.members.length);
+          itemCount: members.length);
     });
   }
 }
