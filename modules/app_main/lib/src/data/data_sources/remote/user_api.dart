@@ -55,6 +55,10 @@ abstract class UserApi {
   @factoryMethod
   factory UserApi(Dio dio) = _UserApi;
 
+  @Deprecated(
+    'getProfile deprecated.'
+    'Use getMe instead or Onboarding',
+  )
   @GET(UserApiConstants.pDoneProfile)
   Future<ApiResponse<User?>> getProfile();
 
