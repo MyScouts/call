@@ -63,33 +63,34 @@ class _ConfirmWithdrawTransactionScreenState
             false,
         builder: (context, state) {
           return state.maybeWhen(
-              orElse: () => const LoadingWidget(),
-              estimateTaxSuccess: (estimateTax) {
-                return SafeArea(
-                  top: false,
-                  child: Stack(
-                    children: [
-                      SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 15),
-                            _buildInfo(context, estimateTax: estimateTax),
-                            const SizedBox(height: 15),
-                            const Divider(
-                              color: WalletTheme.dividerColor,
-                              thickness: 8,
-                            ),
-                            const SizedBox(height: 15),
-                            _buildBankAccountInfo(context),
-                          ],
-                        ),
+            orElse: () => const LoadingWidget(),
+            estimateTaxSuccess: (estimateTax) {
+              return SafeArea(
+                top: false,
+                child: Stack(
+                  children: [
+                    SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 15),
+                          _buildInfo(context, estimateTax: estimateTax),
+                          const SizedBox(height: 15),
+                          const Divider(
+                            color: WalletTheme.dividerColor,
+                            thickness: 8,
+                          ),
+                          const SizedBox(height: 15),
+                          _buildBankAccountInfo(context),
+                        ],
                       ),
-                      _buildButtons(context),
-                    ],
-                  ),
-                );
-              });
+                    ),
+                    _buildButtons(context),
+                  ],
+                ),
+              );
+            },
+          );
         },
       ),
     );
@@ -99,7 +100,10 @@ class _ConfirmWithdrawTransactionScreenState
     return Align(
       alignment: Alignment.bottomCenter,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: context.horizontal),
+        padding: EdgeInsets.symmetric(
+          horizontal: context.horizontal,
+          vertical: 20,
+        ),
         child: Row(
           children: [
             Expanded(
