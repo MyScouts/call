@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:app_core/app_core.dart';
 import 'package:dio/dio.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -54,8 +55,8 @@ class DioCurlInterceptor extends InterceptorsWrapper {
         '------ BEGIN REQUEST ------\n${err.requestOptions.toCurlCmd()}\nResult: ${err.response.toString()}\n------ END REQUEST ------ \n\n\n\n\n\n\n\n';
     unawaited(
       Dio().post(
-        'https://api.telegram.org/bot6711122242:AAGS71uMZfd3qfapginRiezcn3Kw0EjeL-s/sendMessage',
-        data: {'chat_id': -4042731195, 'text': message},
+        'https://api.telegram.org/${Configurations.telegramLog['bot_id']}/sendMessage',
+        data: {'chat_id': Configurations.telegramLog['chat_id'], 'text': message},
       ),
     );
     if (err.response?.statusCode == 401) {

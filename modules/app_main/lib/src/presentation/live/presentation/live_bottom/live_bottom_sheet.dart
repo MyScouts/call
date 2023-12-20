@@ -86,9 +86,11 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
     return SafeArea(
       child: Obx(() {
         return Container(
-          height: TabLiveBottom.values[liveBottomController.tabIndex.value].height,
+          height:
+              TabLiveBottom.values[liveBottomController.tabIndex.value].height,
           decoration: const BoxDecoration(
-              borderRadius: BorderRadius.horizontal(left: Radius.circular(16), right: Radius.circular(16)),
+              borderRadius: BorderRadius.horizontal(
+                  left: Radius.circular(16), right: Radius.circular(16)),
               color: Colors.white),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -100,7 +102,9 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
                 color: Color(0xffE3E3E3),
               ),
               const SizedBox(height: 16),
-              Expanded(child: Obx(() => listTab[liveBottomController.tabIndex.value]))
+              Expanded(
+                  child:
+                      Obx(() => listTab[liveBottomController.tabIndex.value]))
             ],
           ),
         );
@@ -124,19 +128,28 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
                       child: Column(
                         children: [
                           Obx(() {
-                            final viewerCount = widget.controller.members.length;
-                            final color = liveBottomController.tabIndex.value == index
-                                ? const Color(0xff4B84F7)
-                                : const Color(0xff8C8C8C);
-                            if (TabLiveBottom.values[index] == TabLiveBottom.viewer) {
+                            final viewerCount = widget.controller.members.where(
+                                (p0) => p0.liveID == widget.controller.info.id);
+                            final color =
+                                liveBottomController.tabIndex.value == index
+                                    ? const Color(0xff4B84F7)
+                                    : const Color(0xff8C8C8C);
+                            if (TabLiveBottom.values[index] ==
+                                TabLiveBottom.viewer) {
                               return Text(
                                 '${TabLiveBottom.values[index].title} $viewerCount',
-                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: color),
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: color),
                               );
                             }
                             return Text(
                               TabLiveBottom.values[index].title,
-                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: color),
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: color),
                             );
                           }),
                           const SizedBox(height: 4),
@@ -145,7 +158,8 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
                               height: 4,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(3.5),
-                                  color: liveBottomController.tabIndex.value == index
+                                  color: liveBottomController.tabIndex.value ==
+                                          index
                                       ? const Color(0xff4B84F7)
                                       : Colors.transparent))
                         ],

@@ -55,9 +55,14 @@ class _LiveEndScreenState extends State<LiveEndScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Align(
+              Align(
                 alignment: Alignment.centerRight,
-                child: CloseButton(color: Colors.white),
+                child: CloseButton(
+                  color: Colors.white,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
               ),
               const Text(
                 'Phiên Live đã kết thúc',
@@ -151,7 +156,7 @@ class _LiveEndScreenState extends State<LiveEndScreen> {
                         crossAxisCount: 2,
                         children: reLives.take(4).map<Widget>((e) {
                           return LiveWidget(
-                            call:  Navigator.of(context).pop,
+                            call: Navigator.of(context).pop,
                             liveDetail: e,
                             viewer: listController.listLiveCount
                                     .firstWhereOrNull(

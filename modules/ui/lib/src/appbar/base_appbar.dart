@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../ui.dart';
 
@@ -26,6 +27,9 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarBrightness: Brightness.light,
+      ),
       title: titleWidget ?? Text(title ?? ''),
       backgroundColor: backgroundColor ?? Colors.transparent,
       bottomOpacity: 0.0,
