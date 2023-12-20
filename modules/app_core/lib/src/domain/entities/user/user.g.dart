@@ -63,7 +63,7 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
           ? null
           : UserProfileInfo.fromJson(json['profile'] as Map<String, dynamic>),
       sexCode: json['sexCode'] as int?,
-      type: json['type'] as int?,
+      type: json['type'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>

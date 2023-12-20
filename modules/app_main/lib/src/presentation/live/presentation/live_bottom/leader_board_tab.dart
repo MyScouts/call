@@ -243,6 +243,7 @@ class _LeaderBoardTabState extends State<LeaderBoardTab> {
                         AvatarWidget(
                           avatar: list[index].giver?.avatar,
                           size: 36,
+                          isPDone: list[index].giver!.type > 0,
                         ),
                         const SizedBox(width: 8),
                         Expanded(
@@ -493,6 +494,7 @@ class _LeaderBoardTabState extends State<LeaderBoardTab> {
                           AvatarWidget(
                             avatar: list[index].giver?.avatar,
                             size: 36,
+                            isPDone: list[index].giver!.type > 0,
                           ),
                           const SizedBox(width: 8),
                           Expanded(

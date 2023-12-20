@@ -55,7 +55,7 @@ class GiftController {
   }
 }
 
-final List<int> listAmount = [1, 10, 99, 100, 999];
+final List<String> listAmount = ["1", "10", "99", "999", "Khác"];
 
 enum GiftType {
   gift(1),

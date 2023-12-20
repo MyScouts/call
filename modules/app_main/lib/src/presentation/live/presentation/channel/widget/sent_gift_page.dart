@@ -181,7 +181,7 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
   @override
   void initState() {
     if (widget.isStaticGift) {
-      controller = AnimationController(vsync: this, duration: const Duration(seconds: 2));
+      controller = AnimationController(vsync: this, duration: const Duration(seconds: 6));
       _startStaticGift();
     } else {
       Lottie.cache.maximumSize = 0;

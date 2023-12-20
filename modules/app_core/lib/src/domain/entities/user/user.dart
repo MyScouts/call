@@ -59,7 +59,7 @@ class User with _$User {
     @Deprecated('fanGroup deprecated.') UserFanGroupInfo? fanGroup,
     @Deprecated('profile deprecated.') UserProfileInfo? profile,
     int? sexCode,
-    int? type,
+    @Default(0) int type,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
