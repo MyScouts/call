@@ -14,6 +14,7 @@ class Configurations {
   static String _phoneSupport = '';
   static String _androidPackageId = '';
   static String _iosAppId = '';
+  static Map<String, dynamic> _telegramLog = {};
 
   void setConfigurationValues(Map<String, dynamic> value) {
     _environment = value['environment'] ?? DefaultConfig.environment;
@@ -29,19 +30,31 @@ class Configurations {
     _phoneSupport = value['phoneSupport'] ?? '';
     _iosAppId = value['iosAppId'] ?? '';
     _androidPackageId = value['androidPackageId'] ?? '';
+    _telegramLog = value['telegramLog'] ?? '';
   }
 
   static String get environment => _environment;
+
   static String get baseUrl => _baseUrl;
+
   static String get ecommereBaseUrl => _ecommereBaseUrl;
 
+  static Map<String, dynamic> get telegramLog => _telegramLog;
+
   static bool get isStudio => _isStudio;
+
   static bool get isProduction => _isProduction;
+
   static String get hash => _hash;
+
   static int get userIdOffice => _userIdOffice;
+
   static String get zaloSupport => _zaloSupport;
+
   static String get phoneSupport => _phoneSupport;
+
   static String get androidPackageId => _androidPackageId;
+
   static String get iosAppId => _iosAppId;
 }
 
