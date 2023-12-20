@@ -196,7 +196,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                       children: [
                         Container(
                           color: WalletTypeExt.blueBackgroundColor,
-                          height: MediaQuery.of(context).size.height / 2,
+                          height: MediaQuery.of(context).size.height / 3,
                           padding: const EdgeInsets.fromLTRB(
                             0,
                             22,
@@ -205,7 +205,6 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                           ),
                         ),
                         SingleChildScrollView(
-                          physics: ClampingScrollPhysics(),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -220,6 +219,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                                 ),
                               ),
                               _buildBankMethod(),
+                              if (isVisibility) const SizedBox(height: 120,)
                             ],
                           ),
                         ),
@@ -494,8 +494,8 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                 (agency.coinAgency.availableCoin ?? 0)) {
               _coinController.text = agency.coinAgency.availableCoin
                   .toAppCurrencyString(isWithSymbol: false);
-              _onEstCoin();
             }
+            _onEstCoin();
           },
           style: context.textTheme.titleLarge!.copyWith(
             color: AppColors.blue33,
