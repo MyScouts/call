@@ -6,7 +6,7 @@ class WalletEvent with _$WalletEvent {
 
   const factory WalletEvent.getWalletTransactionList({
     required WalletType walletType,
-    WalletTransactionsRequest? request,
+    required WalletTransactionsRequest request,
   }) = _GetWalletTransactionListEvent;
 
   const factory WalletEvent.getWalletTransactionDetail({required String id}) =

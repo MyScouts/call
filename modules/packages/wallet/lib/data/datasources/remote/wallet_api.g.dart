@@ -49,7 +49,7 @@ class _WalletApi implements WalletApi {
   Future<TransactionsResponse> getTransactionsVNDWallet({
     int? page,
     int? pageSize,
-    String? category,
+    String? transactionType,
     num? fromTimestamp,
     num? toTimestamp,
   }) async {
@@ -57,7 +57,7 @@ class _WalletApi implements WalletApi {
     final queryParameters = <String, dynamic>{
       r'page': page,
       r'pageSize': pageSize,
-      r'category': category,
+      r'transactionType': transactionType,
       r'fromTimestamp': fromTimestamp,
       r'toTimestamp': toTimestamp,
     };
@@ -89,7 +89,7 @@ class _WalletApi implements WalletApi {
   Future<TransactionsResponse> getTransactionsDiamondWallet({
     int? page,
     int? pageSize,
-    String? category,
+    String? transactionType,
     num? fromTimestamp,
     num? toTimestamp,
   }) async {
@@ -97,7 +97,7 @@ class _WalletApi implements WalletApi {
     final queryParameters = <String, dynamic>{
       r'page': page,
       r'pageSize': pageSize,
-      r'category': category,
+      r'transactionType': transactionType,
       r'fromTimestamp': fromTimestamp,
       r'toTimestamp': toTimestamp,
     };
@@ -129,7 +129,7 @@ class _WalletApi implements WalletApi {
   Future<TransactionsResponse> getTransactionsCoinWallet({
     int? page,
     int? pageSize,
-    String? category,
+    String? transactionType,
     num? fromTimestamp,
     num? toTimestamp,
   }) async {
@@ -137,7 +137,7 @@ class _WalletApi implements WalletApi {
     final queryParameters = <String, dynamic>{
       r'page': page,
       r'pageSize': pageSize,
-      r'category': category,
+      r'transactionType': transactionType,
       r'fromTimestamp': fromTimestamp,
       r'toTimestamp': toTimestamp,
     };

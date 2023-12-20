@@ -39,7 +39,7 @@ abstract class WalletApi {
   Future<TransactionsResponse> getTransactionsVNDWallet({
     @Query('page') int? page,
     @Query('pageSize') int? pageSize,
-    @Query('category') String? category,
+    @Query('transactionType') String? transactionType,
     @Query('fromTimestamp') num? fromTimestamp,
     @Query('toTimestamp') num? toTimestamp,
   });
@@ -48,7 +48,7 @@ abstract class WalletApi {
   Future<TransactionsResponse> getTransactionsDiamondWallet({
     @Query('page') int? page,
     @Query('pageSize') int? pageSize,
-    @Query('category') String? category,
+    @Query('transactionType') String? transactionType,
     @Query('fromTimestamp') num? fromTimestamp,
     @Query('toTimestamp') num? toTimestamp,
   });
@@ -57,7 +57,7 @@ abstract class WalletApi {
   Future<TransactionsResponse> getTransactionsCoinWallet({
     @Query('page') int? page,
     @Query('pageSize') int? pageSize,
-    @Query('category') String? category,
+    @Query('transactionType') String? transactionType,
     @Query('fromTimestamp') num? fromTimestamp,
     @Query('toTimestamp') num? toTimestamp,
   });
