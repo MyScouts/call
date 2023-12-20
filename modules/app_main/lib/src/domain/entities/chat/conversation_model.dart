@@ -10,4 +10,6 @@ abstract class ConversationModel {
   List<MemberResponseModel> get members;
   List<MemberResponseModel> get membersNotMe;
   MessageModel? get latestMessage;
+
+  ConversationModel copyWithName({String? name});
 }

@@ -136,7 +136,8 @@ enum MessageTypeFB {
   followRequest('FOLLOW_REQUEST'),
   liveCreated('LIVE_CREATED'),
   inviteToLive('INVITE_TO_LIVE'),
-  protectorRequestReply('PROTECTOR_REQUEST_REPLY');
+  protectorRequestReply('PROTECTOR_REQUEST_REPLY'),
+  newMessage('NEW_MESSAGE');
 
   final String type;
 

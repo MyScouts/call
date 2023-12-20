@@ -9,8 +9,7 @@ part 'conversation_dto.g.dart';
 
 @JsonSerializable()
 class ConversationDto extends ConversationModel {
-  factory ConversationDto.fromJson(Map<String, dynamic> json) =>
-      _$ConversationDtoFromJson(json);
+  factory ConversationDto.fromJson(Map<String, dynamic> json) => _$ConversationDtoFromJson(json);
 
   ConversationDto(
       {required this.countUnSeen,
@@ -35,7 +34,7 @@ class ConversationDto extends ConversationModel {
   final List<MemberResponseDto> members;
 
   @override
-  final String? name;
+  String? name;
 
   @override
   final int type;
@@ -43,7 +42,17 @@ class ConversationDto extends ConversationModel {
   @override
   List<MemberResponseDto> get membersNotMe => [
         ...members.where((element) =>
-            getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id !=
-            element.member.id)
+            getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id != element.member.id)
       ];
+
+  @override
+  ConversationDto copyWithName({String? name}) {
+    return ConversationDto(
+        countUnSeen: countUnSeen,
+        id: id,
+        latestMessage: latestMessage,
+        members: members,
+        name: name,
+        type: type);
+  }
 }

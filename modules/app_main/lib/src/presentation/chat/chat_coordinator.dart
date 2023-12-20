@@ -35,9 +35,9 @@ extension ChatCoordinator on BuildContext {
     return Navigator.of(this).pushNamed(CreateRoomPage.routeName);
   }
 
-  Future<T?> toMemberPage<T>(bool isAdmin, int conversationId) {
+  Future<T?> toMemberPage<T>(int type, int conversationId) {
     return Navigator.of(this).pushNamed(MemberPage.routeName, arguments: {
-      'isAdmin': isAdmin,
+      'type': type,
       'conversationId': conversationId,
     });
   }

@@ -1,9 +1,8 @@
-import 'dart:convert';
-
 import 'package:app_core/app_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wallet/core/configuratons/configurations.dart';
 import 'package:wallet/data/datasources/models/response/transactions_response.dart';
@@ -14,6 +13,7 @@ import '../../../data/datasources/models/request/wallet_transactions_request.dar
 import '../../../data/datasources/models/response/onboarding_response.dart';
 import '../../../domain/entities/wallet/vnd_wallet_info/vnd_wallet_info.dart';
 import '../../../domain/repository/wallet_repository.dart';
+import '../../../domain/specs/pagination/pagination.dart';
 import '../../wallet_constant.dart';
 import '../model/infomation_pdone_profile.dart';
 
@@ -23,15 +23,75 @@ part 'wallet_event.dart';
 
 part 'wallet_state.dart';
 
+class TransactionHistoryData {
+  FilterOption _filter = FilterOption(status: [], type: []);
+
+  FilterOption get filter => _filter;
+
+  set setFilter(FilterOption filter) => _filter = filter;
+
+  WalletTransactionsRequest _request = WalletTransactionsRequest();
+
+  WalletTransactionsRequest get request => _request;
+
+  set setRequest(WalletTransactionsRequest request) => _request = request;
+
+  WalletType currentWalletType = WalletType.vnd;
+
+  set setWalletType(WalletType walletType) => currentWalletType = walletType;
+}
+
 @singleton
 class WalletBloc extends Bloc<WalletEvent, WalletState> {
   final WalletRepository _walletRepository;
   final SharedPreferences _shared;
   late VndWalletInfo vndWalletInfo = const VndWalletInfo();
 
-  WalletBloc(this._walletRepository, this._shared) : super(const _Initial()) {
-    List<TransactionItem> transactions = [];
+  final dataState = TransactionHistoryData();
+  final refreshController = RefreshController();
+  List<TransactionItem> transactions = [];
 
+  void onRefresh() {
+    dataState.setRequest = WalletTransactionsRequest(
+      pageSize: 10,
+      page: 1,
+      fromTimestamp: dataState.request.fromTimestamp,
+      toTimestamp: dataState.request.toTimestamp,
+      transactionType: dataState.request.transactionType,
+    );
+    transactions = [];
+    add(
+      WalletEvent.getWalletTransactionList(
+        walletType: dataState.currentWalletType,
+        request: dataState.request,
+      ),
+    );
+
+    refreshController.refreshCompleted();
+  }
+
+  void onLoading() {
+    final request = WalletTransactionsRequest(
+      page: dataState.request.page! + 1,
+      pageSize: dataState.request.pageSize,
+      fromTimestamp: dataState.request.fromTimestamp,
+      toTimestamp: dataState.request.toTimestamp,
+      transactionType: dataState.request.transactionType,
+    );
+
+    add(
+      WalletEvent.getWalletTransactionList(
+        walletType: dataState.currentWalletType,
+        request: request,
+      ),
+    );
+
+    dataState.setRequest = request;
+
+    refreshController.loadComplete();
+  }
+
+  WalletBloc(this._walletRepository, this._shared) : super(const _Initial()) {
     on<_GetWalletInfoEvent>((event, emit) async {
       try {
         emit(const _GetWalletInfoLoading());
@@ -53,13 +113,16 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     on<_GetWalletTransactionListEvent>((event, emit) async {
       try {
         emit(const _GetWalletTransactionListLoading());
-        final transactionList =
-            await _walletRepository.getWalletTransactionList(
+
+        final cloneList = await _walletRepository.getWalletTransactionList(
           walletType: event.walletType,
           request: event.request,
         );
-        transactions = transactionList;
-        emit(_GetWalletTransactionListSuccess(transactions: transactionList));
+        dataState.setWalletType = event.walletType;
+        dataState.setRequest = event.request;
+
+        transactions += cloneList;
+        emit(_GetWalletTransactionListSuccess(transactions: transactions));
       } on DioException catch (e) {
         const errorMessage = 'Đã xảy ra lỗi';
         emit(const _GetWalletTransactionListFailed(errorMessage));
@@ -73,21 +136,26 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     on<_FilterTransactionEvent>((event, emit) async {
       try {
         emit(const _GetWalletTransactionListLoading());
-        final transactionList = transactions.where((transaction) {
-          final transactionResolvedStatus = TransactionResolvedStatus.values
-              .firstWhere(
-                  (status) => status.name == transaction.resolvedStatus);
-          final transactionType = TransactionType.values
-              .firstWhere((type) => type.value == transaction.transactionType);
-          if (event.filter.status.isEmpty) {
-            return event.filter.type.contains(transactionType);
-          } else if (event.filter.type.isEmpty) {
-            return event.filter.status.contains(transactionResolvedStatus);
-          }
-          return event.filter.status.contains(transactionResolvedStatus) &&
-              event.filter.type.contains(transactionType);
-        }).toList();
-        emit(_GetWalletTransactionListSuccess(transactions: transactionList));
+
+        List<TransactionItem> transactionList = transactions;
+        if (event.filter.status.isNotEmpty || event.filter.type.isNotEmpty) {
+          transactionList = transactions.where((transaction) {
+            final transactionResolvedStatus = TransactionResolvedStatus.values
+                .firstWhere(
+                    (status) => status.name == transaction.resolvedStatus);
+            final transactionType = TransactionType.values.firstWhere(
+                (type) => type.value == transaction.transactionType);
+            if (event.filter.status.isEmpty) {
+              return event.filter.type.contains(transactionType);
+            } else if (event.filter.type.isEmpty) {
+              return event.filter.status.contains(transactionResolvedStatus);
+            }
+            return event.filter.status.contains(transactionResolvedStatus) &&
+                event.filter.type.contains(transactionType);
+          }).toList();
+        }
+        dataState.setFilter = event.filter;
+        emit(_FilterTransactionSuccess(transactions: transactionList));
       } on DioException catch (e) {
         const errorMessage = 'Đã xảy ra lỗi';
         emit(const _GetWalletTransactionListFailed(errorMessage));

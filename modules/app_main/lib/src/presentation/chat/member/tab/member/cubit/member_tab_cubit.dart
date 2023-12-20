@@ -57,4 +57,13 @@ class MemberTabCubit extends Cubit<MemberTabState> {
       getMember(conversationId);
     }
   }
+
+
+  Future<void> revokeSecondAdmin(int conversationId, int memberId) async {
+    final ResultModel result =
+    await _chatUseCase.revokeSecondBoos(conversationId: conversationId, memberId: memberId);
+    if (result.result is bool && result.result) {
+      getMember(conversationId);
+    }
+  }
 }

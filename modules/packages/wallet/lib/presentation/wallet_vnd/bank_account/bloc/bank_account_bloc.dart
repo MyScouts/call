@@ -58,7 +58,7 @@ class BankAccountBloc extends Bloc<BankAccountEvent, BankAccountState> {
     on<_UploadImage>((event, emit) async {
       try {
         emit(const _UploadImageLoading());
-        qrImage = await _walletVndUseCase.uploadImage(event.file);
+        qrImage = await _walletVndUseCase.storageUploadUrl(event.file.path, 'qr_bank');
         emit(_UploadImageSuccess(imgUrl: qrImage));
       } catch (e) {
         const errMessage = 'Đã xảy ra lỗi';

@@ -1805,6 +1805,10 @@ class Assets {
   static const AssetGenImage icons_lives_avatar =
       AssetGenImage('assets/icons/lives/avatar.png');
 
+  /// File path: assets/icons/lives/banner.png
+  static const AssetGenImage icons_lives_banner =
+      AssetGenImage('assets/icons/lives/banner.png');
+
   /// File path: assets/icons/lives/beauty.svg
   static const SvgGenImage icons_lives_beauty =
       SvgGenImage('assets/icons/lives/beauty.svg');
@@ -2209,6 +2213,10 @@ class Assets {
   /// File path: assets/images/img_empty.png
   static const AssetGenImage images_img_empty =
       AssetGenImage('assets/images/img_empty.png');
+
+  /// File path: assets/images/img_no_data.png
+  static const AssetGenImage images_img_no_data =
+      AssetGenImage('assets/images/img_no_data.png');
 
   /// File path: assets/images/img_no_results.svg
   static const SvgGenImage images_img_no_results =
@@ -2842,6 +2850,7 @@ class Assets {
         icons_lives_3,
         icons_lives_admin_setting,
         icons_lives_avatar,
+        icons_lives_banner,
         icons_lives_beauty,
         icons_lives_call,
         icons_lives_call_video,
@@ -2944,6 +2953,7 @@ class Assets {
         images_img_camera,
         images_img_default_team_banner,
         images_img_empty,
+        images_img_no_data,
         images_img_no_results,
         images_img_waiting,
         images_instagram,

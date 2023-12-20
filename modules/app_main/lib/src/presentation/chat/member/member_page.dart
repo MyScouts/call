@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 
 class MemberPage extends StatefulWidget {
   static const routeName = 'MemberPage';
-  final bool isAdmin;
+  final int type;
   final int conversationId;
 
-  const MemberPage({super.key, required this.isAdmin, required this.conversationId});
+  const MemberPage({super.key, required this.type, required this.conversationId});
 
   @override
   MemberPageState createState() => MemberPageState();
@@ -31,7 +31,7 @@ class MemberPageState extends State<MemberPage> with TickerProviderStateMixin {
       appBar: AppBar(
         title: const Text('Thành viên'),
         actions: [
-          if (widget.isAdmin)
+          if (widget.type == 2 || widget.type == 3)
             TextButton(
               onPressed: () {
                 context.toAddMemberPage(widget.conversationId);
@@ -68,11 +68,11 @@ class MemberPageState extends State<MemberPage> with TickerProviderStateMixin {
         children: [
           MemberTabWidget(
             conversationId: widget.conversationId,
-            isAdmin: widget.isAdmin,
+            type: widget.type,
           ),
           AdminTabWidget(
             conversationId: widget.conversationId,
-            isAdmin: widget.isAdmin,
+            isAdmin: widget.type == 2,
           ),
         ],
       ),

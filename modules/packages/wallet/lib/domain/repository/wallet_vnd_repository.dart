@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:cross_file/cross_file.dart';
+
 import '../../data/data.dart';
 import '../../data/datasources/models/response/estimate_tax_response.dart';
 import '../entities/entities.dart';
@@ -28,4 +30,6 @@ abstract class WalletVndRepository {
 
   Future<void> setDefaultBankAccount(
       {required int id, required bool isDefault});
+
+  Future<String> storageUploadUrl(XFile xFile, String prefix);
 }
