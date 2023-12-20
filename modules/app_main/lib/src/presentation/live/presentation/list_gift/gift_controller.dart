@@ -29,7 +29,9 @@ class GiftController {
   Future<void> getListGiftCard() async {
     try {
       giftCardList.value = await _useCase.getGiftCardList(giftType.value.type);
-    } catch (e) {}
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   Future<void> getUserPoint() async {

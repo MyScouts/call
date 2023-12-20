@@ -105,17 +105,20 @@ class _ListFriendTabState extends State<ListFriendTab> {
             return ListView.separated(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      context.startSelectUser(userId: list[index].id!);
-                    },
-                    child: UserLisTile(
-                      key: GlobalKey(),
-                      user: list[index],
-                      isInvited: isInvited,
-                      onChanged: (User value) {
-                        widget.controller.inviteFriend(widget.liveData.id.toString(), [value.id!]);
+                  return Visibility(
+                    visible: widget.liveData.user?.id != list[index].id,
+                    child: GestureDetector(
+                      onTap: () {
+                        context.startSelectUser(userId: list[index].id!);
                       },
+                      child: UserLisTile(
+                        key: GlobalKey(),
+                        user: list[index],
+                        isInvited: isInvited,
+                        onChanged: (User value) {
+                          widget.controller.inviteFriend(widget.liveData.id.toString(), [value.id!]);
+                        },
+                      ),
                     ),
                   );
                 },

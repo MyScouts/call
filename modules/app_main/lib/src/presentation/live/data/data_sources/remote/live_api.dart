@@ -40,7 +40,7 @@ class LiveApiConstant {
 
   static const String giftCard = '/api/gift-card/live/{liveId}';
 
-  static const String liveStats = '/api/gift-card/live-stats';
+  static const String liveStats = '/api/gift-card/livestreamer-stats';
 
   static const String dailyDedications = '/api/gift-card/daily-dedication';
 
@@ -124,7 +124,7 @@ abstract class LiveApi {
   Future<ApiResponse<GiftCardLive>> getInfoGiftCard({@Path('liveId') required int liveId});
 
   @GET(LiveApiConstant.liveStats)
-  Future<ApiResponse<GiftCardLive>> getLiveStats({@Query('liveId') required int liveId});
+  Future<ApiResponse<GiftCardLive>> getLiveStats({@Query('userId') required int userId});
 
   @GET(LiveApiConstant.dailyDedications)
   Future<ApiResponse<GiftCardLive>> getDailyDedications(

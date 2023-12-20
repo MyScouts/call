@@ -26,6 +26,7 @@ class _ViewerTabState extends State<ViewerTab> {
       return ListView.separated(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           itemBuilder: (context, index) {
+            print(widget.controller.members[index].info);
             return GestureDetector(
               onTap: () {
                 context.startSelectUser(userId: widget.controller.members[index].info.userID);

@@ -176,8 +176,8 @@ class LiveRepositoryImpl extends LiveRepository {
   }
 
   @override
-  Future<GiftCardLive> getLiveState(int liveID) async {
-    final res = await _liveApi.getLiveStats(liveId: liveID);
+  Future<GiftCardLive> getLiveState(int userId) async {
+    final res = await _liveApi.getLiveStats(userId: userId);
     return res.data;
   }
 

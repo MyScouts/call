@@ -87,9 +87,10 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
                                 userId: host.info.userID);
                           });
                         },
-                        child: CircleNetworkImage(
-                          url: host.info.avatar,
-                          size: 28,
+                        child: AvatarWidget(
+                          avatar: host.info.avatar,
+                          size: 36,
+                          isPDone: host.info.type > 0,
                         ),
                       ),
                     const SizedBox(width: 4),

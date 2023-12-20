@@ -199,14 +199,14 @@ class LiveChannelController {
 
   Future<void> getLeaderBoard(int roomId) async {
     try {
-      await getLiveState(_info.value.id);
+      await getLiveState(_info.value.user!.id!);
       giftCardLive.value = await repository.getInfoGiftCard(roomId);
     } catch (e) {}
   }
 
-  Future<void> getLiveState(int liveId) async {
+  Future<void> getLiveState(int userId) async {
     try {
-      liveState.value = await repository.getLiveState(liveId);
+      liveState.value = await repository.getLiveState(userId);
     } catch (e) {}
   }
 
