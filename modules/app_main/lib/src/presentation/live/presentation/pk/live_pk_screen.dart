@@ -35,6 +35,7 @@ class LivePkScreen extends StatelessWidget {
           child: Column(
             children: [
               const SafeArea(
+                bottom: false,
                 child: LiveChannelHeader(),
               ),
               const SizedBox(height: 16),
@@ -67,6 +68,19 @@ class LivePkScreen extends StatelessWidget {
         const Align(
           alignment: Alignment.bottomCenter,
           child: LiveBottomAction(),
+        ),
+        Align(
+          alignment: Alignment.bottomRight,
+          child: Padding(
+            padding: const EdgeInsets.only(
+              right: 0,
+              bottom: kBottomNavigationBarHeight + 16,
+            ),
+            child: SizedBox(
+              height: 50,
+              child: Assets.icons_lives_banner.image(),
+            ),
+          ),
         ),
         IgnorePointer(
           ignoring: true,
@@ -165,8 +179,25 @@ class _PkEndGameBuilder extends StatelessWidget {
   }
 }
 
-class _LivePKRtc extends StatelessWidget {
+class _LivePKRtc extends StatefulWidget {
   const _LivePKRtc({super.key});
+
+  @override
+  State<_LivePKRtc> createState() => _LivePKRtcState();
+}
+
+class _LivePKRtcState extends State<_LivePKRtc> {
+  bool _isStartAnimation = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _isStartAnimation = true;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -178,22 +209,26 @@ class _LivePKRtc extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           FlexDiamondBuilder(builder: (l, r, lc, rc) {
+            final p = r / l;
+
+            final flexP = 60 * p;
+
             return Row(
               children: [
                 Expanded(
-                  flex: l,
+                  flex: 60,
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      const _RtcOtherLive(),
+                      const _RtcLive(),
                       Obx(() {
                         if (controller.pkStep.value != PkStep.end) {
                           return const EmptyStackBox();
                         }
 
                         return PkWinLoseBuilder(
-                          key: Key('${controller.liveOtherID}'),
-                          liveID: controller.liveOtherID,
+                          key: Key('${controller.info.id}'),
+                          liveID: controller.info.id,
                           builder: (status) {
                             if (status == PkGameStatus.draw) {
                               return const EmptyStackBox();
@@ -222,48 +257,105 @@ class _LivePKRtc extends StatelessWidget {
                     ],
                   ),
                 ),
-                Expanded(
-                  flex: r,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      const _RtcLive(),
-                      Obx(() {
-                        if (controller.pkStep.value != PkStep.end) {
-                          return const EmptyStackBox();
-                        }
+                if (_isStartAnimation)
+                  BoxState(
+                    flex: flexP.toInt(),
+                    builder: (flex, c) {
+                      return Expanded(
+                        flex: flex,
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            const _RtcOtherLive(),
+                            Obx(
+                              () {
+                                if (controller.pkStep.value != PkStep.end) {
+                                  return const EmptyStackBox();
+                                }
 
-                        return PkWinLoseBuilder(
-                          key: Key('${controller.info.id}'),
-                          liveID: controller.info.id,
-                          builder: (status) {
-                            if (status == PkGameStatus.draw) {
+                                return PkWinLoseBuilder(
+                                  key: Key('${controller.liveOtherID}'),
+                                  liveID: controller.liveOtherID,
+                                  builder: (status) {
+                                    if (status == PkGameStatus.draw) {
+                                      return const EmptyStackBox();
+                                    }
+
+                                    if (status == PkGameStatus.win) {
+                                      return Align(
+                                        alignment: Alignment.bottomLeft,
+                                        child: SizedBox.square(
+                                          dimension: 61,
+                                          child: Assets.icons_lives_win_small
+                                              .image(),
+                                        ),
+                                      );
+                                    }
+
+                                    return Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: SizedBox.square(
+                                        dimension: 61,
+                                        child: Assets.icons_lives_lose_small
+                                            .image(),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  )
+                else
+                  Expanded(
+                    flex: 60,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        const _RtcOtherLive(),
+                        Obx(
+                              () {
+                            if (controller.pkStep.value != PkStep.end) {
                               return const EmptyStackBox();
                             }
 
-                            if (status == PkGameStatus.win) {
-                              return Align(
-                                alignment: Alignment.bottomLeft,
-                                child: SizedBox.square(
-                                  dimension: 61,
-                                  child: Assets.icons_lives_win_small.image(),
-                                ),
-                              );
-                            }
+                            return PkWinLoseBuilder(
+                              key: Key('${controller.liveOtherID}'),
+                              liveID: controller.liveOtherID,
+                              builder: (status) {
+                                if (status == PkGameStatus.draw) {
+                                  return const EmptyStackBox();
+                                }
 
-                            return Align(
-                              alignment: Alignment.bottomLeft,
-                              child: SizedBox.square(
-                                dimension: 61,
-                                child: Assets.icons_lives_lose_small.image(),
-                              ),
+                                if (status == PkGameStatus.win) {
+                                  return Align(
+                                    alignment: Alignment.bottomLeft,
+                                    child: SizedBox.square(
+                                      dimension: 61,
+                                      child: Assets.icons_lives_win_small
+                                          .image(),
+                                    ),
+                                  );
+                                }
+
+                                return Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: SizedBox.square(
+                                    dimension: 61,
+                                    child: Assets.icons_lives_lose_small
+                                        .image(),
+                                  ),
+                                );
+                              },
                             );
                           },
-                        );
-                      })
-                    ],
-                  ),
-                ),
+                        ),
+                      ],
+                    ),
+                  )
               ],
             );
           }),
@@ -315,7 +407,7 @@ class _LivePKRtc extends StatelessWidget {
               child: PkTimerBuilder(
                 endTime: controller.currentGameRound!.endAt,
                 builder: (d, end) {
-                  if (end) {}
+                  if (end) return const SizedBox.shrink();
 
                   final time = '${pkPad(d.inMinutes % 60)}:'
                       '${pkPad(d.inSeconds % 60)}';

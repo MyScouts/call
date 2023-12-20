@@ -13,6 +13,10 @@ class PkDiamondProcess extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlexDiamondBuilder(
       builder: (flexLeft, flexRight, leftCount, rightCount) {
+        final p = flexRight / flexLeft;
+
+        final flexP = 60 * p;
+
         return Container(
           height: 22,
           width: double.infinity,
@@ -23,29 +27,31 @@ class PkDiamondProcess extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                  flex: flexLeft,
-                  child: AnimatedSize(
-                    duration: const Duration(milliseconds: 300),
-                    child: Container(
-                      color: const Color(0xffFE1D67),
-                      padding: const EdgeInsets.symmetric(horizontal: 9),
-                      child: Text(
-                        '$leftCount',
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          height: 1.2,
-                          color: Colors.white,
-                        ),
-                      ),
+                flex: 60,
+                child: Container(
+                  height: 22,
+                  color: const Color(0xff00BBE4),
+                  padding: const EdgeInsets.symmetric(horizontal: 9),
+                  child: Text(
+                    '$leftCount',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      height: 1.2,
+                      color: Colors.white,
                     ),
-                  )),
-              Expanded(
-                  flex: flexRight,
-                  child: AnimatedSize(
-                    duration: const Duration(milliseconds: 300),
+                  ),
+                ),
+              ),
+              BoxState(
+                flex: flexP.toInt(),
+                builder: (value, isComplete) {
+                  return Expanded(
+                    flex: value,
                     child: Container(
-                      color: const Color(0xff00BBE4),
+                      width: 202,
+                      height: 22,
+                      color: const Color(0xffFE1D67),
                       padding: const EdgeInsets.symmetric(horizontal: 9),
                       alignment: Alignment.centerRight,
                       child: Text(
@@ -58,102 +64,128 @@ class PkDiamondProcess extends StatelessWidget {
                         ),
                       ),
                     ),
-                  )),
+                  );
+                },
+              ),
             ],
           ),
         );
       },
     );
+  }
+}
 
-    final controller = context.read<LiveChannelController>();
+class BoxState extends StatefulWidget {
+  const BoxState({super.key, required this.flex, required this.builder});
 
-    return Obx(() {
-      final meInLive = controller.pkData!.lives.firstWhereOrNull(
-              (e) => e.user!.id == controller.me.value.info.userID) !=
-          null;
+  final int flex;
+  final Widget Function(int value, bool onCompleted) builder;
 
-      final diamondPk = controller.diamondsPK.value;
+  @override
+  State<BoxState> createState() => _BoxStateState();
+}
 
-      Widget left;
-      Widget right;
-      LiveData? host;
+class _BoxStateState extends State<BoxState> {
+  int begin = 0;
+  int end = 0;
 
-      if (meInLive) {
-        host = controller.pkData!.lives.firstWhereOrNull(
-            (e) => e.user!.id != controller.me.value.info.userID);
-      } else {
-        host = controller.pkData!.lives
-            .firstWhereOrNull((e) => e.user!.id != controller.hostID);
+  @override
+  void initState() {
+    end = widget.flex;
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant BoxState oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.flex != widget.flex) {
+      begin = oldWidget.flex;
+      end = widget.flex;
+      if (mounted) {
+        setState(() {});
       }
+    }
+  }
 
-      final diamondLeft =
-          diamondPk.firstWhereOrNull((e) => e.userId == host!.user!.id);
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSizeBuilder(
+      key: widget.key,
+      begin: begin,
+      end: end,
+      builder: widget.builder,
+    );
+  }
+}
 
-      final diamondRight =
-          diamondPk.firstWhereOrNull((e) => e.userId != host!.user!.id);
+class AnimatedSizeBuilder extends StatefulWidget {
+  const AnimatedSizeBuilder({
+    super.key,
+    required this.begin,
+    required this.end,
+    required this.builder,
+  });
 
-      left = AnimatedSize(
-        duration: const Duration(milliseconds: 300),
-        child: Container(
-          color: const Color(0xffFE1D67),
-          padding: const EdgeInsets.symmetric(horizontal: 9),
-          child: Text(
-            '${diamondLeft?.diamondCount ?? 0}',
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
-              height: 1.2,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      );
+  final int begin;
+  final int end;
+  final Widget Function(int value, bool onCompleted) builder;
 
-      right = AnimatedSize(
-        duration: const Duration(milliseconds: 300),
-        child: Container(
-          color: const Color(0xff00BBE4),
-          padding: const EdgeInsets.symmetric(horizontal: 9),
-          alignment: Alignment.centerRight,
-          child: Text(
-            '${diamondRight?.diamondCount ?? 0}',
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
-              height: 1.2,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      );
+  @override
+  State<AnimatedSizeBuilder> createState() => _AnimatedSizeBuilderState();
+}
 
-      int flexLeft = 1;
-      int flexRight = 1;
+class _AnimatedSizeBuilderState extends State<AnimatedSizeBuilder>
+    with SingleTickerProviderStateMixin {
+  late Animation<int> _animation;
+  late AnimationController _controller;
 
-      if ((diamondLeft?.diamondCount ?? 0) >
-          (diamondRight?.diamondCount ?? 0)) {
-        flexLeft = 6;
-        flexRight = 4;
-      } else if ((diamondLeft?.diamondCount ?? 0) <
-          (diamondRight?.diamondCount ?? 0)) {
-        flexLeft = 4;
-        flexRight = 6;
-      }
-
-      return Container(
-        height: 22,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          border: Border.all(color: const Color(0xffFFC656), width: 3),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(flex: flexLeft, child: left),
-            Expanded(flex: flexRight, child: right),
-          ],
-        ),
-      );
+  @override
+  void initState() {
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3),
+    );
+    _animation = IntTween(begin: widget.begin, end: widget.end).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeIn,
+      ),
+    );
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _controller.forward();
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant AnimatedSizeBuilder oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.begin != widget.begin || oldWidget.end != widget.end) {
+      _controller.reset();
+      _animation = IntTween(begin: widget.begin, end: widget.end).animate(
+        CurvedAnimation(
+          parent: _controller,
+          curve: Curves.easeIn,
+        ),
+      );
+      _controller.forward();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (_, __) => widget.builder(
+        _animation.value,
+        _controller.isCompleted,
+      ),
+    );
   }
 }

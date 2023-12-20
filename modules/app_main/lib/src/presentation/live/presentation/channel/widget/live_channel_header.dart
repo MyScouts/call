@@ -42,7 +42,7 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -288,11 +288,17 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
               ),
             ],
           ),
-          SizedBox(
-            width: 80.w,
-            height: 50.w,
-            child: Assets.icons_lives_banner.image(fit: BoxFit.cover),
-          ),
+          Obx(() {
+            if(controller.liveType.value != LiveChannelType.pk) {
+              return SizedBox(
+                width: 80,
+                height: 50,
+                child: Assets.icons_lives_banner.image(fit: BoxFit.cover),
+              );
+            }
+
+            return const SizedBox.shrink();
+          })
         ],
       ),
     );

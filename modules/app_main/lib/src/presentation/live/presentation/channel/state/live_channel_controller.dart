@@ -217,10 +217,12 @@ class LiveChannelController {
   }
 
   int get hostID {
+
     if (_me.value.isOwner) return _me.value.info.userID;
     final host = _members
         .firstWhereOrNull((e) => e.isOwner && e.liveID == _info.value.id);
-    return host!.info.userID;
+    if(host == null) return 0;
+    return host.info.userID;
   }
 
   LiveData get info => _info.value;
@@ -883,7 +885,7 @@ class LiveChannelController {
         member = LiveMember(
           info: LiveMemberInfo(
             userID: user.id!,
-            name: user.nickname ?? user.fullName ?? user.displayName ?? '',
+            name: user.displayName ?? '',
             avatar: user.avatar ?? '',
             type: user.type ?? 0,
           ),
@@ -894,7 +896,7 @@ class LiveChannelController {
         member = LiveMember(
           info: LiveMemberInfo(
             userID: user.id!,
-            name: user.nickname ?? user.fullName ?? user.displayName ?? '',
+            name: user.displayName ?? '',
             avatar: user.avatar ?? '',
             type: user.type ?? 0,
           ),
@@ -1050,9 +1052,10 @@ class LiveChannelController {
     _timer?.cancel();
     if (_info.value.pk != null) {
       if (_me.value.isOwner) {
-        await repository.deletePK(_info.value.id).onError((error, stackTrace) {
-          rejoinNonPk(_info.value.id);
-        });
+        try {
+          await repository.deletePK(_info.value.id);
+        } catch(e) {}
+        rejoinNonPk(_info.value.id);
         return;
       }
     }

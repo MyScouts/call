@@ -26,6 +26,8 @@ class _FlexDiamondBuilderState extends State<FlexDiamondBuilder> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
+      final diamonds = controller.diamondsPK.value;
+
       if (controller.pkStep.value == PkStep.pending) {
         _flexLeft = 1;
         _flexRight = 1;
@@ -33,13 +35,11 @@ class _FlexDiamondBuilderState extends State<FlexDiamondBuilder> {
         return widget.builder(_flexLeft, _flexRight, 0, 0);
       }
 
-      final diamonds = controller.diamondsPK.value;
-
       UserDiamondForPK? diamondLeft =
-          diamonds.firstWhereOrNull((e) => e.userId == controller.hostOtherID);
+          diamonds.firstWhereOrNull((e) => e.userId == controller.hostID);
 
       UserDiamondForPK? diamondRight =
-          diamonds.firstWhereOrNull((e) => e.userId == controller.hostID);
+          diamonds.firstWhereOrNull((e) => e.userId == controller.hostOtherID);
 
       final leftCount = (diamondLeft?.diamondCount ?? 0);
       final rightCount = (diamondRight?.diamondCount ?? 0);

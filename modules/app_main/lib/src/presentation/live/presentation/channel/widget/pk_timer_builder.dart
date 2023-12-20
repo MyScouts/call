@@ -34,16 +34,16 @@ class _PkTimerBuilderState extends State<PkTimerBuilder> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_isEnd) return;
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        if (_duration.inSeconds == 0) {
+        setState(() {
+          _duration = widget.endTime.difference(DateTime.now());
+        });
+        if (_duration.inSeconds <= 0) {
           _timer?.cancel();
           setState(() {
             _isEnd = true;
           });
           return;
         }
-        setState(() {
-          _duration = Duration(seconds: _duration.inSeconds - 1);
-        });
       });
     });
   }

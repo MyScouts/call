@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_member.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_pk_data.dart';
@@ -21,6 +22,8 @@ class _PkConfigSheetState extends State<PkConfigSheet> {
   int round = 1;
   int time = 3;
   int timeBreak = 30;
+  final FocusNode _roundTimeNode = FocusNode();
+  final FocusNode _roundBreakTimeNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -108,139 +111,191 @@ class _PkConfigSheetState extends State<PkConfigSheet> {
                         });
                       },
                     ),
-                    const SizedBox(width: 4),
-                    _RoundPk(
-                      title: 'DK 3 vòng',
-                      active: round == 3,
-                      onTap: () {
-                        setState(() {
-                          round = 3;
-                        });
-                      },
-                    ),
+                    // const SizedBox(width: 4),
+                    // _RoundPk(
+                    //   title: 'DK 3 vòng',
+                    //   active: round == 3,
+                    //   onTap: () {
+                    //     setState(() {
+                    //       round = 3;
+                    //     });
+                    //   },
+                    // ),
                     const SizedBox(width: 16),
                   ],
                 ),
                 const SizedBox(height: 24),
-                Row(
-                  children: [
-                    const SizedBox(width: 16),
-                    const Text(
-                      'Thời gian',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        height: 1.2,
-                        color: Colors.black,
+                GestureDetector(
+                  onTap: () {
+                    _roundTimeNode.requestFocus();
+                  },
+                  behavior: HitTestBehavior.opaque,
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 16),
+                      const Text(
+                        'Thời gian',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          height: 1.2,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () {},
-                      behavior: HitTestBehavior.opaque,
-                      child: Row(
-                        children: [
-                          Text(
-                            '$time phút',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Color(0xff8C8C8C),
-                            ),
+                      const Spacer(),
+                      SizedBox(
+                        width: 100,
+                        child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          initialValue: '$time',
+                          textAlign: TextAlign.end,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Color(0xff8C8C8C),
+                            fontWeight: FontWeight.w400,
                           ),
-                          const SizedBox(width: 4),
-                          RotatedBox(
-                            quarterTurns: 3,
-                            child: SizedBox.square(
-                              dimension: 20,
-                              child: Assets.icons_lives_chevron_down.svg(),
-                            ),
+                          focusNode: _roundTimeNode,
+                          onChanged: (value) {
+                            if (value.trim().isEmpty) {
+                              setState(() {
+                                time = 0;
+                              });
+                            } else {
+                              setState(() {
+                                time = int.tryParse(value) ?? 0;
+                              });
+                            }
+                          },
+                          decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.zero,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 16),
-                  ],
+                      const Text(
+                        ' phút',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xff8C8C8C),
+                          height: 1.5,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 24),
-                Row(
-                  children: [
-                    const SizedBox(width: 16),
-                    const Text(
-                      'Thời gian nghỉ',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        height: 1.2,
-                        color: Colors.black,
+                GestureDetector(
+                  onTap: () {
+                    _roundBreakTimeNode.requestFocus();
+                  },
+                  behavior: HitTestBehavior.opaque,
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 16),
+                      const Text(
+                        'Thời gian nghỉ',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          height: 1.2,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () {},
-                      behavior: HitTestBehavior.opaque,
-                      child: Row(
-                        children: [
-                          Text(
-                            '$timeBreak' 's',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Color(0xff8C8C8C),
-                            ),
+                      const Spacer(),
+                      SizedBox(
+                        width: 100,
+                        child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          initialValue: '$timeBreak',
+                          textAlign: TextAlign.end,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Color(0xff8C8C8C),
+                            fontWeight: FontWeight.w400,
                           ),
-                          const SizedBox(width: 4),
-                          RotatedBox(
-                            quarterTurns: 3,
-                            child: SizedBox.square(
-                              dimension: 20,
-                              child: Assets.icons_lives_chevron_down.svg(),
-                            ),
+                          focusNode: _roundBreakTimeNode,
+                          onChanged: (value) {
+                            if (value.trim().isEmpty) {
+                              setState(() {
+                                timeBreak = 0;
+                              });
+                            } else {
+                              setState(() {
+                                timeBreak = int.tryParse(value) ?? 0;
+                              });
+                            }
+                          },
+                          decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.zero,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 16),
-                  ],
+                      const Text(
+                        's',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xff8C8C8C),
+                          height: 1.5,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
           bottomNavigationBar: ColoredBox(
             color: Colors.white,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-                widget.onGameStarted(
-                  Game(
-                    id: 0,
-                    roundCount: round,
-                    roundDurationSecond: time * 60,
-                    roundTimeBreak: timeBreak,
+            child: SafeArea(
+              top: false,
+              child: GestureDetector(
+                onTap: () {
+                  if (time <= 0 || timeBreak <= 0) {
+                    context.showToastMessage(
+                      'Vui lòng chọn thời gian',
+                      ToastMessageType.error
+                    );
+                    return;
+                  }
+                  Navigator.of(context).pop();
+                  widget.onGameStarted(
+                    Game(
+                      id: 0,
+                      roundCount: round,
+                      roundDurationSecond: time * 60,
+                      roundTimeBreak: timeBreak,
+                    ),
+                  );
+                },
+                behavior: HitTestBehavior.opaque,
+                child: Container(
+                  margin: const EdgeInsets.all(16.0),
+                  height: 48,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color(0xff015CB5),
+                        Color(0xff0E86FC),
+                      ],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
                   ),
-                );
-              },
-              behavior: HitTestBehavior.opaque,
-              child: Container(
-                margin: const EdgeInsets.all(16.0),
-                height: 48,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xff015CB5),
-                      Color(0xff0E86FC),
-                    ],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  ),
-                ),
-                alignment: Alignment.center,
-                child: const Text(
-                  'Bắt đầu DK',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Bắt đầu DK',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),

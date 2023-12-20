@@ -31,12 +31,21 @@ class _PkWinLoseBuilderState extends State<PkWinLoseBuilder> {
 
     if (diamonds.isEmpty) return widget.builder(PkGameStatus.draw);
 
+    final userWin = controller.members
+        .firstWhereOrNull((e) => e.info.userID == diamonds.first.userId);
+
+    if(diamonds.length == 1) {
+
+      if (userWin?.liveID == widget.liveID) {
+        return widget.builder(PkGameStatus.win);
+      }
+
+      return widget.builder(PkGameStatus.lose);
+    }
+
     if (diamonds.first.diamondCount == diamonds.last.diamondCount) {
       return widget.builder(PkGameStatus.draw);
     }
-
-    final userWin = controller.members
-        .firstWhereOrNull((e) => e.info.userID == diamonds.last.userId);
 
     if (userWin?.liveID == widget.liveID) {
       return widget.builder(PkGameStatus.win);
