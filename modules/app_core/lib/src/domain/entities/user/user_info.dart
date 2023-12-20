@@ -15,6 +15,7 @@ class UserInfo with _$UserInfo {
     required String phone,
     String? email,
     int? sexCode,
+    int? type,
   }) = _UserInfo;
 
   factory UserInfo.fromJson(Map<String, dynamic> json) =>

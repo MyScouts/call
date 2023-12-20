@@ -20,7 +20,8 @@ import 'package:injectable/injectable.dart';
 
 @singleton
 class ChatRoomCubit extends Cubit<ChatRoomState> {
-  ChatRoomCubit(this._chatUseCase, this._userUsecase, this.upgradeAccountUsecase, this.mediaPicker)
+  ChatRoomCubit(this._chatUseCase, this._userUsecase,
+      this.upgradeAccountUsecase, this.mediaPicker)
       : super(const ChatRoomState.loading());
 
   final int kPageSize = 20;
@@ -35,19 +36,23 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
       emit(const ChatRoomState.loading());
       if (conversationId == null && memberId != null) {
         final User? user = await _userUsecase.geSynctUserById(memberId);
-        final FriendStatusModel friendStatus = await _chatUseCase.getFriendStatus(userId: memberId);
-        final ResultModel newConversation = await _chatUseCase.createConversations(
+        final FriendStatusModel friendStatus =
+            await _chatUseCase.getFriendStatus(userId: memberId);
+        final ResultModel newConversation =
+            await _chatUseCase.createConversations(
           payload: NewConversationsPayload(
-            name: user.getdisplayName,
+            name: user.getDisplayName,
             type: 1,
             memberIds: [memberId],
           ),
         );
-        final conversationIdDetail =
-            await _chatUseCase.getConversationsDetail(conversationId: newConversation.result);
+        final conversationIdDetail = await _chatUseCase.getConversationsDetail(
+            conversationId: newConversation.result);
         _conversationId = newConversation.result;
         final response = await _chatUseCase.getMessages(
-            conversationId: newConversation.result as int, page: 1, pageSize: kPageSize);
+            conversationId: newConversation.result as int,
+            page: 1,
+            pageSize: kPageSize);
         emit(
           ChatRoomStateData(
             messages: response.items ?? [],
@@ -55,7 +60,10 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
             friendStatus: friendStatus,
             myType: conversationIdDetail.conversation.members
                     .firstWhereOrNull((element) =>
-                        getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id ==
+                        getIt
+                            .get<UserSharePreferencesUsecase>()
+                            .getUserInfo()
+                            ?.id ==
                         element.member.id)
                     ?.type ??
                 0,
@@ -66,11 +74,12 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
       } else {
         _conversationId = conversationId!;
         FriendStatusModel? friendStatus;
-        final conversationIdDetail =
-            await _chatUseCase.getConversationsDetail(conversationId: _conversationId!);
+        final conversationIdDetail = await _chatUseCase.getConversationsDetail(
+            conversationId: _conversationId!);
         if (conversationIdDetail.conversation.type == 1) {
           friendStatus = await _chatUseCase.getFriendStatus(
-              userId: conversationIdDetail.conversation.membersNotMe.first.member.id);
+              userId: conversationIdDetail
+                  .conversation.membersNotMe.first.member.id);
         }
         final response = await _chatUseCase.getMessages(
             conversationId: _conversationId!, page: 1, pageSize: kPageSize);
@@ -81,7 +90,10 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
               friendStatus: friendStatus,
               myType: conversationIdDetail.conversation.members
                       .firstWhereOrNull((element) =>
-                          getIt.get<UserSharePreferencesUsecase>().getUserInfo()?.id ==
+                          getIt
+                              .get<UserSharePreferencesUsecase>()
+                              .getUserInfo()
+                              ?.id ==
                           element.member.id)
                       ?.type ??
                   0,
@@ -110,7 +122,8 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
   Future<void> sendMessage(String message) async {
     try {
       _chatUseCase.newMessage(
-          conversationId: _conversationId!, payload: NewMessagePayload(message: message));
+          conversationId: _conversationId!,
+          payload: NewMessagePayload(message: message));
     } catch (e) {
       emit(ChatRoomState.error(e));
     }
@@ -119,7 +132,8 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
   void updateMessage(MessageModel message, {bool isLoading = false}) {
     state.mapOrNull((value) async {
       if (_conversationId == message.conversationId &&
-          value.messages.firstWhereOrNull((element) => element.messageId == message.messageId) ==
+          value.messages.firstWhereOrNull(
+                  (element) => element.messageId == message.messageId) ==
               null) {
         List<MessageModel> messages = [message, ...value.messages];
         if (!isLoading) {
@@ -129,8 +143,8 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
             message.type != 11 &&
             message.type != 1 &&
             message.type != 0) {
-          final conversationDetail =
-              await _chatUseCase.getConversationsDetail(conversationId: _conversationId!);
+          final conversationDetail = await _chatUseCase.getConversationsDetail(
+              conversationId: _conversationId!);
           emit(value.copyWith(
             conversation: conversationDetail.conversation,
             messages: messages,
@@ -164,7 +178,8 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
   }
 
   Future<void> reportUser(int userId, String content) async {
-    await _userUsecase.reportUser(userId: userId, payload: ReportUserPayload(content: content));
+    await _userUsecase.reportUser(
+        userId: userId, payload: ReportUserPayload(content: content));
   }
 
   Future<void> changeNameGroup(int conversationId, String name) async {
@@ -174,7 +189,8 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
   }
 
   Future<void> leave(int conversationId, bool isNotice) async {
-    await _chatUseCase.leaveChat(conversationId: conversationId, isNotice: isNotice);
+    await _chatUseCase.leaveChat(
+        conversationId: conversationId, isNotice: isNotice);
   }
 
   Future<String?> sendImage() async {
@@ -236,7 +252,8 @@ class ChatRoomCubit extends Cubit<ChatRoomState> {
     }
     await _chatUseCase.newMessage(
         conversationId: _conversationId!,
-        payload: NewMessagePayload(metadata: MetaDataDto(images: uploadImages)));
+        payload:
+            NewMessagePayload(metadata: MetaDataDto(images: uploadImages)));
   }
 
   Future<void> loadMessages() async {

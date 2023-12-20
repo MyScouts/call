@@ -45,7 +45,11 @@ class _Profile extends StatelessWidget {
       child: BlocSelector<UserProfileBloc, UserProfileState, bool>(
         selector: (state) => state.isPDone,
         builder: (ctx, isPDone) {
-          if (!isPDone) return const InfoEmpty();
+          if (!isPDone) {
+            return InfoEmpty(
+              isPDone: isPDone,
+            );
+          }
           return const ProfilePDoneScreen();
         },
       ),

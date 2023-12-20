@@ -46,6 +46,7 @@ class UserApiConstants {
   static const stringeeToken = "api/v1/call/stringee-token";
   static const userPublicInfo = "api/v1/user/user/{userId}/public-info";
   static const me = "api/v1/user/me";
+  static const userOnBoarding = "api/v1/onboarding/user/{userId}/ecom";
 }
 
 @RestApi()
@@ -161,4 +162,7 @@ abstract class UserApi {
 
   @GET(UserApiConstants.me)
   Future<GetMeResponse> getMe();
+
+  @GET(UserApiConstants.userOnBoarding)
+  Future<dynamic> getOnBoardingUser(@Path('userId') int userId);
 }

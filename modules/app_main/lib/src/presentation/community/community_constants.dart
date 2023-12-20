@@ -3,6 +3,8 @@ import 'package:app_main/src/presentation/community/community_coordinator.dart';
 import 'package:app_main/src/presentation/community/team_detail/bloc/team_detail_bloc.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/add_team_member_sheet.dart';
 import 'package:app_main/src/presentation/community/team_detail/pages/remove_member_sheet.dart';
+import 'package:app_main/src/presentation/general_setting/contracts/contract_constant.dart';
+import 'package:app_main/src/presentation/general_setting/general_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
@@ -110,7 +112,7 @@ extension CommunityTypeExt on CommunityType {
   }
 }
 
-enum UpdateGroupOption { edit, pendingRequest, relinquish }
+enum UpdateGroupOption { edit, pendingRequest, bossGroupContract, relinquish }
 
 extension UpdateGroupOptionExt on UpdateGroupOption {
   String get title {
@@ -119,6 +121,8 @@ extension UpdateGroupOptionExt on UpdateGroupOption {
         return 'Chỉnh sửa thông tin Group';
       case UpdateGroupOption.pendingRequest:
         return 'Yêu cầu cần phê duyệt';
+      case UpdateGroupOption.bossGroupContract:
+        return 'Hợp đồng Boss Group';
       case UpdateGroupOption.relinquish:
         return 'Từ chức Boss Group';
     }
@@ -127,8 +131,8 @@ extension UpdateGroupOptionExt on UpdateGroupOption {
   Color get textColor {
     switch (this) {
       case UpdateGroupOption.edit:
-        return const Color(0xFF212121);
       case UpdateGroupOption.pendingRequest:
+      case UpdateGroupOption.bossGroupContract:
         return const Color(0xFF212121);
       case UpdateGroupOption.relinquish:
         return AppColors.red3;
@@ -145,6 +149,8 @@ extension UpdateGroupOptionExt on UpdateGroupOption {
         );
       case UpdateGroupOption.pendingRequest:
         return await context.startGroupRequestList();
+      case UpdateGroupOption.bossGroupContract:
+        return await context.startContractView(type: TypeContract.isBossGroup);
       case UpdateGroupOption.relinquish:
         final getBossStatusBloc = context.read<GetBossStatusBloc>();
         return getBossStatusBloc

@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
+import 'package:app_main/src/data/models/responses/ask_join_team_response.dart';
 import 'package:app_main/src/data/models/responses/boss_team_relinquish_status_response.dart';
 import 'package:app_main/src/data/models/responses/join_request_response.dart';
 import 'package:app_main/src/data/models/responses/member_join_request.dart';
@@ -118,7 +119,7 @@ class CommunityUsecase {
     return await _communityRepository.replyGiveUpBossTeamRole(id, payload);
   }
 
-  Future<ConfirmResponse> askToJoinTeam(String id) async {
+  Future<AskJoinTeamResponse> askToJoinTeam(String id) async {
     return await _communityRepository.askToJoinTeam(id);
   }
 

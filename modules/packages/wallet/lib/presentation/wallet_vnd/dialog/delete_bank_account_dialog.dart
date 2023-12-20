@@ -13,13 +13,15 @@ class DeleteBankAccountDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: Colors.white,
+      surfaceTintColor: Colors.white,
       insetPadding: EdgeInsets.symmetric(horizontal: context.horizontal),
       shape: RoundedRectangleBorder(
         borderRadius: WalletConstant.borderRadius10,
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: context.horizontal,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 15,
           vertical: 10,
         ),
         child: Column(
@@ -70,7 +72,7 @@ class DeleteBankAccountDialog extends StatelessWidget {
                   child: TextButton(
                     style: TextButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
-                        vertical: 12,
+                        vertical: 15,
                         horizontal: 20,
                       ),
                       backgroundColor: const Color(0xFFF4F4F4),
@@ -90,13 +92,13 @@ class DeleteBankAccountDialog extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 20),
+                const SizedBox(width: 10),
                 Expanded(
                   child: TextButton(
                     style: TextButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 20,
+                        vertical: 15,
+                        horizontal: 12,
                       ),
                       backgroundColor: const Color(0xFFDE372D),
                       shape: RoundedRectangleBorder(

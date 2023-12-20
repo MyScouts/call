@@ -1898,15 +1898,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.8"
-  searchfield:
-    dependency: transitive
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "53c461f41b70270bc8b46e2ef2a6f5d9c1a8aa4f"
-      url: "https://github.com/FightTech-VN/searchfield.git"
-    source: git
-    version: "0.7.1"
   share_plus:
     dependency: transitive
     description:
@@ -2111,6 +2102,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  string_normalizer:
+    dependency: transitive
+    description:
+      name: string_normalizer
+      sha256: b4f97195966360987d5fbfe247d2e75d293e33887c449233ddb97eaa7e7163b3
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.1"
   string_scanner:
     dependency: transitive
     description:

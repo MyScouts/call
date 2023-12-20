@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 
-class InvitePkDialog extends StatelessWidget {
+class InvitePkDialog extends StatefulWidget {
   const InvitePkDialog({
     super.key,
     required this.user,
@@ -13,6 +15,31 @@ class InvitePkDialog extends StatelessWidget {
 
   final User user;
   final VoidCallback onPress;
+
+  @override
+  State<InvitePkDialog> createState() => _InvitePkDialogState();
+}
+
+class _InvitePkDialogState extends State<InvitePkDialog> {
+
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
+        _timer?.cancel();
+        if(mounted) Navigator.of(context).pop();
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +85,7 @@ class InvitePkDialog extends StatelessWidget {
                 children: [
                   WidgetSpan(
                     child: CircleNetworkImage(
-                      url: user.avatar ?? '',
+                      url: widget.user.avatar ?? '',
                       size: 20,
                       defaultImage: ImageWidget(
                         ImageConstants.defaultUserAvatar,
@@ -67,7 +94,7 @@ class InvitePkDialog extends StatelessWidget {
                   ),
                   TextSpan(
                     text:
-                        ' ${user.nickname ?? user.fullName ?? user.displayName ?? ''}',
+                        ' ${widget.user.nickname ?? widget.user.fullName ?? widget.user.displayName ?? ''}',
                     style: const TextStyle(
                       fontSize: 14,
                       color: Colors.black,
@@ -106,7 +133,7 @@ class InvitePkDialog extends StatelessWidget {
                 child: TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    onPress.call();
+                    widget.onPress.call();
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: const Color(0xff0E86FC),

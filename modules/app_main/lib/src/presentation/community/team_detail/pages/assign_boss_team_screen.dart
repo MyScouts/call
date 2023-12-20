@@ -151,7 +151,7 @@ class _AssignBossTeamScreenState extends State<AssignBossTeamScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    member.getdisplayName,
+                                    member.getDisplayName,
                                     style:
                                         context.textTheme.titleMedium!.copyWith(
                                       fontWeight: FontWeight.bold,

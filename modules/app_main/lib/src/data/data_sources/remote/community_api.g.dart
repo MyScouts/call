@@ -601,13 +601,13 @@ class _CommunityApi implements CommunityApi {
   }
 
   @override
-  Future<ConfirmResponse> askToJoinTeam({required String id}) async {
+  Future<AskJoinTeamResponse> askToJoinTeam({required String id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ConfirmResponse>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AskJoinTeamResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -623,7 +623,7 @@ class _CommunityApi implements CommunityApi {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ConfirmResponse.fromJson(_result.data!);
+    final value = AskJoinTeamResponse.fromJson(_result.data!);
     return value;
   }
 

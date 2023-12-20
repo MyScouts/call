@@ -91,7 +91,7 @@ extension BankAccountFieldExt on BankAccountField {
       case BankAccountField.bankName:
         return 'Tên ngân hàng';
       case BankAccountField.bankAccountNumber:
-        return 'Số tài khoản';
+        return 'Số thẻ/Số tài khoản';
       case BankAccountField.bankAccountHolder:
         return 'Họ và tên chủ tài khoản';
     }

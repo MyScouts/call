@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cross_file/cross_file.dart';
 import 'package:injectable/injectable.dart';
 import 'package:wallet/data/datasources/models/request/verify_otp_request.dart';
 import 'package:wallet/data/datasources/models/response/estimate_tax_response.dart';
@@ -80,5 +81,11 @@ class WalletVndRepositoryImpl implements WalletVndRepository {
       {required int id, required bool isDefault}) async {
     await _vndWalletApi
         .setDefaultBankAccount(id: id, body: {'isDefault': isDefault});
+  }
+
+  @override
+  Future<String> storageUploadUrl(XFile xFile, String prefix) async {
+    final res = await _vndWalletApi.storageUploadUrl(xFile, prefix);
+    return res;
   }
 }

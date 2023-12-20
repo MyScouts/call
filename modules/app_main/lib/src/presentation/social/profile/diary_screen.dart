@@ -11,7 +11,6 @@ import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 
 import '../social_constants.dart';
 
-
 class DiaryScreen extends StatefulWidget {
   static const String routeName = "diary";
   final String? userId;
@@ -43,7 +42,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
   void initState() {
     super.initState();
     _authInfo = _userCubit.currentUser!;
-    _userCubit.onboarding();
+    _userCubit.getOnboarding();
     _userId = int.parse(widget.userId ?? _authInfo.id.toString());
     _userByIdBloc.add(GetDetailDataParam1Event(_userId));
     _actionBloc.getFollowUser(userId: _userId);

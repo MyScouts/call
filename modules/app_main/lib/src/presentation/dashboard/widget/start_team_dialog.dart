@@ -66,13 +66,10 @@ class _StartTeamDialogState extends State<StartTeamDialog> {
   }
 
   _buildBody() {
-    return Builder(
-      builder: (context) {
-        final teamBlocState = context.watch<GetMyTeamsBloc>().state;
-
+    return BlocBuilder<GetMyTeamsBloc, GetListState>(
+      builder: (context, teamBlocState) {
         List<Team> teams =
-        teamBlocState is GetListDataSuccess<Team> ? teamBlocState.data : [];
-
+            teamBlocState is GetListDataSuccess<Team> ? teamBlocState.data : [];
         return Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -260,17 +257,17 @@ class _StartTeamDialogState extends State<StartTeamDialog> {
                   )
               ],
             ),
-            if (state is TeamDetailError || _teamIdCtrl.text.trim().isEmpty)
-              const SizedBox(height: 5),
-            if (state is TeamDetailError || _teamIdCtrl.text.trim().isEmpty)
-              Text(
-                _teamIdCtrl.text.trim().isEmpty
-                    ? "Vui lòng nhập ID Team"
-                    : "ID Team không tồn tại!",
-                style: context.textTheme.titleSmall!.copyWith(
-                  color: Colors.red,
-                ),
+            const SizedBox(height: 5),
+            Text(
+              (state is TeamDetailError || _teamIdCtrl.text.trim().isEmpty)
+                  ? _teamIdCtrl.text.trim().isEmpty
+                      ? "Vui lòng nhập ID Team"
+                      : "ID Team không tồn tại!"
+                  : "",
+              style: context.textTheme.titleSmall!.copyWith(
+                color: Colors.red,
               ),
+            ),
           ],
         );
       },

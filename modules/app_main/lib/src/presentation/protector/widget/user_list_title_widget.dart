@@ -22,7 +22,7 @@ class UserListTitleWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              user.getdisplayName,
+              user.getDisplayName,
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,

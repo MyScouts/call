@@ -15,12 +15,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:extended_nested_scroll_view/extended_nested_scroll_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 
 import '../blocs/my_profile_bloc.dart';
 import 'widgets/my_profile_create_post.dart';
 import 'components/ultility_tabs/medial_tabs/post_tab.dart';
-import 'components/ultility_tabs/medial_tabs/reels_tab.dart';
+import 'components/ultility_tabs/medial_tabs/film_tab.dart';
 import 'widgets/profile_avatar.dart';
 
 class MyProfileScreen extends StatefulWidget {
@@ -111,26 +113,45 @@ class _MyProfileScreenState extends State<MyProfileScreen>
                 return pinnedHeaderSliverHeightBuilder;
               },
               onlyOneScrollInBody: true,
-              body: Container(
-                color: AppColors.white,
-                child: TabBarView(
-                  controller: _medialTabController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    PostTab(
-                      postType: PostType.text,
-                      refresh: bloc.postTabRefresh,
-                      createPostPayload: bloc.createTextPostPayload,
-                    ),
-                    PostTab(
-                      postType: PostType.video,
-                      refresh: bloc.videoTabRefresh,
-                      createPostPayload: bloc.createVideoPostPayload,
-                    ),
-                    ReelsTab(),
-                  ],
-                ),
-              ),
+              body: BlocBuilder<MyProfileBloc, MyProfileState>(
+                  buildWhen: (previous, current) =>
+                      previous.userInfo != current.userInfo,
+                  builder: (context, state) {
+                    if (state.isNotExistUser()) {
+                      return Container(
+                        color: AppColors.white,
+                        child: const Center(child: LoadingWidget()),
+                      );
+                    }
+                    final userInfo = state.userInfo!;
+
+                    return Container(
+                      color: AppColors.white,
+                      child: TabBarView(
+                        controller: _medialTabController,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: [
+                          PostTab(
+                            postType: PostType.text,
+                            refresh: bloc.postTabRefresh,
+                            createPostPayload: bloc.createTextPostPayload,
+                            userInfo: userInfo,
+                          ),
+                          PostTab(
+                            postType: PostType.video,
+                            refresh: bloc.videoTabRefresh,
+                            createPostPayload: bloc.createVideoPostPayload,
+                            userInfo: userInfo,
+                          ),
+                          FilmTab(
+                            postType: PostType.film,
+                            refresh: bloc.filmTabRefresh,
+                            userInfo: userInfo,
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
             ),
           )),
     );
@@ -145,7 +166,7 @@ class _MyProfileScreenState extends State<MyProfileScreen>
       case PostType.video:
         bloc.videoTabRefresh.value = !bloc.videoTabRefresh.value;
       case PostType.film:
-        bloc.reelsTabRefresh.value = !bloc.reelsTabRefresh.value;
+        bloc.filmTabRefresh.value = !bloc.filmTabRefresh.value;
     }
 
     return Future.value(null);
@@ -192,7 +213,7 @@ class _MyProfileScreenState extends State<MyProfileScreen>
       titleSpacing: 0,
       title: Container(
         height: 56,
-        padding: const EdgeInsets.symmetric(horizontal: paddingHorizontal),
+        padding:  EdgeInsets.symmetric(horizontal: 16.w),
         child: BlocBuilder<MyProfileBloc, MyProfileState>(
             buildWhen: (previous, current) =>
                 previous.userInfo != current.userInfo ||
@@ -262,7 +283,7 @@ class _MyProfileScreenState extends State<MyProfileScreen>
     required double borderRadius,
   }) {
     return SliverPadding(
-      padding: const EdgeInsets.only(top: 16),
+      padding: EdgeInsets.only(top: 16.w),
       sliver: SliverToBoxAdapter(
         child: Column(
           children: [
@@ -288,10 +309,9 @@ class _MyProfileScreenState extends State<MyProfileScreen>
                       borderRadius: BorderRadius.all(Radius.circular(12)),
                       color: AppColors.grey71,
                     ),
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: paddingHorizontal),
+                    margin: EdgeInsets.symmetric(horizontal: 16.w),
                     padding: EdgeInsets.symmetric(
-                        vertical: paddingTopUltilityHeight, horizontal: 12),
+                        vertical: paddingTopUltilityHeight, horizontal: 12.w),
                     child: Row(
                       children: [
                         _buildItemUltility('Cá nhân', isSelected: true),

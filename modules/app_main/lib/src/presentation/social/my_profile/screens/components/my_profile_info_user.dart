@@ -1,9 +1,11 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/data/models/responses/follow_response.dart';
+import 'package:app_main/src/presentation/qr_code/qr_code_coordinator.dart';
 import 'package:app_main/src/presentation/social/following/following_coordinator.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 class MyProfileInfoUser extends StatelessWidget {
@@ -17,7 +19,7 @@ class MyProfileInfoUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final displayName = userInfo.getdisplayName;
+    final displayName = userInfo.getDisplayName;
     // final firstName = userInfo?.profile?.firstName ?? '';
     // final middleName = userInfo?.profile?.middleName ?? '';
     // final lastName = userInfo?.profile?.lastName ?? '';
@@ -166,23 +168,26 @@ class MyProfileInfoUser extends StatelessWidget {
                       ),
                     ),
                   const SizedBox(width: 7),
-                  Container(
-                    height: 28,
-                    width: 28,
-                    padding: const EdgeInsets.all(3),
-                    decoration: BoxDecoration(
-                      color: const Color(0XFFE8F0FE),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: ImageWidget(
-                      IconAppConstants.icQrCode,
+                  GestureDetector(
+                    onTap: () => context.startQrCode(userInfo: userInfo!),
+                    child: Container(
+                      height: 28,
+                      width: 28,
+                      padding: const EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                        color: const Color(0XFFE8F0FE),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ImageWidget(
+                        IconAppConstants.icQrCode,
+                      ),
                     ),
                   )
                 ],
               ),
               const SizedBox(height: 16),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Row(
                   children: [
                     _buildPeopleInfo(

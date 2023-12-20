@@ -9,10 +9,16 @@ class ThumbnailVideoPlayer extends StatefulWidget {
   const ThumbnailVideoPlayer({
     required this.videoType,
     required this.source,
+    this.isShowPlay = true,
+    this.width,
+    this.height,
     super.key,
   });
   final CustomVideoType videoType;
   final String source;
+  final bool isShowPlay;
+  final double? width;
+  final double? height;
 
   @override
   State<ThumbnailVideoPlayer> createState() => _ThumbnailVideoPlayerState();
@@ -58,11 +64,18 @@ class _ThumbnailVideoPlayerState extends State<ThumbnailVideoPlayer> {
         ? Stack(
             alignment: AlignmentDirectional.center,
             children: [
-              AspectRatio(
-                aspectRatio: videoPlayerController.value.aspectRatio,
-                child: VideoPlayer(videoPlayerController),
-              ),
-              _buildPlayIcon(),
+              if (widget.width == null && widget.height == null)
+                AspectRatio(
+                  aspectRatio: videoPlayerController.value.aspectRatio,
+                  child: VideoPlayer(videoPlayerController),
+                )
+              else
+                SizedBox(
+                  width: widget.width,
+                  height: widget.height,
+                  child: VideoPlayer(videoPlayerController),
+                ),
+              if (widget.isShowPlay) _buildPlayIcon(),
             ],
           )
         : const SizedBox.shrink();

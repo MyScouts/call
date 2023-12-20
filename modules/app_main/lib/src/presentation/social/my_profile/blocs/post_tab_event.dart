@@ -5,8 +5,12 @@ import 'package:app_main/src/presentation/social/my_profile/my_profile_constants
 abstract class PostTabEvent {}
 
 class PostTabInitiated extends PostTabEvent {
-  PostTabInitiated({required this.postType});
+  PostTabInitiated({
+    required this.postType,
+    required this.userInfo,
+  });
   final PostType postType;
+  final User userInfo;
 }
 
 class PostTabLoadMore extends PostTabEvent {}

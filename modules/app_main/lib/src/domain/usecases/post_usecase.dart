@@ -25,24 +25,27 @@ class PostUsecase {
     required int id,
     required int page,
     required String type,
+    bool isGetComment = true,
     int pageSize = 10,
   }) async {
     final posts = await _postRepository.getPostsByType(
         id: id, page: page, type: type, pageSize: pageSize);
     final newPosts = <Post>[];
 
-    for (final post in posts) {
-      final latestComment =
-          await _commentUsecase.getComments(postId: post.id!, page: 1);
-      if (latestComment.isNotEmpty) {
-        final newPost = post.copyWith(latestComment: latestComment.first);
-        newPosts.add(newPost);
-      } else {
-        newPosts.add(post);
+    if (isGetComment) {
+      for (final post in posts) {
+        final latestComment =
+            await _commentUsecase.getComments(postId: post.id!, page: 1);
+        if (latestComment.isNotEmpty) {
+          final newPost = post.copyWith(latestComment: latestComment.first);
+          newPosts.add(newPost);
+        } else {
+          newPosts.add(post);
+        }
       }
     }
 
-    return newPosts;
+    return isGetComment ? newPosts : posts;
   }
 
   Future<void> react({
@@ -59,12 +62,12 @@ class PostUsecase {
       for (var mediaFile in payload.mediaFiles!) {
         if (mediaFile != null) {
           try {
-            final url =
-                await _resourceApi.storageUploadUrl(XFile('mediaFile.path'), '');
+            final url = await _resourceApi.storageUploadUrl(
+                XFile(mediaFile.path), '');
             urlMedias.add(url);
           } catch (e) {
             throw ApiException(
-              message: 'Có lỗi khi upload ảnh',
+              message: 'Có lỗi khi upload phương tiện',
             );
           }
         }

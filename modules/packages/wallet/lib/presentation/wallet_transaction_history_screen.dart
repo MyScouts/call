@@ -106,6 +106,7 @@ class _WalletTransactionHistoryScreenState
                       },
                       onFilterSelected: (FilterOption value) {
                         _selectedFilter = value;
+
                         _bloc.add(
                           WalletEvent.filterTransaction(
                             filter: _selectedFilter,

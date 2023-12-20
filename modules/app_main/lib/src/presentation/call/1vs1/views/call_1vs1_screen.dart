@@ -31,7 +31,8 @@ class Call1vs1Screen extends StatefulWidget {
   State<Call1vs1Screen> createState() => Call1vs1ScreenState();
 }
 
-class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with SinglePlayerPlayingMixin {
+class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen>
+    with SinglePlayerPlayingMixin {
   final _audioController = EasyAudioController();
 
   bool ringtonePlaying = false;
@@ -48,7 +49,8 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with Single
   DeviceService get deviceService => injector.get();
 
   @override
-  Color get buttomNavigationBarColor => callType == CallType.audio ? Colors.blue : Colors.black;
+  Color get buttomNavigationBarColor =>
+      callType == CallType.audio ? Colors.blue : Colors.black;
 
   @override
   bool get isDark => true;
@@ -401,7 +403,9 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with Single
     return _buildIconButton(
       size: size ?? 72,
       iconSize: 72,
-      icon: state.callState.isSpeaker ? IconAppConstants.icVolumeOn : IconAppConstants.icVolume,
+      icon: state.callState.isSpeaker
+          ? IconAppConstants.icVolumeOn
+          : IconAppConstants.icVolume,
       enable: !state.isLeaving,
       onPressed: onPressSpeaker,
     );
@@ -427,7 +431,9 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with Single
     return _buildIconButton(
       size: size ?? 72,
       iconSize: 72,
-      icon: state.callState.isMute ? IconAppConstants.icMicOff : IconAppConstants.icMicro,
+      icon: state.callState.isMute
+          ? IconAppConstants.icMicOff
+          : IconAppConstants.icMicro,
       enable: state.isInCall && !state.isLeaving,
       onPressed: onPressMic,
     );
@@ -468,7 +474,8 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with Single
         iconSize: 40,
         icon: IconAppConstants.icSwitchCamera,
         onPressed: onSwitchCamera,
-        enable: state.isInCall && !state.isLeaving && state.callState.hasLocalTrack,
+        enable:
+            state.isInCall && !state.isLeaving && state.callState.hasLocalTrack,
       );
     }
     return const SizedBox(
@@ -517,7 +524,8 @@ class Call1vs1ScreenState extends StatefulWidgetBase<Call1vs1Screen> with Single
           border: !enableBorder
               ? null
               : Border.all(
-                  color: enable ? color ?? Colors.transparent : Colors.transparent,
+                  color:
+                      enable ? color ?? Colors.transparent : Colors.transparent,
                   width: 1,
                 ),
         ),

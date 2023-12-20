@@ -1,10 +1,9 @@
-import 'package:app_core/app_core.dart';
-import 'package:app_main/src/core/extensions/list_extension.dart';
-import 'package:app_main/src/presentation/live/live_coordinator.dart';
+import 'dart:ui' as ui;
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:app_main/src/presentation/live/presentation/live_reaction/live_reaction_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/setting/setting_sheet.dart';
 import 'package:app_main/src/presentation/live/presentation/tool/live_tools_sheet.dart';
+import 'package:app_main/src/presentation/live/presentation/widget/mashop_status_builder.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -62,7 +61,39 @@ class LiveBottomAction extends StatelessWidget {
                       children: [
                         SizedBox(
                           width: ScreenUtil().screenWidth * 3 / 4,
-                          child: const LiveCommentWidget(),
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              const LiveCommentWidget(),
+                              // Positioned(
+                              //   top: 0,
+                              //   left: -16,
+                              //   right: -100,
+                              //   child: ClipRect(
+                              //     child: BackdropFilter(
+                              //       filter: ui.ImageFilter.blur(
+                              //         sigmaX: 0,
+                              //         sigmaY: 0
+                              //       ),
+                              //       child: Container(
+                              //         height: 100,
+                              //         width: double.infinity,
+                              //         decoration: BoxDecoration(
+                              //             gradient: LinearGradient(
+                              //               colors: [
+                              //                 const Color(0xff042E49),
+                              //                 Colors.white.withOpacity(0.0),
+                              //               ],
+                              //               begin: Alignment.topCenter,
+                              //               end: Alignment.bottomCenter,
+                              //             )
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   )
+                              // ),
+                            ],
+                          ),
                         ),
                         Expanded(
                           child: GestureDetector(
@@ -85,32 +116,42 @@ class LiveBottomAction extends StatelessWidget {
                               icon: ImageWidget(IconAppConstants.icLiveComment),
                               onPressed: controller.enableMessage,
                             ),
-                            LiveButtonAction(
-                              icon: ImageWidget(
-                                IconAppConstants.icLiveMarshop,
-                              ),
-                              onPressed: () {},
+                            MarShopStatusBuilder(
+                              uid: controller.hostID,
+                              builder: (isMarShop) {
+                                if (isMarShop) {
+                                  return Row(
+                                    children: [
+                                      const SizedBox(width: 10),
+                                      LiveButtonAction(
+                                        icon: ImageWidget(
+                                          IconAppConstants.icLiveMarshop,
+                                        ),
+                                        onPressed: () {},
+                                      ),
+                                    ],
+                                  );
+                                }
+
+                                return const SizedBox.shrink();
+                              },
                             ),
-                            if (controller.me.value.isOwner)
+                            if (controller.me.value.isOwner) ...[
+                              const SizedBox(width: 10),
                               LiveButtonAction(
                                 icon: ImageWidget(IconAppConstants.icLiveShare),
                                 onPressed: () {},
+                              )
+                            ],
+                            const SizedBox(width: 10),
+                            LiveButtonAction(
+                              icon: ImageWidget(
+                                IconAppConstants.icLiveMenu,
                               ),
-                            // if (!controller.me.value.isOwner)
-                            //   LiveButtonAction(
-                            //     icon: ImageWidget(IconAppConstants.icLive2User),
-                            //     onPressed: () {
-                            //       context.showBottomSheetLive(controller,
-                            //           index: 1);
-                            //     },
-                            //   ),
-                              LiveButtonAction(
-                                icon: ImageWidget(
-                                  IconAppConstants.icLive2User,
-                                ),
-                                onPressed: () => liveSetting(context),
-                              ),
-                            if (controller.me.value.isOwner)
+                              onPressed: () => liveSetting(context),
+                            ),
+                            if (controller.me.value.isOwner) ...[
+                              const SizedBox(width: 10),
                               LiveButtonAction(
                                 bgColor: const Color(0xff4B84F7),
                                 icon: ImageWidget(IconAppConstants.icLiveQr),
@@ -118,17 +159,11 @@ class LiveBottomAction extends StatelessWidget {
                                   liveTool(context);
                                 },
                               ),
-                            if (!controller.me.value.isOwner)
-                              LiveButtonAction(
-                                icon: ImageWidget(
-                                  IconAppConstants.icLiveMenu,
-                                ),
-                                onPressed: () {},
-                              ),
+                            ],
                             const Spacer(),
                             if (!controller.me.value.isOwner)
                               const LiveRoseButton(),
-                          ].separated(const SizedBox(width: 10)),
+                          ],
                         ),
                       ),
                       if (!controller.me.value.isOwner) const LiveGiftButton(),

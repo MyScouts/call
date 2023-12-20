@@ -87,7 +87,7 @@ class _BankAccountDetailsScreenState extends State<BankAccountDetailsScreen> {
                         qrImage: widget.bankAccount.qrImage,
                       ),
                       setDefaultBankAccountWidget(),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 40),
                       SizedBox(
                         width: double.infinity,
                         child: TextButton(
@@ -141,7 +141,7 @@ class _BankAccountDetailsScreenState extends State<BankAccountDetailsScreen> {
           Text(
             bankAccountField.title,
             style: context.text.bodyMedium?.copyWith(
-              color: WalletTheme.grey72,
+              color: const Color(0xFF6E6E6E),
               fontSize: 14,
               height: 20 / 14,
             ),
@@ -190,17 +190,17 @@ class _BankAccountDetailsScreenState extends State<BankAccountDetailsScreen> {
         return Row(
           children: [
             Text(
-              'Tài khoản thanh toán mặc định',
-              style: context.text.titleMedium?.copyWith(
-                color: WalletTheme.greyTextColor,
+              'Tài khoản mặc định thanh toán',
+              style: context.text.bodyMedium?.copyWith(
+                color: const Color(0xFF6E6E6E),
                 fontSize: 14,
-                fontWeight: FontWeight.w500,
+                height: 20 / 14,
               ),
             ),
             const Spacer(),
             CupertinoSwitch(
               value: isDefault,
-              activeColor: AppColors.blue10,
+              activeColor: const Color(0xFF00A65F),
               onChanged: (value) {
                 isDefault = value;
                 if (widget.bankAccount.id != null) {
