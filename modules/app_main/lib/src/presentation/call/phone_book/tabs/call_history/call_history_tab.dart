@@ -37,11 +37,14 @@ class CallHistoryTabState extends State<CallHistoryTab> {
           }
           return ListView.separated(
               itemBuilder: (_, index) {
-                if(index == data.length && canLoadMore) {
+                if (index == data.length && canLoadMore) {
                   _cubit.loadMore();
                   return const LoadingWidget();
                 }
-                return CallHistoryWidget(data: data[index]);
+                return CallHistoryWidget(
+                  data: data[index],
+                  cubit: _cubit,
+                );
               },
               separatorBuilder: (_, __) => kSpacingHeight12,
               itemCount: canLoadMore ? data.length + 1 : data.length);

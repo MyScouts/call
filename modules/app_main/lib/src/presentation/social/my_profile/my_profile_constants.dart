@@ -1,16 +1,19 @@
+import 'package:app_main/src/domain/entities/media/media_file.dart';
 import 'package:design_system/design_system.dart';
 
 class MyProfileConstant {
-  static const int textPostPageSize = 5;
+  static const int textPostPageSize = 10;
+  static const int filmPageSize = 10;
 
-  static const int pDoneSubjectLength = 1000; // 1000 từ
+
+  static const int pDoneSubjectLength = 50; // 50 từ
   static const int pDoneContentLength = 1000; // 1000 từ
   static const int pDoneImagesLength = 50; // 50 ảnh
   static const int pDoneVideoSecondsDuration = 1800; // 30 phút
   static const int pDoneFilmSecondsDuration = 420; // 7 phút
 
 
-  static const int subjectLength = 1000; // 1000 từ
+  static const int subjectLength = 50; // 50 từ
   static const int contentLength = 1000; // 1000 từ
   static const int imagesLength = 20; // 20 ảnh
   static const int videoSecondsDuration = 600; // 10 phút
@@ -34,6 +37,104 @@ class MyProfileConstant {
 
     return '$totalReact người khác';
   }
+
+   static bool inputRequired({
+    required List<MediaFile?>? mediaFiles,
+    required int imagesLength,
+    required int videoSecondsDuration,
+    required int filmSecondsDuration,
+    required PostType postType,
+    required Function() onErrorImagesLength,
+    required Function() onErrorVideoSecondsDuration,
+    required Function() onErrorFilmSecondsDuration,
+  }) {
+    if (mediaFiles != null) {
+      switch (postType) {
+        case PostType.text:
+          if (mediaFiles.length > imagesLength) {
+            onErrorImagesLength();
+            return false;
+          }
+        case PostType.video:
+          for (final file in mediaFiles) {
+            if (file!.videoDuration.inSeconds > videoSecondsDuration) {
+              onErrorVideoSecondsDuration();
+              return false;
+            }
+          }
+        case PostType.film:
+          for (final file in mediaFiles) {
+            if (file!.videoDuration.inSeconds > filmSecondsDuration) {
+              onErrorFilmSecondsDuration();
+              return false;
+            }
+          }
+      }
+
+      return true;
+    }
+
+    return false;
+  }
+
+  static InputRequired checkInput({
+    required List<MediaFile?>? mediaFiles,
+    required bool isPDone,
+    required PostType postType,
+  }){
+    bool canPost = false;
+    String errorMessage = '';
+     if (isPDone) {
+      canPost = inputRequired(
+        mediaFiles: mediaFiles,
+        postType: postType,
+        imagesLength: MyProfileConstant.pDoneImagesLength,
+        videoSecondsDuration: MyProfileConstant.pDoneVideoSecondsDuration,
+        filmSecondsDuration: MyProfileConstant.pDoneFilmSecondsDuration,
+        onErrorImagesLength: () {
+          errorMessage =
+              'Tài khoản PDone chỉ được đăng tối đa ${MyProfileConstant.pDoneImagesLength} ảnh';
+        },
+        onErrorVideoSecondsDuration: () {
+          errorMessage =
+              'Tài khoản PDone chỉ được đăng video tối đa ${MyProfileConstant.pDoneVideoSecondsDuration / 60} phút';
+        },
+        onErrorFilmSecondsDuration: () {
+          errorMessage =
+              'Tài khoản PDone chỉ được đăng thước phim tối đa ${MyProfileConstant.pDoneFilmSecondsDuration / 60} phút';
+        },
+      );
+    } else {
+      canPost = inputRequired(
+        mediaFiles: mediaFiles,
+        postType: postType,
+        imagesLength: MyProfileConstant.imagesLength,
+        videoSecondsDuration: MyProfileConstant.videoSecondsDuration,
+        filmSecondsDuration: MyProfileConstant.filmSecondsDuration,
+        onErrorImagesLength: () {
+          errorMessage =
+              'Tài khoản thường chỉ được đăng tối đa ${MyProfileConstant.imagesLength} ảnh';
+        },
+        onErrorVideoSecondsDuration: () {
+          errorMessage =
+              'Tài khoản thường chỉ được đăng video tối đa ${MyProfileConstant.videoSecondsDuration / 60} phút';
+        },
+        onErrorFilmSecondsDuration: () {
+          errorMessage =
+              'Tài khoản thường chỉ được đăng thước phim tối đa ${MyProfileConstant.filmSecondsDuration} giây';
+        },
+      );
+    }
+
+    return InputRequired(canPost: canPost, errorMessage: errorMessage);
+  }
+}
+
+class InputRequired{
+  final bool canPost;
+  final String errorMessage;
+
+  InputRequired({required this.canPost, required this.errorMessage});
 }
 
 enum PostType {

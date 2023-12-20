@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cross_file/cross_file.dart';
 import 'package:injectable/injectable.dart';
 import 'package:wallet/data/datasources/models/response/onboarding_response.dart';
 
@@ -37,8 +38,13 @@ class WalletVndUseCase {
     return _walletVndRepository.getOtp();
   }
 
-  Future<String> uploadImage(File image) {
-    return _walletVndRepository.uploadImage(image);
+  // Future<String> uploadImage(File image) {
+  //   return _walletVndRepository.uploadImage(image);
+  // }
+  Future<String> storageUploadUrl(String filePath, String prefix) async {
+    final res =
+        await _walletVndRepository.storageUploadUrl(XFile(filePath), prefix);
+    return res;
   }
 
   Future<BankAccount> addBankAccount(AddBankAccountRequest request) {

@@ -117,7 +117,7 @@ class _$JoinRequestResponseImpl implements _JoinRequestResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$JoinRequestResponseImpl &&
@@ -296,7 +296,7 @@ class _$JoinRequestImpl implements _JoinRequest {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$JoinRequestImpl &&

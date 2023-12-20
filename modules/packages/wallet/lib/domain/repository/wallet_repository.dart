@@ -11,7 +11,7 @@ abstract class WalletRepository {
 
   Future<List<TransactionItem>> getWalletTransactionList({
     required WalletType walletType,
-    WalletTransactionsRequest? request,
+    required WalletTransactionsRequest request,
   });
 
   Future<TransactionItem> getTransactionDetails(String id);

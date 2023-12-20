@@ -7,6 +7,7 @@ import 'package:app_main/src/presentation/social/my_profile/blocs/post_tab_state
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:app_main/src/presentation/social/my_profile/my_profile_coordinator.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/common/subordinate_scroll.dart';
+import 'package:app_main/src/presentation/social/my_profile/screens/widgets/empty_post.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/post_header_user_info.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/post_video_thumbnail_widget.dart';
 import 'package:app_main/src/presentation/social/my_profile/screens/widgets/react_comment_widget.dart';
@@ -27,11 +28,13 @@ class PostTab extends StatefulWidget {
     required this.postType,
     required this.refresh,
     required this.createPostPayload,
+    required this.userInfo,
     super.key,
   });
   final PostType postType;
   final ValueNotifier<bool> refresh;
   final ValueNotifier<CreatePostPayload?> createPostPayload;
+  final User userInfo;
 
   @override
   State<PostTab> createState() => _PostTabState();
@@ -46,7 +49,10 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
     super.initState();
 
     _initController();
-    bloc.add(PostTabInitiated(postType: widget.postType));
+    bloc.add(PostTabInitiated(
+      postType: widget.postType,
+      userInfo: widget.userInfo,
+    ));
     _onListener();
   }
 
@@ -82,8 +88,6 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
-    final paddingLineBottom = MediaQuery.viewPaddingOf(context).bottom;
-
     super.build(context);
 
     return BlocProvider(
@@ -103,7 +107,7 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
             }
 
             if (state.isEmpty()) {
-              return _buildEmptyPosts(paddingLineBottom);
+              return EmptyPost(postType: widget.postType);
             }
 
             return scrollController == null
@@ -127,16 +131,17 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                if (posts!.isNotEmpty)
-                                  const SizedBox(height: 16),
+                                if (posts!.isNotEmpty) SizedBox(height: 16.w),
                                 if (newPost != null)
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      const Padding(
+                                      Padding(
                                         padding: EdgeInsets.only(
-                                            left: 16, right: 16, bottom: 16),
+                                            left: 16.w,
+                                            right: 16.w,
+                                            bottom: 16.w),
                                         child: LinearProgressIndicator(
                                           value: null,
                                         ),
@@ -168,30 +173,6 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
     );
   }
 
-  Padding _buildEmptyPosts(double paddingLineBottom) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: paddingLineBottom),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(height: 10),
-          ImageWidget(
-            IconAppConstants.icDoubleImage,
-            width: 80,
-            height: 80,
-          ),
-          const Text(
-            'Chưa có bài viết nào',
-            style: TextStyle(
-              fontSize: 14,
-              color: AppColors.grey76,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildPost(Post post, {bool isNewPost = false}) {
     bool hasMedia = post.getListMedia.isNotEmpty;
     if (isNewPost) {
@@ -203,7 +184,7 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -280,7 +261,7 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(right: 16),
+              padding: EdgeInsets.only(right: 16.w),
               child: ProfileAvatar(
                 avatarUrl: latestComment.user.getUserAvatar,
                 size: 42,
@@ -305,7 +286,7 @@ class _PostTabState extends State<PostTab> with AutomaticKeepAliveClientMixin {
                               child: Row(
                                 children: [
                                   Text(
-                                    latestComment.user.getdisplayName,
+                                    latestComment.user.getDisplayName,
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,

@@ -7,11 +7,11 @@ import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/payloads/social/react_payload.dart';
 import 'package:app_main/src/domain/usecases/comment_usecase.dart';
 import 'package:app_main/src/domain/usecases/post_usecase.dart';
-import 'package:app_main/src/domain/usecases/user_usecase.dart';
 import 'package:injectable/injectable.dart';
 import 'package:localization/generated/l10n.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:wallet/core/networking/exception/api_exception.dart';
 
 import '../my_profile_constants.dart';
 import 'post_tab_event.dart';
@@ -19,16 +19,12 @@ import 'post_tab_state.dart';
 
 @injectable
 class PostTabBloc extends CoreBloc<PostTabEvent, PostTabState> {
-  final UserUsecase _userUsecase;
   final PostUsecase _postUsecase;
   final CommentUsecase _commentUsecase;
-  final UserUsecase _userRepository;
 
   PostTabBloc(
-    this._userUsecase,
     this._postUsecase,
     this._commentUsecase,
-    this._userRepository,
   ) : super(PostTabState()) {
     on<PostTabInitiated>(onPostTabInitiated);
     on<PostTabLoadMore>(onPostTabLoadmore);
@@ -46,13 +42,6 @@ class PostTabBloc extends CoreBloc<PostTabEvent, PostTabState> {
           .switchMap(mapper),
     );
     on<CreateNewPost>(onCreateNewPost);
-
-    // on<Search>(
-    //   onSearch,
-    //   transformer: (event, mapper) => event
-    //       .debounceTime(const Duration(milliseconds: 150))
-    //       .switchMap(mapper),
-    // );
   }
 
   int _page = 1;
@@ -61,8 +50,6 @@ class PostTabBloc extends CoreBloc<PostTabEvent, PostTabState> {
   final RefreshController _controller = RefreshController();
   RefreshController get controller => _controller;
 
-  late StreamController<bool> isScrolledController =
-      StreamController.broadcast();
   late StreamController<int> switchTabController = StreamController.broadcast();
 
   void onPostTabInitiated(
@@ -72,36 +59,20 @@ class PostTabBloc extends CoreBloc<PostTabEvent, PostTabState> {
     emit(state.copyWith(
       hasLoadMore: true,
       currentPostType: event.postType,
+      userInfo: event.userInfo,
     ));
 
-    await getProfile(emit);
     await getPosts(event.postType, emit);
 
-    // if(event.createPostPayload != null){
-    //   add(CreateNewPost(createPostPayload: event.createPostPayload!));
-    // }
   }
 
-  FutureOr<void> getProfile(Emitter<PostTabState> emit) async {
-    final userInfo = await _userUsecase.getProfile();
-    emit(state.copyWith(
-      userInfo: userInfo,
-    ));
-    if (userInfo != null) {
-      final userFollowDetail =
-          await _userRepository.getFollowUser(userInfo.id!);
-      emit(state.copyWith(
-        userInfo: userInfo,
-        userFollowDetail: userFollowDetail,
-      ));
-    }
-  }
 
   FutureOr<void> getPosts(PostType postType, Emitter<PostTabState> emit) async {
     final posts = await _postUsecase.getPostsByType(
       id: state.userInfo!.id!,
       page: _page,
       type: postType.name,
+      pageSize: MyProfileConstant.textPostPageSize,
     );
 
     emit(state.copyWith(posts: posts));
@@ -114,6 +85,7 @@ class PostTabBloc extends CoreBloc<PostTabEvent, PostTabState> {
         id: state.userInfo!.id!,
         page: _page,
         type: state.currentPostType.name,
+        pageSize: MyProfileConstant.textPostPageSize,
       );
 
       bool hasLoadMore = true;
@@ -177,15 +149,36 @@ class PostTabBloc extends CoreBloc<PostTabEvent, PostTabState> {
       newPost = await _postUsecase.createPost(event.createPostPayload);
       newPost = newPost.copyWith(user: state.userInfo);
       _totalNewPost++;
+      emit(state.copyWith(
+        newPost: null,
+        posts: [newPost, ...state.posts!],
+        postMediaFiles: [],
+      ));
+    } on ApiException catch (e) {
+      AppCoordinator.rootNavigator.currentContext?.showToastMessage(
+        e.message,
+        ToastMessageType.error,
+      );
+      emit(state.copyWith(
+        newPost: null,
+        postMediaFiles: [],
+      ));
+    } on DioException catch (_) {
+      AppCoordinator.rootNavigator.currentContext?.showToastMessage(
+        S.current.messages_server_internal_error.capitalize(),
+        ToastMessageType.error,
+      );
+      emit(state.copyWith(
+        newPost: null,
+        postMediaFiles: [],
+      ));
     } catch (e) {
       AppCoordinator.rootNavigator.currentContext?.showToastMessage(
         S.current.messages_server_internal_error.capitalize(),
         ToastMessageType.error,
       );
-    } finally {
       emit(state.copyWith(
         newPost: null,
-        posts: [newPost, ...state.posts!],
         postMediaFiles: [],
       ));
     }
@@ -207,8 +200,6 @@ class PostTabBloc extends CoreBloc<PostTabEvent, PostTabState> {
     emit(state.copyWith(
       hasLoadMore: true,
     ));
-
-    await getProfile(emit);
 
     await getPosts(state.currentPostType, emit);
   }

@@ -24,13 +24,12 @@ dependencies:
     path: ../design_system
   localization:
     path: ../localization
-  reorderable:
-    path: ../reorderable
   staggered_reorderable:
     path: ../staggered_reorderable
+  reorderable:
+    path: ../reorderable
   easy_audio:
     path: ../plugins/easy_audio
-
   wallet:
     path: ../packages/wallet
 
@@ -89,9 +88,6 @@ dependencies:
   extended_nested_scroll_view: ^6.0.0
   pull_to_refresh: ^2.0.0
   camera: ^0.10.5+5
-  google_mlkit_text_recognition: ^0.11.0
-  google_ml_kit: ^0.16.3
-  google_mlkit_commons: ^0.6.1
   auto_size_text: ^3.0.0
   flutter_keyboard_visibility: ^5.4.1
   file_picker: ^6.1.1
@@ -122,7 +118,8 @@ dependencies:
   auto_animated_list:
     path: ../auto_animated_list
   video_player: ^2.8.1
-  
+  syncfusion_flutter_pdfviewer: ^23.1.39
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

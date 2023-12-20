@@ -15,6 +15,7 @@ import 'package:wallet/presentation/shared/widgets/toast_message/toast_message.d
 import 'package:wallet/presentation/wallet_point/wallet_point_coodinator.dart';
 import 'package:wallet/presentation/wallet_point/point_agency/bloc/agency_bloc.dart';
 import '../../../../../wallet.dart';
+import '../../../../core/configuratons/configurations.dart';
 import '../../../../core/theme/wallet_theme.dart';
 import '../../../../core/utils/deboun_callback.dart';
 import '../../../../core/utils/input_formatter.dart';
@@ -56,6 +57,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
   @override
   void initState() {
     _agencyBloc.add(AgencyEvent.getAgencyInfo(widget.agencyId));
+    _userIDController.text = WalletInjectedData.user.pDoneId ?? '';
     super.initState();
   }
 
@@ -70,6 +72,12 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
   void handleExchangeTap() {
     final money = num.tryParse(_moneyController.text.replaceAll('.', '')) ?? 0;
     final coin = num.tryParse(_coinController.text.replaceAll('.', '')) ?? 0;
+
+    if (bankAccount == null) {
+      showToastMessage(
+          'Bạn phải chọn phương thức thanh toán', ToastMessageType.warning);
+      return;
+    }
 
     if (money + coin == 0) {
       showToastMessage('Số quy đổi không hợp lệ', ToastMessageType.warning);
@@ -325,7 +333,9 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                     fit: BoxFit.fill,
                     width: 16,
                   ),
-                  const SizedBox(width: 8,),
+                  const SizedBox(
+                    width: 8,
+                  ),
                   Text(
                     'Liên hệ',
                     style: context.textTheme.titleLarge!
@@ -397,7 +407,7 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
         children: [
           _buildReceiveUser(context),
           const SizedBox(
-            height: 24,
+            height: 8,
           ),
           _buildInputCoins(context),
         ],
@@ -451,8 +461,8 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
       controller: _userIDController,
       required: false,
       shouldEnabled: true,
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9]"))
+      inputFormatters: const [
+        // FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9]"))
       ],
       onChanged: (value) {
         onValidation();
@@ -477,8 +487,15 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
         ),
         TextFormField(
           controller: _coinController,
+          keyboardType: TextInputType.number,
           onChanged: (val) {
-            _onEstCoin();
+            _moneyController.clear();
+            if ((int.tryParse(val.replaceAll('.', '')) ?? 0) >
+                (agency.coinAgency.availableCoin ?? 0)) {
+              _coinController.text = agency.coinAgency.availableCoin
+                  .toAppCurrencyString(isWithSymbol: false);
+              _onEstCoin();
+            }
           },
           style: context.textTheme.titleLarge!.copyWith(
             color: AppColors.blue33,
@@ -577,7 +594,10 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
         ),
         TextFormField(
           controller: _moneyController,
+          keyboardType: TextInputType.number,
           onChanged: (value) {
+            _coinController.clear();
+
             _onEstCoin();
           },
           style: context.textTheme.titleLarge!.copyWith(
@@ -631,6 +651,17 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
           return state.maybeWhen(
             orElse: () => Container(),
             estCoin: (estCoin) {
+              if (((estCoin.coin + estCoin.bonusCoin)) >
+                  (agency.coinAgency.availableCoin ?? 0)) {
+                _moneyController.clear();
+                _coinController.text = agency.coinAgency.availableCoin
+                    .toAppCurrencyString(isWithSymbol: false);
+                print(' _coinController.text : ${ _coinController.text}');
+                _agencyBloc.add(AgencyEvent.est(
+                    widget.agencyId,
+                    int.tryParse(_moneyController.text.replaceAll('.', '')) ?? 0,
+                    int.tryParse(_coinController.text.replaceAll('.', '')) ?? 0));
+              }
               return Padding(
                 padding: const EdgeInsets.only(top: 8, left: 16),
                 child: Row(
@@ -709,12 +740,10 @@ class _AgencyInfoScreenState extends State<AgencyInfoScreen>
                     img: bankAccount!.bank?.logo ?? '')
                 : null,
             onSelected: (value) {
-              if (value != null) {
-                bankAccount = value;
-                Future.delayed(const Duration(milliseconds: 200)).then((value) {
-                  setState(() {});
-                });
-              }
+              bankAccount = value;
+              Future.delayed(const Duration(milliseconds: 200)).then((value) {
+                setState(() {});
+              });
             },
             onChanged: (val) {},
           )

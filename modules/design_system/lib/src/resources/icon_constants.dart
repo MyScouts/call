@@ -203,8 +203,19 @@ class IconAppConstants {
 
   static String icRadioButtonCheck = IconApp.icRadioButtonCheck.path;
   static String icRadioButton = IconApp.icRadioButton.path;
+  static String icBlockAccount = IconApp.icBlockAccount.path;
+  static String icEdit = IconApp.icEdit.path;
+  static String icLeaveMute = IconApp.icLeaveMute.path;
+  static String icReportGroup = IconApp.icReportGroup.path;
+  static String icKick = IconApp.icKick.path;
+  static String icKickMute = IconApp.icKickMute.path;
+  static String icSetAdmin = IconApp.icSetAdmin.path;
+  static String icSetSecondAdmin = IconApp.icSetSecondAdmin.path;
+  static String icRemoveSecondAdmin = IconApp.icRemoveSecondAdmin.path;
+  static String icSaved = IconApp.icSaved.path;
+  static String icLiked = IconApp.icLiked.path;
+  static String icPlay = IconApp.icPlay.path;
 
-  
 }
 
 enum IconApp {
@@ -359,9 +370,6 @@ enum IconApp {
   icP('assets/icons/ic_p.png'),
   icC('assets/icons/ic_c.png'),
   icE('assets/icons/ic_e.png'),
-  icLeaveTeam('assets/icons/ic_leave_team.svg'),
-  icDeleteChat('assets/icons/ic_delete_chat.svg'),
-  icReportChat('assets/icons/ic_report_chat.svg'),
 
   ///chat
   icImage('assets/icons/ic_image.svg'),
@@ -371,6 +379,18 @@ enum IconApp {
   icMicOff('assets/icons/ic_mic_off.svg'),
   icRadioButton('assets/icons/ic_radio_button.svg'),
   icRadioButtonCheck('assets/icons/ic_radio_button_check.svg'),
+  icBlockAccount('assets/icons/ic_block_account.svg'),
+  icEdit('assets/icons/ic_edit.svg'),
+  icLeaveMute('assets/icons/ic_leave_mute.svg'),
+  icReportGroup('assets/icons/ic_report_group.svg'),
+  icLeaveTeam('assets/icons/ic_leave_team.svg'),
+  icDeleteChat('assets/icons/ic_delete_chat.svg'),
+  icReportChat('assets/icons/ic_report_chat.svg'),
+  icKick('assets/icons/ic_kick.svg'),
+  icKickMute('assets/icons/ic_kick_mute.svg'),
+  icSetAdmin('assets/icons/ic_set_admin.svg'),
+  icSetSecondAdmin('assets/icons/ic_set_second_admin.svg'),
+  icRemoveSecondAdmin('assets/icons/ic_remove_second_admin.svg'),
 
   ///call
   icUserGroup3('assets/icons/ic_user_group3.svg'),
@@ -419,7 +439,11 @@ enum IconApp {
   icVideoFullscreen('assets/icons/ic_video_fullscreen.svg'),
   icVideoBackTime('assets/icons/ic_video_back_time.svg'),
   icVideoNextTime('assets/icons/ic_video_next_time.svg'),
-  icVideoVolume('assets/icons/ic_video_volume.svg');
+  icVideoVolume('assets/icons/ic_video_volume.svg'),
+  icSaved('assets/icons/ic_saved.svg'),
+  icLiked('assets/icons/ic_liked.svg'),
+  icPlay('assets/icons/ic_play.svg');
+
 
   const IconApp(this.path);
 

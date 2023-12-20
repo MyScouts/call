@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/presentation/chat/chat_room/chat_room_page.dart';
 import 'package:app_main/src/core/services/notifications/call_push_service_handler.dart';
 import 'package:app_main/src/data/models/responses/push_call_message_info.dart';
 import 'package:app_main/src/presentation/live/live_coordinator.dart';
@@ -135,7 +136,8 @@ enum MessageTypeFB {
   followRequest('FOLLOW_REQUEST'),
   liveCreated('LIVE_CREATED'),
   inviteToLive('INVITE_TO_LIVE'),
-  protectorRequestReply('PROTECTOR_REQUEST_REPLY');
+  protectorRequestReply('PROTECTOR_REQUEST_REPLY'),
+  newMessage('NEW_MESSAGE');
 
   final String type;
 
@@ -180,6 +182,9 @@ void showFlutterNotification(RemoteMessage message) {
     if (MyNavigatorObserver.listRoute.contains('/join_live')) {
       return;
     }
+  }
+  if(MyNavigatorObserver.listRoute.contains(ChatRoomPage.routeName)) {
+    return;
   }
   flutterLocalNotificationsPlugin.show(
     notification?.hashCode ?? 0,

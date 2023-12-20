@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/app/app_cubit.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
+import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/settings/setting_constants.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
@@ -15,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../social/my_profile/screens/my_profile_screen.dart';
 import '../upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart';
@@ -39,7 +43,7 @@ class _SettingScreenState extends State<SettingScreen> {
   void initState() {
     super.initState();
     _authInfo = userCubit.currentUser!;
-    userCubit.onboarding();
+    userCubit.getOnboarding();
     userCubit.getUserPublicInfo(userCubit.currentUser!.id!);
   }
 
@@ -95,11 +99,14 @@ class _SettingScreenState extends State<SettingScreen> {
                 case OptionalUpgradeAppVersion(version: final version):
                   context.updateOptionalAppVersion(
                     version: version,
-                    onUpdateAppVersion: () {},
+                    onUpdateAppVersion: () => _handleUpgrade(),
                   );
                   break;
                 case LatestAppVersion():
                   context.confirmLatestAppVersion();
+                  break;
+                case UpgradeAppVersion():
+                  context.showForceUpgradeAppDialog();
                   break;
                 default:
                   break;
@@ -222,7 +229,7 @@ class _SettingScreenState extends State<SettingScreen> {
       children: Setting.session1Menus(
         context,
         user: userCubit.currentUser,
-        onUpdate: () => userCubit.onboarding(),
+        onUpdate: () => userCubit.getOnboarding(),
         onboarding: _onboarding,
         osType: currentPlatformName,
         isProduction: Configurations.isProduction,
@@ -260,7 +267,7 @@ class _SettingScreenState extends State<SettingScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _authInfo.getdisplayName,
+                  _authInfo.getDisplayName,
                   style: context.textTheme.titleMedium!.copyWith(
                     fontSize: 15,
                     color: AppColors.black,
@@ -335,5 +342,22 @@ class _SettingScreenState extends State<SettingScreen> {
         );
       },
     );
+  }
+
+  void _handleUpgrade() {
+    if (Platform.isAndroid || Platform.isIOS) {
+      final appId = Platform.isAndroid
+          ? Configurations.androidPackageId
+          : Configurations.iosAppId;
+      final url = Uri.parse(
+        Platform.isAndroid
+            ? "market://details?id=$appId"
+            : "https://apps.apple.com/app/id$appId",
+      );
+      launchUrl(
+        url,
+        mode: LaunchMode.externalApplication,
+      );
+    }
   }
 }

@@ -78,7 +78,7 @@ android {
             dimension "default"
             applicationIdSuffix ".staging"
             resValue "string", "app_name", "VDONE-STG"
-            versionCode 55
+            versionCode 56
             versionName "2.1.0"
         }
     }

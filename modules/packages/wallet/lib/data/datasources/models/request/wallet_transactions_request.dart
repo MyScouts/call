@@ -5,15 +5,15 @@ part 'wallet_transactions_request.g.dart';
 @JsonSerializable()
 class WalletTransactionsRequest {
   final int? page;
-  final int? pageSize;
-  final String? category;
+  final int pageSize;
+  final String? transactionType;
   final num? fromTimestamp;
   final num? toTimestamp;
 
   WalletTransactionsRequest({
-    this.page,
-    this.pageSize,
-    this.category,
+    this.page = 1,
+    this.pageSize = 10,
+    this.transactionType,
     this.fromTimestamp,
     this.toTimestamp,
   });

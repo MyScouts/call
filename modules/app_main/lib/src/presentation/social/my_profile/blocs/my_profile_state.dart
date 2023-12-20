@@ -28,6 +28,10 @@ class MyProfileState extends CoreState with EquatableMixin {
     );
   }
 
+  bool isNotExistUser() {
+    return userInfo == null;
+  }
+
   @override
   List<Object?> get props => [
         userFollowDetail,

@@ -60,3 +60,15 @@ Map<String, dynamic> _$$GlobalPersonResponseImplToJson(
     <String, dynamic>{
       'setting': instance.setting,
     };
+
+_$RenderPDFResponseImpl _$$RenderPDFResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$RenderPDFResponseImpl(
+      url: json['url'] as String,
+    );
+
+Map<String, dynamic> _$$RenderPDFResponseImplToJson(
+        _$RenderPDFResponseImpl instance) =>
+    <String, dynamic>{
+      'url': instance.url,
+    };

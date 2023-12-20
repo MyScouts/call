@@ -79,10 +79,12 @@ class _ListFriendTabState extends State<ListFriendTab> {
               ),
               GestureDetector(
                 onTap: () {
-                  unawaited(widget.controller
-                      .inviteFriend(widget.liveData.id.toString(), listUser.map((element) => element.id!).toList()));
-                  setState(() {
-                    isInvited = true;
+                  EasyDebounce.debounce('invite all', const Duration(seconds: 1), () {
+                    unawaited(widget.controller
+                        .inviteFriend(widget.liveData.id.toString(), listUser.map((element) => element.id!).toList()));
+                    setState(() {
+                      isInvited = true;
+                    });
                   });
                 },
                 child: const Text(

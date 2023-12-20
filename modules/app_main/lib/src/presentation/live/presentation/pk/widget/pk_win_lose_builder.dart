@@ -31,6 +31,10 @@ class _PkWinLoseBuilderState extends State<PkWinLoseBuilder> {
 
     if (diamonds.isEmpty) return widget.builder(PkGameStatus.draw);
 
+    if (diamonds.first.diamondCount == diamonds.last.diamondCount) {
+      return widget.builder(PkGameStatus.draw);
+    }
+
     final userWin = controller.members
         .firstWhereOrNull((e) => e.info.userID == diamonds.last.userId);
 

@@ -1,4 +1,4 @@
-import 'package:app_main/src/domain/usecases/user_usecase.dart';
+import 'package:app_main/src/data/repositories/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:injectable/injectable.dart';
@@ -38,9 +38,9 @@ class _MarShopStatusBuilderState extends State<MarShopStatusBuilder> {
 
 @injectable
 class MarShopBuilderController {
-  final UserUsecase useCase;
+  final UserRepository repository;
 
-  MarShopBuilderController(this.useCase);
+  MarShopBuilderController(this.repository);
 
   int _uid = 0;
 
@@ -53,7 +53,7 @@ class MarShopBuilderController {
   RxBool get isMarShopOwner => _isMarShopOwner;
 
   void fetch() async {
-    final onBoard = await useCase.onboarding();
-    _isMarShopOwner.value = onBoard.isMarshopOwner;
+    final onBoard = await repository.getOnBoardingUser(_uid);
+    _isMarShopOwner.value = onBoard['isMarshopOwner'] ?? false;
   }
 }

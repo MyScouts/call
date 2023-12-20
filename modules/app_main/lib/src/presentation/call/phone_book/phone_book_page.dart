@@ -30,7 +30,7 @@ class PhoneBookPageState extends State<PhoneBookPage> {
   void initState() {
     super.initState();
     _authInfo = userCubit.currentUser!;
-    userCubit.onboarding();
+    userCubit.getOnboarding();
     userCubit.fetchUser();
   }
 
@@ -125,7 +125,8 @@ class PhoneBookPageState extends State<PhoneBookPage> {
                   children: [
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 24),
-                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 12),
                       decoration: BoxDecoration(
                         color: AppColors.bgFa,
                         borderRadius: BorderRadius.circular(12),
@@ -193,7 +194,9 @@ class PhoneBookPageState extends State<PhoneBookPage> {
                     //   ),
                     kSpacingHeight18,
                     Expanded(
-                      child: _pageState == 0 ? const AllFriendsTab() : const CallHistoryTab(),
+                      child: _pageState == 0
+                          ? const AllFriendsTab()
+                          : const CallHistoryTab(),
                     ),
                   ],
                 ),

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:app_core/app_core.dart';
+import 'package:app_core/app_core.dart' as core;
 import 'package:app_main/src/core/coordinator/app_context.dart';
 import 'package:app_main/src/core/coordinator/app_coordinator.dart';
 import 'package:app_main/src/core/services/live_service/impl/live_socket_service_impl.dart';
@@ -27,7 +28,6 @@ import 'package:app_main/src/presentation/live/presentation/live_home/live_home_
 import 'package:app_main/src/presentation/live/presentation/pk/widget/enable_share_message_dialog.dart';
 import 'package:app_main/src/presentation/live/presentation/pk/widget/invite_pk_dialog.dart';
 import 'package:app_main/src/presentation/live/presentation/pk/widget/pk_config_sheet.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:get/get.dart';
@@ -192,8 +192,14 @@ class LiveChannelController {
 
   final liveState = const GiftCardLive().obs;
 
+  bool userInLive(LiveMember member) {
+    if (member.liveID == _info.value.id) return true;
+    return false;
+  }
+
   LiveMember? get host {
-    final host = _members.firstWhereOrNull((e) => e.isOwner && e.liveID == _info.value.id);
+    final host = _members
+        .firstWhereOrNull((e) => e.isOwner && e.liveID == _info.value.id);
     return host;
   }
 
@@ -212,7 +218,8 @@ class LiveChannelController {
 
   int get hostID {
     if (_me.value.isOwner) return _me.value.info.userID;
-    final host = _members.firstWhereOrNull((e) => e.isOwner && e.liveID == _info.value.id);
+    final host = _members
+        .firstWhereOrNull((e) => e.isOwner && e.liveID == _info.value.id);
     return host!.info.userID;
   }
 
@@ -310,7 +317,9 @@ class LiveChannelController {
       _agora?.token ?? '',
       _agora?.channel ?? '',
       _me.value.info.userID,
-      role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
+      role: _me.value.isOwner
+          ? ClientRoleType.clientRoleBroadcaster
+          : ClientRoleType.clientRoleAudience,
     );
 
     reJoinSetting();
@@ -361,7 +370,9 @@ class LiveChannelController {
       _agora?.token ?? '',
       _agora?.channel ?? '',
       _me.value.info.userID,
-      role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
+      role: _me.value.isOwner
+          ? ClientRoleType.clientRoleBroadcaster
+          : ClientRoleType.clientRoleAudience,
     );
 
     reJoinSetting();
@@ -405,7 +416,7 @@ class LiveChannelController {
 
   Future _initLiveInfo(List res) async {
     final joinRes = res.first as JoinLiveResponse;
-    final user = res.last as User;
+    final user = res.last as core.UserInfo;
 
     _info = joinRes.data.obs;
     if (_info.value.pk != null) {
@@ -417,7 +428,7 @@ class LiveChannelController {
     _me = LiveMember(
       info: LiveMemberInfo(
         userID: user.id ?? 0,
-        name: user.nickname ?? user.fullName ?? user.displayName ?? '',
+        name: user.displayName ?? '',
         avatar: user.avatar ?? '',
         type: user.type ?? 0,
       ),
@@ -446,10 +457,9 @@ class LiveChannelController {
   void join(int id) async {
     LiveManageState.join(id, this);
     try {
-      ///lấy thông tin room và thông tin người join
       final res = await Future.wait([
         repository.joinLive(id: id, password: _password),
-        userUseCase.getProfile(),
+        userUseCase.getMe(),
       ]);
 
       await _initLiveInfo(res);
@@ -459,6 +469,8 @@ class LiveChannelController {
       getLeaderBoard(_info.value.id);
     } catch (e) {
       _state.value = LiveStreamState.stop;
+      LiveManageState.disable();
+      NotificationCenter.post(channel: refreshLive);
       if (context.mounted) {
         Navigator.of(AppCoordinator.rootNavigator.currentContext!).pop();
         context.showToastMessage(
@@ -500,7 +512,9 @@ class LiveChannelController {
           _agora?.token ?? '',
           _agora?.channel ?? '',
           _me.value.info.userID,
-          role: _me.value.isOwner ? ClientRoleType.clientRoleBroadcaster : ClientRoleType.clientRoleAudience,
+          role: _me.value.isOwner
+              ? ClientRoleType.clientRoleBroadcaster
+              : ClientRoleType.clientRoleAudience,
         );
       }
 
@@ -534,7 +548,9 @@ class LiveChannelController {
       LiveManageState.hostID.value = hostID;
 
       if (Platform.isAndroid) _initForegroundTask();
-    } catch (e) {}
+    } catch (e) {
+      LiveManageState.disable();
+    }
   }
 
   void _getPkStats() async {
@@ -558,7 +574,8 @@ class LiveChannelController {
 
   Future getMembersPk() async {
     final liveIds = _pkData?.lives.map((e) => e.id).toList() ?? [];
-    final resMembers = await Future.wait(liveIds.map((e) => getMembers(e)).toList());
+    final resMembers =
+        await Future.wait(liveIds.map((e) => getMembers(e)).toList());
 
     _members.value = [...resMembers.first, ...resMembers.last];
   }
@@ -630,7 +647,8 @@ class LiveChannelController {
       androidNotificationOptions: AndroidNotificationOptions(
         channelId: 'notification_channel_id',
         channelName: 'Foreground Notification',
-        channelDescription: 'This notification appears when the foreground service is running.',
+        channelDescription:
+            'This notification appears when the foreground service is running.',
         channelImportance: NotificationChannelImportance.LOW,
         priority: NotificationPriority.LOW,
         iconData: const NotificationIconData(
@@ -664,7 +682,7 @@ class LiveChannelController {
 
   final Rx<int> timesAnimation = 0.obs;
 
-   Rxn<AnimationController> countdownGiftController  = Rxn<AnimationController>();
+  Rxn<AnimationController> countdownGiftController = Rxn<AnimationController>();
 
   Timer? _timer;
 
@@ -732,7 +750,8 @@ class LiveChannelController {
       if (_diamondsPK.isEmpty) {
         _diamondsPK.value = [diamond];
       } else {
-        final x = _diamondsPK.firstWhereOrNull((e) => e.userId == diamond.userId);
+        final x =
+            _diamondsPK.firstWhereOrNull((e) => e.userId == diamond.userId);
         if (x == null) {
           setDiamonds([..._diamondsPK, diamond]);
         } else {
@@ -778,7 +797,8 @@ class LiveChannelController {
       getLeaderBoard(_info.value.id);
       final gift = SentGiftResponse.fromJson(data as Map<String, Object?>);
       if (_liveType.value == LiveChannelType.pk) {
-        final member = _members.firstWhereOrNull((e) => e.info.userID == gift.giver?.id);
+        final member =
+            _members.firstWhereOrNull((e) => e.info.userID == gift.giver?.id);
         if (member != null) {
           final ids = _giftMembers.map((e) => e.info.userID);
           if (ids.contains(member.info.userID)) {
@@ -857,16 +877,31 @@ class LiveChannelController {
         return;
       }
       if (isMemberInLive(user.id!)) return;
-      final member = LiveMember(
-        info: LiveMemberInfo(
-          userID: user.id!,
-          name: user.nickname ?? user.fullName ?? user.displayName ?? '',
-          avatar: user.avatar ?? '',
-          type: user.type ?? 0,
-        ),
-        isOwner: user.id == _info.value.user?.id,
-        liveID: data['liveId'],
-      );
+      LiveMember member;
+
+      if (_liveType.value == LiveChannelType.pk) {
+        member = LiveMember(
+          info: LiveMemberInfo(
+            userID: user.id!,
+            name: user.nickname ?? user.fullName ?? user.displayName ?? '',
+            avatar: user.avatar ?? '',
+            type: user.type ?? 0,
+          ),
+          isOwner: user.id == hostID || user.id == hostOtherID,
+          liveID: data['liveId'],
+        );
+      } else {
+        member = LiveMember(
+          info: LiveMemberInfo(
+            userID: user.id!,
+            name: user.nickname ?? user.fullName ?? user.displayName ?? '',
+            avatar: user.avatar ?? '',
+            type: user.type ?? 0,
+          ),
+          isOwner: user.id == _info.value.user?.id,
+          liveID: data['liveId'],
+        );
+      }
       _members.value = [..._members, member];
 
       LiveManageState.hostID.value = hostID;
@@ -904,7 +939,8 @@ class LiveChannelController {
           _pkStep.value = PkStep.pending;
           _diamondsPK.value = [];
           _giftMembers.value = [];
-          _members.value = _members.where((e) => e.info.userID != user.id).toList();
+          _members.value =
+              _members.where((e) => e.info.userID != user.id).toList();
           return;
         }
         _state.value = LiveStreamState.stop;
@@ -941,7 +977,8 @@ class LiveChannelController {
 
     socketService.on(socketPkStartEvent, (data) {
       if (_me.value.isOwner) {
-        Navigator.popUntil(AppCoordinator.rootNavigator.currentContext!, (route) {
+        Navigator.popUntil(AppCoordinator.rootNavigator.currentContext!,
+            (route) {
           if (route.settings.name == LiveWrapperScreen.routerName) {
             return true;
           }
@@ -1063,13 +1100,18 @@ class LiveChannelController {
 }
 
 extension RemoteVideoStateReasonX on RemoteVideoStateReason {
-  bool get isNetworkCongestion => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
+  bool get isNetworkCongestion =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkCongestion;
 
-  bool get isNetworkRecovery => this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
+  bool get isNetworkRecovery =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonNetworkRecovery;
 
-  bool get isRemoteOffline => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
+  bool get isRemoteOffline =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteOffline;
 
-  bool get isRemoteUnmuted => this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
+  bool get isRemoteUnmuted =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonRemoteUnmuted;
 
-  bool get isRemoteInBackground => this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
+  bool get isRemoteInBackground =>
+      this == RemoteVideoStateReason.remoteVideoStateReasonSdkInBackground;
 }

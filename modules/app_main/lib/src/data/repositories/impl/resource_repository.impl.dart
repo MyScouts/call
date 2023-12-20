@@ -1,3 +1,4 @@
+import 'package:app_main/src/data/models/payloads/resource/resource_payload.dart';
 import 'package:app_main/src/data/models/responses/resource_response.dart';
 import 'package:app_main/src/domain/repository/resource_repository.dart';
 import 'package:image_picker/image_picker.dart';
@@ -33,5 +34,10 @@ class ResourceRepositoryImpl extends ResourceRepository {
   Future<String> storageUploadUrl(XFile xFile, String prefix) async {
     final res = await _resourceApi.storageUploadUrl(xFile, prefix);
     return res;
+  }
+
+  @override
+  Future<RenderPDFResponse> renderPDF(RenderPDFPayload payload) {
+    return _resourceApi.renderPDF(payload.toJson());
   }
 }

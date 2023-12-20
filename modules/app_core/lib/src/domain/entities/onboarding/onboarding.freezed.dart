@@ -194,7 +194,7 @@ class _$OnBoardingImpl implements _OnBoarding {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OnBoardingImpl &&

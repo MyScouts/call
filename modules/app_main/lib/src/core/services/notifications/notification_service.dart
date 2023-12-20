@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:app_core/app_core.dart';
-import 'package:app_main/src/presentation/live/live_coordinator.dart';
-import 'package:app_main/src/presentation/live/presentation/live_home/live_home_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';

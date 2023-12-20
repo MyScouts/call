@@ -1,6 +1,8 @@
 import 'package:app_core/app_core.dart';
 import 'package:design_system/design_system.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/ui.dart';
 import 'package:wallet/presentation/shared/widgets/toast_message/toast_message.dart';
 
 import '../../../../core/core.dart';
@@ -24,9 +26,7 @@ class VerifyBankAccountOTPScreen extends StatefulWidget {
 
 class _VerifyBankAccountOTPScreenState extends State<VerifyBankAccountOTPScreen>
     with TimerMixin {
-  bool _isActive = false;
   late final _paddingBottom = MediaQuery.of(context).padding.bottom;
-  final _otpCodeController = TextEditingController();
   late final _bloc = context.read<BankAccountBloc>();
 
   @override
@@ -39,7 +39,7 @@ class _VerifyBankAccountOTPScreenState extends State<VerifyBankAccountOTPScreen>
 
   @override
   void dispose() {
-    _otpCodeController.dispose();
+    _errorCtr.dispose();
     super.dispose();
   }
 
@@ -62,21 +62,45 @@ class _VerifyBankAccountOTPScreenState extends State<VerifyBankAccountOTPScreen>
         phoneNumber.length - 3, phoneNumber.length, '***');
   }
 
+  bool _disabled = true;
+  String _otp = "";
+  final ValueNotifier<bool> _errorCtr = ValueNotifier(false);
+
+  _onVerify(BuildContext context) {
+    final request = AddBankAccountRequest(
+      token: '${_bloc.otp.token}',
+      bankHolder: '${_bloc.addBankAccountParams.bankHolderName}',
+      bankId: _bloc.addBankAccountParams.bank?.id ?? 1,
+      bankNumber: '${_bloc.addBankAccountParams.bankNumber}',
+      isDefault: _bloc.addBankAccountParams.isDefault ?? false,
+      qrImage: _bloc.addBankAccountParams.qrImage,
+      otp: _otp,
+    );
+    _bloc.add(
+      BankAccountEvent.addBankAccount(request: request),
+    );
+  }
+
+  void _handleResendOTP() {
+    _bloc.add(
+      const BankAccountEvent.getOtp(isResend: true),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appbarBuilder(
-        context,
-        title: 'Nhập mã xác minh',
-        hasBottom: true,
-      ),
       body: BlocListener<BankAccountBloc, BankAccountState>(
         listener: (context, state) {
           state.whenOrNull(
             addBankAccountLoading: showLoading,
             addBankAccountOtpNotMatch: () {
               hideLoading();
-              return context.showWarningDialog();
+              showToastMessage(
+                'Mã xác minh không đúng',
+                ToastMessageType.error,
+              );
+              _errorCtr.value = true;
             },
             addBankAccountSuccess: (bankAccount) {
               hideLoading();
@@ -89,7 +113,6 @@ class _VerifyBankAccountOTPScreenState extends State<VerifyBankAccountOTPScreen>
             },
             resendOtpLoading: () {
               showLoading();
-              _otpCodeController.clear();
             },
             resendOtpSuccess: () {
               hideLoading();
@@ -103,136 +126,94 @@ class _VerifyBankAccountOTPScreenState extends State<VerifyBankAccountOTPScreen>
         },
         child: SafeArea(
           child: Padding(
-            padding: EdgeInsets.fromLTRB(
-              context.horizontal,
-              25,
-              context.horizontal,
-              _paddingBottom,
+            padding: const EdgeInsets.symmetric(
+              horizontal: paddingHorizontal,
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    text: 'Mã xác thực đã gửi qua',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(fontWeight: FontWeight.w400, fontSize: 14),
-                    children: [
-                      TextSpan(
-                        text: ' Tin nhắn ',
-                        style: context.text.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w600, fontSize: 14),
+                const CustomBackButton(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Nhập mã xác minh',
+                      style: context.text.titleLarge!.copyWith(
+                        fontWeight: FontWeight.w700,
                       ),
-                      const TextSpan(text: 'đến số điện thoại của bạn'),
-                      TextSpan(
-                        text: 'Nhập mã OTP\n',
-                        style: context.text.titleLarge?.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: WalletTheme.grey75,
-                        ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      'Mã xác nhận đã được gửi về số điện thoại của bạn',
+                      style: context.text.titleSmall!.copyWith(
+                        fontWeight: FontWeight.w400,
                       ),
-                    ],
-                  ),
-                ),
-                OtpBoxWidget(
-                  activeColor: AppColors.blue10,
-                  inActiveColor: WalletTheme.greyBorder,
-                  selectedColor: AppColors.blue10,
-                  textColor: WalletTheme.greyTextColor,
-                  controller: _otpCodeController,
-                  onOtpChanged: (value) {
-                    if (value.length == WalletConstant.otpLength &&
-                        _isActive == false) {
-                      setState(() {
-                        _isActive = true;
-                      });
-                    } else if (_isActive) {
-                      setState(() {
-                        _isActive = false;
-                      });
-                    }
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: GradiantButton(
-                    onPressed: _isActive
-                        ? () {
-                            final request = AddBankAccountRequest(
-                              token: '${_bloc.otp.token}',
-                              bankHolder:
-                                  '${_bloc.addBankAccountParams.bankHolderName}',
-                              bankId: _bloc.addBankAccountParams.bank?.id ?? 1,
-                              bankNumber:
-                                  '${_bloc.addBankAccountParams.bankNumber}',
-                              isDefault:
-                                  _bloc.addBankAccountParams.isDefault ?? false,
-                              qrImage: _bloc.addBankAccountParams.qrImage,
-                              otp: _otpCodeController.text,
-                            );
-                            _bloc.add(
-                              BankAccountEvent.addBankAccount(request: request),
-                            );
-                          }
-                        : null,
-                    child: Text('Tiếp theo'.toUpperCase()),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Center(
-                  child: ValueListenableBuilder<int>(
-                    valueListenable: timeCtr,
-                    builder: (context, value, child) {
-                      final timerString =
-                          value > 0 ? ' (${value.toString()}s)' : '';
-                      if (timeCtr.value > 0) {
-                        return RichText(
-                          text: TextSpan(
-                            text: 'Vui lòng chờ',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                  color: AppColors.greyLightTextColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
+                    ),
+                    const SizedBox(height: 30),
+                    VerifyOTPInputWidget(
+                      onCompleted: (value) {
+                        _disabled = false;
+                        setState(() {});
+                        debugPrint(value);
+                        _otp = value;
+                      },
+                      onChange: () {
+                        _disabled = true;
+                        _errorCtr.value = false;
+                        setState(() {});
+                      },
+                      errorCtr: _errorCtr,
+                    ),
+                    const SizedBox(height: 30),
+                    PrimaryButton(
+                      title: 'Xác nhận',
+                      onTap: () {
+                        _onVerify(context);
+                      },
+                      color: Colors.white,
+                      disabled: _disabled,
+                      width: MediaQuery.of(context).size.width,
+                    ),
+                    const SizedBox(height: 20),
+                    ValueListenableBuilder(
+                      valueListenable: timeCtr,
+                      builder: (context, value, child) {
+                        final timerString =
+                            value > 0 ? '(${value.toString()}s)' : '';
+                        return Center(
+                          child: Text.rich(
+                            TextSpan(
+                              text: '',
+                              children: [
+                                if (value > 0)
+                                  TextSpan(
+                                      text: 'Gửi lại mã sau ',
+                                      style: context.text.bodyMedium?.copyWith(
+                                        color: const Color(0xFF6E6E6E),
+                                      )),
+                                TextSpan(
+                                  text: timerString,
+                                  style: context.text.bodyMedium!.copyWith(
+                                    color: const Color(0xFF085CAF),
+                                  ),
                                 ),
-                            children: [
-                              TextSpan(
-                                text: timerString,
-                                style: context.text.titleMedium?.copyWith(
-                                  color: WalletTheme.greyTextColor,
-                                  fontSize: 14,
-                                ),
-                              ),
-                              const TextSpan(
-                                text: ' để nhận lại mã xác nhận',
-                              )
-                            ],
+                                if (value <= 0)
+                                  TextSpan(
+                                    text: 'Gửi lại',
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = _handleResendOTP,
+                                    style: context.text.bodyMedium!.copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.blue10,
+                                    ),
+                                  ),
+                              ],
+                            ),
                           ),
                         );
-                      }
-                      return GestureDetector(
-                        onTap: () {
-                          _bloc.add(
-                            const BankAccountEvent.getOtp(isResend: true),
-                          );
-                        },
-                        child: Text(
-                          'Gửi lại mã',
-                          style: context.text.titleMedium?.copyWith(
-                            color: WalletTheme.greyTextColor,
-                            decoration: TextDecoration.underline,
-                            fontSize: 14,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                      },
+                    )
+                  ],
                 ),
               ],
             ),

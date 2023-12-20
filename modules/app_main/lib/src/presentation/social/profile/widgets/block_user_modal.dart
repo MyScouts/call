@@ -71,7 +71,7 @@ class _ReportUserModalState extends State<BlockUserModal> {
           const SizedBox(height: 10),
           Center(
             child: Text(
-              "Chặn ${widget.userInfo.getdisplayName} ?",
+              "Chặn ${widget.userInfo.getDisplayName} ?",
               style: context.textTheme.titleMedium!.copyWith(fontSize: 16),
               textAlign: TextAlign.center,
             ),
@@ -79,7 +79,7 @@ class _ReportUserModalState extends State<BlockUserModal> {
           const SizedBox(height: 5),
           Center(
             child: Text(
-              "Hành động này sẽ khiến tài khoản ${widget.userInfo.getdisplayName} không thể:",
+              "Hành động này sẽ khiến tài khoản ${widget.userInfo.getDisplayName} không thể:",
               style: context.textTheme.labelMedium!.copyWith(
                 color: AppColors.grey14,
               ),
@@ -102,7 +102,7 @@ class _ReportUserModalState extends State<BlockUserModal> {
           _buildRule(
             icon: IconAppConstants.icNewsBan,
             text:
-                "Nếu các bạn là bạn bè, việc chặn ${widget.userInfo.getdisplayName} cũng sẽ huỷ kết bạn với cô ấy",
+                "Nếu các bạn là bạn bè, việc chặn ${widget.userInfo.getDisplayName} cũng sẽ huỷ kết bạn với cô ấy",
           ),
           const SizedBox(height: 20),
           PrimarySolidButton(

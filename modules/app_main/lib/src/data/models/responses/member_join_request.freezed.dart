@@ -123,7 +123,7 @@ class _$MemberJoinRequestResponseImpl implements _MemberJoinRequestResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MemberJoinRequestResponseImpl &&
@@ -318,7 +318,7 @@ class _$RequestDetailImpl implements _RequestDetail {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RequestDetailImpl &&

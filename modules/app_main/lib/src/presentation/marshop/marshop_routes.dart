@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/bloc.dart';
 import 'package:app_main/src/blocs/marshop/marshop_cubit.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/presentation/marshop/marshop_bloc.dart';
@@ -6,12 +7,14 @@ import 'package:app_main/src/presentation/marshop/register_customer/register_cus
 import 'package:app_main/src/presentation/marshop/register_marshop/%20marshop_referral_code_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/confirm_infomation_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/confirm_information_address_screen.dart';
+import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_otp_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_pack_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/register_marshop_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/register_pack_detail_screen.dart';
 import 'package:app_main/src/presentation/marshop/register_marshop/transaction_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 
 @injectable
 class MarkShopRoutes extends RouteModule {
@@ -30,8 +33,18 @@ class MarkShopRoutes extends RouteModule {
           final args = settings.arguments as Map<String, dynamic>;
           return BlocProvider.value(
             value: injector.get<UserCubit>(),
-            child: BlocProvider(
-              create: (context) => injector.get<MarshopDetailBloc>(),
+            child: MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => injector.get<MarshopDetailBloc>(),
+                ),
+                BlocProvider(
+                  create: (context) => injector.get<GetGlobalSettingBloc>()
+                    ..add(
+                      GetDetailDataParam1Event("marshop_general_policy"),
+                    ),
+                ),
+              ],
               child: RegisterMarshopScreen(
                 marshopId: args['marshopId'],
               ),
@@ -82,6 +95,18 @@ class MarkShopRoutes extends RouteModule {
         TransactionDetailScreen.routeName: (context) {
           final args = settings.arguments as Map<String, dynamic>;
           return TransactionDetailScreen(
+            pack: args['pack'],
+            authInfo: args['authInfo'],
+            marshop: args['marshop'],
+            address: args['address'],
+            productResult: args['productResult'],
+            totalPrice: args['totalPrice'],
+          );
+        },
+        RegisterMarShopOTPScreen.routeName: (context) {
+          final args = settings.arguments as Map<String, dynamic>;
+          return RegisterMarShopOTPScreen(
+            payload: args['payload'],
             pack: args['pack'],
             authInfo: args['authInfo'],
             marshop: args['marshop'],

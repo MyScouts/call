@@ -305,7 +305,7 @@ class _BossGroup extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    group.boss?.getdisplayName ?? '',
+                    group.boss?.getDisplayName ?? '',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

@@ -32,7 +32,7 @@ class _RemoveMemberSheetState extends State<RemoveMemberSheet> {
   String get nameConfirm {
     final List<String> names = [];
     for (final x in _chooseRemove.keys.toList()) {
-      names.add(_chooseRemove[x].getdisplayName);
+      names.add(_chooseRemove[x].getDisplayName);
     }
 
     return names.join(',');
@@ -327,7 +327,7 @@ class _UserCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      user.getdisplayName,
+                      user.getDisplayName,
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,

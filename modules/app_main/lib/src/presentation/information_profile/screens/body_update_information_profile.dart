@@ -49,11 +49,16 @@ class BodyUpdateInformationProfile extends StatefulWidget {
   });
 
   @override
-  State<BodyUpdateInformationProfile> createState() => _BodyUpdateInformationProfileState();
+  State<BodyUpdateInformationProfile> createState() =>
+      _BodyUpdateInformationProfileState();
 }
 
-class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProfile>
-    with ValidationMixin, UpdateInformationProfileMixin, AutomaticKeepAliveClientMixin {
+class _BodyUpdateInformationProfileState
+    extends State<BodyUpdateInformationProfile>
+    with
+        ValidationMixin,
+        UpdateInformationProfileMixin,
+        AutomaticKeepAliveClientMixin {
   final _phoneCtrl = TextEditingController();
 
   bool isFirstTimeOne = false;
@@ -65,7 +70,8 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
   late final getListBankBloc = context.read<GetListBanksBloc>();
   late final placeInformationBloc = context.read<PlaceInformationBloc>();
   late final placeInformationBloc2 = context.read<PlaceInformationBloc2>();
-  late final updateInformationBloc = context.read<InformationUpdateProfilBloc>();
+  late final updateInformationBloc =
+      context.read<InformationUpdateProfilBloc>();
 
   @override
   bool get wantKeepAlive => true;
@@ -97,7 +103,8 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
       countriesChanged.value = state.countries;
       if (!isFirstTimeOne) {
         currentCountry = state.countries!.first;
-        placeInformationBloc.add(GetListProvincesEvent(state.countries!.first.iso2!));
+        placeInformationBloc
+            .add(GetListProvincesEvent(state.countries!.first.iso2!));
       }
     }
 
@@ -105,8 +112,8 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
       provincesChanged.value = state.provinces;
       if (!isFirstTimeOne) {
         currentProvince = state.provinces!.first;
-        placeInformationBloc
-            .add(GetDistrictsByProvinceEvent(state.countries!.first.iso2!, state.provinces!.first.stateCode));
+        placeInformationBloc.add(GetDistrictsByProvinceEvent(
+            state.countries!.first.iso2!, state.provinces!.first.stateCode));
       }
     }
 
@@ -115,7 +122,9 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
       if (!isFirstTimeOne) {
         currentDistrict = state.districts!.first;
         placeInformationBloc.add(GetWardsByDistrictEvent(
-            state.countries!.first.iso2!, state.provinces!.first.stateCode, state.districts!.first.code!));
+            state.countries!.first.iso2!,
+            state.provinces!.first.stateCode,
+            state.districts!.first.code!));
       }
     }
 
@@ -133,7 +142,8 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
       countries2Changed.value = state.countries;
       if (!isFirstTimeTwo) {
         currentCountry2 = state.countries!.first;
-        placeInformationBloc2.add(GetListProvincesEvent2(state.countries!.first.iso2!));
+        placeInformationBloc2
+            .add(GetListProvincesEvent2(state.countries!.first.iso2!));
       }
     }
 
@@ -141,8 +151,8 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
       provinces2Changed.value = state.provinces;
       if (!isFirstTimeTwo) {
         currentProvince2 = state.provinces!.first;
-        placeInformationBloc2
-            .add(GetDistrictsByProvinceEvent2(state.countries!.first.iso2!, state.provinces!.first.stateCode));
+        placeInformationBloc2.add(GetDistrictsByProvinceEvent2(
+            state.countries!.first.iso2!, state.provinces!.first.stateCode));
       }
     }
 
@@ -151,7 +161,9 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
       if (!isFirstTimeTwo) {
         currentDistrict2 = state.districts!.first;
         placeInformationBloc2.add(GetWardsByDistrictEvent2(
-            state.countries!.first.iso2!, state.provinces!.first.stateCode, state.districts!.first.code!));
+            state.countries!.first.iso2!,
+            state.provinces!.first.stateCode,
+            state.districts!.first.code!));
       }
     }
 
@@ -168,7 +180,8 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
   void initState() {
     if (widget.informationNonePdoneProfile != null) {
       if (widget.informationNonePdoneProfile!.birthday.isNotEmpty) {
-        tempDate = DateFormat("yyyy-MM-dd").parse(widget.informationNonePdoneProfile!.birthday);
+        tempDate = DateFormat("yyyy-MM-dd")
+            .parse(widget.informationNonePdoneProfile!.birthday);
       }
     }
 
@@ -196,7 +209,8 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                   LoggerService.print("Banks: $banksChanged");
                 }
               },
-              child: BlocConsumer<InformationUpdateProfilBloc, InformationUpdateProfilState>(
+              child: BlocConsumer<InformationUpdateProfilBloc,
+                  InformationUpdateProfilState>(
                 listener: (_, state) {
                   if (state is InformationUpdateProfilLoading) {
                     showLoading();
@@ -207,7 +221,9 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                     showToastMessage("Nâng cấp tài khoản thành công");
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const InformationProfileScreen()),
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const InformationProfileScreen()),
                     );
                   }
                   if (state is InformationUpdateProfilFailed) {
@@ -227,12 +243,19 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                           Container(height: 20, color: AppColors.bgColor),
                           _buildFieldIdentifierInformation(),
                           Container(height: 20, color: AppColors.bgColor),
-                          if (tempDate != null && widget.isEdit && widget.authInfo.getIsPDone) ...[
-                            (widget.authInfo.isUnderFifteen(tempDate)) ? _buildProtectorInformation() : Container(),
-                          ],
-                          if (tempDate != null && widget.isEdit && widget.authInfo.getIsPDone) ...[
+                          if (tempDate != null &&
+                              widget.isEdit &&
+                              widget.authInfo.getIsPDone) ...[
                             (widget.authInfo.isUnderFifteen(tempDate))
-                                ? Container(height: 20, color: AppColors.bgColor)
+                                ? _buildProtectorInformation()
+                                : Container(),
+                          ],
+                          if (tempDate != null &&
+                              widget.isEdit &&
+                              widget.authInfo.getIsPDone) ...[
+                            (widget.authInfo.isUnderFifteen(tempDate))
+                                ? Container(
+                                    height: 20, color: AppColors.bgColor)
                                 : Container(),
                           ],
                           _buildBankInformation(),
@@ -260,8 +283,10 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
           child: PrimaryButton(
             disabled: !isValid,
             onTap: () => widget.authInfo.getIsPDone
-                ? updateInformationBloc.add(InformationUpdateProfilEvent(passPdonePayload()))
-                : updateInformationBloc.add(InformationNoneUpdateProfilEvent(passNonePDonePayload())),
+                ? updateInformationBloc
+                    .add(InformationUpdateProfilEvent(passPdonePayload()))
+                : updateInformationBloc.add(
+                    InformationNoneUpdateProfilEvent(passNonePDonePayload())),
             height: 45,
             title: 'Cập nhật',
             width: MediaQuery.of(context).size.width,
@@ -369,7 +394,9 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
               'Vui lòng nhập nick name',
             ),
           ),
-          (widget.isEdit && widget.authInfo.getIsPDone) ? Container() : const SizedBox(height: 3),
+          (widget.isEdit && widget.authInfo.getIsPDone)
+              ? Container()
+              : const SizedBox(height: 3),
           (widget.isEdit && widget.authInfo.getIsPDone)
               ? Row(
                   children: [
@@ -377,7 +404,8 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                       child: InformationFieldWidget(
                         required: true,
                         shouldEnabled: false,
-                        hintText: widget.informationNonePdoneProfile!.sex.genderToString,
+                        hintText: widget
+                            .informationNonePdoneProfile!.sex.genderToString,
                         controller: lastNameTxtController,
                         type: UpdateInformationType.gender,
                         validator: (value) {},
@@ -428,14 +456,19 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                         builder: (_, dateTimeValue, __) {
                           return InformationLayoutFieldWidget(
                             required: true,
-                            label: UpdateInformationType.birthDay.title(context),
+                            label:
+                                UpdateInformationType.birthDay.title(context),
                             child: InputDateTimeWidget(
                               hintText: 'Ngày sinh',
                               useHorizontalLayout: true,
                               enabled: true,
                               radius: 17,
                               date: dateTimeValue,
-                              formatText: (date) => S.of(context).formatDateDDmmYYYYhhMM(date, date).split('|').first,
+                              formatText: (date) => S
+                                  .of(context)
+                                  .formatDateDDmmYYYYhhMM(date, date)
+                                  .split('|')
+                                  .first,
                               max: DateTime.now(),
                               onChange: (dateTime) {
                                 birthDay = dateTime!;
@@ -546,7 +579,8 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
             },
             type: UpdateInformationType.idNumber,
             validator: (value) => widget.authInfo.isUnderFifteen(tempDate)
-                ? context.validateCCCD(idNumberProtectorTxtController.text, 'Thông tin không hợp lệ')
+                ? context.validateCCCD(idNumberProtectorTxtController.text,
+                    'Thông tin không hợp lệ')
                 : null,
           ),
         ],
@@ -663,14 +697,16 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
               }
 
               var filteredAndSortedJobs = jobsChanged.value
-                  .where((element) => element.name!.contains(textEditingValue.text.toLowerCase()))
+                  .where((element) => element.name!
+                      .contains(textEditingValue.text.toLowerCase()))
                   .map((job) => AutocompleteOption(
                         displayText: job.name!,
                         key: job.key!,
                       ))
                   .toList();
 
-              filteredAndSortedJobs.sort((a, b) => a.displayText!.compareTo(b.displayText!));
+              filteredAndSortedJobs
+                  .sort((a, b) => a.displayText!.compareTo(b.displayText!));
 
               return filteredAndSortedJobs;
             },
@@ -737,14 +773,16 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
               }
 
               var filteredAndSortedTalents = talentsChanged.value
-                  .where((element) => element.name!.contains(textEditingValue.text.toLowerCase()))
+                  .where((element) => element.name!
+                      .contains(textEditingValue.text.toLowerCase()))
                   .map((talent) => AutocompleteOption(
                         displayText: talent.name!,
                         key: talent.key!,
                       ))
                   .toList();
 
-              filteredAndSortedTalents.sort((a, b) => a.displayText!.compareTo(b.displayText!));
+              filteredAndSortedTalents
+                  .sort((a, b) => a.displayText!.compareTo(b.displayText!));
 
               return filteredAndSortedTalents;
             },
@@ -771,14 +809,16 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
               }
 
               var filteredAndSortedInterests = hobbiesChanged.value
-                  .where((element) => element.name!.contains(textEditingValue.text.toLowerCase()))
+                  .where((element) => element.name!
+                      .contains(textEditingValue.text.toLowerCase()))
                   .map((hobbie) => AutocompleteOption(
                         displayText: hobbie.name!,
                         key: hobbie.key!,
                       ))
                   .toList();
 
-              filteredAndSortedInterests.sort((a, b) => a.displayText!.compareTo(b.displayText!));
+              filteredAndSortedInterests
+                  .sort((a, b) => a.displayText!.compareTo(b.displayText!));
 
               return filteredAndSortedInterests;
             },
@@ -833,7 +873,8 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                                 countries: countriesValue,
                                 onChange: (country) {
                                   currentCountry = country;
-                                  placeInformationBloc.add(GetListProvincesEvent(country.iso2!));
+                                  placeInformationBloc.add(
+                                      GetListProvincesEvent(country.iso2!));
                                 },
                               );
                             }
@@ -842,7 +883,8 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                               countries: countries,
                               onChange: (country) {
                                 currentCountry = country;
-                                placeInformationBloc.add(GetListProvincesEvent(country.iso2!));
+                                placeInformationBloc
+                                    .add(GetListProvincesEvent(country.iso2!));
                               },
                             );
                           },
@@ -860,8 +902,10 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                                 provinces: provincesValue,
                                 onChange: (province) {
                                   currentProvince = province;
-                                  placeInformationBloc
-                                      .add(GetDistrictsByProvinceEvent(currentCountry!.iso2!, province.stateCode!));
+                                  placeInformationBloc.add(
+                                      GetDistrictsByProvinceEvent(
+                                          currentCountry!.iso2!,
+                                          province.stateCode!));
                                 },
                               );
                             }
@@ -870,8 +914,10 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                               provinces: provinces,
                               onChange: (province) {
                                 currentProvince = province;
-                                placeInformationBloc
-                                    .add(GetDistrictsByProvinceEvent(currentCountry!.iso2!, province.stateCode!));
+                                placeInformationBloc.add(
+                                    GetDistrictsByProvinceEvent(
+                                        currentCountry!.iso2!,
+                                        province.stateCode!));
                               },
                             );
                           },
@@ -895,8 +941,11 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                                 districts: districtsValue,
                                 onChange: (district) {
                                   currentDistrict = district;
-                                  placeInformationBloc.add(GetWardsByDistrictEvent(
-                                      currentCountry!.iso2!, currentProvince!.stateCode!, district.code!));
+                                  placeInformationBloc.add(
+                                      GetWardsByDistrictEvent(
+                                          currentCountry!.iso2!,
+                                          currentProvince!.stateCode!,
+                                          district.code!));
                                 },
                               );
                             }
@@ -905,8 +954,11 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                               districts: districts,
                               onChange: (district) {
                                 currentDistrict = district;
-                                placeInformationBloc.add(GetWardsByDistrictEvent(
-                                    currentCountry!.iso2!, currentProvince!.stateCode!, district.code!));
+                                placeInformationBloc.add(
+                                    GetWardsByDistrictEvent(
+                                        currentCountry!.iso2!,
+                                        currentProvince!.stateCode!,
+                                        district.code!));
                               },
                             );
                           },
@@ -972,7 +1024,8 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                                 countries: countriesValue,
                                 onChange: (country) {
                                   currentCountry2 = country;
-                                  placeInformationBloc2.add(GetListProvincesEvent2(country.iso2!));
+                                  placeInformationBloc2.add(
+                                      GetListProvincesEvent2(country.iso2!));
                                 },
                               );
                             }
@@ -981,7 +1034,8 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                               countries: countries,
                               onChange: (country) {
                                 currentCountry2 = country;
-                                placeInformationBloc2.add(GetListProvincesEvent2(country.iso2!));
+                                placeInformationBloc2
+                                    .add(GetListProvincesEvent2(country.iso2!));
                               },
                             );
                           },
@@ -999,8 +1053,10 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                                 provinces: provincesValue,
                                 onChange: (province) {
                                   currentProvince2 = province;
-                                  placeInformationBloc2
-                                      .add(GetDistrictsByProvinceEvent2(currentCountry2!.iso2!, province.stateCode!));
+                                  placeInformationBloc2.add(
+                                      GetDistrictsByProvinceEvent2(
+                                          currentCountry2!.iso2!,
+                                          province.stateCode!));
                                 },
                               );
                             }
@@ -1009,8 +1065,10 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                               provinces: provinces,
                               onChange: (province) {
                                 currentProvince2 = province;
-                                placeInformationBloc2
-                                    .add(GetDistrictsByProvinceEvent2(currentCountry2!.iso2!, province.stateCode!));
+                                placeInformationBloc2.add(
+                                    GetDistrictsByProvinceEvent2(
+                                        currentCountry2!.iso2!,
+                                        province.stateCode!));
                               },
                             );
                           },
@@ -1034,8 +1092,11 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                                 districts: districtsValue,
                                 onChange: (district) {
                                   currentDistrict2 = district;
-                                  placeInformationBloc2.add(GetWardsByDistrictEvent2(
-                                      currentCountry2!.iso2!, currentProvince2!.stateCode!, district.code!));
+                                  placeInformationBloc2.add(
+                                      GetWardsByDistrictEvent2(
+                                          currentCountry2!.iso2!,
+                                          currentProvince2!.stateCode!,
+                                          district.code!));
                                 },
                               );
                             }
@@ -1044,8 +1105,11 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                               districts: districts,
                               onChange: (district) {
                                 currentDistrict2 = district;
-                                placeInformationBloc2.add(GetWardsByDistrictEvent2(
-                                    currentCountry2!.iso2!, currentProvince2!.stateCode!, district.code!));
+                                placeInformationBloc2.add(
+                                    GetWardsByDistrictEvent2(
+                                        currentCountry2!.iso2!,
+                                        currentProvince2!.stateCode!,
+                                        district.code!));
                               },
                             );
                           },
@@ -1122,14 +1186,19 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                   builder: (_, dateTimeValue, __) {
                     return InformationLayoutFieldWidget(
                       required: true,
-                      label: UpdateInformationType.dateOfIdNumber.title(context),
+                      label:
+                          UpdateInformationType.dateOfIdNumber.title(context),
                       child: InputDateTimeWidget(
                         hintText: 'Ngày cấp',
                         useHorizontalLayout: true,
                         enabled: true,
                         radius: 17,
                         date: dateTimeValue,
-                        formatText: (date) => S.of(context).formatDateDDmmYYYYhhMM(date, date).split('|').first,
+                        formatText: (date) => S
+                            .of(context)
+                            .formatDateDDmmYYYYhhMM(date, date)
+                            .split('|')
+                            .first,
                         max: DateTime.now(),
                         onChange: (dateTime) {
                           supplyDate = dateTime!;
@@ -1245,7 +1314,7 @@ class _BodyUpdateInformationProfileState extends State<BodyUpdateInformationProf
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      widget.authInfo.getdisplayName,
+                      widget.authInfo.getDisplayName,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

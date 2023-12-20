@@ -34,13 +34,13 @@ class _MedialTabBarState extends State<MedialTabBar> {
           MedialEnum.video.index,
           text: MedialEnum.video.text,
           iconName: MedialEnum.getIconName(MedialEnum.video),
-          activeIconName: MedialEnum.getActiveIconName(MedialEnum.post),
+          activeIconName: MedialEnum.getActiveIconName(MedialEnum.video),
         ),
         _tab(
           MedialEnum.reels.index,
           text: MedialEnum.reels.text,
           iconName: MedialEnum.getIconName(MedialEnum.reels),
-          activeIconName: MedialEnum.getActiveIconName(MedialEnum.post),
+          activeIconName: MedialEnum.getActiveIconName(MedialEnum.reels),
         ),
       ],
     );
@@ -87,6 +87,7 @@ class _MedialTabBarState extends State<MedialTabBar> {
                 style: TextStyle(
                   fontSize: 14,
                   color: selected ? AppColors.blueEdit : AppColors.grey78,
+                  fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),

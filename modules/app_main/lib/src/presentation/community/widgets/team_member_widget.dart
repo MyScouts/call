@@ -20,7 +20,7 @@ class TeamMemberWidget extends StatelessWidget {
       leading: AvatarWidget(avatar: user.avatar),
       contentPadding: EdgeInsets.zero,
       title: Text(
-        user.getdisplayName,
+        user.getDisplayName,
         style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.w600,
               fontSize: 15,

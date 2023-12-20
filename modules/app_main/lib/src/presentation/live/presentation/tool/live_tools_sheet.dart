@@ -4,6 +4,7 @@ import 'package:app_main/src/presentation/live/presentation/live_home/live_home_
 import 'package:app_main/src/presentation/live/presentation/pk/invite/pk_invite_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LiveToolsSheet extends StatelessWidget {
   const LiveToolsSheet({super.key});
@@ -91,16 +92,36 @@ class LiveToolsSheet extends StatelessWidget {
                     icon: Assets.icons_lives_switch_came.svg(),
                     action: controller.switchCamera,
                   ),
-                  _Item(
-                    title: 'Tắt hình',
-                    icon: Assets.icons_lives_turn_off_video.svg(),
-                    action: controller.enableVideo,
-                  ),
-                  _Item(
-                    title: 'Mic',
-                    icon: Assets.icons_lives_turn_off_mic.svg(),
-                    action: controller.enableAudio,
-                  ),
+                  Obx(() {
+                    if (controller.video.value) {
+                      return _Item(
+                        title: 'Tắt hình',
+                        icon: Assets.icons_lives_turn_off_video.svg(),
+                        action: controller.enableVideo,
+                      );
+                    }
+
+                    return _Item(
+                      title: 'Bật hình',
+                      icon: Assets.icons_lives_turn_on_video.svg(),
+                      action: controller.enableVideo,
+                    );
+                  }),
+                  Obx(() {
+                    if (controller.mic.value) {
+                      return _Item(
+                        title: 'Tắt Mic',
+                        icon: Assets.icons_lives_turn_off_mic.svg(),
+                        action: controller.enableAudio,
+                      );
+                    }
+
+                    return _Item(
+                      title: 'Bật Mic',
+                      icon: Assets.icons_lives_turn_on_mic.svg(),
+                      action: controller.enableAudio,
+                    );
+                  }),
                   _Item(
                     title: 'Làm đẹp',
                     icon: Assets.icons_lives_beauty.svg(),

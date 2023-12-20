@@ -5,6 +5,7 @@ import 'package:app_main/src/presentation/social/following/following_coordinator
 import 'package:app_main/src/presentation/social/my_profile/my_profile_constants.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 class MyProfileInfoUser extends StatelessWidget {
@@ -18,8 +19,11 @@ class MyProfileInfoUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final displayName = userInfo.getdisplayName;
-    final nickname = userInfo.getNickname;
+    final displayName = userInfo.getDisplayName;
+    // final firstName = userInfo?.profile?.firstName ?? '';
+    // final middleName = userInfo?.profile?.middleName ?? '';
+    // final lastName = userInfo?.profile?.lastName ?? '';
+    // final fullName = '$firstName $middleName $lastName';
     final pDoneId = userInfo.getPDoneId;
     final sexIcon = userInfo.getSex.getIcon();
     final sexTextColor = userInfo.getSex.getTextColor();
@@ -46,16 +50,17 @@ class MyProfileInfoUser extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 2),
-              if (nickname.isNotEmpty)
-                Text(
-                  '($nickname)',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.grey76,
-                  ),
-                ),
-              if (nickname.isNotEmpty) const SizedBox(height: 8),
+              // (NDNghia) Hiện tại bỏ, đã confirm
+              // if (fullName.isNotEmpty)
+              //   Text(
+              //     '($fullName)',
+              //     style: const TextStyle(
+              //       fontSize: 14,
+              //       fontWeight: FontWeight.w500,
+              //       color: AppColors.grey76,
+              //     ),
+              //   ),
+              // if (fullName.isNotEmpty) const SizedBox(height: 8),
               Text(
                 'ID: $pDoneId',
                 style: const TextStyle(
@@ -182,7 +187,7 @@ class MyProfileInfoUser extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Row(
                   children: [
                     _buildPeopleInfo(

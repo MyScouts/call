@@ -151,7 +151,7 @@ class _$SendGiftPayloadImpl implements _SendGiftPayload {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SendGiftPayloadImpl &&

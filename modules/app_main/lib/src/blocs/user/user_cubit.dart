@@ -117,6 +117,10 @@ class UserCubit extends Cubit<UserState> {
 
   User? get currentUser => _userSharePreferencesUsecase.getUserInfo();
 
+  OnBoarding? get onboarding => _userSharePreferencesUsecase.getOnboarding();
+
+  void setOnboarding(OnBoarding? onboarding) => _onboarding = onboarding;
+
   void setCurrentUser(User? user) => _currentUser = user;
 
   OnBoarding? _onboarding;
@@ -131,7 +135,8 @@ class UserCubit extends Cubit<UserState> {
       try {
         final user = await _userUsecase.geSynctUserById(id);
         if (user != null) {
-          final response = await _userUsecase.getUserPublicInfo(id) ?? const User();
+          final response =
+              await _userUsecase.getUserPublicInfo(id) ?? const User();
           await _userSharePreferencesUsecase.saveUserInfo(user.copyWith(
             isJA: _onboarding?.isJA,
             isPDone: _onboarding?.isPdone ?? false,
@@ -396,7 +401,7 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-  Future<void> onboarding() async {
+  Future<void> getOnboarding() async {
     if (state is OnGetOnboarding) return;
     try {
       emit(OnGetOnboarding());

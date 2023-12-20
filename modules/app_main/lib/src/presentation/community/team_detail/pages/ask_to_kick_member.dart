@@ -131,7 +131,7 @@ class KickMemberForce extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      user.getdisplayName,
+                      user.getDisplayName,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,

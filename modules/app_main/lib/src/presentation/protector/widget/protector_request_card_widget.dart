@@ -33,7 +33,7 @@ class RequestCardWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                request.user.getdisplayName,
+                request.user.getDisplayName,
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,

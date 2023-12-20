@@ -1,8 +1,8 @@
+import 'package:app_core/app_core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobilehub_core/mobilehub_core.dart';
+import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
 import 'package:wallet/domain/domain.dart';
@@ -178,36 +178,67 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
                 ),
               ),
               const SizedBox(height: 10),
-              Expanded(
-                child: GridView.count(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 15,
-                  crossAxisSpacing: 15,
-                  childAspectRatio: itemWidth / itemHeight,
-                  children: banks
-                      .map(
-                        (bank) => DecoratedBox(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 2,
-                              color: _selectedBank?.id != bank.id
-                                  ? Colors.transparent
-                                  : const Color(0xFF4B84F7),
+              if (banks.isNotEmpty)
+                Expanded(
+                  child: GridView.count(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 15,
+                    crossAxisSpacing: 15,
+                    childAspectRatio: itemWidth / itemHeight,
+                    children: banks
+                        .map(
+                          (bank) => DecoratedBox(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                width: 2,
+                                color: _selectedBank?.id != bank.id
+                                    ? Colors.transparent
+                                    : const Color(0xFF4B84F7),
+                              ),
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                            borderRadius: BorderRadius.circular(12),
+                            child: GestureDetector(
+                              onTap: () {
+                                _selectedBank = bank;
+                                setState(() {});
+                              },
+                              child: BankWidget(bank: bank),
+                            ),
                           ),
-                          child: GestureDetector(
-                            onTap: () {
-                              _selectedBank = bank;
-                              setState(() {});
-                            },
-                            child: BankWidget(bank: bank),
+                        )
+                        .toList(),
+                  ),
+                ),
+              if (banks.isEmpty)
+                Expanded(
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      children: [
+                        ImageWidget(
+                          ImageConstants.imgNoData,
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          fit: BoxFit.cover,
+                        ),
+                        Text(
+                          'Không có kết quả',
+                          style: context.text.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            height: 24 / 16,
                           ),
                         ),
-                      )
-                      .toList(),
+                        Text(
+                          'Bạn vui lòng thử từ khóa khác',
+                          style: context.text.bodyMedium?.copyWith(
+                            color: const Color(0xFF667385),
+                            height: 1.6,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
               const SizedBox(height: 15),
               PrimaryButton(
                 title: 'TIẾP THEO',
@@ -310,7 +341,8 @@ class _AddBankAccountScreenState extends State<AddBankAccountScreen>
                       isDefault: false,
                     );
                     _bloc.setAddBankAccountParams(params);
-                    context.startConfirmBankAccountInformation(params: params, bloc: _bloc);
+                    context.startConfirmBankAccountInformation(
+                        params: params, bloc: _bloc);
                     // _bloc.add(const BankAccountEvent.getOtp());
                   },
                   disabled: !validation,

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:app_core/app_core.dart';
 import 'package:app_main/app_main.dart';
 import 'package:app_main/src/core/networking/networking_factory.dart';
 import 'package:app_main/src/data/data_sources/remote/user_api.dart';
@@ -10,7 +9,6 @@ import 'package:app_main/src/data/repositories/impl/user_repository_impl.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 const keyEndpoint = '_key_ApiEndpointKey';
 
@@ -36,8 +34,7 @@ Future<dynamic> handleCallPN(
   final userRepository = AuthRepositoryImpl(
     UserApi(
       NetworkingFactory.createDio(
-        sharedPreferences.getString(keyEndpoint) ??
-            'https://dev.vdone.info/',
+        sharedPreferences.getString(keyEndpoint) ?? 'https://dev.vdone.info/',
         sharedPreferences,
         onLogout,
         false,
@@ -46,7 +43,7 @@ Future<dynamic> handleCallPN(
   );
   final caller = await userRepository.getUserById(id: callerId).catchError(
         (_) => null,
-  );
+      );
 
   const androidPlatformChannelSpecifics = AndroidNotificationDetails(
     'vdone_call_push_channel',

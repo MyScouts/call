@@ -192,7 +192,7 @@ class _$CreateRoomStateDataImpl implements CreateRoomStateData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CreateRoomStateDataImpl &&
@@ -349,7 +349,7 @@ class _$CreateRoomStateLoadingImpl implements CreateRoomStateLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CreateRoomStateLoadingImpl);
@@ -482,7 +482,7 @@ class _$CreateRoomStateErrorImpl implements CreateRoomStateError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CreateRoomStateErrorImpl &&

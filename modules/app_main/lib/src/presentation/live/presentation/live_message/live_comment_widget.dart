@@ -1,9 +1,11 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/live/domain/entities/live_comment.dart';
+import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:app_main/src/presentation/live/presentation/live_message/state/live_message_bloc.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:imagewidget/imagewidget.dart';
 
 class LiveCommentWidget extends StatelessWidget {
@@ -13,9 +15,20 @@ class LiveCommentWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LiveMessageBloc, LiveMessageState>(
       builder: (_, state) {
-        return AnimatedOpacity(
-          opacity: 1.0,
-          duration: const Duration(microseconds: 300),
+        return ShaderMask(
+          blendMode: BlendMode.dstOut,
+          shaderCallback: (bounds) => const LinearGradient(
+            colors: [
+              Colors.white,
+              Colors.transparent,
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.center,
+            stops: [
+              0.1,
+              1.0
+            ],
+          ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
           child: ListView.separated(
             padding: const EdgeInsets.symmetric(vertical: 16),
             reverse: true,
@@ -42,21 +55,35 @@ class LiveCommentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (comment is JoinMessage) {
-      final cm = comment as JoinMessage;
-      return Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(90),
-            ),
-            alignment: Alignment.centerLeft,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+    final controller = context.read<LiveChannelController>();
+    return Obx(() {
+      final type = controller.liveType.value;
+
+      final bool isPk = type == LiveChannelType.pk;
+
+      if (comment is JoinMessage) {
+        final cm = comment as JoinMessage;
+        return Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(90),
+                border: isPk
+                    ? Border.all(
+                        color: controller.userInLive(cm.member)
+                            ? const Color(0xff00BBE4)
+                            : const Color(0xffFE1D67),
+                        width: 1,
+                      )
+                    : null,
+              ),
+              alignment: Alignment.centerLeft,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   CircleNetworkImage(
                     url: cm.member.info.avatar,
                     size: 17,
@@ -64,65 +91,125 @@ class LiveCommentCard extends StatelessWidget {
                       ImageConstants.defaultUserAvatar,
                     ),
                   ),
-                const SizedBox(width: 4),
-                Flexible(
-                  child: Builder(
-                    builder: (_) {
-                      return RichText(
-                        text: TextSpan(children: [
-                          TextSpan(
-                            text: cm.member.info.name,
-                            style: const TextStyle(
-                              color: Color(0xffB6B5BA),
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
+                  const SizedBox(width: 4),
+                  Flexible(
+                    child: Builder(
+                      builder: (_) {
+                        return RichText(
+                          text: TextSpan(children: [
+                            TextSpan(
+                              text: cm.member.info.name,
+                              style: const TextStyle(
+                                color: Color(0xffB6B5BA),
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                          const TextSpan(
-                            text: ' tham gia',
-                            style: TextStyle(
-                              color: Color(0xffAAF6A3),
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
+                            const TextSpan(
+                              text: ' tham gia',
+                              style: TextStyle(
+                                color: Color(0xffAAF6A3),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                        ]),
-                      );
-                    },
+                          ]),
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
+            ),
+          ],
+        );
+      }
+
+      if (comment is SystemMessage) {
+        return Align(
+          alignment: Alignment.centerLeft,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 6,
+                vertical: 4,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(
+                    child: RichText(
+                      text: TextSpan(children: [
+                        TextSpan(
+                          text: comment.message,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ]),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ],
-      );
-    }
+        );
+      }
 
-    if (comment is SystemMessage) {
+      final cm = comment as UserMessage;
+
       return Align(
         alignment: Alignment.centerLeft,
         child: DecoratedBox(
           decoration: BoxDecoration(
             color: Colors.black.withOpacity(0.3),
             borderRadius: BorderRadius.circular(10),
+            border: isPk
+                ? Border.all(
+                    color: controller.userInLive(cm.member)
+                        ? const Color(0xff00BBE4)
+                        : const Color(0xffFE1D67),
+                    width: 1,
+                  )
+                : null,
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 6,
-              vertical: 4,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                CircleNetworkImage(
+                  url: cm.member.info.avatar,
+                  size: 17,
+                  defaultImage: ImageWidget(
+                    ImageConstants.defaultUserAvatar,
+                  ),
+                ),
+                const SizedBox(width: 4),
                 Flexible(
                   child: RichText(
                     text: TextSpan(children: [
                       TextSpan(
-                        text: comment.message,
+                        text: '${cm.member.info.name}: ',
+                        style: const TextStyle(
+                          color: Color(0xffB6B5BA),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      TextSpan(
+                        text: cm.message,
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 13,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ]),
@@ -133,57 +220,6 @@ class LiveCommentCard extends StatelessWidget {
           ),
         ),
       );
-    }
-
-    final cm = comment as UserMessage;
-
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.3),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-                CircleNetworkImage(
-                  url: cm.member.info.avatar,
-                  size: 17,
-                  defaultImage: ImageWidget(
-                    ImageConstants.defaultUserAvatar,
-                  ),
-                ),
-              const SizedBox(width: 4),
-              Flexible(
-                child: RichText(
-                  text: TextSpan(children: [
-                    TextSpan(
-                      text: '${cm.member.info.name}: ',
-                      style: const TextStyle(
-                        color: Color(0xffB6B5BA),
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    TextSpan(
-                      text: cm.message,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ]),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+    });
   }
 }

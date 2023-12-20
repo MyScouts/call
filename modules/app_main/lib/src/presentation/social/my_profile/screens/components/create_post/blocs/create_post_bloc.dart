@@ -47,78 +47,15 @@ class CreatePostBloc extends CoreBloc<CreatePostEvent, CreatePostState> {
   void onPostButtonTapped(
       PostButtonTapped event, Emitter<CreatePostState> emit) async {
     if (state.isShowPostButton) {
-      bool canPost = false;
-      String errorMessage = '';
-      if (event.user.getIsPDone) {
-        canPost = inputRequired(
-          content: state.content,
-          mediaFiles: state.files,
-          subject: state.subject,
-          postType: event.postType,
-          contentLength: MyProfileConstant.pDoneContentLength,
-          subjectLength: MyProfileConstant.pDoneSubjectLength,
-          imagesLength: MyProfileConstant.pDoneImagesLength,
-          videoSecondsDuration: MyProfileConstant.pDoneVideoSecondsDuration,
-          filmSecondsDuration: MyProfileConstant.pDoneFilmSecondsDuration,
-          onErrorSubject: () {
-            errorMessage = 'Người dùng PDone chỉ được đăng tiêu đề dưới ${MyProfileConstant.pDoneSubjectLength} từ';
-          },
-          onErrorContent: () {
-            errorMessage = 'Người dùng PDone chỉ được đăng nội dung dưới ${MyProfileConstant.pDoneContentLength} từ';
-          },
-          onErrorImagesLength: () {
-            errorMessage = 'Người dùng PDone chỉ được đăng dưới ${MyProfileConstant.pDoneImagesLength} ảnh';
-          },
-          onErrorVideoSecondsDuration: () {
-            errorMessage = 'Người dùng PDone chỉ được đăng video dưới ${MyProfileConstant.pDoneVideoSecondsDuration} phút';
-          },
-          onErrorFilmSecondsDuration: () {
-            errorMessage = 'Người dùng PDone chỉ được đăng thước phim dưới ${MyProfileConstant.pDoneFilmSecondsDuration} phút';
-          },
-        );
-      } else {
-        canPost = inputRequired(
-          content: state.content,
-          mediaFiles: state.files,
-          subject: state.subject,
-          postType: event.postType,
-          contentLength: MyProfileConstant.contentLength,
-          subjectLength: MyProfileConstant.subjectLength,
-          imagesLength: MyProfileConstant.imagesLength,
-          videoSecondsDuration: MyProfileConstant.videoSecondsDuration,
-          filmSecondsDuration: MyProfileConstant.filmSecondsDuration,
-          onErrorSubject: () {
-            errorMessage = 'Người dùng thường chỉ được đăng tiêu đề dưới ${MyProfileConstant.subjectLength} từ';
-          },
-          onErrorContent: () {
-            errorMessage = 'Người dùng thường chỉ được đăng nội dung dưới ${MyProfileConstant.contentLength} từ';
-          },
-          onErrorImagesLength: () {
-            errorMessage = 'Người dùng thường chỉ được đăng dưới ${MyProfileConstant.imagesLength} ảnh';
-          },
-          onErrorVideoSecondsDuration: () {
-            errorMessage = 'Người dùng thường chỉ được đăng video dưới ${MyProfileConstant.videoSecondsDuration} phút';
-          },
-          onErrorFilmSecondsDuration: () {
-            errorMessage = 'Người dùng thường chỉ được đăng thước phim dưới ${MyProfileConstant.filmSecondsDuration} phút';
-          },
-        );
-      }
+      final createPostPayload = CreatePostPayload(
+        scopeType: state.typeScopeSelected,
+        subject: state.subject,
+        content: state.content,
+        postType: event.postType,
+        mediaFiles: state.files,
+      );
 
-      if (canPost) {
-        final createPostPayload = CreatePostPayload(
-          scopeType: state.typeScopeSelected,
-          subject: state.subject,
-          content: state.content,
-          postType: event.postType,
-          mediaFiles: state.files,
-        );
-
-        AppCoordinator.rootNavigator.currentContext
-            ?.pop(data: createPostPayload);
-      } else {
-        AppCoordinator.rootNavigator.currentContext?.showToastText(errorMessage);
-      }
+      AppCoordinator.rootNavigator.currentContext?.pop(data: createPostPayload);
     }
   }
 
@@ -151,25 +88,39 @@ class CreatePostBloc extends CoreBloc<CreatePostEvent, CreatePostState> {
   }
 
   void onMediaTapped(MediaTapped event, Emitter<CreatePostState> emit) async {
+    List<MediaFile?>? mediaFiles = [];
     if (event.postType.isText) {
-      final mediaFiles = await _mediaPicker.pickImagesFromGallery();
-      if (mediaFiles == null || mediaFiles.isEmpty) return;
-      emit(state.copyWith(
-        files: [...state.files, ...mediaFiles],
-      ));
-
-      return;
+      mediaFiles = await _mediaPicker.pickImagesFromGallery();
     }
 
     if (event.postType.isVideo) {
       final mediaFile = await _mediaPicker.pickVideoFromGallery();
-      if (mediaFile == null) return;
+      mediaFiles!.add(mediaFile);
+    }
 
-      emit(state.copyWith(
-        files: [mediaFile],
-      ));
+    if (mediaFiles == null || mediaFiles.isEmpty) return;
 
-      return;
+    final output = MyProfileConstant.checkInput(
+      isPDone: event.user.getIsPDone,
+      mediaFiles: mediaFiles,
+      postType: event.postType,
+    );
+
+    if (output.canPost) {
+      if (event.postType.isText) {
+        emit(state.copyWith(
+          files: [...state.files, ...mediaFiles],
+        ));
+      }
+
+      if (event.postType.isVideo) {
+        emit(state.copyWith(
+          files: mediaFiles,
+        ));
+      }
+    } else {
+      AppCoordinator.rootNavigator.currentContext
+          ?.showToastText(output.errorMessage);
     }
   }
 
@@ -189,60 +140,5 @@ class CreatePostBloc extends CoreBloc<CreatePostEvent, CreatePostState> {
     required String content,
   }) {
     return subject.isNotEmpty && content.isNotEmpty;
-  }
-
-  bool inputRequired({
-    required String subject,
-    required String content,
-    required List<MediaFile?>? mediaFiles,
-    required int subjectLength,
-    required int contentLength,
-    required int imagesLength,
-    required int videoSecondsDuration,
-    required int filmSecondsDuration,
-    required PostType postType,
-    required Function() onErrorSubject,
-    required Function() onErrorContent,
-    required Function() onErrorImagesLength,
-    required Function() onErrorVideoSecondsDuration,
-    required Function() onErrorFilmSecondsDuration,
-  }) {
-    if (subject.length > subjectLength) {
-      onErrorSubject();
-      return false;
-    }
-
-    if (content.length > contentLength) {
-      onErrorContent();
-      return false;
-    }
-
-    if (mediaFiles != null) {
-      switch (postType) {
-        case PostType.text:
-          if (mediaFiles.length > imagesLength) {
-            onErrorImagesLength();
-            return false;
-          }
-        case PostType.video:
-          for (final file in mediaFiles) {
-            if (file!.videoDuration.inSeconds > videoSecondsDuration) {
-              onErrorVideoSecondsDuration();
-              return false;
-            }
-          }
-        case PostType.film:
-          for (final file in mediaFiles) {
-            if (file!.videoDuration.inSeconds > filmSecondsDuration) {
-              onErrorFilmSecondsDuration();
-              return false;
-            }
-          }
-      }
-
-      return true;
-    }
-
-    return false;
   }
 }

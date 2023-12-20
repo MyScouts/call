@@ -180,7 +180,7 @@ abstract class UpgradeAccountApi {
   });
 
   @GET(UpgradeAccountApiConstants.pDoneProfile)
-  Future<ApiResponse<PDoneInformationResponse>> pDoneProfile();
+  Future<PDoneInformationResponse> pDoneProfile();
 
   @GET(UpgradeAccountApiConstants.pDoneRegisteringProfile)
   Future<ApiResponse<PDoneRegisteringProfileResponse>>

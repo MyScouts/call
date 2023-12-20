@@ -5,6 +5,7 @@ import 'package:app_main/src/data/models/payloads/user/user_action_payload.dart'
 import 'package:app_main/src/data/models/responses/follow_response.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
+import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/models/responses/list_followees_response.dart';
@@ -14,20 +15,20 @@ import '../../data/repositories/user_repository.dart';
 @injectable
 class UserUsecase {
   final UserRepository _userRepository;
+  final UserSharePreferencesUsecase _userSharePreferencesUsecase;
 
   UserUsecase(
     this._userRepository,
+    this._userSharePreferencesUsecase,
   );
 
   Future<User?> geSynctUserById(int id) async {
     final user = await _userRepository.getUserById(id: id);
-    // unawaited(_chatUsecase.updateUserInfo(user));
     return user;
   }
 
   Future<User?> getUserPublicInfo(int id) async {
     final user = await _userRepository.getUserPublicInfo(id: id);
-    // unawaited(_chatUsecase.updateUserInfo(user));
     return user;
   }
 
@@ -78,7 +79,7 @@ class UserUsecase {
 
   Future<OnBoarding> onboarding() async {
     final response = await _userRepository.onboarding();
-    return OnBoarding(
+    final onboarding = OnBoarding(
       isJA: response.isJA,
       isPdone: response.isPdone,
       isMarshopOwner: response.isMarshopOwner,
@@ -86,6 +87,8 @@ class UserUsecase {
       hasDefaultBankAccount: response.hasDefaultBankAccount,
       marshopCustomerId: response.marshopCustomerId,
     );
+    unawaited(_userSharePreferencesUsecase.saveOnboarding(onboarding));
+    return onboarding;
   }
 
   Future<UpdateNonePDoneProfileReponse> updatePDoneProfile(
@@ -149,5 +152,9 @@ class UserUsecase {
 
   Future replyFollow(ReplyFollowPayload payload) {
     return _userRepository.replyFollowRequest(payload);
+  }
+
+  Future<UserInfo> getMe() {
+    return _userRepository.getMe();
   }
 }

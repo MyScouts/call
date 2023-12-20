@@ -1,10 +1,9 @@
-import 'package:app_core/app_core.dart';
-import 'package:app_main/src/core/extensions/list_extension.dart';
-import 'package:app_main/src/presentation/live/live_coordinator.dart';
+import 'dart:ui' as ui;
 import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
 import 'package:app_main/src/presentation/live/presentation/live_reaction/live_reaction_screen.dart';
 import 'package:app_main/src/presentation/live/presentation/setting/setting_sheet.dart';
 import 'package:app_main/src/presentation/live/presentation/tool/live_tools_sheet.dart';
+import 'package:app_main/src/presentation/live/presentation/widget/mashop_status_builder.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -42,9 +41,8 @@ class LiveBottomAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = context.read<LiveChannelController>();
     return Obx(() {
-      final controller = context.read<LiveChannelController>();
-
       if (controller.state.value == LiveStreamState.watching) {
         return Padding(
           padding: const EdgeInsets.all(16.0),
@@ -77,42 +75,51 @@ class LiveBottomAction extends StatelessWidget {
                   );
                 }),
                 Obx(() {
-                  final controller = context.read<LiveChannelController>();
                   return Row(
                     children: [
                       Expanded(
                         child: Row(
                           children: <Widget>[
                             LiveButtonAction(
-                              icon: ImageWidget(
-                                IconAppConstants.icLiveMarshop,
-                              ),
-                              onPressed: () {},
-                            ),
-                            LiveButtonAction(
                               icon: ImageWidget(IconAppConstants.icLiveComment),
                               onPressed: controller.enableMessage,
                             ),
-                            if (controller.me.value.isOwner)
+                            MarShopStatusBuilder(
+                              uid: controller.hostID,
+                              builder: (isMarShop) {
+                                if (isMarShop) {
+                                  return Row(
+                                    children: [
+                                      const SizedBox(width: 10),
+                                      LiveButtonAction(
+                                        icon: ImageWidget(
+                                          IconAppConstants.icLiveMarshop,
+                                        ),
+                                        onPressed: () {},
+                                      ),
+                                    ],
+                                  );
+                                }
+
+                                return const SizedBox.shrink();
+                              },
+                            ),
+                            if (controller.me.value.isOwner) ...[
+                              const SizedBox(width: 10),
                               LiveButtonAction(
                                 icon: ImageWidget(IconAppConstants.icLiveShare),
                                 onPressed: () {},
-                              ),
-                            if (!controller.me.value.isOwner)
-                              LiveButtonAction(
-                                icon: ImageWidget(IconAppConstants.icLive2User),
-                                onPressed: () {
-                                  context.showBottomSheetLive(controller,
-                                      index: 1);
-                                },
-                              ),
+                              )
+                            ],
+                            const SizedBox(width: 10),
                             LiveButtonAction(
                               icon: ImageWidget(
-                                IconAppConstants.icLiveSetting,
+                                IconAppConstants.icLiveMenu,
                               ),
                               onPressed: () => liveSetting(context),
                             ),
-                            if (controller.me.value.isOwner)
+                            if (controller.me.value.isOwner) ...[
+                              const SizedBox(width: 10),
                               LiveButtonAction(
                                 bgColor: const Color(0xff4B84F7),
                                 icon: ImageWidget(IconAppConstants.icLiveQr),
@@ -120,17 +127,11 @@ class LiveBottomAction extends StatelessWidget {
                                   liveTool(context);
                                 },
                               ),
-                            if (!controller.me.value.isOwner)
-                              LiveButtonAction(
-                                icon: ImageWidget(
-                                  IconAppConstants.icLiveMenu,
-                                ),
-                                onPressed: () {},
-                              ),
+                            ],
                             const Spacer(),
                             if (!controller.me.value.isOwner)
                               const LiveRoseButton(),
-                          ].separated(const SizedBox(width: 10)),
+                          ],
                         ),
                       ),
                       if (!controller.me.value.isOwner) const LiveGiftButton(),

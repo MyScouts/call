@@ -4,6 +4,7 @@ import 'package:app_main/src/data/models/responses/follow_response.dart';
 import 'package:app_main/src/data/models/responses/list_friends_user_response.dart';
 import 'package:app_main/src/data/models/responses/search_user_response.dart';
 import 'package:app_main/src/data/models/responses/update_none_pdone_profile_response.dart';
+import 'package:app_main/src/data/models/responses/user/get_me_response.dart';
 import 'package:app_main/src/data/models/responses/user_action_response.dart';
 import 'package:app_main/src/data/models/responses/user_response.dart';
 import 'package:app_main/src/data/models/responses/user_verify_response.dart';
@@ -33,8 +34,10 @@ class UserApiConstants {
   static const updatePDoneProfile = "api/v1/p-done/profile";
   static const updateNonePDoneProfile = "api/v1/p-done/non-p-done-profile";
   static const listFriends = "/api/v1/following/friend?page=1&pageSize=200";
-  static const listFollowers = '/api/v1/following/followers?page=1&pageSize=200';
-  static const listFollowees = "/api/v1/following/followees?page=1&pageSize=200";
+  static const listFollowers =
+      '/api/v1/following/followers?page=1&pageSize=200';
+  static const listFollowees =
+      "/api/v1/following/followees?page=1&pageSize=200";
   static const invite = "api/v1/team/{id}/invite";
   static const email = "api/v1/user/email";
   static const genEmail = "api/v1/user/add-email-otp";
@@ -42,6 +45,8 @@ class UserApiConstants {
   static const setConfig = "api/v1/setting/personal/{key}";
   static const stringeeToken = "api/v1/call/stringee-token";
   static const userPublicInfo = "api/v1/user/user/{userId}/public-info";
+  static const me = "api/v1/user/me";
+  static const userOnBoarding = "api/v1/onboarding/user/{userId}/ecom";
 }
 
 @RestApi()
@@ -154,4 +159,10 @@ abstract class UserApi {
   Future<UserPublicInfoResponse> getUserPublicInfo({
     @Path('id') required int id,
   });
+
+  @GET(UserApiConstants.me)
+  Future<GetMeResponse> getMe();
+
+  @GET(UserApiConstants.userOnBoarding)
+  Future<dynamic> getOnBoardingUser(@Path('userId') int userId);
 }

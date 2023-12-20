@@ -24,32 +24,32 @@ class WalletRepositoryImpl implements WalletRepository {
   @override
   Future<List<TransactionItem>> getWalletTransactionList(
       {required WalletType walletType,
-      WalletTransactionsRequest? request}) async {
+      required WalletTransactionsRequest request}) async {
     TransactionsResponse? response;
 
     if (walletType == WalletType.coin) {
       response = await _walletApi.getTransactionsCoinWallet(
-        pageSize: request?.pageSize ?? 100,
-        page: request?.page,
-        category: request?.category,
-        fromTimestamp: request?.fromTimestamp,
-        toTimestamp: request?.toTimestamp,
+        pageSize: request.pageSize,
+        page: request.page,
+        transactionType: request.transactionType,
+        fromTimestamp: request.fromTimestamp,
+        toTimestamp: request.toTimestamp,
       );
     } else if (walletType == WalletType.diamond) {
       response = await _walletApi.getTransactionsDiamondWallet(
-        pageSize: request?.pageSize ?? 100,
-        page: request?.page,
-        category: request?.category,
-        fromTimestamp: request?.fromTimestamp,
-        toTimestamp: request?.toTimestamp,
+        pageSize: request.pageSize,
+        page: request.page,
+        transactionType: request.transactionType,
+        fromTimestamp: request.fromTimestamp,
+        toTimestamp: request.toTimestamp,
       );
     } else if (walletType == WalletType.vnd) {
       response = await _walletApi.getTransactionsVNDWallet(
-        pageSize: request?.pageSize ?? 100,
-        page: request?.page,
-        category: request?.category,
-        fromTimestamp: request?.fromTimestamp,
-        toTimestamp: request?.toTimestamp,
+        pageSize: request.pageSize,
+        page: request.page,
+        transactionType: request.transactionType,
+        fromTimestamp: request.fromTimestamp,
+        toTimestamp: request.toTimestamp,
       );
     }
     return response?.transactions ?? [];

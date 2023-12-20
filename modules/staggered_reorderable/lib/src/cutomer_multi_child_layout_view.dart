@@ -426,7 +426,7 @@ class ProxyClass extends MultiChildLayoutDelegate {
         }
       }
 
-      calculateItemPosition.add(ItemPosition(itemAll[i].id!,
+      calculateItemPosition.add(ItemPosition(itemAll[i].id,
           Offset(offsetX + padding * 0.5, columnH[nowRowIndex])));
 
       offsetX += padding +

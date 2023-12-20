@@ -130,7 +130,7 @@ class _$ReplyJoinRequestPayloadImpl implements _ReplyJoinRequestPayload {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ReplyJoinRequestPayloadImpl &&
@@ -273,7 +273,7 @@ class _$AssignBossPayloadImpl implements _AssignBossPayload {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AssignBossPayloadImpl &&
@@ -411,7 +411,7 @@ class _$GetCommunityPayloadImpl implements _GetCommunityPayload {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GetCommunityPayloadImpl &&

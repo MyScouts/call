@@ -8,6 +8,7 @@ import 'package:app_main/src/presentation/live/presentation/channel/state/live_c
 import 'package:app_main/src/presentation/live/presentation/live_message/state/live_message_bloc.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:provider/provider.dart';
@@ -42,244 +43,256 @@ class _LiveChannelHeaderState extends State<LiveChannelHeader> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(90),
-              image: DecorationImage(image: AssetImage(ImageConstants.profileHeader,package: 'design_system'),fit: BoxFit.fill)
-            ),
-            padding: const EdgeInsets.all(4.0),
-            child: Obx(() {
-              final host = controller.members.firstWhereOrNull(
-                  (e) => e.isOwner && e.liveID == controller.info.id);
-              return IntrinsicHeight(
-                child: Row(
-                  children: [
-                    if (host == null || host.info.avatar.trim().isEmpty)
-                      GestureDetector(
-                        onTap: () {
-                          context
-                              .startSelectUser(userId: host!.info.userID)
-                              .then((value) {
-                            _actionBloc.getFollowUser(
-                                userId: host.info.userID);
-                          });
-                        },
-                        child: SizedBox.square(
-                          dimension: 28,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(28 / 2),
-                            child: ImageWidget(
-                              ImageConstants.defaultUserAvatar,
-                            ),
-                          ),
-                        ),
-                      )
-                    else
-                      GestureDetector(
-                        onTap: () {
-                          context
-                              .startSelectUser(userId: host.info.userID)
-                              .then((value) {
-                            _actionBloc.getFollowUser(
-                                userId: host.info.userID);
-                          });
-                        },
-                        child: AvatarWidget(
-                          avatar: host.info.avatar,
-                          size: 36,
-                          isPDone: host.info.type > 0,
-                        ),
-                      ),
-                    const SizedBox(width: 4),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(90),
+                    image: DecorationImage(
+                        image: AssetImage(ImageConstants.profileHeader,
+                            package: 'design_system'),
+                        fit: BoxFit.fill)),
+                padding: const EdgeInsets.all(4.0),
+                child: Obx(() {
+                  final host = controller.members.firstWhereOrNull(
+                      (e) => e.isOwner && e.liveID == controller.info.id);
+                  return IntrinsicHeight(
+                    child: Row(
                       children: [
-                        Text(
-                          host?.info.name ?? '',
-                          style: const TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SizedBox.square(
-                              dimension: 12,
-                              child: ImageWidget(
-                                IconAppConstants.icDiamond,
+                        if (host == null || host.info.avatar.trim().isEmpty)
+                          GestureDetector(
+                            onTap: () {
+                              context
+                                  .startSelectUser(userId: host!.info.userID)
+                                  .then((value) {
+                                _actionBloc.getFollowUser(
+                                    userId: host.info.userID);
+                              });
+                            },
+                            child: SizedBox.square(
+                              dimension: 28,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(28 / 2),
+                                child: ImageWidget(
+                                  ImageConstants.defaultUserAvatar,
+                                ),
                               ),
                             ),
-                            const SizedBox(width: 4),
-                            Obx(() {
+                          )
+                        else
+                          GestureDetector(
+                            onTap: () {
+                              context
+                                  .startSelectUser(userId: host.info.userID)
+                                  .then((value) {
+                                _actionBloc.getFollowUser(
+                                    userId: host.info.userID);
+                              });
+                            },
+                            child: AvatarWidget(
+                              avatar: host.info.avatar,
+                              size: 28,
+                            ),
+                          ),
+                        const SizedBox(width: 4),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              host?.info.name ?? '',
+                              style: const TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SizedBox.square(
+                                  dimension: 12,
+                                  child: ImageWidget(
+                                    IconAppConstants.icDiamond,
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                Obx(() {
+                                  return Text(
+                                    controller.liveState.value.diamondCount
+                                            ?.toString() ??
+                                        '0',
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.white,
+                                    ),
+                                  );
+                                }),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 20),
+                        Obx(() {
+                          final host = controller.members.firstWhereOrNull(
+                              (e) =>
+                                  e.isOwner && e.liveID == controller.info.id);
+                          if (host == null) {
+                            return const SizedBox();
+                          }
+                          if (controller.me.value.isOwner) {
+                            return const SizedBox();
+                          }
+                          return LiveButtonAddFriend(
+                            id: host.info.userID,
+                            cubit: _actionBloc,
+                          );
+                        }),
+                      ],
+                    ),
+                  );
+                }),
+              ),
+              GestureDetector(
+                onTap: () {
+                  context.showBottomSheetLive(controller);
+                },
+                behavior: HitTestBehavior.opaque,
+                child: Row(
+                  children: [
+                    Obx(() {
+                      if (controller.giftCardLive.value.giversInfo == null) {
+                        return const SizedBox();
+                      }
+                      return Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: controller.giftCardLive.value.giversInfo!
+                            .mapIndexed((index, element) {
+                              if (index == 0) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    context.startSelectUser(
+                                        userId: element.giver!.id!);
+                                  },
+                                  child: SizedBox(
+                                    height: 40,
+                                    width: 40,
+                                    child: Stack(
+                                      children: [
+                                        ImageWidget(
+                                          IconAppConstants.icTop1Awards,
+                                          width: 40,
+                                          height: 40,
+                                        ),
+                                        Align(
+                                          alignment: Alignment.center,
+                                          child: SizedBox(
+                                            child: AvatarWidget(
+                                              avatar: element.giver?.avatar,
+                                              size: 25,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }
+                              return SizedBox(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    context.startSelectUser(
+                                        userId: element.giver!.id!);
+                                  },
+                                  child: AvatarWidget(
+                                      avatar: element.giver?.avatar, size: 30),
+                                ),
+                              );
+                            })
+                            .take(2)
+                            .toList()
+                            .separated(const SizedBox(width: 8)),
+                      );
+                    }),
+                    const SizedBox(width: 8),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(13),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 6,
+                        vertical: 4,
+                      ),
+                      child: Row(
+                        children: [
+                          ImageWidget(IconAppConstants.icLiveMember),
+                          const SizedBox(width: 2),
+                          Obx(
+                            () {
+                              final members = controller.members.value;
+
+                              final liveMembers = members
+                                  .where((e) => e.liveID == controller.info.id);
+
                               return Text(
-                                controller.liveState.value.diamondCount
-                                        ?.toString() ??
-                                    '0',
+                                liveMembers.length.toString(),
                                 style: const TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
                                   color: Colors.white,
                                 ),
                               );
-                            }),
-                          ],
-                        ),
-                      ],
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(width: 20),
-                    Obx(() {
-                      final host = controller.members.firstWhereOrNull(
-                          (e) =>
-                              e.isOwner && e.liveID == controller.info.id);
-                      if (host == null) {
-                        return const SizedBox();
-                      }
-                      if (controller.me.value.isOwner) {
-                        return const SizedBox();
-                      }
-                      return LiveButtonAddFriend(
-                        id: host.info.userID,
-                        cubit: _actionBloc,
-                      );
-                    }),
+                    CloseButton(
+                      color: Colors.white,
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (_) => LeaveLiveConfirm(
+                            onRemoved: () {
+                              controller.leaveLive();
+                              if (controller.me.value.isOwner) {
+                                if (controller.liveType.value !=
+                                    LiveChannelType.pk) {
+                                  Navigator.of(context).pop();
+                                  Future.delayed(
+                                    const Duration(seconds: 1),
+                                    () => showModalBottomSheet(
+                                      context: AppCoordinator
+                                          .rootNavigator.currentContext!,
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      builder: (_) => const LiveEndSheet(),
+                                    ),
+                                  );
+                                }
+                              } else {
+                                Navigator.of(context).pop();
+                              }
+                            },
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
-              );
-            }),
+              ),
+            ],
           ),
-          GestureDetector(
-            onTap: () {
-              context.showBottomSheetLive(controller);
-            },
-            behavior: HitTestBehavior.opaque,
-            child: Row(
-              children: [
-                Obx(() {
-                  if (controller.giftCardLive.value.giversInfo == null) {
-                    return const SizedBox();
-                  }
-                  return Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: controller.giftCardLive.value.giversInfo!
-                        .mapIndexed((index, element) {
-                          if (index == 0) {
-                            return GestureDetector(
-                              onTap: () {
-                                context.startSelectUser(
-                                    userId: element.giver!.id!);
-                              },
-                              child: SizedBox(
-                                height: 40,
-                                width: 40,
-                                child: Stack(
-                                  children: [
-                                    ImageWidget(
-                                      IconAppConstants.icTop1Awards,
-                                      width: 40,
-                                      height: 40,
-                                    ),
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: SizedBox(
-                                        child: AvatarWidget(
-                                          avatar: element.giver?.avatar,
-                                          size: 25,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
-                          }
-                          return SizedBox(
-                            child: GestureDetector(
-                              onTap: () {
-                                context.startSelectUser(
-                                    userId: element.giver!.id!);
-                              },
-                              child: AvatarWidget(
-                                  avatar: element.giver?.avatar, size: 30),
-                            ),
-                          );
-                        })
-                        .take(2)
-                        .toList()
-                        .separated(const SizedBox(width: 8)),
-                  );
-                }),
-                const SizedBox(width: 8),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(13),
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 6,
-                    vertical: 4,
-                  ),
-                  child: Row(
-                    children: [
-                      ImageWidget(IconAppConstants.icLiveMember),
-                      const SizedBox(width: 2),
-                      Obx(
-                        () {
-                          final members = controller.members.value;
-
-                          final liveMembers = members
-                              .where((e) => e.liveID == controller.info.id);
-
-                          return Text(
-                            liveMembers.length.toString(),
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                CloseButton(
-                  color: Colors.white,
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (_) => LeaveLiveConfirm(
-                        onRemoved: () {
-                          controller.leaveLive();
-                          if (controller.me.value.isOwner) {
-                            if (controller.liveType.value !=
-                                LiveChannelType.pk) {
-                              Navigator.of(context).pop();
-                              Future.delayed(
-                                const Duration(seconds: 1),
-                                () => showModalBottomSheet(
-                                  context: AppCoordinator
-                                      .rootNavigator.currentContext!,
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  builder: (_) => const LiveEndSheet(),
-                                ),
-                              );
-                            }
-                          } else {
-                            Navigator.of(context).pop();
-                          }
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
+          SizedBox(
+            width: 80.w,
+            height: 50.w,
+            child: Assets.icons_lives_banner.image(fit: BoxFit.cover),
           ),
         ],
       ),

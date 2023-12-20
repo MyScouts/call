@@ -12,6 +12,7 @@ import 'package:design_system/design_system.dart';
 import 'package:detectable_text_field/widgets/detectable_text_editing_controller.dart';
 import 'package:detectable_text_field/widgets/detectable_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imagewidget/imagewidget.dart';
 import 'package:ui/ui.dart';
@@ -49,7 +50,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.isShowMedia) {
-        bloc.add(MediaTapped(widget.postType));
+        bloc.add(MediaTapped(
+          postType: widget.postType,
+          user: widget.user!,
+        ));
       }
     });
   }
@@ -79,11 +83,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const avatarSize = 52.0;
-    const maxLinesSubject = 10;
-    const minLinesSubject = 2;
+    final avatarSize = 52.w;
     final keyBoardHeight = MediaQuery.of(context).viewInsets.bottom;
-    const padding = 16.0;
+    final padding = 16.w;
     final paddingLineBottom = MediaQuery.viewPaddingOf(context).bottom;
 
     return GestureDetector(
@@ -96,7 +98,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
           resizeToAvoidBottomInset: true,
           appBar: _buildAppBar(),
           body: Container(
-              padding: const EdgeInsets.symmetric(vertical: padding),
+              padding: EdgeInsets.symmetric(vertical: padding),
               child: CustomScrollView(
                 slivers: [
                   SliverFillRemaining(
@@ -105,8 +107,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: padding),
+                          padding: EdgeInsets.symmetric(horizontal: padding),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -133,7 +134,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        widget.user?.getdisplayName ?? '',
+                                        widget.user?.getDisplayName ?? '',
                                         style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600,
@@ -161,8 +162,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.black,
                                 ),
-                                minLines: minLinesSubject,
-                                maxLines: maxLinesSubject,
+                                maxLength: MyProfileConstant.subjectLength,
                                 isShowDetectedStyle: false,
                               ),
                               const SizedBox(height: 6),
@@ -181,7 +181,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                                     contentFocusNode.requestFocus();
                                   },
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(
+                                    padding: EdgeInsets.symmetric(
                                         horizontal: padding),
                                     child: _buildInput(
                                       controller: contentController,
@@ -198,6 +198,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                                         fontWeight: FontWeight.w400,
                                       ),
                                       focusNode: contentFocusNode,
+                                      maxLength:
+                                          MyProfileConstant.contentLength,
                                     ),
                                   ),
                                 ),
@@ -219,7 +221,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 double paddingBottom = isVerticleAction
                     ? keyBoardHeight
                     : (isShowKeyBoard ? keyBoardHeight : paddingLineBottom);
-    
+
                 return Container(
                   padding: EdgeInsets.only(bottom: paddingBottom),
                   color: AppColors.white,
@@ -280,7 +282,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     width: screenWidth,
                     height: screenWidth,
                     listFile: state.files.map((e) => e!.path).toList(),
-                    spacing: 19, 
+                    spacing: 19,
                     isFixedImage1: true,
                     autoCalculatedHeight: true,
                   ),
@@ -319,7 +321,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     }
 
     return InkWell(
-      onTap: () => bloc.add(MediaTapped(widget.postType)),
+      onTap: () => bloc.add(MediaTapped(
+        postType: widget.postType,
+        user: widget.user!,
+      )),
       child: ImageWidget(iconName,
           width: iconHorizontalSize, height: iconHorizontalSize),
     );
@@ -366,7 +371,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       return _buildAction(
         iconName: IconAppConstants.icGalleryBg,
         text: 'Ảnh',
-        onTap: () => bloc.add(MediaTapped(widget.postType)),
+        onTap: () => bloc.add(MediaTapped(
+          postType: widget.postType,
+          user: widget.user!,
+        )),
       );
     }
 
@@ -374,7 +382,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       return _buildAction(
         iconName: IconAppConstants.icVideoBg,
         text: 'Video',
-        onTap: () => bloc.add(MediaTapped(widget.postType)),
+        onTap: () => bloc.add(MediaTapped(
+          postType: widget.postType,
+          user: widget.user!,
+        )),
       );
     }
 
@@ -474,8 +485,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     required TextStyle hintStyle,
     required Function(String) onChanged,
     required DetectableTextEditingController controller,
-    int? maxLines,
-    int? minLines,
+    int? maxLength,
     bool isShowDetectedStyle = true,
     FocusNode? focusNode,
   }) {
@@ -486,10 +496,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       controller: controller,
       focusNode: focusNode,
       keyboardType: TextInputType.multiline,
-      maxLines: maxLines,
-      minLines: minLines,
       style: textStyle,
       onChanged: onChanged,
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(maxLength),
+      ],
       decoration: InputDecoration(
         isDense: true,
         contentPadding: EdgeInsets.zero,
@@ -500,7 +511,13 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         disabledBorder: outlineBorderRadius,
         border: outlineBorderRadius,
         hintStyle: hintStyle,
+        counterStyle: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          color: AppColors.grey76,
+        ),
       ),
+      maxLength: maxLength,
     );
   }
 
@@ -524,7 +541,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 if (widget.user != null) {
                   bloc.add(PostButtonTapped(
                     postType: widget.postType,
-                    user: widget.user!,
                   ));
                 }
               },

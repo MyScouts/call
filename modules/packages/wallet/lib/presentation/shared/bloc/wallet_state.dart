@@ -45,4 +45,8 @@ class WalletState with _$WalletState {
       OnboardingResponse onboarding) = _GetOnboardingSuccess;
 
   const factory WalletState.getOnboardingFail(String err) = _GetOnboardingFail;
+
+  const factory WalletState.filterTransactionSuccess(
+          {required List<TransactionItem> transactions}) =
+      _FilterTransactionSuccess;
 }

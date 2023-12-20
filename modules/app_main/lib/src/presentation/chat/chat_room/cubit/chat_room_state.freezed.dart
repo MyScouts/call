@@ -20,8 +20,9 @@ mixin _$ChatRoomState {
   TResult when<TResult extends Object?>(
     TResult Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
+            int myType,
             int page,
             bool canLoadMore,
             bool? loadMoreError)
@@ -34,8 +35,9 @@ mixin _$ChatRoomState {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
+            int myType,
             int page,
             bool canLoadMore,
             bool? loadMoreError)?
@@ -48,8 +50,9 @@ mixin _$ChatRoomState {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
+            int myType,
             int page,
             bool canLoadMore,
             bool? loadMoreError)?
@@ -109,8 +112,9 @@ abstract class _$$ChatRoomStateDataImplCopyWith<$Res> {
   @useResult
   $Res call(
       {List<MessageModel> messages,
-      ConversationDetailResponseModel conversation,
+      ConversationModel conversation,
       FriendStatusModel? friendStatus,
+      int myType,
       int page,
       bool canLoadMore,
       bool? loadMoreError});
@@ -130,6 +134,7 @@ class __$$ChatRoomStateDataImplCopyWithImpl<$Res>
     Object? messages = null,
     Object? conversation = null,
     Object? friendStatus = freezed,
+    Object? myType = null,
     Object? page = null,
     Object? canLoadMore = null,
     Object? loadMoreError = freezed,
@@ -142,11 +147,15 @@ class __$$ChatRoomStateDataImplCopyWithImpl<$Res>
       conversation: null == conversation
           ? _value.conversation
           : conversation // ignore: cast_nullable_to_non_nullable
-              as ConversationDetailResponseModel,
+              as ConversationModel,
       friendStatus: freezed == friendStatus
           ? _value.friendStatus
           : friendStatus // ignore: cast_nullable_to_non_nullable
               as FriendStatusModel?,
+      myType: null == myType
+          ? _value.myType
+          : myType // ignore: cast_nullable_to_non_nullable
+              as int,
       page: null == page
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
@@ -170,6 +179,7 @@ class _$ChatRoomStateDataImpl implements ChatRoomStateData {
       {required final List<MessageModel> messages,
       required this.conversation,
       this.friendStatus,
+      required this.myType,
       required this.page,
       required this.canLoadMore,
       this.loadMoreError})
@@ -184,9 +194,11 @@ class _$ChatRoomStateDataImpl implements ChatRoomStateData {
   }
 
   @override
-  final ConversationDetailResponseModel conversation;
+  final ConversationModel conversation;
   @override
   final FriendStatusModel? friendStatus;
+  @override
+  final int myType;
   @override
   final int page;
   @override
@@ -196,11 +208,11 @@ class _$ChatRoomStateDataImpl implements ChatRoomStateData {
 
   @override
   String toString() {
-    return 'ChatRoomState(messages: $messages, conversation: $conversation, friendStatus: $friendStatus, page: $page, canLoadMore: $canLoadMore, loadMoreError: $loadMoreError)';
+    return 'ChatRoomState(messages: $messages, conversation: $conversation, friendStatus: $friendStatus, myType: $myType, page: $page, canLoadMore: $canLoadMore, loadMoreError: $loadMoreError)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChatRoomStateDataImpl &&
@@ -209,6 +221,7 @@ class _$ChatRoomStateDataImpl implements ChatRoomStateData {
                 other.conversation == conversation) &&
             (identical(other.friendStatus, friendStatus) ||
                 other.friendStatus == friendStatus) &&
+            (identical(other.myType, myType) || other.myType == myType) &&
             (identical(other.page, page) || other.page == page) &&
             (identical(other.canLoadMore, canLoadMore) ||
                 other.canLoadMore == canLoadMore) &&
@@ -222,6 +235,7 @@ class _$ChatRoomStateDataImpl implements ChatRoomStateData {
       const DeepCollectionEquality().hash(_messages),
       conversation,
       friendStatus,
+      myType,
       page,
       canLoadMore,
       loadMoreError);
@@ -238,8 +252,9 @@ class _$ChatRoomStateDataImpl implements ChatRoomStateData {
   TResult when<TResult extends Object?>(
     TResult Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
+            int myType,
             int page,
             bool canLoadMore,
             bool? loadMoreError)
@@ -247,8 +262,8 @@ class _$ChatRoomStateDataImpl implements ChatRoomStateData {
     required TResult Function() loading,
     required TResult Function(dynamic error) error,
   }) {
-    return $default(
-        messages, conversation, friendStatus, page, canLoadMore, loadMoreError);
+    return $default(messages, conversation, friendStatus, myType, page,
+        canLoadMore, loadMoreError);
   }
 
   @override
@@ -256,8 +271,9 @@ class _$ChatRoomStateDataImpl implements ChatRoomStateData {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
+            int myType,
             int page,
             bool canLoadMore,
             bool? loadMoreError)?
@@ -265,8 +281,8 @@ class _$ChatRoomStateDataImpl implements ChatRoomStateData {
     TResult? Function()? loading,
     TResult? Function(dynamic error)? error,
   }) {
-    return $default?.call(
-        messages, conversation, friendStatus, page, canLoadMore, loadMoreError);
+    return $default?.call(messages, conversation, friendStatus, myType, page,
+        canLoadMore, loadMoreError);
   }
 
   @override
@@ -274,8 +290,9 @@ class _$ChatRoomStateDataImpl implements ChatRoomStateData {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
+            int myType,
             int page,
             bool canLoadMore,
             bool? loadMoreError)?
@@ -285,8 +302,8 @@ class _$ChatRoomStateDataImpl implements ChatRoomStateData {
     required TResult orElse(),
   }) {
     if ($default != null) {
-      return $default(messages, conversation, friendStatus, page, canLoadMore,
-          loadMoreError);
+      return $default(messages, conversation, friendStatus, myType, page,
+          canLoadMore, loadMoreError);
     }
     return orElse();
   }
@@ -329,15 +346,17 @@ class _$ChatRoomStateDataImpl implements ChatRoomStateData {
 abstract class ChatRoomStateData implements ChatRoomState {
   const factory ChatRoomStateData(
       {required final List<MessageModel> messages,
-      required final ConversationDetailResponseModel conversation,
+      required final ConversationModel conversation,
       final FriendStatusModel? friendStatus,
+      required final int myType,
       required final int page,
       required final bool canLoadMore,
       final bool? loadMoreError}) = _$ChatRoomStateDataImpl;
 
   List<MessageModel> get messages;
-  ConversationDetailResponseModel get conversation;
+  ConversationModel get conversation;
   FriendStatusModel? get friendStatus;
+  int get myType;
   int get page;
   bool get canLoadMore;
   bool? get loadMoreError;
@@ -373,7 +392,7 @@ class _$ChatRoomStateLoadingImpl implements ChatRoomStateLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChatRoomStateLoadingImpl);
@@ -387,8 +406,9 @@ class _$ChatRoomStateLoadingImpl implements ChatRoomStateLoading {
   TResult when<TResult extends Object?>(
     TResult Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
+            int myType,
             int page,
             bool canLoadMore,
             bool? loadMoreError)
@@ -404,8 +424,9 @@ class _$ChatRoomStateLoadingImpl implements ChatRoomStateLoading {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
+            int myType,
             int page,
             bool canLoadMore,
             bool? loadMoreError)?
@@ -421,8 +442,9 @@ class _$ChatRoomStateLoadingImpl implements ChatRoomStateLoading {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
+            int myType,
             int page,
             bool canLoadMore,
             bool? loadMoreError)?
@@ -521,7 +543,7 @@ class _$ChatRoomStateErrorImpl implements ChatRoomStateError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChatRoomStateErrorImpl &&
@@ -544,8 +566,9 @@ class _$ChatRoomStateErrorImpl implements ChatRoomStateError {
   TResult when<TResult extends Object?>(
     TResult Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
+            int myType,
             int page,
             bool canLoadMore,
             bool? loadMoreError)
@@ -561,8 +584,9 @@ class _$ChatRoomStateErrorImpl implements ChatRoomStateError {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
+            int myType,
             int page,
             bool canLoadMore,
             bool? loadMoreError)?
@@ -578,8 +602,9 @@ class _$ChatRoomStateErrorImpl implements ChatRoomStateError {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
             List<MessageModel> messages,
-            ConversationDetailResponseModel conversation,
+            ConversationModel conversation,
             FriendStatusModel? friendStatus,
+            int myType,
             int page,
             bool canLoadMore,
             bool? loadMoreError)?

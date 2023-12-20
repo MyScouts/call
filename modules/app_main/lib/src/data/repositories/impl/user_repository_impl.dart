@@ -174,4 +174,16 @@ class AuthRepositoryImpl extends UserRepository {
 
     return res.user;
   }
+
+  @override
+  Future<UserInfo> getMe() async {
+    final response = await _userAPI.getMe();
+    return response.user;
+  }
+
+  @override
+  Future<Map<String, dynamic>> getOnBoardingUser(int userId) async {
+    final res = await _userAPI.getOnBoardingUser(userId);
+    return Map<String,dynamic>.from(res);
+  }
 }
