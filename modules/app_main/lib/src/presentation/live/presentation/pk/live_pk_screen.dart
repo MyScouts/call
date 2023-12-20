@@ -84,6 +84,53 @@ class LivePkScreen extends StatelessWidget {
           }),
         ),
         Obx(() {
+          if (controller.pkStep.value != PkStep.started &&
+              controller.pkStep.value != PkStep.end) {
+            return const EmptyStackBox();
+          }
+
+          if (controller.currentGameRound == null) {
+            return const EmptyStackBox();
+          }
+
+          return Align(
+            alignment: Alignment.center,
+            child: PkTimerBuilder(
+              endTime: controller.currentGameRound!.endAt,
+              builder: (d, end) {
+                if (d.inSeconds > 3 || end) return const SizedBox.shrink();
+
+                if (d.inSeconds > 0) {
+                  if (d.inSeconds == 3) {
+                    return SizedBox(
+                      width: 113.w,
+                      child: Assets.icons_lives_3.image(
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  } else if (d.inSeconds == 2) {
+                    return SizedBox(
+                      width: 113.w,
+                      child: Assets.icons_lives_2.image(
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  }
+
+                  return SizedBox(
+                    width: 113.w,
+                    child: Assets.icons_lives_1.image(
+                      fit: BoxFit.cover,
+                    ),
+                  );
+                }
+
+                return const SizedBox.shrink();
+              },
+            ),
+          );
+        }),
+        Obx(() {
           if (controller.pkStep.value != PkStep.end) {
             return const EmptyStackBox();
           }
@@ -304,6 +351,53 @@ class _LivePKRtc extends StatelessWidget {
                       ],
                     ),
                   );
+                },
+              ),
+            );
+          }),
+          Obx(() {
+            if (controller.pkStep.value != PkStep.started &&
+                controller.pkStep.value != PkStep.end) {
+              return const EmptyStackBox();
+            }
+
+            if (controller.currentGameRound == null) {
+              return const EmptyStackBox();
+            }
+
+            return Align(
+              alignment: Alignment.center,
+              child: PkTimerBuilder(
+                endTime: controller.currentGameRound!.endAt,
+                builder: (d, end) {
+                  if (d.inSeconds > 10 || end) return const SizedBox.shrink();
+
+                  if (d.inSeconds > 3) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text(
+                          'DK sẽ kết thúc trong',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        Text(
+                          d.inSeconds.toString(),
+                          style: const TextStyle(
+                            fontSize: 64,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+
+                  return const SizedBox.shrink();
                 },
               ),
             );

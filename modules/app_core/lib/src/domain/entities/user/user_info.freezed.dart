@@ -29,6 +29,7 @@ mixin _$UserInfo {
   String get phone => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   int? get sexCode => throw _privateConstructorUsedError;
+  int? get type => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -50,7 +51,8 @@ abstract class $UserInfoCopyWith<$Res> {
       DateTime? birthday,
       String phone,
       String? email,
-      int? sexCode});
+      int? sexCode,
+      int? type});
 }
 
 /// @nodoc
@@ -75,6 +77,7 @@ class _$UserInfoCopyWithImpl<$Res, $Val extends UserInfo>
     Object? phone = null,
     Object? email = freezed,
     Object? sexCode = freezed,
+    Object? type = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -113,6 +116,10 @@ class _$UserInfoCopyWithImpl<$Res, $Val extends UserInfo>
           ? _value.sexCode
           : sexCode // ignore: cast_nullable_to_non_nullable
               as int?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -134,7 +141,8 @@ abstract class _$$UserInfoImplCopyWith<$Res>
       DateTime? birthday,
       String phone,
       String? email,
-      int? sexCode});
+      int? sexCode,
+      int? type});
 }
 
 /// @nodoc
@@ -157,6 +165,7 @@ class __$$UserInfoImplCopyWithImpl<$Res>
     Object? phone = null,
     Object? email = freezed,
     Object? sexCode = freezed,
+    Object? type = freezed,
   }) {
     return _then(_$UserInfoImpl(
       id: null == id
@@ -195,6 +204,10 @@ class __$$UserInfoImplCopyWithImpl<$Res>
           ? _value.sexCode
           : sexCode // ignore: cast_nullable_to_non_nullable
               as int?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -211,7 +224,8 @@ class _$UserInfoImpl implements _UserInfo {
       this.birthday,
       required this.phone,
       this.email,
-      this.sexCode});
+      this.sexCode,
+      this.type});
 
   factory _$UserInfoImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserInfoImplFromJson(json);
@@ -234,10 +248,12 @@ class _$UserInfoImpl implements _UserInfo {
   final String? email;
   @override
   final int? sexCode;
+  @override
+  final int? type;
 
   @override
   String toString() {
-    return 'UserInfo(id: $id, avatar: $avatar, displayName: $displayName, pDoneId: $pDoneId, fullName: $fullName, birthday: $birthday, phone: $phone, email: $email, sexCode: $sexCode)';
+    return 'UserInfo(id: $id, avatar: $avatar, displayName: $displayName, pDoneId: $pDoneId, fullName: $fullName, birthday: $birthday, phone: $phone, email: $email, sexCode: $sexCode, type: $type)';
   }
 
   @override
@@ -256,13 +272,14 @@ class _$UserInfoImpl implements _UserInfo {
                 other.birthday == birthday) &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.sexCode, sexCode) || other.sexCode == sexCode));
+            (identical(other.sexCode, sexCode) || other.sexCode == sexCode) &&
+            (identical(other.type, type) || other.type == type));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, avatar, displayName, pDoneId,
-      fullName, birthday, phone, email, sexCode);
+      fullName, birthday, phone, email, sexCode, type);
 
   @JsonKey(ignore: true)
   @override
@@ -288,7 +305,8 @@ abstract class _UserInfo implements UserInfo {
       final DateTime? birthday,
       required final String phone,
       final String? email,
-      final int? sexCode}) = _$UserInfoImpl;
+      final int? sexCode,
+      final int? type}) = _$UserInfoImpl;
 
   factory _UserInfo.fromJson(Map<String, dynamic> json) =
       _$UserInfoImpl.fromJson;
@@ -311,6 +329,8 @@ abstract class _UserInfo implements UserInfo {
   String? get email;
   @override
   int? get sexCode;
+  @override
+  int? get type;
   @override
   @JsonKey(ignore: true)
   _$$UserInfoImplCopyWith<_$UserInfoImpl> get copyWith =>

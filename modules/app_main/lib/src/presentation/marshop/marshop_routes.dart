@@ -1,4 +1,5 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/bloc.dart';
 import 'package:app_main/src/blocs/marshop/marshop_cubit.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/presentation/marshop/marshop_bloc.dart';
@@ -13,6 +14,7 @@ import 'package:app_main/src/presentation/marshop/register_marshop/register_pack
 import 'package:app_main/src/presentation/marshop/register_marshop/transaction_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 
 @injectable
 class MarkShopRoutes extends RouteModule {
@@ -31,8 +33,18 @@ class MarkShopRoutes extends RouteModule {
           final args = settings.arguments as Map<String, dynamic>;
           return BlocProvider.value(
             value: injector.get<UserCubit>(),
-            child: BlocProvider(
-              create: (context) => injector.get<MarshopDetailBloc>(),
+            child: MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => injector.get<MarshopDetailBloc>(),
+                ),
+                BlocProvider(
+                  create: (context) => injector.get<GetGlobalSettingBloc>()
+                    ..add(
+                      GetDetailDataParam1Event("marshop_general_policy"),
+                    ),
+                ),
+              ],
               child: RegisterMarshopScreen(
                 marshopId: args['marshopId'],
               ),

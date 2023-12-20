@@ -596,7 +596,13 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
         );
       }
     } else if (state is AskToLeaveTeamSuccess) {
-      context.startDialogBossStatus(CommunityConstant.dayForLeaveTeamRequest);
+      if (state.approveRequired) {
+        context.startDialogBossStatus(CommunityConstant.dayForLeaveTeamRequest);
+      } else {
+        showToastMessage("Bạn đã rời Team thành công");
+        teamDetailBloc.add(FetchTeamDetailEvent(widget.id));
+        joinRequestsBloc.add(GetListDataEvent());
+      }
     } else if (state is TeamDetailError) {
       context.hideLoading();
       final e = state.error;

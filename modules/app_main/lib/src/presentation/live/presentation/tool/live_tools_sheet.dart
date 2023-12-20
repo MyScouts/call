@@ -108,7 +108,7 @@ class LiveToolsSheet extends StatelessWidget {
                     );
                   }),
                   Obx(() {
-                    if (controller.video.value) {
+                    if (controller.mic.value) {
                       return _Item(
                         title: 'Tắt Mic',
                         icon: Assets.icons_lives_turn_off_mic.svg(),
@@ -119,7 +119,7 @@ class LiveToolsSheet extends StatelessWidget {
                     return _Item(
                       title: 'Bật Mic',
                       icon: Assets.icons_lives_turn_on_mic.svg(),
-                      action: controller.enableVideo,
+                      action: controller.enableAudio,
                     );
                   }),
                   _Item(

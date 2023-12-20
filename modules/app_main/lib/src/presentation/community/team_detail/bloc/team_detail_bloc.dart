@@ -90,9 +90,11 @@ class TeamDetailBloc extends Bloc<TeamDetailEvent, TeamDetailState> {
     emit(AskToLeaveTeamLoading());
 
     try {
-      await _communityUsecase.askToLeaveTeam(event.teamId);
+      final response = await _communityUsecase.askToLeaveTeam(event.teamId);
 
-      emit(AskToLeaveTeamSuccess());
+      emit(AskToLeaveTeamSuccess(
+        approveRequired: response.approveRequired ?? false,
+      ));
     } on DioException catch (e) {
       emit(TeamDetailError(e));
 

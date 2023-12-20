@@ -38,14 +38,19 @@ class ActionDialog extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Center(
-                  child: Text(
-                    title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineMedium!
-                        .copyWith(fontWeight: FontWeight.w600),
-                    textAlign: TextAlign.center,
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: paddingHorizontal,
+                  ),
+                  child: Center(
+                    child: Text(
+                      title,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium!
+                          .copyWith(fontWeight: FontWeight.w600),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
                 if (onCancel == null)

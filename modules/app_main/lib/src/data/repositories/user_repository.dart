@@ -76,4 +76,6 @@ abstract class UserRepository {
   Future replyFollowRequest(ReplyFollowPayload payload);
 
   Future<UserInfo> getMe();
+
+  Future<Map<String, dynamic>> getOnBoardingUser(int userId);
 }

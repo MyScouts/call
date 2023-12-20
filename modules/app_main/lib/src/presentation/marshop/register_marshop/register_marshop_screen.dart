@@ -1,8 +1,10 @@
 import 'package:app_core/app_core.dart';
+import 'package:app_main/src/blocs/bloc.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/data/models/payloads/marshop/marshop_payload.dart';
 import 'package:app_main/src/data/models/responses/marshop_response.dart';
+import 'package:app_main/src/data/models/responses/resource_response.dart';
 import 'package:app_main/src/presentation/app_coordinator.dart';
 import 'package:app_main/src/presentation/marshop/marshop_constant.dart';
 import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
@@ -13,14 +15,13 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:localization/localization.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
+import 'package:mobilehub_ui_core/mobilehub_ui_core.dart';
 import 'package:ui/ui.dart';
 
 import '../../../blocs/auth/auth_cubit.dart';
 import '../../../blocs/marshop/marshop_cubit.dart';
 import '../../authentication/widget/custom_text_field.dart';
 import '../marshop_bloc.dart';
-import '../widgets/accept_term_with_checkbox_widget.dart';
-import '../widgets/read_more_policy.dart';
 
 class RegisterMarshopScreen extends StatefulWidget {
   static const String routeName = "register-marshop";
@@ -104,11 +105,15 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
           child: SingleChildScrollView(
             child: Column(children: [
               _buildForm(),
-              const ReadMorePolicy(),
+              _buildGeneralPolicy(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: AcceptTermWithCheckboxWidget(
-                  acceptTerm: _acceptTerm,
+                child: AcceptCheckBoxWidget(
+                  accept: _acceptTerm,
+                  child: Text(
+                    "Tôi đồng ý điều khoản chung MarShop",
+                    style: context.textTheme.titleMedium,
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
@@ -368,5 +373,22 @@ class _RegisterMarshopScreenState extends State<RegisterMarshopScreen> {
     }
     _rulesCtrl.value = [];
     _rulesCtrl.value = rules;
+  }
+
+  _buildGeneralPolicy() {
+    return BlocBuilder<GetGlobalSettingBloc, GetDetailState>(
+      builder: (context, state) {
+        if (state is GetDetailDataSuccess<GlobalSettingResponse>) {
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: HTMLLoadMoreViewer(
+              html: state.data.value,
+            ),
+          );
+        }
+
+        return const LoadingWidget();
+      },
+    );
   }
 }

@@ -132,7 +132,6 @@ extension UserExtNull on User? {
     return age < 15;
   }
 
-  @Deprecated('getPDoneId deprecated.')
   String get getPDoneId => this?.pDoneId ?? _userDefaultPDoneId;
 
   @Deprecated('getSex deprecated.')

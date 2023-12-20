@@ -31,7 +31,7 @@ class ContractWidget extends StatelessWidget {
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () => context.startContractView(
-                    type: TypeContract.bossGroup,
+                    type: TypeContract.joinBossGroup,
                   ),
           ),
           const TextSpan(text: ' của VDONE')

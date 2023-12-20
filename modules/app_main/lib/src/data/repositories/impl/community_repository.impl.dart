@@ -18,6 +18,7 @@ import '../../../domain/repository/community_repository.dart';
 import '../../data_sources/remote/community_api.dart';
 import '../../models/payloads/community/request_boss_group_payload.dart';
 import '../../models/payloads/community/update_community_payload.dart';
+import '../../models/responses/ask_join_team_response.dart';
 
 @Injectable(as: CommunityRepository)
 class CommunityRepositoryImpl extends CommunityRepository {
@@ -176,7 +177,7 @@ class CommunityRepositoryImpl extends CommunityRepository {
   }
 
   @override
-  Future<ConfirmResponse> askToJoinTeam(String id) async {
+  Future<AskJoinTeamResponse> askToJoinTeam(String id) async {
     return await _communityApi.askToJoinTeam(id: id);
   }
 

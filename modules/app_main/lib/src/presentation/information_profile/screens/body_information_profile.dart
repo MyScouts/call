@@ -9,7 +9,6 @@ import 'package:app_main/src/presentation/information_profile/widgets/update_inf
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:imagewidget/imagewidget.dart';
-import 'package:localization/generated/l10n.dart';
 
 extension GenderExtension on int {
   String get genderToString {

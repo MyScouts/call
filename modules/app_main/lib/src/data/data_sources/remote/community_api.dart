@@ -2,6 +2,7 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/networking/data_rows_response.dart';
 import 'package:app_main/src/data/models/payloads/community/community_payload.dart';
 import 'package:app_main/src/data/models/payloads/community/reply_give_up_boss_team_role_payload.dart';
+import 'package:app_main/src/data/models/responses/ask_join_team_response.dart';
 import 'package:app_main/src/data/models/responses/group_request_response.dart';
 import 'package:app_main/src/data/models/responses/join_request_response.dart';
 import 'package:app_main/src/data/models/responses/member_join_request.dart';
@@ -179,7 +180,7 @@ abstract class CommunityApi {
   });
 
   @POST(CommunityApiConstants.askToJoinTeam)
-  Future<ConfirmResponse> askToJoinTeam({
+  Future<AskJoinTeamResponse> askToJoinTeam({
     @Path('id') required String id,
   });
 

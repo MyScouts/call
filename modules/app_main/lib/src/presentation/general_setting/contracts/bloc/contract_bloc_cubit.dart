@@ -52,7 +52,8 @@ class ContractBlocCubit extends Cubit<ContractBlocState> {
       UserInfo userInfo = await _userUsecase.getMe();
 
       switch (type) {
-        case TypeContract.bossGroup:
+        case TypeContract.joinBossGroup:
+        case TypeContract.isBossGroup:
           params = BossGroupContractPram(
             contractNumber: userInfo.pDoneId,
             address: address.join(","),
