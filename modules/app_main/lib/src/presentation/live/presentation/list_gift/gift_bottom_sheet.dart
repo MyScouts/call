@@ -1,5 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
+import 'package:app_main/src/presentation/live/presentation/list_gift/dialog_gift.dart';
 import 'package:app_main/src/presentation/live/presentation/list_gift/gift_controller.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -46,9 +47,9 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        decoration: const BoxDecoration(
-            borderRadius: BorderRadius.horizontal(left: Radius.circular(16), right: Radius.circular(16)),
-            color: Colors.white),
+        decoration: BoxDecoration(
+            borderRadius: const BorderRadius.horizontal(left: Radius.circular(16), right: Radius.circular(16)),
+            color: const Color(0xff000000).withOpacity(0.9)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -68,10 +69,7 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                         const PercentWidget(percent: 50),
                         const SizedBox(height: 4),
                         Text(S.of(context).gift_hint,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                            ))
+                            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Color(0xffACACAC)))
                       ],
                     ),
                   )
@@ -79,11 +77,8 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
               ),
             ),
             const SizedBox(height: 16),
-            const Divider(color: Color(0xffE3E3E3), thickness: 1, height: 0),
+            Divider(color: const Color(0xffffffff).withOpacity(0.1), thickness: 1, height: 0),
             giftType(),
-            const SizedBox(height: 4),
-            giftCommon(),
-            const SizedBox(height: 12),
             Obx(() {
               return GiftPage(
                 key: ObjectKey(giftController.giftCardList.value.giftList ?? []),
@@ -105,44 +100,15 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                     height: 16,
                   ),
                   const SizedBox(width: 4),
-                  ImageWidget(IconAppConstants.icChevronRight),
                   Obx(() {
                     return Text(giftController.userWallet.value.availableCoin?.toStringAsFixed(0) ?? '0',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ));
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white));
                   }),
-                  Expanded(child: giftAmount()),
-                  GestureDetector(
-                    onTap: () async {
-                      if (selectedGift.value == null) return;
-
-                      if ((selectedGift.value?.coinValue ?? 0) * giftController.amount.value >
-                          giftController.userWallet.value.availableCoin!) {
-                        return context.showToastText('Bạn không đủ xu');
-                      }
-                      if (GiftCardBottomSheet.isShowBottom) {
-                        if (context.mounted) {
-                          Navigator.pop(context, selectedGift.value);
-                        }
-                      }
-                      await giftController.sentGift(
-                          userId: widget.controller.info.user!.id!,
-                          liveId: widget.controller.info.id,
-                          giftId: selectedGift.value!.id!);
-                      await giftController.getUserPoint();
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 9.5, horizontal: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        gradient: const LinearGradient(colors: [Color(0xff971FF5), Color(0xffDE38EC)]),
-                      ),
-                      child: const Text("Ủng hộ",
-                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white)),
-                    ),
+                  ImageWidget(
+                    IconAppConstants.icChevronRight,
+                    color: Colors.white,
                   ),
+                  Expanded(child: giftAmount()),
                 ],
               ),
             ),
@@ -172,10 +138,14 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                         children: [
                           Text(
                             GiftType.values[index].title,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: giftController.giftType.value == GiftType.values[index]
+                                    ? FontWeight.w600
+                                    : FontWeight.w400,
+                                color: giftController.giftType.value == GiftType.values[index]
+                                    ? const Color(0xffffffff)
+                                    : const Color(0xffACACAC)),
                           ),
                           const SizedBox(height: 4),
                           Container(
@@ -184,7 +154,7 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(3.5),
                                   color: giftController.giftType.value == GiftType.values[index]
-                                      ? const Color(0xff9627df)
+                                      ? const Color(0xffffffff)
                                       : Colors.transparent))
                         ],
                       ),
@@ -237,36 +207,92 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
 
   Widget giftAmount() {
     return Obx(() {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: List<Widget>.generate(
-                listAmount.length,
-                (index) => GestureDetector(
-                      onTap: () {
-                        giftController.amount.value = listAmount[index];
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                        decoration: BoxDecoration(
-                            color: giftController.amount.value == listAmount[index]
-                                ? const Color(0xff9627DF)
-                                : Colors.transparent,
-                            borderRadius: BorderRadius.circular(100)),
-                        child: Text(
-                          listAmount[index].toString(),
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: giftController.amount.value == listAmount[index]
-                                  ? Colors.white
-                                  : const Color(0xff9627DF)),
-                        ),
+      return Container(
+        //padding: const EdgeInsets.all(3.5),
+        decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.2),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(34),
+              bottomLeft: Radius.circular(34),
+              topRight: Radius.circular(5),
+              bottomRight: Radius.circular(5),
+            )),
+        child: Row(
+          children: [
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List<Widget>.generate(listAmount.length, (index) {
+                  Color backColor = giftController.amount.value.toString() == listAmount[index]
+                      ? const Color(0xff4B84F7)
+                      : Colors.transparent;
+                  if (index == listAmount.length - 1 &&
+                      giftController.amount.value > 0 &&
+                      !listAmount.contains(giftController.amount.value.toString())) {
+                    backColor = const Color(0xff4B84F7);
+                  }
+                  return GestureDetector(
+                    onTap: () async {
+                      try {
+                        giftController.amount.value = int.tryParse(listAmount[index])!;
+                      } catch (e) {
+                        /// trường hợp khác
+                        final text = await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return DialogInputGift(
+                                init: giftController.amount.value > 0 ? giftController.amount.value.toString() : null,
+                              );
+                            });
+                        if (int.tryParse(text) != null) {
+                          giftController.amount.value = int.tryParse(text)!;
+                        } else {
+                          giftController.amount.value = 0;
+                        }
+                      }
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(3),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(color: backColor, borderRadius: BorderRadius.circular(100)),
+                      child: Text(
+                        listAmount[index],
+                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white),
                       ),
-                    )),
-          ),
+                    ),
+                  );
+                }),
+              ),
+            ),
+            GestureDetector(
+              onTap: () async {
+                if (selectedGift.value == null) return;
+                if ((selectedGift.value?.coinValue ?? 0) * giftController.amount.value >
+                    giftController.userWallet.value.availableCoin!) {
+                  return context.showToastText('Bạn không đủ xu');
+                }
+                if (GiftCardBottomSheet.isShowBottom) {
+                  if (context.mounted) {
+                    Navigator.pop(context, selectedGift.value);
+                  }
+                }
+                await giftController.sentGift(
+                    userId: widget.controller.info.user!.id!,
+                    liveId: widget.controller.info.id,
+                    giftId: selectedGift.value!.id!);
+                await giftController.getUserPoint();
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 9.5, horizontal: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  gradient: const LinearGradient(colors: [Color(0xff015CB5), Color(0xff0E86FC)]),
+                ),
+                child: const Text("Ủng hộ",
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Colors.white)),
+              ),
+            )
+          ],
         ),
       );
     });
@@ -287,10 +313,7 @@ class _GiftCardBottomSheetState extends State<GiftCardBottomSheet> {
   Widget get userName {
     return Text(
       _authInfo.displayName ?? '',
-      style: const TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.w600,
-      ),
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white),
     );
   }
 }
@@ -327,7 +350,7 @@ class PercentWidget extends StatelessWidget {
           Container(
               width: constant.maxWidth * percent / 100,
               height: 4,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xff9627df))),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: const Color(0xff4B84F7))),
         ],
       );
     });

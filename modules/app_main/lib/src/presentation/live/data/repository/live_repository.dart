@@ -35,7 +35,7 @@ abstract class LiveRepository {
 
   Future<GiftCardLive> getInfoGiftCard(int liveID);
 
-  Future<GiftCardLive> getLiveState(int liveID);
+  Future<GiftCardLive> getLiveState(int userId);
 
   Future<GiftCardLive> getDailyDedications(int userId);
 

@@ -13,8 +13,9 @@ class LiveRoseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = context.findAncestorStateOfType<LiveChannelScreenState>()!.controller;
 
-    return InkWell(
+    return GestureDetector(
       onTap: () async {
+        controller.isFastGift = true;
         final LiveUseCase useCase = getIt.get<LiveUseCase>();
 
         try {

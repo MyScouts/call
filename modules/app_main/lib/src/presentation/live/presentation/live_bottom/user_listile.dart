@@ -33,7 +33,7 @@ class _UserLisTileState extends State<UserLisTile> {
           AvatarWidget(
             avatar: widget.user.avatar,
             size: 36,
-            isPDone: widget.user.type! > 0,
+            isPDone: widget.user.type > 0,
           ),
           const SizedBox(width: 8),
           Expanded(

@@ -31,6 +31,7 @@ class _LiveGiftButtonState extends State<LiveGiftButton> {
       final times = controller.timesAnimation.value;
       return InkWell(
         onTap: () async {
+          controller.isFastGift = false;
           if (times > 0) {
             try {
               await _useCase.sendGift(

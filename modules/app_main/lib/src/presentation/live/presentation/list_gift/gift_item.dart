@@ -24,11 +24,8 @@ class GiftItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-            color: isSelected ? const Color(0xffFBF4FF) : null,
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(
-              color: isSelected ? const Color(0xff9627DF) : Colors.transparent,
-            )),
+            color: isSelected ? const Color(0xffFFFFFF).withOpacity(0.2) : null,
+            borderRadius: BorderRadius.circular(5)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -42,10 +39,7 @@ class GiftItem extends StatelessWidget {
             ),
             Text(
               gift.name ?? '',
-              style: const TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w500,
-              ),
+              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: Colors.white),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -53,18 +47,11 @@ class GiftItem extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ImageWidget(
-                  IconAppConstants.icCoin,
-                  width: 14,
-                  height: 14,
-                ),
+                ImageWidget(IconAppConstants.icCoin1),
                 const SizedBox(width: 4),
                 Text(
                   '${gift.coinValue ?? 0}',
-                  style: const TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: Colors.white),
                 ),
               ],
             )

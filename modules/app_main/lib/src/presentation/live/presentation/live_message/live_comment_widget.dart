@@ -7,6 +7,7 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imagewidget/imagewidget.dart';
+import 'package:ui/ui.dart';
 
 class LiveCommentWidget extends StatelessWidget {
   const LiveCommentWidget({super.key});
@@ -24,10 +25,7 @@ class LiveCommentWidget extends StatelessWidget {
             ],
             begin: Alignment.topCenter,
             end: Alignment.center,
-            stops: [
-              0.1,
-              1.0
-            ],
+            stops: [0.1, 1.0],
           ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
           child: ListView.separated(
             padding: const EdgeInsets.symmetric(vertical: 16),
@@ -72,9 +70,7 @@ class LiveCommentCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(90),
                 border: isPk
                     ? Border.all(
-                        color: controller.userInLive(cm.member)
-                            ? const Color(0xff00BBE4)
-                            : const Color(0xffFE1D67),
+                        color: controller.userInLive(cm.member) ? const Color(0xff00BBE4) : const Color(0xffFE1D67),
                         width: 1,
                       )
                     : null,
@@ -84,12 +80,10 @@ class LiveCommentCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleNetworkImage(
-                    url: cm.member.info.avatar,
+                  AvatarWidget(
+                    avatar: cm.member.info.avatar,
                     size: 17,
-                    defaultImage: ImageWidget(
-                      ImageConstants.defaultUserAvatar,
-                    ),
+                    isPDone: cm.member.info.type > 0,
                   ),
                   const SizedBox(width: 4),
                   Flexible(
@@ -172,9 +166,7 @@ class LiveCommentCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             border: isPk
                 ? Border.all(
-                    color: controller.userInLive(cm.member)
-                        ? const Color(0xff00BBE4)
-                        : const Color(0xffFE1D67),
+                    color: controller.userInLive(cm.member) ? const Color(0xff00BBE4) : const Color(0xffFE1D67),
                     width: 1,
                   )
                 : null,

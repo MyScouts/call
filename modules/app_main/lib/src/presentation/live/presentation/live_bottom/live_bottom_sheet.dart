@@ -43,11 +43,11 @@ extension TabLiveBottomExt on TabLiveBottom {
   double? get height {
     switch (this) {
       case TabLiveBottom.viewer:
-        return 450;
+        return 650;
       case TabLiveBottom.rank:
         return 650;
       case TabLiveBottom.invite:
-        return 450;
+        return 650;
     }
   }
 }

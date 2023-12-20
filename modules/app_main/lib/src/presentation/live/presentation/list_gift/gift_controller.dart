@@ -29,7 +29,9 @@ class GiftController {
   Future<void> getListGiftCard() async {
     try {
       giftCardList.value = await _useCase.getGiftCardList(giftType.value.type);
-    } catch (e) {}
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   Future<void> getUserPoint() async {
@@ -53,7 +55,7 @@ class GiftController {
   }
 }
 
-final List<int> listAmount = [1, 10, 99, 100, 999];
+final List<String> listAmount = ["1", "10", "99", "999", "Khác"];
 
 enum GiftType {
   gift(1),

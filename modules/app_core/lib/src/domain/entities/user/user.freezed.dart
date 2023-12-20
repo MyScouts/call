@@ -100,7 +100,7 @@ mixin _$User {
   @Deprecated('profile deprecated.')
   UserProfileInfo? get profile => throw _privateConstructorUsedError;
   int? get sexCode => throw _privateConstructorUsedError;
-  int? get type => throw _privateConstructorUsedError;
+  int get type => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -159,7 +159,7 @@ abstract class $UserCopyWith<$Res> {
       @Deprecated('fanGroup deprecated.') UserFanGroupInfo? fanGroup,
       @Deprecated('profile deprecated.') UserProfileInfo? profile,
       int? sexCode,
-      int? type});
+      int type});
 
   $TeamCopyWith<$Res>? get joinedTeam;
   $UserFanGroupInfoCopyWith<$Res>? get fanGroup;
@@ -224,7 +224,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? fanGroup = freezed,
     Object? profile = freezed,
     Object? sexCode = freezed,
-    Object? type = freezed,
+    Object? type = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -407,10 +407,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.sexCode
           : sexCode // ignore: cast_nullable_to_non_nullable
               as int?,
-      type: freezed == type
+      type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
     ) as $Val);
   }
 
@@ -505,7 +505,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       @Deprecated('fanGroup deprecated.') UserFanGroupInfo? fanGroup,
       @Deprecated('profile deprecated.') UserProfileInfo? profile,
       int? sexCode,
-      int? type});
+      int type});
 
   @override
   $TeamCopyWith<$Res>? get joinedTeam;
@@ -570,7 +570,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? fanGroup = freezed,
     Object? profile = freezed,
     Object? sexCode = freezed,
-    Object? type = freezed,
+    Object? type = null,
   }) {
     return _then(_$UserImpl(
       id: freezed == id
@@ -753,10 +753,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.sexCode
           : sexCode // ignore: cast_nullable_to_non_nullable
               as int?,
-      type: freezed == type
+      type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
     ));
   }
 }
@@ -811,7 +811,7 @@ class _$UserImpl implements _User {
       @Deprecated('fanGroup deprecated.') this.fanGroup,
       @Deprecated('profile deprecated.') this.profile,
       this.sexCode,
-      this.type})
+      this.type = 0})
       : _backgroundImages = backgroundImages;
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
@@ -961,7 +961,8 @@ class _$UserImpl implements _User {
   @override
   final int? sexCode;
   @override
-  final int? type;
+  @JsonKey()
+  final int type;
 
   @override
   String toString() {
@@ -1161,7 +1162,7 @@ abstract class _User implements User {
       @Deprecated('fanGroup deprecated.') final UserFanGroupInfo? fanGroup,
       @Deprecated('profile deprecated.') final UserProfileInfo? profile,
       final int? sexCode,
-      final int? type}) = _$UserImpl;
+      final int type}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -1291,7 +1292,7 @@ abstract class _User implements User {
   @override
   int? get sexCode;
   @override
-  int? get type;
+  int get type;
   @override
   @JsonKey(ignore: true)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>

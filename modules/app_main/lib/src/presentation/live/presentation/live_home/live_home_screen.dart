@@ -8,6 +8,7 @@ import 'package:draggable_float_widget/draggable_float_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' as t;
 import 'package:imagewidget/imagewidget.dart';
+import 'package:ui/ui.dart';
 
 import '../../../../../app_main.dart';
 import '../../../../blocs/user/user_cubit.dart';
@@ -27,17 +28,12 @@ class LiveHomeScreen extends StatefulWidget {
   State<LiveHomeScreen> createState() => _LiveHomeScreenState();
 }
 
-class _LiveHomeScreenState extends State<LiveHomeScreen>
-    with SingleTickerProviderStateMixin {
+class _LiveHomeScreenState extends State<LiveHomeScreen> with SingleTickerProviderStateMixin {
   late TabController _liveTabController;
 
   @override
   void initState() {
-    _liveTabController = TabController(
-        length: 3,
-        vsync: this,
-        initialIndex: 0,
-        animationDuration: Duration.zero);
+    _liveTabController = TabController(length: 3, vsync: this, initialIndex: 0, animationDuration: Duration.zero);
     super.initState();
   }
 
@@ -83,10 +79,7 @@ class _LiveHomeScreenState extends State<LiveHomeScreen>
                               alignment: Alignment.centerLeft,
                               child: BlocBuilder<UserCubit, UserState>(
                                 builder: (_, state) {
-                                  if (state.currentUser?.avatar
-                                          ?.trim()
-                                          .isEmpty ??
-                                      false) {
+                                  if (state.currentUser?.avatar?.trim().isEmpty ?? false) {
                                     return Container(
                                       height: 40,
                                       width: 40,
@@ -105,26 +98,15 @@ class _LiveHomeScreenState extends State<LiveHomeScreen>
                                       ),
                                     );
                                   }
-                                  return CircleNetworkImage(
-                                    url: context
-                                            .read<UserCubit>()
-                                            .currentUser
-                                            ?.avatar ??
-                                        '',
-                                    size: 40,
-                                    defaultImage: ImageWidget(
-                                      ImageConstants.defaultUserAvatar,
-                                      borderRadius: 100,
-                                      fit: BoxFit.cover,
-                                    ),
+                                  return AvatarWidget(
+                                    isPDone: context.read<UserCubit>().currentUser!.type > 0,
+                                    avatar: context.read<UserCubit>().currentUser?.avatar,
                                   );
                                 },
                               ),
                             ),
                           ),
-                          Expanded(
-                              child:
-                                  TabBarGroups(controller: _liveTabController)),
+                          Expanded(child: TabBarGroups(controller: _liveTabController)),
                           SizedBox(
                             width: 35,
                             height: 35,
@@ -137,8 +119,7 @@ class _LiveHomeScreenState extends State<LiveHomeScreen>
                               ),
                               highlightColor: Colors.black,
                               onPressed: () {
-                                Navigator.pushNamed(
-                                    context, LiveStreamSearch.routeName);
+                                Navigator.pushNamed(context, LiveStreamSearch.routeName);
                               },
                             ),
                           ),
@@ -169,11 +150,7 @@ class _LiveHomeScreenState extends State<LiveHomeScreen>
                     Expanded(
                       child: TabBarView(
                         controller: _liveTabController,
-                        children: [
-                          const LiveScreenTab(),
-                          Container(),
-                          Container()
-                        ],
+                        children: [const LiveScreenTab(), Container(), Container()],
                       ),
                     )
                   ],

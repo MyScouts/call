@@ -253,9 +253,9 @@ class _LiveApi implements LiveApi {
   }
 
   @override
-  Future<ApiResponse<GiftCardLive>> getLiveStats({required int liveId}) async {
+  Future<ApiResponse<GiftCardLive>> getLiveStats({required int userId}) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'liveId': liveId};
+    final queryParameters = <String, dynamic>{r'userId': userId};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -266,7 +266,7 @@ class _LiveApi implements LiveApi {
     )
             .compose(
               _dio.options,
-              '/api/gift-card/live-stats',
+              '/api/gift-card/livestreamer-stats',
               queryParameters: queryParameters,
               data: _data,
             )
