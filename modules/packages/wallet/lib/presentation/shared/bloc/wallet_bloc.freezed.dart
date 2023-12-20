@@ -20,7 +20,7 @@ mixin _$WalletEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() getWalletInfo,
     required TResult Function(
-            WalletType walletType, WalletTransactionsRequest? request)
+            WalletType walletType, WalletTransactionsRequest request)
         getWalletTransactionList,
     required TResult Function(String id) getWalletTransactionDetail,
     required TResult Function(FilterOption filter) filterTransaction,
@@ -31,8 +31,7 @@ mixin _$WalletEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getWalletInfo,
-    TResult? Function(
-            WalletType walletType, WalletTransactionsRequest? request)?
+    TResult? Function(WalletType walletType, WalletTransactionsRequest request)?
         getWalletTransactionList,
     TResult? Function(String id)? getWalletTransactionDetail,
     TResult? Function(FilterOption filter)? filterTransaction,
@@ -43,7 +42,7 @@ mixin _$WalletEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getWalletInfo,
-    TResult Function(WalletType walletType, WalletTransactionsRequest? request)?
+    TResult Function(WalletType walletType, WalletTransactionsRequest request)?
         getWalletTransactionList,
     TResult Function(String id)? getWalletTransactionDetail,
     TResult Function(FilterOption filter)? filterTransaction,
@@ -157,7 +156,7 @@ class _$GetWalletInfoEventImpl
   TResult when<TResult extends Object?>({
     required TResult Function() getWalletInfo,
     required TResult Function(
-            WalletType walletType, WalletTransactionsRequest? request)
+            WalletType walletType, WalletTransactionsRequest request)
         getWalletTransactionList,
     required TResult Function(String id) getWalletTransactionDetail,
     required TResult Function(FilterOption filter) filterTransaction,
@@ -171,8 +170,7 @@ class _$GetWalletInfoEventImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getWalletInfo,
-    TResult? Function(
-            WalletType walletType, WalletTransactionsRequest? request)?
+    TResult? Function(WalletType walletType, WalletTransactionsRequest request)?
         getWalletTransactionList,
     TResult? Function(String id)? getWalletTransactionDetail,
     TResult? Function(FilterOption filter)? filterTransaction,
@@ -186,7 +184,7 @@ class _$GetWalletInfoEventImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getWalletInfo,
-    TResult Function(WalletType walletType, WalletTransactionsRequest? request)?
+    TResult Function(WalletType walletType, WalletTransactionsRequest request)?
         getWalletTransactionList,
     TResult Function(String id)? getWalletTransactionDetail,
     TResult Function(FilterOption filter)? filterTransaction,
@@ -261,7 +259,7 @@ abstract class _$$GetWalletTransactionListEventImplCopyWith<$Res> {
           $Res Function(_$GetWalletTransactionListEventImpl) then) =
       __$$GetWalletTransactionListEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({WalletType walletType, WalletTransactionsRequest? request});
+  $Res call({WalletType walletType, WalletTransactionsRequest request});
 }
 
 /// @nodoc
@@ -277,17 +275,17 @@ class __$$GetWalletTransactionListEventImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? walletType = null,
-    Object? request = freezed,
+    Object? request = null,
   }) {
     return _then(_$GetWalletTransactionListEventImpl(
       walletType: null == walletType
           ? _value.walletType
           : walletType // ignore: cast_nullable_to_non_nullable
               as WalletType,
-      request: freezed == request
+      request: null == request
           ? _value.request
           : request // ignore: cast_nullable_to_non_nullable
-              as WalletTransactionsRequest?,
+              as WalletTransactionsRequest,
     ));
   }
 }
@@ -298,12 +296,12 @@ class _$GetWalletTransactionListEventImpl
     with DiagnosticableTreeMixin
     implements _GetWalletTransactionListEvent {
   const _$GetWalletTransactionListEventImpl(
-      {required this.walletType, this.request});
+      {required this.walletType, required this.request});
 
   @override
   final WalletType walletType;
   @override
-  final WalletTransactionsRequest? request;
+  final WalletTransactionsRequest request;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -345,7 +343,7 @@ class _$GetWalletTransactionListEventImpl
   TResult when<TResult extends Object?>({
     required TResult Function() getWalletInfo,
     required TResult Function(
-            WalletType walletType, WalletTransactionsRequest? request)
+            WalletType walletType, WalletTransactionsRequest request)
         getWalletTransactionList,
     required TResult Function(String id) getWalletTransactionDetail,
     required TResult Function(FilterOption filter) filterTransaction,
@@ -359,8 +357,7 @@ class _$GetWalletTransactionListEventImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getWalletInfo,
-    TResult? Function(
-            WalletType walletType, WalletTransactionsRequest? request)?
+    TResult? Function(WalletType walletType, WalletTransactionsRequest request)?
         getWalletTransactionList,
     TResult? Function(String id)? getWalletTransactionDetail,
     TResult? Function(FilterOption filter)? filterTransaction,
@@ -374,7 +371,7 @@ class _$GetWalletTransactionListEventImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getWalletInfo,
-    TResult Function(WalletType walletType, WalletTransactionsRequest? request)?
+    TResult Function(WalletType walletType, WalletTransactionsRequest request)?
         getWalletTransactionList,
     TResult Function(String id)? getWalletTransactionDetail,
     TResult Function(FilterOption filter)? filterTransaction,
@@ -441,11 +438,11 @@ class _$GetWalletTransactionListEventImpl
 abstract class _GetWalletTransactionListEvent implements WalletEvent {
   const factory _GetWalletTransactionListEvent(
           {required final WalletType walletType,
-          final WalletTransactionsRequest? request}) =
+          required final WalletTransactionsRequest request}) =
       _$GetWalletTransactionListEventImpl;
 
   WalletType get walletType;
-  WalletTransactionsRequest? get request;
+  WalletTransactionsRequest get request;
   @JsonKey(ignore: true)
   _$$GetWalletTransactionListEventImplCopyWith<
           _$GetWalletTransactionListEventImpl>
@@ -534,7 +531,7 @@ class _$GetWalletTransactionDetailEventImpl
   TResult when<TResult extends Object?>({
     required TResult Function() getWalletInfo,
     required TResult Function(
-            WalletType walletType, WalletTransactionsRequest? request)
+            WalletType walletType, WalletTransactionsRequest request)
         getWalletTransactionList,
     required TResult Function(String id) getWalletTransactionDetail,
     required TResult Function(FilterOption filter) filterTransaction,
@@ -548,8 +545,7 @@ class _$GetWalletTransactionDetailEventImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getWalletInfo,
-    TResult? Function(
-            WalletType walletType, WalletTransactionsRequest? request)?
+    TResult? Function(WalletType walletType, WalletTransactionsRequest request)?
         getWalletTransactionList,
     TResult? Function(String id)? getWalletTransactionDetail,
     TResult? Function(FilterOption filter)? filterTransaction,
@@ -563,7 +559,7 @@ class _$GetWalletTransactionDetailEventImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getWalletInfo,
-    TResult Function(WalletType walletType, WalletTransactionsRequest? request)?
+    TResult Function(WalletType walletType, WalletTransactionsRequest request)?
         getWalletTransactionList,
     TResult Function(String id)? getWalletTransactionDetail,
     TResult Function(FilterOption filter)? filterTransaction,
@@ -717,7 +713,7 @@ class _$FilterTransactionEventImpl
   TResult when<TResult extends Object?>({
     required TResult Function() getWalletInfo,
     required TResult Function(
-            WalletType walletType, WalletTransactionsRequest? request)
+            WalletType walletType, WalletTransactionsRequest request)
         getWalletTransactionList,
     required TResult Function(String id) getWalletTransactionDetail,
     required TResult Function(FilterOption filter) filterTransaction,
@@ -731,8 +727,7 @@ class _$FilterTransactionEventImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getWalletInfo,
-    TResult? Function(
-            WalletType walletType, WalletTransactionsRequest? request)?
+    TResult? Function(WalletType walletType, WalletTransactionsRequest request)?
         getWalletTransactionList,
     TResult? Function(String id)? getWalletTransactionDetail,
     TResult? Function(FilterOption filter)? filterTransaction,
@@ -746,7 +741,7 @@ class _$FilterTransactionEventImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getWalletInfo,
-    TResult Function(WalletType walletType, WalletTransactionsRequest? request)?
+    TResult Function(WalletType walletType, WalletTransactionsRequest request)?
         getWalletTransactionList,
     TResult Function(String id)? getWalletTransactionDetail,
     TResult Function(FilterOption filter)? filterTransaction,
@@ -869,7 +864,7 @@ class _$GetPDoneProfileEventImpl
   TResult when<TResult extends Object?>({
     required TResult Function() getWalletInfo,
     required TResult Function(
-            WalletType walletType, WalletTransactionsRequest? request)
+            WalletType walletType, WalletTransactionsRequest request)
         getWalletTransactionList,
     required TResult Function(String id) getWalletTransactionDetail,
     required TResult Function(FilterOption filter) filterTransaction,
@@ -883,8 +878,7 @@ class _$GetPDoneProfileEventImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getWalletInfo,
-    TResult? Function(
-            WalletType walletType, WalletTransactionsRequest? request)?
+    TResult? Function(WalletType walletType, WalletTransactionsRequest request)?
         getWalletTransactionList,
     TResult? Function(String id)? getWalletTransactionDetail,
     TResult? Function(FilterOption filter)? filterTransaction,
@@ -898,7 +892,7 @@ class _$GetPDoneProfileEventImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getWalletInfo,
-    TResult Function(WalletType walletType, WalletTransactionsRequest? request)?
+    TResult Function(WalletType walletType, WalletTransactionsRequest request)?
         getWalletTransactionList,
     TResult Function(String id)? getWalletTransactionDetail,
     TResult Function(FilterOption filter)? filterTransaction,
@@ -1014,7 +1008,7 @@ class _$GetOnboardingEventImpl
   TResult when<TResult extends Object?>({
     required TResult Function() getWalletInfo,
     required TResult Function(
-            WalletType walletType, WalletTransactionsRequest? request)
+            WalletType walletType, WalletTransactionsRequest request)
         getWalletTransactionList,
     required TResult Function(String id) getWalletTransactionDetail,
     required TResult Function(FilterOption filter) filterTransaction,
@@ -1028,8 +1022,7 @@ class _$GetOnboardingEventImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? getWalletInfo,
-    TResult? Function(
-            WalletType walletType, WalletTransactionsRequest? request)?
+    TResult? Function(WalletType walletType, WalletTransactionsRequest request)?
         getWalletTransactionList,
     TResult? Function(String id)? getWalletTransactionDetail,
     TResult? Function(FilterOption filter)? filterTransaction,
@@ -1043,7 +1036,7 @@ class _$GetOnboardingEventImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getWalletInfo,
-    TResult Function(WalletType walletType, WalletTransactionsRequest? request)?
+    TResult Function(WalletType walletType, WalletTransactionsRequest request)?
         getWalletTransactionList,
     TResult Function(String id)? getWalletTransactionDetail,
     TResult Function(FilterOption filter)? filterTransaction,
@@ -1134,6 +1127,8 @@ mixin _$WalletState {
     required TResult Function(OnboardingResponse onboarding)
         getOnboardingSuccess,
     required TResult Function(String err) getOnboardingFail,
+    required TResult Function(List<TransactionItem> transactions)
+        filterTransactionSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1156,6 +1151,8 @@ mixin _$WalletState {
     TResult? Function()? getOnboardingLoading,
     TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult? Function(String err)? getOnboardingFail,
+    TResult? Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1178,6 +1175,8 @@ mixin _$WalletState {
     TResult Function()? getOnboardingLoading,
     TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult Function(String err)? getOnboardingFail,
+    TResult Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1208,6 +1207,8 @@ mixin _$WalletState {
     required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
     required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
     required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+    required TResult Function(_FilterTransactionSuccess value)
+        filterTransactionSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1234,6 +1235,8 @@ mixin _$WalletState {
     TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult? Function(_FilterTransactionSuccess value)?
+        filterTransactionSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1260,6 +1263,7 @@ mixin _$WalletState {
     TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult Function(_FilterTransactionSuccess value)? filterTransactionSuccess,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1346,6 +1350,8 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     required TResult Function(OnboardingResponse onboarding)
         getOnboardingSuccess,
     required TResult Function(String err) getOnboardingFail,
+    required TResult Function(List<TransactionItem> transactions)
+        filterTransactionSuccess,
   }) {
     return initial();
   }
@@ -1371,6 +1377,8 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult? Function()? getOnboardingLoading,
     TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult? Function(String err)? getOnboardingFail,
+    TResult? Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
   }) {
     return initial?.call();
   }
@@ -1396,6 +1404,8 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult Function()? getOnboardingLoading,
     TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult Function(String err)? getOnboardingFail,
+    TResult Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -1432,6 +1442,8 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
     required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
     required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+    required TResult Function(_FilterTransactionSuccess value)
+        filterTransactionSuccess,
   }) {
     return initial(this);
   }
@@ -1461,6 +1473,8 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult? Function(_FilterTransactionSuccess value)?
+        filterTransactionSuccess,
   }) {
     return initial?.call(this);
   }
@@ -1490,6 +1504,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult Function(_FilterTransactionSuccess value)? filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -1594,6 +1609,8 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     required TResult Function(OnboardingResponse onboarding)
         getOnboardingSuccess,
     required TResult Function(String err) getOnboardingFail,
+    required TResult Function(List<TransactionItem> transactions)
+        filterTransactionSuccess,
   }) {
     return error(err);
   }
@@ -1619,6 +1636,8 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     TResult? Function()? getOnboardingLoading,
     TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult? Function(String err)? getOnboardingFail,
+    TResult? Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
   }) {
     return error?.call(err);
   }
@@ -1644,6 +1663,8 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     TResult Function()? getOnboardingLoading,
     TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult Function(String err)? getOnboardingFail,
+    TResult Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1680,6 +1701,8 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
     required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
     required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+    required TResult Function(_FilterTransactionSuccess value)
+        filterTransactionSuccess,
   }) {
     return error(this);
   }
@@ -1709,6 +1732,8 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult? Function(_FilterTransactionSuccess value)?
+        filterTransactionSuccess,
   }) {
     return error?.call(this);
   }
@@ -1738,6 +1763,7 @@ class _$ErrorImpl with DiagnosticableTreeMixin implements _Error {
     TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult Function(_FilterTransactionSuccess value)? filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -1851,6 +1877,8 @@ class _$GetWalletInfoSuccessImpl
     required TResult Function(OnboardingResponse onboarding)
         getOnboardingSuccess,
     required TResult Function(String err) getOnboardingFail,
+    required TResult Function(List<TransactionItem> transactions)
+        filterTransactionSuccess,
   }) {
     return getWalletInfoSuccess(wallet);
   }
@@ -1876,6 +1904,8 @@ class _$GetWalletInfoSuccessImpl
     TResult? Function()? getOnboardingLoading,
     TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult? Function(String err)? getOnboardingFail,
+    TResult? Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
   }) {
     return getWalletInfoSuccess?.call(wallet);
   }
@@ -1901,6 +1931,8 @@ class _$GetWalletInfoSuccessImpl
     TResult Function()? getOnboardingLoading,
     TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult Function(String err)? getOnboardingFail,
+    TResult Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getWalletInfoSuccess != null) {
@@ -1937,6 +1969,8 @@ class _$GetWalletInfoSuccessImpl
     required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
     required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
     required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+    required TResult Function(_FilterTransactionSuccess value)
+        filterTransactionSuccess,
   }) {
     return getWalletInfoSuccess(this);
   }
@@ -1966,6 +2000,8 @@ class _$GetWalletInfoSuccessImpl
     TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult? Function(_FilterTransactionSuccess value)?
+        filterTransactionSuccess,
   }) {
     return getWalletInfoSuccess?.call(this);
   }
@@ -1995,6 +2031,7 @@ class _$GetWalletInfoSuccessImpl
     TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult Function(_FilterTransactionSuccess value)? filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getWalletInfoSuccess != null) {
@@ -2081,6 +2118,8 @@ class _$GetWalletInfoLoadingImpl
     required TResult Function(OnboardingResponse onboarding)
         getOnboardingSuccess,
     required TResult Function(String err) getOnboardingFail,
+    required TResult Function(List<TransactionItem> transactions)
+        filterTransactionSuccess,
   }) {
     return getWalletInfoLoading();
   }
@@ -2106,6 +2145,8 @@ class _$GetWalletInfoLoadingImpl
     TResult? Function()? getOnboardingLoading,
     TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult? Function(String err)? getOnboardingFail,
+    TResult? Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
   }) {
     return getWalletInfoLoading?.call();
   }
@@ -2131,6 +2172,8 @@ class _$GetWalletInfoLoadingImpl
     TResult Function()? getOnboardingLoading,
     TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult Function(String err)? getOnboardingFail,
+    TResult Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getWalletInfoLoading != null) {
@@ -2167,6 +2210,8 @@ class _$GetWalletInfoLoadingImpl
     required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
     required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
     required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+    required TResult Function(_FilterTransactionSuccess value)
+        filterTransactionSuccess,
   }) {
     return getWalletInfoLoading(this);
   }
@@ -2196,6 +2241,8 @@ class _$GetWalletInfoLoadingImpl
     TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult? Function(_FilterTransactionSuccess value)?
+        filterTransactionSuccess,
   }) {
     return getWalletInfoLoading?.call(this);
   }
@@ -2225,6 +2272,7 @@ class _$GetWalletInfoLoadingImpl
     TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult Function(_FilterTransactionSuccess value)? filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getWalletInfoLoading != null) {
@@ -2337,6 +2385,8 @@ class _$GetWalletTransactionListFailedImpl
     required TResult Function(OnboardingResponse onboarding)
         getOnboardingSuccess,
     required TResult Function(String err) getOnboardingFail,
+    required TResult Function(List<TransactionItem> transactions)
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionListFailed(err);
   }
@@ -2362,6 +2412,8 @@ class _$GetWalletTransactionListFailedImpl
     TResult? Function()? getOnboardingLoading,
     TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult? Function(String err)? getOnboardingFail,
+    TResult? Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionListFailed?.call(err);
   }
@@ -2387,6 +2439,8 @@ class _$GetWalletTransactionListFailedImpl
     TResult Function()? getOnboardingLoading,
     TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult Function(String err)? getOnboardingFail,
+    TResult Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getWalletTransactionListFailed != null) {
@@ -2423,6 +2477,8 @@ class _$GetWalletTransactionListFailedImpl
     required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
     required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
     required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+    required TResult Function(_FilterTransactionSuccess value)
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionListFailed(this);
   }
@@ -2452,6 +2508,8 @@ class _$GetWalletTransactionListFailedImpl
     TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult? Function(_FilterTransactionSuccess value)?
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionListFailed?.call(this);
   }
@@ -2481,6 +2539,7 @@ class _$GetWalletTransactionListFailedImpl
     TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult Function(_FilterTransactionSuccess value)? filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getWalletTransactionListFailed != null) {
@@ -2609,6 +2668,8 @@ class _$GetWalletTransactionListSuccessImpl
     required TResult Function(OnboardingResponse onboarding)
         getOnboardingSuccess,
     required TResult Function(String err) getOnboardingFail,
+    required TResult Function(List<TransactionItem> transactions)
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionListSuccess(transactions);
   }
@@ -2634,6 +2695,8 @@ class _$GetWalletTransactionListSuccessImpl
     TResult? Function()? getOnboardingLoading,
     TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult? Function(String err)? getOnboardingFail,
+    TResult? Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionListSuccess?.call(transactions);
   }
@@ -2659,6 +2722,8 @@ class _$GetWalletTransactionListSuccessImpl
     TResult Function()? getOnboardingLoading,
     TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult Function(String err)? getOnboardingFail,
+    TResult Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getWalletTransactionListSuccess != null) {
@@ -2695,6 +2760,8 @@ class _$GetWalletTransactionListSuccessImpl
     required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
     required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
     required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+    required TResult Function(_FilterTransactionSuccess value)
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionListSuccess(this);
   }
@@ -2724,6 +2791,8 @@ class _$GetWalletTransactionListSuccessImpl
     TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult? Function(_FilterTransactionSuccess value)?
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionListSuccess?.call(this);
   }
@@ -2753,6 +2822,7 @@ class _$GetWalletTransactionListSuccessImpl
     TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult Function(_FilterTransactionSuccess value)? filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getWalletTransactionListSuccess != null) {
@@ -2844,6 +2914,8 @@ class _$GetWalletTransactionListLoadingImpl
     required TResult Function(OnboardingResponse onboarding)
         getOnboardingSuccess,
     required TResult Function(String err) getOnboardingFail,
+    required TResult Function(List<TransactionItem> transactions)
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionListLoading();
   }
@@ -2869,6 +2941,8 @@ class _$GetWalletTransactionListLoadingImpl
     TResult? Function()? getOnboardingLoading,
     TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult? Function(String err)? getOnboardingFail,
+    TResult? Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionListLoading?.call();
   }
@@ -2894,6 +2968,8 @@ class _$GetWalletTransactionListLoadingImpl
     TResult Function()? getOnboardingLoading,
     TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult Function(String err)? getOnboardingFail,
+    TResult Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getWalletTransactionListLoading != null) {
@@ -2930,6 +3006,8 @@ class _$GetWalletTransactionListLoadingImpl
     required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
     required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
     required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+    required TResult Function(_FilterTransactionSuccess value)
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionListLoading(this);
   }
@@ -2959,6 +3037,8 @@ class _$GetWalletTransactionListLoadingImpl
     TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult? Function(_FilterTransactionSuccess value)?
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionListLoading?.call(this);
   }
@@ -2988,6 +3068,7 @@ class _$GetWalletTransactionListLoadingImpl
     TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult Function(_FilterTransactionSuccess value)? filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getWalletTransactionListLoading != null) {
@@ -3102,6 +3183,8 @@ class _$GetWalletTransactionDetailSuccessImpl
     required TResult Function(OnboardingResponse onboarding)
         getOnboardingSuccess,
     required TResult Function(String err) getOnboardingFail,
+    required TResult Function(List<TransactionItem> transactions)
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionDetailSuccess(transaction);
   }
@@ -3127,6 +3210,8 @@ class _$GetWalletTransactionDetailSuccessImpl
     TResult? Function()? getOnboardingLoading,
     TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult? Function(String err)? getOnboardingFail,
+    TResult? Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionDetailSuccess?.call(transaction);
   }
@@ -3152,6 +3237,8 @@ class _$GetWalletTransactionDetailSuccessImpl
     TResult Function()? getOnboardingLoading,
     TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult Function(String err)? getOnboardingFail,
+    TResult Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getWalletTransactionDetailSuccess != null) {
@@ -3188,6 +3275,8 @@ class _$GetWalletTransactionDetailSuccessImpl
     required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
     required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
     required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+    required TResult Function(_FilterTransactionSuccess value)
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionDetailSuccess(this);
   }
@@ -3217,6 +3306,8 @@ class _$GetWalletTransactionDetailSuccessImpl
     TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult? Function(_FilterTransactionSuccess value)?
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionDetailSuccess?.call(this);
   }
@@ -3246,6 +3337,7 @@ class _$GetWalletTransactionDetailSuccessImpl
     TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult Function(_FilterTransactionSuccess value)? filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getWalletTransactionDetailSuccess != null) {
@@ -3337,6 +3429,8 @@ class _$GetWalletTransactionDetailLoadingImpl
     required TResult Function(OnboardingResponse onboarding)
         getOnboardingSuccess,
     required TResult Function(String err) getOnboardingFail,
+    required TResult Function(List<TransactionItem> transactions)
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionDetailLoading();
   }
@@ -3362,6 +3456,8 @@ class _$GetWalletTransactionDetailLoadingImpl
     TResult? Function()? getOnboardingLoading,
     TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult? Function(String err)? getOnboardingFail,
+    TResult? Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionDetailLoading?.call();
   }
@@ -3387,6 +3483,8 @@ class _$GetWalletTransactionDetailLoadingImpl
     TResult Function()? getOnboardingLoading,
     TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult Function(String err)? getOnboardingFail,
+    TResult Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getWalletTransactionDetailLoading != null) {
@@ -3423,6 +3521,8 @@ class _$GetWalletTransactionDetailLoadingImpl
     required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
     required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
     required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+    required TResult Function(_FilterTransactionSuccess value)
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionDetailLoading(this);
   }
@@ -3452,6 +3552,8 @@ class _$GetWalletTransactionDetailLoadingImpl
     TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult? Function(_FilterTransactionSuccess value)?
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionDetailLoading?.call(this);
   }
@@ -3481,6 +3583,7 @@ class _$GetWalletTransactionDetailLoadingImpl
     TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult Function(_FilterTransactionSuccess value)? filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getWalletTransactionDetailLoading != null) {
@@ -3594,6 +3697,8 @@ class _$GetWalletTransactionDetailFailedImpl
     required TResult Function(OnboardingResponse onboarding)
         getOnboardingSuccess,
     required TResult Function(String err) getOnboardingFail,
+    required TResult Function(List<TransactionItem> transactions)
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionDetailFailed(err);
   }
@@ -3619,6 +3724,8 @@ class _$GetWalletTransactionDetailFailedImpl
     TResult? Function()? getOnboardingLoading,
     TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult? Function(String err)? getOnboardingFail,
+    TResult? Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionDetailFailed?.call(err);
   }
@@ -3644,6 +3751,8 @@ class _$GetWalletTransactionDetailFailedImpl
     TResult Function()? getOnboardingLoading,
     TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult Function(String err)? getOnboardingFail,
+    TResult Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getWalletTransactionDetailFailed != null) {
@@ -3680,6 +3789,8 @@ class _$GetWalletTransactionDetailFailedImpl
     required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
     required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
     required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+    required TResult Function(_FilterTransactionSuccess value)
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionDetailFailed(this);
   }
@@ -3709,6 +3820,8 @@ class _$GetWalletTransactionDetailFailedImpl
     TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult? Function(_FilterTransactionSuccess value)?
+        filterTransactionSuccess,
   }) {
     return getWalletTransactionDetailFailed?.call(this);
   }
@@ -3738,6 +3851,7 @@ class _$GetWalletTransactionDetailFailedImpl
     TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult Function(_FilterTransactionSuccess value)? filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getWalletTransactionDetailFailed != null) {
@@ -3827,6 +3941,8 @@ class _$GetPDoneProfileLoadingImpl
     required TResult Function(OnboardingResponse onboarding)
         getOnboardingSuccess,
     required TResult Function(String err) getOnboardingFail,
+    required TResult Function(List<TransactionItem> transactions)
+        filterTransactionSuccess,
   }) {
     return getPDoneProfileLoading();
   }
@@ -3852,6 +3968,8 @@ class _$GetPDoneProfileLoadingImpl
     TResult? Function()? getOnboardingLoading,
     TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult? Function(String err)? getOnboardingFail,
+    TResult? Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
   }) {
     return getPDoneProfileLoading?.call();
   }
@@ -3877,6 +3995,8 @@ class _$GetPDoneProfileLoadingImpl
     TResult Function()? getOnboardingLoading,
     TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult Function(String err)? getOnboardingFail,
+    TResult Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getPDoneProfileLoading != null) {
@@ -3913,6 +4033,8 @@ class _$GetPDoneProfileLoadingImpl
     required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
     required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
     required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+    required TResult Function(_FilterTransactionSuccess value)
+        filterTransactionSuccess,
   }) {
     return getPDoneProfileLoading(this);
   }
@@ -3942,6 +4064,8 @@ class _$GetPDoneProfileLoadingImpl
     TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult? Function(_FilterTransactionSuccess value)?
+        filterTransactionSuccess,
   }) {
     return getPDoneProfileLoading?.call(this);
   }
@@ -3971,6 +4095,7 @@ class _$GetPDoneProfileLoadingImpl
     TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult Function(_FilterTransactionSuccess value)? filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getPDoneProfileLoading != null) {
@@ -4091,6 +4216,8 @@ class _$GetPDoneProfileSuccessImpl
     required TResult Function(OnboardingResponse onboarding)
         getOnboardingSuccess,
     required TResult Function(String err) getOnboardingFail,
+    required TResult Function(List<TransactionItem> transactions)
+        filterTransactionSuccess,
   }) {
     return getPDoneProfileSuccess(pDoneProfile);
   }
@@ -4116,6 +4243,8 @@ class _$GetPDoneProfileSuccessImpl
     TResult? Function()? getOnboardingLoading,
     TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult? Function(String err)? getOnboardingFail,
+    TResult? Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
   }) {
     return getPDoneProfileSuccess?.call(pDoneProfile);
   }
@@ -4141,6 +4270,8 @@ class _$GetPDoneProfileSuccessImpl
     TResult Function()? getOnboardingLoading,
     TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult Function(String err)? getOnboardingFail,
+    TResult Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getPDoneProfileSuccess != null) {
@@ -4177,6 +4308,8 @@ class _$GetPDoneProfileSuccessImpl
     required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
     required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
     required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+    required TResult Function(_FilterTransactionSuccess value)
+        filterTransactionSuccess,
   }) {
     return getPDoneProfileSuccess(this);
   }
@@ -4206,6 +4339,8 @@ class _$GetPDoneProfileSuccessImpl
     TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult? Function(_FilterTransactionSuccess value)?
+        filterTransactionSuccess,
   }) {
     return getPDoneProfileSuccess?.call(this);
   }
@@ -4235,6 +4370,7 @@ class _$GetPDoneProfileSuccessImpl
     TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult Function(_FilterTransactionSuccess value)? filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getPDoneProfileSuccess != null) {
@@ -4349,6 +4485,8 @@ class _$GetPDoneProfileFailedImpl
     required TResult Function(OnboardingResponse onboarding)
         getOnboardingSuccess,
     required TResult Function(String err) getOnboardingFail,
+    required TResult Function(List<TransactionItem> transactions)
+        filterTransactionSuccess,
   }) {
     return getPDoneProfileFailed(err);
   }
@@ -4374,6 +4512,8 @@ class _$GetPDoneProfileFailedImpl
     TResult? Function()? getOnboardingLoading,
     TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult? Function(String err)? getOnboardingFail,
+    TResult? Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
   }) {
     return getPDoneProfileFailed?.call(err);
   }
@@ -4399,6 +4539,8 @@ class _$GetPDoneProfileFailedImpl
     TResult Function()? getOnboardingLoading,
     TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult Function(String err)? getOnboardingFail,
+    TResult Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getPDoneProfileFailed != null) {
@@ -4435,6 +4577,8 @@ class _$GetPDoneProfileFailedImpl
     required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
     required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
     required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+    required TResult Function(_FilterTransactionSuccess value)
+        filterTransactionSuccess,
   }) {
     return getPDoneProfileFailed(this);
   }
@@ -4464,6 +4608,8 @@ class _$GetPDoneProfileFailedImpl
     TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult? Function(_FilterTransactionSuccess value)?
+        filterTransactionSuccess,
   }) {
     return getPDoneProfileFailed?.call(this);
   }
@@ -4493,6 +4639,7 @@ class _$GetPDoneProfileFailedImpl
     TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult Function(_FilterTransactionSuccess value)? filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getPDoneProfileFailed != null) {
@@ -4579,6 +4726,8 @@ class _$GetOnboardingLoadingImpl
     required TResult Function(OnboardingResponse onboarding)
         getOnboardingSuccess,
     required TResult Function(String err) getOnboardingFail,
+    required TResult Function(List<TransactionItem> transactions)
+        filterTransactionSuccess,
   }) {
     return getOnboardingLoading();
   }
@@ -4604,6 +4753,8 @@ class _$GetOnboardingLoadingImpl
     TResult? Function()? getOnboardingLoading,
     TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult? Function(String err)? getOnboardingFail,
+    TResult? Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
   }) {
     return getOnboardingLoading?.call();
   }
@@ -4629,6 +4780,8 @@ class _$GetOnboardingLoadingImpl
     TResult Function()? getOnboardingLoading,
     TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult Function(String err)? getOnboardingFail,
+    TResult Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getOnboardingLoading != null) {
@@ -4665,6 +4818,8 @@ class _$GetOnboardingLoadingImpl
     required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
     required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
     required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+    required TResult Function(_FilterTransactionSuccess value)
+        filterTransactionSuccess,
   }) {
     return getOnboardingLoading(this);
   }
@@ -4694,6 +4849,8 @@ class _$GetOnboardingLoadingImpl
     TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult? Function(_FilterTransactionSuccess value)?
+        filterTransactionSuccess,
   }) {
     return getOnboardingLoading?.call(this);
   }
@@ -4723,6 +4880,7 @@ class _$GetOnboardingLoadingImpl
     TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult Function(_FilterTransactionSuccess value)? filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getOnboardingLoading != null) {
@@ -4832,6 +4990,8 @@ class _$GetOnboardingSuccessImpl
     required TResult Function(OnboardingResponse onboarding)
         getOnboardingSuccess,
     required TResult Function(String err) getOnboardingFail,
+    required TResult Function(List<TransactionItem> transactions)
+        filterTransactionSuccess,
   }) {
     return getOnboardingSuccess(onboarding);
   }
@@ -4857,6 +5017,8 @@ class _$GetOnboardingSuccessImpl
     TResult? Function()? getOnboardingLoading,
     TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult? Function(String err)? getOnboardingFail,
+    TResult? Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
   }) {
     return getOnboardingSuccess?.call(onboarding);
   }
@@ -4882,6 +5044,8 @@ class _$GetOnboardingSuccessImpl
     TResult Function()? getOnboardingLoading,
     TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult Function(String err)? getOnboardingFail,
+    TResult Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getOnboardingSuccess != null) {
@@ -4918,6 +5082,8 @@ class _$GetOnboardingSuccessImpl
     required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
     required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
     required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+    required TResult Function(_FilterTransactionSuccess value)
+        filterTransactionSuccess,
   }) {
     return getOnboardingSuccess(this);
   }
@@ -4947,6 +5113,8 @@ class _$GetOnboardingSuccessImpl
     TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult? Function(_FilterTransactionSuccess value)?
+        filterTransactionSuccess,
   }) {
     return getOnboardingSuccess?.call(this);
   }
@@ -4976,6 +5144,7 @@ class _$GetOnboardingSuccessImpl
     TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult Function(_FilterTransactionSuccess value)? filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getOnboardingSuccess != null) {
@@ -5089,6 +5258,8 @@ class _$GetOnboardingFailImpl
     required TResult Function(OnboardingResponse onboarding)
         getOnboardingSuccess,
     required TResult Function(String err) getOnboardingFail,
+    required TResult Function(List<TransactionItem> transactions)
+        filterTransactionSuccess,
   }) {
     return getOnboardingFail(err);
   }
@@ -5114,6 +5285,8 @@ class _$GetOnboardingFailImpl
     TResult? Function()? getOnboardingLoading,
     TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult? Function(String err)? getOnboardingFail,
+    TResult? Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
   }) {
     return getOnboardingFail?.call(err);
   }
@@ -5139,6 +5312,8 @@ class _$GetOnboardingFailImpl
     TResult Function()? getOnboardingLoading,
     TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
     TResult Function(String err)? getOnboardingFail,
+    TResult Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getOnboardingFail != null) {
@@ -5175,6 +5350,8 @@ class _$GetOnboardingFailImpl
     required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
     required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
     required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+    required TResult Function(_FilterTransactionSuccess value)
+        filterTransactionSuccess,
   }) {
     return getOnboardingFail(this);
   }
@@ -5204,6 +5381,8 @@ class _$GetOnboardingFailImpl
     TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult? Function(_FilterTransactionSuccess value)?
+        filterTransactionSuccess,
   }) {
     return getOnboardingFail?.call(this);
   }
@@ -5233,6 +5412,7 @@ class _$GetOnboardingFailImpl
     TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
     TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
     TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult Function(_FilterTransactionSuccess value)? filterTransactionSuccess,
     required TResult orElse(),
   }) {
     if (getOnboardingFail != null) {
@@ -5249,4 +5429,284 @@ abstract class _GetOnboardingFail implements WalletState {
   @JsonKey(ignore: true)
   _$$GetOnboardingFailImplCopyWith<_$GetOnboardingFailImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$FilterTransactionSuccessImplCopyWith<$Res> {
+  factory _$$FilterTransactionSuccessImplCopyWith(
+          _$FilterTransactionSuccessImpl value,
+          $Res Function(_$FilterTransactionSuccessImpl) then) =
+      __$$FilterTransactionSuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<TransactionItem> transactions});
+}
+
+/// @nodoc
+class __$$FilterTransactionSuccessImplCopyWithImpl<$Res>
+    extends _$WalletStateCopyWithImpl<$Res, _$FilterTransactionSuccessImpl>
+    implements _$$FilterTransactionSuccessImplCopyWith<$Res> {
+  __$$FilterTransactionSuccessImplCopyWithImpl(
+      _$FilterTransactionSuccessImpl _value,
+      $Res Function(_$FilterTransactionSuccessImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? transactions = null,
+  }) {
+    return _then(_$FilterTransactionSuccessImpl(
+      transactions: null == transactions
+          ? _value._transactions
+          : transactions // ignore: cast_nullable_to_non_nullable
+              as List<TransactionItem>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$FilterTransactionSuccessImpl
+    with DiagnosticableTreeMixin
+    implements _FilterTransactionSuccess {
+  const _$FilterTransactionSuccessImpl(
+      {required final List<TransactionItem> transactions})
+      : _transactions = transactions;
+
+  final List<TransactionItem> _transactions;
+  @override
+  List<TransactionItem> get transactions {
+    if (_transactions is EqualUnmodifiableListView) return _transactions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_transactions);
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'WalletState.filterTransactionSuccess(transactions: $transactions)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'WalletState.filterTransactionSuccess'))
+      ..add(DiagnosticsProperty('transactions', transactions));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FilterTransactionSuccessImpl &&
+            const DeepCollectionEquality()
+                .equals(other._transactions, _transactions));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_transactions));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FilterTransactionSuccessImplCopyWith<_$FilterTransactionSuccessImpl>
+      get copyWith => __$$FilterTransactionSuccessImplCopyWithImpl<
+          _$FilterTransactionSuccessImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(String err) error,
+    required TResult Function(UserWallet? wallet) getWalletInfoSuccess,
+    required TResult Function() getWalletInfoLoading,
+    required TResult Function(String err) getWalletTransactionListFailed,
+    required TResult Function(List<TransactionItem> transactions)
+        getWalletTransactionListSuccess,
+    required TResult Function() getWalletTransactionListLoading,
+    required TResult Function(TransactionItem transaction)
+        getWalletTransactionDetailSuccess,
+    required TResult Function() getWalletTransactionDetailLoading,
+    required TResult Function(String err) getWalletTransactionDetailFailed,
+    required TResult Function() getPDoneProfileLoading,
+    required TResult Function(PDoneProfile pDoneProfile) getPDoneProfileSuccess,
+    required TResult Function(String err) getPDoneProfileFailed,
+    required TResult Function() getOnboardingLoading,
+    required TResult Function(OnboardingResponse onboarding)
+        getOnboardingSuccess,
+    required TResult Function(String err) getOnboardingFail,
+    required TResult Function(List<TransactionItem> transactions)
+        filterTransactionSuccess,
+  }) {
+    return filterTransactionSuccess(transactions);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(String err)? error,
+    TResult? Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult? Function()? getWalletInfoLoading,
+    TResult? Function(String err)? getWalletTransactionListFailed,
+    TResult? Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult? Function()? getWalletTransactionListLoading,
+    TResult? Function(TransactionItem transaction)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function()? getWalletTransactionDetailLoading,
+    TResult? Function(String err)? getWalletTransactionDetailFailed,
+    TResult? Function()? getPDoneProfileLoading,
+    TResult? Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
+    TResult? Function(String err)? getPDoneProfileFailed,
+    TResult? Function()? getOnboardingLoading,
+    TResult? Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult? Function(String err)? getOnboardingFail,
+    TResult? Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
+  }) {
+    return filterTransactionSuccess?.call(transactions);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(String err)? error,
+    TResult Function(UserWallet? wallet)? getWalletInfoSuccess,
+    TResult Function()? getWalletInfoLoading,
+    TResult Function(String err)? getWalletTransactionListFailed,
+    TResult Function(List<TransactionItem> transactions)?
+        getWalletTransactionListSuccess,
+    TResult Function()? getWalletTransactionListLoading,
+    TResult Function(TransactionItem transaction)?
+        getWalletTransactionDetailSuccess,
+    TResult Function()? getWalletTransactionDetailLoading,
+    TResult Function(String err)? getWalletTransactionDetailFailed,
+    TResult Function()? getPDoneProfileLoading,
+    TResult Function(PDoneProfile pDoneProfile)? getPDoneProfileSuccess,
+    TResult Function(String err)? getPDoneProfileFailed,
+    TResult Function()? getOnboardingLoading,
+    TResult Function(OnboardingResponse onboarding)? getOnboardingSuccess,
+    TResult Function(String err)? getOnboardingFail,
+    TResult Function(List<TransactionItem> transactions)?
+        filterTransactionSuccess,
+    required TResult orElse(),
+  }) {
+    if (filterTransactionSuccess != null) {
+      return filterTransactionSuccess(transactions);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Error value) error,
+    required TResult Function(_GetWalletInfoSuccess value) getWalletInfoSuccess,
+    required TResult Function(_GetWalletInfoLoading value) getWalletInfoLoading,
+    required TResult Function(_GetWalletTransactionListFailed value)
+        getWalletTransactionListFailed,
+    required TResult Function(_GetWalletTransactionListSuccess value)
+        getWalletTransactionListSuccess,
+    required TResult Function(_GetWalletTransactionListLoading value)
+        getWalletTransactionListLoading,
+    required TResult Function(_GetWalletTransactionDetailSuccess value)
+        getWalletTransactionDetailSuccess,
+    required TResult Function(_GetWalletTransactionDetailLoading value)
+        getWalletTransactionDetailLoading,
+    required TResult Function(_GetWalletTransactionDetailFailed value)
+        getWalletTransactionDetailFailed,
+    required TResult Function(_GetPDoneProfileLoading value)
+        getPDoneProfileLoading,
+    required TResult Function(_GetPDoneProfileSuccess value)
+        getPDoneProfileSuccess,
+    required TResult Function(_GetPDoneProfileFailed value)
+        getPDoneProfileFailed,
+    required TResult Function(_GetOnboardingLoading value) getOnboardingLoading,
+    required TResult Function(_GetOnboardingSuccess value) getOnboardingSuccess,
+    required TResult Function(_GetOnboardingFail value) getOnboardingFail,
+    required TResult Function(_FilterTransactionSuccess value)
+        filterTransactionSuccess,
+  }) {
+    return filterTransactionSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult? Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult? Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult? Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult? Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult? Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult? Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult? Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+    TResult? Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
+    TResult? Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
+    TResult? Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult? Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult? Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult? Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult? Function(_FilterTransactionSuccess value)?
+        filterTransactionSuccess,
+  }) {
+    return filterTransactionSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Error value)? error,
+    TResult Function(_GetWalletInfoSuccess value)? getWalletInfoSuccess,
+    TResult Function(_GetWalletInfoLoading value)? getWalletInfoLoading,
+    TResult Function(_GetWalletTransactionListFailed value)?
+        getWalletTransactionListFailed,
+    TResult Function(_GetWalletTransactionListSuccess value)?
+        getWalletTransactionListSuccess,
+    TResult Function(_GetWalletTransactionListLoading value)?
+        getWalletTransactionListLoading,
+    TResult Function(_GetWalletTransactionDetailSuccess value)?
+        getWalletTransactionDetailSuccess,
+    TResult Function(_GetWalletTransactionDetailLoading value)?
+        getWalletTransactionDetailLoading,
+    TResult Function(_GetWalletTransactionDetailFailed value)?
+        getWalletTransactionDetailFailed,
+    TResult Function(_GetPDoneProfileLoading value)? getPDoneProfileLoading,
+    TResult Function(_GetPDoneProfileSuccess value)? getPDoneProfileSuccess,
+    TResult Function(_GetPDoneProfileFailed value)? getPDoneProfileFailed,
+    TResult Function(_GetOnboardingLoading value)? getOnboardingLoading,
+    TResult Function(_GetOnboardingSuccess value)? getOnboardingSuccess,
+    TResult Function(_GetOnboardingFail value)? getOnboardingFail,
+    TResult Function(_FilterTransactionSuccess value)? filterTransactionSuccess,
+    required TResult orElse(),
+  }) {
+    if (filterTransactionSuccess != null) {
+      return filterTransactionSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FilterTransactionSuccess implements WalletState {
+  const factory _FilterTransactionSuccess(
+          {required final List<TransactionItem> transactions}) =
+      _$FilterTransactionSuccessImpl;
+
+  List<TransactionItem> get transactions;
+  @JsonKey(ignore: true)
+  _$$FilterTransactionSuccessImplCopyWith<_$FilterTransactionSuccessImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
