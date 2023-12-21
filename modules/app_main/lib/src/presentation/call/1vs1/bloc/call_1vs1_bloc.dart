@@ -9,7 +9,6 @@ import 'package:app_main/src/data/models/payloads/call/new_call_payload.dart';
 import 'package:app_main/src/data/models/payloads/call/update_call_payload.dart';
 import 'package:app_main/src/domain/entities/call/result_response_model.dart';
 import 'package:app_main/src/domain/usecases/call_usecase.dart';
-import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:stringee_flutter_plugin/stringee_flutter_plugin.dart';
@@ -136,10 +135,13 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
 
     if (_call1vs1Service.isIncomingCall) {
       // Case incoming call
-      log({'where': 'incoming call', 'data': _call1vs1Service.call.customDataFromYourServer}
-          .toString());
+      log({
+        'where': 'incoming call',
+        'data': _call1vs1Service.call.customDataFromYourServer
+      }.toString());
 
-      final participant = await int.tryParse(_call1vs1Service.call.from ?? '')?.let(
+      final participant =
+          await int.tryParse(_call1vs1Service.call.from ?? '')?.let(
         _userUsecase.geSynctUserById,
       );
 
@@ -266,7 +268,8 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
       callState = state.callState.copyWith(
         callId: callEvent.callId,
         hasLocalTrack: callEvent.isLocal || state.callState.hasLocalTrack,
-        hasPaticipantTrack: !callEvent.isLocal || state.callState.hasPaticipantTrack,
+        hasPaticipantTrack:
+            !callEvent.isLocal || state.callState.hasPaticipantTrack,
       );
     } else if (callEvent is ChangeMediaEvent && callEvent.connected) {
       _call1vs1Service.setSpeakerphoneOn(state.callState.isSpeaker);
@@ -280,12 +283,13 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
     );
   }
 
-  Future<void> _onCloseCallEvent(CloseCallEvent event, Emitter<Call1vs1State> emit) async {
+  Future<void> _onCloseCallEvent(
+      CloseCallEvent event, Emitter<Call1vs1State> emit) async {
     await _onListenerCallEvent.cancel();
     if (state.isMakingACall) {
       status = 3;
     } else if (state.isCallClosed) {
-      status =  status == 3 ? 3 : 2;
+      status = status == 3 ? 3 : 2;
     }
     if (state.isIncomingCall) {
       _call1vs1Service.reject();
@@ -302,7 +306,8 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
     ));
   }
 
-  Future<void> _onAnswerCallEvent(AnswerCallEvent event, Emitter<Call1vs1State> emit) async {
+  Future<void> _onAnswerCallEvent(
+      AnswerCallEvent event, Emitter<Call1vs1State> emit) async {
     emit(
       state.copyWith(
         data: state.data.copyWith(
@@ -318,7 +323,8 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
     }
   }
 
-  Future<void> _onToggleMicEvent(ToggleMicEvent event, Emitter<Call1vs1State> emit) async {
+  Future<void> _onToggleMicEvent(
+      ToggleMicEvent event, Emitter<Call1vs1State> emit) async {
     var isMute = state.callState.isMute;
     if (event.muted != null) {
       // case force isMute
@@ -344,7 +350,8 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
     );
   }
 
-  Future<void> _onToggleSpeakerEvent(ToggleSpeakerEvent event, Emitter<Call1vs1State> emit) async {
+  Future<void> _onToggleSpeakerEvent(
+      ToggleSpeakerEvent event, Emitter<Call1vs1State> emit) async {
     var isSpeaker = state.callState.isSpeaker;
     if (event.isSpeaker != null) {
       // case force isSpeaker
@@ -370,7 +377,8 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
     );
   }
 
-  Future<void> _onEnableCameraEvent(EnableCameraEvent event, Emitter<Call1vs1State> emit) async {
+  Future<void> _onEnableCameraEvent(
+      EnableCameraEvent event, Emitter<Call1vs1State> emit) async {
     final enabled = event.enable ?? !state.callState.isEnableCamera;
     emit(
       state.copyWith(
@@ -393,7 +401,8 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
     );
   }
 
-  FutureOr<void> _onSwitchCameraEvent(SwitchCameraEvent event, Emitter<Call1vs1State> emit) {
+  FutureOr<void> _onSwitchCameraEvent(
+      SwitchCameraEvent event, Emitter<Call1vs1State> emit) {
     _call1vs1Service.switchCamera();
   }
 
@@ -411,8 +420,8 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
   Future<void> updateCall() async {
     if (needUpdateCall) {
       await _callUseCase.updateCall(
-          payload:
-              UpdateCallPayload(type: state.callType == CallType.audio ? 1 : 2, status: status),
+          payload: UpdateCallPayload(
+              type: state.callType == CallType.audio ? 1 : 2, status: status),
           callId: response?.result ?? 0);
       needUpdateCall = false;
     }

@@ -11,7 +11,6 @@ import 'package:app_main/src/data/models/responses/confirm_register_ja_response.
 import 'package:app_main/src/data/models/responses/ja_status_response.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
 import 'package:app_main/src/presentation/settings/widget/item_setting_widget.dart';
-import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +18,6 @@ import 'package:imagewidget/imagewidget.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:ui/ui.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../social/my_profile/screens/my_profile_screen.dart';
-import '../upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart';
 
 class SettingScreen extends StatefulWidget {
   static const String routeName = "settings";
@@ -54,9 +50,6 @@ class _SettingScreenState extends State<SettingScreen> {
       backgroundColor: const Color(0XFFF3F8FF),
       body: MultiBlocListener(
         listeners: [
-          BlocListener<GetJAStatusBloc, GetDetailState>(
-            listener: _onListenerGetJAStatusBloc,
-          ),
           BlocListener<UserCubit, UserState>(
             listener: (context, state) {
               if (state is OnboardingFail) {
@@ -113,9 +106,6 @@ class _SettingScreenState extends State<SettingScreen> {
               }
             },
           ),
-          BlocListener<ConfirmRegisterJABloc, GetDetailState>(
-            listener: _onListenerConfirmJABloc,
-          )
         ],
         child: SafeArea(
           child: Container(
@@ -146,14 +136,6 @@ class _SettingScreenState extends State<SettingScreen> {
       showLoading();
     } else if (state is GetDetailDataSuccess<JAStatusResponse>) {
       hideLoading();
-      context.startUpgradeJAFlow(
-        jaStatus: state.data.jaInfo,
-        user: userCubit.currentUser?.copyWith(
-          isJA: _onboarding?.isJA,
-          isPDone: _onboarding?.isPdone ?? false,
-          birthday: _userPublicInfo?.birthday,
-        ),
-      );
     } else if (state is GetDetailError) {
       hideLoading();
       final e = state.error;
@@ -239,7 +221,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   _buildSession1() {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, MyProfileScreen.routeName),
+      onTap: () => {},
       child: Container(
         padding: const EdgeInsets.symmetric(
           vertical: 15,

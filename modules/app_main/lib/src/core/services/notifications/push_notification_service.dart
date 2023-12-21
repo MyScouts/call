@@ -6,7 +6,6 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/chat/chat_room/chat_room_page.dart';
 import 'package:app_main/src/core/services/notifications/call_push_service_handler.dart';
 import 'package:app_main/src/data/models/responses/push_call_message_info.dart';
-import 'package:app_main/src/presentation/live/live_coordinator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -76,7 +75,8 @@ Future<void> setupFlutterNotifications() async {
   channel = const AndroidNotificationChannel(
     'high_importance_channel', // id
     'High Importance Notifications', // title
-    description: 'This channel is used for important notifications.', // description
+    description:
+        'This channel is used for important notifications.', // description
     importance: Importance.high,
     enableLights: true,
   );
@@ -86,10 +86,13 @@ Future<void> setupFlutterNotifications() async {
   await flutterLocalNotificationsPlugin.initialize(
     const InitializationSettings(
       android: AndroidInitializationSettings('@drawable/icon_notify'),
-      iOS: DarwinInitializationSettings(onDidReceiveLocalNotification: _onDidReceiveLocalNotification),
+      iOS: DarwinInitializationSettings(
+          onDidReceiveLocalNotification: _onDidReceiveLocalNotification),
     ),
-    onDidReceiveNotificationResponse: _onDidReceiveBackgroundNotificationResponse,
-    onDidReceiveBackgroundNotificationResponse: onDidReceiveBackgroundNotificationResponse,
+    onDidReceiveNotificationResponse:
+        _onDidReceiveBackgroundNotificationResponse,
+    onDidReceiveBackgroundNotificationResponse:
+        onDidReceiveBackgroundNotificationResponse,
   );
 
   /// Create an Android Notification Channel.
@@ -97,7 +100,8 @@ Future<void> setupFlutterNotifications() async {
   /// We use this channel in the `AndroidManifest.xml` file to override the
   /// default FCM channel to enable heads up notifications.
   await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
 
   /// Update the iOS foreground notification presentation options to allow
@@ -111,7 +115,8 @@ Future<void> setupFlutterNotifications() async {
 }
 
 @pragma('vm:entry-point')
-void _onDidReceiveBackgroundNotificationResponse(NotificationResponse notificationResponse) {
+void _onDidReceiveBackgroundNotificationResponse(
+    NotificationResponse notificationResponse) {
   debugPrint('[_onDidReceiveBackgroundNotificationResponse]: '
       '${notificationResponse.payload}');
   if (notificationResponse.payload?.isNotEmpty == true) {
@@ -125,7 +130,8 @@ void _onDidReceiveBackgroundNotificationResponse(NotificationResponse notificati
 }
 
 @pragma('vm:entry-point')
-void onDidReceiveBackgroundNotificationResponse(NotificationResponse notificationResponse) {
+void onDidReceiveBackgroundNotificationResponse(
+    NotificationResponse notificationResponse) {
   debugPrint('[onDidReceiveBackgroundNotificationResponse]: '
       '${notificationResponse.payload}');
 }
@@ -145,15 +151,16 @@ enum MessageTypeFB {
 }
 
 @pragma('vm:entry-point')
-void _onDidReceiveLocalNotification(int id, String? title, String? body, String? payload) {}
+void _onDidReceiveLocalNotification(
+    int id, String? title, String? body, String? payload) {}
 
-const AndroidNotificationDetails _androidNotificationDetails = AndroidNotificationDetails(
-    'channelId', 'channelName',
-    channelDescription: 'channelDescription',
-    playSound: true,
-    priority: Priority.high,
-    importance: Importance.high,
-    fullScreenIntent: true);
+const AndroidNotificationDetails _androidNotificationDetails =
+    AndroidNotificationDetails('channelId', 'channelName',
+        channelDescription: 'channelDescription',
+        playSound: true,
+        priority: Priority.high,
+        importance: Importance.high,
+        fullScreenIntent: true);
 
 void showFlutterNotification(RemoteMessage message) {
   // if (isIOS) {
@@ -162,7 +169,8 @@ void showFlutterNotification(RemoteMessage message) {
 
   final RemoteNotification? notification = message.notification;
   final payload = message.data;
-  final type = MessageTypeFB.values.firstWhereOrNull((element) => element.type == payload['type']);
+  final type = MessageTypeFB.values
+      .firstWhereOrNull((element) => element.type == payload['type']);
   debugPrint('[FCM]: forground $type');
 
   final title = notification?.title ?? 'Tin nhắn mới';
@@ -174,8 +182,6 @@ void showFlutterNotification(RemoteMessage message) {
       return;
     }
     final liveData = jsonDecode(payload['data']);
-    AppCoordinator.rootNavigator.currentContext!
-        .showInviteDialog(title: body, liveId: liveData['liveId'], liveType: liveData['liveType']);
     return;
   }
   if (type == MessageTypeFB.liveCreated) {
@@ -183,7 +189,7 @@ void showFlutterNotification(RemoteMessage message) {
       return;
     }
   }
-  if(MyNavigatorObserver.listRoute.contains(ChatRoomPage.routeName)) {
+  if (MyNavigatorObserver.listRoute.contains(ChatRoomPage.routeName)) {
     return;
   }
   flutterLocalNotificationsPlugin.show(

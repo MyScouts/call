@@ -1,12 +1,8 @@
 import 'package:app_main/src/presentation/chat/conversation/conversation_page.dart';
 import 'package:app_main/src/presentation/call/phone_book/phone_book_page.dart';
-import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
-import 'package:app_main/src/presentation/social/my_profile/screens/my_profile_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:equatable/equatable.dart';
 import 'package:staggered_reorderable/staggered_reorderable.dart';
-
-import '../live/presentation/live_home/live_home_screen.dart';
 
 enum DashboardType { community, personal, ecommerce }
 
@@ -175,10 +171,10 @@ final Map<String, DashBoardItem> mapItems = {
     height: 2,
   ),
   'ic_live': DashBoardIconItem(
-      id: 'ic_live',
-      title: 'Live',
-      backgroundImage: IconAppConstants.icLive,
-      path: LiveHomeScreen.routeName),
+    id: 'ic_live',
+    title: 'Live',
+    backgroundImage: IconAppConstants.icLive,
+  ),
   'ic_wallet': DashBoardIconItem(
     id: 'ic_wallet',
     title: 'Ví',
@@ -188,13 +184,11 @@ final Map<String, DashBoardItem> mapItems = {
     id: 'ic_qr',
     title: 'QR Code',
     backgroundImage: IconAppConstants.icQr,
-    path: ScanQrCodeScanScreen.routeName,
   ),
   'ic_scan': DashBoardIconItem(
     id: 'ic_scan',
     title: 'Quét QR',
     backgroundImage: IconAppConstants.icScan,
-    path: ScanQrCodeScanScreen.routeName,
   ),
   'ic_group': DashBoardIconItem(
     id: 'ic_group',
@@ -227,7 +221,6 @@ final communityDefault = {
     id: 'ic_live',
     title: 'Live',
     backgroundImage: IconAppConstants.icLive,
-    path: LiveHomeScreen.routeName,
   ),
   'ic_wallet': DashBoardIconItem(
     id: 'ic_wallet',
@@ -238,13 +231,11 @@ final communityDefault = {
     id: 'ic_qr',
     title: 'QR Code',
     backgroundImage: IconAppConstants.icQr,
-    path: ScanQrCodeScanScreen.routeName,
   ),
   'ic_scan': DashBoardIconItem(
     id: 'ic_scan',
     title: 'Quét QR',
     backgroundImage: IconAppConstants.icScan,
-    path: ScanQrCodeScanScreen.routeName,
   ),
   'ic_group': DashBoardIconItem(
     id: 'ic_group',
@@ -282,7 +273,6 @@ final personalDefault = {
     id: 'ic_qr',
     title: 'QR Code',
     backgroundImage: IconAppConstants.icQr,
-    path: ScanQrCodeScanScreen.routeName,
   ),
   'ic_call': DashBoardIconItem(
     id: 'ic_call',
@@ -301,7 +291,6 @@ final personalDefault = {
     id: 'ic_profile',
     title: 'Profile',
     backgroundImage: IconAppConstants.icProfile,
-    path: MyProfileScreen.routeName,
   ),
   // 'ic_setting': DashBoardIconItem(
   //   id: 'ic_setting',
@@ -325,13 +314,11 @@ final personalDefault = {
     id: 'ic_qr',
     title: 'QR Code',
     backgroundImage: IconAppConstants.icQr,
-    path: ScanQrCodeScanScreen.routeName,
   ),
   'ic_scan': DashBoardIconItem(
     id: 'ic_scan',
     title: 'Quét QR',
     backgroundImage: IconAppConstants.icScan,
-    path: ScanQrCodeScanScreen.routeName,
   ),
 };
 
@@ -354,7 +341,6 @@ final eCommerceDefault = {
     id: 'ic_profile',
     title: 'Profile',
     backgroundImage: IconAppConstants.icProfile,
-    path: MyProfileScreen.routeName,
   ),
   "ic_marShop": DashBoardIconItem(
     id: 'ic_marShop',

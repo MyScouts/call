@@ -1,12 +1,9 @@
 //import 'dart:developer' as developer;
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
-import 'package:app_main/src/presentation/call/widgets/avatar_caller_widget.dart';
 import 'package:app_main/src/presentation/call/widgets/tag_widget.dart';
-import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:imagewidget/imagewidget.dart';
 import 'package:ui/ui.dart';
 
 import 'tabs/all_friends/all_friends_tab.dart';
@@ -41,7 +38,7 @@ class PhoneBookPageState extends State<PhoneBookPage> {
         child: Column(
           children: [
             GestureDetector(
-              onTap: () => context.startDiary(userId: _authInfo.id.toString()),
+              onTap: () => {},
               child: Container(
                 padding: const EdgeInsets.symmetric(
                   vertical: 12,

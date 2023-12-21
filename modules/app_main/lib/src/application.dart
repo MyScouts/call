@@ -8,7 +8,6 @@ import 'package:app_main/src/di/di.dart';
 import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_cubit.dart';
 import 'package:app_main/src/presentation/chat/conversation/cubit/conversation_cubit.dart';
 import 'package:app_main/src/presentation/chat/conversation/conversation_page.dart';
-import 'package:app_main/src/presentation/live/presentation/pip/pip_handler.dart';
 import 'package:app_main/src/presentation/routes.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -93,12 +92,6 @@ class _ApplicationState extends State<Application>
                 child: Stack(
                   children: [
                     toastBuilder(context, AppScaffold(child: child!)),
-                    Obx(() {
-                      if (PipHandler.showPip.value) {
-                        return PipHandler.pipView;
-                      }
-                      return const SizedBox.shrink();
-                    }),
                   ],
                 ),
               );

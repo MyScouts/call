@@ -7,7 +7,6 @@ import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_cubit.d
 import 'package:app_main/src/presentation/chat/chat_room/cubit/chat_room_state.dart';
 import 'package:app_main/src/presentation/chat/widgets/avatar_chat_widget.dart';
 import 'package:app_main/src/presentation/chat/widgets/message_widget.dart';
-import 'package:app_main/src/presentation/social/profile/diary_coordinator.dart';
 import 'package:design_system/design_system.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +38,8 @@ class ChatRoomPageState extends State<ChatRoomPage> {
 
   @override
   void initState() {
-    _cubit.init(conversationId: widget.conversationId, memberId: widget.memberId);
+    _cubit.init(
+        conversationId: widget.conversationId, memberId: widget.memberId);
     scrollController.addListener(() {
       if (scrollController.hasClients) {
         if (scrollController.offset > MediaQuery.of(context).size.height / 3) {
@@ -72,7 +72,8 @@ class ChatRoomPageState extends State<ChatRoomPage> {
       bloc: _cubit,
       builder: (_, state) {
         return state.when(
-          (messages, conversation, friendStatus, myType, page, canLoadMore, loadMoreError) {
+          (messages, conversation, friendStatus, myType, page, canLoadMore,
+              loadMoreError) {
             return GestureDetector(
               onTap: () {
                 setState(() {
@@ -108,13 +109,7 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                   isClose: false,
                   backgroundColor: AppColors.white,
                   titleWidget: InkWell(
-                    onTap: conversation.type == 1
-                        ? () {
-                            context.startDiary(
-                                userId: conversation.membersNotMe.first.member.id
-                                    .toString());
-                          }
-                        : null,
+                    onTap: null,
                     child: Row(
                       children: [
                         AvatarChatWidget(
@@ -129,7 +124,8 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                             children: [
                               Text(
                                 conversation.type == 1
-                                    ? conversation.membersNotMe.first.member.displayName ??
+                                    ? conversation.membersNotMe.first.member
+                                            .displayName ??
                                         ''
                                     : conversation.name ?? '',
                                 maxLines: 1,
@@ -309,7 +305,8 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                       kSpacingWidth4,
                                       Text(
                                         'Đổi tên nhóm',
-                                        style: context.text.bodyMedium?.copyWith(
+                                        style:
+                                            context.text.bodyMedium?.copyWith(
                                           color: AppColors.black,
                                         ),
                                       ),
@@ -353,7 +350,8 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                       kSpacingWidth4,
                                       Text(
                                         'Báo cáo',
-                                        style: context.text.bodyMedium?.copyWith(
+                                        style:
+                                            context.text.bodyMedium?.copyWith(
                                           color: AppColors.black,
                                         ),
                                       ),
@@ -376,7 +374,8 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                       kSpacingWidth4,
                                       Text(
                                         'Chặn thành viên',
-                                        style: context.text.bodyMedium?.copyWith(
+                                        style:
+                                            context.text.bodyMedium?.copyWith(
                                           color: AppColors.black,
                                         ),
                                       ),
@@ -440,7 +439,8 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                         child: ListView.separated(
                             controller: scrollController,
                             addAutomaticKeepAlives: true,
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 12),
                             reverse: true,
                             itemBuilder: (_, index) {
                               if (index == messages.length && canLoadMore) {
@@ -459,25 +459,31 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                               }
                             },
                             separatorBuilder: (_, __) => kSpacingHeight8,
-                            itemCount: canLoadMore ? messages.length + 1 : messages.length),
+                            itemCount: canLoadMore
+                                ? messages.length + 1
+                                : messages.length),
                       )
                     else
                       kSpacer,
                     if (friendStatus != null &&
-                        (friendStatus.relation.isBlocked || friendStatus.relation.isBlocking))
+                        (friendStatus.relation.isBlocked ||
+                            friendStatus.relation.isBlocking))
                       Center(
                         child: Container(
                           padding: const EdgeInsets.all(8),
                           margin: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                              color: AppColors.white, borderRadius: BorderRadius.circular(8)),
+                              color: AppColors.white,
+                              borderRadius: BorderRadius.circular(8)),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               if (friendStatus.relation.isBlocking) ...[
-                                Text('Bạn đã chặn ', style: context.text.bodyMedium),
+                                Text('Bạn đã chặn ',
+                                    style: context.text.bodyMedium),
                                 Text(
-                                  conversation.membersNotMe.first.member.displayName ??
+                                  conversation.membersNotMe.first.member
+                                          .displayName ??
                                       '',
                                   style: context.text.bodyMedium?.copyWith(
                                     fontWeight: FontWeight.w600,
@@ -485,13 +491,15 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                 ),
                               ] else ...[
                                 Text(
-                                  conversation.membersNotMe.first.member.displayName ??
+                                  conversation.membersNotMe.first.member
+                                          .displayName ??
                                       '',
                                   style: context.text.bodyMedium?.copyWith(
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                                Text(' đã chặn tin nhắn', style: context.text.bodyMedium),
+                                Text(' đã chặn tin nhắn',
+                                    style: context.text.bodyMedium),
                               ]
                             ],
                           ),
@@ -521,14 +529,15 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                       });
                                     }
                                     _cubit.sendImage().then((value) {
-                                      if(value != null && value.isNotEmpty) {
+                                      if (value != null && value.isNotEmpty) {
                                         showError(value);
                                       }
                                     });
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(8),
-                                    child: ImageWidget(IconAppConstants.icImage),
+                                    child:
+                                        ImageWidget(IconAppConstants.icImage),
                                   ),
                                 ),
                               ),
@@ -541,14 +550,16 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                   decoration: InputDecoration(
                                     fillColor: AppColors.gray50,
                                     hintText: 'Soạn tin nhắn',
-                                    contentPadding:
-                                        const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 12),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(40),
-                                      borderSide: const BorderSide(color: Colors.white),
+                                      borderSide:
+                                          const BorderSide(color: Colors.white),
                                     ),
                                     enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(color: Colors.white),
+                                      borderSide:
+                                          const BorderSide(color: Colors.white),
                                       borderRadius: BorderRadius.circular(40),
                                     ),
                                     suffixIconConstraints: const BoxConstraints(
@@ -592,7 +603,8 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                   },
                                   child: const Padding(
                                     padding: EdgeInsets.all(8),
-                                    child: Icon(Icons.send_rounded, color: AppColors.blueEdit),
+                                    child: Icon(Icons.send_rounded,
+                                        color: AppColors.blueEdit),
                                   ),
                                 ),
                               ),
@@ -611,7 +623,8 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                     columns: 7,
                                     // Issue: https://github.com/flutter/flutter/issues/28894
                                     emojiSizeMax: 32 *
-                                        (foundation.defaultTargetPlatform == TargetPlatform.iOS
+                                        (foundation.defaultTargetPlatform ==
+                                                TargetPlatform.iOS
                                             ? 1.30
                                             : 1.0),
                                     verticalSpacing: 0,
@@ -631,11 +644,13 @@ class ChatRoomPageState extends State<ChatRoomPage> {
                                     replaceEmojiOnLimitExceed: false,
                                     noRecents: const Text(
                                       'No Recents',
-                                      style: TextStyle(fontSize: 20, color: Colors.black26),
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.black26),
                                       textAlign: TextAlign.center,
                                     ),
                                     loadingIndicator: const SizedBox.shrink(),
-                                    tabIndicatorAnimDuration: kTabScrollDuration,
+                                    tabIndicatorAnimDuration:
+                                        kTabScrollDuration,
                                     categoryIcons: const CategoryIcons(),
                                     buttonMode: ButtonMode.MATERIAL,
                                     checkPlatformCompatibility: true,
@@ -745,7 +760,8 @@ class ChatRoomPageState extends State<ChatRoomPage> {
       context: context,
       builder: (_) => ChatDialog(
         title: 'Xóa cuộc trò chuyện',
-        content: 'Cuộc trò chuyện của bạn sẽ được xóa vĩnh viễn và không thể khôi phục',
+        content:
+            'Cuộc trò chuyện của bạn sẽ được xóa vĩnh viễn và không thể khôi phục',
         actionTitle: 'Xóa',
         onAction: () {
           _cubit.deleteConversation().then(
@@ -774,7 +790,8 @@ class ChatRoomPageState extends State<ChatRoomPage> {
       context: context,
       builder: (_) => ChatDialog(
         title: 'Chặn ${conversation.membersNotMe.first.member.displayName}',
-        content: '${conversation.membersNotMe.first.member.displayName} sẽ không thể :\n\n'
+        content:
+            '${conversation.membersNotMe.first.member.displayName} sẽ không thể :\n\n'
             ' • Xem bài viết trên trang cá nhân của bạn\n'
             ' • Nhắn tin cho bạn\n'
             ' • Thêm bạn làm bạn bè\n'
@@ -783,7 +800,10 @@ class ChatRoomPageState extends State<ChatRoomPage> {
         actionColor: AppColors.blueEdit,
         contentAlign: TextAlign.start,
         onAction: () {
-          _cubit.blockUser(widget.memberId ?? conversation.membersNotMe.first.member.id).then(
+          _cubit
+              .blockUser(
+                  widget.memberId ?? conversation.membersNotMe.first.member.id)
+              .then(
                 (value) => Navigator.pop(context),
               );
         },
@@ -824,7 +844,8 @@ class ChatRoomPageState extends State<ChatRoomPage> {
         ),
         onAction: () {
           if (reportController.text.isNotEmpty) {
-            _cubit.reportUser(widget.memberId ?? conversation.membersNotMe.first.member.id,
+            _cubit.reportUser(
+                widget.memberId ?? conversation.membersNotMe.first.member.id,
                 reportController.text);
           }
         },

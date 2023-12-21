@@ -13,7 +13,6 @@ import '../../data/models/responses/confirm_response.dart';
 import '../../data/models/responses/group_request_response.dart';
 import '../../data/models/responses/leave_team_status_response.dart';
 import '../../data/models/responses/open_group_request_response.dart';
-import '../../presentation/community/community_constants.dart';
 import '../repository/community_repository.dart';
 
 @injectable
@@ -94,15 +93,6 @@ class CommunityUsecase {
     final result = await _communityRepository.getBossGroupStatus(id);
 
     return result;
-  }
-
-  Future<ConfirmResponse> relinquishBossRole(
-      String id, CommunityType type) async {
-    if (type == CommunityType.group) {
-      return await _communityRepository.relinquishBossGroup(id);
-    } else {
-      return await _communityRepository.relinquishBossTeam(id);
-    }
   }
 
   Future<BossTeamRelinquishStatusResponse> getBossTeamRelinquishStatus(

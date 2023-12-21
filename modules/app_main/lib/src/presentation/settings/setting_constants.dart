@@ -2,15 +2,9 @@ import 'package:app_core/app_core.dart';
 import 'package:app_main/src/blocs/app/app_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
-import 'package:app_main/src/presentation/marshop/marshop_coordinator.dart';
-import 'package:app_main/src/presentation/profile/user_profile_screen.dart';
-import 'package:app_main/src/presentation/protector/manage_protector_screen.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
-import 'package:app_main/src/presentation/upgrade_account/upgrade_account_coordinator.dart';
-import 'package:app_main/src/presentation/upgrade_account/upgrade_ja/upgrade_agree_policy.bloc.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
-import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 
 class Setting {
   final String text;
@@ -38,16 +32,13 @@ class Setting {
           Setting(
             text: "Cài đặt tài khoản",
             icon: IconAppConstants.icSettingAccount,
-            onPressed: () =>
-                Navigator.of(context).pushNamed(UserProfileScreen.routerName),
+            onPressed: () {},
           ),
           if ((user?.getAge ?? 0) >= 18)
             Setting(
               text: "Quản lý người bảo hộ",
               icon: IconAppConstants.icCare,
-              onPressed: () {
-                Navigator.pushNamed(context, ManageProtectorScreen.routerName);
-              },
+              onPressed: () {},
             ),
           Setting(
             text: "Tin nhắn office",
@@ -58,25 +49,16 @@ class Setting {
           Setting(
             text: "Team",
             icon: Assets.icons_ic_team_png.path,
-            onPressed: () => context.startTeam(),
+            onPressed: () => {},
           ),
           Setting(
               text: "P-Done",
               icon: IconAppConstants.icUpgrade,
-              onPressed: () {
-                if (onboarding?.isPdone ?? false) {
-                  context.startPDoneInformation().then((value) => onUpdate());
-                } else {
-                  context.startUpgradePDone().then((value) => onUpdate());
-                }
-              }),
+              onPressed: () {}),
           Setting(
             text: "JA",
             icon: IconAppConstants.icJA,
-            onPressed: () {
-              final bloc = context.read<GetJAStatusBloc>();
-              bloc.add(GetDetailDataEvent());
-            },
+            onPressed: () {},
           ),
           Setting(
             text: "Khách hàng thường xuyên - Market Home",
@@ -84,9 +66,7 @@ class Setting {
             onPressed: () {
               if (onboarding != null && onboarding.isMarshopCustomer) {
                 context.showToastMessage("Bạn đã là Khách hàng thường xuyên");
-              } else {
-                context.startRegisterCustomer();
-              }
+              } else {}
             },
           ),
           Setting(
@@ -95,9 +75,7 @@ class Setting {
             onPressed: () {
               if (onboarding != null && onboarding.isMarshopOwner) {
                 context.showToastMessage("Bạn đã là MarShop");
-              } else {
-                context.startRegisterMarshop();
-              }
+              } else {}
             },
           ),
         ],

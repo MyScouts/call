@@ -6,9 +6,6 @@ import 'package:app_main/src/presentation/dashboard/dashboard_constants.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/dashboard_v2/widget/dash_ecom_leading.dart';
 import 'package:app_main/src/presentation/dashboard_v2/widget/dash_ps_promotion.dart';
-import 'package:app_main/src/presentation/live/presentation/live_home/live_home_screen.dart';
-import 'package:app_main/src/presentation/qr_code/scan_qr_code_screen.dart';
-import 'package:app_main/src/presentation/social/my_profile/screens/my_profile_screen.dart';
 import 'package:design_system/design_system.dart';
 import 'package:design_system/generated/assets.gen.dart';
 import 'package:flutter/material.dart';
@@ -225,8 +222,7 @@ class DashboardCommunity extends DashboardBaseV2 {
                 const SizedBox(width: 5),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () =>
-                        Navigator.pushNamed(context, LiveHomeScreen.routeName),
+                    onTap: () => {},
                   ),
                 ),
               ],
@@ -333,7 +329,6 @@ final personalItems = <DashBoardItem>[
     id: 'ic_qr',
     title: 'QR Code',
     backgroundImage: IconAppConstants.icQr,
-    path: ScanQrCodeScanScreen.routeName,
   ),
   DashBoardIconItem(
     id: 'ic_wallet',
@@ -344,7 +339,6 @@ final personalItems = <DashBoardItem>[
     id: 'ic_profile',
     title: 'Profile',
     backgroundImage: IconAppConstants.icProfile,
-    path: MyProfileScreen.routeName,
   ),
   DashBoardIconItem(
     id: 'ic_save',

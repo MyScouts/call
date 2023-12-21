@@ -3,7 +3,6 @@ import 'package:app_main/app_main.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/extensions/list_extension.dart';
 import 'package:app_main/src/presentation/authentication/authentication_coordinator.dart';
-import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard_coordinator.dart';
 import 'package:app_main/src/presentation/notification/state/notification_bloc.dart';
 import 'package:app_main/src/presentation/settings/setting_coordinator.dart';
@@ -45,25 +44,20 @@ class DashBoardV2Header extends StatelessWidget {
                   return AspectRatio(
                     aspectRatio: 1,
                     child: GestureDetector(
-                      onTap: () {
-                        if (!authenticate) {
-                          context.requiredLogin();
-                          return;
-                        }
-                        context.startSetting();
-                      },
-                      behavior: HitTestBehavior.opaque,
-                      child: CircleNetworkImage(
-                        url:
-                            context.read<UserCubit>().currentUser?.avatar ?? '',
-                        size: 40,
-                        defaultImage: ImageWidget(
+                        onTap: () {
+                          if (!authenticate) {
+                            context.requiredLogin();
+                            return;
+                          }
+                          context.startSetting();
+                        },
+                        behavior: HitTestBehavior.opaque,
+                        child: ImageWidget(
                           ImageConstants.defaultUserAvatar,
                           borderRadius: 100,
+                          width: 30,
                           fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
+                        )),
                   );
                 },
               ),
@@ -74,7 +68,6 @@ class DashBoardV2Header extends StatelessWidget {
                       context.requiredLogin();
                       return;
                     }
-                    context.startSearch();
                   },
                   behavior: HitTestBehavior.opaque,
                   child: Container(

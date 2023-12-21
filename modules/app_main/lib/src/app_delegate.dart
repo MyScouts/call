@@ -7,8 +7,6 @@ import 'package:app_main/src/blocs/marshop/marshop_cubit.dart';
 import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/domain/usecases/user_share_preferences_usecase.dart';
 import 'package:app_main/src/presentation/authentication/splash/splash_screen.dart';
-import 'package:app_main/src/presentation/live/presentation/channel/state/live_channel_controller.dart';
-import 'package:app_main/src/presentation/live/presentation/live_message/state/live_message_bloc.dart';
 import 'package:app_main/src/presentation/shared/user/bloc/user_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -99,8 +97,6 @@ class AppDelegate extends IAppDelegate {
         BlocProvider<MarshopCubit>(create: (_) => injector.get()),
         BlocProvider<AuthCubit>(create: (_) => injector.get()),
         BlocProvider<AppCubit>(create: (_) => injector.get()),
-        Provider<LiveChannelController>(create: (_) => getIt()),
-        BlocProvider<LiveMessageBloc>(create: (_) => getIt()),
         BlocProvider<StringeeBloc>(create: (context) => injector.get()),
       ],
       savedThemeMode: savedThemeMode,

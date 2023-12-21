@@ -1,6 +1,6 @@
 import 'package:app_main/src/domain/entities/notification/notification_data.dart';
-import 'package:app_main/src/presentation/community/widgets/circle_image.dart';
 import 'package:app_main/src/presentation/notification/notification_builder.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -59,9 +59,8 @@ class NotificationCard extends StatelessWidget {
                     if ((data.metadata?['user']?['avatar'] ?? '')
                         .trim()
                         .isNotEmpty)
-                      CircleNetworkImage(
-                        url: data.metadata?['user']?['avatar'] ?? '',
-                        size: 19 * 2,
+                      CachedNetworkImage(
+                        imageUrl: data.metadata?['user']?['avatar'] ?? '',
                       ),
                     const SizedBox(width: 8),
                     Expanded(
