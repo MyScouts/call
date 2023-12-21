@@ -128,8 +128,10 @@ class _LiveBottomSheetState extends State<LiveBottomSheet> {
                       child: Column(
                         children: [
                           Obx(() {
-                            final viewerCount = widget.controller.members.where(
-                                (p0) => p0.liveID == widget.controller.info.id);
+                            final viewerCount = widget.controller.members
+                                .where((p0) =>
+                                    p0.liveID == widget.controller.info.id)
+                                .length;
                             final color =
                                 liveBottomController.tabIndex.value == index
                                     ? const Color(0xff4B84F7)

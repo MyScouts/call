@@ -86,7 +86,7 @@ class BoxState extends StatefulWidget {
 }
 
 class _BoxStateState extends State<BoxState> {
-  int begin = 0;
+  int begin = 60;
   int end = 0;
 
   @override
@@ -109,6 +109,9 @@ class _BoxStateState extends State<BoxState> {
 
   @override
   Widget build(BuildContext context) {
+    if(begin == end) {
+      return widget.builder(begin, true);
+    }
     return AnimatedSizeBuilder(
       key: widget.key,
       begin: begin,
