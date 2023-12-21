@@ -25,9 +25,9 @@ class PolicyBossGroupWidget extends StatelessWidget {
         children: [
           TextSpan(
             text: 'Quy định chung về Boss Group và Boss Team',
-            style: TextStyle(
+            style: const TextStyle(
               decoration: TextDecoration.underline,
-              color: isAccepted == true ? AppColors.blue31 : Colors.grey,
+              color: AppColors.blue31,
             ),
             recognizer: TapGestureRecognizer()
               ..onTap =

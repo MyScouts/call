@@ -43,6 +43,13 @@ class _CreateOpenGroupRequestSuccessDialogState
                 child: const Icon(Icons.close),
               ),
             ),
+            const SizedBox(height: 10),
+            const CircleAvatar(
+              radius: 38,
+              backgroundColor: Color(0xFF00A65F),
+              child: Icon(Icons.check, color: Colors.white, size: 26),
+            ),
+            const SizedBox(height: 25),
             Text(
               'Đã gửi thành công yêu cầu',
               style: context.text.titleMedium?.copyWith(
@@ -50,12 +57,6 @@ class _CreateOpenGroupRequestSuccessDialogState
                 fontSize: 16,
                 height: 24 / 16,
               ),
-            ),
-            const SizedBox(height: 25),
-            const CircleAvatar(
-              radius: 38,
-              backgroundColor: Color(0xFF00A65F),
-              child: Icon(Icons.check, color: Colors.white, size: 26),
             ),
             const SizedBox(height: 15),
             Text(

@@ -20,7 +20,6 @@ class GroupDetailScreen extends StatefulWidget {
   final String id;
 
   static const String routeName = '/groups';
-  static final myId = injector<UserCubit>().currentUser?.id;
 
   @override
   State<GroupDetailScreen> createState() => _GroupDetailScreenState();
@@ -129,10 +128,13 @@ class _TeamCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isBossTeam = GroupDetailScreen.myId == team.boss?.id;
+
+    final myId = injector<UserCubit>().currentUser?.id;
+
+    bool isBossTeam = myId == team.boss?.id;
     final bloc = context.watch<GroupDetailBloc>();
     final group = (bloc.state as FetchGroupDetailSuccess).group;
-    bool isBossGroup = GroupDetailScreen.myId == group.boss?.id;
+    bool isBossGroup = myId == group.boss?.id;
 
     return GestureDetector(
       onTap: () => isBossGroup || isBossTeam

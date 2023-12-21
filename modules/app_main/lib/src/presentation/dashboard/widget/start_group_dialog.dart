@@ -11,6 +11,16 @@ import 'package:flutter/material.dart';
 import 'package:mobilehub_bloc/mobilehub_bloc.dart';
 import 'package:wallet/core/core.dart';
 
+enum OpenGroupStatus {
+  pending(0),
+  approved(1),
+  rejected(10);
+
+  final int value;
+
+  const OpenGroupStatus(this.value);
+}
+
 class StartGroupDialog extends StatefulWidget {
   const StartGroupDialog({super.key});
 
@@ -52,7 +62,9 @@ class _StartGroupDialogState extends State<StartGroupDialog> {
       builder: (context, state) {
         if (state is GetDetailDataSuccess<OpenGroupRequestResponse>) {
           final request = state.data.request;
-          if (request == null) {
+          if (request == null ||
+              (request != null &&
+                  request.status != OpenGroupStatus.approved.value)) {
             context.read<GetMyGroupsBloc>().add(GetListDataEvent());
             return BlocBuilder<GetMyGroupsBloc, GetListState>(
               buildWhen: (pre, cur) => cur is GetListDataSuccess,

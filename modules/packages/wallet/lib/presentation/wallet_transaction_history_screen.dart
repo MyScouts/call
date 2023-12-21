@@ -252,7 +252,7 @@ class _WalletTransactionHistoryScreenState
                       children: [
                         Expanded(
                           child: Text(
-                            _selectedFromDate.text(),
+                            _selectedFromDate.formatDate(),
                             style: context.text.titleMedium?.copyWith(
                               color: const Color(0xFF101B28),
                               fontWeight: FontWeight.w600,
@@ -320,7 +320,7 @@ class _WalletTransactionHistoryScreenState
                       children: [
                         Expanded(
                           child: Text(
-                            _selectedToDate.text(),
+                            _selectedToDate.formatDate(),
                             style: context.text.titleMedium?.copyWith(
                               color: const Color(0xFF101B28),
                               fontWeight: FontWeight.w600,

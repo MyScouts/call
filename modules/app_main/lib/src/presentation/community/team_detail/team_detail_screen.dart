@@ -340,25 +340,28 @@ class _TeamDetailScreenState extends State<TeamDetailScreen>
   // }
 
   Widget _introductionWidget(Team? team) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Lời giới thiệu',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          team?.introduction ?? '',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-              ),
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Lời giới thiệu',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            team?.introduction ?? '',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
+          )
+        ],
+      ),
     );
   }
 
