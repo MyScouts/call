@@ -62,9 +62,7 @@ class _StartGroupDialogState extends State<StartGroupDialog> {
       builder: (context, state) {
         if (state is GetDetailDataSuccess<OpenGroupRequestResponse>) {
           final request = state.data.request;
-          if (request == null ||
-              (request != null &&
-                  request.status != OpenGroupStatus.approved.value)) {
+          if (request == null || request.status == OpenGroupStatus.rejected.value) {
             context.read<GetMyGroupsBloc>().add(GetListDataEvent());
             return BlocBuilder<GetMyGroupsBloc, GetListState>(
               buildWhen: (pre, cur) => cur is GetListDataSuccess,
