@@ -120,10 +120,7 @@ class IOSCallManager extends CallManager {
         ),
         call.isVideoCall ? CallType.video : CallType.audio,
       );
-      callInstance = IOSCallInstance(
-        bloc,
-        _genUUID(),
-      );
+
 
       if (WidgetsBinding.instance.lifecycleState != AppLifecycleState.resumed) {
         Future.microtask(() async {
@@ -132,10 +129,12 @@ class IOSCallManager extends CallManager {
               await userRepository.getUserById(id: int.parse(call.from!));
 
           // Show callkit
-          await callKeep.displayIncomingCall(
-            callInstance!.uuid,
-            call.from!,
-            localizedCallerName: caller?.displayName ?? call.fromAlias ?? '',
+
+          var uuid = await callKeep.reportCallIfNeeded(call.id!, call.fromAlias ?? call.from ?? "");
+
+          callInstance = IOSCallInstance(
+            bloc,
+            uuid
           );
         });
       }
@@ -202,10 +201,6 @@ class IOSCallManager extends CallManager {
         ),
         call.isVideoCall ? CallType.video : CallType.audio,
       );
-      callInstance = IOSCallInstance(
-        bloc,
-        _genUUID(),
-      );
 
       if (WidgetsBinding.instance.lifecycleState != AppLifecycleState.resumed) {
         Future.microtask(() async {
@@ -213,11 +208,11 @@ class IOSCallManager extends CallManager {
           final caller =
           await userRepository.getUserById(id: int.parse(call.from!));
 
-          // Show callkit
-          await callKeep.displayIncomingCall(
-            callInstance!.uuid,
-            call.from!,
-            localizedCallerName: caller?.displayName ?? call.fromAlias ?? '',
+          var uuid = await callKeep.reportCallIfNeeded(call.id!, call.fromAlias ?? call.from ?? "");
+
+          callInstance = IOSCallInstance(
+              bloc,
+              uuid
           );
         });
       }
@@ -420,30 +415,13 @@ class IOSCallManager extends CallManager {
     stringeeLog(
         '''CallKeepPushKitReceivedNotification, callId: ${event.callId}, callStatus: ${event.callStatus}, uuid: ${event.uuid}, serial: ${event.serial},''');
     final callId = event.callId!;
-    final callStatus = event.callStatus;
     final uuid = event.uuid;
     final serial = event.serial;
 
     if (uuid == null) {
       return;
     }
-
-    // call khong hop le => can end o day
-    if (callId.isEmpty || callStatus != 'started') {
-      _fakeCallUuids.add(uuid);
-      endFakeCall(uuid);
-      return;
-    }
-
-    // call da duoc xu ly roi thi ko xu ly lai
-    // => can end callkit da duoc show ben native
-    if (checkIfCallIsHandledOrNot(callId, serial)) {
-      // _callKit.endCall(uuid);
-      await callKeep.endCall(uuid);
-      removeCallInstanceFromHandledCallList(callId, serial);
-      deleteCallInstanceIfNeed();
-      return;
-    }
+    
 
     // Chưa có sync call (Trường hợp cuộc gọi mới)
     // => tạo sync call và lưu lại thông tin
