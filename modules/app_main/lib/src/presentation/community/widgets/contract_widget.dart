@@ -25,9 +25,9 @@ class ContractWidget extends StatelessWidget {
         children: [
           TextSpan(
             text: 'Hợp đồng Boss Group',
-            style: TextStyle(
+            style: const TextStyle(
               decoration: TextDecoration.underline,
-              color: isAccepted == true ? AppColors.blue31 : Colors.grey,
+              color: AppColors.blue31,
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () => context.startContractView(
