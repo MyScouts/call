@@ -216,7 +216,7 @@ class _LivePKRtcState extends State<_LivePKRtc> {
             return Row(
               children: [
                 Expanded(
-                  flex: 60,
+                  flex: l,
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
@@ -257,105 +257,52 @@ class _LivePKRtcState extends State<_LivePKRtc> {
                     ],
                   ),
                 ),
-                if (_isStartAnimation)
-                  BoxState(
-                    flex: flexP.toInt(),
-                    builder: (flex, c) {
-                      return Expanded(
-                        flex: flex,
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            const _RtcOtherLive(),
-                            Obx(
-                              () {
-                                if (controller.pkStep.value != PkStep.end) {
-                                  return const EmptyStackBox();
-                                }
+                Expanded(
+                  flex: r,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      const _RtcOtherLive(),
+                      Obx(
+                            () {
+                          if (controller.pkStep.value != PkStep.end) {
+                            return const EmptyStackBox();
+                          }
 
-                                return PkWinLoseBuilder(
-                                  key: Key('${controller.liveOtherID}'),
-                                  liveID: controller.liveOtherID,
-                                  builder: (status) {
-                                    if (status == PkGameStatus.draw) {
-                                      return const EmptyStackBox();
-                                    }
+                          return PkWinLoseBuilder(
+                            key: Key('${controller.liveOtherID}'),
+                            liveID: controller.liveOtherID,
+                            builder: (status) {
+                              if (status == PkGameStatus.draw) {
+                                return const EmptyStackBox();
+                              }
 
-                                    if (status == PkGameStatus.win) {
-                                      return Align(
-                                        alignment: Alignment.bottomLeft,
-                                        child: SizedBox.square(
-                                          dimension: 61,
-                                          child: Assets.icons_lives_win_small
-                                              .image(),
-                                        ),
-                                      );
-                                    }
-
-                                    return Align(
-                                      alignment: Alignment.bottomLeft,
-                                      child: SizedBox.square(
-                                        dimension: 61,
-                                        child: Assets.icons_lives_lose_small
-                                            .image(),
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  )
-                else
-                  Expanded(
-                    flex: 60,
-                    child: Stack(
-                      fit: StackFit.expand,
-                      children: [
-                        const _RtcOtherLive(),
-                        Obx(
-                              () {
-                            if (controller.pkStep.value != PkStep.end) {
-                              return const EmptyStackBox();
-                            }
-
-                            return PkWinLoseBuilder(
-                              key: Key('${controller.liveOtherID}'),
-                              liveID: controller.liveOtherID,
-                              builder: (status) {
-                                if (status == PkGameStatus.draw) {
-                                  return const EmptyStackBox();
-                                }
-
-                                if (status == PkGameStatus.win) {
-                                  return Align(
-                                    alignment: Alignment.bottomLeft,
-                                    child: SizedBox.square(
-                                      dimension: 61,
-                                      child: Assets.icons_lives_win_small
-                                          .image(),
-                                    ),
-                                  );
-                                }
-
+                              if (status == PkGameStatus.win) {
                                 return Align(
                                   alignment: Alignment.bottomLeft,
                                   child: SizedBox.square(
                                     dimension: 61,
-                                    child: Assets.icons_lives_lose_small
+                                    child: Assets.icons_lives_win_small
                                         .image(),
                                   ),
                                 );
-                              },
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  )
+                              }
+
+                              return Align(
+                                alignment: Alignment.bottomLeft,
+                                child: SizedBox.square(
+                                  dimension: 61,
+                                  child: Assets.icons_lives_lose_small
+                                      .image(),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                )
               ],
             );
           }),
