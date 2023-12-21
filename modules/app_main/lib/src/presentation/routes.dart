@@ -1,7 +1,6 @@
 import 'package:app_core/app_core.dart';
 import 'package:app_main/src/presentation/settings/setting_routes.dart';
 import 'package:injectable/injectable.dart';
-import 'package:wallet/presentation/wallet_routes.dart';
 import 'authentication/authentication_routes.dart';
 import 'chat/chat_routes.dart';
 import 'dashboard/dashboard_routes.dart';
@@ -21,7 +20,5 @@ class Routes extends RouteModuleBuilder {
       ];
 
   @override
-  List<RouteModuleBuilder> get routerModules => [
-        get<WalletRoutes>(),
-      ];
+  List<RouteModuleBuilder> get routerModules => [];
 }

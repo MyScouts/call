@@ -1,10 +1,7 @@
-import 'package:app_core/app_core.dart';
-import 'package:app_main/src/blocs/user/user_cubit.dart';
 import 'package:app_main/src/core/utils/toast_message/toast_message.dart';
 import 'package:app_main/src/presentation/dashboard/dashboard/dashboard_screen.dart';
 import 'package:app_main/src/presentation/dashboard/system_setting/system_setting.dart';
 import 'package:flutter/material.dart';
-import 'package:wallet/presentation/wallet_coodinator.dart';
 
 import 'dashboard/widget/dashboard_option_sheet.dart';
 import 'dashboard/widget/remove_confirm_dialog.dart';
@@ -46,20 +43,8 @@ extension DashBoardCoordinator on BuildContext {
     );
   }
 
-  Future<T?> _startWallet<T>() async {
-    return startMyWallet(read<UserCubit>().currentUser);
-  }
-
-  Future<T?> _startPointAllAgency<T>() async {
-    return pointAllAgencyExternal();
-  }
-
   Future<T?> handleStartAppWidget<T>({required String id, String? path}) async {
     switch (id) {
-      case 'ic_wallet':
-        return _startWallet();
-      case "ic_buff":
-        return _startPointAllAgency();
       default:
         if (path != null) {
           Navigator.of(this).pushNamed(path);

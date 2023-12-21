@@ -30,8 +30,6 @@ dependencies:
     path: ../reorderable
   easy_audio:
     path: ../plugins/easy_audio
-  wallet:
-    path: ../packages/wallet
 
   #for ios
   uuid: ^3.0.7
