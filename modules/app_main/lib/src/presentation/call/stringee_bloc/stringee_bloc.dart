@@ -51,7 +51,6 @@ class StringeeBloc extends Bloc<StringeeEvent, StringeeState> {
 
     final user = _userSharePreferencesUsecase.getUserInfo();
     final tokenStringee = _userSharePreferencesUsecase.getStringeeToken;
-
     if (tokenStringee?.isNotEmpty ?? false) {
       _stringeeService.connect(tokenStringee!, user?.displayName, user?.avatar);
     }
