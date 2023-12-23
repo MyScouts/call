@@ -39,7 +39,7 @@ dependencies:
 
   callkeep:
     git:
-      url: https://github.com/stringeecom/callkeep.git
+      url: https://github.com/HiepH-Stringee/callkeep
       ref: master
 
   intl: ^0.18.1

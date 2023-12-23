@@ -76,19 +76,20 @@ class StringeeService {
   }
 
   Future<bool?> disconnect() async {
-    try {
-      if (_tokenFCM?.isNotEmpty ?? false) {
-        await _client.unregisterPush(_tokenFCM!);
-      }
-
-      stringeeLog(
-          'stringee disconnect (hasConnected: ${_client.hasConnected})');
-      if (_client.hasConnected) {
-        await _client.disconnect();
-      }
-      return true;
-    } catch (_) {}
-    return false;
+    return true;
+    // try {
+    //   if (_tokenFCM?.isNotEmpty ?? false) {
+    //     await _client.unregisterPush(_tokenFCM!);
+    //   }
+    //
+    //   stringeeLog(
+    //       'stringee disconnect (hasConnected: ${_client.hasConnected})');
+    //   if (_client.hasConnected) {
+    //     await _client.disconnect();
+    //   }
+    //   return true;
+    // } catch (_) {}
+    // return false;
   }
 
   /// Invoked when the StringeeClient is connected

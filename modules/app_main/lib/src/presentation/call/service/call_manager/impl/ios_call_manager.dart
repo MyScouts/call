@@ -130,7 +130,7 @@ class IOSCallManager extends CallManager {
           final userRepository = injector.get<UserRepository>();
           final caller =
               await userRepository.getUserById(id: int.parse(call.from!));
-
+          print("show callkeep, ");
           // Show callkit
           await callKeep.displayIncomingCall(
             callInstance!.uuid,
@@ -178,9 +178,10 @@ class IOSCallManager extends CallManager {
   }
 
   @override
-  void handleIncomingEvent2(StringeeCall2 call, BuildContext context) {
+  void handleIncomingEvent2(StringeeCall2 call, BuildContext context) async {
     super.handleIncomingEvent2(call, context);
 
+    print("nhan duoc call2");
     if(callInstance?.call != null && callInstance?.call is StringeeCall) {
       return;
     }
@@ -202,25 +203,21 @@ class IOSCallManager extends CallManager {
         ),
         call.isVideoCall ? CallType.video : CallType.audio,
       );
+
+
+      final userRepository = injector.get<UserRepository>();
+      final caller = await userRepository.getUserById(id: int.parse(call.from!));
+      // await callKeep.displayIncomingCall(
+      //   callInstance!.uuid,
+      //   call.from!,
+      //   localizedCallerName: caller?.displayName ?? call.fromAlias ?? '',
+      // );
+      //
+      var uuid = await callKeep.reportCallIfNeeded(call.id!, caller?.displayName ?? call.fromAlias ?? '');
       callInstance = IOSCallInstance(
         bloc,
-        _genUUID(),
+        uuid,
       );
-
-      if (WidgetsBinding.instance.lifecycleState != AppLifecycleState.resumed) {
-        Future.microtask(() async {
-          final userRepository = injector.get<UserRepository>();
-          final caller =
-          await userRepository.getUserById(id: int.parse(call.from!));
-
-          // Show callkit
-          await callKeep.displayIncomingCall(
-            callInstance!.uuid,
-            call.from!,
-            localizedCallerName: caller?.displayName ?? call.fromAlias ?? '',
-          );
-        });
-      }
 
       listenCallBlocEnded(bloc);
 
