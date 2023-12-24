@@ -9,9 +9,11 @@ import 'package:app_main/src/data/models/payloads/call/new_call_payload.dart';
 import 'package:app_main/src/data/models/payloads/call/update_call_payload.dart';
 import 'package:app_main/src/domain/entities/call/result_response_model.dart';
 import 'package:app_main/src/domain/usecases/call_usecase.dart';
+import 'package:app_main/src/presentation/call/service/call_instance/impl/ios_call_instance.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:stringee_flutter_plugin/stringee_flutter_plugin.dart';
+import 'package:callkeep/callkeep.dart';
 
 import '../../../../domain/usecases/user_share_preferences_usecase.dart';
 import '../../../../domain/usecases/user_usecase.dart';
@@ -39,6 +41,7 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
   final CallUseCase _callUseCase;
   bool needUpdateCall = false;
   int status = 1;
+  final FlutterCallkeep callKeep = FlutterCallkeep();
 
   late StreamSubscription<CallEvent> _onListenerCallEvent;
 
@@ -223,7 +226,7 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
   ////////////////////////////////////////////////////////////////
 
   FutureOr<void> _onHandleCallStateChangedEvent(
-      HandleCallStateChangedEvent event, Emitter<Call1vs1State> emit) {
+      HandleCallStateChangedEvent event, Emitter<Call1vs1State> emit) async {
     if (state.isCallClosed) {
       //DO NOTHING
       return Future.value();
@@ -236,6 +239,7 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
       // Handle SignalingEvent
 
       if (callEvent.answered) {
+
         if (_call1vs1Service.isIncomingCall && !state.isInCall) {
           // In case another device picked phone up
           data = state.data.copyWith(
@@ -316,6 +320,7 @@ class Call1vs1Bloc extends Bloc<Call1vs1Event, Call1vs1State> {
         ),
       ),
     );
+
     if ((await _call1vs1Service.answerCall()) == true) {
       if (_call1vs1Service.call.isVideoCall) {
         add(EnableCameraEvent(enable: true));

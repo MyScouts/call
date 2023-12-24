@@ -207,18 +207,13 @@ class IOSCallManager extends CallManager {
 
       final userRepository = injector.get<UserRepository>();
       final caller = await userRepository.getUserById(id: int.parse(call.from!));
-      // await callKeep.displayIncomingCall(
-      //   callInstance!.uuid,
-      //   call.from!,
-      //   localizedCallerName: caller?.displayName ?? call.fromAlias ?? '',
-      // );
-      //
+
       var uuid = await callKeep.reportCallIfNeeded(call.id!, caller?.displayName ?? call.fromAlias ?? '');
       callInstance = IOSCallInstance(
         bloc,
         uuid,
       );
-
+      
       listenCallBlocEnded(bloc);
 
       // Show callScreen
