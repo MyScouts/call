@@ -116,13 +116,13 @@ class AuthenticationUsecase {
 
   Future syncUser() async {
     _chatSocket.connect();
+    unawaited(_syncStringeeToken());
     final user = await _userRepository.getProfile();
     _userSharePreferencesUsecase.saveUserInfo(user!);
     isAuthenticate.add(true);
     unawaited(await AppConfigService.init());
     unawaited(_userRepository.onboarding());
     unawaited(_syncFCMToken());
-    unawaited(_syncStringeeToken());
   }
 
   Future authClaimV1(AuthClaimPayload payload) async {
