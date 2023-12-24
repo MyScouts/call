@@ -213,7 +213,6 @@ class IOSCallManager extends CallManager {
         bloc,
         uuid,
       );
-      
       listenCallBlocEnded(bloc);
 
       // Show callScreen
@@ -411,29 +410,17 @@ class IOSCallManager extends CallManager {
   ) async {
     stringeeLog(
         '''CallKeepPushKitReceivedNotification, callId: ${event.callId}, callStatus: ${event.callStatus}, uuid: ${event.uuid}, serial: ${event.serial},''');
+  }
+
+  void didDisplayIncomingCall(CallKeepDidDisplayIncomingCall event) async {
+    stringeeLog(
+        '''didDisplayIncomingCall, callId: ${event.callId}, uuid: ${event.uuid}, serial: ${event.serial}''');
     final callId = event.callId!;
-    final callStatus = event.callStatus;
     final uuid = event.uuid;
-    final serial = event.serial;
+    const serial = 1;
+
 
     if (uuid == null) {
-      return;
-    }
-
-    // call khong hop le => can end o day
-    if (callId.isEmpty || callStatus != 'started') {
-      _fakeCallUuids.add(uuid);
-      endFakeCall(uuid);
-      return;
-    }
-
-    // call da duoc xu ly roi thi ko xu ly lai
-    // => can end callkit da duoc show ben native
-    if (checkIfCallIsHandledOrNot(callId, serial)) {
-      // _callKit.endCall(uuid);
-      await callKeep.endCall(uuid);
-      removeCallInstanceFromHandledCallList(callId, serial);
-      deleteCallInstanceIfNeed();
       return;
     }
 
@@ -472,11 +459,6 @@ class IOSCallManager extends CallManager {
       // _callKit.endCall(uuid);
       await callKeep.endCall(uuid);
     }
-  }
-
-  void didDisplayIncomingCall(CallKeepDidDisplayIncomingCall event) {
-    stringeeLog(
-        '''didDisplayIncomingCall, callId: ${event.callId}, uuid: ${event.uuid}, serial: ${event.serial}''');
     endFakeCall(event.uuid);
     deleteCallInstanceIfNeed();
   }
