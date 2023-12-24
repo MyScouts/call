@@ -2,6 +2,7 @@
  import Flutter
  import ICSdkEKYC
  import FirebaseCore
+ import callkeep
 
  @UIApplicationMain
  @objc class AppDelegate: FlutterAppDelegate {
@@ -15,6 +16,7 @@
      ) -> Bool {
          FirebaseApp.configure()
          UIDevice.current.isProximityMonitoringEnabled = false
+         CallKeep.instance()
 
 
          let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
@@ -45,9 +47,7 @@
              }
 
              print("channel.setMethodCallHandler")
-
          })
-
 
          GeneratedPluginRegistrant.register(with: self)
          return super.application(application, didFinishLaunchingWithOptions: launchOptions)
