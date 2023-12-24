@@ -73,7 +73,6 @@ class IOSCallInstance extends CallInstance {
     if (bloc == null ||
         !userAnswered ||
         callAnswered ||
-        !audioSessionActived ||
         call == null) {
       stringeeLog(
           '''answerIfConditionPassed, condition has not been passed, userAnswered: $userAnswered, callAnswered: $callAnswered, audioSessionActived: $audioSessionActived''');

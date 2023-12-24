@@ -70,9 +70,9 @@ class Call1vs1ServiceImpl extends Call1vs1Service {
 
   @override
   Future<bool?> answerCall() async {
-    if (!isIncomingCall) {
-      return Future.value(false);
-    }
+    // if (!isIncomingCall) {
+    //   return Future.value(false);
+    // }
 
     if (Platform.isIOS) {
       var uuid = IOSCallManager.shared.callInstance?.uuid;
