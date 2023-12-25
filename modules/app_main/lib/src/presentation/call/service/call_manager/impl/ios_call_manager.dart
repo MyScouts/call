@@ -227,7 +227,16 @@ class IOSCallManager extends CallManager {
               call.answer().then((value) => {
                 print('call.answer, user answer from call keep')
               });
+              return;
           }
+
+          if (callInstance!.userRejected || callInstance!.endedCallkit) {
+            call.reject().then((value) => {
+              print('call.reject, user answer from call keep')
+            });
+            return;
+          }
+
         }
       });
 
