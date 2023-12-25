@@ -8,7 +8,8 @@
  @objc class AppDelegate: FlutterAppDelegate {
 
      var methodChannel: FlutterResult?
-
+     var backgroundUpdateTask: UIBackgroundTaskIdentifier?
+     
 
      override func application(
          _ application: UIApplication,
@@ -300,6 +301,28 @@
          UIDevice.current.isProximityMonitoringEnabled = false
          self.methodChannel!(FlutterMethodNotImplemented)
      }
+     
+     
+     override func applicationDidEnterBackground(_ application: UIApplication) {
+         super.applicationDidEnterBackground(application)
+         
+         self.backgroundUpdateTask =  UIApplication.shared.beginBackgroundTask(withName: "extendBackgroundRunningTimeForCallKit") {
+             self.backgroundUpdateTask = .invalid
+         }
+         DispatchQueue.global(qos: .default).async {
+             Thread.sleep(forTimeInterval: 10)
+             self.backgroundUpdateTask = .invalid
+         }
+     }
+     
+     override func applicationWillEnterForeground(_ application: UIApplication) {
+         super.applicationWillEnterForeground(application)
+         if let backgroundUpdateTask = self.backgroundUpdateTask, backgroundUpdateTask != .invalid {
+             self.backgroundUpdateTask = .invalid
+         }
+     }
+     
+     
 
  }
 

@@ -11,7 +11,7 @@ abstract class CallInstance {
   bool callScreenShowed = false;
 
   // Incase receive the call PN, we save temp CallIntance without service
-  final Call1vs1Bloc? bloc;
+  Call1vs1Bloc? bloc;
 
   get call => bloc?.call;
 
