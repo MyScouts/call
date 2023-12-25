@@ -181,7 +181,6 @@ class IOSCallManager extends CallManager {
   void handleIncomingEvent2(StringeeCall2 call, BuildContext context) async {
     super.handleIncomingEvent2(call, context);
 
-    print("nhan duoc call2");
     if(callInstance?.call != null && callInstance?.call is StringeeCall) {
       return;
     }
@@ -224,6 +223,11 @@ class IOSCallManager extends CallManager {
           clearDataEndDismiss();
         } else {
           callInstance!.answerIfConditionPassed();
+          if (callInstance!.userAnswered || callInstance!.callAnswered) {
+              call.answer().then((value) => {
+                print('call.answer, user answer from call keep')
+              });
+          }
         }
       });
 
