@@ -264,7 +264,7 @@ class IOSCallManager extends CallManager {
     client
         .registerPush(
       pushToken!,
-      isProduction: false,
+      isProduction: true,
       isVoip: true,
     )
         .then((result) {
