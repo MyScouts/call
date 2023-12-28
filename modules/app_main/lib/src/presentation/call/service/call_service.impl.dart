@@ -8,6 +8,7 @@ class Call1vs1ServiceImpl extends Call1vs1Service {
     @factoryParam super.context,
   );
 
+  final FlutterCallkeep flutterCallkeep = FlutterCallkeep();
   final _callEventStreamCtrl = StreamController<CallEvent>.broadcast();
 
   @override
@@ -69,8 +70,15 @@ class Call1vs1ServiceImpl extends Call1vs1Service {
 
   @override
   Future<bool?> answerCall() async {
-    if (!isIncomingCall) {
-      return Future.value(false);
+    // if (!isIncomingCall) {
+    //   return Future.value(false);
+    // }
+
+    if (Platform.isIOS) {
+      var uuid = IOSCallManager.shared.callInstance?.uuid;
+      if (uuid != null && uuid.isNotEmpty) {
+        await flutterCallkeep.answerIncomingCall(uuid);
+      }
     }
 
     final res = await call.answer();

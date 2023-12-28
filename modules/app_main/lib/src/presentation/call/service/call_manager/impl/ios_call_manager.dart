@@ -82,7 +82,7 @@ class IOSCallManager extends CallManager {
         return;
       }
 
-      if (appLifecycleState != AppLifecycleState.resumed ||
+      if (
           callInstance?.bloc == null ||
           !callInstance!.hasStringeeCall() ||
           callInstance!.ended()) {
@@ -130,7 +130,7 @@ class IOSCallManager extends CallManager {
           final userRepository = injector.get<UserRepository>();
           final caller =
               await userRepository.getUserById(id: int.parse(call.from!));
-
+          print("show callkeep, ");
           // Show callkit
           await callKeep.displayIncomingCall(
             callInstance!.uuid,
@@ -178,85 +178,63 @@ class IOSCallManager extends CallManager {
   }
 
   @override
-  void handleIncomingEvent2(StringeeCall2 call, BuildContext context) {
+  void handleIncomingEvent2(StringeeCall2 call, BuildContext context) async {
     super.handleIncomingEvent2(call, context);
+    await call.initAnswer();
 
-    if(callInstance?.call != null && callInstance?.call is StringeeCall) {
+    if(callInstance?.call != null && callInstance?.call.id != call.id) {
+      call.reject();
       return;
     }
     // Chưa có sync call thì tạo mới
-    if (callInstance?.bloc == null) {
-      final bloc = Call1vs1Bloc(
-        injector.get(
-          param1: CallServiceContext(
-            client: context.read<StringeeBloc>().state.client,
-            call2: call,
-            userCall2: true,
-          ),
+
+    final bloc = Call1vs1Bloc(
+      injector.get(
+        param1: CallServiceContext(
+          client: context.read<StringeeBloc>().state.client,
+          call2: call,
+          userCall2: true,
         ),
-        injector.get(),
-        injector.get(),
-        injector.get(),
-        User(
-          id: int.tryParse(call.from!),
-        ),
-        call.isVideoCall ? CallType.video : CallType.audio,
-      );
+      ),
+      injector.get(),
+      injector.get(),
+      injector.get(),
+      User(
+        id: int.tryParse(call.from!),
+      ),
+      call.isVideoCall ? CallType.video : CallType.audio,
+    );
+
+
+    final userRepository = injector.get<UserRepository>();
+    final caller = await userRepository.getUserById(id: int.parse(call.from!));
+
+    var uuid = await callKeep.reportCallIfNeeded(call.id!, caller?.displayName ?? call.fromAlias ?? '');
+
+    if (callInstance == null) {
       callInstance = IOSCallInstance(
         bloc,
-        _genUUID(),
+        uuid,
       );
-
-      if (WidgetsBinding.instance.lifecycleState != AppLifecycleState.resumed) {
-        Future.microtask(() async {
-          final userRepository = injector.get<UserRepository>();
-          final caller =
-          await userRepository.getUserById(id: int.parse(call.from!));
-
-          // Show callkit
-          await callKeep.displayIncomingCall(
-            callInstance!.uuid,
-            call.from!,
-            localizedCallerName: caller?.displayName ?? call.fromAlias ?? '',
-          );
-        });
-      }
-
-      listenCallBlocEnded(bloc);
-
-      // Show callScreen
-      showCallScreen();
-
-      call.initAnswer().then((result) {
-        stringeeLog('initAnswer: ${result['message']}');
-        if (result['status'] != true) {
-          clearDataEndDismiss();
-        } else {
-          callInstance!.answerIfConditionPassed();
-        }
-      });
-
-      return;
-    }
-
-    // Cuộc gọi mới không phải là cuộc gọi đang xử lý thì reject
-    if (!callInstance!.isThisCall(call.id, call.serial)) {
-      stringeeLog('Cuộc gọi mới không phải là cuộc gọi đang xử lý thì reject');
+    }else if (callInstance?.callId == call.id) {
+      callInstance?.bloc = bloc;
+    } else {
       call.reject();
       return;
     }
 
-    // Người dùng đã click reject cuộc gọi thì reject
-    if (callInstance!.userRejected) {
-      stringeeLog('Người dùng đã click reject cuộc gọi thì reject');
-      call.reject();
-      return;
-    }
+    listenCallBlocEnded(bloc);
 
+    // Show callScreen
     showCallScreen();
 
-    call.initAnswer();
+    callInstance!.userAnswered = await callKeep.checkCallAnswered(uuid);
     callInstance!.answerIfConditionPassed();
+
+    var callDidReject = await callKeep.checkCallEnded(uuid);
+    if (callDidReject) {
+      await callInstance!.reject();
+    }
   }
 
   @override
@@ -292,7 +270,7 @@ class IOSCallManager extends CallManager {
         .then((result) {
       final status = result['status'];
       final message = result['message'];
-      stringeeLog('Result for resgister push: $message');
+      print('Result for resgister push: $message');
       if (status) {
         registeredPushWithStringeeServer = true;
       }
@@ -383,16 +361,13 @@ class IOSCallManager extends CallManager {
       return;
     }
 
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 5), () {
       if (callInstance?.bloc == null) {
-        return;
-      }
-
-      if (!callInstance!.hasStringeeCall()) {
         callInstance!.endedStringeeCall = true;
         callKeep.endAllCalls();
         saveCallInstanceToHandledCallList(callInstance);
         callInstance = null;
+        return;
       }
     });
   }
@@ -419,39 +394,21 @@ class IOSCallManager extends CallManager {
   ) async {
     stringeeLog(
         '''CallKeepPushKitReceivedNotification, callId: ${event.callId}, callStatus: ${event.callStatus}, uuid: ${event.uuid}, serial: ${event.serial},''');
+  }
+
+  void didDisplayIncomingCall(CallKeepDidDisplayIncomingCall event) async {
+    stringeeLog(
+        '''didDisplayIncomingCall, callId: ${event.callId}, uuid: ${event.uuid}, serial: ${event.serial}''');
     final callId = event.callId!;
-    final callStatus = event.callStatus;
     final uuid = event.uuid;
-    final serial = event.serial;
+    const serial = 1;
+
 
     if (uuid == null) {
       return;
     }
 
-    // call khong hop le => can end o day
-    if (callId.isEmpty || callStatus != 'started') {
-      _fakeCallUuids.add(uuid);
-      endFakeCall(uuid);
-      return;
-    }
-
-    // call da duoc xu ly roi thi ko xu ly lai
-    // => can end callkit da duoc show ben native
-    if (checkIfCallIsHandledOrNot(callId, serial)) {
-      // _callKit.endCall(uuid);
-      await callKeep.endCall(uuid);
-      removeCallInstanceFromHandledCallList(callId, serial);
-      deleteCallInstanceIfNeed();
-      return;
-    }
-
-    // Chưa có sync call (Trường hợp cuộc gọi mới)
-    // => tạo sync call và lưu lại thông tin
-    if (callInstance?.bloc == null) {
-      stringeeLog(
-        'handleIncomingPushNotification, CallInstance: $callInstance',
-      );
-
+    if (callInstance == null) {
       callInstance = IOSCallInstance(
         null,
         uuid,
@@ -461,42 +418,13 @@ class IOSCallManager extends CallManager {
       startTimeoutForIncomingCall();
       return;
     }
-
-    // Đã có sync call nhưng là của cuộc gọi khác
-    // => end callkit này (callkit vừa được show bên native)
-    if (!callInstance!.isThisCall(callId, serial)) {
-      stringeeLog(
-        'END CALLKIT KHI NHAN DUOC PUSH, PUSH MOI KHONG PHAI SYNC CALL',
-      );
-      // _callKit.endCall(uuid);
-      await callKeep.endCall(uuid);
-      return;
-    }
-
-    // Đã có sync call, thông tin cuộc gọi là trùng khớp,
-    // nhưng đã show callkit rồi => end callkit vừa show
-    if (callInstance!.showedCallkit() && callInstance!.uuid != uuid) {
-      stringeeLog('END CALLKIT KHI NHAN DUOC PUSH, SYNC CALL DA SHOW CALLKIT');
-      // _callKit.endCall(uuid);
-      await callKeep.endCall(uuid);
-    }
-  }
-
-  void didDisplayIncomingCall(CallKeepDidDisplayIncomingCall event) {
-    stringeeLog(
-        '''didDisplayIncomingCall, callId: ${event.callId}, uuid: ${event.uuid}, serial: ${event.serial}''');
-    endFakeCall(event.uuid);
-    deleteCallInstanceIfNeed();
   }
 
   Future<void> answerCall(CallKeepPerformAnswerCallAction event) async {
-    // Called when the user answers an incoming call
-    stringeeLog('performAnswerCallAction, uuid: ${event.callUUID}');
-    if (callInstance!.uuid.isEmpty || callInstance!.uuid != event.callUUID) {
-      return;
-    }
     callInstance!.userAnswered = true;
-    callInstance!.answerIfConditionPassed();
+    if (callInstance?.bloc != null) {
+      callInstance!.answerIfConditionPassed();
+    }
   }
 
   Future<void> endCall(CallKeepPerformEndCallAction event) async {
@@ -529,7 +457,7 @@ class IOSCallManager extends CallManager {
       }
     }
 
-    deleteCallInstanceIfNeed();
+    // deleteCallInstanceIfNeed();
   }
 
   Future<void> didPerformSetMutedCallAction(

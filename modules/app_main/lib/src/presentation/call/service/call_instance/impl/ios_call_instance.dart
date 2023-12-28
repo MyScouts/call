@@ -62,28 +62,12 @@ class IOSCallInstance extends CallInstance {
   }
 
   void answerIfConditionPassed() {
-    /*
-      Voi iOS, Answer StringeeCall khi thoa man cac yeu to:
-      1. Da nhan duoc su kien incomingCall (có StringeeCall object) 
-      hoac incomingCall2 (co StringeeCall2 object)
-      2. User da click answer
-      3. Chua goi ham answer cua StringeeCall lan nao
-      4. AudioSession da active
-    **/
-    if (bloc == null ||
-        !userAnswered ||
-        callAnswered ||
-        !audioSessionActived ||
-        call == null) {
-      stringeeLog(
-          '''answerIfConditionPassed, condition has not been passed, userAnswered: $userAnswered, callAnswered: $callAnswered, audioSessionActived: $audioSessionActived''');
+    if (userAnswered && !callAnswered) {
+      if (bloc != null) {
+        bloc?.add(AnswerCallEvent());
+        callAnswered = true;
+      }
       return;
-    }
-
-    if (!bloc!.state.isInCall) {
-      userAnswered = true;
-      callAnswered = true;
-      bloc!.add(AnswerCallEvent());
     }
   }
 

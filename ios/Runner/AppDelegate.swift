@@ -2,12 +2,14 @@
  import Flutter
  import ICSdkEKYC
  import FirebaseCore
+ import callkeep
 
  @UIApplicationMain
  @objc class AppDelegate: FlutterAppDelegate {
 
      var methodChannel: FlutterResult?
-
+     var backgroundUpdateTask: UIBackgroundTaskIdentifier?
+     
 
      override func application(
          _ application: UIApplication,
@@ -15,6 +17,7 @@
      ) -> Bool {
          FirebaseApp.configure()
          UIDevice.current.isProximityMonitoringEnabled = false
+         CallKeep.instance()
 
 
          let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
@@ -45,9 +48,7 @@
              }
 
              print("channel.setMethodCallHandler")
-
          })
-
 
          GeneratedPluginRegistrant.register(with: self)
          return super.application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -300,6 +301,28 @@
          UIDevice.current.isProximityMonitoringEnabled = false
          self.methodChannel!(FlutterMethodNotImplemented)
      }
+     
+     
+     override func applicationDidEnterBackground(_ application: UIApplication) {
+         super.applicationDidEnterBackground(application)
+         
+         self.backgroundUpdateTask =  UIApplication.shared.beginBackgroundTask(withName: "extendBackgroundRunningTimeForCallKit") {
+             self.backgroundUpdateTask = .invalid
+         }
+         DispatchQueue.global(qos: .default).async {
+             Thread.sleep(forTimeInterval: 10)
+             self.backgroundUpdateTask = .invalid
+         }
+     }
+     
+     override func applicationWillEnterForeground(_ application: UIApplication) {
+         super.applicationWillEnterForeground(application)
+         if let backgroundUpdateTask = self.backgroundUpdateTask, backgroundUpdateTask != .invalid {
+             self.backgroundUpdateTask = .invalid
+         }
+     }
+     
+     
 
  }
 
